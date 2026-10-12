@@ -53,28 +53,26 @@ CERTDECK_API_TOKEN=devtoken .venv/bin/python manage.py runserver 127.0.0.1:8765
 ```
 Without `POSTGRES_DB` it uses SQLite. Env vars: see [backend/.env.example](backend/.env.example).
 
-### Production (VPS 217.76.55.241, user `deploy`)
-Isolated compose project in `~/certdeck` (own Postgres, volumes, network; API on `127.0.0.1:18765`),
-reachable at `https://certdeck.mithaqstay.com/api/` through the existing wa-category nginx container (one added
-server block, `deploy/nginx-certdeck.conf`) with its own Let's Encrypt cert renewed by its own certbot
-container. Details and the reasons behind them are in DECISIONS.md → Deployment.
+### Production (169.58.7.222, root)
+Isolated compose project in `/opt/certdeck` (own Postgres, volumes, network; API on `127.0.0.1:18765`),
+served at `https://certdeck.mithaqstay.com/api/` by the host nginx (site file `deploy/nginx-certdeck.conf` →
+`/etc/nginx/sites-available/certdeck`), with a Let's Encrypt cert renewed by the existing `certbot.timer`.
+See DECISIONS.md → Deployment.
 
 ```
-~/certdeck/.env            secrets + settings (chmod 600, never in git)
-~/certdeck/proxy.enabled   marker: include docker-compose.proxy.yml (proxy network + certbot)
-~/certdeck/letsencrypt/    our certbot state
-~/certdeck/src/            code, replaced on every deploy
+/opt/certdeck/.env     secrets + settings (chmod 600, never in git)
+/opt/certdeck/src/     code, replaced on every deploy
 ```
 
 **Update / redeploy** (from the laptop, after committing):
 ```bash
-deploy/deploy.sh          # git archive HEAD → VPS, docker compose up -d --build; migrations run on start
+deploy/deploy.sh          # git archive HEAD → server, docker compose up -d --build; migrations run on start
 ```
 
-Useful on the VPS:
+Useful on the server:
 ```bash
-cd ~/certdeck/src/deploy
-alias dc='docker compose -f docker-compose.yml -f docker-compose.proxy.yml --env-file ~/certdeck/.env'
+cd /opt/certdeck/src/deploy
+alias dc='docker compose --env-file /opt/certdeck/.env'
 dc ps; dc logs -f certdeck-api          # token usage per AI call is logged ("ai generate ok=True in=… out=…")
 dc exec certdeck-api python manage.py optimize_fsrs
 curl -s 127.0.0.1:18765/api/health
@@ -82,17 +80,16 @@ curl -s 127.0.0.1:18765/api/health
 
 ### Change the API token
 ```bash
-ssh deploy@217.76.55.241
+ssh root@169.58.7.222
 NEW=$(python3 -c 'import secrets; print(secrets.token_urlsafe(32))')
-sed -i "s/^CERTDECK_API_TOKEN=.*/CERTDECK_API_TOKEN=$NEW/" ~/certdeck/.env && echo "$NEW"
-cd ~/certdeck/src/deploy && docker compose -f docker-compose.yml -f docker-compose.proxy.yml --env-file ~/certdeck/.env up -d certdeck-api
+sed -i "s/^CERTDECK_API_TOKEN=.*/CERTDECK_API_TOKEN=$NEW/" /opt/certdeck/.env && echo "$NEW"
+cd /opt/certdeck/src/deploy && docker compose --env-file /opt/certdeck/.env up -d certdeck-api
 ```
-Then in the app: Settings → API token → Save & sync. The Anthropic key (`ANTHROPIC_API_KEY`) is changed the same way.
+Then in the app: Settings → API token → Save & sync. Change the Anthropic key (`ANTHROPIC_API_KEY`) the same way.
 
-### Remove CertDeck from the proxy
-Delete `~/wa-category/deploy/nginx/conf.d/certdeck.conf`, run
-`docker exec wa-category-nginx-1 nginx -t && docker exec wa-category-nginx-1 nginx -s reload`, then
-`docker compose … down` in `~/certdeck/src/deploy`.
+### Remove CertDeck from the server
+`rm /etc/nginx/sites-enabled/certdeck && nginx -t && systemctl reload nginx`, then
+`docker compose --env-file /opt/certdeck/.env down` in `/opt/certdeck/src/deploy` (add `-v` to delete the data).
 
 ## Import / export
 Format: [docs/cards.schema.json](docs/cards.schema.json) (JSON Schema). Example:

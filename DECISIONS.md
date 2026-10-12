@@ -63,19 +63,21 @@ Significant choices made while building CertDeck, newest at the bottom of each s
 - The release keystore lives outside the repo in `~/.config/certdeck/release.jks` (`app/android/key.properties`, gitignored).
 
 ## Deployment (VPS)
-- Read-only inspection found one other project, **wa-category** (atharflow.com), entirely in Docker. Its
-  nginx container owns :80/:443 and loads `conf.d` from that project's repo directory; Postgres runs in its
-  container (no host nginx or Postgres); `deploy` has docker access but no passwordless sudo.
-- CertDeck is its own compose project (`~/certdeck`, project `certdeck`): own Postgres 16 container + volume,
-  own media volume, own internal network, API published only on `127.0.0.1:18765`. Secrets live in
-  `~/certdeck/.env` (generated on the server, chmod 600). Code is shipped with `git archive` by
-  `deploy/deploy.sh`, so no GitHub credentials sit on the server.
-- Proxy integration (approved by the user): the API joins `wa-category_default` under the **unique alias
-  `certdeck-api`**. Docker DNS answers to service names, so a service named `backend` would have
-  been load-balanced into atharflow's traffic. One self-contained server block is added in their `conf.d`
-  (own resolver, variable `proxy_pass` so nginx starts even if CertDeck is down), followed by `nginx -t` and a graceful reload.
-- **Own certbot, never theirs:** their certbot deploy hook copies *every* renewed lineage over atharflow's
-  live cert. Ours writes HTTP-01 challenges into the shared webroot and publishes the cert into
-  `origin-cert/certdeck.mithaqstay.com/` (a dir their nginx already mounts and their git ignores). Their nginx
-  reloads itself every 6 h, which picks up our renewals.
+- At the user's request the backend runs on **169.58.7.222** (the server that hosts mithaqstay.com), not the
+  first VPS (217.76.55.241). Everything deployed there during setup was removed and the other project there
+  was verified unaffected before and after.
+- Read-only inspection of 169.58.7.222: host nginx (systemd) with one site per project (`mithaqstay`, `uptick`),
+  host certbot using the nginx authenticator on the stock `certbot.timer` with no custom hooks, and the other
+  projects in Docker bound to `127.0.0.1` (`:8000`, `:3100`).
+- CertDeck is its own compose project in `/opt/certdeck` (project `certdeck`): own Postgres 16 container + volume,
+  own media volume, own internal network, API only on `127.0.0.1:18765`. Secrets are in `/opt/certdeck/.env`
+  (generated on the server, chmod 600). Code is shipped with `git archive` by `deploy/deploy.sh`, so no GitHub
+  credentials live on the server.
+- nginx: one added site, `/etc/nginx/sites-available/certdeck` (+ symlink); `nginx -t`, then a graceful
+  `systemctl reload nginx`. Other sites' responses were checked before and after.
+- TLS: `certbot certonly --nginx -d certdeck.mithaqstay.com`, the same authenticator the existing certs use, so the
+  existing timer renews it. `certonly` means certbot never edits our site file.
+- Lesson from the first VPS, kept in case it ever moves back: there, the shared certbot's deploy hook copied every
+  renewed cert over another site's live cert, and Docker DNS answers to *service names* on shared networks.
+  So: never reuse another project's certbot, and give services unique names (`certdeck-api`, `certdeck-db`).
 - FSRS re-optimization runs weekly in a small `certdeck-optimizer` container (a sleep loop; no host cron needed).
