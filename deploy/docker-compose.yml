@@ -38,6 +38,16 @@ services:
     networks: [internal]
     command: ["sh", "-c", "while :; do sleep 604800; python manage.py optimize_fsrs; done"]
 
+  # Finishes background generations (Batch API, 50% off) once their batch has ended.
+  certdeck-batches:
+    image: certdeck-api:latest
+    restart: unless-stopped
+    env_file: ../../.env
+    environment: {POSTGRES_HOST: certdeck-db}
+    depends_on: {certdeck-api: {condition: service_started}}
+    networks: [internal]
+    command: ["sh", "-c", "while :; do python manage.py poll_jobs; sleep 60; done"]
+
 networks:
   internal: {}
 volumes:

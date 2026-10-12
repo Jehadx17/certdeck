@@ -87,3 +87,21 @@ Significant choices made while building CertDeck, newest at the bottom of each s
   starts empty, offline study, token restore after reinstall) ran on a HONOR Magic8 Lite, and the user accepted it
   as final (2026-10-12). The OnePlus 12 still has an earlier test build: uninstall it before first use, then install
   `app-release.apk` and enter the token.
+
+## Cost optimization (2026-10-12)
+Profile from the AiCall log (15 calls, $1.22): output 67% (about half of it thinking at medium effort), cache
+writes 29% with **zero** cache reads, regular input 3%; card generation ~80% of spend (~$0.015–0.02 per card).
+Rates from the platform pricing page (Opus 5.5: $4 in, $5 cache write, $0.20 cache read, $20 out; Batch API 50% off).
+- **Applied:** per-call $ cost + `GET /api/usage` + "AI spend this month" in Settings; one cached system block per
+  cert (prompt + certs + official guide) with the per-request card list after the cache point (verified live: the
+  2nd generation read 5,096 cached tokens and wrote none); the 300 most relevant existing cards instead of the
+  whole deck (keeps per-generation input flat as the deck grows; difflib still dedupes against every card); no
+  cache writes on one-shot calls; **background generation via the Message Batches API** (50% off, opt-in toggle,
+  also used by one-tap actions; finished by the `certdeck-batches` poller; refusal fallback omitted there because
+  the Batch API rejects it).
+- **Not applied (user's choice):** shorter, de-duplicated MCQ explanations.
+- **Compared, not switched:** Sonnet 5.5 vs Opus 5.5 on an identical request: both accurate; Sonnet ~2.5x cheaper
+  per card but shallower (weaker cloze, no cross-cert tagging, fewer exam traps). Kept Opus 5.5 (spec default);
+  switching is `CERTDECK_MODEL=claude-sonnet-5-5` in the server `.env`.
+- **Skipped:** tool search, compaction/context editing (no agent loops), Files API, 1-hour cache, lower `max_tokens`,
+  lower effort (spec says medium; no eval to prove it safe).

@@ -202,6 +202,37 @@ class ApiTests(TestCase):
         self.assertAlmostEqual(usage["usd"], float(call.cost_usd))
         self.assertAlmostEqual(usage["by_endpoint"]["generate"], float(call.cost_usd))
 
+    def test_background_generate(self):
+        payload = {"cards": [ai_card(question="What does SQS long polling reduce?", answer="Empty receives")],
+                   "retag": []}
+        batches = mock.MagicMock()
+        batches.create.return_value = NS(id="msgbatch_1")
+        with mock.patch("core.ai._batches", return_value=batches):
+            r = self.post("/api/ai/generate", {"cert": "DVA-C02", "topic": "sqs", "count": 5, "background": True})
+            self.assertEqual(r.status_code, 200, r.content)
+            job = r.json()["job"]
+            self.assertEqual((job["status"], job["batch_id"], job["label"]), ("queued", "msgbatch_1", "sqs"))
+            req = batches.create.call_args.kwargs["requests"][0]
+            self.assertEqual(req["custom_id"], job["id"])
+            self.assertEqual(req["params"]["model"], "claude-opus-5-5")
+            self.assertNotIn("extra_body", req["params"])  # no refusal fallback on the Batch API
+            self.assertFalse(Doc.objects.filter(kind="card").exists())
+
+            batches.retrieve.return_value = NS(processing_status="in_progress")
+            call_command("poll_jobs")
+            self.assertEqual(Doc.objects.get(id=job["id"]).data["status"], "queued")
+
+            batches.retrieve.return_value = NS(processing_status="ended")
+            batches.results.return_value = iter([NS(custom_id=job["id"],
+                                                    result=NS(type="succeeded", message=message(payload)))])
+            call_command("poll_jobs", stdout=StringIO())
+        done = Doc.objects.get(id=job["id"]).data
+        self.assertEqual((done["status"], done["added"], done["retag"]), ("done", 1, []))
+        self.assertEqual(Doc.objects.filter(kind="card").count(), 1)
+        call = AiCall.objects.get()
+        self.assertTrue(call.batch)
+        self.assertAlmostEqual(float(call.cost_usd), (100 * 4 + 5 * 5 + 10 * 0.2 + 50 * 20) / 1e6 / 2, places=6)
+
     def test_relevant_cards(self):
         from core.ai import MAX_EXISTING_LINES, relevant_cards
         mk = lambda i, certs, q="unrelated words here": Doc(id=i, kind="card", seq=0, updated_at=0,

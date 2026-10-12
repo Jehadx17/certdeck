@@ -91,6 +91,15 @@ Then in the app: Settings → API token → Save & sync. Change the Anthropic ke
 `rm /etc/nginx/sites-enabled/certdeck && nginx -t && systemctl reload nginx`, then
 `docker compose --env-file /opt/certdeck/.env down` in `/opt/certdeck/src/deploy` (add `-v` to delete the data).
 
+## AI cost
+- Every AI call is logged with its token counts and $ cost (`AiCall`); Settings shows **AI spend this month**
+  (`GET /api/usage`). Server logs: `ai generate ok=True in=… out=… $0.0821`.
+- **Background generation** (toggle on the Generate tab, also used by one-tap actions) goes through the Message
+  Batches API at 50% off; the `certdeck-batches` service finishes jobs (usually within minutes) and the app picks
+  the cards up on its next sync.
+- Model: `CERTDECK_MODEL` in `/opt/certdeck/.env` (default `claude-opus-5-5`; `claude-sonnet-5-5` is ~2.5x cheaper,
+  see DECISIONS.md). Restart `certdeck-api` and `certdeck-batches` after changing it.
+
 ## Import / export
 Format: [docs/cards.schema.json](docs/cards.schema.json) (JSON Schema). Example:
 [examples/cards.example.json](examples/cards.example.json). Images are inlined as base64 under `media`

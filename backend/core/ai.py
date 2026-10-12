@@ -442,7 +442,60 @@ def generate_finish(out, ctx):
 
 def generate(body):
     request, ctx = generate_request(body)
+    if body.get("background"):
+        return {"job": queue_job(request, ctx)}
     return generate_finish(call("generate", request), ctx)
+
+
+# ---------- background generation: Message Batches API, 50% off every token ----------
+
+def queue_job(request, ctx):
+    """Submits a generate request as a one-request batch and records a `job` doc; poll_jobs finishes it."""
+    job_id, now = str(uuid.uuid4()), now_ms()
+    try:  # no FALLBACK here: the Batch API rejects the fallbacks parameter
+        batch = _batches().create(requests=[{"custom_id": job_id, "params": request}])
+    except anthropic.APIConnectionError as e:
+        raise ApiError(503, "AI service unreachable, try again") from e
+    except anthropic.APIStatusError as e:
+        raise ApiError(502, f"AI batch error ({e.status_code})") from e
+    job = {**ctx, "status": "queued", "batch_id": batch.id, "model": request["model"], "created_at": now}
+    save_docs([{"id": job_id, "kind": "job", "data": job, "updated_at": now, "deleted": False}])
+    log.info("generate job %s queued as %s", job_id, batch.id)
+    return dict(job, id=job_id)
+
+
+def poll_jobs():
+    """Finishes queued jobs whose batch has ended (run every minute). Returns how many it finished."""
+    finished = 0
+    for d in Doc.objects.filter(kind="job", deleted=False):
+        job = d.data
+        if job.get("status") != "queued":
+            continue
+        try:
+            if _batches().retrieve(job["batch_id"]).processing_status != "ended":
+                continue
+            result = next(iter(_batches().results(job["batch_id"])), None)
+        except anthropic.AnthropicError as e:
+            log.warning("job %s: batch %s not readable: %s", d.id, job["batch_id"], e)
+            continue
+        now, msg, ok, error = now_ms(), None, False, ""
+        try:
+            kind = getattr(getattr(result, "result", None), "type", "missing")
+            if kind != "succeeded":
+                raise ApiError(502, f"background request {kind}")
+            msg = result.result.message
+            res = generate_finish(parse(msg), job)
+            upd = {"status": "done", "added": len(res["cards"]), "skipped_duplicates": res["skipped_duplicates"],
+                   "dropped_invalid": res["dropped_invalid"], "retag": res["retag"]}
+            ok = True
+        except ApiError as e:
+            error = str(e.detail)
+            upd = {"status": "failed", "error": error}
+        log_call("generate", job.get("model", ""), msg, ok, error, now - job["created_at"], batch=True)
+        save_docs([{"id": d.id, "kind": "job", "data": {**job, **upd, "finished_at": now}, "updated_at": now,
+                    "deleted": False}])
+        finished += 1
+    return finished
 
 
 def explain(body):

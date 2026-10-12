@@ -15,14 +15,7 @@ Future<(String, List<Json>)> generateCards(Json body) async {
   final res = await Api.ai('ai/generate', body);
   final cards = ((res['cards'] as List?) ?? []).map((c) => Map<String, dynamic>.from(c as Map)).toList();
   await Db.putAll('card', cards, dirty: false); // the server already has them
-  var retagged = 0;
-  for (final r in ((res['retag'] as List?) ?? []).cast<Map>()) {
-    final c = await Db.get(r['card_id']);
-    if (c == null) continue;
-    c['certs'] = {...((c['certs'] as Map?) ?? {}), r['cert']: r['domain']};
-    await Db.put('card', c);
-    retagged++;
-  }
+  final retagged = await applyRetags(res['retag'] as List?);
   final dup = res['skipped_duplicates'] ?? 0;
   String n(int k, String w) => '$k $w${k == 1 ? '' : 's'}';
   return (
@@ -30,6 +23,15 @@ Future<(String, List<Json>)> generateCards(Json body) async {
     cards
   );
 }
+
+/// Background generation via the Batch API: 50% cheaper, cards arrive on a later sync (usually minutes).
+Future<String> queueCards(Json body) async {
+  final res = await Api.ai('ai/generate', {...body, 'background': true});
+  await Db.putAll('job', [Map<String, dynamic>.from(res['job'] as Map)], dirty: false);
+  return 'Queued ${body['count'] ?? 20} cards in the background (50% cheaper). They arrive within minutes, on the next sync.';
+}
+
+bool get backgroundGenerate => App.settings['background_generate'] != false;
 
 class AiScreen extends StatelessWidget {
   const AiScreen({super.key});
@@ -128,6 +130,20 @@ class _GenerateTabState extends State<GenerateTab> with AutomaticKeepAliveClient
     };
     await Api.sync(); // so dedupe sees every existing card
     if (!mounted) return;
+    if (backgroundGenerate) {
+      final msg = await busy(context, 'Queuing…', () => queueCards(body));
+      if (msg != null) {
+        setState(() {
+          result = msg;
+          made = [];
+        });
+        files.clear();
+        text.clear();
+      } else if (Api.online.value == false) {
+        setState(() => error = 'Needs connection');
+      }
+      return;
+    }
     final r = await busy(context, 'Generating ${body['count']} cards… this can take a couple of minutes.', () => generateCards(body));
     if (r != null) {
       setState(() {
@@ -206,6 +222,16 @@ class _GenerateTabState extends State<GenerateTab> with AutomaticKeepAliveClient
           subtitle: const Text('Scenario MCQs (or hands-on tasks for CKAD)'),
           value: examStyle,
           onChanged: (v) => setState(() => examStyle = v)),
+      SwitchListTile(
+          contentPadding: EdgeInsets.zero,
+          title: const Text('In the background (50% cheaper)'),
+          subtitle: const Text('Cards arrive within minutes, on the next sync. Off = wait for them now.'),
+          value: backgroundGenerate,
+          onChanged: (v) async {
+            App.settings['background_generate'] = v;
+            await App.saveSettings();
+            setState(() {});
+          }),
       FilledButton.icon(onPressed: _go, icon: const Icon(Icons.auto_awesome), label: const Text('Generate')),
       if (error != null) NeedsConnection(error!, onRetry: _go),
       if (result != null) ...[
@@ -218,8 +244,36 @@ class _GenerateTabState extends State<GenerateTab> with AutomaticKeepAliveClient
               subtitle: Text(typeLabels[c['type']] ?? ''),
               onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => CardDetail(c['id'])))),
       ],
+      const JobsList(),
     ]);
   }
+}
+
+/// Recent background generations and their status.
+class JobsList extends StatelessWidget {
+  const JobsList({super.key});
+  @override
+  Widget build(BuildContext context) => Live(
+        load: () async => (await Db.query('job'))..sort((a, b) => ((b['created_at'] as int?) ?? 0).compareTo((a['created_at'] as int?) ?? 0)),
+        builder: (context, jobs) => Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          if (jobs.isNotEmpty) ...[
+            const SizedBox(height: 16),
+            Text('Background generations', style: TextStyle(color: Theme.of(context).colorScheme.primary)),
+          ],
+          for (final j in jobs.take(5))
+            ListTile(
+              dense: true,
+              contentPadding: EdgeInsets.zero,
+              leading: Icon(switch (j['status']) { 'done' => Icons.check_circle_outline, 'failed' => Icons.error_outline, _ => Icons.hourglass_top }),
+              title: Text('${j['count']} cards · ${(j['label'] ?? '').toString().isEmpty ? j['cert'] ?? '' : j['label']}'),
+              subtitle: Text(switch (j['status']) {
+                'done' => 'Added ${j['added']}${(j['skipped_duplicates'] ?? 0) > 0 ? ' · ${j['skipped_duplicates']} duplicates skipped' : ''}',
+                'failed' => 'Failed: ${j['error']}',
+                _ => 'Queued ${DateTime.fromMillisecondsSinceEpoch(j['created_at'] as int).toString().substring(11, 16)} · arrives on a later sync',
+              }),
+            ),
+        ]),
+      );
 }
 
 class InsightsTab extends StatefulWidget {
@@ -256,9 +310,14 @@ class _InsightsTabState extends State<InsightsTab> {
   }
 
   Future<void> _action(Map a) async {
-    final r = await busy(context, 'Generating ${a['count']} cards on ${a['topic']}…',
-        () => generateCards({'cert': a['cert'] ?? App.cert['id'], 'domain': a['domain'], 'topic': a['topic'], 'count': a['count'] ?? 15}));
-    if (r != null && mounted) toast(context, r.$1);
+    final body = {'cert': a['cert'] ?? App.cert['id'], 'domain': a['domain'], 'topic': a['topic'], 'count': a['count'] ?? 15};
+    String? msg;
+    if (backgroundGenerate) {
+      msg = await busy(context, 'Queuing ${a['count']} cards on ${a['topic']}…', () => queueCards(body));
+    } else {
+      msg = (await busy(context, 'Generating ${a['count']} cards on ${a['topic']}…', () => generateCards(body)))?.$1;
+    }
+    if (msg != null && mounted) toast(context, msg);
   }
 
   @override

@@ -391,3 +391,30 @@ bool lenientMatch(String input, Iterable<String> answers) {
     return x == b || (b.length > 4 && levenshtein(x, b) <= max(1, (b.length * .12).floor()));
   });
 }
+
+// ---- AI generation follow-ups (the app is the only writer of existing cards) ----
+
+/// Adds the cert/domain the AI suggested to existing cards, so they count for that cert and aren't re-taught.
+Future<int> applyRetags(List? retag) async {
+  var n = 0;
+  for (final r in (retag ?? []).cast<Map>()) {
+    final c = await Db.get(r['card_id']);
+    if (c == null) continue;
+    c['certs'] = {...((c['certs'] as Map?) ?? {}), r['cert']: r['domain']};
+    await Db.put('card', c);
+    n++;
+  }
+  return n;
+}
+
+/// Background (Batch API) generations the server finished: apply their retags once.
+Future<void> applyFinishedJobs() async {
+  for (final j in await Db.query('job')) {
+    if (j['status'] == 'done' && j['applied_at'] == null) {
+      await applyRetags(j['retag'] as List?);
+      await Db.put('job', j..['applied_at'] = nowMs());
+    }
+  }
+}
+
+Future<bool> hasQueuedJobs() async => (await Db.query('job')).any((j) => j['status'] == 'queued');

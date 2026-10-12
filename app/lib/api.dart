@@ -33,8 +33,9 @@ class Api {
     token = await _store.read(key: 'token');
     url = await _store.read(key: 'url') ?? defaultUrl;
     lastSync.value = await Db.meta('last_sync') ?? 'never';
-    _timer ??= Timer.periodic(const Duration(minutes: 10), (_) async {
-      if (await Db.dirtyCount() > 0) sync().ignore();
+    // Push local changes, and pull background generations as soon as they finish.
+    _timer ??= Timer.periodic(const Duration(minutes: 2), (_) async {
+      if (await Db.dirtyCount() > 0 || await hasQueuedJobs()) sync().ignore();
     });
   }
 
@@ -124,6 +125,7 @@ class Api {
       }
       await App.reload();
       await applyPendingOverrides();
+      await applyFinishedJobs();
       final stamp = DateTime.now().toString().substring(0, 16);
       await Db.setMeta('last_sync', stamp);
       lastSync.value = stamp;
