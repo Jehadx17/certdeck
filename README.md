@@ -99,3 +99,14 @@ Format: [docs/cards.schema.json](docs/cards.schema.json) (JSON Schema). Example:
 - Through the backend: Settings → Export from server / Import a file through the server, or directly:
   `curl -H "Authorization: Bearer $TOKEN" https://certdeck.mithaqstay.com/api/export > cards.json` and
   `curl -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json' --data @cards.json https://certdeck.mithaqstay.com/api/import`.
+
+## Verification (2026-10-12)
+- Backend: 11 Django tests; on the live server (HTTPS, Postgres) token auth, sync, import/export and every AI
+  endpoint with the real key: generate from cert/domain, pasted text, PDF and screenshot; dedupe; cross-cert retag;
+  CKAD exam-style; explain chat; fill; leech variants; weakness analysis with bounded overrides; optimizer threshold.
+- App: logic tests + an end-to-end sync/restore test (`test/sync_test.dart`). On real phones (OnePlus 12, HONOR
+  Magic8 Lite): fresh-install token restore, study session with confidence and misconceptions, every card type
+  (incl. drag-to-order, typed lenient matching, code highlighting, occlusion creation with drawn regions), search and
+  card history, in-app generation and one-tap actions, override revert, MCQ and CKAD exam simulations, import
+  from file, export via share sheet, AI chat, and offline mode (network blocked for the app): studying works, AI shows
+  "Needs connection", and offline reviews sync on reconnect.
