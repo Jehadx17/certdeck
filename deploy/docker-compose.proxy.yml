@@ -19,4 +19,6 @@ services:
     networks: [internal]
 
 networks:
-  proxy: {external: true, name: ${PROXY_NETWORK}}
+  proxy:
+    external: true
+    name: ${PROXY_NETWORK}
