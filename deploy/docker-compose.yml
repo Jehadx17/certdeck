@@ -1,0 +1,47 @@
+# CertDeck, fully isolated: own project name, network, Postgres, volumes.
+# The API is published only on 127.0.0.1:18765 (for ssh tunnels / health checks).
+# docker-compose.proxy.yml adds what the shared reverse proxy needs.
+name: certdeck
+services:
+  certdeck-db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes: [pgdata:/var/lib/postgresql/data]
+    networks: [internal]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      retries: 20
+
+  # Service names are deliberately unique: on a shared network Docker DNS answers to the
+  # service name, and the other project's nginx resolves "backend"/"db".
+  certdeck-api:
+    build: {context: .., dockerfile: deploy/Dockerfile}
+    image: certdeck-api:latest
+    restart: unless-stopped
+    env_file: ../../.env
+    environment: {POSTGRES_HOST: certdeck-db, CERTDECK_MEDIA_DIR: /data/media}
+    volumes: [media:/data/media]
+    depends_on: {certdeck-db: {condition: service_healthy}}
+    networks: [internal]
+    ports: ["127.0.0.1:18765:8000"]
+
+  # Weekly FSRS re-optimization from the review history.
+  certdeck-optimizer:
+    image: certdeck-api:latest
+    restart: unless-stopped
+    env_file: ../../.env
+    environment: {POSTGRES_HOST: certdeck-db}
+    depends_on: {certdeck-api: {condition: service_started}}
+    networks: [internal]
+    command: ["sh", "-c", "while :; do sleep 604800; python manage.py optimize_fsrs; done"]
+
+networks:
+  internal: {}
+volumes:
+  pgdata: {}
+  media: {}

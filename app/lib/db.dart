@@ -22,10 +22,11 @@ class Db {
   static late Database _db;
   static late String mediaDir;
 
-  static Future<void> open() async {
-    mediaDir = p.join((await getApplicationDocumentsDirectory()).path, 'media');
+  /// [dir] overrides the app directories (used by the sync integration test).
+  static Future<void> open({String? dir}) async {
+    mediaDir = p.join(dir ?? (await getApplicationDocumentsDirectory()).path, 'media');
     await Directory(mediaDir).create(recursive: true);
-    _db = await openDatabase(p.join(await getDatabasesPath(), 'certdeck.db'), version: 1, onCreate: (db, _) async {
+    _db = await openDatabase(p.join(dir ?? await getDatabasesPath(), 'certdeck.db'), version: 1, onCreate: (db, _) async {
       await db.execute('''CREATE TABLE docs(id TEXT PRIMARY KEY, kind TEXT NOT NULL, data TEXT NOT NULL,
         updated_at INTEGER NOT NULL, deleted INTEGER NOT NULL DEFAULT 0, dirty INTEGER NOT NULL DEFAULT 0,
         due INTEGER, certs TEXT, card_id TEXT, ts INTEGER)''');
@@ -40,10 +41,16 @@ class Db {
   static List<Object?> _cols(String kind, Json d, int updatedAt, bool deleted, bool dirty) {
     final f = d['fsrs'];
     return [
-      d['id'], kind, jsonEncode(d), updatedAt, deleted ? 1 : 0, dirty ? 1 : 0,
+      d['id'],
+      kind,
+      jsonEncode(d),
+      updatedAt,
+      deleted ? 1 : 0,
+      dirty ? 1 : 0,
       kind == 'card' && f is Map ? f['due'] : null,
       kind == 'card' ? ',${((d['certs'] as Map?) ?? {}).keys.join(',')},' : null,
-      d['card_id'], d['ts'],
+      d['card_id'],
+      d['ts'],
     ];
   }
 
@@ -119,8 +126,7 @@ class Db {
   static Future<List<Json>> cardsFor(String cert) => query('card', where: 'certs LIKE ?', args: ['%,$cert,%']);
   static Future<List<Json>> reviewsFor(String cardId) => query('review', where: 'card_id = ?', args: [cardId], orderBy: 'ts DESC');
   static Future<List<Json>> reviewsSince(int ts) => query('review', where: 'ts >= ?', args: [ts]);
-  static Future<int> dirtyCount() async =>
-      Sqflite.firstIntValue(await _db.rawQuery('SELECT COUNT(*) FROM docs WHERE dirty = 1')) ?? 0;
+  static Future<int> dirtyCount() async => Sqflite.firstIntValue(await _db.rawQuery('SELECT COUNT(*) FROM docs WHERE dirty = 1')) ?? 0;
 
   static Future<String?> meta(String key) async {
     final r = await _db.query('meta', where: 'key = ?', whereArgs: [key]);
@@ -141,8 +147,7 @@ class Db {
     return name;
   }
 
-  static Future<List<String>> pendingMedia() async =>
-      (await _db.query('media', where: 'uploaded = 0')).map((r) => r['name'] as String).toList();
+  static Future<List<String>> pendingMedia() async => (await _db.query('media', where: 'uploaded = 0')).map((r) => r['name'] as String).toList();
 
   static Future<void> markMediaUploaded(String name) => _db.update('media', {'uploaded': 1}, where: 'name = ?', whereArgs: [name]);
 }

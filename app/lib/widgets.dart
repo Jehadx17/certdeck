@@ -14,14 +14,20 @@ import 'db.dart';
 import 'logic.dart';
 
 const typeLabels = {
-  'basic': 'Basic', 'mcq': 'Multiple choice', 'cloze': 'Cloze', 'typed': 'Typed answer',
-  'code': 'Code / YAML', 'occlusion': 'Image occlusion', 'ordering': 'Ordering',
+  'basic': 'Basic',
+  'mcq': 'Multiple choice',
+  'cloze': 'Cloze',
+  'typed': 'Typed answer',
+  'code': 'Code / YAML',
+  'occlusion': 'Image occlusion',
+  'ordering': 'Ordering',
 };
 
 void openUrl(String url) => launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
 
-void toast(BuildContext context, String msg) =>
-    ScaffoldMessenger.of(context)..hideCurrentSnackBar()..showSnackBar(SnackBar(content: Text(msg)));
+void toast(BuildContext context, String msg) => ScaffoldMessenger.of(context)
+  ..hideCurrentSnackBar()
+  ..showSnackBar(SnackBar(content: Text(msg)));
 
 class CodeView extends StatelessWidget {
   final String code;
@@ -37,8 +43,11 @@ class CodeView extends StatelessWidget {
       decoration: BoxDecoration(color: const Color(0xff282c34), borderRadius: BorderRadius.circular(8)),
       child: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
-        child: HighlightView(code.trimRight(), language: lang, theme: atomOneDarkTheme,
-            padding: const EdgeInsets.all(12), textStyle: const TextStyle(fontFamily: 'monospace', fontSize: 13, height: 1.35)),
+        child: HighlightView(code.trimRight(),
+            language: lang,
+            theme: atomOneDarkTheme,
+            padding: const EdgeInsets.all(12),
+            textStyle: const TextStyle(fontFamily: 'monospace', fontSize: 13, height: 1.35)),
       ),
     );
   }
@@ -80,8 +89,8 @@ class MediaImage extends StatelessWidget {
   const MediaImage(this.name, {super.key});
   @override
   Widget build(BuildContext context) => Image.file(Db.mediaFile(name),
-      errorBuilder: (_, __, ___) => Container(
-          padding: const EdgeInsets.all(16), color: Colors.white10, child: const Text('Image not downloaded yet (sync to fetch it)')));
+      errorBuilder: (_, __, ___) =>
+          Container(padding: const EdgeInsets.all(16), color: Colors.white10, child: const Text('Image not downloaded yet (sync to fetch it)')));
 }
 
 Widget images(List? names) => Column(children: [
@@ -120,21 +129,37 @@ class MaskPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     for (var i = 0; i < masks.length; i++) {
       final m = masks[i];
-      final r = Rect.fromLTWH((m['x'] as num) * size.width, (m['y'] as num) * size.height, (m['w'] as num) * size.width, (m['h'] as num) * size.height);
+      final r =
+          Rect.fromLTWH((m['x'] as num) * size.width, (m['y'] as num) * size.height, (m['w'] as num) * size.width, (m['h'] as num) * size.height);
       final tested = target == null || target == i;
       if (revealed && tested) {
-        canvas.drawRect(r, Paint()..color = accent..style = PaintingStyle.stroke..strokeWidth = 3);
+        canvas.drawRect(
+            r,
+            Paint()
+              ..color = accent
+              ..style = PaintingStyle.stroke
+              ..strokeWidth = 3);
         final label = m['label']?.toString() ?? '';
         if (label.isNotEmpty) {
           final tp = TextPainter(
-              text: TextSpan(text: label, style: const TextStyle(color: Colors.white, fontSize: 13, fontWeight: FontWeight.bold, backgroundColor: Color(0xcc000000))),
-              textDirection: TextDirection.ltr, maxLines: 2, ellipsis: '…')
+              text: TextSpan(
+                  text: label,
+                  style: const TextStyle(color: Colors.white, fontSize: 13, fontWeight: FontWeight.bold, backgroundColor: Color(0xcc000000))),
+              textDirection: TextDirection.ltr,
+              maxLines: 2,
+              ellipsis: '…')
             ..layout(maxWidth: max(40, r.width));
           tp.paint(canvas, r.center - Offset(tp.width / 2, tp.height / 2));
         }
       } else {
         canvas.drawRect(r, Paint()..color = tested && target != null ? accent : const Color(0xffb0b0b8));
-        if (selected == i) canvas.drawRect(r, Paint()..color = Colors.red..style = PaintingStyle.stroke..strokeWidth = 3);
+        if (selected == i)
+          canvas.drawRect(
+              r,
+              Paint()
+                ..color = Colors.red
+                ..style = PaintingStyle.stroke
+                ..strokeWidth = 3);
       }
     }
   }
@@ -227,7 +252,9 @@ class _CardViewState extends State<CardView> {
     return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
       if (s.type == 'cloze') Md(revealed ? clozeBack(question) : clozeFront(question)) else Md(question),
       if (s.type == 'mcq' && s.correctSet.length > 1)
-        Padding(padding: const EdgeInsets.only(top: 4), child: Text('Choose ${s.correctSet.length}', style: TextStyle(color: cs.primary, fontWeight: FontWeight.bold))),
+        Padding(
+            padding: const EdgeInsets.only(top: 4),
+            child: Text('Choose ${s.correctSet.length}', style: TextStyle(color: cs.primary, fontWeight: FontWeight.bold))),
       if (s.type == 'code' && (c['code'] ?? '').toString().isNotEmpty) CodeView(c['code'], language: c['language']),
       images(c['question_images']),
       if (s.type == 'occlusion') OcclusionView(c, revealed: revealed),
@@ -254,7 +281,8 @@ class _CardViewState extends State<CardView> {
           if (!widget.revealed && chosen) border = cs.primary;
           return Card(
             margin: const EdgeInsets.symmetric(vertical: 4),
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10), side: BorderSide(color: border ?? Colors.white12, width: border == null ? 1 : 2)),
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10), side: BorderSide(color: border ?? Colors.white12, width: border == null ? 1 : 2)),
             child: InkWell(
               borderRadius: BorderRadius.circular(10),
               onTap: widget.revealed
@@ -276,8 +304,11 @@ class _CardViewState extends State<CardView> {
                     Icon(
                         widget.revealed
                             ? (right ? Icons.check_circle : (chosen ? Icons.cancel : Icons.circle_outlined))
-                            : (multi ? (chosen ? Icons.check_box : Icons.check_box_outline_blank) : (chosen ? Icons.radio_button_checked : Icons.radio_button_off)),
-                        color: border ?? Colors.white54, size: 22),
+                            : (multi
+                                ? (chosen ? Icons.check_box : Icons.check_box_outline_blank)
+                                : (chosen ? Icons.radio_button_checked : Icons.radio_button_off)),
+                        color: border ?? Colors.white54,
+                        size: 22),
                     const SizedBox(width: 10),
                     Expanded(child: Md(options[i])),
                   ]),
@@ -294,7 +325,9 @@ class _CardViewState extends State<CardView> {
       if (widget.revealed && widget.showExplanation)
         for (final i in s.optionOrder)
           if (!s.selected.contains(i) && !s.correctSet.contains(i) && i < expl.length && expl[i].isNotEmpty)
-            Padding(padding: const EdgeInsets.only(left: 8, top: 2), child: Md('• *${options[i]}*: ${expl[i]}', style: const TextStyle(color: Colors.white54, fontSize: 13))),
+            Padding(
+                padding: const EdgeInsets.only(left: 8, top: 2),
+                child: Md('• *${options[i]}*: ${expl[i]}', style: const TextStyle(color: Colors.white54, fontSize: 13))),
     ];
   }
 
@@ -349,7 +382,9 @@ class _CardViewState extends State<CardView> {
         child: Row(children: [
           Icon(Icons.warning_amber, color: cs.onErrorContainer),
           const SizedBox(width: 8),
-          Expanded(child: Text('Misconception: you were sure, but wrong. Read this carefully; the card will come back soon.', style: TextStyle(color: cs.onErrorContainer))),
+          Expanded(
+              child: Text('Misconception: you were sure, but wrong. Read this carefully; the card will come back soon.',
+                  style: TextStyle(color: cs.onErrorContainer))),
         ]),
       ));
     }
@@ -440,6 +475,42 @@ class OnlineBanner extends StatelessWidget {
               width: double.infinity,
               color: Colors.orange.withOpacity(.2),
               padding: const EdgeInsets.all(6),
-              child: const Text('Offline: studying works, AI features need a connection', textAlign: TextAlign.center, style: TextStyle(fontSize: 12)))
+              child:
+                  const Text('Offline: studying works, AI features need a connection', textAlign: TextAlign.center, style: TextStyle(fontSize: 12)))
           : const SizedBox.shrink());
+}
+
+/// Re-runs [load] when local data changes, but only while this route is on top, so screens
+/// underneath a study session don't re-query on every answer. Keeps showing the last result while reloading.
+class Live<T> extends StatefulWidget {
+  final Future<T> Function() load;
+  final Widget Function(BuildContext context, T data) builder;
+  const Live({super.key, required this.load, required this.builder});
+  @override
+  State<Live<T>> createState() => _LiveState<T>();
+}
+
+class _LiveState<T> extends State<Live<T>> {
+  Future<T>? future;
+  int seen = -1;
+
+  @override
+  Widget build(BuildContext context) {
+    final current = ModalRoute.of(context)?.isCurrent ?? true;
+    return ValueListenableBuilder<int>(
+      valueListenable: changes,
+      builder: (context, v, _) {
+        if ((current || future == null) && v != seen) {
+          seen = v;
+          future = widget.load();
+        }
+        return FutureBuilder<T>(
+          future: future,
+          builder: (context, snap) => snap.hasData
+              ? widget.builder(context, snap.data as T)
+              : Center(child: snap.hasError ? Text('${snap.error}') : const CircularProgressIndicator()),
+        );
+      },
+    );
+  }
 }

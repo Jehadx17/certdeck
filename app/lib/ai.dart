@@ -24,7 +24,10 @@ Future<(String, List<Json>)> generateCards(Json body) async {
     retagged++;
   }
   final dup = res['skipped_duplicates'] ?? 0;
-  return ('Added ${cards.length} cards${retagged > 0 ? ', tagged $retagged existing cards for this cert' : ''}${dup > 0 ? ', skipped $dup duplicates' : ''}', cards);
+  return (
+    'Added ${cards.length} cards${retagged > 0 ? ', tagged $retagged existing cards for this cert' : ''}${dup > 0 ? ', skipped $dup duplicates' : ''}',
+    cards
+  );
 }
 
 class AiScreen extends StatelessWidget {
@@ -34,7 +37,10 @@ class AiScreen extends StatelessWidget {
         length: 2,
         child: Scaffold(
           appBar: AppBar(title: const Text('AI'), bottom: const TabBar(tabs: [Tab(text: 'Generate cards'), Tab(text: 'Weak areas')])),
-          body: const Column(children: [OnlineBanner(), Expanded(child: TabBarView(children: [GenerateTab(), InsightsTab()]))]),
+          body: const Column(children: [
+            OnlineBanner(),
+            Expanded(child: TabBarView(children: [GenerateTab(), InsightsTab()]))
+          ]),
         ),
       );
 }
@@ -89,7 +95,9 @@ class _GenerateTabState extends State<GenerateTab> with AutomaticKeepAliveClient
       if (domain != null) 'domain': domain,
       if (topic.text.trim().isNotEmpty) 'topic': topic.text.trim(),
       if (text.text.trim().isNotEmpty) 'text': text.text.trim(),
-      'files': [for (final f in files) {'name': f.name, 'media_type': _mime(f.name), 'data': base64Encode(f.bytes!)}],
+      'files': [
+        for (final f in files) {'name': f.name, 'media_type': _mime(f.name), 'data': base64Encode(f.bytes!)}
+      ],
       'count': int.tryParse(count.text) ?? 20,
       if (types.isNotEmpty) 'types': types.toList(),
       'exam_style': examStyle,
@@ -129,7 +137,10 @@ class _GenerateTabState extends State<GenerateTab> with AutomaticKeepAliveClient
         const SizedBox(width: 8),
         SizedBox(
             width: 90,
-            child: TextField(controller: count, keyboardType: TextInputType.number, decoration: const InputDecoration(labelText: 'Count', border: OutlineInputBorder()))),
+            child: TextField(
+                controller: count,
+                keyboardType: TextInputType.number,
+                decoration: const InputDecoration(labelText: 'Count', border: OutlineInputBorder()))),
       ]),
       const SizedBox(height: 10),
       DropdownButtonFormField<String?>(
@@ -138,12 +149,14 @@ class _GenerateTabState extends State<GenerateTab> with AutomaticKeepAliveClient
         decoration: const InputDecoration(labelText: 'Domain', border: OutlineInputBorder()),
         items: [
           const DropdownMenuItem(value: null, child: Text('Any / let the AI decide')),
-          for (final d in certJ['domains'] as List) DropdownMenuItem(value: d['id'] as String, child: Text('${d['id']}. ${d['name']}', overflow: TextOverflow.ellipsis)),
+          for (final d in certJ['domains'] as List)
+            DropdownMenuItem(value: d['id'] as String, child: Text('${d['id']}. ${d['name']}', overflow: TextOverflow.ellipsis)),
         ],
         onChanged: (v) => setState(() => domain = v),
       ),
       const SizedBox(height: 10),
-      TextField(controller: topic, decoration: const InputDecoration(labelText: 'Topic (optional), e.g. DynamoDB GSIs', border: OutlineInputBorder())),
+      TextField(
+          controller: topic, decoration: const InputDecoration(labelText: 'Topic (optional), e.g. DynamoDB GSIs', border: OutlineInputBorder())),
       const SizedBox(height: 10),
       TextField(
           controller: text,
@@ -160,7 +173,8 @@ class _GenerateTabState extends State<GenerateTab> with AutomaticKeepAliveClient
       Wrap(spacing: 6, children: [
         for (final e in typeLabels.entries)
           if (e.key != 'occlusion')
-            FilterChip(label: Text(e.value), selected: types.contains(e.key), onSelected: (v) => setState(() => v ? types.add(e.key) : types.remove(e.key))),
+            FilterChip(
+                label: Text(e.value), selected: types.contains(e.key), onSelected: (v) => setState(() => v ? types.add(e.key) : types.remove(e.key))),
       ]),
       SwitchListTile(
           contentPadding: EdgeInsets.zero,
@@ -226,67 +240,67 @@ class _InsightsTabState extends State<InsightsTab> {
   Widget build(BuildContext context) {
     final cs = Theme.of(context).colorScheme;
     final cert = App.cert;
-    return ValueListenableBuilder(
-      valueListenable: changes,
-      builder: (_, __, ___) => FutureBuilder(
-        future: _load(),
-        builder: (context, snap) {
-          final (a, overrides) = snap.data ?? (null, <Json>[]);
-          return ListView(padding: const EdgeInsets.all(16), children: [
-            FilledButton.icon(onPressed: _run, icon: const Icon(Icons.insights), label: Text('Analyze weak areas (${cert['code']})')),
-            if (error != null) NeedsConnection(error!, onRetry: _run),
-            if (a == null)
-              const Padding(padding: EdgeInsets.all(24), child: Text('No analysis yet. Study a bit, then run one.', textAlign: TextAlign.center))
-            else ...[
-              const SizedBox(height: 8),
-              Text('From ${DateTime.fromMillisecondsSinceEpoch(a['created_at'] as int).toString().substring(0, 16)}',
-                  style: const TextStyle(color: Colors.white54, fontSize: 12)),
-              const SizedBox(height: 8),
-              Md(a['summary'] ?? ''),
-              const SizedBox(height: 12),
-              Text('Weak areas', style: TextStyle(color: cs.primary, fontWeight: FontWeight.bold)),
-              for (final w in ((a['weak_areas'] as List?) ?? []).cast<Map>())
-                Card(
-                    child: ListTile(
-                  leading: CircleAvatar(child: Text('${w['rank']}')),
-                  title: Text('${w['topic']}'),
-                  subtitle: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                    Text(domainName(cert, '${w['domain']}'), style: TextStyle(color: cs.primary, fontSize: 12)),
-                    Md('${w['diagnosis']}', style: const TextStyle(fontSize: 14)),
-                  ]),
-                )),
-              const SizedBox(height: 8),
-              Text('Do this', style: TextStyle(color: cs.primary, fontWeight: FontWeight.bold)),
-              for (final act in ((a['actions'] as List?) ?? []).cast<Map>())
+    return Live(
+      load: _load,
+      builder: (context, data) {
+        final (a, overrides) = data;
+        return ListView(padding: const EdgeInsets.all(16), children: [
+          FilledButton.icon(onPressed: _run, icon: const Icon(Icons.insights), label: Text('Analyze weak areas (${cert['code']})')),
+          if (error != null) NeedsConnection(error!, onRetry: _run),
+          if (a == null)
+            const Padding(padding: EdgeInsets.all(24), child: Text('No analysis yet. Study a bit, then run one.', textAlign: TextAlign.center))
+          else ...[
+            const SizedBox(height: 8),
+            Text('From ${DateTime.fromMillisecondsSinceEpoch(a['created_at'] as int).toString().substring(0, 16)}',
+                style: const TextStyle(color: Colors.white54, fontSize: 12)),
+            const SizedBox(height: 8),
+            Md(a['summary'] ?? ''),
+            const SizedBox(height: 12),
+            Text('Weak areas', style: TextStyle(color: cs.primary, fontWeight: FontWeight.bold)),
+            for (final w in ((a['weak_areas'] as List?) ?? []).cast<Map>())
+              Card(
+                  child: ListTile(
+                leading: CircleAvatar(child: Text('${w['rank']}')),
+                title: Text('${w['topic']}'),
+                subtitle: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                  Text(domainName(cert, '${w['domain']}'), style: TextStyle(color: cs.primary, fontSize: 12)),
+                  Md('${w['diagnosis']}', style: const TextStyle(fontSize: 14)),
+                ]),
+              )),
+            const SizedBox(height: 8),
+            Text('Do this', style: TextStyle(color: cs.primary, fontWeight: FontWeight.bold)),
+            for (final act in ((a['actions'] as List?) ?? []).cast<Map>())
+              ListTile(
+                leading: const Icon(Icons.auto_awesome),
+                title: Text('${act['label']}'),
+                trailing: const Icon(Icons.play_arrow),
+                onTap: () => _action(act),
+              ),
+            Text('Watch', style: TextStyle(color: cs.primary, fontWeight: FontWeight.bold)),
+            for (final v in ((a['videos'] as List?) ?? []).cast<Map>())
+              ListTile(
+                  leading: const Icon(Icons.smart_display_outlined, color: Colors.redAccent),
+                  title: Text('${v['title']}'),
+                  onTap: () => openUrl(v['url'])),
+            if (overrides.isNotEmpty) ...[
+              Text('Scheduling overrides', style: TextStyle(color: cs.primary, fontWeight: FontWeight.bold)),
+              for (final o in overrides)
                 ListTile(
-                  leading: const Icon(Icons.auto_awesome),
-                  title: Text('${act['label']}'),
-                  trailing: const Icon(Icons.play_arrow),
-                  onTap: () => _action(act),
+                  leading: const Icon(Icons.event_repeat),
+                  title: Text('${(o['card_ids'] as List).length} cards: ${[
+                    if (o['due_now'] == true) 'review now',
+                    if (o['due_shift_days'] != null) 'shift ${o['due_shift_days']}d',
+                    if (o['priority'] != null) 'priority ${o['priority']}',
+                  ].join(', ')}'),
+                  subtitle: Text('${o['reason']}${o['reverted_at'] != null ? '\n(reverted)' : ''}'),
+                  trailing: o['applied_at'] != null && o['reverted_at'] == null
+                      ? TextButton(onPressed: () => revertOverride(o), child: const Text('Revert'))
+                      : null,
                 ),
-              Text('Watch', style: TextStyle(color: cs.primary, fontWeight: FontWeight.bold)),
-              for (final v in ((a['videos'] as List?) ?? []).cast<Map>())
-                ListTile(leading: const Icon(Icons.smart_display_outlined, color: Colors.redAccent), title: Text('${v['title']}'), onTap: () => openUrl(v['url'])),
-              if (overrides.isNotEmpty) ...[
-                Text('Scheduling overrides', style: TextStyle(color: cs.primary, fontWeight: FontWeight.bold)),
-                for (final o in overrides)
-                  ListTile(
-                    leading: const Icon(Icons.event_repeat),
-                    title: Text('${(o['card_ids'] as List).length} cards: ${[
-                      if (o['due_now'] == true) 'review now',
-                      if (o['due_shift_days'] != null) 'shift ${o['due_shift_days']}d',
-                      if (o['priority'] != null) 'priority ${o['priority']}',
-                    ].join(', ')}'),
-                    subtitle: Text('${o['reason']}${o['reverted_at'] != null ? '\n(reverted)' : ''}'),
-                    trailing: o['applied_at'] != null && o['reverted_at'] == null
-                        ? TextButton(onPressed: () => revertOverride(o), child: const Text('Revert'))
-                        : null,
-                  ),
-              ],
             ],
-          ]);
-        },
-      ),
+          ],
+        ]);
+      },
     );
   }
 }
@@ -316,7 +330,10 @@ class _ChatScreenState extends State<ChatScreen> {
   Future<void> _send([String? preset]) async {
     final text = (preset ?? input.text).trim();
     if (text.isEmpty || sending) return;
-    final next = [...messages, {'role': 'user', 'text': text, 'ts': nowMs()}];
+    final next = [
+      ...messages,
+      {'role': 'user', 'text': text, 'ts': nowMs()}
+    ];
     setState(() {
       messages = next;
       sending = true;
@@ -325,8 +342,16 @@ class _ChatScreenState extends State<ChatScreen> {
     input.clear();
     try {
       final card = Map<String, dynamic>.from(widget.card)..remove('fsrs');
-      final res = await Api.ai('ai/explain', {'card': card, 'messages': [for (final m in next) {'role': m['role'], 'text': m['text']}]});
-      messages = [...next, {'role': 'assistant', 'text': res['reply'], 'ts': nowMs()}];
+      final res = await Api.ai('ai/explain', {
+        'card': card,
+        'messages': [
+          for (final m in next) {'role': m['role'], 'text': m['text']}
+        ]
+      });
+      messages = [
+        ...next,
+        {'role': 'assistant', 'text': res['reply'], 'ts': nowMs()}
+      ];
       await Db.put('chat', {'id': widget.card['id'], 'card_id': widget.card['id'], 'messages': messages});
     } on ApiError catch (e) {
       messages = messages.sublist(0, messages.length - 1);
@@ -349,7 +374,12 @@ class _ChatScreenState extends State<ChatScreen> {
               Card(child: Padding(padding: const EdgeInsets.all(12), child: Md(clozeBack(widget.card['question'] ?? '')))),
               if (messages.isEmpty)
                 Wrap(spacing: 6, children: [
-                  for (final q in ['Explain this to me in depth', 'Give me an analogy', 'What are the common traps here?', 'How would the exam test this?'])
+                  for (final q in [
+                    'Explain this to me in depth',
+                    'Give me an analogy',
+                    'What are the common traps here?',
+                    'How would the exam test this?'
+                  ])
                     ActionChip(label: Text(q), onPressed: () => _send(q)),
                 ]),
               for (final m in messages)

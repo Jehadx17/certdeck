@@ -19,7 +19,10 @@ Future<List<Json>> pickExamCards(Json cert, int n, Set<String> domains) async {
   final preferred = perf ? {'typed', 'code'} : {'mcq'};
   final fallback = perf ? {'mcq', 'ordering'} : {'typed', 'ordering'};
   final pool = (await Db.cardsFor(cert['id'])).where((c) => !isSuspended(c) && domains.contains(domainOf(c, cert))).toList()..shuffle();
-  final weights = {for (final d in cert['domains'] as List) if (domains.contains(d['id'])) d['id'] as String: (d['weight'] as num).toDouble()};
+  final weights = {
+    for (final d in cert['domains'] as List)
+      if (domains.contains(d['id'])) d['id'] as String: (d['weight'] as num).toDouble()
+  };
   final total = weights.values.fold(0.0, (a, b) => a + b);
   final quota = {for (final e in weights.entries) e.key: (n * e.value / total).floor()};
   final rest = (weights.keys.toList()..sort((a, b) => ((n * weights[b]! / total) % 1).compareTo((n * weights[a]! / total) % 1)));
@@ -61,7 +64,9 @@ class _ExamScreenState extends State<ExamScreen> {
       final r = await busy(context, 'Generating $freshN fresh exam questions…', () async {
         await Api.sync();
         return generateCards({
-          'cert': cert['id'], 'count': freshN, 'exam_style': true,
+          'cert': cert['id'],
+          'count': freshN,
+          'exam_style': true,
           'types': _performance(cert) ? ['typed', 'code'] : ['mcq'],
           if (domains.length < (cert['domains'] as List).length) 'topic': 'Only these domains: ${domains.map((d) => domainName(cert, d)).join(', ')}',
         });
@@ -100,11 +105,23 @@ class _ExamScreenState extends State<ExamScreen> {
             style: const TextStyle(color: Colors.white70)),
         const SizedBox(height: 12),
         Row(children: [
-          Expanded(child: TextField(controller: count, keyboardType: TextInputType.number, decoration: const InputDecoration(labelText: 'Questions', border: OutlineInputBorder()))),
+          Expanded(
+              child: TextField(
+                  controller: count,
+                  keyboardType: TextInputType.number,
+                  decoration: const InputDecoration(labelText: 'Questions', border: OutlineInputBorder()))),
           const SizedBox(width: 8),
-          Expanded(child: TextField(controller: minutes, keyboardType: TextInputType.number, decoration: const InputDecoration(labelText: 'Minutes', border: OutlineInputBorder()))),
+          Expanded(
+              child: TextField(
+                  controller: minutes,
+                  keyboardType: TextInputType.number,
+                  decoration: const InputDecoration(labelText: 'Minutes', border: OutlineInputBorder()))),
           const SizedBox(width: 8),
-          Expanded(child: TextField(controller: fresh, keyboardType: TextInputType.number, decoration: const InputDecoration(labelText: 'Fresh AI Qs', border: OutlineInputBorder()))),
+          Expanded(
+              child: TextField(
+                  controller: fresh,
+                  keyboardType: TextInputType.number,
+                  decoration: const InputDecoration(labelText: 'Fresh AI Qs', border: OutlineInputBorder()))),
         ]),
         const SizedBox(height: 8),
         for (final d in cert['domains'] as List)
@@ -119,44 +136,43 @@ class _ExamScreenState extends State<ExamScreen> {
         FilledButton.icon(onPressed: domains.isEmpty ? null : _start, icon: const Icon(Icons.timer_outlined), label: const Text('Start exam')),
         const SizedBox(height: 24),
         Text('Past simulations', style: TextStyle(color: cs.primary, fontWeight: FontWeight.bold)),
-        ValueListenableBuilder(
-          valueListenable: changes,
-          builder: (_, __, ___) => FutureBuilder(
-            future: Db.query('exam'),
-            builder: (_, snap) {
-              final list = (snap.data ?? []).where((e) => e['cert'] == cert['id']).toList()
-                ..sort((a, b) => (b['started_at'] as int).compareTo(a['started_at'] as int));
-              if (list.isEmpty) return const Padding(padding: EdgeInsets.all(8), child: Text('None yet', style: TextStyle(color: Colors.white54)));
-              return Column(children: [
-                for (final e in list)
-                  ListTile(
-                    leading: Icon(e['passed'] == true ? Icons.emoji_events : Icons.trending_up, color: e['passed'] == true ? Colors.amber : null),
-                    title: Text('${(100 * (e['score_pct'] as num)).round()}%${e['scaled'] != null ? ' · ${e['scaled']}/1000' : ''}'),
-                    subtitle: Text('${DateTime.fromMillisecondsSinceEpoch(e['started_at']).toString().substring(0, 16)} · ${(e['questions'] as List).length} Qs'),
-                    onTap: () async {
-                      final states = <AnswerState>[];
-                      final flagged = <int>{};
-                      for (final q in (e['questions'] as List).cast<Map>()) {
-                        final c = await Db.get(q['card_id']);
-                        if (c == null) continue;
-                        final s = AnswerState(c);
-                        final a = q['answer'];
-                        if (a is List && c['type'] == 'mcq') s.selected.addAll(a.cast<int>());
-                        if (a is List && c['type'] == 'ordering') s.order = a.cast<String>();
-                        if (a is String) s.typed = a;
-                        if (a is bool) s.selfGrade = a;
-                        s.overrideCorrect = q['correct'] == true;
-                        if (q['flagged'] == true) flagged.add(states.length);
-                        states.add(s);
-                      }
-                      if (context.mounted) {
-                        Navigator.push(context, MaterialPageRoute(builder: (_) => ExamResults(cert, states, flagged, e['started_at'], e['minutes'], saved: true)));
-                      }
-                    },
-                  ),
-              ]);
-            },
-          ),
+        Live(
+          load: () => Db.query('exam'),
+          builder: (_, exams) {
+            final list = exams.where((e) => e['cert'] == cert['id']).toList()
+              ..sort((a, b) => (b['started_at'] as int).compareTo(a['started_at'] as int));
+            if (list.isEmpty) return const Padding(padding: EdgeInsets.all(8), child: Text('None yet', style: TextStyle(color: Colors.white54)));
+            return Column(children: [
+              for (final e in list)
+                ListTile(
+                  leading: Icon(e['passed'] == true ? Icons.emoji_events : Icons.trending_up, color: e['passed'] == true ? Colors.amber : null),
+                  title: Text('${(100 * (e['score_pct'] as num)).round()}%${e['scaled'] != null ? ' · ${e['scaled']}/1000' : ''}'),
+                  subtitle: Text(
+                      '${DateTime.fromMillisecondsSinceEpoch(e['started_at']).toString().substring(0, 16)} · ${(e['questions'] as List).length} Qs'),
+                  onTap: () async {
+                    final states = <AnswerState>[];
+                    final flagged = <int>{};
+                    for (final q in (e['questions'] as List).cast<Map>()) {
+                      final c = await Db.get(q['card_id']);
+                      if (c == null) continue;
+                      final s = AnswerState(c);
+                      final a = q['answer'];
+                      if (a is List && c['type'] == 'mcq') s.selected.addAll(a.cast<int>());
+                      if (a is List && c['type'] == 'ordering') s.order = a.cast<String>();
+                      if (a is String) s.typed = a;
+                      if (a is bool) s.selfGrade = a;
+                      s.overrideCorrect = q['correct'] == true;
+                      if (q['flagged'] == true) flagged.add(states.length);
+                      states.add(s);
+                    }
+                    if (context.mounted) {
+                      Navigator.push(
+                          context, MaterialPageRoute(builder: (_) => ExamResults(cert, states, flagged, e['started_at'], e['minutes'], saved: true)));
+                    }
+                  },
+                ),
+            ]);
+          },
         ),
       ]),
     );
@@ -226,7 +242,8 @@ class _ExamRunState extends State<ExamRun> {
   Widget build(BuildContext context) {
     final cs = Theme.of(context).colorScheme;
     final left = Duration(milliseconds: max(0, endsAt - nowMs()));
-    final clock = '${left.inHours > 0 ? '${left.inHours}:' : ''}${(left.inMinutes % 60).toString().padLeft(2, '0')}:${(left.inSeconds % 60).toString().padLeft(2, '0')}';
+    final clock =
+        '${left.inHours > 0 ? '${left.inHours}:' : ''}${(left.inMinutes % 60).toString().padLeft(2, '0')}:${(left.inSeconds % 60).toString().padLeft(2, '0')}';
     final s = states[i];
     return PopScope(
       canPop: false,
@@ -238,7 +255,9 @@ class _ExamRunState extends State<ExamRun> {
           automaticallyImplyLeading: false,
           title: Text(reviewing ? 'Review answers' : 'Question ${i + 1} / ${states.length}'),
           actions: [
-            Center(child: Text(clock, style: TextStyle(fontFeatures: const [FontFeature.tabularFigures()], color: left.inMinutes < 5 ? cs.error : null))),
+            Center(
+                child:
+                    Text(clock, style: TextStyle(fontFeatures: const [FontFeature.tabularFigures()], color: left.inMinutes < 5 ? cs.error : null))),
             if (!reviewing)
               IconButton(
                   tooltip: 'Flag for review',
@@ -247,22 +266,27 @@ class _ExamRunState extends State<ExamRun> {
             IconButton(icon: Icon(reviewing ? Icons.close : Icons.grid_view), onPressed: () => setState(() => reviewing = !reviewing)),
           ],
         ),
-        body: reviewing ? _review(cs) : ListView(key: ValueKey(i), padding: const EdgeInsets.all(16), children: [
-          CardView(s, key: ObjectKey(s), onChanged: () => setState(() {})),
-          if (!s.autoGraded && s.type != 'mcq')
-            Padding(
-              padding: const EdgeInsets.only(top: 12),
-              child: TextFormField(
-                initialValue: s.typed,
-                minLines: s.type == 'code' ? 8 : 2,
-                maxLines: 30,
-                style: const TextStyle(fontFamily: 'monospace', fontSize: 13),
-                decoration: InputDecoration(labelText: s.type == 'code' ? 'Your YAML / commands' : 'Your answer', border: const OutlineInputBorder(), alignLabelWithHint: true),
-                onChanged: (v) => s.typed = v,
-              ),
-            ),
-          const SizedBox(height: 80),
-        ]),
+        body: reviewing
+            ? _review(cs)
+            : ListView(key: ValueKey(i), padding: const EdgeInsets.all(16), children: [
+                CardView(s, key: ObjectKey(s), onChanged: () => setState(() {})),
+                if (!s.autoGraded && s.type != 'mcq')
+                  Padding(
+                    padding: const EdgeInsets.only(top: 12),
+                    child: TextFormField(
+                      initialValue: s.typed,
+                      minLines: s.type == 'code' ? 8 : 2,
+                      maxLines: 30,
+                      style: const TextStyle(fontFamily: 'monospace', fontSize: 13),
+                      decoration: InputDecoration(
+                          labelText: s.type == 'code' ? 'Your YAML / commands' : 'Your answer',
+                          border: const OutlineInputBorder(),
+                          alignLabelWithHint: true),
+                      onChanged: (v) => s.typed = v,
+                    ),
+                  ),
+                const SizedBox(height: 80),
+              ]),
         bottomNavigationBar: SafeArea(
           child: Padding(
             padding: const EdgeInsets.all(8),
@@ -348,12 +372,25 @@ class _ExamResultsState extends State<ExamResults> {
     for (final (i, s) in widget.states.indexed) {
       final answered = switch (s.type) { 'mcq' => s.selected.isNotEmpty, 'ordering' => true, _ => s.typed.trim().isNotEmpty || s.selfGrade != null };
       // Flagged = unsure; unanswered questions aren't fed to FSRS.
-      if (answered) await recordAnswer(s.card, conf: widget.flagged.contains(i) ? Conf.unsure : Conf.sure, correct: s.correct, source: 'exam', answer: s.answer);
-      qs.add({'card_id': s.card['id'], 'domain': domainOf(s.card, widget.cert), 'answer': s.type == 'mcq' || s.type == 'ordering' ? s.answer : (s.typed.isEmpty ? s.selfGrade : s.typed), 'correct': s.correct, 'flagged': widget.flagged.contains(i)});
+      if (answered)
+        await recordAnswer(s.card, conf: widget.flagged.contains(i) ? Conf.unsure : Conf.sure, correct: s.correct, source: 'exam', answer: s.answer);
+      qs.add({
+        'card_id': s.card['id'],
+        'domain': domainOf(s.card, widget.cert),
+        'answer': s.type == 'mcq' || s.type == 'ordering' ? s.answer : (s.typed.isEmpty ? s.selfGrade : s.typed),
+        'correct': s.correct,
+        'flagged': widget.flagged.contains(i)
+      });
     }
     await Db.put('exam', {
-      'cert': widget.cert['id'], 'started_at': widget.started, 'finished_at': nowMs(), 'minutes': widget.minutes, 'questions': qs,
-      'score_pct': pct, 'scaled': scaled, 'passed': passed,
+      'cert': widget.cert['id'],
+      'started_at': widget.started,
+      'finished_at': nowMs(),
+      'minutes': widget.minutes,
+      'questions': qs,
+      'score_pct': pct,
+      'scaled': scaled,
+      'passed': passed,
     });
     if (mounted) setState(() => saved = true);
     Api.sync().ignore();
@@ -374,8 +411,7 @@ class _ExamResultsState extends State<ExamResults> {
           Card(
               color: cs.tertiaryContainer,
               child: const Padding(
-                  padding: EdgeInsets.all(12),
-                  child: Text('Grade your hands-on answers below against the reference solutions, then save.'))),
+                  padding: EdgeInsets.all(12), child: Text('Grade your hands-on answers below against the reference solutions, then save.'))),
         Center(
           child: Column(children: [
             Text('${(pct * 100).round()}%', style: Theme.of(context).textTheme.displayMedium),

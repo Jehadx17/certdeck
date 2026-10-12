@@ -1,0 +1,22 @@
+# Hooks CertDeck into the existing reverse proxy (the wa-category nginx container) without
+# changing that project: the API joins its network under the unique alias certdeck-api, and our OWN
+# certbot (never theirs: its deploy hook would overwrite atharflow's cert) writes challenges into
+# the shared webroot and publishes our cert under origin-cert/certdeck.mithaqstay.com/.
+services:
+  certdeck-api:
+    networks:
+      internal: {}
+      proxy: {aliases: [certdeck-api]}
+
+  certdeck-certbot:
+    image: certbot/certbot:v5.6.0
+    restart: unless-stopped
+    volumes:
+      - ../../letsencrypt:/etc/letsencrypt
+      - ${PROXY_WEBROOT}:/var/www/certbot
+      - ${PROXY_CERT_DIR}:/publish
+    entrypoint: ["/bin/sh", "-c", "trap exit TERM; while :; do certbot renew --quiet --deploy-hook 'cp -L $$RENEWED_LINEAGE/fullchain.pem $$RENEWED_LINEAGE/privkey.pem /publish/ && chmod 644 /publish/fullchain.pem && chmod 600 /publish/privkey.pem'; sleep 12h & wait $${!}; done"]
+    networks: [internal]
+
+networks:
+  proxy: {external: true, name: ${PROXY_NETWORK}}

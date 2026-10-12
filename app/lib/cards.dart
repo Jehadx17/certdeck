@@ -30,7 +30,12 @@ class _CardsScreenState extends State<CardsScreen> {
   String q = '';
 
   static const filters = {
-    'all': 'All', 'due': 'Due', 'new': 'New', 'leech': 'Leeches', 'misconception': 'Misconceptions', 'suspended': 'Suspended',
+    'all': 'All',
+    'due': 'Due',
+    'new': 'New',
+    'leech': 'Leeches',
+    'misconception': 'Misconceptions',
+    'suspended': 'Suspended',
   };
 
   bool _match(Json c) {
@@ -87,39 +92,37 @@ class _CardsScreenState extends State<CardsScreen> {
       ),
       floatingActionButton: FloatingActionButton(
           onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const CardEditor())), child: const Icon(Icons.add)),
-      body: ValueListenableBuilder(
-        valueListenable: changes,
-        builder: (_, __, ___) => FutureBuilder(
-          future: Db.query('card', orderBy: 'updated_at DESC'),
-          builder: (_, snap) {
-            if (!snap.hasData) return const Center(child: CircularProgressIndicator());
-            final list = snap.data!.where(_match).toList();
-            if (list.isEmpty) return const Center(child: Text('No cards here yet.\nTap + to add one, or generate some in the AI tab.', textAlign: TextAlign.center));
-            return ListView.separated(
-              itemCount: list.length + 1,
-              separatorBuilder: (_, __) => const Divider(height: 1),
-              itemBuilder: (_, i) {
-                if (i == 0) return Padding(padding: const EdgeInsets.all(8), child: Text('${list.length} cards', style: const TextStyle(color: Colors.white54)));
-                final c = list[i - 1];
-                final certJ = App.cert;
-                return ListTile(
-                  title: Text(plain(c['question']), maxLines: 2, overflow: TextOverflow.ellipsis),
-                  subtitle: Text([
-                    typeLabels[c['type']] ?? c['type'],
-                    if (domainOf(c, certJ).isNotEmpty) 'D${domainOf(c, certJ)}',
-                    (c['certs'] as Map?)?.keys.join('/') ?? '',
-                    isSuspended(c) ? 'suspended' : dueLabel(c),
-                  ].join(' · ')),
-                  trailing: Row(mainAxisSize: MainAxisSize.min, children: [
-                    if (c['misconception'] == true) const Icon(Icons.warning_amber, color: Colors.redAccent, size: 18),
-                    if (c['leech'] == true) const Icon(Icons.bug_report_outlined, color: Colors.orange, size: 18),
-                  ]),
-                  onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => CardDetail(c['id']))),
-                );
-              },
-            );
-          },
-        ),
+      body: Live(
+        load: () => Db.query('card', orderBy: 'updated_at DESC'),
+        builder: (_, all) {
+          final list = all.where(_match).toList();
+          if (list.isEmpty)
+            return const Center(child: Text('No cards here yet.\nTap + to add one, or generate some in the AI tab.', textAlign: TextAlign.center));
+          return ListView.separated(
+            itemCount: list.length + 1,
+            separatorBuilder: (_, __) => const Divider(height: 1),
+            itemBuilder: (_, i) {
+              if (i == 0)
+                return Padding(padding: const EdgeInsets.all(8), child: Text('${list.length} cards', style: const TextStyle(color: Colors.white54)));
+              final c = list[i - 1];
+              final certJ = App.cert;
+              return ListTile(
+                title: Text(plain(c['question']), maxLines: 2, overflow: TextOverflow.ellipsis),
+                subtitle: Text([
+                  typeLabels[c['type']] ?? c['type'],
+                  if (domainOf(c, certJ).isNotEmpty) 'D${domainOf(c, certJ)}',
+                  (c['certs'] as Map?)?.keys.join('/') ?? '',
+                  isSuspended(c) ? 'suspended' : dueLabel(c),
+                ].join(' · ')),
+                trailing: Row(mainAxisSize: MainAxisSize.min, children: [
+                  if (c['misconception'] == true) const Icon(Icons.warning_amber, color: Colors.redAccent, size: 18),
+                  if (c['leech'] == true) const Icon(Icons.bug_report_outlined, color: Colors.orange, size: 18),
+                ]),
+                onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => CardDetail(c['id']))),
+              );
+            },
+          );
+        },
       ),
     );
   }
@@ -157,125 +160,133 @@ class _CardDetailState extends State<CardDetail> {
   @override
   Widget build(BuildContext context) {
     final cs = Theme.of(context).colorScheme;
-    return ValueListenableBuilder(
-      valueListenable: changes,
-      builder: (_, __, ___) => FutureBuilder(
-        future: _load(),
-        builder: (context, snap) {
-          if (!snap.hasData) return Scaffold(appBar: AppBar(), body: const Center(child: CircularProgressIndicator()));
-          final (c, reviews, overrides, variants) = snap.data!;
-          if (c == null) return Scaffold(appBar: AppBar(), body: const Center(child: Text('Card deleted')));
-          final preview = AnswerState(c)..selected.addAll(((c['correct'] as List?) ?? []).cast<int>());
-          preview.order = [...((c['items'] as List?) ?? []).cast<String>()];
-          preview.typed = c['answer']?.toString() ?? '';
-          final s = schedulerFor(App.cert);
-          final help = c['leech_help'];
-          return Scaffold(
-            appBar: AppBar(title: Text(typeLabels[c['type']] ?? 'Card'), actions: [
-              IconButton(
-                  icon: const Icon(Icons.edit),
-                  onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => CardEditor(card: c)))),
-              IconButton(icon: const Icon(Icons.forum_outlined), onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => ChatScreen(c)))),
-              PopupMenuButton<String>(
-                onSelected: (v) async {
-                  switch (v) {
-                    case 'suspend':
-                      await Db.put('card', c..['suspended'] = !isSuspended(c));
-                    case 'clear':
-                      await Db.put('card', c..['misconception'] = false..['leech'] = false);
-                    case 'variants':
-                      await _variants(c, leech: false);
-                    case 'delete':
-                      final ok = await showDialog<bool>(
-                          context: context,
-                          builder: (_) => AlertDialog(title: const Text('Delete this card?'), actions: [
-                                TextButton(onPressed: () => Navigator.pop(context, false), child: const Text('Cancel')),
-                                FilledButton(onPressed: () => Navigator.pop(context, true), child: const Text('Delete')),
-                              ]));
-                      if (ok == true) {
-                        await Db.put('card', c, deleted: true);
-                        if (context.mounted) Navigator.pop(context);
-                      }
-                  }
-                },
-                itemBuilder: (_) => [
-                  PopupMenuItem(value: 'suspend', child: Text(isSuspended(c) ? 'Unsuspend' : 'Suspend')),
-                  const PopupMenuItem(value: 'variants', child: Text('AI: make variant questions')),
-                  if (c['misconception'] == true || c['leech'] == true) const PopupMenuItem(value: 'clear', child: Text('Clear leech/misconception flags')),
-                  const PopupMenuItem(value: 'delete', child: Text('Delete')),
-                ],
-              ),
+    return Live(
+      load: _load,
+      builder: (context, data) {
+        final (c, reviews, overrides, variants) = data;
+        if (c == null) return Scaffold(appBar: AppBar(), body: const Center(child: Text('Card deleted')));
+        final preview = AnswerState(c)..selected.addAll(((c['correct'] as List?) ?? []).cast<int>());
+        preview.order = [...((c['items'] as List?) ?? []).cast<String>()];
+        preview.typed = c['answer']?.toString() ?? '';
+        final s = schedulerFor(App.cert);
+        final help = c['leech_help'];
+        return Scaffold(
+          appBar: AppBar(title: Text(typeLabels[c['type']] ?? 'Card'), actions: [
+            IconButton(
+                icon: const Icon(Icons.edit), onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => CardEditor(card: c)))),
+            IconButton(
+                icon: const Icon(Icons.forum_outlined), onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => ChatScreen(c)))),
+            PopupMenuButton<String>(
+              onSelected: (v) async {
+                switch (v) {
+                  case 'suspend':
+                    await Db.put('card', c..['suspended'] = !isSuspended(c));
+                  case 'clear':
+                    await Db.put(
+                        'card',
+                        c
+                          ..['misconception'] = false
+                          ..['leech'] = false);
+                  case 'variants':
+                    await _variants(c, leech: false);
+                  case 'delete':
+                    final ok = await showDialog<bool>(
+                        context: context,
+                        builder: (_) => AlertDialog(title: const Text('Delete this card?'), actions: [
+                              TextButton(onPressed: () => Navigator.pop(context, false), child: const Text('Cancel')),
+                              FilledButton(onPressed: () => Navigator.pop(context, true), child: const Text('Delete')),
+                            ]));
+                    if (ok == true) {
+                      await Db.put('card', c, deleted: true);
+                      if (context.mounted) Navigator.pop(context);
+                    }
+                }
+              },
+              itemBuilder: (_) => [
+                PopupMenuItem(value: 'suspend', child: Text(isSuspended(c) ? 'Unsuspend' : 'Suspend')),
+                const PopupMenuItem(value: 'variants', child: Text('AI: make variant questions')),
+                if (c['misconception'] == true || c['leech'] == true)
+                  const PopupMenuItem(value: 'clear', child: Text('Clear leech/misconception flags')),
+                const PopupMenuItem(value: 'delete', child: Text('Delete')),
+              ],
+            ),
+          ]),
+          body: ListView(padding: const EdgeInsets.all(16), children: [
+            CardView(preview, revealed: true),
+            const Divider(height: 32),
+            Wrap(spacing: 6, runSpacing: 6, children: [
+              for (final e in ((c['certs'] as Map?) ?? {}).entries) Chip(label: Text('${e.key} · D${e.value}')),
+              for (final t in ((c['tags'] as List?) ?? [])) Chip(label: Text('#$t')),
+              if (isSuspended(c)) const Chip(label: Text('Suspended')),
+              if (c['leech'] == true) const Chip(label: Text('Leech'), avatar: Icon(Icons.bug_report_outlined, color: Colors.orange)),
+              if (c['misconception'] == true) const Chip(label: Text('Misconception'), avatar: Icon(Icons.warning_amber, color: Colors.redAccent)),
             ]),
-            body: ListView(padding: const EdgeInsets.all(16), children: [
-              CardView(preview, revealed: true),
-              const Divider(height: 32),
-              Wrap(spacing: 6, runSpacing: 6, children: [
-                for (final e in ((c['certs'] as Map?) ?? {}).entries) Chip(label: Text('${e.key} · D${e.value}')),
-                for (final t in ((c['tags'] as List?) ?? [])) Chip(label: Text('#$t')),
-                if (isSuspended(c)) const Chip(label: Text('Suspended')),
-                if (c['leech'] == true) const Chip(label: Text('Leech'), avatar: Icon(Icons.bug_report_outlined, color: Colors.orange)),
-                if (c['misconception'] == true) const Chip(label: Text('Misconception'), avatar: Icon(Icons.warning_amber, color: Colors.redAccent)),
-              ]),
-              const SizedBox(height: 8),
-              Text([
-                dueLabel(c),
-                if (!isNew(c)) 'recall now ${(100 * retrievability(s, c)).round()}%',
-                if (c['fsrs']?['stability'] != null) 'stability ${(c['fsrs']['stability'] as num).toStringAsFixed(1)}d',
-                'lapses ${c['lapses'] ?? 0}',
-                if ((c['priority'] ?? 0) != 0) 'priority ${c['priority']}',
-                'source: ${c['source'] ?? 'manual'}',
-              ].join(' · '), style: const TextStyle(color: Colors.white60)),
-              if (c['leech'] == true) ...[
-                const SizedBox(height: 12),
-                FilledButton.tonalIcon(
-                    onPressed: () => _variants(c, leech: true), icon: const Icon(Icons.auto_fix_high), label: const Text('AI leech help: new explanation + variants')),
-              ],
-              if (help is Map) ...[
-                const SizedBox(height: 12),
-                if ((help['learn'] ?? '').toString().isNotEmpty)
-                  Card(child: Padding(padding: const EdgeInsets.all(12), child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                    Text('Learn it', style: TextStyle(color: cs.primary, fontWeight: FontWeight.bold)),
-                    Md(help['learn']),
-                  ]))),
-                for (final v in ((help['videos'] as List?) ?? []).cast<Map>())
-                  ListTile(leading: const Icon(Icons.play_circle_outline), title: Text(v['title'] ?? ''), onTap: () => openUrl(v['url'])),
-              ],
-              if (variants.isNotEmpty) ...[
-                const SizedBox(height: 12),
-                Text('Variants', style: TextStyle(color: cs.primary)),
-                for (final v in variants)
-                  ListTile(
-                      dense: true,
-                      title: Text(plain(v['question']), maxLines: 2),
-                      onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => CardDetail(v['id'])))),
-              ],
-              const SizedBox(height: 16),
-              Text('History', style: TextStyle(color: cs.primary, fontWeight: FontWeight.bold)),
-              for (final o in overrides)
+            const SizedBox(height: 8),
+            Text(
+                [
+                  dueLabel(c),
+                  if (!isNew(c)) 'recall now ${(100 * retrievability(s, c)).round()}%',
+                  if (c['fsrs']?['stability'] != null) 'stability ${(c['fsrs']['stability'] as num).toStringAsFixed(1)}d',
+                  'lapses ${c['lapses'] ?? 0}',
+                  if ((c['priority'] ?? 0) != 0) 'priority ${c['priority']}',
+                  'source: ${c['source'] ?? 'manual'}',
+                ].join(' · '),
+                style: const TextStyle(color: Colors.white60)),
+            if (c['leech'] == true) ...[
+              const SizedBox(height: 12),
+              FilledButton.tonalIcon(
+                  onPressed: () => _variants(c, leech: true),
+                  icon: const Icon(Icons.auto_fix_high),
+                  label: const Text('AI leech help: new explanation + variants')),
+            ],
+            if (help is Map) ...[
+              const SizedBox(height: 12),
+              if ((help['learn'] ?? '').toString().isNotEmpty)
                 Card(
-                  color: cs.secondaryContainer.withOpacity(.4),
-                  child: ListTile(
-                    leading: const Icon(Icons.auto_awesome),
-                    title: Text('AI override: ${_describe(o)}'),
-                    subtitle: Text('${o['reason']}\n${_when(o['applied_at'])}${o['reverted_at'] != null ? ' · reverted' : ''}'),
-                    isThreeLine: true,
-                    trailing: o['applied_at'] != null && o['reverted_at'] == null
-                        ? TextButton(onPressed: () => revertOverride(o), child: const Text('Revert'))
-                        : null,
-                  ),
-                ),
-              if (reviews.isEmpty) const Text('Not reviewed yet', style: TextStyle(color: Colors.white54)),
-              for (final r in reviews)
+                    child: Padding(
+                        padding: const EdgeInsets.all(12),
+                        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                          Text('Learn it', style: TextStyle(color: cs.primary, fontWeight: FontWeight.bold)),
+                          Md(help['learn']),
+                        ]))),
+              for (final v in ((help['videos'] as List?) ?? []).cast<Map>())
+                ListTile(leading: const Icon(Icons.play_circle_outline), title: Text(v['title'] ?? ''), onTap: () => openUrl(v['url'])),
+            ],
+            if (variants.isNotEmpty) ...[
+              const SizedBox(height: 12),
+              Text('Variants', style: TextStyle(color: cs.primary)),
+              for (final v in variants)
                 ListTile(
-                  dense: true,
-                  leading: Icon(r['correct'] == true ? Icons.check : Icons.close, color: r['correct'] == true ? Colors.green : cs.error),
-                  title: Text('${_when(r['ts'])} · ${const ['', 'Again', 'Hard', 'Good', 'Easy'][r['rating'] as int]}'),
-                  subtitle: Text('${r['confidence']}${r['misconception'] == true ? ' · misconception' : ''} · ${r['source']}'),
+                    dense: true,
+                    title: Text(plain(v['question']), maxLines: 2),
+                    onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => CardDetail(v['id'])))),
+            ],
+            const SizedBox(height: 16),
+            Text('History', style: TextStyle(color: cs.primary, fontWeight: FontWeight.bold)),
+            for (final o in overrides)
+              Card(
+                color: cs.secondaryContainer.withOpacity(.4),
+                child: ListTile(
+                  leading: const Icon(Icons.auto_awesome),
+                  title: Text('AI override: ${_describe(o)}'),
+                  subtitle: Text('${o['reason']}\n${_when(o['applied_at'])}${o['reverted_at'] != null ? ' · reverted' : ''}'),
+                  isThreeLine: true,
+                  trailing: o['applied_at'] != null && o['reverted_at'] == null
+                      ? TextButton(onPressed: () => revertOverride(o), child: const Text('Revert'))
+                      : null,
                 ),
-            ]),
-          );
-        },
-      ),
+              ),
+            if (reviews.isEmpty) const Text('Not reviewed yet', style: TextStyle(color: Colors.white54)),
+            for (final r in reviews)
+              ListTile(
+                dense: true,
+                leading: Icon(r['correct'] == true ? Icons.check : Icons.close, color: r['correct'] == true ? Colors.green : cs.error),
+                title: Text('${_when(r['ts'])} · ${const ['', 'Again', 'Hard', 'Good', 'Easy'][r['rating'] as int]}'),
+                subtitle: Text('${r['confidence']}${r['misconception'] == true ? ' · misconception' : ''} · ${r['source']}'),
+              ),
+          ]),
+        );
+      },
     );
   }
 }
@@ -334,16 +345,25 @@ class CardEditor extends StatefulWidget {
 
 class _CardEditorState extends State<CardEditor> {
   late final Json d = widget.card == null
-      ? {'type': 'basic', 'certs': {App.cert['id']: ''}, 'source': 'manual', 'created_at': nowMs()}
+      ? {
+          'type': 'basic',
+          'certs': {App.cert['id']: ''},
+          'source': 'manual',
+          'created_at': nowMs()
+        }
       : Map<String, dynamic>.from(widget.card!);
   final _ctl = <String, TextEditingController>{};
-  late List<TextEditingController> options =
-      [for (final o in ((d['options'] as List?) ?? ['', '', '', ''])) TextEditingController(text: o.toString())];
+  late List<TextEditingController> options = [
+    for (final o in ((d['options'] as List?) ?? ['', '', '', ''])) TextEditingController(text: o.toString())
+  ];
   late List<TextEditingController> optionExpl = [
-    for (var i = 0; i < options.length; i++) TextEditingController(text: (((d['option_explanations'] as List?) ?? []).elementAtOrNull(i) ?? '').toString())
+    for (var i = 0; i < options.length; i++)
+      TextEditingController(text: (((d['option_explanations'] as List?) ?? []).elementAtOrNull(i) ?? '').toString())
   ];
   late Set<int> correct = ((d['correct'] as List?) ?? []).cast<int>().toSet();
-  late List<TextEditingController> items = [for (final o in ((d['items'] as List?) ?? ['', '', ''])) TextEditingController(text: o.toString())];
+  late List<TextEditingController> items = [
+    for (final o in ((d['items'] as List?) ?? ['', '', ''])) TextEditingController(text: o.toString())
+  ];
   late Map<String, String> certs = {for (final e in ((d['certs'] as Map?) ?? {}).entries) e.key.toString(): e.value.toString()};
   late List<Map> masks = [for (final m in ((d['masks'] as List?) ?? [])) Map.from(m)];
   bool perRegion = true;
@@ -373,14 +393,27 @@ class _CardEditorState extends State<CardEditor> {
     d['tags'] = csv('tags');
     if (type == 'typed') d['accepted'] = csv('accepted');
     if (type == 'mcq') {
-      final keep = [for (var i = 0; i < options.length; i++) if (options[i].text.trim().isNotEmpty) i];
+      final keep = [
+        for (var i = 0; i < options.length; i++)
+          if (options[i].text.trim().isNotEmpty) i
+      ];
       d['options'] = [for (final i in keep) options[i].text.trim()];
       d['option_explanations'] = [for (final i in keep) optionExpl[i].text.trim()];
-      d['correct'] = [for (var j = 0; j < keep.length; j++) if (correct.contains(keep[j])) j];
+      d['correct'] = [
+        for (var j = 0; j < keep.length; j++)
+          if (correct.contains(keep[j])) j
+      ];
     }
-    if (type == 'ordering') d['items'] = [for (final c in items) if (c.text.trim().isNotEmpty) c.text.trim()];
+    if (type == 'ordering')
+      d['items'] = [
+        for (final c in items)
+          if (c.text.trim().isNotEmpty) c.text.trim()
+      ];
     if (type == 'occlusion') d['masks'] = masks;
-    d['certs'] = {for (final e in certs.entries) if (e.value.isNotEmpty) e.key: e.value};
+    d['certs'] = {
+      for (final e in certs.entries)
+        if (e.value.isNotEmpty) e.key: e.value
+    };
   }
 
   String? _validate() {
@@ -444,8 +477,15 @@ class _CardEditorState extends State<CardEditor> {
       child: Wrap(spacing: 8, runSpacing: 8, crossAxisAlignment: WrapCrossAlignment.center, children: [
         for (final n in list)
           Stack(children: [
-            SizedBox(width: 80, height: 80, child: ClipRRect(borderRadius: BorderRadius.circular(6), child: FittedBox(fit: BoxFit.cover, clipBehavior: Clip.hardEdge, child: MediaImage(n)))),
-            Positioned(right: -8, top: -8, child: IconButton(icon: const Icon(Icons.cancel, size: 20), onPressed: () => setState(() => d[key] = [...list]..remove(n)))),
+            SizedBox(
+                width: 80,
+                height: 80,
+                child: ClipRRect(
+                    borderRadius: BorderRadius.circular(6), child: FittedBox(fit: BoxFit.cover, clipBehavior: Clip.hardEdge, child: MediaImage(n)))),
+            Positioned(
+                right: -8,
+                top: -8,
+                child: IconButton(icon: const Icon(Icons.cancel, size: 20), onPressed: () => setState(() => d[key] = [...list]..remove(n)))),
           ]),
         OutlinedButton.icon(
             onPressed: () async {
@@ -474,20 +514,29 @@ class _CardEditorState extends State<CardEditor> {
             onChanged: (v) => setState(() => d['type'] = v),
           ),
         if (type == 'occlusion') ..._occlusion(cs),
-        field('question', switch (type) {
-          'cloze' => 'Text with {{blanks}} (use {{answer::hint}} for a hint)',
-          'mcq' => 'Question / scenario',
-          'occlusion' => 'Caption (optional)',
-          'ordering' => 'What to order',
-          _ => 'Question',
-        }, lines: 3),
-        if (type == 'cloze') Align(alignment: Alignment.centerLeft, child: TextButton.icon(onPressed: _wrapCloze, icon: const Icon(Icons.data_array), label: const Text('Make selection a blank'))),
+        field(
+            'question',
+            switch (type) {
+              'cloze' => 'Text with {{blanks}} (use {{answer::hint}} for a hint)',
+              'mcq' => 'Question / scenario',
+              'occlusion' => 'Caption (optional)',
+              'ordering' => 'What to order',
+              _ => 'Question',
+            },
+            lines: 3),
+        if (type == 'cloze')
+          Align(
+              alignment: Alignment.centerLeft,
+              child: TextButton.icon(onPressed: _wrapCloze, icon: const Icon(Icons.data_array), label: const Text('Make selection a blank'))),
         _imageList('question_images', 'Question image'),
         if (type == 'code') ...[
           DropdownButtonFormField<String>(
             value: (d['language'] ?? 'yaml') as String,
             decoration: const InputDecoration(labelText: 'Language', border: OutlineInputBorder()),
-            items: [for (final l in ['yaml', 'json', 'bash', 'python', 'javascript', 'typescript', 'java', 'go', 'dockerfile', 'sql', 'plaintext']) DropdownMenuItem(value: l, child: Text(l))],
+            items: [
+              for (final l in ['yaml', 'json', 'bash', 'python', 'javascript', 'typescript', 'java', 'go', 'dockerfile', 'sql', 'plaintext'])
+                DropdownMenuItem(value: l, child: Text(l))
+            ],
             onChanged: (v) => d['language'] = v,
           ),
           field('code', 'Code shown with the question (optional)', lines: 5, mono: true),
@@ -496,7 +545,8 @@ class _CardEditorState extends State<CardEditor> {
         if (type == 'mcq') ..._mcq(cs),
         if (type == 'ordering') ..._ordering(),
         if (const {'basic', 'code', 'typed'}.contains(type))
-          field('answer', type == 'typed' ? 'Exact answer (e.g. aws sts assume-role)' : 'Answer', lines: type == 'typed' ? 1 : 3, mono: type == 'typed'),
+          field('answer', type == 'typed' ? 'Exact answer (e.g. aws sts assume-role)' : 'Answer',
+              lines: type == 'typed' ? 1 : 3, mono: type == 'typed'),
         if (type == 'typed') field('accepted', 'Other accepted answers (comma separated)'),
         _imageList('answer_images', 'Answer image'),
         Row(children: [
@@ -519,7 +569,10 @@ class _CardEditorState extends State<CardEditor> {
                   isExpanded: true,
                   value: certs[cert['id']]!.isEmpty ? null : certs[cert['id']],
                   hint: const Text('Pick domain'),
-                  items: [for (final dm in (cert['domains'] as List)) DropdownMenuItem(value: dm['id'] as String, child: Text('${dm['id']}. ${dm['name']}', overflow: TextOverflow.ellipsis))],
+                  items: [
+                    for (final dm in (cert['domains'] as List))
+                      DropdownMenuItem(value: dm['id'] as String, child: Text('${dm['id']}. ${dm['name']}', overflow: TextOverflow.ellipsis))
+                  ],
                   onChanged: (v) => setState(() => certs[cert['id']] = v!),
                 ),
               ),
@@ -540,7 +593,10 @@ class _CardEditorState extends State<CardEditor> {
               Expanded(
                 child: Column(children: [
                   TextField(controller: options[i], decoration: InputDecoration(labelText: 'Option ${String.fromCharCode(65 + i)}', isDense: true)),
-                  TextField(controller: optionExpl[i], style: const TextStyle(fontSize: 13), decoration: const InputDecoration(hintText: 'Why right / wrong (optional)', isDense: true)),
+                  TextField(
+                      controller: optionExpl[i],
+                      style: const TextStyle(fontSize: 13),
+                      decoration: const InputDecoration(hintText: 'Why right / wrong (optional)', isDense: true)),
                 ]),
               ),
               IconButton(
@@ -550,7 +606,10 @@ class _CardEditorState extends State<CardEditor> {
                       : () => setState(() {
                             options.removeAt(i);
                             optionExpl.removeAt(i);
-                            correct = {for (final c in correct) if (c != i) c > i ? c - 1 : c};
+                            correct = {
+                              for (final c in correct)
+                                if (c != i) c > i ? c - 1 : c
+                            };
                           })),
             ]),
           ),
@@ -585,7 +644,8 @@ class _CardEditorState extends State<CardEditor> {
               ),
           ],
         ),
-        TextButton.icon(onPressed: () => setState(() => items.add(TextEditingController())), icon: const Icon(Icons.add), label: const Text('Add step')),
+        TextButton.icon(
+            onPressed: () => setState(() => items.add(TextEditingController())), icon: const Icon(Icons.add), label: const Text('Add step')),
       ];
 
   List<Widget> _occlusion(ColorScheme cs) => [
@@ -680,14 +740,15 @@ class _MaskEditorState extends State<MaskEditor> {
                   final p = Offset(e.localPosition.dx / size.width, e.localPosition.dy / size.height);
                   for (var i = widget.masks.length - 1; i >= 0; i--) {
                     final m = widget.masks[i];
-                    if (Rect.fromLTWH((m['x'] as num).toDouble(), (m['y'] as num).toDouble(), (m['w'] as num).toDouble(), (m['h'] as num).toDouble()).contains(p)) {
+                    if (Rect.fromLTWH((m['x'] as num).toDouble(), (m['y'] as num).toDouble(), (m['w'] as num).toDouble(), (m['h'] as num).toDouble())
+                        .contains(p)) {
                       _edit(i);
                       return;
                     }
                   }
                 },
-                child: CustomPaint(
-                    painter: MaskPainter([...widget.masks, if (draft != null) draft], null, true, Theme.of(context).colorScheme.primary)),
+                child:
+                    CustomPaint(painter: MaskPainter([...widget.masks, if (draft != null) draft], null, true, Theme.of(context).colorScheme.primary)),
               );
             }),
           ),

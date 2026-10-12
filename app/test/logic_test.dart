@@ -21,10 +21,19 @@ void main() {
 
   test('weighted new-card interleave follows exam weights', () {
     final cert = {
-      'id': 'X', 'domains': [{'id': '1', 'weight': .75}, {'id': '2', 'weight': .25}]
+      'id': 'X',
+      'domains': [
+        {'id': '1', 'weight': .75},
+        {'id': '2', 'weight': .25}
+      ]
     };
     final cards = [
-      for (var i = 0; i < 40; i++) {'id': '$i', 'created_at': i, 'certs': {'X': i.isEven ? '1' : '2'}}
+      for (var i = 0; i < 40; i++)
+        {
+          'id': '$i',
+          'created_at': i,
+          'certs': {'X': i.isEven ? '1' : '2'}
+        }
     ];
     final firstEight = orderNew(cards, cert).take(8).map((c) => (c['certs'] as Map)['X']).toList();
     expect(firstEight.where((d) => d == '1').length, 6);

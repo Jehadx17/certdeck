@@ -13,7 +13,11 @@ const defaultSettings = {'new_per_day': 20, 'max_reviews_per_day': 200, 'leech_t
 /// Official formats, checked against the exam guides on 2026-10-12 (see DECISIONS.md).
 final defaultCerts = <Json>[
   {
-    'id': 'DVA-C02', 'code': 'DVA-C02', 'name': 'AWS Certified Developer – Associate', 'exam_date': null, 'active': true,
+    'id': 'DVA-C02',
+    'code': 'DVA-C02',
+    'name': 'AWS Certified Developer – Associate',
+    'exam_date': null,
+    'active': true,
     'exam': {'questions': 65, 'minutes': 130, 'pass_pct': 72, 'scaled': true, 'kind': 'mcq'},
     'domains': [
       {'id': '1', 'name': 'Development with AWS Services', 'weight': .32},
@@ -23,7 +27,11 @@ final defaultCerts = <Json>[
     ],
   },
   {
-    'id': 'SAA-C03', 'code': 'SAA-C03', 'name': 'AWS Certified Solutions Architect – Associate', 'exam_date': null, 'active': false,
+    'id': 'SAA-C03',
+    'code': 'SAA-C03',
+    'name': 'AWS Certified Solutions Architect – Associate',
+    'exam_date': null,
+    'active': false,
     'exam': {'questions': 65, 'minutes': 130, 'pass_pct': 72, 'scaled': true, 'kind': 'mcq'},
     'domains': [
       {'id': '1', 'name': 'Design Secure Architectures', 'weight': .30},
@@ -33,7 +41,11 @@ final defaultCerts = <Json>[
     ],
   },
   {
-    'id': 'CKAD', 'code': 'CKAD', 'name': 'Certified Kubernetes Application Developer', 'exam_date': null, 'active': false,
+    'id': 'CKAD',
+    'code': 'CKAD',
+    'name': 'Certified Kubernetes Application Developer',
+    'exam_date': null,
+    'active': false,
     'exam': {'questions': 17, 'minutes': 120, 'pass_pct': 66, 'scaled': false, 'kind': 'performance'},
     'domains': [
       {'id': '1', 'name': 'Application Design and Build', 'weight': .20},
@@ -119,8 +131,12 @@ fsrs.Card toFsrs(Json c) {
 }
 
 Json fromFsrs(fsrs.Card k) => {
-      'state': k.state.value, 'step': k.step, 'stability': k.stability, 'difficulty': k.difficulty,
-      'due': k.due.millisecondsSinceEpoch, 'last_review': k.lastReview?.millisecondsSinceEpoch,
+      'state': k.state.value,
+      'step': k.step,
+      'stability': k.stability,
+      'difficulty': k.difficulty,
+      'due': k.due.millisecondsSinceEpoch,
+      'last_review': k.lastReview?.millisecondsSinceEpoch,
     };
 
 double retrievability(fsrs.Scheduler s, Json c, [DateTime? at]) =>
@@ -159,8 +175,15 @@ Future<Json> recordAnswer(Json card, {required Conf conf, required bool correct,
 
   await Db.put('card', card);
   await Db.put('review', {
-    'card_id': card['id'], 'ts': now.millisecondsSinceEpoch, 'rating': rating.value, 'confidence': conf.name,
-    'correct': correct, 'misconception': misconception, 'duration_ms': durationMs, 'source': source, 'was_new': wasNew,
+    'card_id': card['id'],
+    'ts': now.millisecondsSinceEpoch,
+    'rating': rating.value,
+    'confidence': conf.name,
+    'correct': correct,
+    'misconception': misconception,
+    'duration_ms': durationMs,
+    'source': source,
+    'was_new': wasNew,
     if (answer != null) 'answer': answer,
   });
   return card;
@@ -203,8 +226,9 @@ List<Json> orderNew(List<Json> cards, Json cert) {
   final weight = {for (final d in (cert['domains'] as List)) d['id'] as String: (d['weight'] as num).toDouble()};
   final out = <Json>[];
   while (pools.values.any((p) => p.isNotEmpty)) {
-    final d = pools.keys.where((k) => pools[k]!.isNotEmpty).reduce((a, b) =>
-        (introduced[a] ?? 0) / (weight[a] ?? .05) <= (introduced[b] ?? 0) / (weight[b] ?? .05) ? a : b);
+    final d = pools.keys
+        .where((k) => pools[k]!.isNotEmpty)
+        .reduce((a, b) => (introduced[a] ?? 0) / (weight[a] ?? .05) <= (introduced[b] ?? 0) / (weight[b] ?? .05) ? a : b);
     out.add(pools[d]!.removeAt(0));
     introduced[d] = (introduced[d] ?? 0) + 1;
   }
@@ -254,7 +278,10 @@ Future<List<Json>> buildCramQueue(Json cert, {int limit = 40}) async {
   final r = readiness(cert, await Db.cardsFor(cert['id']));
   final weakDomains = (r.byDomain.entries.toList()..sort((a, b) => a.value.compareTo(b.value))).take(2).map((e) => e.key).toSet();
   double score(Json c) =>
-      (c['misconception'] == true ? -2 : 0) + (c['leech'] == true ? -1 : 0) + (weakDomains.contains(domainOf(c, cert)) ? -.5 : 0) + retrievability(s, c);
+      (c['misconception'] == true ? -2 : 0) +
+      (c['leech'] == true ? -1 : 0) +
+      (weakDomains.contains(domainOf(c, cert)) ? -.5 : 0) +
+      retrievability(s, c);
   cards.sort((a, b) => score(a).compareTo(score(b)));
   return cards.where((c) => retrievability(s, c) < .95 || c['misconception'] == true).take(limit).toList();
 }
@@ -312,7 +339,11 @@ Future<void> applyOverride(Json o) async {
     c['overrides'] = [...((c['overrides'] as List?) ?? []), o['id']];
     await Db.put('card', c);
   }
-  await Db.put('override', o..['applied_at'] = now..['before'] = before);
+  await Db.put(
+      'override',
+      o
+        ..['applied_at'] = now
+        ..['before'] = before);
 }
 
 Future<void> revertOverride(Json o) async {

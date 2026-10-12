@@ -23,8 +23,12 @@ Future<Json> buildExport() async {
     }
   }
   return {
-    'format': 'certdeck', 'version': 1, 'exported_at': DateTime.now().toUtc().toIso8601String(),
-    'certs': App.certs, 'cards': cards, 'media': media,
+    'format': 'certdeck',
+    'version': 1,
+    'exported_at': DateTime.now().toUtc().toIso8601String(),
+    'certs': App.certs,
+    'cards': cards,
+    'media': media,
   };
 }
 
@@ -135,7 +139,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
     final cs = Theme.of(context).colorScheme;
-    Widget header(String t) => Padding(padding: const EdgeInsets.fromLTRB(16, 20, 16, 4), child: Text(t, style: TextStyle(color: cs.primary, fontWeight: FontWeight.bold)));
+    Widget header(String t) =>
+        Padding(padding: const EdgeInsets.fromLTRB(16, 20, 16, 4), child: Text(t, style: TextStyle(color: cs.primary, fontWeight: FontWeight.bold)));
     return Scaffold(
       appBar: AppBar(title: const Text('Settings')),
       body: ListView(children: [
@@ -176,7 +181,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
               obscureText: !showToken,
               decoration: InputDecoration(
                   labelText: 'API token',
-                  suffixIcon: IconButton(icon: Icon(showToken ? Icons.visibility_off : Icons.visibility), onPressed: () => setState(() => showToken = !showToken))),
+                  suffixIcon: IconButton(
+                      icon: Icon(showToken ? Icons.visibility_off : Icons.visibility), onPressed: () => setState(() => showToken = !showToken))),
             ),
             const SizedBox(height: 8),
             Row(children: [
@@ -199,7 +205,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
         ListTile(
           leading: const Icon(Icons.tune),
           title: const Text('Re-optimize FSRS parameters'),
-          subtitle: Text(App.params == null ? 'Using FSRS defaults (optimizes weekly on the server once you have enough reviews)' : 'Using parameters optimized from your reviews'),
+          subtitle: Text(App.params == null
+              ? 'Using FSRS defaults (optimizes weekly on the server once you have enough reviews)'
+              : 'Using parameters optimized from your reviews'),
           onTap: () => _run('Optimizing on the server…', () async {
             await Api.sync();
             final r = await Api.call('POST', 'fsrs/optimize', body: {}, timeout: const Duration(minutes: 5));

@@ -45,8 +45,7 @@ class Api {
     await _store.write(key: 'token', value: token);
   }
 
-  static Future<dynamic> call(String method, String path,
-      {Object? body, List<int>? bytes, Duration timeout = const Duration(seconds: 60)}) async {
+  static Future<dynamic> call(String method, String path, {Object? body, List<int>? bytes, Duration timeout = const Duration(seconds: 60)}) async {
     if (!configured) throw ApiError('Needs connection: add your server token in Settings', offline: true);
     final uri = Uri.parse('$url/api/$path');
     final headers = {'Authorization': 'Bearer $token', if (body != null) 'Content-Type': 'application/json'};
@@ -56,7 +55,8 @@ class Api {
         'GET' => http.get(uri, headers: headers),
         'PUT' => http.put(uri, headers: headers, body: bytes),
         _ => http.post(uri, headers: headers, body: jsonEncode(body)),
-      }).timeout(timeout);
+      })
+          .timeout(timeout);
     } on SocketException {
       online.value = false;
       throw ApiError('Needs connection', offline: true);

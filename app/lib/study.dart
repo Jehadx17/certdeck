@@ -63,7 +63,8 @@ class _StudyScreenState extends State<StudyScreen> {
 
   Future<void> _commit() async {
     final a = ans!;
-    final updated = await recordAnswer(card!, conf: conf!, correct: a.correct, source: widget.source, durationMs: nowMs() - a.startedAt, answer: a.answer);
+    final updated =
+        await recordAnswer(card!, conf: conf!, correct: a.correct, source: widget.source, durationMs: nowMs() - a.startedAt, answer: a.answer);
     if (widget.source == 'study') session.answered(updated);
     done++;
     if (a.correct) right++;
@@ -183,15 +184,15 @@ class _StudyScreenState extends State<StudyScreen> {
     }
     if (!graded) {
       return bar([
-        FilledButton.tonal(onPressed: () => _selfGrade(false), style: FilledButton.styleFrom(foregroundColor: cs.error), child: const Text('I was wrong')),
+        FilledButton.tonal(
+            onPressed: () => _selfGrade(false), style: FilledButton.styleFrom(foregroundColor: cs.error), child: const Text('I was wrong')),
         FilledButton(onPressed: () => _selfGrade(true), child: const Text('I was right')),
       ]);
     }
     return bar([
       if (ans!.autoGraded)
         TextButton(
-            onPressed: () => setState(() => ans!.overrideCorrect = !ans!.correct),
-            child: Text(ans!.correct ? 'Actually wrong' : 'Actually right')),
+            onPressed: () => setState(() => ans!.overrideCorrect = !ans!.correct), child: Text(ans!.correct ? 'Actually wrong' : 'Actually right')),
       FilledButton(onPressed: _commit, child: const Text('Next')),
     ]);
   }
