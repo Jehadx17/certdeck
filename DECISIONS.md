@@ -81,3 +81,9 @@ Significant choices made while building CertDeck, newest at the bottom of each s
   renewed cert over another site's live cert, and Docker DNS answers to *service names* on shared networks.
   So: never reuse another project's certbot, and give services unique names (`certdeck-api`, `certdeck-db`).
 - FSRS re-optimization runs weekly in a small `certdeck-optimizer` container (a sleep loop; no host cron needed).
+
+## Acceptance device
+- The OnePlus 12 was unavailable for the final run, so at the user's direction the final acceptance (clean install
+  starts empty, offline study, token restore after reinstall) ran on a HONOR Magic8 Lite, and the user accepted it
+  as final (2026-10-12). The OnePlus 12 still has an earlier test build: uninstall it before first use, then install
+  `app-release.apk` and enter the token.
