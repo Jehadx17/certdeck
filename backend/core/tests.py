@@ -185,10 +185,13 @@ class ApiTests(TestCase):
         self.assertEqual(kw["output_config"]["effort"], "medium")
         self.assertEqual(kw["output_config"]["format"]["type"], "json_schema")
         self.assertNotIn("thinking", kw)
-        self.assertEqual(kw["system"][-1]["cache_control"], {"type": "ephemeral"})
-        self.assertIn("old1 | SAA-C03:3 | What is the maximum", kw["system"][-1]["text"])
-        self.assertIn("Develop code for AWS Lambda", kw["system"][-1]["text"])  # official guide included
-        self.assertEqual(kw["messages"][0]["content"][0]["type"], "document")
+        self.assertEqual(len(kw["system"]), 1)  # one stable, cached prefix: prompt + certs + official guide
+        self.assertEqual(kw["system"][0]["cache_control"], {"type": "ephemeral"})
+        self.assertIn("Develop code for AWS Lambda", kw["system"][0]["text"])
+        self.assertNotIn("old1", kw["system"][0]["text"])  # the changing card list stays out of the cached prefix
+        content = kw["messages"][0]["content"]
+        self.assertEqual(content[0]["type"], "document")
+        self.assertIn("old1 | SAA-C03:3 | What is the maximum", content[1]["text"])
 
         call = AiCall.objects.get()
         self.assertEqual((call.endpoint, call.ok, call.input_tokens, call.cache_read_tokens), ("generate", True, 100, 10))
@@ -198,6 +201,17 @@ class ApiTests(TestCase):
         self.assertEqual((usage["calls"], usage["batch_calls"]), (1, 0))
         self.assertAlmostEqual(usage["usd"], float(call.cost_usd))
         self.assertAlmostEqual(usage["by_endpoint"]["generate"], float(call.cost_usd))
+
+    def test_relevant_cards(self):
+        from core.ai import MAX_EXISTING_LINES, relevant_cards
+        mk = lambda i, certs, q="unrelated words here": Doc(id=i, kind="card", seq=0, updated_at=0,
+                                                            data={"certs": certs, "question": q, "created_at": 0})
+        cards = [mk(f"x{i}", {"SAA-C03": "1"}) for i in range(MAX_EXISTING_LINES)] + [
+            mk("other_domain", {"DVA-C02": "2"}), mk("same_domain", {"DVA-C02": "1"}),
+            mk("overlap", {"SAA-C03": "1"}, "How does SQS visibility timeout work?")]
+        shown = [d.id for d in relevant_cards(cards, "DVA-C02", "1", "SQS visibility timeout")]
+        self.assertEqual(shown[:3], ["same_domain", "overlap", "other_domain"])
+        self.assertEqual(len(shown), MAX_EXISTING_LINES)
 
     def test_explain(self):
         card = {"id": "c1", "type": "mcq", "question": "Q?", "options": ["a", "b", "c"], "correct": [0]}

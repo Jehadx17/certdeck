@@ -29,7 +29,7 @@ AI_TYPES = ["basic", "mcq", "cloze", "typed", "code", "ordering"]  # no occlusio
 IMAGE_TYPES = {"image/jpeg", "image/png", "image/gif", "image/webp"}
 YOUTUBE = "https://www.youtube.com/results?search_query="
 DUP_RATIO = 0.85
-MAX_EXISTING_LINES = 1500
+MAX_EXISTING_LINES = 300  # existing cards shown to the model for dedupe/retag; the difflib filter still checks all
 
 
 # ---------- the one Anthropic seam ----------
@@ -177,7 +177,7 @@ Pick the best mix of card types for the material: scenario MCQs for service-sele
 
 {CARD_RULES}
 
-Never duplicate an existing card (list below) or another new card; target gaps the existing cards don't cover.
+Never duplicate an existing card (listed with the request) or another new card; target gaps the existing cards don't cover.
 retag: list existing cards from OTHER certifications that already teach a domain of the target certification, as {{card_id, cert: target cert code, domain: target domain id}}, so the student isn't re-taught. Only genuine coverage; empty list if none or no target certification."""
 
 MCQ_EXAM_STYLE = """Exam style: write realistic exam scenario questions: a 2-4 sentence scenario with requirements and constraints (cost, least operational overhead, security, performance, availability) followed by the question. Mix single-answer (4 options) and multiple-response "(Choose 2)"/"(Choose 3)" questions (5-6 options). Distractors must be plausible options that each fail one requirement."""
@@ -333,6 +333,24 @@ def _file_blocks(files):
 
 # ---------- endpoints ----------
 
+def _words(s):
+    return set(re.findall(r"[a-z0-9]{4,}", str(s).lower()))
+
+
+def relevant_cards(cards, cert, domain, hint):
+    """Existing cards worth showing the model, best first: the target cert+domain, the rest of that cert, then other
+    certs' cards (retag candidates); each boosted by word overlap with the topic/material. Capped."""
+    # ponytail: keyword overlap, not embeddings; fine for dedupe hints since difflib re-checks every card afterwards.
+    words = _words(hint)
+
+    def score(d):
+        tags = d.data.get("certs") or {}
+        rank = 4 if cert in tags and domain and str(tags[cert]) == domain else 2 if cert in tags else 1
+        return rank + min(3, len(words & _words(d.data.get("question", "")))), d.data.get("created_at") or 0
+
+    return sorted(cards, key=score, reverse=True)[:MAX_EXISTING_LINES]
+
+
 def generate_request(body):
     """Validates a generate body -> (request params, ctx). ctx is what generate_finish needs (JSON-safe)."""
     certs = known_certs()
@@ -353,15 +371,14 @@ def generate_request(body):
     if not types:
         types = (["typed", "code"] if performance else ["mcq"]) if exam_style else AI_TYPES
 
-    cards = list(Doc.objects.filter(kind="card", deleted=False))
-    ordered = sorted(cards, key=lambda d: cert not in (d.data.get("certs") or {}))  # target cert first
+    # Stable per cert -> one cached prefix; the per-request card list goes in the user turn, after the cache point.
+    system = [{"type": "text", "cache_control": {"type": "ephemeral"},
+               "text": f"{GENERATE_PROMPT}\n\nKnown certifications:\n{certs_text(certs)}"
+                       + (f"\n\nOfficial exam guide for {cert}:\n{guide(cert)}" if cert else "")}]
+    shown = relevant_cards(list(Doc.objects.filter(kind="card", deleted=False)), cert, domain, f"{topic} {text[:2000]}")
     lines = [f"{d.id} | " + (",".join(f"{k}:{v}" for k, v in (d.data.get("certs") or {}).items()) or "-")
-             + " | " + " ".join(str(d.data.get("question", "")).split())[:150] for d in ordered[:MAX_EXISTING_LINES]]
-    reference = (f"Known certifications:\n{certs_text(certs)}\n\n"
-                 + (f"Official exam guide for {cert}:\n{guide(cert)}\n\n" if cert else "")
-                 + "Existing cards (id | cert:domain | question start):\n" + ("\n".join(lines) or "(none)"))
-    system = [{"type": "text", "text": GENERATE_PROMPT},
-              {"type": "text", "text": reference, "cache_control": {"type": "ephemeral"}}]
+             + " | " + " ".join(str(d.data.get("question", "")).split())[:100] for d in shown]
+    existing = "Existing cards, most relevant first (id | cert:domain | question start):\n" + ("\n".join(lines) or "(none)")
 
     task = [f"Generate {count} new flashcards."]
     dname = ""
@@ -378,7 +395,8 @@ def generate_request(body):
         task.append("Base the cards on the attached files.")
     if text:
         task.append(f"Base the cards on this material:\n<material>\n{text}\n</material>")
-    request = params(system, [{"role": "user", "content": files + [{"type": "text", "text": "\n".join(task)}]}],
+    request = params(system, [{"role": "user", "content": files + [{"type": "text", "text": existing},
+                                                                  {"type": "text", "text": "\n".join(task)}]}],
                      GENERATE_SCHEMA)
     label = topic or dname or (f"{len(files)} file(s)" if files else "notes" if text else cert or "")
     return request, {"cert": cert, "types": types, "count": count, "label": label[:80]}
@@ -429,10 +447,12 @@ def generate(body):
 
 def explain(body):
     card = _card_arg(body)
+    fill = body.get("mode") == "fill"
     system = [{"type": "text", "text": TUTOR_PROMPT},
+              # Chat follow-ups re-read the card from cache; a one-shot fill would only pay the write surcharge.
               {"type": "text", "text": "The card (JSON):\n" + json.dumps(card, ensure_ascii=False),
-               "cache_control": {"type": "ephemeral"}}]
-    if body.get("mode") == "fill":
+               **({} if fill else {"cache_control": {"type": "ephemeral"}})}]
+    if fill:
         out = call("explain_fill", params(system, [{"role": "user", "content": FILL_TASK}], FILL_SCHEMA))
         expl = out.get("option_explanations")
         if card.get("type") != "mcq":
@@ -465,8 +485,7 @@ def variants(body):
     count, leech = _int(body.get("count"), 1, 1, 3), bool(body.get("leech"))
     certs = known_certs()
     system = [{"type": "text", "text": f"{VARIANT_PROMPT}\n\nKnown certifications:\n{certs_text(certs)}"},
-              {"type": "text", "text": "Original card (JSON):\n" + json.dumps(card, ensure_ascii=False),
-               "cache_control": {"type": "ephemeral"}}]
+              {"type": "text", "text": "Original card (JSON):\n" + json.dumps(card, ensure_ascii=False)}]  # one-shot: no cache
     task = f"Write exactly {count} variant card(s) of the original card."
     task += "\n\n" + LEECH_TASK if leech else " Set explanation and learn to null and videos to []."
     out = call("variants", params(system, [{"role": "user", "content": task}], VARIANTS_SCHEMA))
