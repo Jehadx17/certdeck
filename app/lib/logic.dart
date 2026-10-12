@@ -386,7 +386,8 @@ bool lenientMatch(String input, Iterable<String> answers) {
   final a = normAnswer(input);
   if (a.isEmpty) return false;
   return answers.any((ans) {
-    final b = normAnswer(ans);
-    return a == b || (b.length > 4 && levenshtein(a, b) <= max(1, (b.length * .12).floor()));
+    // Spaces are ignored too, so "generate data key" matches GenerateDataKey.
+    final b = normAnswer(ans).replaceAll(' ', ''), x = a.replaceAll(' ', '');
+    return x == b || (b.length > 4 && levenshtein(x, b) <= max(1, (b.length * .12).floor()));
   });
 }

@@ -84,11 +84,16 @@ class Md extends StatelessWidget {
   }
 }
 
+/// Fills the available width (aspect ratio kept) so occlusion masks, which are fractions of the
+/// drawn size, line up with the image. [fill] false = natural size (for FittedBox thumbnails).
 class MediaImage extends StatelessWidget {
   final String name;
-  const MediaImage(this.name, {super.key});
+  final bool fill;
+  const MediaImage(this.name, {super.key, this.fill = true});
   @override
   Widget build(BuildContext context) => Image.file(Db.mediaFile(name),
+      width: fill ? double.infinity : null,
+      fit: fill ? BoxFit.fitWidth : null,
       errorBuilder: (_, __, ___) =>
           Container(padding: const EdgeInsets.all(16), color: Colors.white10, child: const Text('Image not downloaded yet (sync to fetch it)')));
 }
@@ -170,8 +175,10 @@ class MaskPainter extends CustomPainter {
 }
 
 final _cloze = RegExp(r'\{\{(.+?)(?:::(.+?))?\}\}');
-String clozeFront(String s) => s.replaceAllMapped(_cloze, (m) => '**[${m[2] ?? '…'}]**');
-String clozeBack(String s) => s.replaceAllMapped(_cloze, (m) => '**‹${m[1]}›**');
+// `{{x}}` → {{`x`}} so the blank's bold markers aren't trapped inside an inline code span.
+String _unwrapCode(String s) => s.replaceAllMapped(RegExp(r'`\{\{(.+?)(?:::(.+?))?\}\}`'), (m) => '{{`${m[1]}`${m[2] == null ? '' : '::${m[2]}'}}}');
+String clozeFront(String s) => _unwrapCode(s).replaceAllMapped(_cloze, (m) => '**[${m[2] ?? '…'}]**');
+String clozeBack(String s) => _unwrapCode(s).replaceAllMapped(_cloze, (m) => '**‹${m[1]}›**');
 
 /// What the user has answered for one card, plus grading. Shared by study and exam.
 class AnswerState {
@@ -450,6 +457,7 @@ class NeedsConnection extends StatelessWidget {
 
 /// Runs [f] with a modal spinner; returns its result or null after showing the error.
 Future<T?> busy<T>(BuildContext context, String label, Future<T> Function() f) async {
+  FocusManager.instance.primaryFocus?.unfocus(); // else the keyboard returns over the result when the dialog closes
   showDialog(
       context: context,
       barrierDismissible: false,

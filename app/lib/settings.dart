@@ -214,7 +214,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
               await Api.sync();
               final r = await Api.call('POST', 'fsrs/optimize', body: {}, timeout: const Duration(minutes: 5));
               await Api.sync();
-              return r?['note']?.toString() ?? 'Optimized from ${r?['review_count']} reviews';
+              return r?['optimized_at'] == null
+                  ? 'Not enough history yet (${r?['review_count']} reviews, needs 512); keeping FSRS defaults'
+                  : 'Optimized from ${r?['review_count']} reviews';
             }),
           ),
           header('Import / export'),

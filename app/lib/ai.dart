@@ -24,8 +24,9 @@ Future<(String, List<Json>)> generateCards(Json body) async {
     retagged++;
   }
   final dup = res['skipped_duplicates'] ?? 0;
+  String n(int k, String w) => '$k $w${k == 1 ? '' : 's'}';
   return (
-    'Added ${cards.length} cards${retagged > 0 ? ', tagged $retagged existing cards for this cert' : ''}${dup > 0 ? ', skipped $dup duplicates' : ''}',
+    'Added ${n(cards.length, 'card')}${retagged > 0 ? ', tagged ${n(retagged, 'existing card')} for this cert' : ''}${dup > 0 ? ', skipped ${n(dup as int, 'duplicate')}' : ''}',
     cards
   );
 }
@@ -211,8 +212,9 @@ class _InsightsTabState extends State<InsightsTab> {
     final list = (await Db.query('analysis')).where((a) => a['cert'] == App.cert['id']).toList()
       ..sort((a, b) => ((b['created_at'] as int?) ?? 0).compareTo((a['created_at'] as int?) ?? 0));
     if (list.isEmpty) return (null, <Json>[]);
-    final ids = ((list.first['override_ids'] as List?) ?? []).toSet();
-    final overrides = (await Db.query('override')).where((o) => ids.contains(o['id'])).toList();
+    final ids = ((list.first['override_ids'] as List?) ?? []).cast<String>();
+    final overrides = (await Db.query('override')).where((o) => ids.contains(o['id'])).toList()
+      ..sort((a, b) => ids.indexOf(a['id']).compareTo(ids.indexOf(b['id']))); // stable, as the analysis listed them
     return (list.first, overrides);
   }
 

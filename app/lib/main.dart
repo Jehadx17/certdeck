@@ -72,7 +72,10 @@ class _ShellState extends State<Shell> with WidgetsBindingObserver {
       body: IndexedStack(index: tab, children: const [TodayScreen(), CardsScreen(), AiScreen(), ExamScreen(), SettingsScreen()]),
       bottomNavigationBar: NavigationBar(
         selectedIndex: tab,
-        onDestinationSelected: (i) => setState(() => tab = i),
+        onDestinationSelected: (i) {
+          FocusManager.instance.primaryFocus?.unfocus(); // a focused field on a hidden tab would keep the keyboard up
+          setState(() => tab = i);
+        },
         destinations: const [
           NavigationDestination(icon: Icon(Icons.today_outlined), selectedIcon: Icon(Icons.today), label: 'Today'),
           NavigationDestination(icon: Icon(Icons.style_outlined), selectedIcon: Icon(Icons.style), label: 'Cards'),

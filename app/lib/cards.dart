@@ -100,6 +100,7 @@ class _CardsScreenState extends State<CardsScreen> {
             return const Center(child: Text('No cards here yet.\nTap + to add one, or generate some in the AI tab.', textAlign: TextAlign.center));
           }
           return ListView.separated(
+            keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
             itemCount: list.length + 1,
             separatorBuilder: (_, __) => const Divider(height: 1),
             itemBuilder: (_, i) {
@@ -120,7 +121,10 @@ class _CardsScreenState extends State<CardsScreen> {
                   if (c['misconception'] == true) const Icon(Icons.warning_amber, color: Colors.redAccent, size: 18),
                   if (c['leech'] == true) const Icon(Icons.bug_report_outlined, color: Colors.orange, size: 18),
                 ]),
-                onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => CardDetail(c['id']))),
+                onTap: () {
+                  FocusManager.instance.primaryFocus?.unfocus(); // else the search keyboard pops back on return
+                  Navigator.push(context, MaterialPageRoute(builder: (_) => CardDetail(c['id'])));
+                },
               );
             },
           );
@@ -489,7 +493,8 @@ class _CardEditorState extends State<CardEditor> {
                 width: 80,
                 height: 80,
                 child: ClipRRect(
-                    borderRadius: BorderRadius.circular(6), child: FittedBox(fit: BoxFit.cover, clipBehavior: Clip.hardEdge, child: MediaImage(n)))),
+                    borderRadius: BorderRadius.circular(6),
+                    child: FittedBox(fit: BoxFit.cover, clipBehavior: Clip.hardEdge, child: MediaImage(n, fill: false)))),
             Positioned(
                 right: -8,
                 top: -8,
