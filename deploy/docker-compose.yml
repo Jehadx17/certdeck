@@ -1,6 +1,6 @@
 # CertDeck, fully isolated: own project name, network, Postgres, volumes.
-# The API is published only on 127.0.0.1:18765 (for ssh tunnels / health checks).
-# docker-compose.proxy.yml adds what the shared reverse proxy needs.
+# The API is published only on 127.0.0.1:18765.
+# Host nginx proxies certdeck.mithaqstay.com/api/ to it (deploy/nginx-certdeck.conf).
 name: certdeck
 services:
   certdeck-db:
@@ -17,8 +17,6 @@ services:
       interval: 5s
       retries: 20
 
-  # Service names are deliberately unique: on a shared network Docker DNS answers to the
-  # service name, and the other project's nginx resolves "backend"/"db".
   certdeck-api:
     build: {context: .., dockerfile: deploy/Dockerfile}
     image: certdeck-api:latest
