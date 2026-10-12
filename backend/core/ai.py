@@ -20,9 +20,10 @@ from .models import AiCall, Doc, domain_ids, known_certs, now_ms, save_docs
 
 log = logging.getLogger(__name__)
 
-MODEL = "claude-opus-5-5"
-# Server-side refusal fallback. If the API ever rejects these, set FALLBACK = {}.
+# Server-side refusal fallback. If the API ever rejects these, set FALLBACK = {}. Not accepted by the Batch API.
 FALLBACK = {"extra_headers": {"anthropic-beta": "server-side-fallback-2026-07-01"}, "extra_body": {"fallbacks": "default"}}
+# $ per million tokens: input, 5-minute cache write, cache read, output (platform pricing page, checked 2026-10-12).
+PRICES = {"claude-opus-5-5": (4, 5, 0.20, 20), "claude-sonnet-5-5": (2, 2.5, 0.10, 10)}
 GUIDES = Path(__file__).parent / "guides"
 AI_TYPES = ["basic", "mcq", "cloze", "typed", "code", "ordering"]  # no occlusion: the AI can't draw images
 IMAGE_TYPES = {"image/jpeg", "image/png", "image/gif", "image/webp"}
@@ -46,23 +47,63 @@ def _create(**kwargs):
         return stream.get_final_message()
 
 
-def call(endpoint, system, messages, schema):
-    """Structured-output call; returns the parsed JSON object. Always logs an AiCall row."""
+def _batches():
+    """The Message Batches resource (tests mock this)."""
+    if not settings.ANTHROPIC_API_KEY:
+        raise ApiError(503, "ANTHROPIC_API_KEY is not configured on the server")
+    return _client().messages.batches
+
+
+def cost_usd(model, usage, batch=False):
+    """Dollar cost of one response from its usage; the Batch API bills every token at 50%."""
+    p = PRICES.get(model)
+    if not p or usage is None:
+        return 0.0
+    tok = [getattr(usage, k, 0) or 0 for k in
+           ("input_tokens", "cache_creation_input_tokens", "cache_read_input_tokens", "output_tokens")]
+    return round(sum(t * r for t, r in zip(tok, p)) / 1e6 * (0.5 if batch else 1), 6)
+
+
+def log_call(endpoint, model, msg, ok, error, duration_ms, batch=False):
+    u = getattr(msg, "usage", None)
+    row = AiCall.objects.create(
+        endpoint=endpoint, model=model, ok=ok, error=error or ("" if ok else "unexpected error"), batch=batch,
+        input_tokens=getattr(u, "input_tokens", 0) or 0, output_tokens=getattr(u, "output_tokens", 0) or 0,
+        cache_read_tokens=getattr(u, "cache_read_input_tokens", 0) or 0,
+        cache_creation_tokens=getattr(u, "cache_creation_input_tokens", 0) or 0,
+        duration_ms=duration_ms, cost_usd=cost_usd(model, u, batch))
+    log.info("ai %s%s ok=%s in=%d out=%d cache_read=%d cache_write=%d $%.4f ms=%d %s", endpoint,
+             " (batch)" if batch else "", ok, row.input_tokens, row.output_tokens, row.cache_read_tokens,
+             row.cache_creation_tokens, row.cost_usd, row.duration_ms, row.error)
+
+
+def params(system, messages, schema):
+    """Request params shared by streamed calls and batch requests."""
+    return dict(model=settings.CERTDECK_MODEL, max_tokens=64000, system=system, messages=messages,
+                output_config={"effort": "medium", "format": {"type": "json_schema", "schema": schema}})
+
+
+def parse(msg):
+    """Structured-output message -> dict, or ApiError."""
+    if msg.stop_reason in ("refusal", "max_tokens"):
+        raise ApiError(502, f"AI response unusable (stop_reason={msg.stop_reason})")
+    text = next((b.text for b in msg.content if b.type == "text"), None)
+    try:
+        out = json.loads(text or "")
+    except ValueError:
+        raise ApiError(502, "AI returned invalid JSON")
+    if not isinstance(out, dict):
+        raise ApiError(502, "AI returned invalid JSON")
+    return out
+
+
+def call(endpoint, request):
+    """One streamed structured-output call; returns the parsed JSON object. Always logs an AiCall row."""
     t0 = time.monotonic()
     msg, ok, error = None, False, ""
     try:
-        msg = _create(model=MODEL, max_tokens=64000, system=system, messages=messages,
-                      output_config={"effort": "medium", "format": {"type": "json_schema", "schema": schema}},
-                      **FALLBACK)
-        if msg.stop_reason in ("refusal", "max_tokens"):
-            raise ApiError(502, f"AI response unusable (stop_reason={msg.stop_reason})")
-        text = next((b.text for b in msg.content if b.type == "text"), None)
-        try:
-            out = json.loads(text or "")
-        except ValueError:
-            raise ApiError(502, "AI returned invalid JSON")
-        if not isinstance(out, dict):
-            raise ApiError(502, "AI returned invalid JSON")
+        msg = _create(**request, **FALLBACK)
+        out = parse(msg)
         ok = True
         return out
     except ApiError as e:
@@ -81,15 +122,7 @@ def call(endpoint, system, messages, schema):
         error = repr(e)
         raise ApiError(502, "AI service error") from e
     finally:
-        u = getattr(msg, "usage", None)
-        row = AiCall.objects.create(
-            endpoint=endpoint, model=MODEL, ok=ok, error=error or ("" if ok else "unexpected error"),
-            input_tokens=getattr(u, "input_tokens", 0) or 0, output_tokens=getattr(u, "output_tokens", 0) or 0,
-            cache_read_tokens=getattr(u, "cache_read_input_tokens", 0) or 0,
-            cache_creation_tokens=getattr(u, "cache_creation_input_tokens", 0) or 0,
-            duration_ms=int((time.monotonic() - t0) * 1000))
-        log.info("ai %s ok=%s in=%d out=%d cache_read=%d cache_write=%d ms=%d %s", endpoint, ok, row.input_tokens,
-                 row.output_tokens, row.cache_read_tokens, row.cache_creation_tokens, row.duration_ms, row.error)
+        log_call(endpoint, request["model"], msg, ok, error, int((time.monotonic() - t0) * 1000))
 
 
 # ---------- output schemas (structured outputs: no recursion, all props required, nullable via anyOf) ----------
@@ -300,7 +333,8 @@ def _file_blocks(files):
 
 # ---------- endpoints ----------
 
-def generate(body):
+def generate_request(body):
+    """Validates a generate body -> (request params, ctx). ctx is what generate_finish needs (JSON-safe)."""
     certs = known_certs()
     cert = body.get("cert") or None
     if cert is not None and cert not in certs:
@@ -330,6 +364,7 @@ def generate(body):
               {"type": "text", "text": reference, "cache_control": {"type": "ephemeral"}}]
 
     task = [f"Generate {count} new flashcards."]
+    dname = ""
     if cert:
         dname = next((d.get("name", "") for d in certs[cert]["domains"] if str(d["id"]) == domain), "")
         task.append(f"Target certification: {cert}." + (f" Target domain: {domain} ({dname})." if domain else
@@ -343,9 +378,16 @@ def generate(body):
         task.append("Base the cards on the attached files.")
     if text:
         task.append(f"Base the cards on this material:\n<material>\n{text}\n</material>")
-    out = call("generate", system, [{"role": "user", "content": files + [{"type": "text", "text": "\n".join(task)}]}],
-               GENERATE_SCHEMA)
+    request = params(system, [{"role": "user", "content": files + [{"type": "text", "text": "\n".join(task)}]}],
+                     GENERATE_SCHEMA)
+    label = topic or dname or (f"{len(files)} file(s)" if files else "notes" if text else cert or "")
+    return request, {"cert": cert, "types": types, "count": count, "label": label[:80]}
 
+
+def generate_finish(out, ctx):
+    """Validates, dedupes and saves AI cards; checks retag suggestions. Shared by the streamed and batch paths."""
+    certs, cert, types, count = known_certs(), ctx["cert"], ctx["types"], ctx["count"]
+    cards = list(Doc.objects.filter(kind="card", deleted=False))
     now = now_ms()
     seen = [_norm(d.data.get("question", "")) for d in cards]
     docs, skipped, dropped = [], 0, 0
@@ -380,13 +422,18 @@ def generate(body):
             "skipped_duplicates": skipped, "dropped_invalid": dropped}
 
 
+def generate(body):
+    request, ctx = generate_request(body)
+    return generate_finish(call("generate", request), ctx)
+
+
 def explain(body):
     card = _card_arg(body)
     system = [{"type": "text", "text": TUTOR_PROMPT},
               {"type": "text", "text": "The card (JSON):\n" + json.dumps(card, ensure_ascii=False),
                "cache_control": {"type": "ephemeral"}}]
     if body.get("mode") == "fill":
-        out = call("explain_fill", system, [{"role": "user", "content": FILL_TASK}], FILL_SCHEMA)
+        out = call("explain_fill", params(system, [{"role": "user", "content": FILL_TASK}], FILL_SCHEMA))
         expl = out.get("option_explanations")
         if card.get("type") != "mcq":
             expl = None
@@ -405,7 +452,7 @@ def explain(body):
         messages.insert(0, {"role": "user", "content": "Explain this card to me in more depth."})
     if messages[-1]["role"] != "user":
         raise ApiError(400, "the last message must be from the user")
-    out = call("explain", system, messages, REPLY_SCHEMA)
+    out = call("explain", params(system, messages, REPLY_SCHEMA))
     if not (out.get("reply") or "").strip():
         raise ApiError(502, "AI returned an empty reply")
     return {"reply": out["reply"]}
@@ -422,7 +469,7 @@ def variants(body):
                "cache_control": {"type": "ephemeral"}}]
     task = f"Write exactly {count} variant card(s) of the original card."
     task += "\n\n" + LEECH_TASK if leech else " Set explanation and learn to null and videos to []."
-    out = call("variants", system, [{"role": "user", "content": task}], VARIANTS_SCHEMA)
+    out = call("variants", params(system, [{"role": "user", "content": task}], VARIANTS_SCHEMA))
 
     now, docs, dropped = now_ms(), [], 0
     orig_certs = card.get("certs") if isinstance(card.get("certs"), dict) else {}
@@ -484,7 +531,7 @@ def analyze(body):
         raise ApiError(400, f"unknown cert {code!r}")
     data, cards = stats.cert_stats(code, certs[code])
     system = [{"type": "text", "text": ANALYZE_PROMPT}]
-    out = call("analyze", system, [{"role": "user", "content": "Stats (JSON):\n" + json.dumps(data)}], ANALYZE_SCHEMA)
+    out = call("analyze", params(system, [{"role": "user", "content": "Stats (JSON):\n" + json.dumps(data)}], ANALYZE_SCHEMA))
 
     now, analysis_id = now_ms(), str(uuid.uuid4())
     overrides = []

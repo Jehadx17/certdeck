@@ -20,6 +20,7 @@ ALLOWED_HOSTS = [h.strip() for h in env("DJANGO_ALLOWED_HOSTS", "localhost,127.0
 
 CERTDECK_API_TOKEN = env("CERTDECK_API_TOKEN", "")
 ANTHROPIC_API_KEY = env("ANTHROPIC_API_KEY", "")
+CERTDECK_MODEL = env("CERTDECK_MODEL", "claude-opus-5-5")
 CERTDECK_MEDIA_DIR = Path(env("CERTDECK_MEDIA_DIR") or BASE_DIR / "media")
 CARDS_SCHEMA_PATH = BASE_DIR.parent / "docs" / "cards.schema.json"
 

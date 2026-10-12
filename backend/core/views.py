@@ -10,6 +10,8 @@ from datetime import datetime, timezone
 
 import jsonschema
 from django.conf import settings
+from django.db.models import Count, Sum
+from django.utils.timezone import now as tz_now
 from django.http import FileResponse
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny
@@ -18,7 +20,7 @@ from rest_framework.views import exception_handler as drf_exception_handler
 
 from . import ai, stats
 from .auth import ApiError
-from .models import Doc, now_ms, save_docs
+from .models import AiCall, Doc, now_ms, save_docs
 
 PAGE = 1000
 MEDIA_NAME = re.compile(r"([0-9a-f]{64})\.(png|jpg|jpeg|webp|gif)")
@@ -113,6 +115,20 @@ def variants(request):
 @api_view(["POST"])
 def analyze(request):
     return Response(ai.analyze(_body(request)))
+
+
+@api_view(["GET"])
+def usage(request):
+    """AI spend from the AiCall log: this calendar month (UTC) and all time."""
+    since = tz_now().replace(day=1, hour=0, minute=0, second=0, microsecond=0)
+    month = AiCall.objects.filter(created__gte=since)
+    agg = month.aggregate(usd=Sum("cost_usd"), calls=Count("id"))
+    return Response({
+        "month": since.strftime("%Y-%m"), "usd": float(agg["usd"] or 0), "calls": agg["calls"],
+        "batch_calls": month.filter(batch=True).count(),
+        "by_endpoint": {r["endpoint"]: float(r["usd"]) for r in month.values("endpoint").annotate(usd=Sum("cost_usd"))},
+        "all_time_usd": float(AiCall.objects.aggregate(usd=Sum("cost_usd"))["usd"] or 0),
+    })
 
 
 @api_view(["POST"])

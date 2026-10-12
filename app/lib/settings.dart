@@ -82,6 +82,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   late final url = TextEditingController(text: Api.url);
   late final token = TextEditingController(text: Api.token);
   bool showToken = false;
+  Future<dynamic>? usage = Api.configured ? Api.call('GET', 'usage') : null;
 
   String get stamp => DateTime.now().toIso8601String().substring(0, 10);
 
@@ -203,6 +204,24 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 if (context.mounted) toast(context, err ?? 'Synced');
               },
             ),
+          ),
+          FutureBuilder(
+            future: usage,
+            builder: (_, snap) {
+              final u = snap.data;
+              return ListTile(
+                leading: const Icon(Icons.payments_outlined),
+                title: const Text('AI spend this month'),
+                subtitle: Text(usage == null
+                    ? 'Connect the backend to see it'
+                    : snap.hasError
+                        ? 'Needs connection (tap to retry)'
+                        : u == null
+                            ? 'Loading…'
+                            : '\$${(u['usd'] as num).toStringAsFixed(2)} · ${u['calls']} calls (${u['batch_calls']} in background) · all time \$${(u['all_time_usd'] as num).toStringAsFixed(2)}'),
+                onTap: () => setState(() => usage = Api.call('GET', 'usage')),
+              );
+            },
           ),
           ListTile(
             leading: const Icon(Icons.tune),

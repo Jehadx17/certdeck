@@ -33,6 +33,8 @@ class AiCall(models.Model):
     cache_read_tokens = models.IntegerField(default=0)
     cache_creation_tokens = models.IntegerField(default=0)
     duration_ms = models.IntegerField(default=0)
+    cost_usd = models.DecimalField(max_digits=10, decimal_places=6, default=0)
+    batch = models.BooleanField(default=False)
     ok = models.BooleanField(default=False)
     error = models.TextField(blank=True)
     created = models.DateTimeField(auto_now_add=True)

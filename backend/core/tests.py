@@ -192,6 +192,12 @@ class ApiTests(TestCase):
 
         call = AiCall.objects.get()
         self.assertEqual((call.endpoint, call.ok, call.input_tokens, call.cache_read_tokens), ("generate", True, 100, 10))
+        # Opus 5.5: 100 in x $4 + 5 cache writes x $5 + 10 cache reads x $0.20 + 50 out x $20, per MTok
+        self.assertAlmostEqual(float(call.cost_usd), (100 * 4 + 5 * 5 + 10 * 0.2 + 50 * 20) / 1e6)
+        usage = self.client.get("/api/usage", **AUTH).json()
+        self.assertEqual((usage["calls"], usage["batch_calls"]), (1, 0))
+        self.assertAlmostEqual(usage["usd"], float(call.cost_usd))
+        self.assertAlmostEqual(usage["by_endpoint"]["generate"], float(call.cost_usd))
 
     def test_explain(self):
         card = {"id": "c1", "type": "mcq", "question": "Q?", "options": ["a", "b", "c"], "correct": [0]}

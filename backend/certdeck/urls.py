@@ -12,6 +12,7 @@ urlpatterns = [
     path("api/ai/variants", views.variants),
     path("api/ai/analyze", views.analyze),
     path("api/fsrs/optimize", views.optimize),
+    path("api/usage", views.usage),
     path("api/export", views.export),
     path("api/import", views.import_),
 ]
