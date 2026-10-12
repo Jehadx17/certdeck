@@ -69,6 +69,29 @@ class _GenerateTabState extends State<GenerateTab> with AutomaticKeepAliveClient
   @override
   bool get wantKeepAlive => true;
 
+  // Follow the active cert when it changes in Settings.
+  late String _active = App.cert['id'];
+  void _onChange() {
+    if (App.cert['id'] != _active && mounted) {
+      setState(() {
+        _active = cert = App.cert['id'];
+        domain = null;
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    changes.addListener(_onChange);
+  }
+
+  @override
+  void dispose() {
+    changes.removeListener(_onChange);
+    super.dispose();
+  }
+
   Json get certJ => App.certs.firstWhere((c) => c['id'] == cert);
 
   Future<void> _pick() async {

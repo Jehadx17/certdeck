@@ -91,7 +91,9 @@ class _CardsScreenState extends State<CardsScreen> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-          onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const CardEditor())), child: const Icon(Icons.add)),
+          tooltip: 'Add card',
+          onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const CardEditor())),
+          child: const Icon(Icons.add)),
       body: Live(
         load: () => Db.query('card', orderBy: 'updated_at DESC'),
         builder: (_, all) {

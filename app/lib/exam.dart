@@ -56,6 +56,21 @@ class _ExamScreenState extends State<ExamScreen> {
   final fresh = TextEditingController(text: '0');
   late Set<String> domains = {for (final d in cert['domains'] as List) d['id'] as String};
 
+  // Rebuild when the active cert changes in Settings (this tab is a const child of the shell's IndexedStack).
+  void _onChange() => setState(() {});
+
+  @override
+  void initState() {
+    super.initState();
+    changes.addListener(_onChange);
+  }
+
+  @override
+  void dispose() {
+    changes.removeListener(_onChange);
+    super.dispose();
+  }
+
   Future<void> _start() async {
     final n = int.tryParse(count.text) ?? 65;
     final freshN = min(n, int.tryParse(fresh.text) ?? 0);
