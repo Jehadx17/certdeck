@@ -1,0 +1,85 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://certdeck.mithaqstay.com/schema/cards.schema.json",
+  "title": "CertDeck export / import file",
+  "type": "object",
+  "required": ["format", "version", "cards"],
+  "properties": {
+    "format": {"const": "certdeck"},
+    "version": {"const": 1},
+    "exported_at": {"type": "string", "description": "ISO-8601 timestamp"},
+    "certs": {"type": "array", "items": {"type": "object"}, "description": "Optional cert docs' data (see docs/PROTOCOL.md)"},
+    "cards": {"type": "array", "items": {"$ref": "#/$defs/card"}},
+    "media": {
+      "type": "object",
+      "description": "Images referenced by cards: name (sha256hex.ext) -> base64 bytes",
+      "additionalProperties": {"type": "string"}
+    }
+  },
+  "$defs": {
+    "markdown": {"type": "string", "description": "Markdown. Fenced code blocks with a language get syntax highlighting."},
+    "card": {
+      "type": "object",
+      "required": ["type", "question"],
+      "properties": {
+        "id": {"type": "string", "description": "UUID; generated on import when missing"},
+        "type": {"enum": ["basic", "mcq", "cloze", "typed", "code", "occlusion", "ordering"]},
+        "question": {"$ref": "#/$defs/markdown", "description": "Front / MCQ stem / typed prompt / ordering prompt / occlusion caption. For cloze: text with {{answer}} or {{answer::hint}} blanks."},
+        "answer": {"$ref": "#/$defs/markdown", "description": "Back (basic, code, occlusion). For typed: the canonical answer."},
+        "options": {"type": "array", "items": {"type": "string"}, "description": "mcq: answer options (displayed shuffled)"},
+        "correct": {"type": "array", "items": {"type": "integer"}, "description": "mcq: indices of correct options. More than one = 'choose N' multiple-response."},
+        "option_explanations": {"type": "array", "items": {"type": "string"}, "description": "mcq: why each option is right or wrong (same order as options)"},
+        "accepted": {"type": "array", "items": {"type": "string"}, "description": "typed: other accepted answers"},
+        "items": {"type": "array", "items": {"type": "string"}, "description": "ordering: steps in the CORRECT order (displayed shuffled)"},
+        "code": {"type": "string", "description": "code: snippet shown with the question"},
+        "answer_code": {"type": "string", "description": "code: snippet shown with the answer"},
+        "language": {"type": "string", "description": "code: highlight language, e.g. yaml, json, bash, python"},
+        "image": {"type": "string", "description": "occlusion: media name of the base image"},
+        "masks": {
+          "type": "array",
+          "description": "occlusion: hidden regions, coordinates as fractions of the image size",
+          "items": {
+            "type": "object",
+            "required": ["x", "y", "w", "h"],
+            "properties": {"x": {"type": "number"}, "y": {"type": "number"}, "w": {"type": "number"}, "h": {"type": "number"}, "label": {"type": "string"}}
+          }
+        },
+        "target": {"type": ["integer", "null"], "description": "occlusion: index of the one mask being tested, or null = all masks"},
+        "question_images": {"type": "array", "items": {"type": "string"}, "description": "media names shown with the question"},
+        "answer_images": {"type": "array", "items": {"type": "string"}, "description": "media names shown with the answer"},
+        "explanation": {"$ref": "#/$defs/markdown", "description": "Why the right answer is right AND why each wrong option is wrong"},
+        "certs": {"type": "object", "additionalProperties": {"type": "string"}, "description": "cert code -> official domain id, e.g. {\"DVA-C02\": \"1\", \"SAA-C03\": \"3\"}"},
+        "tags": {"type": "array", "items": {"type": "string"}, "description": "free topic tags, e.g. lambda, sqs"},
+        "source": {"type": "string", "description": "manual | import | ai:<details> | a URL"},
+        "variant_of": {"type": ["string", "null"]},
+        "suspended": {"type": "boolean"},
+        "created_at": {"type": "integer", "description": "ms since epoch"},
+        "fsrs": {
+          "type": "object",
+          "description": "Scheduling state (optional on import; omitted = new card)",
+          "properties": {
+            "state": {"enum": [1, 2, 3], "description": "1 learning, 2 review, 3 relearning"},
+            "step": {"type": ["integer", "null"]},
+            "stability": {"type": ["number", "null"]},
+            "difficulty": {"type": ["number", "null"]},
+            "due": {"type": "integer"},
+            "last_review": {"type": ["integer", "null"]}
+          }
+        },
+        "new": {"type": "boolean", "description": "never reviewed"},
+        "lapses": {"type": "integer"},
+        "leech": {"type": "boolean"},
+        "misconception": {"type": "boolean"},
+        "priority": {"type": "integer", "description": "-2..2, AI override; higher = earlier in the queue"},
+        "leech_help": {"type": ["object", "null"], "description": "{explanation, learn, videos:[{title,url}]} from the AI leech helper"}
+      },
+      "allOf": [
+        {"if": {"properties": {"type": {"const": "mcq"}}}, "then": {"required": ["options", "correct"]}},
+        {"if": {"properties": {"type": {"const": "typed"}}}, "then": {"required": ["answer"]}},
+        {"if": {"properties": {"type": {"const": "ordering"}}}, "then": {"required": ["items"]}},
+        {"if": {"properties": {"type": {"const": "occlusion"}}}, "then": {"required": ["image", "masks"]}},
+        {"if": {"properties": {"type": {"const": "code"}}}, "then": {"anyOf": [{"required": ["code"]}, {"required": ["answer_code"]}]}}
+      ]
+    }
+  }
+}

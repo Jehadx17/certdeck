@@ -1,0 +1,209 @@
+{
+  "format": "certdeck",
+  "version": 1,
+  "exported_at": "2026-10-12T00:00:00Z",
+  "cards": [
+    {
+      "id": "6f1c2b7e-0001-4000-8000-000000000001",
+      "type": "basic",
+      "question": "What is the maximum execution time of an AWS Lambda function?",
+      "answer": "**15 minutes** (900 seconds).",
+      "explanation": "Lambda's timeout is configurable from 1 s up to 900 s. Longer jobs belong in Step Functions, ECS/Fargate, or AWS Batch.",
+      "certs": {
+        "DVA-C02": "1",
+        "SAA-C03": "3"
+      },
+      "tags": [
+        "lambda"
+      ],
+      "source": "manual"
+    },
+    {
+      "id": "6f1c2b7e-0001-4000-8000-000000000002",
+      "type": "mcq",
+      "question": "A developer needs to store session state for a stateless web app behind an ALB with **sub-millisecond** reads. Which service fits best?",
+      "options": [
+        "Amazon DynamoDB",
+        "Amazon ElastiCache for Redis",
+        "Amazon S3",
+        "Amazon RDS for MySQL"
+      ],
+      "correct": [
+        1
+      ],
+      "option_explanations": [
+        "DynamoDB gives single-digit *milli*second latency, not sub-millisecond (that needs DAX).",
+        "Correct: in-memory store with sub-millisecond latency, and a classic session store.",
+        "S3 is object storage with much higher latency per request.",
+        "A relational DB adds connection overhead and isn't built as a session cache."
+      ],
+      "explanation": "ElastiCache (Redis) is in-memory, so reads are sub-millisecond, which makes it the standard pattern for externalized sessions.",
+      "certs": {
+        "DVA-C02": "1"
+      },
+      "tags": [
+        "elasticache",
+        "sessions"
+      ],
+      "source": "manual"
+    },
+    {
+      "id": "6f1c2b7e-0001-4000-8000-000000000003",
+      "type": "mcq",
+      "question": "Which **two** services can trigger a Lambda function *asynchronously*? (Choose 2)",
+      "options": [
+        "Amazon S3 event notifications",
+        "Application Load Balancer",
+        "Amazon SNS",
+        "Amazon API Gateway (REST, default)",
+        "Amazon Kinesis Data Streams"
+      ],
+      "correct": [
+        0,
+        2
+      ],
+      "option_explanations": [
+        "Correct: S3 invokes Lambda asynchronously.",
+        "ALB invokes synchronously.",
+        "Correct: SNS invokes asynchronously.",
+        "API Gateway invokes synchronously by default.",
+        "Kinesis uses an event source mapping (poll-based), not async invoke."
+      ],
+      "explanation": "Async invokers put events on Lambda's internal queue (retries, DLQ/destinations). S3 and SNS are async; ALB and API Gateway are sync; Kinesis/SQS/DynamoDB Streams are poll-based.",
+      "certs": {
+        "DVA-C02": "1"
+      },
+      "tags": [
+        "lambda"
+      ],
+      "source": "manual"
+    },
+    {
+      "id": "6f1c2b7e-0001-4000-8000-000000000004",
+      "type": "cloze",
+      "question": "DynamoDB on-demand mode bills per {{request}}, while provisioned mode bills per {{capacity unit::RCU/WCU}} per hour.",
+      "explanation": "On-demand = pay per read/write request unit; provisioned = pay for RCU/WCU capacity you reserve.",
+      "certs": {
+        "DVA-C02": "1"
+      },
+      "tags": [
+        "dynamodb"
+      ],
+      "source": "manual"
+    },
+    {
+      "id": "6f1c2b7e-0001-4000-8000-000000000005",
+      "type": "typed",
+      "question": "AWS CLI command to get temporary credentials for an IAM role (service + subcommand)?",
+      "answer": "aws sts assume-role",
+      "accepted": [
+        "sts assume-role"
+      ],
+      "explanation": "`aws sts assume-role --role-arn ... --role-session-name ...` returns AccessKeyId, SecretAccessKey and SessionToken.",
+      "certs": {
+        "DVA-C02": "2"
+      },
+      "tags": [
+        "sts",
+        "iam"
+      ],
+      "source": "manual"
+    },
+    {
+      "id": "6f1c2b7e-0001-4000-8000-000000000006",
+      "type": "code",
+      "question": "What does this IAM policy allow?",
+      "code": "{\n  \"Version\": \"2012-10-17\",\n  \"Statement\": [{\n    \"Effect\": \"Allow\",\n    \"Action\": \"s3:GetObject\",\n    \"Resource\": \"arn:aws:s3:::reports/*\",\n    \"Condition\": {\"Bool\": {\"aws:SecureTransport\": \"true\"}}\n  }]\n}",
+      "language": "json",
+      "answer": "Reading objects in the `reports` bucket, **only over HTTPS**.",
+      "explanation": "`aws:SecureTransport` is true only for TLS requests. The resource `reports/*` covers objects, not the bucket itself (so no ListBucket).",
+      "certs": {
+        "DVA-C02": "2",
+        "SAA-C03": "1"
+      },
+      "tags": [
+        "iam",
+        "s3"
+      ],
+      "source": "manual"
+    },
+    {
+      "id": "6f1c2b7e-0001-4000-8000-000000000007",
+      "type": "occlusion",
+      "question": "Name the hidden service in this serverless pipeline.",
+      "image": "975e753489985555461c9e3325724e59beb4b3c74454b01481743bc6a5963cbd.png",
+      "masks": [
+        {
+          "x": 0.0417,
+          "y": 0.333,
+          "w": 0.25,
+          "h": 0.333,
+          "label": "API Gateway"
+        },
+        {
+          "x": 0.375,
+          "y": 0.333,
+          "w": 0.25,
+          "h": 0.333,
+          "label": "Lambda"
+        },
+        {
+          "x": 0.708,
+          "y": 0.333,
+          "w": 0.25,
+          "h": 0.333,
+          "label": "DynamoDB"
+        }
+      ],
+      "target": 1,
+      "answer": "Lambda",
+      "explanation": "API Gateway → Lambda → DynamoDB is the canonical serverless CRUD backend.",
+      "certs": {
+        "DVA-C02": "1"
+      },
+      "tags": [
+        "serverless"
+      ],
+      "source": "manual"
+    },
+    {
+      "id": "6f1c2b7e-0001-4000-8000-000000000008",
+      "type": "ordering",
+      "question": "Order the CodeDeploy lifecycle hooks for an EC2 in-place deployment.",
+      "items": [
+        "ApplicationStop",
+        "BeforeInstall",
+        "AfterInstall",
+        "ApplicationStart",
+        "ValidateService"
+      ],
+      "explanation": "Stop the old app → prepare (BeforeInstall) → copy files (Install) → configure (AfterInstall) → start → validate.",
+      "certs": {
+        "DVA-C02": "3"
+      },
+      "tags": [
+        "codedeploy"
+      ],
+      "source": "manual"
+    },
+    {
+      "id": "6f1c2b7e-0001-4000-8000-000000000009",
+      "type": "code",
+      "question": "Write a Deployment named `web` with 3 replicas of `nginx:1.27`.",
+      "answer_code": "apiVersion: apps/v1\nkind: Deployment\nmetadata:\n  name: web\nspec:\n  replicas: 3\n  selector:\n    matchLabels:\n      app: web\n  template:\n    metadata:\n      labels:\n        app: web\n    spec:\n      containers:\n      - name: nginx\n        image: nginx:1.27",
+      "language": "yaml",
+      "answer": "Or imperatively: `kubectl create deployment web --image=nginx:1.27 --replicas=3`",
+      "explanation": "`selector.matchLabels` must match the template labels, or the API rejects the Deployment.",
+      "certs": {
+        "CKAD": "2"
+      },
+      "tags": [
+        "deployment"
+      ],
+      "source": "manual"
+    }
+  ],
+  "media": {
+    "975e753489985555461c9e3325724e59beb4b3c74454b01481743bc6a5963cbd.png": "iVBORw0KGgoAAAANSUhEUgAAAPAAAAB4CAIAAABD1OhwAAABbklEQVR42u3dQQ2AMAxA0SrZCQkowAKaEDEHSJmg3cEBlyaEkrd8A23epadFa4v0m8IKBLQEtAS0BLSAloCWgJaAloAW0BLQEtAS0BLQAloCWgJaAloCWkBLQEtAS0BLQAtoCWgJaAloCWgBLQEtAS0BLQEtoCWgJaAloAX0Q1ePcmXWsR2zXJl513MvF9BAAw000EADDTTQQAMNNNBAAw000EADDTTQQAMNNNBAAw000EADDTTQQAMNNNBAAw000EADDTTQQAMN9PuNxKsIOjMv0EADDTTQQAMNNNBAOwodhUADDTTQQAMNNNBAAw000EADDTTQQAMNNNBAAw000EADDTTQQAMNNNBAAw000EADDTTQQAMNNNBAAw3010FLfpKVgJaAloAW0BLQEtAS0BLQAloCWgJaAloCWkBLQEtAS0ALaAloCWgJaAloAS0BLQEtAS0BLaAloCWgJaAloAW0BLQEtAS0BLSAlgp1A2kJJibhBgDqAAAAAElFTkSuQmCC"
+  }
+}
