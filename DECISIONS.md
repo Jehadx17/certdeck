@@ -61,3 +61,21 @@ Significant choices made while building CertDeck, newest at the bottom of each s
   versions rather than upgrading the SDK. JDK 17 and the Android SDK are installed under `~/opt` and
   `~/Android/Sdk`. Gradle heap capped at 1.5 GB (the laptop OOM-killed the default 4 GB).
 - The release keystore lives outside the repo in `~/.config/certdeck/release.jks` (`app/android/key.properties`, gitignored).
+
+## Deployment (VPS)
+- Read-only inspection found one other project, **wa-category** (atharflow.com), entirely in Docker. Its
+  nginx container owns :80/:443 and loads `conf.d` from that project's repo directory; Postgres runs in its
+  container (no host nginx or Postgres); `deploy` has docker access but no passwordless sudo.
+- CertDeck is its own compose project (`~/certdeck`, project `certdeck`): own Postgres 16 container + volume,
+  own media volume, own internal network, API published only on `127.0.0.1:18765`. Secrets live in
+  `~/certdeck/.env` (generated on the server, chmod 600). Code is shipped with `git archive` by
+  `deploy/deploy.sh`, so no GitHub credentials sit on the server.
+- Proxy integration (approved by the user): the API joins `wa-category_default` under the **unique alias
+  `certdeck-api`**. Docker DNS answers to service names, so a service named `backend` would have
+  been load-balanced into atharflow's traffic. One self-contained server block is added in their `conf.d`
+  (own resolver, variable `proxy_pass` so nginx starts even if CertDeck is down), followed by `nginx -t` and a graceful reload.
+- **Own certbot, never theirs:** their certbot deploy hook copies *every* renewed lineage over atharflow's
+  live cert. Ours writes HTTP-01 challenges into the shared webroot and publishes the cert into
+  `origin-cert/certdeck.mithaqstay.com/` (a dir their nginx already mounts and their git ignores). Their nginx
+  reloads itself every 6 h, which picks up our renewals.
+- FSRS re-optimization runs weekly in a small `certdeck-optimizer` container (a sleep loop; no host cron needed).

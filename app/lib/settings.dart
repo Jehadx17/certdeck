@@ -38,7 +38,7 @@ Future<int> importLocal(Json data) async {
   final rename = <String, String>{};
   for (final e in ((data['media'] as Map?) ?? {}).entries) {
     final name = e.key as String;
-    rename[name] = await Db.saveMedia(base64Decode(e.value as String), name.split('.').last);
+    rename[name] = await Db.saveMedia(base64Decode(e.value as String));
   }
   final cards = <Json>[];
   for (final raw in data['cards'] as List) {
@@ -108,12 +108,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
             initialValue: '${App.setting(key)}',
             textAlign: TextAlign.end,
             keyboardType: TextInputType.number,
-            onFieldSubmitted: (v) async {
+            onChanged: (v) async {
               final n = int.tryParse(v);
               if (n == null || n < 0) return;
               App.settings[key] = n;
               await App.saveSettings();
-              if (mounted) toast(context, 'Saved');
             },
           ),
         ),
@@ -143,122 +142,126 @@ class _SettingsScreenState extends State<SettingsScreen> {
         Padding(padding: const EdgeInsets.fromLTRB(16, 20, 16, 4), child: Text(t, style: TextStyle(color: cs.primary, fontWeight: FontWeight.bold)));
     return Scaffold(
       appBar: AppBar(title: const Text('Settings')),
-      body: ListView(children: [
-        header('Certifications'),
-        for (final c in App.certs)
-          ListTile(
-            leading: Radio<String>(value: c['id'], groupValue: App.settings['active_cert'], onChanged: (_) => _setCert(c, active: true)),
-            title: Text(c['code']),
-            subtitle: Text(c['exam_date'] == null ? 'No exam date' : 'Exam: ${c['exam_date']}'),
-            trailing: Row(mainAxisSize: MainAxisSize.min, children: [
-              if (c['exam_date'] != null) IconButton(icon: const Icon(Icons.clear), onPressed: () => _setCert(c, clearDate: true)),
-              IconButton(
-                icon: const Icon(Icons.event),
-                onPressed: () async {
-                  final now = DateTime.now();
-                  final d = await showDatePicker(
-                      context: context,
-                      firstDate: now.subtract(const Duration(days: 1)),
-                      lastDate: now.add(const Duration(days: 730)),
-                      initialDate: DateTime.tryParse(c['exam_date'] ?? '') ?? now.add(const Duration(days: 60)));
-                  if (d != null) _setCert(c, examDate: d.toIso8601String().substring(0, 10));
-                },
-              ),
-            ]),
-            onTap: () => _setCert(c, active: true),
-          ),
-        header('Study'),
-        _num('new_per_day', 'New cards per day'),
-        _num('max_reviews_per_day', 'Max reviews per day'),
-        _num('leech_threshold', 'Leech after N lapses'),
-        header('Backend & sync'),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: Column(children: [
-            TextField(controller: url, keyboardType: TextInputType.url, decoration: const InputDecoration(labelText: 'Server URL')),
-            TextField(
-              controller: token,
-              obscureText: !showToken,
-              decoration: InputDecoration(
-                  labelText: 'API token',
-                  suffixIcon: IconButton(
-                      icon: Icon(showToken ? Icons.visibility_off : Icons.visibility), onPressed: () => setState(() => showToken = !showToken))),
+      // Rebuild after syncs (a restore can change certs, exam dates and limits).
+      body: ValueListenableBuilder(
+        valueListenable: changes,
+        builder: (context, _, __) => ListView(children: [
+          header('Certifications'),
+          for (final c in App.certs)
+            ListTile(
+              leading: Radio<String>(value: c['id'], groupValue: App.settings['active_cert'], onChanged: (_) => _setCert(c, active: true)),
+              title: Text(c['code']),
+              subtitle: Text(c['exam_date'] == null ? 'No exam date' : 'Exam: ${c['exam_date']}'),
+              trailing: Row(mainAxisSize: MainAxisSize.min, children: [
+                if (c['exam_date'] != null) IconButton(icon: const Icon(Icons.clear), onPressed: () => _setCert(c, clearDate: true)),
+                IconButton(
+                  icon: const Icon(Icons.event),
+                  onPressed: () async {
+                    final now = DateTime.now();
+                    final d = await showDatePicker(
+                        context: context,
+                        firstDate: now.subtract(const Duration(days: 1)),
+                        lastDate: now.add(const Duration(days: 730)),
+                        initialDate: DateTime.tryParse(c['exam_date'] ?? '') ?? now.add(const Duration(days: 60)));
+                    if (d != null) _setCert(c, examDate: d.toIso8601String().substring(0, 10));
+                  },
+                ),
+              ]),
+              onTap: () => _setCert(c, active: true),
             ),
-            const SizedBox(height: 8),
-            Row(children: [
-              Expanded(child: FilledButton(onPressed: _connect, child: const Text('Save & sync'))),
+          header('Study'),
+          _num('new_per_day', 'New cards per day'),
+          _num('max_reviews_per_day', 'Max reviews per day'),
+          _num('leech_threshold', 'Leech after N lapses'),
+          header('Backend & sync'),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Column(children: [
+              TextField(controller: url, keyboardType: TextInputType.url, decoration: const InputDecoration(labelText: 'Server URL')),
+              TextField(
+                controller: token,
+                obscureText: !showToken,
+                decoration: InputDecoration(
+                    labelText: 'API token',
+                    suffixIcon: IconButton(
+                        icon: Icon(showToken ? Icons.visibility_off : Icons.visibility), onPressed: () => setState(() => showToken = !showToken))),
+              ),
+              const SizedBox(height: 8),
+              Row(children: [
+                Expanded(child: FilledButton(onPressed: _connect, child: const Text('Save & sync'))),
+              ]),
             ]),
-          ]),
-        ),
-        ValueListenableBuilder(
-          valueListenable: Api.lastSync,
-          builder: (_, v, __) => ListTile(
-            leading: const Icon(Icons.sync),
-            title: const Text('Sync now'),
-            subtitle: Text('Last sync: $v'),
+          ),
+          ValueListenableBuilder(
+            valueListenable: Api.lastSync,
+            builder: (_, v, __) => ListTile(
+              leading: const Icon(Icons.sync),
+              title: const Text('Sync now'),
+              subtitle: Text('Last sync: $v'),
+              onTap: () async {
+                final err = await Api.sync();
+                if (context.mounted) toast(context, err ?? 'Synced');
+              },
+            ),
+          ),
+          ListTile(
+            leading: const Icon(Icons.tune),
+            title: const Text('Re-optimize FSRS parameters'),
+            subtitle: Text(App.params == null
+                ? 'Using FSRS defaults (optimizes weekly on the server once you have enough reviews)'
+                : 'Using parameters optimized from your reviews'),
+            onTap: () => _run('Optimizing on the server…', () async {
+              await Api.sync();
+              final r = await Api.call('POST', 'fsrs/optimize', body: {}, timeout: const Duration(minutes: 5));
+              await Api.sync();
+              return r?['note']?.toString() ?? 'Optimized from ${r?['review_count']} reviews';
+            }),
+          ),
+          header('Import / export'),
+          ListTile(
+            leading: const Icon(Icons.upload_file),
+            title: const Text('Export cards to a file'),
+            subtitle: const Text('JSON with images inlined (share or save)'),
+            onTap: () => _run('Exporting…', () async {
+              await shareJson(await buildExport(), 'certdeck-$stamp.json');
+              return 'Exported';
+            }),
+          ),
+          ListTile(
+            leading: const Icon(Icons.download),
+            title: const Text('Import cards from a file'),
             onTap: () async {
-              final err = await Api.sync();
-              if (context.mounted) toast(context, err ?? 'Synced');
+              final data = await pickJson();
+              if (data != null && mounted) _run('Importing…', () async => 'Imported ${await importLocal(data)} cards');
             },
           ),
-        ),
-        ListTile(
-          leading: const Icon(Icons.tune),
-          title: const Text('Re-optimize FSRS parameters'),
-          subtitle: Text(App.params == null
-              ? 'Using FSRS defaults (optimizes weekly on the server once you have enough reviews)'
-              : 'Using parameters optimized from your reviews'),
-          onTap: () => _run('Optimizing on the server…', () async {
-            await Api.sync();
-            final r = await Api.call('POST', 'fsrs/optimize', body: {}, timeout: const Duration(minutes: 5));
-            await Api.sync();
-            return r?['note']?.toString() ?? 'Optimized from ${r?['review_count']} reviews';
-          }),
-        ),
-        header('Import / export'),
-        ListTile(
-          leading: const Icon(Icons.upload_file),
-          title: const Text('Export cards to a file'),
-          subtitle: const Text('JSON with images inlined (share or save)'),
-          onTap: () => _run('Exporting…', () async {
-            await shareJson(await buildExport(), 'certdeck-$stamp.json');
-            return 'Exported';
-          }),
-        ),
-        ListTile(
-          leading: const Icon(Icons.download),
-          title: const Text('Import cards from a file'),
-          onTap: () async {
-            final data = await pickJson();
-            if (data != null && mounted) _run('Importing…', () async => 'Imported ${await importLocal(data)} cards');
-          },
-        ),
-        ListTile(
-          leading: const Icon(Icons.cloud_download_outlined),
-          title: const Text('Export from server'),
-          subtitle: const Text('Downloads the backend\'s full card export'),
-          onTap: () => _run('Downloading export…', () async {
-            final data = await Api.call('GET', 'export', timeout: const Duration(minutes: 3));
-            await shareJson(Map<String, dynamic>.from(data), 'certdeck-server-$stamp.json');
-            return 'Exported';
-          }),
-        ),
-        ListTile(
-          leading: const Icon(Icons.cloud_upload_outlined),
-          title: const Text('Import a file through the server'),
-          subtitle: const Text('Server validates it against the schema, then it syncs down'),
-          onTap: () async {
-            final data = await pickJson();
-            if (data == null || !mounted) return;
-            _run('Uploading…', () async {
-              final r = await Api.call('POST', 'import', body: data, timeout: const Duration(minutes: 3));
-              await Api.sync();
-              return 'Server imported ${r['imported']} cards';
-            });
-          },
-        ),
-        const SizedBox(height: 40),
-      ]),
+          ListTile(
+            leading: const Icon(Icons.cloud_download_outlined),
+            title: const Text('Export from server'),
+            subtitle: const Text('Downloads the backend\'s full card export'),
+            onTap: () => _run('Downloading export…', () async {
+              final data = await Api.call('GET', 'export', timeout: const Duration(minutes: 3));
+              await shareJson(Map<String, dynamic>.from(data), 'certdeck-server-$stamp.json');
+              return 'Exported';
+            }),
+          ),
+          ListTile(
+            leading: const Icon(Icons.cloud_upload_outlined),
+            title: const Text('Import a file through the server'),
+            subtitle: const Text('Server validates it against the schema, then it syncs down'),
+            onTap: () async {
+              final data = await pickJson();
+              if (data == null || !mounted) return;
+              _run('Uploading…', () async {
+                final r = await Api.call('POST', 'import', body: data, timeout: const Duration(minutes: 3));
+                await Api.sync();
+                return 'Server imported ${r['imported']} cards';
+              });
+            },
+          ),
+          const SizedBox(height: 40),
+        ]),
+      ),
     );
   }
 }

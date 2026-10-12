@@ -153,13 +153,14 @@ class MaskPainter extends CustomPainter {
         }
       } else {
         canvas.drawRect(r, Paint()..color = tested && target != null ? accent : const Color(0xffb0b0b8));
-        if (selected == i)
+        if (selected == i) {
           canvas.drawRect(
               r,
               Paint()
                 ..color = Colors.red
                 ..style = PaintingStyle.stroke
                 ..strokeWidth = 3);
+        }
       }
     }
   }
@@ -459,6 +460,9 @@ Future<T?> busy<T>(BuildContext context, String label, Future<T> Function() f) a
     return await f();
   } on ApiError catch (e) {
     if (context.mounted) toast(context, e.message);
+    return null;
+  } catch (e) {
+    if (context.mounted) toast(context, 'Failed: $e');
     return null;
   } finally {
     if (context.mounted) Navigator.of(context, rootNavigator: true).pop();

@@ -21,7 +21,7 @@ void main() {
     // Device A: create + study a card with an image, all offline-capable local writes.
     await Db.open(dir: '${tmp.path}/a');
     await App.init();
-    final img = await Db.saveMedia(List.generate(64, (i) => i), 'png');
+    final img = await Db.saveMedia([0x89, 0x50, 0x4E, 0x47, ...List.generate(60, (i) => i)]);
     final card = await Db.put('card', {
       'type': 'mcq',
       'question': 'Q?',

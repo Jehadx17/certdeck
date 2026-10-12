@@ -139,12 +139,23 @@ class Db {
   // ---- media: content-addressed files (sha256.ext) ----
   static File mediaFile(String name) => File(p.join(mediaDir, name));
 
-  static Future<String> saveMedia(List<int> bytes, String ext, {bool uploaded = false}) async {
-    final name = '${sha256.convert(bytes)}.${ext.toLowerCase().replaceAll('jpeg', 'jpg')}';
+  /// Stores image bytes as `sha256.ext`; ext comes from the file's magic bytes (the server
+  /// accepts png/jpg/gif/webp only). Throws FormatException for anything else.
+  static Future<String> saveMedia(List<int> bytes) async {
+    final name = '${sha256.convert(bytes)}.${imageExt(bytes)}';
     final f = mediaFile(name);
     if (!await f.exists()) await f.writeAsBytes(bytes, flush: true);
-    await _db.insert('media', {'name': name, 'uploaded': uploaded ? 1 : 0}, conflictAlgorithm: ConflictAlgorithm.ignore);
+    await _db.insert('media', {'name': name, 'uploaded': 0}, conflictAlgorithm: ConflictAlgorithm.ignore);
     return name;
+  }
+
+  static String imageExt(List<int> b) {
+    bool starts(List<int> sig, [int at = 0]) => b.length >= at + sig.length && List.generate(sig.length, (i) => b[at + i]).join() == sig.join();
+    if (starts([0x89, 0x50, 0x4E, 0x47])) return 'png';
+    if (starts([0xFF, 0xD8, 0xFF])) return 'jpg';
+    if (starts([0x47, 0x49, 0x46])) return 'gif';
+    if (starts([0x52, 0x49, 0x46, 0x46]) && starts([0x57, 0x45, 0x42, 0x50], 8)) return 'webp';
+    throw const FormatException('Unsupported image format (use PNG, JPEG, GIF or WebP)');
   }
 
   static Future<List<String>> pendingMedia() async => (await _db.query('media', where: 'uploaded = 0')).map((r) => r['name'] as String).toList();

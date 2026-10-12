@@ -96,14 +96,16 @@ class _CardsScreenState extends State<CardsScreen> {
         load: () => Db.query('card', orderBy: 'updated_at DESC'),
         builder: (_, all) {
           final list = all.where(_match).toList();
-          if (list.isEmpty)
+          if (list.isEmpty) {
             return const Center(child: Text('No cards here yet.\nTap + to add one, or generate some in the AI tab.', textAlign: TextAlign.center));
+          }
           return ListView.separated(
             itemCount: list.length + 1,
             separatorBuilder: (_, __) => const Divider(height: 1),
             itemBuilder: (_, i) {
-              if (i == 0)
+              if (i == 0) {
                 return Padding(padding: const EdgeInsets.all(8), child: Text('${list.length} cards', style: const TextStyle(color: Colors.white54)));
+              }
               final c = list[i - 1];
               final certJ = App.cert;
               return ListTile(
@@ -325,7 +327,7 @@ Future<String?> pickImage(BuildContext context) async {
       final r = await http.get(Uri.parse(url)).timeout(const Duration(seconds: 30));
       final type = r.headers['content-type'] ?? '';
       if (r.statusCode != 200 || !type.startsWith('image/')) throw Exception('not an image (${r.statusCode} $type)');
-      return Db.saveMedia(r.bodyBytes, type.split('/').last.split(';').first.replaceAll('svg+xml', 'svg'));
+      return await Db.saveMedia(r.bodyBytes);
     } catch (e) {
       if (context.mounted) toast(context, 'Could not download image: $e');
       return null;
@@ -333,7 +335,12 @@ Future<String?> pickImage(BuildContext context) async {
   }
   final x = await ImagePicker().pickImage(source: src == 'camera' ? ImageSource.camera : ImageSource.gallery, maxWidth: 2000, imageQuality: 85);
   if (x == null) return null;
-  return Db.saveMedia(await x.readAsBytes(), x.path.split('.').last);
+  try {
+    return await Db.saveMedia(await x.readAsBytes());
+  } on FormatException catch (e) {
+    if (context.mounted) toast(context, e.message);
+    return null;
+  }
 }
 
 class CardEditor extends StatefulWidget {
@@ -404,11 +411,12 @@ class _CardEditorState extends State<CardEditor> {
           if (correct.contains(keep[j])) j
       ];
     }
-    if (type == 'ordering')
+    if (type == 'ordering') {
       d['items'] = [
         for (final c in items)
           if (c.text.trim().isNotEmpty) c.text.trim()
       ];
+    }
     if (type == 'occlusion') d['masks'] = masks;
     d['certs'] = {
       for (final e in certs.entries)

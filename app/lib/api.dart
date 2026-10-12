@@ -94,7 +94,11 @@ class Api {
     try {
       for (final name in await Db.pendingMedia()) {
         final f = Db.mediaFile(name);
-        if (await f.exists()) await call('PUT', 'media/$name', bytes: await f.readAsBytes());
+        try {
+          if (await f.exists()) await call('PUT', 'media/$name', bytes: await f.readAsBytes());
+        } on ApiError catch (e) {
+          if (e.offline) rethrow; // rejected by the server: skip it rather than block every future sync
+        }
         await Db.markMediaUploaded(name);
       }
       var cursor = int.parse(await Db.meta('cursor') ?? '0');
@@ -112,7 +116,7 @@ class Api {
         for (final name in cardMedia(c)) {
           if (await Db.mediaFile(name).exists()) continue;
           try {
-            await Db.saveMedia(await call('GET', 'media/$name') as List<int>, name.split('.').last, uploaded: true);
+            await Db.mediaFile(name).writeAsBytes(await call('GET', 'media/$name') as List<int>, flush: true); // already on the server
           } on ApiError catch (e) {
             if (e.offline) rethrow; // missing on server: skip, the card shows a placeholder
           }

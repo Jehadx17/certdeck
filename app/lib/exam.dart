@@ -372,8 +372,9 @@ class _ExamResultsState extends State<ExamResults> {
     for (final (i, s) in widget.states.indexed) {
       final answered = switch (s.type) { 'mcq' => s.selected.isNotEmpty, 'ordering' => true, _ => s.typed.trim().isNotEmpty || s.selfGrade != null };
       // Flagged = unsure; unanswered questions aren't fed to FSRS.
-      if (answered)
+      if (answered) {
         await recordAnswer(s.card, conf: widget.flagged.contains(i) ? Conf.unsure : Conf.sure, correct: s.correct, source: 'exam', answer: s.answer);
+      }
       qs.add({
         'card_id': s.card['id'],
         'domain': domainOf(s.card, widget.cert),
