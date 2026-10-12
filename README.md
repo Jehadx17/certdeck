@@ -110,3 +110,7 @@ Format: [docs/cards.schema.json](docs/cards.schema.json) (JSON Schema). Example:
   card history, in-app generation and one-tap actions, override revert, MCQ and CKAD exam simulations, import
   from file, export via share sheet, AI chat, and offline mode (network blocked for the app): studying works, AI shows
   "Needs connection", and offline reviews sync on reconnect.
+- Final acceptance on the HONOR Magic8 Lite (the OnePlus 12 was unavailable; done there at the user's request): clean
+  install starts empty → token → a card created and studied offline → reconnect sync → uninstall/reinstall → token →
+  card, FSRS state and review history restored. Server test data was then wiped; the app was left installed,
+  connected and empty.
