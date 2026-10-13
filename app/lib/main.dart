@@ -49,8 +49,8 @@ class CertDeck extends StatelessWidget {
         cardTheme: CardTheme(color: scheme.surfaceContainerLow, elevation: 0, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
         appBarTheme: AppBarTheme(backgroundColor: scheme.surface, scrolledUnderElevation: 0),
       ),
-      // Keyed by language: switching rebuilds every screen with the new strings and direction.
-      home: UpdateGate(key: ValueKey(App.lang), child: const Shell()),
+      // Keyed by language and role: switching either rebuilds every screen (strings, direction, which tabs).
+      home: UpdateGate(key: ValueKey('${App.lang}/${App.role}'), child: const Shell()),
     ));
   }
 }

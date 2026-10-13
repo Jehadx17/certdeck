@@ -455,3 +455,12 @@ Future<void> applyDiagrams(List? diagrams) async {
 }
 
 Future<bool> hasQueuedJobs() async => (await Db.query('job')).any((j) => j['status'] == 'queued');
+
+/// The server is working for us right now (a material being processed, an assessment being prepared): its
+/// progress and results arrive by sync, so poll often.
+Future<bool> serverBusy() async =>
+    (await Db.query('prep')).any((p) => const {'queued', 'running'}.contains(p['status'])) ||
+    (await Db.query('ingest')).any((i) => const {'queued', 'converting', 'mapping'}.contains(i['status']));
+
+/// Waiting on the Batch API (background cards or a preparation): results come within the hour, poll gently.
+Future<bool> serverWaiting() async => await hasQueuedJobs() || (await Db.query('prep')).any((p) => p['status'] == 'waiting');

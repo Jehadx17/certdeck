@@ -33,9 +33,12 @@ class Api {
     token = await _store.read(key: 'token');
     url = await _store.read(key: 'url') ?? defaultUrl;
     lastSync.value = await Db.meta('last_sync') ?? 'never';
-    // Push local changes, and pull background generations as soon as they finish.
-    _timer ??= Timer.periodic(const Duration(minutes: 2), (_) async {
-      if (await Db.dirtyCount() > 0 || await hasQueuedJobs()) sync().ignore();
+    // Every 30 s while the server is processing material or preparing an assessment for us (so progress shows);
+    // every 2 min to push local changes or to collect Batch API results.
+    var ticks = 0;
+    _timer ??= Timer.periodic(const Duration(seconds: 30), (_) async {
+      ticks++;
+      if (await serverBusy() || (ticks % 4 == 0 && (await Db.dirtyCount() > 0 || await serverWaiting()))) sync().ignore();
     });
   }
 
