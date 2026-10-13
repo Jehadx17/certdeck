@@ -88,11 +88,11 @@ class _ShellState extends State<Shell> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
-    // Students see only the college side; the owner also keeps the cert tabs.
+    // Students see only College and Settings (COLLEGE.md); the owner also keeps the cert tabs.
     final tabs = [
       if (App.isOwner) (const TodayScreen(), Icons.today_outlined, Icons.today, 'Certs'),
       (const CollegeScreen(), Icons.school_outlined, Icons.school, t('College')),
-      (const CardsScreen(), Icons.style_outlined, Icons.style, t('Cards')),
+      if (App.isOwner) (const CardsScreen(), Icons.style_outlined, Icons.style, t('Cards')), // students open cards per course
       if (App.isOwner) (const AiScreen(), Icons.auto_awesome_outlined, Icons.auto_awesome, 'AI'),
       if (App.isOwner) (const ExamScreen(), Icons.timer_outlined, Icons.timer, 'Exam'),
       (const SettingsScreen(), Icons.settings_outlined, Icons.settings, t('Settings')),

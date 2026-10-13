@@ -136,9 +136,8 @@ Rates from the platform pricing page (Opus 5.5: $4 in, $5 cache write, $0.20 cac
   was rebuilt with a `(user, doc_id)` key. Migration 0003 made the existing token the owner's and moved all existing
   data (208 docs, 28 images, AI history) to it, keeping every sync seq, so the phone kept working untouched. Checked
   first on a copy of the production rows, with a full DB + media backup on the server (`/opt/certdeck/backups/`).
-- **A student's tabs:** College, Cards and Settings. "Only Courses" (COLLEGE.md) is read as "none of my cert
-  screens": Certs, AI and Exam are hidden. The Cards tab stays because it lists only that student's own course cards
-  (search, edit, delete a bad AI card); the server never sends another account's docs.
+- **A student's tabs** (1.3.6): College and Settings only, as COLLEGE.md says. A course's cards open from its
+  course screen; the owner keeps Certs, Cards, AI and Exam.
 - **Tokens are stored as sha256 hashes** and managed with `manage.py users` over SSH (create, rotate, disable, cap,
   delete). No admin UI, no sign-up (out of scope).
 - **Media ownership:** files stay content-addressed and stored once, but `Media(user, name)` decides who may read one;
