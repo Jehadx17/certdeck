@@ -533,7 +533,8 @@ class _CardViewState extends State<CardView> {
                   },
             title: Md('${r['point']}', style: const TextStyle(fontSize: 14)),
             subtitle: g != null && ((g['points'] as List?)?.elementAtOrNull(i)?['note'] ?? '').toString().isNotEmpty
-                ? Text('${(g['points'] as List)[i]['note']}', style: const TextStyle(fontSize: 12))
+                ? Text('${(g['points'] as List)[i]['note']}',
+                    style: const TextStyle(fontSize: 12), textDirection: isRtl('${(g['points'] as List)[i]['note']}') ? TextDirection.rtl : TextDirection.ltr)
                 : null,
             secondary: Text('${(((r['weight'] as num?) ?? 0) * 100).round()}%', style: const TextStyle(fontSize: 12, color: Colors.white54)),
           ),

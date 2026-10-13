@@ -1,3 +1,4 @@
+import 'package:certdeck/cards.dart';
 import 'package:markdown/markdown.dart' as md;
 import 'package:certdeck/logic.dart';
 import 'package:certdeck/widgets.dart' show clozeBack, clozeFront;
@@ -40,6 +41,13 @@ void main() {
     ];
     final firstEight = orderNew(cards, cert).take(8).map((c) => (c['certs'] as Map)['X']).toList();
     expect(firstEight.where((d) => d == '1').length, 6);
+  });
+
+  test('list titles: LaTeX as readable text, cloze answers, no Markdown marks', () {
+    expect(plain(r'Evaluate $\int\frac{e^x}{1+e^{2x}}\,dx$.'), 'Evaluate ∫eˣ/(1+e²ˣ) dx.');
+    expect(plain(r'$$\int_0^3 x^2\,dx$$'), '∫₀³ x² dx');
+    expect(plain('The **default** {{constructor::kind}}'), 'The default constructor');
+    expect(plain('my_var stays'), 'my_var stays');
   });
 
   test('cloze blanks inside inline code', () {

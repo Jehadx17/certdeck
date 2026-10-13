@@ -112,7 +112,7 @@ class _PracticeSetupState extends State<PracticeSetup> {
           ]),
           Padding(
               padding: const EdgeInsets.only(top: 6),
-              child: Text(t('New questions you haven\'t seen cost about \$0.02 each and need a connection; the rest come from your cards.'),
+              child: Text(t('New questions you haven\'t seen cost about \$0.05 each and need a connection; the rest come from your cards.'),
                   style: const TextStyle(color: Colors.white54, fontSize: 12))),
           const SizedBox(height: 16),
           FilledButton.icon(onPressed: _start, icon: const Icon(Icons.timer_outlined), label: Text(t('Start'))),
@@ -256,7 +256,7 @@ class _PracticeResultsState extends State<PracticeResults> {
           ExpansionTile(
             leading: Icon(!s.graded ? Icons.help : (s.score >= .85 ? Icons.check_circle : (s.score >= .4 ? Icons.adjust : Icons.cancel)),
                 color: !s.graded ? Colors.amber : (s.score >= .85 ? Colors.green : (s.score >= .4 ? Colors.amber : cs.error))),
-            title: Text('${i + 1}. ${plain(s.card['question'])}', maxLines: 2, overflow: TextOverflow.ellipsis),
+            title: autoText('${i + 1}. ${plain(s.card['question'])}', maxLines: 2, overflow: TextOverflow.ellipsis),
             subtitle: Text([if (widget.flagged.contains(i)) t('flagged'), if (s.written && s.graded) '${(s.score * 100).round()}%'].join(' · ')),
             childrenPadding: const EdgeInsets.all(12),
             children: [

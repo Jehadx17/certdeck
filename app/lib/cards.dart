@@ -10,7 +10,52 @@ import 'i18n.dart';
 import 'logic.dart';
 import 'widgets.dart';
 
-String plain(String? s) => (s ?? '').replaceAll(RegExp(r'[*_`#>\[\]]|\{\{|\}\}'), '').replaceAll(RegExp(r'\s+'), ' ').trim();
+/// Card text for one-line lists: cloze blanks show their answer, LaTeX becomes readable symbols, Markdown marks go.
+String plain(String? s) {
+  final text = (s ?? '').replaceAllMapped(RegExp(r'\{\{(.+?)(?:::.+?)?\}\}'), (m) => m[1]!);
+  final out = text.replaceAllMapped(RegExp(r'\$\$([\s\S]+?)\$\$|\$([^$]+?)\$'), (m) => texToText(m[1] ?? m[2]!));
+  return out.replaceAll(RegExp(r'[*`#>]|(?<!\w)_|_(?!\w)'), '').replaceAll(RegExp(r'\s+'), ' ').trim();
+}
+
+const _tex = {
+  'int': '∫', 'sum': 'Σ', 'prod': 'Π', 'sqrt': '√', 'pi': 'π', 'theta': 'θ', 'alpha': 'α', 'beta': 'β', 'gamma': 'γ',
+  'delta': 'δ', 'Delta': 'Δ', 'lambda': 'λ', 'mu': 'μ', 'sigma': 'σ', 'omega': 'ω', 'phi': 'φ', 'epsilon': 'ε', 'infty': '∞',
+  'cdot': '·', 'times': '×', 'div': '÷', 'pm': '±', 'le': '≤', 'leq': '≤', 'ge': '≥', 'geq': '≥', 'ne': '≠', 'neq': '≠',
+  'to': '→', 'rightarrow': '→', 'Rightarrow': '⇒', 'iff': '⇔', 'approx': '≈', 'in': '∈', 'forall': '∀', 'exists': '∃',
+  'neg': '¬', 'land': '∧', 'lor': '∨', 'cup': '∪', 'cap': '∩', 'subseteq': '⊆', 'emptyset': '∅', 'partial': '∂',
+};
+const _sup = {
+  '0': '⁰', '1': '¹', '2': '²', '3': '³', '4': '⁴', '5': '⁵', '6': '⁶', '7': '⁷', '8': '⁸', '9': '⁹', '+': '⁺', '-': '⁻', '=': '⁼', '(': '⁽',
+  ')': '⁾', 'a': 'ᵃ', 'b': 'ᵇ', 'c': 'ᶜ', 'd': 'ᵈ', 'e': 'ᵉ', 'f': 'ᶠ', 'g': 'ᵍ', 'h': 'ʰ', 'i': 'ⁱ', 'j': 'ʲ', 'k': 'ᵏ', 'l': 'ˡ', 'm': 'ᵐ',
+  'n': 'ⁿ', 'o': 'ᵒ', 'p': 'ᵖ', 'r': 'ʳ', 's': 'ˢ', 't': 'ᵗ', 'u': 'ᵘ', 'v': 'ᵛ', 'w': 'ʷ', 'x': 'ˣ', 'y': 'ʸ', 'z': 'ᶻ',
+};
+const _sub = {'0': '₀', '1': '₁', '2': '₂', '3': '₃', '4': '₄', '5': '₅', '6': '₆', '7': '₇', '8': '₈', '9': '₉', '+': '₊', '-': '₋', 'n': 'ₙ', 'i': 'ᵢ', 'k': 'ₖ'};
+
+/// Superscript/subscript characters when every character has one, else ^(…) / _(…).
+String _script(String s, Map<String, String> map, String mark) =>
+    s.split('').every(map.containsKey) ? s.split('').map((c) => map[c]).join() : '$mark($s)';
+
+/// A rough plain-text rendering of LaTeX for titles (the card itself renders the real formula).
+String texToText(String tex) {
+  var t = tex.replaceAll(RegExp(r'\\[,;!: ]'), ' ');
+  // Symbols first (before fractions merge \int with the letters after it), keeping \frac and \sqrt for below.
+  t = t.replaceAllMapped(RegExp(r'\\([A-Za-z]+)'), (m) => const {'frac', 'dfrac', 'tfrac', 'sqrt'}.contains(m[1])
+      ? m[0]!
+      : _tex[m[1]] ?? (const {'left', 'right', 'displaystyle', 'mathrm', 'text', 'operatorname', 'quad'}.contains(m[1]) ? '' : m[1]!));
+  t = t.replaceAllMapped(RegExp(r'\^\{([^{}]*)\}|\^([A-Za-z0-9])'), (m) => _script(m[1] ?? m[2]!, _sup, '^'));
+  t = t.replaceAllMapped(RegExp(r'_\{([^{}]*)\}|_([A-Za-z0-9])'), (m) => _script(m[1] ?? m[2]!, _sub, '_'));
+  for (var i = 0; i < 3; i++) {
+    t = t.replaceAllMapped(RegExp(r'\\[dt]?frac\{([^{}]*)\}\{([^{}]*)\}'), (m) => '${_group(m[1]!)}/${_group(m[2]!)}');
+    t = t.replaceAllMapped(RegExp(r'\\sqrt\{([^{}]*)\}'), (m) => '√${_group(m[1]!)}');
+  }
+  return t.replaceAll(RegExp(r'[{}]'), '');
+}
+
+String _group(String s) => RegExp(r'^[^\s+\-*/=]+$').hasMatch(s) ? s : '($s)';
+
+/// Text that takes its direction from its own content (English in an Arabic UI, and the other way round).
+Widget autoText(String s, {TextStyle? style, int? maxLines, TextOverflow? overflow}) =>
+    Text(s, style: style, maxLines: maxLines, overflow: overflow, textDirection: isRtl(s) ? TextDirection.rtl : TextDirection.ltr);
 
 String dueLabel(Json c) {
   if (isNew(c)) return t('new');
@@ -134,7 +179,7 @@ class _CardsScreenState extends State<CardsScreen> {
               final c = list[i - 1];
               final certJ = App.cert;
               return ListTile(
-                title: Text(plain(c['question']), maxLines: 2, overflow: TextOverflow.ellipsis),
+                title: autoText(plain(c['question']), maxLines: 2, overflow: TextOverflow.ellipsis),
                 subtitle: Text([
                   t(typeLabels[c['type']] ?? c['type']),
                   if (domainOf(c, certJ).isNotEmpty) 'D${domainOf(c, certJ)}',
@@ -288,7 +333,7 @@ class _CardDetailState extends State<CardDetail> {
               for (final v in variants)
                 ListTile(
                     dense: true,
-                    title: Text(plain(v['question']), maxLines: 2),
+                    title: autoText(plain(v['question']), maxLines: 2),
                     onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => CardDetail(v['id'])))),
             ],
             const SizedBox(height: 16),

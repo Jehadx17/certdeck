@@ -173,7 +173,7 @@ const _ar = <String, String>{
   'Questions': 'الأسئلة',
   'Minutes': 'الدقائق',
   'New AI questions': 'أسئلة جديدة بالذكاء الاصطناعي',
-  'New questions you haven\'t seen cost about \$0.02 each and need a connection; the rest come from your cards.': 'الأسئلة الجديدة التي لم ترها تكلف نحو 0.02\$ للسؤال وتحتاج اتصالًا؛ والباقي من بطاقاتك.',
+  'New questions you haven\'t seen cost about \$0.05 each and need a connection; the rest come from your cards.': 'الأسئلة الجديدة التي لم ترها تكلف نحو 0.05\$ للسؤال وتحتاج اتصالًا؛ والباقي من بطاقاتك.',
   'Past attempts': 'المحاولات السابقة',
   'None yet': 'لا شيء بعد',
   '{n} questions': '{n} سؤال',

@@ -32,7 +32,9 @@ String countdown(int? d) => d == null
         ? t('Today')
         : d == 1
             ? t('Tomorrow')
-            : t('In {n} days', {'n': d});
+            : App.lang == 'ar'
+                ? (d == 2 ? 'بعد يومين' : (d <= 10 ? 'بعد $d أيام' : 'بعد $d يومًا')) // Arabic dual and plural forms
+                : t('In {n} days', {'n': d});
 
 Widget header(BuildContext context, String text, {Widget? trailing}) => Padding(
       padding: const EdgeInsets.fromLTRB(4, 20, 4, 6),
@@ -977,7 +979,7 @@ class TriageScreen extends StatelessWidget {
             for (final c in cards.take(60))
               ListTile(
                 dense: true,
-                title: Text(plain(c['question']), maxLines: 2, overflow: TextOverflow.ellipsis),
+                title: autoText(plain(c['question']), maxLines: 2, overflow: TextOverflow.ellipsis),
                 trailing: Text('★' * (s.weight(c) * 5).round(), style: const TextStyle(color: Colors.amber, fontSize: 11)),
               ),
           ],

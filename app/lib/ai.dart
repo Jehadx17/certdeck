@@ -240,7 +240,7 @@ class _GenerateTabState extends State<GenerateTab> with AutomaticKeepAliveClient
         for (final c in made)
           ListTile(
               dense: true,
-              title: Text(plain(c['question']), maxLines: 2, overflow: TextOverflow.ellipsis),
+              title: autoText(plain(c['question']), maxLines: 2, overflow: TextOverflow.ellipsis),
               subtitle: Text(typeLabels[c['type']] ?? ''),
               onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => CardDetail(c['id'])))),
       ],
