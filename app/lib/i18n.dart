@@ -304,4 +304,6 @@ const _ar = <String, String>{
   'Another': 'صورة أخرى',
   'Connecting & restoring…': 'جارٍ الاتصال والاستعادة…',
   'Connected. Everything is synced.': 'تم الاتصال، وكل شيء متزامن.',
+  'The server doesn\'t recognise this token. Nothing was changed.': 'الخادم لا يتعرف على هذا الرمز. لم يتغير شيء.',
+  'Needs connection to check the token. Nothing was changed.': 'يحتاج اتصالًا للتحقق من الرمز. لم يتغير شيء.',
 };

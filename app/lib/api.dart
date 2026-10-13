@@ -50,6 +50,15 @@ class Api {
   /// from an empty local database so the new account restores cleanly (never mix two people's data).
   /// Returns null on success, else why it didn't switch.
   static Future<String?> connect(String newUrl, String newToken) async {
+    newUrl = newUrl.trim().replaceAll(RegExp(r'/+$'), '');
+    // Check the new token with the server before touching anything: a typo must never cost local data.
+    try {
+      final r = await http.get(Uri.parse('$newUrl/api/me'), headers: {'Authorization': 'Bearer ${newToken.trim()}'}).timeout(const Duration(seconds: 30));
+      if (r.statusCode == 401) return 'The server doesn\'t recognise this token. Nothing was changed.';
+      if (r.statusCode >= 400) return 'Server error (HTTP ${r.statusCode}). Nothing was changed.';
+    } on Exception {
+      return 'Needs connection to check the token. Nothing was changed.';
+    }
     final switching = configured && newToken.trim() != token;
     if (switching) {
       if ((await Db.meta('uploads') ?? '{}') != '{}') return 'Finish the uploads in progress first (or wait until they are done).';

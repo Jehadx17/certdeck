@@ -222,6 +222,19 @@ def page_pdfs(path, pages):
     return out
 
 
+def page_chars(path):
+    """Characters of text on each page (what the density-based cost estimate uses)."""
+    from pypdf import PdfReader
+
+    out = []
+    for page in PdfReader(str(path)).pages:
+        try:
+            out.append(len("".join((page.extract_text() or "").split())))
+        except Exception:  # noqa: BLE001
+            out.append(0)
+    return out
+
+
 def page_texts(path, limit=200):
     """First [limit] characters of each page's text layer (a cheap digest for mapping big books)."""
     from pypdf import PdfReader

@@ -252,3 +252,14 @@ class CollegeTests(TestCase):
             Image.new("RGB", (400, 600), "white").save(buf, "JPEG")
             self.assertEqual(self.upload(mid, buf.getvalue(), n=n).json()["type"], "jpg")
         self.assertEqual(ingest.build_pdf(self.owner, mid), 2)
+
+
+class ScopePagesTests(TestCase):
+    def test_boundary_pages_are_read_once(self):
+        m = {"id": "m1"}
+        sec = lambda i, a, b: (f"m1/s{i}", m, {"start": a, "end": b, "level": 2}, {})
+        scope = [sec(1, 4, 5), sec(2, 5, 6), sec(3, 6, 9)]  # neighbours share their boundary page
+        self.assertEqual(college._scope_pages(scope), {"m1/s1": [4, 5], "m1/s2": [6], "m1/s3": [7, 8, 9]})
+        self.assertEqual(college._scope_pages(scope, skip={"m1/s1"}), {"m1/s2": [6], "m1/s3": [7, 8, 9]})
+        # Dense prose holds far more knowledge points per page than slides.
+        self.assertGreater(college._expected_kps([1300] * 10), 3 * college._expected_kps([350] * 10) / 2)

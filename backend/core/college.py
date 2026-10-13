@@ -335,7 +335,8 @@ def map_material(user, m):
         if sp and 1 <= sp.get("start", 0) <= sp.get("end", 0) <= last:
             syllabus_pages = (sp["start"], min(sp["end"], sp["start"] + 9))
     structure = _clean_sections(sections, last)
-    ingest.set_ingest(user, mid, structure=structure, lang=lang, status="ready", progress=1, ready_at=now_ms())
+    ingest.set_ingest(user, mid, structure=structure, lang=lang, chars=ingest.page_chars(pdf), status="ready", progress=1,
+                      ready_at=now_ms())
     if m.get("kind") == "syllabus":
         propose_assessments(user, m, (1, min(last, 10)))
     elif syllabus_pages:
@@ -486,23 +487,59 @@ def _chunks(seq, n):
     return [seq[i:i + n] for i in range(0, len(seq), n)]
 
 
+def _scope_pages(scope, skip=()):
+    """{section key: its pages}, each page given only to the first section that holds it (neighbouring sections
+    often share their boundary page, which would otherwise be read, and carded, twice)."""
+    taken, out = set(), {}
+    for key, m, s, ing in scope:
+        pages = [p for p in range(s["start"], s["end"] + 1) if (m["id"], p) not in taken]
+        taken.update((m["id"], p) for p in pages)
+        if key not in skip and pages:
+            out[key] = pages
+    return out
+
+
+def _chars(user, m, ing):
+    """Text characters per page of a material (stored at mapping time; computed for older materials)."""
+    if ing.get("chars") is None:
+        ing = ingest.set_ingest(user, m["id"], chars=ingest.page_chars(ingest.material_pdf(user, m["id"])))
+    return ing["chars"]
+
+
+# Calibrated on real material (DECISIONS.md "Estimates"): one knowledge point per ~180 characters of text (at least
+# 1.5 per page: figures, formulas), ~1.9 cards per point, ~$0.0124 of WRITE-model tokens per card.
+CHARS_PER_KP, MIN_KPS_PER_PAGE, CARDS_PER_KP = 180, 1.5, 1.9
+
+
+def _expected_kps(chars):
+    return sum(max(MIN_KPS_PER_PAGE, c / CHARS_PER_KP) for c in chars)
+
+
+def _generation_usd(cards):
+    wp = ai.PRICES.get(settings.CERTDECK_MODEL, (4, 5, 0.2, 20))
+    return cards * (100 * wp[0] + 600 * wp[3]) / 1e6
+
+
 def estimate(user, a):
-    """Dollar estimate for preparing [a] now (and through the Batch API)."""
+    """Dollar estimate for preparing [a] now (and through the Batch API), from how much text the pages hold."""
     scope = _scope(user, a)
     extracted = {k.get("section") for k in _kps(user, a.get("course_id"))}
-    pages = 0
-    for key, m, s, ing in scope:
-        if key not in extracted:
-            pages += s["end"] - s["start"] + 1
+    todo = _scope_pages(scope, skip=extracted)
+    by_key = {x[0]: x for x in scope}
+    pages, new_kps = 0, 0.0
+    for key, plist in todo.items():
+        _, m, s, ing = by_key[key]
+        chars = _chars(user, m, ing)
+        pages += len(plist)
+        new_kps += _expected_kps([chars[p - 1] for p in plist if p - 1 < len(chars)])
     rp, wp = ai.PRICES.get(read_model(), (2, 2.5, 0.2, 10)), ai.PRICES.get(settings.CERTDECK_MODEL, (4, 5, 0.2, 20))
     keys = {x[0] for x in scope}
     old_kps = [k for k in _kps(user, a.get("course_id"), keys)]
     uncovered = len([k for k in old_kps if k["id"] not in _covered(user, a.get("course_id"))])
-    new_kps = pages * 1.3
-    cards = (new_kps + uncovered) * 1.6
-    # Per page ~2,000 input tokens and ~500 output (incl. thinking); per card ~150 input and ~900 output.
+    cards = (new_kps + uncovered) * CARDS_PER_KP
+    # Per page ~2,000 input tokens and ~500 output (incl. thinking) for the READ model.
     extract = pages * 2000 * rp[0] / 1e6 + pages * 500 * rp[3] / 1e6
-    generate = cards * (150 * wp[0] + 900 * wp[3]) / 1e6 + math.ceil(cards / 30) * 3000 * wp[0] / 1e6
+    generate = _generation_usd(cards)
     sheets = ((len(old_kps) + new_kps) * 120 * wp[0] + 9000 * wp[3]) / 1e6 if scope else 0
     prio = ((len(old_kps) + new_kps) * 40 * rp[0] + 2000 * rp[3]) / 1e6 if scope else 0
     usd = extract + generate + sheets + prio
@@ -548,14 +585,15 @@ def _stage_requests(user, prep, a, stage):
     reqs = []
     if stage == "extract":
         done = {k.get("section") for k in _kps(user, course_id)}
+        todo = _scope_pages(scope, skip=done)
         for key, m, s, ing in scope:
-            if key in done:
+            if key not in todo:
                 continue
             ctx_base = {"section": key, "material_id": m["id"], "lang": ing.get("lang")}
             sys_ = [{"type": "text", "text": EXTRACT_PROMPT, "cache_control": {"type": "ephemeral"}}]
             head = f"Course material: {m.get('title', '')} › {s['title']}."
             pdf = ingest.material_pdf(user, m["id"])
-            for pages in _chunks(list(range(s["start"], s["end"] + 1)), PAGES_PER_REQUEST):
+            for pages in _chunks(todo[key], PAGES_PER_REQUEST):
                 content = _page_blocks(pdf, pages) + [{"type": "text", "text": f"{head} Extract its knowledge points."}]
                 reqs.append((f"x{len(reqs)}", params(sys_, [{"role": "user", "content": content}], KPS_SCHEMA,
                                                      model=read_model()), ctx_base))
@@ -724,6 +762,11 @@ def advance(user, prep_doc_id):
             else:
                 reqs = _stage_requests(user, prep, a, stage)
                 ctxs = {cid: ctx for cid, _, ctx in reqs}
+                if stage == "generate" and reqs:
+                    # The real number of knowledge points is known now: check the budget before the costly stage.
+                    n = sum(len(ctx["kp_ids"]) for ctx in ctxs.values())
+                    usd = _generation_usd(n * CARDS_PER_KP) * (0.5 if prep["mode"] == "batch" else 1)
+                    ai.check_budget(user, usd)
                 if reqs and prep["mode"] == "batch" and stage != "prioritize":
                     ai.check_budget(user)
                     batch = ai._batches().create(requests=[{"custom_id": cid, "params": p} for cid, p, _ in reqs])

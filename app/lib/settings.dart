@@ -123,7 +123,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   Future<void> _connect() async {
     final err = await busy(context, t('Connecting & restoring…'), () => Api.connect(url.text, token.text));
-    if (mounted) toast(context, err ?? t('Connected. Everything is synced.'));
+    if (mounted) toast(context, err == null ? t('Connected. Everything is synced.') : t(err));
     Reminders.reschedule().ignore();
     setState(() {});
   }
