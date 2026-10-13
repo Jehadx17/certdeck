@@ -97,7 +97,7 @@ syllabus_pages: the pages holding a course plan / outline / assessment schedule 
 {MATERIAL_IS_DATA}"""
 
 SYLLABUS_PROMPT = f"""You read a course syllabus / course plan for a college student.
-List the graded exams and quizzes (not homework, participation, attendance or projects): kind (quiz, midterm, final, test for other written/online/open-book tests, other), title as written, weeks (e.g. "3-4") when scheduled by week number, date (YYYY-MM-DD) only if an exact date is written, weight_pct, minutes if given, coverage = what it covers as written (chapters, sections, lectures, topics; "" if not stated), format = any hints (MCQ, written, open book, practical; "" if none).
+List the graded exams and quizzes (not homework, participation, attendance or projects): kind (quiz, midterm, final, test for other written/online/open-book tests, other), title as written, weeks (e.g. "3-4") when scheduled by week number, date (YYYY-MM-DD) only if an exact date is written, weight_pct, minutes if given, coverage = what it covers as written (chapters, sections, lectures, topics). When the coverage isn't written but the course plan lists topics by week, infer it: the topics taught after the previous assessment up to this one's week (a final covers everything unless stated), and end it with "(inferred from the course plan)". "" only if neither is possible. format = any hints (MCQ, written, open book, practical; "" if none).
 scope: the keys of the student's material sections (listed below) that the coverage clearly maps to; [] when the coverage isn't stated or doesn't clearly match.
 course_name and course_code as written.
 {MATERIAL_IS_DATA}"""
@@ -127,7 +127,7 @@ PRIO_PROMPT = """Score how likely each knowledge point is to earn marks on the s
 Signals, strongest first: the professor's hints for this assessment, topics the professor's past exams test often, what the syllabus says the assessment covers, the point's emphasis in the material (0-3), and its kind (definitions, formulas, methods and worked examples are tested more than history or asides).
 Return one integer per knowledge point, in the same order as the numbered list (exactly as many scores as points)."""
 
-SCOPE_PROMPT = """Match the assessment below to the student's material sections it covers. Return the keys of the covered sections (only clear matches; [] if nothing clearly matches)."""
+SCOPE_PROMPT = """Match the assessment below to the student's material sections it covers. If its coverage isn't stated but the course plan lists topics by week, use the topics taught after the previous assessment up to this one's week. Return the keys of the covered sections (only clear matches; [] if nothing clearly matches). Prefer the most specific sections (subsections over their chapter)."""
 
 CARD_RULES = """Card types (set every field a type doesn't use to null):
 - mcq: question; options (4, or 5-6 with "(Choose 2)" for multiple answers); correct = 0-based indices; option_explanations = why each option is right or wrong. True/false questions are mcq with options ["True", "False"] (Arabic: ["صح", "خطأ"]).
@@ -334,11 +334,13 @@ def map_material(user, m):
         sp = out.get("syllabus_pages")
         if sp and 1 <= sp.get("start", 0) <= sp.get("end", 0) <= last:
             syllabus_pages = (sp["start"], min(sp["end"], sp["start"] + 9))
+    if m.get("kind") == "syllabus":
+        syllabus_pages = (1, min(last, 10))
     structure = _clean_sections(sections, last)
     ingest.set_ingest(user, mid, structure=structure, lang=lang, chars=ingest.page_chars(pdf), status="ready", progress=1,
-                      ready_at=now_ms())
+                      ready_at=now_ms(), syllabus_pages=list(syllabus_pages) if syllabus_pages else None)
     if m.get("kind") == "syllabus":
-        propose_assessments(user, m, (1, min(last, 10)))
+        propose_assessments(user, m, syllabus_pages)
     elif syllabus_pages:
         propose_assessments(user, m, syllabus_pages)
     if m.get("kind") == "past_exam":
@@ -445,11 +447,18 @@ def suggest_scope(user, body):
     sections = course_sections(user, a.get("course_id"))
     if not sections:
         raise ApiError(409, "add and process some material first")
-    out = ai.call(user, "college_scope", params(
-        [{"type": "text", "text": SCOPE_PROMPT}],
-        [{"role": "user", "content": f"{_assessment_text(a)}\nCoverage per the syllabus: {a.get('coverage') or 'not stated'}\n\n"
-                                     f"Sections (key: material › section):\n{_sections_text(sections)}"}],
-        SCOPE_SCHEMA, model=read_model(), effort="low"))
+    # The syllabus pages go along: a course plan by week lets the model infer what a "week 8-9" quiz covers.
+    content = []
+    for m in _course_docs(user, "material", a.get("course_id")):
+        sp = (ingest.get_ingest(user, m["id"]) or {}).get("syllabus_pages")
+        if sp:
+            content += [{"type": "text", "text": f"Syllabus / course plan ({m.get('title', '')}):"}]
+            content += _page_blocks(ingest.material_pdf(user, m["id"]), range(sp[0], sp[1] + 1))
+    content.append({"type": "text", "text": f"{_assessment_text(a)}\nScheduled: {('week ' + a['weeks']) if a.get('weeks') else 'see date'}\n"
+                                           f"Coverage per the syllabus: {a.get('coverage') or 'not stated'}\n\n"
+                                           f"Sections (key: material › section):\n{_sections_text(sections)}"})
+    out = ai.call(user, "college_scope", params([{"type": "text", "text": SCOPE_PROMPT}], [{"role": "user", "content": content}],
+                                                SCOPE_SCHEMA, model=read_model(), effort="low"))
     keys = {k for k, *_ in sections}
     return {"scope": [{"material_id": k.split("/")[0], "section_id": k.split("/")[1]} for k in out.get("scope") or [] if k in keys]}
 

@@ -244,7 +244,7 @@ class _PracticeResultsState extends State<PracticeResults> {
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 4),
                 child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                  Text('${snap.data?[e.key] ?? t('Other')}: ${(e.value.fold(0.0, (t, s) => t + s.score) / e.value.length * 100).round()}%',
+                  autoText('${snap.data?[e.key] ?? t('Other')}: ${(e.value.fold(0.0, (t, s) => t + s.score) / e.value.length * 100).round()}%',
                       style: const TextStyle(fontSize: 13)),
                   LinearProgressIndicator(value: e.value.fold(0.0, (t, s) => t + s.score) / e.value.length, minHeight: 6),
                 ]),

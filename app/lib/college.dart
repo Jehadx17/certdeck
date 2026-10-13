@@ -88,7 +88,7 @@ class CollegeScreen extends StatelessWidget {
                   Card(
                     child: ListTile(
                       leading: const Icon(Icons.school_outlined),
-                      title: Text(c['name'] ?? ''),
+                      title: autoText(c['name'] ?? ''),
                       subtitle: Text([
                         if ((c['code'] ?? '').toString().isNotEmpty) c['code'],
                         if (next[c['id']] != null) '${next[c['id']]!['title']}: ${countdown(daysUntil(next[c['id']]!['date']))}',
@@ -311,7 +311,7 @@ class AssessmentTile extends StatelessWidget {
     return Card(
       child: ListTile(
         leading: Icon(proposed ? Icons.help_outline : Icons.event_available, color: proposed ? Colors.amber : null),
-        title: Text('${a['title']}'),
+        title: autoText('${a['title']}'),
         subtitle: Text([
           if (proposed) t('Proposed from the syllabus: tap to confirm'),
           if (!proposed) countdown(d),
@@ -359,7 +359,7 @@ class MaterialTile extends StatelessWidget {
             return Card(
               child: ListTile(
                 leading: Icon(materialKinds[m['kind']]?.$1 ?? Icons.insert_drive_file_outlined),
-                title: Text(m['title'] ?? '', maxLines: 2, overflow: TextOverflow.ellipsis),
+                title: autoText(m['title'] ?? '', maxLines: 2, overflow: TextOverflow.ellipsis),
                 subtitle: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                   Text(statusText(status, ing, up), style: TextStyle(color: status == 'failed' ? Colors.redAccent : Colors.white60, fontSize: 13)),
                   if (status == 'failed' && err != null) Text('$err', style: const TextStyle(color: Colors.redAccent, fontSize: 12)),
@@ -760,13 +760,13 @@ class _ScopePickerState extends State<ScopePicker> {
               for (final (m, secs) in snap.data!) ...[
                 Padding(
                     padding: const EdgeInsets.fromLTRB(16, 16, 16, 4),
-                    child: Text(m['title'] ?? '', style: TextStyle(color: Theme.of(context).colorScheme.primary, fontWeight: FontWeight.bold))),
+                    child: autoText(m['title'] ?? '', style: TextStyle(color: Theme.of(context).colorScheme.primary, fontWeight: FontWeight.bold))),
                 for (final s in secs)
                   CheckboxListTile(
                     dense: true,
                     contentPadding: EdgeInsetsDirectional.only(start: s['level'] == 2 ? 36 : 8, end: 8),
                     value: picked.contains('${m['id']}/${s['id']}'),
-                    title: Text('${s['title']}', style: TextStyle(fontWeight: s['level'] == 1 ? FontWeight.bold : null)),
+                    title: autoText('${s['title']}', style: TextStyle(fontWeight: s['level'] == 1 ? FontWeight.bold : null)),
                     subtitle: Text('${t('p.')} ${s['start']}–${s['end']}'),
                     onChanged: (v) {
                       setState(() {
@@ -896,7 +896,7 @@ class ReadinessCard extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(vertical: 4),
                   child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                     Row(children: [
-                      Expanded(child: Text(snap.data?[sc.key] ?? '…', maxLines: 1, overflow: TextOverflow.ellipsis, style: const TextStyle(fontSize: 13))),
+                      Expanded(child: autoText(snap.data?[sc.key] ?? '…', maxLines: 1, overflow: TextOverflow.ellipsis, style: const TextStyle(fontSize: 13))),
                       Text(t('{m}/{n} known · {s} seen', {'m': sc.mastered, 'n': sc.cards, 's': sc.seen}), style: const TextStyle(fontSize: 12, color: Colors.white60)),
                     ]),
                     const SizedBox(height: 3),
