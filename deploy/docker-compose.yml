@@ -22,8 +22,8 @@ services:
     image: certdeck-api:latest
     restart: unless-stopped
     env_file: ../../.env
-    environment: {POSTGRES_HOST: certdeck-db, CERTDECK_MEDIA_DIR: /data/media}
-    volumes: [media:/data/media]
+    environment: {POSTGRES_HOST: certdeck-db, CERTDECK_MEDIA_DIR: /data/media, CERTDECK_RELEASE_DIR: /data/release}
+    volumes: [media:/data/media, /opt/certdeck/release:/data/release:ro]  # app updates (deploy/release-apk.sh)
     depends_on: {certdeck-db: {condition: service_healthy}}
     networks: [internal]
     ports: ["127.0.0.1:18765:8000"]
@@ -43,7 +43,8 @@ services:
     image: certdeck-api:latest
     restart: unless-stopped
     env_file: ../../.env
-    environment: {POSTGRES_HOST: certdeck-db}
+    environment: {POSTGRES_HOST: certdeck-db, CERTDECK_MEDIA_DIR: /data/media}  # diagrams are saved as media
+    volumes: [media:/data/media]
     depends_on: {certdeck-api: {condition: service_started}}
     networks: [internal]
     command: ["sh", "-c", "while :; do python manage.py poll_jobs; sleep 60; done"]

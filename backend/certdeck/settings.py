@@ -24,6 +24,8 @@ CERTDECK_MODEL = env("CERTDECK_MODEL", "claude-opus-5-5")
 # Background diagrams for cards (Batch API, about $0.005 per card checked); "false" turns them off.
 CERTDECK_AUTO_DIAGRAMS = env("CERTDECK_AUTO_DIAGRAMS", "true").lower() in ("1", "true", "yes")
 CERTDECK_MEDIA_DIR = Path(env("CERTDECK_MEDIA_DIR") or BASE_DIR / "media")
+# The published app update: certdeck.apk + latest.json, written by deploy/release-apk.sh.
+CERTDECK_RELEASE_DIR = Path(env("CERTDECK_RELEASE_DIR") or BASE_DIR / "release")
 CARDS_SCHEMA_PATH = BASE_DIR.parent / "docs" / "cards.schema.json"
 
 INSTALLED_APPS = ["core"]

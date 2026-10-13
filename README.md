@@ -35,11 +35,12 @@ flutter test                                      # logic checks
 CERTDECK_TEST_URL=http://127.0.0.1:8765 CERTDECK_TEST_TOKEN=devtoken flutter test test/sync_test.dart   # needs a fresh backend DB (SQLITE_PATH=/tmp/x.sqlite3)
 ```
 
-Updating the app = bump `version:` in `app/pubspec.yaml`, rebuild, `adb install -r` (data is kept).
-
-No USB? Upload the APK and open the link on the phone (nginx serves `/opt/certdeck/dl/` at `/dl/`, no listing):
-`scp app/build/app/outputs/flutter-apk/app-release.apk root@169.58.7.222:/opt/certdeck/dl/certdeck-<random>.apk`
-→ `https://certdeck.mithaqstay.com/dl/certdeck-<random>.apk`.
+**Updating the app (forced, from the server):** bump `version:` in `app/pubspec.yaml`, `flutter build apk --release`,
+then `deploy/release-apk.sh`. It uploads the APK to `/opt/certdeck/release/` (served to the app by `GET /api/app/latest`
+and `/api/app/apk`, token only) and prints a browser link for first installs (`/dl/…`). Every phone checks on open and
+resume: if the server has a newer build, the app locks, downloads it (sha256-checked) and installs it, without a prompt on
+Android 12+ once CertDeck may "install unknown apps" (asked once). Offline it keeps working and retries later.
+Data is kept across updates (same signing key).
 
 First run: **Settings → Backend & sync** → server URL `https://certdeck.mithaqstay.com` + API token →
 **Save & sync**. On a new phone this restores everything.

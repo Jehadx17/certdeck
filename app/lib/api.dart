@@ -78,7 +78,7 @@ class Api {
       }
       throw ApiError(msg);
     }
-    if (method == 'GET' && path.startsWith('media/')) return r.bodyBytes;
+    if (method == 'GET' && (path.startsWith('media/') || path == 'app/apk')) return r.bodyBytes;
     return r.bodyBytes.isEmpty ? null : jsonDecode(utf8.decode(r.bodyBytes));
   }
 

@@ -8,6 +8,7 @@ import 'exam.dart';
 import 'home.dart';
 import 'logic.dart';
 import 'settings.dart';
+import 'update.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -16,6 +17,7 @@ Future<void> main() async {
   await Api.load();
   runApp(const CertDeck());
   Api.sync().ignore(); // sync on open
+  Updater.check().ignore();
 }
 
 class CertDeck extends StatelessWidget {
@@ -35,7 +37,7 @@ class CertDeck extends StatelessWidget {
         cardTheme: CardTheme(color: scheme.surfaceContainerLow, elevation: 0, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
         appBarTheme: AppBarTheme(backgroundColor: scheme.surface, scrolledUnderElevation: 0),
       ),
-      home: const Shell(),
+      home: const UpdateGate(child: Shell()),
     );
   }
 }
@@ -63,7 +65,10 @@ class _ShellState extends State<Shell> with WidgetsBindingObserver {
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state == AppLifecycleState.resumed) Api.sync().ignore();
+    if (state == AppLifecycleState.resumed) {
+      Api.sync().ignore();
+      Updater.check().ignore();
+    }
   }
 
   @override

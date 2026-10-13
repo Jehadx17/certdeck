@@ -61,6 +61,16 @@ Significant choices made while building CertDeck, newest at the bottom of each s
 - Single-writer rule kept: the job doc carries `{card_id, image}` and the app appends the image to the card's
   `answer_images` (like retags). The app applies jobs before its media pass so the image arrives in the same sync.
 
+## App updates (2026-10-13)
+- The user asked for forced updates from the VPS. Android doesn't let a sideloaded app update silently in general, but
+  since Android 12 an app may update *itself* without a prompt (PackageInstaller `USER_ACTION_NOT_REQUIRED` + the
+  `UPDATE_PACKAGES_WITHOUT_USER_ACTION` permission, target SDK requirement met by 34), after the user grants
+  "install unknown apps" once. Older Android or an OEM that insists falls back to the system's one-tap confirm.
+- "Forced" = when the app learns of a newer build it covers the UI until the update is installed (cancelling just asks
+  again on the next resume). It never blocks offline: studying must not depend on the network.
+- The release lives outside the web root (`/opt/certdeck/release`, mounted read-only into the API) and is served only
+  with the token; the `/dl/` link is a hard link for first installs on a new phone.
+
 ## Exams
 - Formats checked against official guides on 2026-10-12: DVA-C02 and SAA-C03 = 65 questions (50 scored),
   130 min, scaled 100–1000, pass 720; CKAD = performance-based, 2 h, pass 66%, 5 domains (20/20/15/25/20),

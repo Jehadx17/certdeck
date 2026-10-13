@@ -15,6 +15,8 @@ urlpatterns = [
     path("api/usage", views.usage),
     path("api/export", views.export),
     path("api/import", views.import_),
+    path("api/app/latest", views.app_latest),
+    path("api/app/apk", views.app_apk),
 ]
 
 

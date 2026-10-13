@@ -117,6 +117,19 @@ class ApiTests(TestCase):
 
     # ---------- import / export ----------
 
+    def test_app_release(self):
+        self.assertEqual(self.client.get("/api/app/latest", **AUTH).status_code, 404)
+        release = Path(tempfile.mkdtemp())
+        self.addCleanup(shutil.rmtree, release)
+        (release / "latest.json").write_text('{"version_code": 3, "version_name": "1.2.0", "sha256": "ab"}')
+        (release / "certdeck.apk").write_bytes(b"PK apk")
+        with override_settings(CERTDECK_RELEASE_DIR=release):
+            self.assertEqual(self.client.get("/api/app/latest").status_code, 401)
+            self.assertEqual(self.client.get("/api/app/latest", **AUTH).json()["version_code"], 3)
+            r = self.client.get("/api/app/apk", **AUTH)
+            self.assertEqual((r["Content-Type"], b"".join(r.streaming_content)),
+                             ("application/vnd.android.package-archive", b"PK apk"))
+
     def test_import_export_roundtrip(self):
         example = json.loads(EXAMPLE.read_text())
         r = self.post("/api/import", example)

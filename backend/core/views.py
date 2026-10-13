@@ -97,6 +97,23 @@ def media(request, name):
     return FileResponse(path.open("rb"), content_type=MEDIA_TYPES[name.rsplit(".", 1)[1]])
 
 
+@api_view(["GET"])
+def app_latest(request):
+    """The newest published Android build: {version_code, version_name, sha256}. The app updates itself to it."""
+    path = settings.CERTDECK_RELEASE_DIR / "latest.json"
+    if not path.exists():
+        raise ApiError(404, "no app release published")
+    return Response(json.loads(path.read_text()))
+
+
+@api_view(["GET"])
+def app_apk(request):
+    path = settings.CERTDECK_RELEASE_DIR / "certdeck.apk"
+    if not path.exists():
+        raise ApiError(404, "no app release published")
+    return FileResponse(path.open("rb"), content_type="application/vnd.android.package-archive")
+
+
 @api_view(["POST"])
 def generate(request):
     return Response(ai.generate(_body(request)))
