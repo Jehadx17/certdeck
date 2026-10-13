@@ -361,7 +361,8 @@ def map_material(user, m):
 
 
 def _outline(pdf):
-    """Top-level PDF bookmarks as sections, when the file has a usable outline."""
+    """Top-level PDF bookmarks as sections, when the file has a usable outline: one that groups pages (PowerPoint
+    exports carry a bookmark per slide, which is no structure at all)."""
     from pypdf import PdfReader
 
     reader = PdfReader(str(pdf))
@@ -370,7 +371,7 @@ def _outline(pdf):
     except Exception:  # noqa: BLE001 - malformed outlines are common
         return []
     items = sorted({(p, t.strip()) for t, p in items if t and t.strip()})
-    if len(items) < 2:
+    if len(items) < 2 or len(items) > max(3, len(reader.pages) // 4):
         return []
     return [{"title": t, "level": 1, "start": p, "end": (items[i + 1][0] - 1 if i + 1 < len(items) else 10 ** 6),
              "kind": "content"} for i, (p, t) in enumerate(items)]
