@@ -18,7 +18,7 @@ services:
       retries: 20
 
   certdeck-api:
-    build: {context: .., dockerfile: deploy/Dockerfile, target: app}
+    build: {context: .., dockerfile: deploy/Dockerfile}
     image: certdeck-api:latest
     restart: unless-stopped
     env_file: ../../.env
@@ -64,26 +64,9 @@ services:
     cpus: 1.0
     mem_limit: 2g
 
-  # Lecture recordings -> transcripts. The VPS also runs other production projects, so this is capped hard:
-  # 2 of 4 CPUs, 3 GB RAM, the lowest CPU priority and scheduler share, one recording at a time.
-  certdeck-whisper:
-    build: {context: .., dockerfile: deploy/Dockerfile, target: whisper}
-    image: certdeck-whisper:latest
-    restart: unless-stopped
-    env_file: ../../.env
-    environment: {POSTGRES_HOST: certdeck-db, CERTDECK_UPLOAD_DIR: /data/uploads, WHISPER_THREADS: "2", WHISPER_MODELS: /models,
-                  HF_HOME: /models/hf, HOME: /models}
-    volumes: [uploads:/data/uploads, whisper-models:/models]
-    depends_on: {certdeck-api: {condition: service_started}}
-    networks: [internal]
-    cpus: 2.0
-    cpu_shares: 256
-    mem_limit: 3g
-
 networks:
   internal: {}
 volumes:
   pgdata: {}
   media: {}
   uploads: {}
-  whisper-models: {}

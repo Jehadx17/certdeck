@@ -1,17 +1,15 @@
-"""Course material on disk: resumable uploads, type checks, conversion to one PDF (or audio for Whisper), pages.
+"""Course material on disk: resumable uploads, type checks, conversion to one PDF, pages.
 
 Layout: <CERTDECK_UPLOAD_DIR>/<account id>/<material id>/
   <n>.part            file n while it uploads (chunks appended at the offset the server reports)
   <n>.<ext>           file n once its sha256 matched
   material.pdf        every page of the material in order (PDFs, converted slides/docs, photos)
-  transcript.json     recordings: [[start_s, end_s, text], ...] (the audio is deleted once this exists)
 
 Everything uploaded is untrusted: types come from magic bytes (never the name), sizes are capped, and office files
 are converted by LibreOffice in a throwaway profile with a timeout.
 """
 import hashlib
 import io
-import json
 import logging
 import os
 import re
@@ -33,8 +31,7 @@ CHUNK_MAX = 8 * 1024 * 1024
 FILE_MAX = 600 * 1024 * 1024
 FILES_MAX = 40  # files per material (photos)
 MIN_FREE = 3 * 1024 ** 3  # keep 3 GB free on the server's disk
-KINDS = ("book", "slides", "notes", "photos", "recording", "syllabus", "past_exam")
-AUDIO = {"mp3", "m4a", "wav", "ogg", "aac", "flac", "amr", "webm", "mp4", "mov", "mkv", "3gp"}
+KINDS = ("book", "slides", "notes", "photos", "syllabus", "past_exam")
 OFFICE = {"pptx", "ppt", "docx", "doc", "odp", "odt"}
 IMAGES = {"png", "jpg", "webp", "gif"}
 
@@ -89,7 +86,7 @@ def upload_status(user, material_id, n):
 
 
 def sniff(path):
-    """File type from its first bytes: an extension from AUDIO|OFFICE|IMAGES|{'pdf'}, or None."""
+    """File type from its first bytes: an extension from OFFICE|IMAGES|{'pdf'}, or None."""
     with open(path, "rb") as f:
         head = f.read(64)
     if head.startswith(b"%PDF"):
@@ -102,8 +99,6 @@ def sniff(path):
         return "gif"
     if head[:4] == b"RIFF" and head[8:12] == b"WEBP":
         return "webp"
-    if head[:4] == b"RIFF" and head[8:12] == b"WAVE":
-        return "wav"
     if head.startswith(b"PK\x03\x04"):
         try:
             names = zipfile.ZipFile(path).namelist()
@@ -118,25 +113,6 @@ def sniff(path):
         return None
     if head.startswith(b"\xd0\xcf\x11\xe0\xa1\xb1\x1a\xe1"):
         return "ppt"  # legacy Office (ppt or doc); LibreOffice detects which
-    if head[4:8] == b"ftyp":
-        brand = head[8:12]
-        if brand.startswith((b"heic", b"heix", b"mif1", b"msf1")):
-            return None  # HEIC photos: the app sends JPEG
-        return "m4a" if brand.startswith((b"M4A", b"M4B")) else "mp4"
-    if head.startswith(b"ID3") or head[:2] in (b"\xff\xfb", b"\xff\xf3", b"\xff\xf2"):
-        return "mp3"
-    if head[:2] in (b"\xff\xf1", b"\xff\xf9"):
-        return "aac"
-    if head.startswith(b"OggS"):
-        return "ogg"
-    if head.startswith(b"fLaC"):
-        return "flac"
-    if head.startswith(b"#!AMR"):
-        return "amr"
-    if head.startswith(b"\x1aE\xdf\xa3"):
-        return "webm"
-    if head.startswith(b"\x00\x00\x00\x14ftypqt") or head[4:8] == b"moov":
-        return "mov"
     return None
 
 
@@ -156,9 +132,9 @@ def upload_done(user, material_id, n, sha256):
         part.unlink()
         raise ApiError(400, "upload corrupted (sha256 mismatch), please upload this file again")
     kind = sniff(part)
-    if kind not in AUDIO | OFFICE | IMAGES | {"pdf"}:
+    if kind not in OFFICE | IMAGES | {"pdf"}:
         part.unlink()
-        raise ApiError(415, "unsupported file: use PDF, PowerPoint/Word, photos (JPEG/PNG/WebP) or audio/video")
+        raise ApiError(415, "unsupported file: use PDF, PowerPoint/Word or photos (JPEG/PNG/WebP)")
     os.replace(part, d / f"{n}.{kind}")
     return {"ok": True, "type": kind}
 
@@ -209,7 +185,7 @@ def build_pdf(user, material_id):
         elif ext in IMAGES:
             data = image_to_pdf(path)
         else:
-            raise ApiError(422, f"file {n + 1} is audio/video; upload it as a recording")
+            raise ApiError(422, f"file {n + 1} isn't a document or photo")
         reader = PdfReader(io.BytesIO(data))
         if reader.is_encrypted and not reader.decrypt(""):
             raise ApiError(422, f"file {n + 1} is a password-protected PDF")
@@ -274,11 +250,6 @@ def page_png(user, material_id, page):
             raise ApiError(404, "page not available")
         os.replace(tmp.with_suffix(".png"), out)
     return out
-
-
-def transcript(user, material_id):
-    p = material_dir(user, material_id) / "transcript.json"
-    return json.loads(p.read_text()) if p.exists() else None
 
 
 # ---------- ingest status (backend-owned docs: ingest-<material id>) ----------

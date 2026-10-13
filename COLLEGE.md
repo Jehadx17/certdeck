@@ -1,7 +1,7 @@
 # CertDeck for College: Goal
 
 Extend CertDeck (see SPEC.md, README.md, DECISIONS.md, docs/PROTOCOL.md) so a few college students I invite can
-upload their course material (books, lecture slides, notes, photos, recordings, past exams), have the AI extract
+upload their course material (books, lecture slides, notes, photos, past exams), have the AI extract
 what matters, and get cards, practice exams, sheets and a plan that raise their marks on quizzes, midterms and finals.
 
 ## Context
@@ -23,10 +23,9 @@ what matters, and get cards, practice exams, sheets and a plan that raise their 
 ## Before you start: ask me everything in ONE batch
 Then don't stop again unless something is destructive, affects my other VPS projects, or is blocked:
 - Real sample material for the end-to-end test: a syllabus, a .pptx lecture, a textbook chapter PDF, a past
-  quiz/exam (PDF or photos), a photo of handwritten notes, and a short lecture recording, ideally in both languages.
+  quiz/exam (PDF or photos) and a photo of handwritten notes, ideally in both languages.
 - Whether I have a free or paid Apple ID for installing on students' iPhones.
 - The first student accounts to create (or confirm I'll create them later with the command you build).
-- The VPS resource check result for Whisper (see below), if it looks too heavy for the server.
 
 ## Ground rules
 - All VPS safety rules from SPEC.md still apply: isolate, only add, inspect read-only first, ask before anything that
@@ -34,13 +33,13 @@ Then don't stop again unless something is destructive, affects my other VPS proj
 - Reuse what exists: the document model and sync, FSRS, confidence → rating, misconceptions, leeches, the cram
   queue, exam simulation, AI generation/explain/variants, Batch API jobs, cost logging, diagrams, forced updates.
   Extend them rather than building parallel versions.
-- Keep the single-writer rule. Backend progress (processing status, transcripts, extraction results) goes into
+- Keep the single-writer rule. Backend progress (processing status, extraction results) goes into
   backend-owned job docs that the app applies, like the diagram jobs.
 - The existing `exam` doc kind is a simulation result. Name the new real-world assessment kind so it doesn't collide.
 - Uploaded material is untrusted: check magic bytes, enforce size limits, run conversions sandboxed with no network
   and a timeout, and treat its text as data, never as instructions to the model.
 - Verify against official docs before coding: Claude model ids, PDF limits (pages/size per request), Batch API,
-  pricing; faster-whisper / Whisper model sizes and CPU requirements.
+  pricing.
 
 ## Accounts, isolation and cost
 - Users: per-user long-lived tokens replace the single token. My existing token maps to my account (owner) and all
@@ -67,12 +66,11 @@ Then don't stop again unless something is destructive, affects my other VPS proj
   - PDF books and notes (books can be 300–800 pages)
   - .pptx slides (convert to PDF on the server, e.g. LibreOffice headless)
   - photos/scans of printed pages, handwritten notes or the whiteboard (several photos = one material)
-  - lecture recordings (audio/video → transcript with timestamps via Whisper, below)
   - the syllabus
   - past quizzes/exams from the same professor
 - Large uploads must survive a phone connection: resumable or chunked uploads with a visible status. Raise the body
   size limit only in our own nginx site file.
-- On upload, **map the structure only** (chapters/sections with page ranges, slide titles, recording segments).
+- On upload, **map the structure only** (chapters/sections with page ranges, slide titles).
   This is cheap and lets the student pick scope. Deep extraction happens per exam scope (below). Never process a
   whole book upfront.
 - **Syllabus →** the AI proposes the course's assessments (quiz/midterm/final, dates if present, weights, topics).
@@ -81,11 +79,6 @@ Then don't stop again unless something is destructive, affects my other VPS proj
   3", "no proofs"), and the expected question mix.
 - **Past exams →** a professor profile: format mix, difficulty, point weights, topics that repeat, typical traps,
   wording style. Use it for prioritization and to make practice exams look like the real ones.
-- Lecture recordings: Whisper runs **on my VPS**. First inspect the server read-only (cores, RAM, load, disk), pick
-  a model size that fits (e.g. faster-whisper with int8), and run it in its own container with hard CPU and memory
-  limits, low priority, one job at a time, from a queue. Arabic and English. If it would noticeably slow my other
-  projects or take unreasonably long per hour of audio, ask me before deploying. Delete the audio after a verified
-  transcript and keep the transcript.
 
 ## Extraction: from material to knowledge
 - When an assessment's scope is set (or changes), extract **knowledge points** from exactly that scope:
@@ -167,7 +160,8 @@ All are generated per assessment scope, stored as docs, readable offline, with s
 
 ## Out of scope (don't build)
 Public sign-up, an admin UI, sharing material or cards between students, AI tutor chat over the material, grade
-logging, essay grading, push notifications from a server, App Store / Play Store publishing.
+logging, essay grading, lecture recordings / audio transcription (removed at my request on 2026-10-13),
+push notifications from a server, App Store / Play Store publishing.
 
 ## Delivery and workflow
 - Work autonomously, same as SPEC.md: small meaningful commits pushed as you go, significant decisions in
@@ -187,8 +181,7 @@ logging, essay grading, push notifications from a server, App Store / Play Store
    - my data migrated to my account
    - Arabic/English UI with RTL, LaTeX rendering
    - ship via forced update and verify my certs and history are intact
-2. **Courses and ingestion:** course/material/assessment docs; uploads (PDF, pptx→PDF, photos, recordings via
-   Whisper); structure mapping; syllabus → proposed assessments; past exams → professor profile; status and
+2. **Courses and ingestion:** course/material/assessment docs; uploads (PDF, pptx→PDF, photos); structure mapping; syllabus → proposed assessments; past exams → professor profile; status and
    estimates in the app.
 3. **Extraction and generation:** knowledge points with citations and importance per scope; the new card types with
    rubrics and verified numeric answers; coverage; the model-mix quality check.
@@ -209,14 +202,14 @@ logging, essay grading, push notifications from a server, App Store / Play Store
 - I can create a student with one command and give them a token. On their phone they see only Courses, in Arabic or
   English.
 - A student can:
-  - upload a syllabus, slides, a book, photos, a recording and a past exam
+  - upload a syllabus, slides, a book, photos and a past exam
   - confirm the proposed assessments, set a quiz's scope and hints
   - get cited cards and problems for exactly that scope, within budget and with an estimate first
 - With 2 days left, the app runs a sprint: a time-budget session ordered by expected marks, triage when time is
   short, AI-graded short answers and problems (self-graded offline), a practice exam in the professor's style, a
   readiness range, a night-before sheet, and an exam-morning check.
 - Formulas render correctly in Arabic and English. Numeric answers are verified.
-- A student can never see another user's data. Caps are enforced. Whisper runs isolated without disturbing my
-  other projects.
+- A student can never see another user's data. Caps are enforced. The new services run isolated without
+  disturbing my other projects.
 - All code is pushed with updated docs and DECISIONS.md. End with a short summary: what was built, how to add a
   student, how students install (Android/iOS), costs from the sample run, and anything I need to do manually.

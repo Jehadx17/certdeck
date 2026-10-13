@@ -19,7 +19,6 @@ const materialKinds = {
   'notes': (Icons.description_outlined, 'Notes / handouts'),
   'book': (Icons.menu_book_outlined, 'Textbook'),
   'photos': (Icons.photo_camera_outlined, 'Photos of pages / board'),
-  'recording': (Icons.mic_none, 'Lecture recording'),
   'syllabus': (Icons.event_note_outlined, 'Syllabus / course plan'),
   'past_exam': (Icons.history_edu_outlined, 'Past quiz / exam'),
 };
@@ -261,7 +260,7 @@ class CourseScreen extends StatelessWidget {
               header(context, t('Material'),
                   trailing: TextButton.icon(icon: const Icon(Icons.upload_file), label: Text(t('Add')), onPressed: () => addMaterial(context, id))),
               if (mats.isEmpty)
-                Text(t('Upload slides, notes, a textbook, photos, recordings, the syllabus or past exams.'), style: const TextStyle(color: Colors.white60)),
+                Text(t('Upload slides, notes, a textbook, photos, the syllabus or past exams.'), style: const TextStyle(color: Colors.white60)),
               for (final m in mats) MaterialTile(m, ing[m['id']]),
               if (profile != null) ...[
                 header(context, t('Your professor\'s exams')),
@@ -362,10 +361,8 @@ class MaterialTile extends StatelessWidget {
                 subtitle: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                   Text(statusText(status, ing, up), style: TextStyle(color: status == 'failed' ? Colors.redAccent : Colors.white60, fontSize: 13)),
                   if (status == 'failed' && err != null) Text('$err', style: const TextStyle(color: Colors.redAccent, fontSize: 12)),
-                  if (up != null || const {'transcribing', 'converting', 'mapping', 'queued'}.contains(status))
-                    Padding(
-                        padding: const EdgeInsets.only(top: 4),
-                        child: LinearProgressIndicator(value: up ?? (status == 'transcribing' ? (ing?['progress'] as num?)?.toDouble() : null))),
+                  if (up != null || const {'converting', 'mapping', 'queued'}.contains(status))
+                    Padding(padding: const EdgeInsets.only(top: 4), child: LinearProgressIndicator(value: up)),
                 ]),
                 onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => MaterialScreen(m['id']))),
               ),
@@ -380,11 +377,9 @@ String statusText(String status, Json? ing, double? up) => switch (status) {
       'waiting' => t('Waiting to upload'),
       'queued' => t('Queued on the server'),
       'converting' => t('Converting'),
-      'transcribing' => t('Transcribing the recording'),
-      'transcribed' || 'mapping' => t('Finding chapters and sections'),
+      'mapping' => t('Finding chapters and sections'),
       'ready' => [
           if (ing?['pages'] != null) t('{n} pages', {'n': ing!['pages']}),
-          if (ing?['minutes'] != null) t('{n} min', {'n': ing!['minutes']}),
           t('{n} sections', {'n': ((ing?['structure'] as List?) ?? []).length}),
         ].join(' · '),
       'failed' => t('Failed'),
@@ -424,11 +419,8 @@ Future<void> addMaterial(BuildContext context, String courseId) async {
     }
     name = t('Photos {date}', {'date': DateTime.now().toString().substring(0, 10)});
   } else {
-    final ext = switch (kind) {
-      'recording' => ['mp3', 'm4a', 'wav', 'ogg', 'aac', 'amr', 'flac', 'mp4', 'webm', 'mov', '3gp'],
-      _ => ['pdf', 'pptx', 'ppt', 'docx', 'doc', 'odp', 'odt', 'jpg', 'jpeg', 'png', 'webp'],
-    };
-    final r = await FilePicker.platform.pickFiles(type: FileType.custom, allowedExtensions: ext, allowMultiple: true);
+    final r = await FilePicker.platform.pickFiles(
+        type: FileType.custom, allowedExtensions: ['pdf', 'pptx', 'ppt', 'docx', 'doc', 'odp', 'odt', 'jpg', 'jpeg', 'png', 'webp'], allowMultiple: true);
     paths = [for (final f in r?.files ?? <PlatformFile>[]) if (f.path != null) f.path!];
     name = r?.files.firstOrNull?.name.replaceAll(RegExp(r'\.[^.]+$'), '');
   }
@@ -459,7 +451,6 @@ class MaterialScreen extends StatelessWidget {
           final (m, ing) = data;
           if (m == null) return Scaffold(appBar: AppBar(), body: Center(child: Text(t('Deleted'))));
           final sections = ((ing?['structure'] as List?) ?? []).cast<Map>();
-          final rec = ing?['unit'] == 'sec';
           return Scaffold(
             appBar: AppBar(title: Text(m['title'] ?? ''), actions: [
               IconButton(
@@ -486,16 +477,14 @@ class MaterialScreen extends StatelessWidget {
                   dense: true,
                   contentPadding: EdgeInsetsDirectional.only(start: s['level'] == 2 ? 28 : 4),
                   title: Md('${s['title']}', style: TextStyle(fontWeight: s['level'] == 1 ? FontWeight.bold : null)),
-                  subtitle: Text(rec ? '${_mmss(s['start'])}–${_mmss(s['end'])}' : '${t('p.')} ${s['start']}–${s['end']}${s['kind'] == 'exercises' ? ' · ${t('exercises')}' : ''}'),
-                  onTap: rec ? null : () => Navigator.push(context, MaterialPageRoute(builder: (_) => SourcePage(id, s['start'] as int, m['title'] ?? ''))),
+                  subtitle: Text('${t('p.')} ${s['start']}–${s['end']}${s['kind'] == 'exercises' ? ' · ${t('exercises')}' : ''}'),
+                  onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => SourcePage(id, s['start'] as int, m['title'] ?? ''))),
                 ),
             ]),
           );
         },
       );
 }
-
-String _mmss(Object? s) => s is int ? '${s ~/ 60}:${(s % 60).toString().padLeft(2, '0')}' : '';
 
 // ---------------- assessment ----------------
 
@@ -776,7 +765,7 @@ class _ScopePickerState extends State<ScopePicker> {
                     contentPadding: EdgeInsetsDirectional.only(start: s['level'] == 2 ? 36 : 8, end: 8),
                     value: picked.contains('${m['id']}/${s['id']}'),
                     title: Text('${s['title']}', style: TextStyle(fontWeight: s['level'] == 1 ? FontWeight.bold : null)),
-                    subtitle: Text(m['kind'] == 'recording' ? '${_mmss(s['start'])}–${_mmss(s['end'])}' : '${t('p.')} ${s['start']}–${s['end']}'),
+                    subtitle: Text('${t('p.')} ${s['start']}–${s['end']}'),
                     onChanged: (v) {
                       setState(() {
                         final key = '${m['id']}/${s['id']}';
@@ -821,7 +810,6 @@ class PrepCard extends StatelessWidget {
         t('Prepare this assessment?'),
         [
           t('{p} pages, {s} sections → about {c} cards.', {'p': e['pages'], 's': e['sections'], 'c': e['cards']}),
-          if ((e['minutes'] as num) > 0) t('{m} minutes of recordings.', {'m': e['minutes']}),
           background
               ? t('Cost: about \${usd} (prepared in the background at half price; usually ready within the hour).', {'usd': e['usd_batch']})
               : t('Cost: about \${usd} (ready in a few minutes).', {'usd': e['usd']}),

@@ -751,14 +751,12 @@ class SourceChip extends StatelessWidget {
         builder: (context, snap) {
           final title = snap.data?['title'] ?? t('Your material');
           final loc = ref['loc'];
-          final sec = ref['unit'] == 'sec';
-          final label = loc == null ? title : (sec ? '$title, ${(loc as int) ~/ 60}:${(loc % 60).toString().padLeft(2, '0')}' : '$title, ${t('p.')} $loc');
           return Padding(
             padding: const EdgeInsets.only(top: 10),
             child: ActionChip(
-              avatar: Icon(sec ? Icons.mic_none : Icons.description_outlined, size: 18),
-              label: Text(label, overflow: TextOverflow.ellipsis),
-              onPressed: sec || loc == null ? null : () => Navigator.push(context, MaterialPageRoute(builder: (_) => SourcePage(ref['material_id'], loc as int, title))),
+              avatar: const Icon(Icons.description_outlined, size: 18),
+              label: Text(loc == null ? title : '$title, ${t('p.')} $loc', overflow: TextOverflow.ellipsis),
+              onPressed: loc is! int ? null : () => Navigator.push(context, MaterialPageRoute(builder: (_) => SourcePage(ref['material_id'], loc, title))),
             ),
           );
         },

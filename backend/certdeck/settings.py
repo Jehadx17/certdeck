@@ -24,10 +24,9 @@ CERTDECK_MODEL = env("CERTDECK_MODEL", "claude-opus-5-5")
 # College: a cheaper model reads uploads (structure, extraction, priorities); CERTDECK_MODEL writes cards, questions,
 # rubrics, sheets and grades. See DECISIONS.md "Model mix".
 CERTDECK_READ_MODEL = env("CERTDECK_READ_MODEL", "claude-sonnet-5-5")
-# Uploaded course material (and transcripts): <dir>/<account id>/<material id>/
+# Uploaded course material: <dir>/<account id>/<material id>/
 CERTDECK_UPLOAD_DIR = Path(env("CERTDECK_UPLOAD_DIR") or BASE_DIR / "uploads")
-# faster-whisper model for lecture recordings (chosen by a benchmark on the VPS, see DECISIONS.md)
-CERTDECK_WHISPER_MODEL = env("CERTDECK_WHISPER_MODEL", "small")
+
 # Background diagrams for cards (Batch API, about $0.005 per card checked); "false" turns them off.
 CERTDECK_AUTO_DIAGRAMS = env("CERTDECK_AUTO_DIAGRAMS", "true").lower() in ("1", "true", "yes")
 CERTDECK_MEDIA_DIR = Path(env("CERTDECK_MEDIA_DIR") or BASE_DIR / "media")

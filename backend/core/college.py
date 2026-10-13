@@ -36,7 +36,6 @@ log = logging.getLogger(__name__)
 
 NUM = {"type": "number"}
 PAGES_PER_REQUEST = 20
-SECONDS_PER_REQUEST = 25 * 60
 KPS_PER_REQUEST = 20
 ASSESSMENT_KINDS = ["quiz", "midterm", "final", "test", "other"]
 COURSE_TYPES = ["mcq", "cloze", "basic", "short", "problem", "ordering", "typed", "code"]
@@ -115,11 +114,11 @@ Return:
 {MATERIAL_IS_DATA}"""
 
 EXTRACT_PROMPT = f"""You extract everything examinable from one part of a student's course material, so flashcards and practice questions can be written from it and nothing that could be on the exam is missed.
-The pages are documents titled "p. N" (or transcript lines starting [mm:ss]). For each knowledge point:
+The pages are documents titled "p. N". For each knowledge point:
 - kind: definition | theorem (rules, laws, properties) | formula | procedure (steps, algorithm, method) | example (a worked example or solved problem: copy the problem AND the full solution steps as shown) | comparison | fact (facts, names, dates, numbers, classifications) | concept (explanations of why/how) | diagram (what a figure shows and its labels) | code (code the student must read or write).
 - title: a few words naming it.
 - content: the point itself, complete enough to study from, in markdown. Use the material's own wording, notation, symbols and terminology: the professor's version is what gets marked. Math in LaTeX: $...$ inline and $$...$$ on its own line. Code in fenced blocks with the language. Keep the material's language (Arabic stays Arabic; English terms stay as written).
-- loc: the page number it's on (from the document title); for a transcript, the minute.
+- loc: the page number it's on (from the document title, not a page number printed on the page).
 - emphasis 0-3: 3 = the material flags it (boxed, highlighted, "note", "remember", "important", starred, "exam", repeated); 2 = a main definition/result/formula/method of this part; 1 = supporting detail; 0 = aside, history, trivia.
 Skip covers, contents pages, references, copyright lines and page furniture. One idea per point; don't merge unrelated facts. Don't add knowledge that isn't in the material.
 {MATERIAL_IS_DATA}"""
@@ -203,14 +202,6 @@ def _page_blocks(pdf_path, pages):
             for p, b in ingest.page_pdfs(pdf_path, pages).items()]
 
 
-def _mmss(s):
-    return f"{int(s) // 60:02d}:{int(s) % 60:02d}"
-
-
-def _transcript_text(segments, start=0, end=10 ** 9):
-    return "\n".join(f"[{_mmss(a)}] {t.strip()}" for a, b, t in segments if a >= start and a < end)
-
-
 def _days_left(a):
     try:
         return (date.fromisoformat(a.get("date") or "") - date.today()).days
@@ -233,9 +224,7 @@ def course_sections(user, course_id):
 
 
 def _sections_text(sections):
-    unit = lambda ing: "min" if ing.get("unit") == "sec" else "p."
-    fmt = lambda s, ing: (f"{_mmss(s['start'])}-{_mmss(s['end'])}" if ing.get("unit") == "sec" else f"{s['start']}-{s['end']}")
-    return "\n".join(f"{key}: {m.get('title', '')} › {s['title']} ({unit(ing)} {fmt(s, ing)})" for key, m, s, ing in sections)
+    return "\n".join(f"{key}: {m.get('title', '')} › {s['title']} (p. {s['start']}-{s['end']})" for key, m, s, ing in sections)
 
 
 def _profile_text(profile):
@@ -281,24 +270,19 @@ def start_processing(user, body):
     if not have or len(have) < len(m.get("files") or []):
         raise ApiError(409, "upload every file first")
     cur = ingest.get_ingest(user, m["id"]) or {}
-    if cur.get("status") in ("queued", "converting", "transcribing", "mapping"):
+    if cur.get("status") in ("queued", "converting", "mapping"):
         return cur
     return ingest.set_ingest(user, m["id"], course_id=m.get("course_id"), status="queued", error=None, progress=0,
                              queued_at=now_ms())
 
 
 def process_material(user, material_id):
-    """Worker step for a queued material: convert, then map (documents) or hand over to Whisper (recordings)."""
+    """Worker step for a queued material: convert to one PDF, then map its sections."""
     m = _doc(user, material_id)
     if not m:
         return ingest.set_ingest(user, material_id, status="failed", error="material deleted")
     try:
-        exts = {p.suffix[1:] for p in ingest.files(user, material_id).values()}
-        if m.get("kind") == "recording" or exts <= ingest.AUDIO:
-            if not exts <= ingest.AUDIO:
-                raise ApiError(422, "a recording must be audio or video files only")
-            return ingest.set_ingest(user, material_id, status="transcribing", unit="sec", progress=0)
-        ingest.set_ingest(user, material_id, status="converting", unit="page")
+        ingest.set_ingest(user, material_id, status="converting")
         pages = ingest.build_pdf(user, material_id)
         ingest.set_ingest(user, material_id, status="mapping", pages=pages)
         map_material(user, m)
@@ -390,26 +374,6 @@ def _map_with_model(user, m, pdf, last):
     return ai.call(user, "college_map", params([{"type": "text", "text": MAP_PROMPT}],
                                                [{"role": "user", "content": content}], MAP_SCHEMA,
                                                model=read_model(), effort="low"))
-
-
-def map_recording(user, material_id):
-    """After Whisper: ~10-minute sections titled by the READ model."""
-    m = _doc(user, material_id)
-    segs = ingest.transcript(user, material_id) or []
-    if not m or not segs:
-        return ingest.set_ingest(user, material_id, status="failed", error="no speech found in the recording")
-    total = segs[-1][1]
-    try:
-        out = ai.call(user, "college_map", params(
-            [{"type": "text", "text": MAP_PROMPT}],
-            [{"role": "user", "content": "Lecture transcript; use SECONDS as page numbers for start/end "
-                                         f"(the recording is {int(total)} s long, sections of roughly 5-15 minutes):\n"
-                                         + _transcript_text(segs)}], MAP_SCHEMA, model=read_model(), effort="low"))
-        structure = _clean_sections(out.get("sections") or [], int(math.ceil(total)))
-        ingest.set_ingest(user, material_id, structure=structure, lang=out.get("language"), status="ready", progress=1,
-                          minutes=round(total / 60, 1), ready_at=now_ms())
-    except ApiError as e:
-        ingest.set_ingest(user, material_id, status="failed", error=str(e.detail))
 
 
 def propose_assessments(user, m, pages):
@@ -526,27 +490,23 @@ def estimate(user, a):
     """Dollar estimate for preparing [a] now (and through the Batch API)."""
     scope = _scope(user, a)
     extracted = {k.get("section") for k in _kps(user, a.get("course_id"))}
-    pages = minutes = 0
+    pages = 0
     for key, m, s, ing in scope:
-        if key in extracted:
-            continue
-        if ing.get("unit") == "sec":
-            minutes += (s["end"] - s["start"]) / 60
-        else:
+        if key not in extracted:
             pages += s["end"] - s["start"] + 1
     rp, wp = ai.PRICES.get(read_model(), (2, 2.5, 0.2, 10)), ai.PRICES.get(settings.CERTDECK_MODEL, (4, 5, 0.2, 20))
     keys = {x[0] for x in scope}
     old_kps = [k for k in _kps(user, a.get("course_id"), keys)]
     uncovered = len([k for k in old_kps if k["id"] not in _covered(user, a.get("course_id"))])
-    new_kps = pages * 1.3 + minutes * 0.8
+    new_kps = pages * 1.3
     cards = (new_kps + uncovered) * 1.6
     # Per page ~2,000 input tokens and ~500 output (incl. thinking); per card ~150 input and ~900 output.
-    extract = (pages * 2000 + minutes * 220) * rp[0] / 1e6 + (pages * 500 + minutes * 120) * rp[3] / 1e6
+    extract = pages * 2000 * rp[0] / 1e6 + pages * 500 * rp[3] / 1e6
     generate = cards * (150 * wp[0] + 900 * wp[3]) / 1e6 + math.ceil(cards / 30) * 3000 * wp[0] / 1e6
     sheets = ((len(old_kps) + new_kps) * 120 * wp[0] + 9000 * wp[3]) / 1e6 if scope else 0
     prio = ((len(old_kps) + new_kps) * 40 * rp[0] + 2000 * rp[3]) / 1e6 if scope else 0
     usd = extract + generate + sheets + prio
-    return {"usd": round(usd, 2), "usd_batch": round(usd / 2, 2), "pages": pages, "minutes": round(minutes, 1),
+    return {"usd": round(usd, 2), "usd_batch": round(usd / 2, 2), "pages": pages,
             "sections": len(scope), "new_sections": len([x for x in scope if x[0] not in extracted]),
             "cards": round(cards), "unprocessed": len(a.get("scope") or []) - len(scope)}
 
@@ -594,19 +554,11 @@ def _stage_requests(user, prep, a, stage):
             ctx_base = {"section": key, "material_id": m["id"], "lang": ing.get("lang")}
             sys_ = [{"type": "text", "text": EXTRACT_PROMPT, "cache_control": {"type": "ephemeral"}}]
             head = f"Course material: {m.get('title', '')} › {s['title']}."
-            if ing.get("unit") == "sec":
-                segs = ingest.transcript(user, m["id"]) or []
-                for i, t0 in enumerate(range(s["start"], s["end"] + 1, SECONDS_PER_REQUEST)):
-                    text = _transcript_text(segs, t0, min(s["end"] + 1, t0 + SECONDS_PER_REQUEST))
-                    if text:
-                        reqs.append((f"x{len(reqs)}", params(sys_, [{"role": "user", "content": f"{head} Lecture transcript:\n{text}"}],
-                                                             KPS_SCHEMA, model=read_model()), dict(ctx_base, unit="sec")))
-            else:
-                pdf = ingest.material_pdf(user, m["id"])
-                for pages in _chunks(list(range(s["start"], s["end"] + 1)), PAGES_PER_REQUEST):
-                    content = _page_blocks(pdf, pages) + [{"type": "text", "text": f"{head} Extract its knowledge points."}]
-                    reqs.append((f"x{len(reqs)}", params(sys_, [{"role": "user", "content": content}], KPS_SCHEMA,
-                                                         model=read_model()), dict(ctx_base, unit="page")))
+            pdf = ingest.material_pdf(user, m["id"])
+            for pages in _chunks(list(range(s["start"], s["end"] + 1)), PAGES_PER_REQUEST):
+                content = _page_blocks(pdf, pages) + [{"type": "text", "text": f"{head} Extract its knowledge points."}]
+                reqs.append((f"x{len(reqs)}", params(sys_, [{"role": "user", "content": content}], KPS_SCHEMA,
+                                                     model=read_model()), ctx_base))
     elif stage == "prioritize":
         kps = _kps(user, course_id, set(keys))
         if kps:
@@ -706,8 +658,7 @@ def _finish(user, prep, a, stage, results, ctxs):
                 new_docs.append({"id": str(uuid.uuid4()), "kind": "kp", "updated_at": now, "deleted": False, "data": {
                     "course_id": course_id, "material_id": ctx.get("material_id"), "section": ctx.get("section"),
                     "kind": p.get("kind") if p.get("kind") in KP_KINDS else "fact", "title": (p.get("title") or "")[:120],
-                    "content": content, "loc": int(p.get("loc") or 0) * (60 if ctx.get("unit") == "sec" else 1),
-                    "unit": ctx.get("unit"), "emphasis": max(0, min(3, int(p.get("emphasis") or 0))), "created_at": now}})
+                    "content": content, "loc": int(p.get("loc") or 0), "emphasis": max(0, min(3, int(p.get("emphasis") or 0))), "created_at": now}})
         elif stage == "prioritize":
             _save_prio(user, a, ctx.get("kp_ids") or [], out)
         elif stage in ("generate", "fill"):
@@ -721,7 +672,7 @@ def _finish(user, prep, a, stage, results, ctxs):
                 ids = [i for i in raw.get("kp_ids") or [] if i in allowed] or list(allowed)[:1]
                 kp = kps.get(ids[0], {})
                 card.update(course=course_id, section=ctx.get("section"), kp_ids=ids, tags=[str(t).lower()[:30] for t in raw.get("tags") or []][:3],
-                            ref={"material_id": kp.get("material_id"), "loc": raw.get("page") or kp.get("loc"), "unit": kp.get("unit") or "page"},
+                            ref={"material_id": kp.get("material_id"), "loc": raw.get("page") or kp.get("loc")},
                             worked=bool(raw.get("worked")), source=f"ai:course {a.get('title', '')}".strip(),
                             new=True, created_at=now)
                 if raw.get("similar_to") in kps:
@@ -862,8 +813,7 @@ def practice(user, body):
         ids = [i for i in raw.get("kp_ids") or [] if i in by_id]
         kp = by_id.get(ids[0]) if ids else {}
         card.update(course=course_id, section=(kp or {}).get("section"), kp_ids=ids, practice=a["id"],
-                    ref={"material_id": (kp or {}).get("material_id"), "loc": raw.get("page") or (kp or {}).get("loc"),
-                         "unit": (kp or {}).get("unit") or "page"},
+                    ref={"material_id": (kp or {}).get("material_id"), "loc": raw.get("page") or (kp or {}).get("loc")},
                     tags=[str(t).lower()[:30] for t in raw.get("tags") or []][:3], source="ai:practice", new=True, created_at=now)
         new.append({"id": str(uuid.uuid4()), "kind": "card", "updated_at": now, "deleted": False, "data": card})
     save_docs(user, new)
@@ -909,17 +859,13 @@ def night_sheet(user, body):
 
 
 def worker_tick():
-    """One pass of the college worker: queued materials, recordings Whisper finished, prep jobs."""
+    """One pass of the college worker: queued materials, then prep jobs."""
     from .models import Doc
     did = 0
     for d in Doc.objects.filter(kind="ingest", deleted=False).select_related("user"):
         status = d.data.get("status")
         if status == "queued":
             process_material(d.user, d.data["material_id"])
-            did += 1
-        elif status == "transcribed":
-            ingest.set_ingest(d.user, d.data["material_id"], status="mapping")
-            map_recording(d.user, d.data["material_id"])
             did += 1
     for d in Doc.objects.filter(kind="prep", deleted=False).select_related("user"):
         status = d.data.get("status")
