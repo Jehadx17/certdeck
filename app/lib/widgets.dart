@@ -240,8 +240,9 @@ class MaskPainter extends CustomPainter {
 final _cloze = RegExp(r'\{\{(.+?)(?:::(.+?))?\}\}');
 // `{{x}}` → {{`x`}} so the blank's bold markers aren't trapped inside an inline code span.
 String _unwrapCode(String s) => s.replaceAllMapped(RegExp(r'`\{\{(.+?)(?:::(.+?))?\}\}`'), (m) => '{{`${m[1]}`${m[2] == null ? '' : '::${m[2]}'}}}');
-String clozeFront(String s) => _unwrapCode(s).replaceAllMapped(_cloze, (m) => '**[${m[2] ?? '…'}]**');
-String clozeBack(String s) => _unwrapCode(s).replaceAllMapped(_cloze, (m) => '**‹${m[1]}›**');
+// Brackets go outside the bold markers: `**[` right after a letter (Arabic "بـ**[…]**") isn't bold in Markdown.
+String clozeFront(String s) => _unwrapCode(s).replaceAllMapped(_cloze, (m) => '[**${m[2] ?? '…'}**]');
+String clozeBack(String s) => _unwrapCode(s).replaceAllMapped(_cloze, (m) => '‹**${m[1]}**›');
 
 /// What the user has answered for one card, plus grading. Shared by study and exam.
 class AnswerState {

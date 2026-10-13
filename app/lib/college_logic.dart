@@ -75,13 +75,23 @@ class Pace {
 }
 
 /// Everything the engine needs about one assessment, loaded once.
+/// The professor's format bucket a card trains (profile formats: mcq, true_false, short_answer, problem, other).
+String formatOf(Json c) => switch (c['type']) {
+      'mcq' => ((c['options'] as List?) ?? []).length == 2 ? 'true_false' : 'mcq',
+      'short' || 'cloze' || 'basic' || 'typed' => 'short_answer',
+      'problem' || 'code' => 'problem',
+      _ => 'other',
+    };
+
 class Scope {
   final Json assessment;
   final List<Json> cards; // the scope's cards, not suspended
   final Map<String, int> priority; // kp id -> 1..5
   final fsrs.Scheduler scheduler;
   final Pace pace;
-  Scope(this.assessment, this.cards, this.priority, this.scheduler, this.pace);
+  /// Share of marks per format in the professor's past papers (empty = no past papers yet).
+  final Map<String, double> formats;
+  Scope(this.assessment, this.cards, this.priority, this.scheduler, this.pace, {this.formats = const {}});
 
   int? get days => daysUntil(assessment['date']);
   Mode get mode => modeFor(days);
@@ -90,7 +100,9 @@ class Scope {
     final keys = scopeKeys(a);
     final cards = (await courseCards(a['course_id'])).where((c) => keys.contains(c['section']) && !isSuspended(c) && c['practice'] == null).toList();
     final prio = ((await Db.get('prio-${a['id']}'))?['scores'] as Map?) ?? {};
-    return Scope(a, cards, {for (final e in prio.entries) e.key as String: (e.value as num).toInt()}, schedulerForDate(a['date']), await Pace.load());
+    final formats = ((await Db.get('profile-${a['course_id']}'))?['formats'] as Map?) ?? {};
+    return Scope(a, cards, {for (final e in prio.entries) e.key as String: (e.value as num).toInt()}, schedulerForDate(a['date']), await Pace.load(),
+        formats: {for (final e in formats.entries) e.key as String: (e.value as num).toDouble()});
   }
 
   /// 0.2..1: how much this card's points are likely to count on the assessment.
@@ -122,29 +134,49 @@ class Triage {
   double get plannedMinutes => 0; // filled by plan(); kept for display
 }
 
-/// Picks what to study in [minutes]: greedy by expected marks per second, the relearning of earlier sprint days
-/// first, 15% of the time kept for in-session relearning. What doesn't fit is split into skim (still valuable:
-/// read its knowledge point on the summary sheet) and skip.
+/// Picks what to study in [minutes]: the time is shared across question formats like the professor's past papers
+/// (evenly without them), so a short session still practises what the exam asks, not just the quickest cards. Within
+/// a format: yesterday's shaky cards first, then expected marks per second. 15% of the time is kept for in-session
+/// relearning. What doesn't fit is split into skim (still valuable: read it on the summary sheet) and skip.
 Triage plan(Scope s, int minutes) {
   final budget = minutes * 60 * .85;
-  final cands = s.cards.where((c) => s.mode != Mode.sprint || !s.mastered(c) || c['misconception'] == true).toList();
+  final cands = s.cards.where((c) => (s.mode != Mode.sprint || !s.mastered(c) || c['misconception'] == true) && s.value(c) > 0.01).toList();
   double ratio(Json c) => s.value(c) / max(1, s.cost(c));
-  // Seen-but-shaky cards come first: yesterday's sprint relearned before anything new.
   int tier(Json c) => !isNew(c) && s.recall(c) < .9 ? 0 : 1;
-  cands.sort((a, b) {
+  int better(Json a, Json b) {
     final t = tier(a) - tier(b);
     return t != 0 ? t : ratio(b).compareTo(ratio(a));
-  });
-  final master = <Json>[], rest = <Json>[];
-  var used = 0.0;
+  }
+
+  final by = <String, List<Json>>{};
   for (final c in cands) {
-    if (s.value(c) <= 0.01) continue;
-    if (used + s.cost(c) <= budget) {
+    (by[formatOf(c)] ??= []).add(c);
+  }
+  for (final l in by.values) {
+    l.sort(better);
+  }
+  final share = {for (final f in by.keys) f: s.formats.isEmpty ? 1.0 : (s.formats[f] ?? 0)};
+  final total = share.values.fold(0.0, (a, b) => a + b);
+  final master = <Json>[];
+  var used = 0.0;
+  for (final f in by.keys) {
+    final cap = total == 0 ? 0 : budget * share[f]! / total;
+    var mine = 0.0;
+    for (final c in [...by[f]!]) {
+      if (mine + s.cost(c) > cap) break;
       master.add(c);
-      used += s.cost(c);
-    } else {
-      rest.add(c);
+      by[f]!.remove(c);
+      mine += s.cost(c);
     }
+    used += mine;
+  }
+  // Time a format couldn't use (few cards, or none of it in the scope) goes to the best remaining cards.
+  final rest = [for (final l in by.values) ...l]..sort(better);
+  for (final c in [...rest]) {
+    if (used + s.cost(c) > budget) continue;
+    master.add(c);
+    rest.remove(c);
+    used += s.cost(c);
   }
   rest.sort((a, b) => s.value(b).compareTo(s.value(a)));
   final cut = rest.indexWhere((c) => s.weight(c) < .6);

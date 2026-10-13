@@ -21,12 +21,13 @@ Map reviewed(double stability, int daysAgo) {
   return {'state': 2, 'step': null, 'stability': stability, 'difficulty': 5.0, 'due': last + 86400000, 'last_review': last};
 }
 
-Scope scope(List<Json> cards, Map<String, int> prio, {int days = 2}) => Scope(
+Scope scope(List<Json> cards, Map<String, int> prio, {int days = 2, Map<String, double> formats = const {}}) => Scope(
     {'id': 'a1', 'date': DateTime.now().add(Duration(days: days)).toIso8601String().substring(0, 10), 'scope': []},
     cards,
     prio,
     schedulerForDate(DateTime.now().add(Duration(days: days)).toIso8601String().substring(0, 10)),
-    Pace(Pace.defaults));
+    Pace(Pace.defaults),
+    formats: formats);
 
 void main() {
   test('mode from days left', () {
@@ -55,6 +56,20 @@ void main() {
     // Priority-1 cards that don't fit are "skip"; worthwhile ones that don't fit are "skim".
     expect(tri.skip.every((c) => s.weight(c) < .6), isTrue);
     expect(tri.skim.map((c) => c['id']), contains('mid'));
+  });
+
+  test('triage shares the time across formats instead of filling it with the quickest cards', () {
+    final cards = [
+      for (var i = 0; i < 30; i++) card('cloze$i', type: 'cloze', kps: ['k']), // 20 s each: the cheapest
+      for (var i = 0; i < 5; i++) card('short$i', type: 'short', kps: ['k']), // 75 s each
+      for (var i = 0; i < 5; i++) card('mcq$i', kps: ['k']),
+    ];
+    final even = plan(scope(cards, {'k': 4}), 15);
+    expect(even.master.map(formatOf).toSet(), {'short_answer', 'mcq'}); // cloze and short both train short answers
+    expect(even.master.where((c) => c['type'] == 'mcq'), isNotEmpty);
+    // The professor's past papers are all MCQ: the session follows.
+    final mcqOnly = plan(scope(cards, {'k': 4}, formats: {'mcq': 1.0}), 15);
+    expect(mcqOnly.master.where((c) => c['type'] == 'mcq').length, 5);
   });
 
   test('sprint loop: right twice in a row to learn, a miss comes back 3 cards later', () {

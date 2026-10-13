@@ -11,14 +11,6 @@ import 'i18n.dart';
 import 'logic.dart';
 import 'widgets.dart';
 
-/// The professor's format bucket a card belongs to (profile formats: mcq, true_false, short_answer, problem, other).
-String formatOf(Json c) => switch (c['type']) {
-      'mcq' => ((c['options'] as List?) ?? []).length == 2 ? 'true_false' : 'mcq',
-      'short' || 'cloze' || 'basic' || 'typed' => 'short_answer',
-      'problem' || 'code' => 'problem',
-      _ => 'other',
-    };
-
 /// [n] scope cards in the professor's format mix (from past papers, else an even mix), likelier points first,
 /// with some randomness so two practice exams differ.
 List<Json> pickPractice(Scope s, Json? profile, int n, {Random? rng}) {

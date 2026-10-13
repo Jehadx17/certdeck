@@ -44,9 +44,9 @@
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>
-	<string>Take a photo to make an image-occlusion card or generate cards from it.</string>
+	<string>Take photos of course pages or your handwritten work, or make an image-occlusion card.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Pick an image to make an image-occlusion card or generate cards from a screenshot.</string>
+	<string>Pick photos of course pages, or an image for a card.</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 </dict>

@@ -1,3 +1,4 @@
+import 'package:markdown/markdown.dart' as md;
 import 'package:certdeck/logic.dart';
 import 'package:certdeck/widgets.dart' show clozeBack, clozeFront;
 import 'package:fsrs/fsrs.dart' as fsrs;
@@ -42,7 +43,10 @@ void main() {
   });
 
   test('cloze blanks inside inline code', () {
-    expect(clozeBack('set `{{WaitTimeSeconds}}` to {{20}}'), 'set **‹`WaitTimeSeconds`›** to **‹20›**');
-    expect(clozeFront('set `{{WaitTimeSeconds::param}}`'), 'set **[param]**');
+    expect(clozeBack('set `{{WaitTimeSeconds}}` to {{20}}'), 'set ‹**`WaitTimeSeconds`**› to ‹**20**›');
+    expect(clozeFront('set `{{WaitTimeSeconds::param}}`'), 'set [**param**]');
+    // Bold right after an Arabic letter: the markers must sit inside the brackets.
+    final html = md.markdownToHtml(clozeFront('يُعتنى بـ{{الفكرة العامة}}'));
+    expect(html, contains('<strong>…</strong>'));
   });
 }
