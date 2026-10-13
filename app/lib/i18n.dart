@@ -4,7 +4,8 @@ import 'logic.dart';
 /// `{name}` placeholders are filled from [args].
 String t(String en, [Map<String, Object?> args = const {}]) {
   var s = App.lang == 'ar' ? (_ar[en] ?? en) : en;
-  args.forEach((k, v) => s = s.replaceAll('{$k}', '$v'));
+  // Inserted names and titles keep their own direction inside the sentence (first-strong isolate).
+  args.forEach((k, v) => s = s.replaceAll('{$k}', v is String ? '\u2068$v\u2069' : '$v'));
   return s;
 }
 
@@ -306,4 +307,27 @@ const _ar = <String, String>{
   'Connected. Everything is synced.': 'تم الاتصال، وكل شيء متزامن.',
   'The server doesn\'t recognise this token. Nothing was changed.': 'الخادم لا يتعرف على هذا الرمز. لم يتغير شيء.',
   'Needs connection to check the token. Nothing was changed.': 'يحتاج اتصالًا للتحقق من الرمز. لم يتغير شيء.',
+  'Offline: studying works, AI features need a connection': 'دون اتصال: المذاكرة تعمل، وميزات الذكاء الاصطناعي تحتاج اتصالًا',
+  'Needs connection': 'يحتاج اتصالًا',
+  'Needs connection (timed out)': 'يحتاج اتصالًا (انتهت المهلة)',
+  'Needs connection: add your server token in Settings': 'يحتاج اتصالًا: أضف رمز الدخول في الإعدادات',
+  'Card deleted': 'حُذفت البطاقة',
+  'Card': 'بطاقة',
+  'Delete this card?': 'حذف هذه البطاقة؟',
+  'Unsuspend': 'إلغاء الإيقاف',
+  'Suspend': 'إيقاف',
+  'AI: make variant questions': 'الذكاء الاصطناعي: أسئلة بصيغ أخرى',
+  'Clear leech/misconception flags': 'إزالة علامات الاستعصاء والفهم الخاطئ',
+  'AI leech help: new explanation + variants': 'مساعدة للبطاقة المستعصية: شرح جديد وأسئلة بصيغ أخرى',
+  'Learn it': 'تعلّمها',
+  'Variants': 'صيغ أخرى',
+  'History': 'السجل',
+  'Not reviewed yet': 'لم تُراجَع بعد',
+  'Again': 'مرة أخرى',
+  'Hard': 'صعبة',
+  'Good': 'جيدة',
+  'Easy': 'سهلة',
+  'recall now {p}%': 'التذكّر الآن {p}%',
+  'stability {d} days': 'الثبات {d} يوم',
+  'lapses {n}': 'الإخفاقات {n}',
 };

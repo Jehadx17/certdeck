@@ -298,6 +298,15 @@ TYPE_FIELDS = {"basic": ["answer"], "mcq": ["options", "correct", "option_explan
                "typed": ["answer", "accepted"], "code": ["code", "answer_code", "language", "answer"], "ordering": ["items"]}
 
 
+FENCE = re.compile(r"^\s*```[\w+-]*\n([\s\S]*?)\n?```\s*$")
+
+
+def unfence(code):
+    """A code field holds code; the model sometimes wraps it in its own ``` fence."""
+    m = FENCE.match(code) if isinstance(code, str) else None
+    return m.group(1) if m else code
+
+
 def clean_card(raw, allowed=AI_TYPES):
     """Semantic validation of one AI card; returns the card content or None (dropped)."""
     t = raw.get("type")
@@ -305,7 +314,8 @@ def clean_card(raw, allowed=AI_TYPES):
     if t not in allowed or not question or not explanation:
         return None
     card = {"type": t, "question": question, "explanation": explanation}
-    card.update({k: raw[k] for k in TYPE_FIELDS[t] if raw.get(k) not in (None, "", [])})
+    card.update({k: unfence(raw[k]) if k in ("code", "answer_code") else raw[k]
+                 for k in TYPE_FIELDS[t] if raw.get(k) not in (None, "", [])})
     if t == "mcq":
         opts, correct, expl = card.get("options", []), card.get("correct", []), card.get("option_explanations", [])
         if (len(opts) < 2 or not correct or len(set(correct)) != len(correct) or len(correct) >= len(opts)

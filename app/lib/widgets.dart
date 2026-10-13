@@ -41,6 +41,12 @@ class CodeView extends StatelessWidget {
   final String? language;
   const CodeView(this.code, {super.key, this.language});
 
+  /// The AI sometimes wraps a code field in its own ``` fence: show only the code.
+  static String unfence(String code) {
+    final m = RegExp(r'^\s*```[\w+-]*\n([\s\S]*?)\n?```\s*$').firstMatch(code);
+    return m == null ? code : m[1]!;
+  }
+
   @override
   Widget build(BuildContext context) {
     final lang = allLanguages.containsKey(language) ? language! : 'plaintext';
@@ -52,7 +58,7 @@ class CodeView extends StatelessWidget {
       decoration: BoxDecoration(color: const Color(0xff282c34), borderRadius: BorderRadius.circular(8)),
       child: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
-        child: HighlightView(code.trimRight(),
+        child: HighlightView(unfence(code).trimRight(),
             language: lang,
             theme: atomOneDarkTheme,
             padding: const EdgeInsets.all(12),
@@ -112,6 +118,65 @@ bool isRtl(String text) {
   return _arabic.allMatches(prose).length > _latin.allMatches(prose).length;
 }
 
+// Unicode directional isolates: LRI / RLI open a left-to-right / right-to-left run, PDI closes it.
+const _lri = '\u2066', _rli = '\u2067', _pdi = '\u2069';
+// Code spans, math, fenced blocks, links and URLs are left alone.
+final _keep = RegExp(r'```[\s\S]*?```|`[^`]*`|\$\$[\s\S]*?\$\$|\$[^$\n]+\$|\[[^\]]*\]\([^)]*\)|https?://\S+');
+// A run of the other script: starts and ends with a letter/digit of that script, may hold spaces and the
+// punctuation that belongs inside a phrase ("one copy per class", "Trace the code", "مشتركة بين الكائنات").
+// Runs start and end with a letter/digit, so brackets around a term stay outside and pair up in the paragraph.
+final _latinRun = RegExp(r"[A-Za-z0-9](?:[A-Za-z0-9 .,:;'’/+=&%_#()*‹›\[\]…-]*[A-Za-z0-9?!])?");
+final _arabicRun = RegExp(r'[\u0600-\u06FF](?:[\u0600-\u06FF\u0750-\u077F0-9 ،؛.,:()«»*‹›\[\]…-]*[\u0600-\u06FF])?');
+
+/// Wraps every run of the other script in a directional isolate, so English inside an Arabic sentence (and the
+/// other way round) renders as one unit with its own spaces and punctuation instead of being reordered piecemeal.
+String isolateRuns(String text, {required bool rtl}) {
+  final run = rtl ? _latinRun : _arabicRun;
+  final open = rtl ? _lri : _rli;
+  final out = StringBuffer();
+  var last = 0;
+  void prose(String s) => out.write(_isolate(s, run, open));
+  for (final m in _keep.allMatches(text)) {
+    prose(text.substring(last, m.start));
+    out.write(rtl ? '$_lri${m[0]}$_pdi' : m[0]);
+    last = m.end;
+  }
+  prose(text.substring(last));
+  return out.toString();
+}
+
+/// Isolates each run; a run that opens a marker (bold `**`, cloze ‹ › [ ], brackets) without closing it takes the
+/// closing marker that follows it (and the other way round), so "one copy per ‹**class**›" stays one unit.
+String _isolate(String s, RegExp run, String open) {
+  int count(String t, String c) => c.allMatches(t).length;
+  bool unbalanced(String t) =>
+      count(t, '‹') != count(t, '›') || count(t, '[') != count(t, ']') || count(t, '(') != count(t, ')') || count(t, '*').isOdd;
+  final out = StringBuffer();
+  var i = 0;
+  for (final m in run.allMatches(s)) {
+    if (m.start < i) continue;
+    var a = m.start, b = m.end;
+    while (unbalanced(s.substring(a, b))) {
+      if (b < s.length && '*_›])'.contains(s[b])) {
+        b++;
+      } else if (a > i && '*_‹[('.contains(s[a - 1])) {
+        a--;
+      } else {
+        break;
+      }
+    }
+    out
+      ..write(s.substring(i, a))
+      ..write('$open${s.substring(a, b)}$_pdi');
+    i = b;
+  }
+  out.write(s.substring(i));
+  return out.toString();
+}
+
+/// A name or title inside a UI sentence keeps its own direction (first-strong isolate).
+String iso(Object? s) => '\u2068$s$_pdi';
+
 class Md extends StatelessWidget {
   final String text;
   final TextStyle? style;
@@ -120,10 +185,11 @@ class Md extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final rtl = isRtl(text);
     return Directionality(
-      textDirection: isRtl(text) ? TextDirection.rtl : TextDirection.ltr,
+      textDirection: rtl ? TextDirection.rtl : TextDirection.ltr,
       child: MarkdownBody(
-        data: text,
+        data: isolateRuns(text, rtl: rtl),
         inlineSyntaxes: [_MathSyntax()],
         builders: {'code': _CodeBuilder(), 'math': _MathBuilder(false), 'mathblock': _MathBuilder(true)},
         onTapLink: (_, href, __) => href == null ? null : openUrl(href),
@@ -643,7 +709,7 @@ class NeedsConnection extends StatelessWidget {
         color: Theme.of(context).colorScheme.surfaceContainerHigh,
         child: ListTile(
           leading: Icon(message.startsWith('Needs connection') ? Icons.cloud_off : Icons.error_outline),
-          title: Text(message),
+          title: Text(t(message)),
           trailing: onRetry == null ? null : TextButton(onPressed: onRetry, child: const Text('Retry')),
         ),
       );
@@ -665,7 +731,7 @@ Future<T?> busy<T>(BuildContext context, String label, Future<T> Function() f) a
   try {
     return await f();
   } on ApiError catch (e) {
-    if (context.mounted) toast(context, e.message);
+    if (context.mounted) toast(context, t(e.message));
     return null;
   } catch (e) {
     if (context.mounted) toast(context, 'Failed: $e');
@@ -688,7 +754,7 @@ class OnlineBanner extends StatelessWidget {
               color: Colors.orange.withOpacity(.2),
               padding: const EdgeInsets.all(6),
               child:
-                  const Text('Offline: studying works, AI features need a connection', textAlign: TextAlign.center, style: TextStyle(fontSize: 12)))
+                  Text(t('Offline: studying works, AI features need a connection'), textAlign: TextAlign.center, style: const TextStyle(fontSize: 12)))
           : const SizedBox.shrink());
 }
 
@@ -763,7 +829,8 @@ class SourceChip extends StatelessWidget {
             padding: const EdgeInsets.only(top: 10),
             child: ActionChip(
               avatar: const Icon(Icons.description_outlined, size: 18),
-              label: Text(loc == null ? title : '$title, ${t('p.')} $loc', overflow: TextOverflow.ellipsis),
+              label: Text(loc == null ? iso(title) : '${iso(title)}، ${t('p.')} $loc'.replaceAll('،', App.lang == 'ar' ? '،' : ','),
+                  overflow: TextOverflow.ellipsis),
               onPressed: loc is! int ? null : () => Navigator.push(context, MaterialPageRoute(builder: (_) => SourcePage(ref['material_id'], loc, title))),
             ),
           );

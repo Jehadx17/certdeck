@@ -1,7 +1,7 @@
 import 'package:certdeck/cards.dart';
 import 'package:markdown/markdown.dart' as md;
 import 'package:certdeck/logic.dart';
-import 'package:certdeck/widgets.dart' show clozeBack, clozeFront;
+import 'package:certdeck/widgets.dart' show clozeBack, clozeFront, isolateRuns;
 import 'package:fsrs/fsrs.dart' as fsrs;
 import 'package:flutter_test/flutter_test.dart';
 
@@ -48,6 +48,25 @@ void main() {
     expect(plain(r'$$\int_0^3 x^2\,dx$$'), '∫₀³ x² dx');
     expect(plain('The **default** {{constructor::kind}}'), 'The default constructor');
     expect(plain('my_var stays'), 'my_var stays');
+  });
+
+  test('mixed Arabic/English: runs of the other script are isolated, code and math untouched', () {
+    const lri = '\u2066', rli = '\u2067', pdi = '\u2069';
+    final ar = isolateRuns('المتغيرات الثابتة (static) مشتركة — one copy per class.', rtl: true);
+    expect(ar, contains('(${lri}static$pdi)')); // brackets stay outside the isolate and pair up
+    expect(ar, contains('${lri}one copy per class$pdi.'));
+    final en = isolateRuns('`count` is **static** (المتغير الثابت مشترك بين جميع الكائنات), see \$x^2\$.', rtl: false);
+    expect(en, startsWith('`count` is **static** ('));
+    expect(en, contains('($rliالمتغير الثابت مشترك بين جميع الكائنات$pdi)'));
+    expect(en, contains('\$x^2\$')); // math unchanged in an LTR paragraph
+    expect(isolateRuns('ارجع إلى [الرابط](https://example.com/a_b)', rtl: true), contains('$lri[الرابط](https://example.com/a_b)$pdi'));
+    // A cloze inside the English phrase stays inside the same unit; a fully wrapped term keeps its markers outside.
+    final cloze = isolateRuns('المتغيرات الثابتة (‹**static**›) بين الكائنات — one copy per ‹**class**›.', rtl: true);
+    expect(cloze, contains('${lri}one copy per ‹**class**›$pdi.'));
+    expect(cloze, contains('(‹**${lri}static$pdi**›)'));
+    expect(isolateRuns('يُعتنى بـ[**shared / separate?**]', rtl: true), contains('[**${lri}shared / separate?$pdi**]'));
+    // Still valid Markdown: the bold survives the isolates.
+    expect(md.markdownToHtml(isolateRuns('**قراءة الالتقاط (Scanning)**', rtl: true)), contains('<strong>'));
   });
 
   test('cloze blanks inside inline code', () {
