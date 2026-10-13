@@ -50,7 +50,8 @@ One time: install Xcode, open it, Xcode → Settings → Accounts → add your A
 + → Apple Development. On the iPhone: tap Trust when connected, and turn on Settings → Privacy & Security →
 Developer Mode.
 ```bash
-git clone https://github.com/Jehadx17/certdeck.git && certdeck/app/build-ios.sh   # later: git pull && app/build-ios.sh
+# private repo: sign in first (brew install gh && gh auth login)
+gh repo clone Jehadx17/certdeck && certdeck/app/build-ios.sh   # later: git pull && app/build-ios.sh
 ```
 The script installs Flutter 3.22.2 and CocoaPods if missing, signs with your Apple ID's team and installs the app.
 First launch: Settings → General → VPN & Device Management → trust your Apple ID. A **free** Apple ID signs for
