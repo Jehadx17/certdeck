@@ -214,7 +214,7 @@ class MediaImage extends StatelessWidget {
       width: fill ? double.infinity : null,
       fit: fill ? BoxFit.fitWidth : null,
       errorBuilder: (_, __, ___) =>
-          Container(padding: const EdgeInsets.all(16), color: Colors.white10, child: const Text('Image not downloaded yet (sync to fetch it)')));
+          Container(padding: const EdgeInsets.all(16), color: Colors.white10, child: Text(t('Image not downloaded yet (sync to fetch it)'))));
 }
 
 /// Card images; tap one to view it full screen with pinch-zoom (diagrams have small labels on a phone).
@@ -424,7 +424,7 @@ class _CardViewState extends State<CardView> {
       if (s.type == 'mcq' && s.correctSet.length > 1)
         Padding(
             padding: const EdgeInsets.only(top: 4),
-            child: Text('Choose ${s.correctSet.length}', style: TextStyle(color: cs.primary, fontWeight: FontWeight.bold))),
+            child: Text(t('Choose {n}', {'n': s.correctSet.length}), style: TextStyle(color: cs.primary, fontWeight: FontWeight.bold))),
       if (s.type == 'code' && (c['code'] ?? '').toString().isNotEmpty) CodeView(c['code'], language: c['language']),
       images(c['question_images']),
       if (s.type == 'occlusion') OcclusionView(c, revealed: revealed),
@@ -538,7 +538,7 @@ class _CardViewState extends State<CardView> {
           autocorrect: false,
           enableSuggestions: false,
           style: const TextStyle(fontFamily: 'monospace'),
-          decoration: const InputDecoration(labelText: 'Your answer', border: OutlineInputBorder()),
+          decoration: InputDecoration(labelText: t('Your answer'), border: const OutlineInputBorder()),
           onChanged: (v) {
             s.typed = v;
             widget.onChanged?.call();
@@ -635,7 +635,7 @@ class _CardViewState extends State<CardView> {
           Icon(Icons.warning_amber, color: cs.onErrorContainer),
           const SizedBox(width: 8),
           Expanded(
-              child: Text('Misconception: you were sure, but wrong. Read this carefully; the card will come back soon.',
+              child: Text(t('Misconception: you were sure, but wrong. Read this carefully; the card will come back soon.'),
                   style: TextStyle(color: cs.onErrorContainer))),
         ]),
       ));
@@ -644,7 +644,7 @@ class _CardViewState extends State<CardView> {
       out.add(Row(children: [
         Icon(s.correct ? Icons.check_circle : Icons.cancel, color: s.correct ? Colors.green : cs.error),
         const SizedBox(width: 8),
-        Text(s.correct ? 'Correct' : 'Incorrect', style: TextStyle(fontSize: 18, color: s.correct ? Colors.green : cs.error)),
+        Text(s.correct ? t('Correct') : t('Incorrect'), style: TextStyle(fontSize: 18, color: s.correct ? Colors.green : cs.error)),
       ]));
     }
     if (s.type == 'typed') out.add(Md('**${t('Answer')}:** `${c['answer']}`'));
@@ -664,7 +664,7 @@ class _CardViewState extends State<CardView> {
     if (s.type == 'short') out.add(Md('**${t('Model answer')}:**\n\n${c['answer']}'));
     if (s.written) out.add(_grading(cs));
     if (s.type == 'ordering') {
-      out.add(Md('**Correct order:**\n\n${[for (final (i, it) in (c['items'] as List).indexed) '${i + 1}. $it'].join('\n')}'));
+      out.add(Md('**${t('Correct order:')}**\n\n${[for (final (i, it) in (c['items'] as List).indexed) '${i + 1}. $it'].join('\n')}'));
     }
     if (!const {'typed', 'cloze', 'short', 'problem'}.contains(s.type) && (c['answer'] ?? '').toString().isNotEmpty) out.add(Md(c['answer']));
     if ((c['answer_code'] ?? '').toString().isNotEmpty) out.add(CodeView(c['answer_code'], language: c['language']));
@@ -690,7 +690,7 @@ class _CardViewState extends State<CardView> {
         padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(color: cs.tertiaryContainer.withOpacity(.4), borderRadius: BorderRadius.circular(10)),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Text('Another way to see it', style: TextStyle(color: cs.tertiary, fontWeight: FontWeight.bold)),
+          Text(t('Another way to see it'), style: TextStyle(color: cs.tertiary, fontWeight: FontWeight.bold)),
           Md(help['explanation']),
         ]),
       ));

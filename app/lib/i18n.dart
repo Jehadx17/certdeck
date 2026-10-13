@@ -330,4 +330,11 @@ const _ar = <String, String>{
   'recall now {p}%': 'التذكّر الآن {p}%',
   'stability {d} days': 'الثبات {d} يوم',
   'lapses {n}': 'الإخفاقات {n}',
+  'Image not downloaded yet (sync to fetch it)': 'لم تُحمَّل الصورة بعد (زامن لجلبها)',
+  'Misconception: you were sure, but wrong. Read this carefully; the card will come back soon.': 'فهم خاطئ: كنت متأكدًا لكن الإجابة خاطئة. اقرأ هذا بعناية؛ ستعود البطاقة قريبًا.',
+  'Correct': 'صحيحة',
+  'Incorrect': 'خاطئة',
+  'Correct order:': 'الترتيب الصحيح:',
+  'Another way to see it': 'زاوية أخرى للفهم',
+  'Choose {n}': 'اختر {n}',
 };
