@@ -652,12 +652,16 @@ class NeedsConnection extends StatelessWidget {
 /// Runs [f] with a modal spinner; returns its result or null after showing the error.
 Future<T?> busy<T>(BuildContext context, String label, Future<T> Function() f) async {
   FocusManager.instance.primaryFocus?.unfocus(); // else the keyboard returns over the result when the dialog closes
+  BuildContext? dialog;
   showDialog(
       context: context,
       barrierDismissible: false,
-      builder: (_) => PopScope(
-          canPop: false,
-          child: AlertDialog(content: Row(children: [const CircularProgressIndicator(), const SizedBox(width: 16), Expanded(child: Text(label))]))));
+      builder: (c) {
+        dialog = c;
+        return PopScope(
+            canPop: false,
+            child: AlertDialog(content: Row(children: [const CircularProgressIndicator(), const SizedBox(width: 16), Expanded(child: Text(label))])));
+      });
   try {
     return await f();
   } on ApiError catch (e) {
@@ -667,7 +671,9 @@ Future<T?> busy<T>(BuildContext context, String label, Future<T> Function() f) a
     if (context.mounted) toast(context, 'Failed: $e');
     return null;
   } finally {
-    if (context.mounted) Navigator.of(context, rootNavigator: true).pop();
+    // Closed through its own context: the screen that opened it may be gone by now (an account switch or a
+    // language change rebuilds every screen).
+    if (dialog?.mounted == true) Navigator.of(dialog!).pop();
   }
 }
 
