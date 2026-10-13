@@ -1,0 +1,303 @@
+"""Course material on disk: resumable uploads, type checks, conversion to one PDF (or audio for Whisper), pages.
+
+Layout: <CERTDECK_UPLOAD_DIR>/<account id>/<material id>/
+  <n>.part            file n while it uploads (chunks appended at the offset the server reports)
+  <n>.<ext>           file n once its sha256 matched
+  material.pdf        every page of the material in order (PDFs, converted slides/docs, photos)
+  transcript.json     recordings: [[start_s, end_s, text], ...] (the audio is deleted once this exists)
+
+Everything uploaded is untrusted: types come from magic bytes (never the name), sizes are capped, and office files
+are converted by LibreOffice in a throwaway profile with a timeout.
+"""
+import hashlib
+import io
+import json
+import logging
+import os
+import re
+import shutil
+import subprocess
+import tempfile
+import zipfile
+from pathlib import Path
+
+from django.conf import settings
+
+from .auth import ApiError
+from .models import docs, now_ms, save_docs
+
+log = logging.getLogger(__name__)
+
+UUID = re.compile(r"[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}")
+CHUNK_MAX = 8 * 1024 * 1024
+FILE_MAX = 600 * 1024 * 1024
+FILES_MAX = 40  # files per material (photos)
+MIN_FREE = 3 * 1024 ** 3  # keep 3 GB free on the server's disk
+KINDS = ("book", "slides", "notes", "photos", "recording", "syllabus", "past_exam")
+AUDIO = {"mp3", "m4a", "wav", "ogg", "aac", "flac", "amr", "webm", "mp4", "mov", "mkv", "3gp"}
+OFFICE = {"pptx", "ppt", "docx", "doc", "odp", "odt"}
+IMAGES = {"png", "jpg", "webp", "gif"}
+
+
+def material_dir(user, material_id):
+    if not UUID.fullmatch(material_id or ""):
+        raise ApiError(400, "material id must be a lowercase UUID")
+    return settings.CERTDECK_UPLOAD_DIR / str(user.id) / material_id
+
+
+def _n(n):
+    if not (isinstance(n, int) and 0 <= n < FILES_MAX):
+        raise ApiError(400, f"file number must be 0..{FILES_MAX - 1}")
+    return n
+
+
+def files(user, material_id):
+    """{n: path} of the finished uploads, in order."""
+    d = material_dir(user, material_id)
+    out = {}
+    for p in d.glob("[0-9]*.*") if d.exists() else []:
+        if p.suffix != ".part" and p.stem.isdigit():
+            out[int(p.stem)] = p
+    return dict(sorted(out.items()))
+
+
+# ---------- uploads ----------
+
+def upload_chunk(user, material_id, n, offset, data):
+    """Appends a chunk at [offset], which must equal what the server has (so a resumed upload never duplicates)."""
+    part = material_dir(user, material_id) / f"{_n(n)}.part"
+    size = part.stat().st_size if part.exists() else 0
+    if offset != size:
+        raise ApiError(409, f"offset must be {size}")
+    if not data or len(data) > CHUNK_MAX:
+        raise ApiError(400, f"chunk must be 1 byte to {CHUNK_MAX // 1024 // 1024} MB")
+    if size + len(data) > FILE_MAX:
+        raise ApiError(413, f"files are limited to {FILE_MAX // 1024 // 1024} MB")
+    part.parent.mkdir(parents=True, exist_ok=True)
+    if shutil.disk_usage(part.parent).free < MIN_FREE + len(data):
+        raise ApiError(507, "the server is low on disk space; ask the owner")
+    with part.open("ab") as f:
+        f.write(data)
+    return size + len(data)
+
+
+def upload_status(user, material_id, n):
+    d = material_dir(user, material_id)
+    part = d / f"{_n(n)}.part"
+    done = files(user, material_id).get(n)
+    return {"size": (done or part).stat().st_size if (done or part.exists()) else 0, "done": done is not None}
+
+
+def sniff(path):
+    """File type from its first bytes: an extension from AUDIO|OFFICE|IMAGES|{'pdf'}, or None."""
+    with open(path, "rb") as f:
+        head = f.read(64)
+    if head.startswith(b"%PDF"):
+        return "pdf"
+    if head.startswith(b"\x89PNG"):
+        return "png"
+    if head.startswith(b"\xff\xd8\xff"):
+        return "jpg"
+    if head.startswith(b"GIF8"):
+        return "gif"
+    if head[:4] == b"RIFF" and head[8:12] == b"WEBP":
+        return "webp"
+    if head[:4] == b"RIFF" and head[8:12] == b"WAVE":
+        return "wav"
+    if head.startswith(b"PK\x03\x04"):
+        try:
+            names = zipfile.ZipFile(path).namelist()
+        except zipfile.BadZipFile:
+            return None
+        if any(n.startswith("ppt/") for n in names):
+            return "pptx"
+        if any(n.startswith("word/") for n in names):
+            return "docx"
+        if "content.xml" in names:
+            return "odp"
+        return None
+    if head.startswith(b"\xd0\xcf\x11\xe0\xa1\xb1\x1a\xe1"):
+        return "ppt"  # legacy Office (ppt or doc); LibreOffice detects which
+    if head[4:8] == b"ftyp":
+        brand = head[8:12]
+        if brand.startswith((b"heic", b"heix", b"mif1", b"msf1")):
+            return None  # HEIC photos: the app sends JPEG
+        return "m4a" if brand.startswith((b"M4A", b"M4B")) else "mp4"
+    if head.startswith(b"ID3") or head[:2] in (b"\xff\xfb", b"\xff\xf3", b"\xff\xf2"):
+        return "mp3"
+    if head[:2] in (b"\xff\xf1", b"\xff\xf9"):
+        return "aac"
+    if head.startswith(b"OggS"):
+        return "ogg"
+    if head.startswith(b"fLaC"):
+        return "flac"
+    if head.startswith(b"#!AMR"):
+        return "amr"
+    if head.startswith(b"\x1aE\xdf\xa3"):
+        return "webm"
+    if head.startswith(b"\x00\x00\x00\x14ftypqt") or head[4:8] == b"moov":
+        return "mov"
+    return None
+
+
+def upload_done(user, material_id, n, sha256):
+    """Verifies the finished upload and keeps it under its real type."""
+    d = material_dir(user, material_id)
+    part = d / f"{_n(n)}.part"
+    if not part.exists():
+        if n in files(user, material_id):
+            return {"ok": True, "type": files(user, material_id)[n].suffix[1:]}
+        raise ApiError(404, "nothing uploaded for this file")
+    h = hashlib.sha256()
+    with part.open("rb") as f:
+        for block in iter(lambda: f.read(1 << 20), b""):
+            h.update(block)
+    if h.hexdigest() != (sha256 or "").lower():
+        part.unlink()
+        raise ApiError(400, "upload corrupted (sha256 mismatch), please upload this file again")
+    kind = sniff(part)
+    if kind not in AUDIO | OFFICE | IMAGES | {"pdf"}:
+        part.unlink()
+        raise ApiError(415, "unsupported file: use PDF, PowerPoint/Word, photos (JPEG/PNG/WebP) or audio/video")
+    os.replace(part, d / f"{n}.{kind}")
+    return {"ok": True, "type": kind}
+
+
+# ---------- conversion ----------
+
+def office_to_pdf(src, timeout=300):
+    """LibreOffice headless conversion in a throwaway profile; returns PDF bytes."""
+    with tempfile.TemporaryDirectory() as tmp:
+        tmp = Path(tmp)
+        shutil.copy(src, tmp / f"in{src.suffix}")
+        try:
+            subprocess.run(["soffice", f"-env:UserInstallation=file://{tmp}/profile", "--headless", "--norestore",
+                            "--convert-to", "pdf", "--outdir", str(tmp), str(tmp / f"in{src.suffix}")],
+                           capture_output=True, timeout=timeout, check=True, env={**os.environ, "HOME": str(tmp)})
+        except FileNotFoundError:
+            raise ApiError(500, "LibreOffice is not installed on the server")
+        except (subprocess.TimeoutExpired, subprocess.CalledProcessError):
+            raise ApiError(422, f"could not convert {src.name} to PDF")
+        out = tmp / "in.pdf"
+        if not out.exists():
+            raise ApiError(422, f"could not convert {src.name} to PDF")
+        return out.read_bytes()
+
+
+def image_to_pdf(src):
+    from PIL import Image, ImageOps
+
+    with Image.open(src) as im:
+        im = ImageOps.exif_transpose(im).convert("RGB")
+        im.thumbnail((2000, 2000))
+        buf = io.BytesIO()
+        im.save(buf, "PDF", resolution=150, quality=88)
+        return buf.getvalue()
+
+
+def build_pdf(user, material_id):
+    """Merges every document/photo file of a material into material.pdf; returns its page count."""
+    from pypdf import PdfReader, PdfWriter
+
+    writer = PdfWriter()
+    for n, path in files(user, material_id).items():
+        ext = path.suffix[1:]
+        if ext == "pdf":
+            data = path.read_bytes()
+        elif ext in OFFICE:
+            data = office_to_pdf(path)
+        elif ext in IMAGES:
+            data = image_to_pdf(path)
+        else:
+            raise ApiError(422, f"file {n + 1} is audio/video; upload it as a recording")
+        reader = PdfReader(io.BytesIO(data))
+        if reader.is_encrypted and not reader.decrypt(""):
+            raise ApiError(422, f"file {n + 1} is a password-protected PDF")
+        writer.append(reader)
+    if not writer.pages:
+        raise ApiError(422, "no pages found")
+    out = material_dir(user, material_id) / "material.pdf"
+    with open(out.with_suffix(".tmp"), "wb") as f:
+        writer.write(f)
+    os.replace(out.with_suffix(".tmp"), out)
+    return len(writer.pages)
+
+
+def material_pdf(user, material_id):
+    p = material_dir(user, material_id) / "material.pdf"
+    if not p.exists():
+        raise ApiError(409, "this material isn't processed yet")
+    return p
+
+
+def page_pdfs(path, pages):
+    """{page number (1-based): single-page PDF bytes} for [pages], so the model can cite exact pages."""
+    from pypdf import PdfReader, PdfWriter
+
+    reader = PdfReader(str(path))
+    out = {}
+    for p in pages:
+        if 1 <= p <= len(reader.pages):
+            w = PdfWriter()
+            w.add_page(reader.pages[p - 1])
+            buf = io.BytesIO()
+            w.write(buf)
+            out[p] = buf.getvalue()
+    return out
+
+
+def page_texts(path, limit=200):
+    """First [limit] characters of each page's text layer (a cheap digest for mapping big books)."""
+    from pypdf import PdfReader
+
+    reader = PdfReader(str(path))
+    texts = []
+    for page in reader.pages:
+        try:
+            t = " ".join((page.extract_text() or "").split())
+        except Exception:  # noqa: BLE001 - a broken page just has no digest
+            t = ""
+        texts.append(t[:limit])
+    return texts
+
+
+def page_png(user, material_id, page):
+    """A rendered page (poppler's pdftoppm, cached next to the material)."""
+    pdf = material_pdf(user, material_id)
+    out = pdf.parent / f"page-{int(page)}.png"
+    if not out.exists():
+        tmp = pdf.parent / f".page-{int(page)}"
+        try:
+            subprocess.run(["pdftoppm", "-png", "-r", "110", "-f", str(page), "-l", str(page), "-singlefile", str(pdf), str(tmp)],
+                           capture_output=True, timeout=60, check=True)
+        except (FileNotFoundError, subprocess.TimeoutExpired, subprocess.CalledProcessError):
+            raise ApiError(404, "page not available")
+        os.replace(tmp.with_suffix(".png"), out)
+    return out
+
+
+def transcript(user, material_id):
+    p = material_dir(user, material_id) / "transcript.json"
+    return json.loads(p.read_text()) if p.exists() else None
+
+
+# ---------- ingest status (backend-owned docs: ingest-<material id>) ----------
+
+def ingest_id(material_id):
+    return f"ingest-{material_id}"
+
+
+def get_ingest(user, material_id):
+    d = docs(user).filter(doc_id=ingest_id(material_id), deleted=False).first()
+    return dict(d.data) if d else None
+
+
+def set_ingest(user, material_id, **fields):
+    data = {**(get_ingest(user, material_id) or {"material_id": material_id}), **fields}
+    save_docs(user, [{"id": ingest_id(material_id), "kind": "ingest", "data": data, "updated_at": now_ms(),
+                      "deleted": False}])
+    return data
+
+
+def delete_account_files(user):
+    shutil.rmtree(settings.CERTDECK_UPLOAD_DIR / str(user.id), ignore_errors=True)

@@ -93,5 +93,7 @@ class Command(BaseCommand):
                 raise CommandError(f"this deletes {name!r} and all their data; add --yes to confirm")
             if account.role == "owner" and Account.objects.filter(role="owner").count() == 1:
                 raise CommandError("refusing to delete the only owner")
+            from core.ingest import delete_account_files
+            delete_account_files(account)
             account.delete()
             self.stdout.write(f"Deleted {name} and their data.")

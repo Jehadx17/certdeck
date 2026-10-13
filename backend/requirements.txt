@@ -6,3 +6,6 @@ gunicorn>=23,<24
 anthropic>=1,<2
 fsrs[optimizer]>=6,<7
 jsonschema>=4,<5
+sympy>=1.13,<2
+pypdf>=5,<7
+pillow>=11,<13

@@ -18,12 +18,14 @@ services:
       retries: 20
 
   certdeck-api:
-    build: {context: .., dockerfile: deploy/Dockerfile}
+    build: {context: .., dockerfile: deploy/Dockerfile, target: app}
     image: certdeck-api:latest
     restart: unless-stopped
     env_file: ../../.env
-    environment: {POSTGRES_HOST: certdeck-db, CERTDECK_MEDIA_DIR: /data/media, CERTDECK_RELEASE_DIR: /data/release}
-    volumes: [media:/data/media, /opt/certdeck/release:/data/release:ro]  # app updates (deploy/release-apk.sh)
+    environment: {POSTGRES_HOST: certdeck-db, CERTDECK_MEDIA_DIR: /data/media, CERTDECK_RELEASE_DIR: /data/release,
+                  CERTDECK_UPLOAD_DIR: /data/uploads}
+    # app updates (deploy/release-apk.sh); course uploads
+    volumes: [media:/data/media, uploads:/data/uploads, /opt/certdeck/release:/data/release:ro]
     depends_on: {certdeck-db: {condition: service_healthy}}
     networks: [internal]
     ports: ["127.0.0.1:18765:8000"]
@@ -49,8 +51,38 @@ services:
     networks: [internal]
     command: ["sh", "-c", "while :; do python manage.py poll_jobs; sleep 60; done"]
 
+  # College: converts and maps uploaded course material, prepares assessments (AI calls; LibreOffice for slides).
+  certdeck-college:
+    image: certdeck-api:latest
+    restart: unless-stopped
+    env_file: ../../.env
+    environment: {POSTGRES_HOST: certdeck-db, CERTDECK_MEDIA_DIR: /data/media, CERTDECK_UPLOAD_DIR: /data/uploads}
+    volumes: [media:/data/media, uploads:/data/uploads]
+    depends_on: {certdeck-api: {condition: service_started}}
+    networks: [internal]
+    command: ["python", "manage.py", "college_worker"]
+    cpus: 1.0
+    mem_limit: 2g
+
+  # Lecture recordings -> transcripts. The VPS also runs other production projects, so this is capped hard:
+  # 2 of 4 CPUs, 3 GB RAM, the lowest CPU priority and scheduler share, one recording at a time.
+  certdeck-whisper:
+    build: {context: .., dockerfile: deploy/Dockerfile, target: whisper}
+    image: certdeck-whisper:latest
+    restart: unless-stopped
+    env_file: ../../.env
+    environment: {POSTGRES_HOST: certdeck-db, CERTDECK_UPLOAD_DIR: /data/uploads, WHISPER_THREADS: "2", WHISPER_MODELS: /models}
+    volumes: [uploads:/data/uploads, whisper-models:/models]
+    depends_on: {certdeck-api: {condition: service_started}}
+    networks: [internal]
+    cpus: 2.0
+    cpu_shares: 256
+    mem_limit: 3g
+
 networks:
   internal: {}
 volumes:
   pgdata: {}
   media: {}
+  uploads: {}
+  whisper-models: {}

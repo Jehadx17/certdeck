@@ -28,8 +28,11 @@ log = logging.getLogger(__name__)
 
 # Server-side refusal fallback. If the API ever rejects these, set FALLBACK = {}. Not accepted by the Batch API.
 FALLBACK = {"extra_headers": {"anthropic-beta": "server-side-fallback-2026-07-01"}, "extra_body": {"fallbacks": "default"}}
-# $ per million tokens: input, 5-minute cache write, cache read, output (platform pricing page, checked 2026-10-12).
-PRICES = {"claude-opus-5-5": (4, 5, 0.20, 20), "claude-sonnet-5-5": (2, 2.5, 0.10, 10)}
+# $ per million tokens: input, 5-minute cache write, cache read, output (platform pricing, checked 2026-10-13).
+# Haiku 5.5 has a second tier for prompts over 100K tokens.
+PRICES = {"claude-opus-5-5": (4, 5, 0.20, 20), "claude-sonnet-5-5": (2, 2.5, 0.20, 10),
+          "claude-haiku-5-5": (0.10, 0.125, 0.01, 0.50)}
+LONG_PRICES = {"claude-haiku-5-5": (100_000, (0.50, 0.625, 0.05, 2.50))}
 GUIDES = Path(__file__).parent / "guides"
 AI_TYPES = ["basic", "mcq", "cloze", "typed", "code", "ordering"]  # no occlusion: the AI can't draw images
 IMAGE_TYPES = {"image/jpeg", "image/png", "image/gif", "image/webp"}
@@ -68,6 +71,8 @@ def cost_usd(model, usage, batch=False):
         return 0.0
     tok = [getattr(usage, k, 0) or 0 for k in
            ("input_tokens", "cache_creation_input_tokens", "cache_read_input_tokens", "output_tokens")]
+    if model in LONG_PRICES and sum(tok[:3]) > LONG_PRICES[model][0]:
+        p = LONG_PRICES[model][1]
     return round(sum(t * r for t, r in zip(tok, p)) / 1e6 * (0.5 if batch else 1), 6)
 
 
@@ -94,15 +99,16 @@ def log_call(user, endpoint, model, msg, ok, error, duration_ms, batch=False):
         cache_read_tokens=getattr(u, "cache_read_input_tokens", 0) or 0,
         cache_creation_tokens=getattr(u, "cache_creation_input_tokens", 0) or 0,
         duration_ms=duration_ms, cost_usd=cost_usd(model, u, batch))
-    log.info("ai %s%s user=%s ok=%s in=%d out=%d cache_read=%d cache_write=%d $%.4f ms=%d %s", endpoint,
-             " (batch)" if batch else "", user, ok, row.input_tokens, row.output_tokens, row.cache_read_tokens,
+    log.info("ai %s%s user=%s model=%s ok=%s in=%d out=%d cache_read=%d cache_write=%d $%.4f ms=%d %s", endpoint,
+             " (batch)" if batch else "", user, model, ok, row.input_tokens, row.output_tokens, row.cache_read_tokens,
              row.cache_creation_tokens, row.cost_usd, row.duration_ms, row.error)
+    return float(row.cost_usd)
 
 
-def params(system, messages, schema):
-    """Request params shared by streamed calls and batch requests."""
-    return dict(model=settings.CERTDECK_MODEL, max_tokens=64000, system=system, messages=messages,
-                output_config={"effort": "medium", "format": {"type": "json_schema", "schema": schema}})
+def params(system, messages, schema, model=None, effort="medium"):
+    """Request params shared by streamed calls and batch requests. Default model: CERTDECK_MODEL (the writer)."""
+    return dict(model=model or settings.CERTDECK_MODEL, max_tokens=64000, system=system, messages=messages,
+                output_config={"effort": effort, "format": {"type": "json_schema", "schema": schema}})
 
 
 def parse(msg):
@@ -119,13 +125,15 @@ def parse(msg):
     return out
 
 
-def call(user, endpoint, request, estimate=0.0):
-    """One streamed structured-output call; returns the parsed JSON object. Always logs an AiCall row."""
+def call(user, endpoint, request, estimate=0.0, costs=None):
+    """One streamed structured-output call; returns the parsed JSON object. Always logs an AiCall row (and appends
+    its dollar cost to [costs] when given)."""
     check_budget(user, estimate)
     t0 = time.monotonic()
     msg, ok, error = None, False, ""
     try:
-        msg = _create(**request, **FALLBACK)
+        # The server-side refusal fallback exists for Opus/Sonnet 5.5 only (not Haiku).
+        msg = _create(**request, **(FALLBACK if "haiku" not in request["model"] else {}))
         out = parse(msg)
         ok = True
         return out
@@ -145,7 +153,9 @@ def call(user, endpoint, request, estimate=0.0):
         error = repr(e)
         raise ApiError(502, "AI service error") from e
     finally:
-        log_call(user, endpoint, request["model"], msg, ok, error, int((time.monotonic() - t0) * 1000))
+        cost = log_call(user, endpoint, request["model"], msg, ok, error, int((time.monotonic() - t0) * 1000))
+        if costs is not None:
+            costs.append(cost)
 
 
 # ---------- output schemas (structured outputs: no recursion, all props required, nullable via anyOf) ----------
