@@ -1,0 +1,3 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- The reminder notifications use the launcher icon; don't let resource shrinking drop it. -->
+<resources xmlns:tools="http://schemas.android.com/tools" tools:keep="@mipmap/ic_launcher" />

@@ -66,6 +66,8 @@ android {
         release {
             // key.properties (gitignored) points at the keystore in ~/.config/certdeck; debug keys otherwise.
             signingConfig = keystorePropertiesFile.exists() ? signingConfigs.release : signingConfigs.debug
+            // flutter_local_notifications stores scheduled reminders with Gson; keep its generic types (R8).
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
 }
@@ -76,4 +78,7 @@ flutter {
 
 dependencies {
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.2.2'
+    // With desugaring on, Flutter crashes at start on Android 12L+ without these (flutter/flutter#110658).
+    implementation 'androidx.window:window:1.0.0'
+    implementation 'androidx.window:window-java:1.0.0'
 }
