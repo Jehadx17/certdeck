@@ -37,6 +37,10 @@ CERTDECK_TEST_URL=http://127.0.0.1:8765 CERTDECK_TEST_TOKEN=devtoken flutter tes
 
 Updating the app = bump `version:` in `app/pubspec.yaml`, rebuild, `adb install -r` (data is kept).
 
+No USB? Upload the APK and open the link on the phone (nginx serves `/opt/certdeck/dl/` at `/dl/`, no listing):
+`scp app/build/app/outputs/flutter-apk/app-release.apk root@169.58.7.222:/opt/certdeck/dl/certdeck-<random>.apk`
+→ `https://certdeck.mithaqstay.com/dl/certdeck-<random>.apk`.
+
 First run: **Settings → Backend & sync** → server URL `https://certdeck.mithaqstay.com` + API token →
 **Save & sync**. On a new phone this restores everything.
 
