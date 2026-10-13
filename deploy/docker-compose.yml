@@ -71,7 +71,8 @@ services:
     image: certdeck-whisper:latest
     restart: unless-stopped
     env_file: ../../.env
-    environment: {POSTGRES_HOST: certdeck-db, CERTDECK_UPLOAD_DIR: /data/uploads, WHISPER_THREADS: "2", WHISPER_MODELS: /models}
+    environment: {POSTGRES_HOST: certdeck-db, CERTDECK_UPLOAD_DIR: /data/uploads, WHISPER_THREADS: "2", WHISPER_MODELS: /models,
+                  HF_HOME: /models/hf, HOME: /models}
     volumes: [uploads:/data/uploads, whisper-models:/models]
     depends_on: {certdeck-api: {condition: service_started}}
     networks: [internal]

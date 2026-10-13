@@ -43,10 +43,6 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         from faster_whisper import WhisperModel
 
-        model = WhisperModel(settings.CERTDECK_WHISPER_MODEL, device="cpu", compute_type="int8",
-                             cpu_threads=int(os.environ.get("WHISPER_THREADS", "2")),
-                             download_root=os.environ.get("WHISPER_MODELS", "/models"))
-        log.info("whisper ready: %s", settings.CERTDECK_WHISPER_MODEL)
         while True:
             close_old_connections()
             job = next((d for d in Doc.objects.filter(kind="ingest", deleted=False).select_related("user")
@@ -56,7 +52,12 @@ class Command(BaseCommand):
                 continue
             mid, t0 = job.data["material_id"], time.monotonic()
             try:
+                # Loaded per recording and freed after: idle, this container holds no model in the shared server's RAM.
+                model = WhisperModel(settings.CERTDECK_WHISPER_MODEL, device="cpu", compute_type="int8",
+                                     cpu_threads=int(os.environ.get("WHISPER_THREADS", "2")),
+                                     download_root=os.environ.get("WHISPER_MODELS", "/models"))
                 minutes = transcribe(model, job.user, mid)
+                del model
                 ingest.set_ingest(job.user, mid, status="transcribed", minutes=minutes, progress=1,
                                   transcribe_seconds=round(time.monotonic() - t0))
                 log.info("transcribed %s: %.1f min of audio in %.0f s", mid, minutes, time.monotonic() - t0)
