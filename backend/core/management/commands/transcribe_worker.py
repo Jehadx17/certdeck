@@ -1,6 +1,7 @@
 import json
 import logging
 import os
+import subprocess
 import time
 
 from django.conf import settings
@@ -13,20 +14,31 @@ from core.models import Doc
 log = logging.getLogger(__name__)
 
 
+def decode(path):
+    """Any audio/video file -> 16 kHz mono float32 samples (ffmpeg, with a timeout)."""
+    import numpy as np
+
+    raw = subprocess.run(["ffmpeg", "-nostdin", "-v", "error", "-i", str(path), "-vn", "-f", "s16le", "-ac", "1",
+                          "-ar", "16000", "-"], capture_output=True, check=True, timeout=1800).stdout
+    return np.frombuffer(raw, np.int16).astype(np.float32) / 32768.0
+
+
 def transcribe(model, user, material_id):
     """Every audio/video file of the material, in order -> transcript.json [[start, end, text]]; then the audio
-    is deleted. faster-whisper decodes the files itself (PyAV), so no ffmpeg is needed."""
+    is deleted."""
     audio = list(ingest.files(user, material_id).values())
     segments, offset, last_report = [], 0.0, 0.0
     for i, path in enumerate(audio):
-        parts, info = model.transcribe(str(path), vad_filter=True, beam_size=1, condition_on_previous_text=False)
+        samples = decode(path)
+        duration = len(samples) / 16000
+        parts, info = model.transcribe(samples, vad_filter=True, beam_size=1, condition_on_previous_text=False)
         for seg in parts:
             segments.append([round(offset + seg.start, 1), round(offset + seg.end, 1), seg.text.strip()])
             if time.monotonic() - last_report > 20:
                 last_report = time.monotonic()
-                done = (i + min(1.0, seg.end / max(info.duration, 1))) / len(audio)
+                done = (i + min(1.0, seg.end / max(duration, 1))) / len(audio)
                 ingest.set_ingest(user, material_id, progress=round(min(0.99, done), 2), language=info.language)
-        offset += info.duration
+        offset += duration
     segments = [s for s in segments if s[2]]
     if not segments:
         raise ValueError("no speech found")
