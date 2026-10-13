@@ -23,7 +23,7 @@
       "required": ["type", "question"],
       "properties": {
         "id": {"type": "string", "description": "UUID; generated on import when missing"},
-        "type": {"enum": ["basic", "mcq", "cloze", "typed", "code", "occlusion", "ordering"]},
+        "type": {"enum": ["basic", "mcq", "cloze", "typed", "code", "occlusion", "ordering", "short", "problem"]},
         "question": {"$ref": "#/$defs/markdown", "description": "Front / MCQ stem / typed prompt / ordering prompt / occlusion caption. For cloze: text with {{answer}} or {{answer::hint}} blanks."},
         "answer": {"$ref": "#/$defs/markdown", "description": "Back (basic, code, occlusion). For typed: the canonical answer."},
         "options": {"type": "array", "items": {"type": "string"}, "description": "mcq: answer options (displayed shuffled)"},
@@ -48,6 +48,15 @@
         "question_images": {"type": "array", "items": {"type": "string"}, "description": "media names shown with the question"},
         "answer_images": {"type": "array", "items": {"type": "string"}, "description": "media names shown with the answer"},
         "explanation": {"$ref": "#/$defs/markdown", "description": "Why the right answer is right AND why each wrong option is wrong"},
+        "rubric": {"type": "array", "items": {"type": "object", "required": ["point"], "properties": {"point": {"type": "string"}, "weight": {"type": "number"}}}, "description": "short/problem: marking points (weights sum to 1) for partial credit"},
+        "steps": {"type": "array", "items": {"type": "string"}, "description": "problem: the worked solution, one step per item"},
+        "check": {"type": ["object", "null"], "description": "problem: how the final answer was verified with SymPy {kind, expr, value, var, tolerance}"},
+        "verified": {"type": "boolean", "description": "problem: the answer passed the SymPy check"},
+        "course": {"type": "string", "description": "college: the course id (instead of certs)"},
+        "section": {"type": "string", "description": "college: <material id>/<section id> the card comes from"},
+        "kp_ids": {"type": "array", "items": {"type": "string"}, "description": "college: the knowledge points it tests"},
+        "ref": {"type": "object", "description": "college: source {material_id, loc (page)}"},
+        "worked": {"type": "boolean", "description": "college: a professor's worked example as a problem card"},
         "certs": {"type": "object", "additionalProperties": {"type": "string"}, "description": "cert code -> official domain id, e.g. {\"DVA-C02\": \"1\", \"SAA-C03\": \"3\"}"},
         "tags": {"type": "array", "items": {"type": "string"}, "description": "free topic tags, e.g. lambda, sqs"},
         "source": {"type": "string", "description": "manual | import | ai:<details> | a URL"},
@@ -78,7 +87,9 @@
         {"if": {"properties": {"type": {"const": "typed"}}}, "then": {"required": ["answer"]}},
         {"if": {"properties": {"type": {"const": "ordering"}}}, "then": {"required": ["items"]}},
         {"if": {"properties": {"type": {"const": "occlusion"}}}, "then": {"required": ["image", "masks"]}},
-        {"if": {"properties": {"type": {"const": "code"}}}, "then": {"anyOf": [{"required": ["code"]}, {"required": ["answer_code"]}]}}
+        {"if": {"properties": {"type": {"const": "code"}}}, "then": {"anyOf": [{"required": ["code"]}, {"required": ["answer_code"]}]}},
+        {"if": {"properties": {"type": {"const": "short"}}}, "then": {"required": ["answer"]}},
+        {"if": {"properties": {"type": {"const": "problem"}}}, "then": {"required": ["answer", "steps"]}}
       ]
     }
   }

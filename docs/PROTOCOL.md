@@ -29,7 +29,23 @@ JSON import overwrites the cards it imports.
 | `analysis` | uuid | backend | `{created_at, cert, summary, weak_areas:[{rank, domain, topic, diagnosis}], actions:[{label, cert, domain, topic, count}], videos:[{title, url}], override_ids:[...]}` |
 | `override` | uuid | backend creates, app applies | `{created_at, analysis_id, reason, card_ids:[...], due_shift_days:int\|null, due_now:bool, priority:int\|null, applied_at:ms\|null, reverted_at:ms\|null, before:{card_id:{due, priority}}}` |
 | `chat` | card id | app | `{card_id, messages:[{role:"user"\|"assistant", text, ts}]}` |
-| `exam` | uuid | app | `{cert, started_at, finished_at, minutes, questions:[{card_id, domain, answer, correct, flagged}], score_pct, scaled, passed}` |
+| `exam` | uuid | app | cert simulation `{cert, started_at, finished_at, minutes, questions:[{card_id, domain, answer, correct, flagged}], score_pct, scaled, passed}`; college practice exam `{assessment_id, course_id, started_at, finished_at, minutes, questions:[{card_id, section, answer, score 0-1, flagged}], score_pct}` |
+| `course` | uuid | app | `{name, code, lang: "en"\|"ar"\|"mixed", created_at}` |
+| `material` | uuid | app | `{course_id, kind: "book"\|"slides"\|"notes"\|"photos"\|"syllabus"\|"past_exam", title, files:[{name, size}], created_at}`; the files go up through `upload/` |
+| `ingest` | `ingest-<material id>` | backend | processing status `{material_id, course_id, status: "queued"\|"converting"\|"mapping"\|"ready"\|"failed", error, pages, lang, chars:[per page], structure:[{id: "s1", title, level: 1\|2, start, end (pages), kind: "content"\|"exercises"\|"other"}]}` |
+| `assessment` | uuid | app; backend proposes | `{course_id, kind: "quiz"\|"midterm"\|"final"\|"test"\|"other", title, date: "YYYY-MM-DD"\|null, weeks, minutes, weight_pct, scope:[{material_id, section_id}], hints, coverage, format, status: "proposed"\|"active", source: "syllabus"\|"manual", created_at}` |
+| `profile` | `profile-<course id>` | backend | the professor's past papers: `{course_id, paper_ids, formats:{mcq, true_false, short_answer, problem, other} (shares of marks), difficulty, typical_questions, typical_minutes, topics:[{topic, count}], traps:[...], style, questions:[{text, type, topic, points, page}]}` |
+| `kp` | uuid | backend | a knowledge point `{course_id, material_id, section: "<material id>/<section id>", kind, title, content (markdown + LaTeX), loc (page), emphasis 0-3, created_at}` |
+| `prep` | `prep-<assessment id>` | backend | preparation job `{assessment_id, status: "queued"\|"running"\|"waiting"\|"done"\|"failed", mode: "now"\|"batch", stage, progress, estimate_usd, cost_usd, cards_added, dropped, unverified, kps, uncovered, error, pending (batch)}` |
+| `prio` | `prio-<assessment id>` | backend | `{assessment_id, scores:{kp id: 1-5}, hints (the hints they were scored with), updated_at}` |
+| `sheet` | `sheet-<assessment id>-<kind>` | backend | `{assessment_id, course_id, kind: "summary"\|"facts"\|"formulas"\|"night", content (markdown + LaTeX), created_at}` |
+
+College cards are ordinary `card` docs with `course` (course id) instead of `certs`, plus `section`, `kp_ids`,
+`ref: {material_id, loc}` (the source page), `worked` / `similar_kp` (a professor's worked example / a new problem
+in its style), `practice` (assessment id, for fresh practice-exam questions) and two more types: `short`
+(`answer` = model answer, `rubric: [{point, weight}]`) and `problem` (`steps`, `answer`, `rubric`,
+`check: {kind: numeric|equivalent|derivative|solutions, expr, value, var, tolerance}` and `verified: true` once SymPy
+confirmed the answer). Reviews of graded answers carry `score` (0-1; partial credit rates Hard).
 
 Card FSRS state lives inside the card doc (`fsrs` object, times in ms).
 
@@ -89,6 +105,24 @@ Offline or failing calls return an `{"error"}` that the app shows as "Needs conn
   proposes actions, videos (YouTube search links) and bounded overrides.
 - `POST fsrs/optimize`: runs the py-fsrs optimizer over every review, writes the `fsrs_params` doc, and returns it.
   It also runs weekly from a timer.
+
+### College (all per account; AI calls count against the monthly cap)
+- `PUT upload/<material id>/<n>?offset=<bytes>`: raw chunk (≤ 8 MB) of file n, appended only at the offset the server
+  has (409 with the right offset otherwise), so an interrupted upload resumes. `GET upload/<material id>/<n>` →
+  `{size, done}`. `POST upload/<material id>/<n>/done` `{sha256}` → `{ok, type}`: verifies the hash and the type from
+  magic bytes (PDF, PowerPoint/Word/ODF, JPEG/PNG/WebP/GIF; anything else 415). Files ≤ 600 MB.
+- `POST college/process` `{material_id}`: after every file is up. The `certdeck-college` worker converts everything into
+  one PDF (LibreOffice for slides/docs, Pillow for photos), maps sections (PDF outline, or the READ model), turns
+  syllabus pages into proposed `assessment` docs and past papers into the `profile`. Progress arrives as the `ingest` doc.
+- `GET college/page/<material id>/<page>` → that page as a PNG (a card's source).
+- `POST college/prepare` `{assessment_id}` → `{estimate: {usd, usd_batch, pages, sections, new_sections, cards, unprocessed}}`;
+  with `confirm: true` it queues the `prep` job (Batch API when the date is more than 3 days away, or `now: true`):
+  extract → prioritize → generate → fill → sheets. Sections already extracted aren't read again.
+- `POST college/suggest_scope` `{assessment_id}` → `{scope}` (the app applies it). `POST college/prioritize`
+  `{assessment_id}` → a new `prio` doc after the hints changed.
+- `POST college/grade` `{card, answer, images?: [{media_type, data}]}` → `{score, verdict, points:[{point, met, note}], feedback}`.
+- `POST college/practice` `{assessment_id, count}` → `{cards}`: fresh questions in the professor's style (saved as cards).
+- `POST college/night` `{assessment_id}` → the personal night-before `sheet`.
 
 ### Import / export
 - `GET export` → export JSON (`docs/cards.schema.json`, `format: "certdeck"`), with every card, cert and media file inlined as base64.

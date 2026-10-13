@@ -1,11 +1,14 @@
 # CertDeck
 
-Personal, offline-first, AI-powered spaced-repetition app for certification exams (DVA-C02 → SAA-C03 → CKAD).
-Flutter Android app + Django backend. The spec is in [SPEC.md](SPEC.md); design decisions are in [DECISIONS.md](DECISIONS.md).
+Personal, offline-first, AI-powered spaced-repetition app for certification exams (DVA-C02 → SAA-C03 → CKAD), plus a
+**College** side for a few invited students: they upload their course material and get cards, practice exams, sheets
+and a study plan aimed at their next quiz, midterm or final.
+Flutter Android app + Django backend. Specs: [SPEC.md](SPEC.md) (certs), [COLLEGE.md](COLLEGE.md) (college); design
+decisions are in [DECISIONS.md](DECISIONS.md).
 
 ```
 app/        Flutter app (Android): local SQLite, FSRS, all card types, study/exam/AI screens
-backend/    Django + DRF: sync/backup, media, AI endpoints (Claude), FSRS optimizer, import/export
+backend/    Django + DRF: accounts, sync/backup, media, AI endpoints (Claude), college pipeline, FSRS optimizer
 deploy/     Dockerfile, compose project, nginx server block, deploy script
 docs/       PROTOCOL.md (app↔backend contract), cards.schema.json (import/export format)
 examples/   cards.example.json (one card of every type, incl. an occlusion image)
@@ -72,6 +75,36 @@ CERTDECK_API_TOKEN=devtoken .venv/bin/python manage.py runserver 127.0.0.1:8765
 ```
 Without `POSTGRES_DB` it uses SQLite. Env vars: see [backend/.env.example](backend/.env.example).
 
+## College (students)
+How it works: a student adds a **course**, uploads its **material** (slides as PDF or PowerPoint, notes, a textbook,
+photos of pages, the syllabus, past quizzes) and confirms its **quizzes & exams** (the syllabus proposes them with
+weeks and weights). For each one they pick what it covers (chapters, lectures) and add the professor's hints, then tap
+**Prepare**: after a cost estimate, the server reads exactly those pages, extracts every examinable point (cited by
+page), ranks them for this assessment (hints, the professor's past papers, the syllabus), writes cards and practice
+problems (math answers verified by computer algebra) and summary / key-facts / formula sheets. Studying is offline:
+**sprint** mode with ≤ 3 days left (time-budgeted, most marks first, right twice in a row), **compressed** with 4-14
+days, long-term otherwise; plus practice exams in the professor's format (AI or rubric grading, photos of handwritten
+work), a predicted-mark range, a night-before sheet, an exam-morning check and daily reminders. Arabic and English,
+right-to-left included (Settings → Language). Details: [DECISIONS.md](DECISIONS.md) → College.
+
+**Add a student** (on the server, see *Accounts and tokens* below): `users create <name>` prints a token; give them
+the token and the server URL `https://certdeck.mithaqstay.com`. They see only College, Cards and Settings.
+
+**Install for a student**
+- Android: send them the browser link printed by `deploy/release-apk.sh` (`https://certdeck.mithaqstay.com/dl/…`),
+  they allow the install, open CertDeck → Settings → Backend & sync → URL + token → Save & sync. Updates arrive by
+  themselves (the same forced update as mine).
+- iPhone: only through your Mac (see *iOS* below): their iPhone on USB, `app/build-ios.sh`. With a free Apple ID the
+  app stops opening after 7 days until you run the script again with their phone plugged in (their data stays);
+  a paid developer account ($99/year) makes it a yearly chore. iOS has no self-update: re-run the script for updates.
+- One phone, two accounts: entering another token pushes the current account's changes, clears the phone and
+  restores the other account (a wrong token changes nothing).
+
+**Cost** (Anthropic, charged to the student's monthly cap, default $10): roughly $0.04-0.08 per page of lecture
+slides or notes and $0.15-0.25 per page of dense prose prepared now, half that through the Batch API (assessments
+more than 3 days away); the app shows the estimate before anything runs. Grading a written answer ≈ $0.01-0.02,
+a fresh practice question ≈ $0.02.
+
 ### Production (169.58.7.222, root)
 Isolated compose project in `/opt/certdeck` (own Postgres, volumes, network; API on `127.0.0.1:18765`),
 served at `https://certdeck.mithaqstay.com/api/` by the host nginx (site file `deploy/nginx-certdeck.conf` →
@@ -93,6 +126,7 @@ Useful on the server:
 cd /opt/certdeck/src/deploy
 alias dc='docker compose --env-file /opt/certdeck/.env'
 dc ps; dc logs -f certdeck-api          # token usage per AI call is logged ("ai generate ok=True in=… out=…")
+dc logs -f certdeck-college             # course material processing and assessment preparation
 dc exec certdeck-api python manage.py optimize_fsrs
 curl -s 127.0.0.1:18765/api/health
 ```

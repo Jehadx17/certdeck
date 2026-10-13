@@ -662,7 +662,7 @@ class _AssessmentScreenState extends State<AssessmentScreen> {
               Expanded(
                 child: OutlinedButton.icon(
                   icon: const Icon(Icons.event),
-                  label: Text(a['date'] ?? t('Set date')),
+                  label: FittedBox(fit: BoxFit.scaleDown, child: Text(a['date'] ?? t('Set date'), maxLines: 1)),
                   onPressed: () async {
                     final now = DateTime.now();
                     final picked = await showDatePicker(

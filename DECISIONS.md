@@ -129,3 +129,64 @@ Rates from the platform pricing page (Opus 5.5: $4 in, $5 cache write, $0.20 cac
   switching is `CERTDECK_MODEL=claude-sonnet-5-5` in the server `.env`.
 - **Skipped:** tool search, compaction/context editing (no agent loops), Files API, 1-hour cache, lower `max_tokens`,
   lower effort (spec says medium; no eval to prove it safe).
+
+## Accounts (2026-10-13, COLLEGE.md)
+- **Per-user data, one schema:** every doc, image, AI call and job belongs to an `Account` (`owner` = me: certs +
+  college; `student`: college only). Doc ids are unique per account (`settings`, cert codes repeat), so the doc table
+  was rebuilt with a `(user, doc_id)` key. Migration 0003 made the existing token the owner's and moved all existing
+  data (208 docs, 28 images, AI history) to it, keeping every sync seq, so the phone kept working untouched. Checked
+  first on a copy of the production rows, with a full DB + media backup on the server (`/opt/certdeck/backups/`).
+- **Tokens are stored as sha256 hashes** and managed with `manage.py users` over SSH (create, rotate, disable, cap,
+  delete). No admin UI, no sign-up (out of scope).
+- **Media ownership:** files stay content-addressed and stored once, but `Media(user, name)` decides who may read one;
+  a hash alone never grants access (an isolation test covers it).
+- **Caps:** AI calls check the month's spend (`AiCall` per user) against `cap_usd` before running (402 past it);
+  default $10 for students, none for the owner. Big jobs show an estimate first; Batch jobs are checked at submission
+  and again, with the real numbers, before the expensive stage.
+- **One phone, two people:** switching the token first checks it with the server (a typo changes nothing), pushes the
+  current account's unsynced changes, wipes the local DB and images, then restores the new account. Found on the
+  device test: the first version wiped before checking the token.
+
+## College (2026-10-13)
+- **Pipeline:** material → one PDF (LibreOffice for pptx/docx in a throwaway profile with a timeout, Pillow for photos)
+  → sections (the PDF outline when it groups pages; PowerPoint exports carry one bookmark per slide, so those go to
+  the model) → per assessment scope: extract knowledge points (READ model, one document per page so citations are exact
+  pages) → priorities 1-5 → cards (WRITE model) → coverage pass → sheets. Backend-owned progress docs (`ingest`,
+  `prep`, `prio`, `profile`, `sheet`) keep the single-writer rule; cards and proposed assessments are created once and
+  owned by the app.
+- **Model mix (measured, same three sections: calculus 13 pp, Arabic prose 4 pp, Java slides 7 pp):** Haiku 5.5 cost
+  $0.002-0.005 per section but cited printed page numbers instead of the PDF's (9 of 29 points off on the calculus
+  notes), dropped a letter in Arabic words (تتلك for تمتلك) and titled Arabic points in English. Sonnet 5.5
+  ($0.04-0.09) was exact on pages and Arabic. Opus 5.5 ($0.08-0.22) found more, finer points. **READ = Sonnet 5.5**
+  (`CERTDECK_READ_MODEL`), WRITE = Opus 5.5 (`CERTDECK_MODEL`).
+- **Real runs:** CS 112 quiz (30 slides): 61 points → 107 cards, $1.32, under 3 minutes. MATH106 quiz (27 pp of notes,
+  Batch API): 46 points → 82 cards incl. 48 problems, every answer verified by SymPy, $0.67. Arabic GS111 quiz
+  (12 pp of dense prose): 102 points → 232 cards, $3.16, which exposed two estimate bugs:
+  neighbouring sections share their boundary page, which was read (and carded) twice — now each page goes to one
+  section; and dense prose holds ~4x the points per page of slides — the estimate now counts the text on each page
+  (one point per ~180 characters, at least 1.5 per page, ~1.9 cards per point, ~$0.0124 per card).
+- **Numeric answers are verified, never trusted:** the model states a SymPy check (numeric value, equivalent
+  expression, derivative of an antiderivative, roots); the server evaluates it in a child process with CPU/memory/time
+  limits after a token whitelist (no attribute access, no strings, only known function names). Failing or missing
+  checks on numeric answers drop the problem.
+- **Batch vs now:** assessments more than 3 days away are prepared through the Batch API at half price (each stage
+  is one batch; the worker polls once a minute); closer ones run immediately, 4 requests at a time.
+- **Study engine (app, offline):** mode by days left — sprint ≤ 3 (in-session successive relearning: right twice in a
+  row, misses back after 3 cards, interleaved by section; yesterday's shaky cards first), compressed 4-14 (FSRS capped
+  at the date, retention up to 0.95, new cards paced to finish 2 days early), long. Order = expected marks = priority ×
+  (1 − recall); a time budget keeps 15% for repeats and splits the rest into master / skim / skip. Predicted mark is a
+  range (recall blended with the last practice exam, ±8 to ±33 points depending on how much evidence there is).
+  Daily plan per assessment is capped at 2 hours; "behind" only counts when a plan existed all of yesterday.
+- **Written answers:** short answers and problems carry a rubric; the student ticks it, gives a quick verdict, or asks
+  the AI (Opus, low effort; photos of handwritten work accepted). Partial credit rates Hard in FSRS.
+- **Reminders:** `flutter_local_notifications` 17.2.4 (19.x needs AGP 8.6/SDK 35; this app is on AGP 7.3 with Flutter
+  3.22) with core-library desugaring; that crashed the app at start on Android 16 until the WindowManager libraries
+  were added (flutter/flutter#110658) — caught on the HONOR before publishing. Gson keep rules for the scheduled
+  notifications. Reminders are re-planned on every open and when the app goes to the background.
+- **Math:** `flutter_math_fork` 0.7.3 (0.7.4 needs a newer Flutter), `$…$` / `$$…$$` in every Markdown field; formulas
+  stay LTR inside Arabic text. Text direction is per text block (most letters Arabic → RTL), so an Arabic card reads
+  right-to-left in an English UI and vice versa.
+- **Recordings removed (user's request, 2026-10-13):** lecture recordings were built (faster-whisper in a CPU/RAM-capped
+  container) and measured at ~2x real time with the `small` model on 2 vCPUs, with English sentences in mixed lectures
+  coming out as garbled Arabic. The user then asked to drop audio: code, container, its 3.45 GB image and the model
+  volume were removed.

@@ -278,6 +278,8 @@ Future<Readiness2> readinessOf(Scope s) async {
   return Readiness2(secs, recall, practice, max(0, point - spread), min(1, point + spread), reviews);
 }
 
+const maxDailyMinutes = 120;
+
 class PlanItem {
   final Json assessment;
   final String course;
@@ -306,11 +308,14 @@ Future<List<PlanItem>> todayPlan({DateTime? at}) async {
       if (s.mastered(c)) continue;
       work += isNew(c) ? s.cost(c) : s.pace.of(c) * 1.5;
     }
-    final minutes = (work / 60 / max(1, d)).ceil();
+    // Spread over the days left, at most 2 hours a day: what doesn't fit is triaged by expected marks.
+    final minutes = min(maxDailyMinutes, (work / 60 / max(1, d)).ceil());
     if (minutes == 0) continue;
     final ids = {for (final c in s.cards) c['id']};
     final studied = yesterday.where((r) => ids.contains(r['card_id']) && (r['ts'] as int) < startOfToday()).fold<int>(0, (t, r) => t + ((r['duration_ms'] as int?) ?? 0)) / 60000;
-    final behind = d <= 7 && studied < minutes * .5 && work / 60 > minutes * d * .9;
+    // Behind only if there was a plan all of yesterday (the cards existed) and under half of it got done.
+    final hadPlan = s.cards.any((c) => ((c['created_at'] as int?) ?? nowMs()) < startOfToday() - dayMs);
+    final behind = hadPlan && d <= 7 && studied < minutes * .5;
     out.add(PlanItem(a, names[a['course_id']] ?? '', max(10, minutes), s.mode, behind: behind, practiceDay: s.mode == Mode.compressed && (d == 2 || d == 7)));
   }
   return out;
