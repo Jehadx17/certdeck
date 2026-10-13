@@ -7,7 +7,7 @@ from statistics import mean
 from fsrs import Card, Rating, ReviewLog, Scheduler, State
 from fsrs.scheduler import DEFAULT_PARAMETERS
 
-from .models import Doc, now_ms, save_docs
+from .models import docs, now_ms, save_docs
 
 log = logging.getLogger(__name__)
 
@@ -20,8 +20,8 @@ def _dt(ms):
     return datetime.fromtimestamp(ms / 1000, timezone.utc)
 
 
-def scheduler():
-    doc = Doc.objects.filter(id="fsrs_params", deleted=False).first()
+def scheduler(user):
+    doc = docs(user).filter(doc_id="fsrs_params", deleted=False).first()
     try:
         return Scheduler(parameters=doc.data["parameters"]) if doc else Scheduler()
     except (KeyError, TypeError, ValueError):
@@ -55,20 +55,20 @@ def _final(s):
     return s
 
 
-def cert_stats(code, cert):
+def cert_stats(user, code, cert):
     """Returns (stats for the prompt, {card_id: {domain, r, data}} for the cert's non-deleted cards)."""
     now = datetime.now(timezone.utc)
-    sched = scheduler()
+    sched = scheduler(user)
     domains = {str(d["id"]): d for d in cert.get("domains", [])}
     per = {i: _blank() for i in domains}
     overall = _blank()
 
     cards = {}
-    for d in Doc.objects.filter(kind="card", deleted=False):
+    for d in docs(user).filter(kind="card", deleted=False):
         dom = (d.data.get("certs") or {}).get(code)
         if dom is None:
             continue
-        c = cards[d.id] = {"domain": str(dom), "r": retrievability(sched, d.data.get("fsrs"), now), "data": d.data}
+        c = cards[d.doc_id] = {"domain": str(dom), "r": retrievability(sched, d.data.get("fsrs"), now), "data": d.data}
         for s in (per.setdefault(c["domain"], _blank()), overall):
             s["cards"] += 1
             s["new"] += bool(d.data.get("new", not d.data.get("fsrs")))
@@ -79,7 +79,7 @@ def cert_stats(code, cert):
                 s["_r"].append(c["r"])
 
     misconceptions = Counter()
-    for r in Doc.objects.filter(kind="review", deleted=False).values_list("data", flat=True):
+    for r in docs(user).filter(kind="review", deleted=False).values_list("data", flat=True):
         c = cards.get(r.get("card_id"))
         if not c:
             continue
@@ -94,7 +94,7 @@ def cert_stats(code, cert):
                 s["confidence"][r["confidence"]][1] += ok
 
     exams = []
-    for e in Doc.objects.filter(kind="exam", deleted=False).values_list("data", flat=True):
+    for e in docs(user).filter(kind="exam", deleted=False).values_list("data", flat=True):
         if e.get("cert") != code:
             continue
         exams.append({k: e.get(k) for k in ("finished_at", "score_pct", "passed", "minutes")}
@@ -137,10 +137,10 @@ def cert_stats(code, cert):
     return stats, cards
 
 
-def optimize():
-    """Fit FSRS parameters to every review doc; writes the fsrs_params doc when there is enough data."""
+def optimize(user):
+    """Fit FSRS parameters to the user's review docs; writes their fsrs_params doc when there is enough data."""
     rows = []
-    for r in Doc.objects.filter(kind="review", deleted=False).values_list("data", flat=True):
+    for r in docs(user).filter(kind="review", deleted=False).values_list("data", flat=True):
         try:
             rows.append((int(r["ts"]), str(r["card_id"]), Rating(int(r["rating"])), r.get("duration_ms")))
         except (KeyError, TypeError, ValueError):
@@ -152,7 +152,7 @@ def optimize():
             for ts, cid, rating, dur in rows]
     defaults = {"parameters": list(DEFAULT_PARAMETERS), "optimized_at": None, "review_count": len(logs)}
     if len(logs) < MIN_REVIEWS:
-        log.info("fsrs optimize skipped: %d reviews < %d", len(logs), MIN_REVIEWS)
+        log.info("fsrs optimize %s skipped: %d reviews < %d", user, len(logs), MIN_REVIEWS)
         return defaults
 
     from fsrs import Optimizer  # imports torch; keep it off the request path of other endpoints
@@ -163,6 +163,6 @@ def optimize():
         return defaults
     now = now_ms()
     data = {"parameters": params, "optimized_at": now, "review_count": len(logs)}
-    save_docs([{"id": "fsrs_params", "kind": "fsrs_params", "data": data, "updated_at": now, "deleted": False}])
-    log.info("fsrs optimize: %d reviews -> %s", len(logs), params)
+    save_docs(user, [{"id": "fsrs_params", "kind": "fsrs_params", "data": data, "updated_at": now, "deleted": False}])
+    log.info("fsrs optimize %s: %d reviews -> %s", user, len(logs), params)
     return data

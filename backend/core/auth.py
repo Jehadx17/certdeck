@@ -1,7 +1,4 @@
 # Kept free of rest_framework.views imports: DRF imports DEFAULT_PERMISSION_CLASSES while loading its views module.
-import hmac
-
-from django.conf import settings
 from rest_framework.exceptions import APIException
 from rest_framework.permissions import BasePermission
 
@@ -13,9 +10,16 @@ class ApiError(APIException):
 
 
 class BearerToken(BasePermission):
+    """Finds the active account whose token hash matches; views read it as request.account."""
+
     def has_permission(self, request, view):
-        token = settings.CERTDECK_API_TOKEN.encode()
-        given = request.headers.get("Authorization", "").encode()
-        if token and hmac.compare_digest(given, b"Bearer " + token):
-            return True
+        from .models import Account, token_hash  # models aren't ready when DRF loads this module
+
+        given = request.headers.get("Authorization", "")
+        if given.startswith("Bearer ") and len(given) > 7:
+            # A lookup by sha256 of a 256-bit random token: timing reveals nothing useful about other tokens.
+            account = Account.objects.filter(token_hash=token_hash(given[7:]), active=True).first()
+            if account:
+                request.account = account
+                return True
         raise ApiError(401, "invalid or missing API token")

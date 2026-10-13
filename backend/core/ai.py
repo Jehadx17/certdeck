@@ -19,7 +19,10 @@ from django.conf import settings
 
 from . import diagram, stats
 from .auth import ApiError
-from .models import AiCall, Doc, domain_ids, known_certs, now_ms, save_docs
+from django.db.models import Sum
+from django.utils.timezone import now as tz_now
+
+from .models import Account, AiCall, Doc, docs, domain_ids, known_certs, now_ms, save_docs
 
 log = logging.getLogger(__name__)
 
@@ -68,16 +71,31 @@ def cost_usd(model, usage, batch=False):
     return round(sum(t * r for t, r in zip(tok, p)) / 1e6 * (0.5 if batch else 1), 6)
 
 
-def log_call(endpoint, model, msg, ok, error, duration_ms, batch=False):
+def month_start():
+    return tz_now().replace(day=1, hour=0, minute=0, second=0, microsecond=0)
+
+
+def check_budget(user, estimate=0.0):
+    """Refuses AI work that would take the user past their monthly cap (owner: no cap unless set)."""
+    if user.cap_usd is None:
+        return
+    spent = float(AiCall.objects.filter(user=user, created__gte=month_start()).aggregate(s=Sum("cost_usd"))["s"] or 0)
+    if spent + estimate > float(user.cap_usd):
+        left = max(0.0, float(user.cap_usd) - spent)
+        raise ApiError(402, f"Monthly AI budget reached: ${left:.2f} of ${float(user.cap_usd):.2f} left"
+                            + (f", this needs about ${estimate:.2f}" if estimate else "") + ". Studying still works.")
+
+
+def log_call(user, endpoint, model, msg, ok, error, duration_ms, batch=False):
     u = getattr(msg, "usage", None)
     row = AiCall.objects.create(
-        endpoint=endpoint, model=model, ok=ok, error=error or ("" if ok else "unexpected error"), batch=batch,
+        user=user, endpoint=endpoint, model=model, ok=ok, error=error or ("" if ok else "unexpected error"), batch=batch,
         input_tokens=getattr(u, "input_tokens", 0) or 0, output_tokens=getattr(u, "output_tokens", 0) or 0,
         cache_read_tokens=getattr(u, "cache_read_input_tokens", 0) or 0,
         cache_creation_tokens=getattr(u, "cache_creation_input_tokens", 0) or 0,
         duration_ms=duration_ms, cost_usd=cost_usd(model, u, batch))
-    log.info("ai %s%s ok=%s in=%d out=%d cache_read=%d cache_write=%d $%.4f ms=%d %s", endpoint,
-             " (batch)" if batch else "", ok, row.input_tokens, row.output_tokens, row.cache_read_tokens,
+    log.info("ai %s%s user=%s ok=%s in=%d out=%d cache_read=%d cache_write=%d $%.4f ms=%d %s", endpoint,
+             " (batch)" if batch else "", user, ok, row.input_tokens, row.output_tokens, row.cache_read_tokens,
              row.cache_creation_tokens, row.cost_usd, row.duration_ms, row.error)
 
 
@@ -101,8 +119,9 @@ def parse(msg):
     return out
 
 
-def call(endpoint, request):
+def call(user, endpoint, request, estimate=0.0):
     """One streamed structured-output call; returns the parsed JSON object. Always logs an AiCall row."""
+    check_budget(user, estimate)
     t0 = time.monotonic()
     msg, ok, error = None, False, ""
     try:
@@ -126,7 +145,7 @@ def call(endpoint, request):
         error = repr(e)
         raise ApiError(502, "AI service error") from e
     finally:
-        log_call(endpoint, request["model"], msg, ok, error, int((time.monotonic() - t0) * 1000))
+        log_call(user, endpoint, request["model"], msg, ok, error, int((time.monotonic() - t0) * 1000))
 
 
 # ---------- output schemas (structured outputs: no recursion, all props required, nullable via anyOf) ----------
@@ -385,9 +404,9 @@ def relevant_cards(cards, cert, domain, hint):
     return sorted(cards, key=score, reverse=True)[:MAX_EXISTING_LINES]
 
 
-def generate_request(body):
+def generate_request(user, body):
     """Validates a generate body -> (request params, ctx). ctx is what generate_finish needs (JSON-safe)."""
-    certs = known_certs()
+    certs = known_certs(user)
     cert = body.get("cert") or None
     if cert is not None and cert not in certs:
         raise ApiError(400, f"unknown cert {cert!r}")
@@ -409,8 +428,8 @@ def generate_request(body):
     system = [{"type": "text", "cache_control": {"type": "ephemeral"},
                "text": f"{GENERATE_PROMPT}\n\nKnown certifications:\n{certs_text(certs)}"
                        + (f"\n\nOfficial exam guide for {cert}:\n{guide(cert)}" if cert else "")}]
-    shown = relevant_cards(list(Doc.objects.filter(kind="card", deleted=False)), cert, domain, f"{topic} {text[:2000]}")
-    lines = [f"{d.id} | " + (",".join(f"{k}:{v}" for k, v in (d.data.get("certs") or {}).items()) or "-")
+    shown = relevant_cards(list(docs(user).filter(kind="card", deleted=False)), cert, domain, f"{topic} {text[:2000]}")
+    lines = [f"{d.doc_id} | " + (",".join(f"{k}:{v}" for k, v in (d.data.get("certs") or {}).items()) or "-")
              + " | " + " ".join(str(d.data.get("question", "")).split())[:100] for d in shown]
     existing = "Existing cards, most relevant first (id | cert:domain | question start):\n" + ("\n".join(lines) or "(none)")
 
@@ -436,13 +455,13 @@ def generate_request(body):
     return request, {"cert": cert, "types": types, "count": count, "label": label[:80]}
 
 
-def generate_finish(out, ctx):
+def generate_finish(user, out, ctx):
     """Validates, dedupes and saves AI cards; checks retag suggestions. Shared by the streamed and batch paths."""
-    certs, cert, types, count = known_certs(), ctx["cert"], ctx["types"], ctx["count"]
-    cards = list(Doc.objects.filter(kind="card", deleted=False))
+    certs, cert, types, count = known_certs(user), ctx["cert"], ctx["types"], ctx["count"]
+    cards = list(docs(user).filter(kind="card", deleted=False))
     now = now_ms()
     seen = [_norm(d.data.get("question", "")) for d in cards]
-    docs, skipped, dropped = [], 0, 0
+    new_docs, skipped, dropped = [], 0, 0
     for raw in out.get("cards", [])[:count]:
         card, tags = clean_card(raw, types), card_certs(raw, certs)
         if not card or not tags:
@@ -456,35 +475,36 @@ def generate_finish(out, ctx):
         code = cert if cert in tags else next(iter(tags))
         card.update(certs=tags, tags=_tags(raw), source=f"ai:{code} d{tags[code]} {raw.get('topic', '')}".strip(),
                     new=True, created_at=now)
-        docs.append(_card_doc(card, now))
+        new_docs.append(_card_doc(card, now))
 
-    by_id = {d.id: d for d in cards}
+    by_id = {d.doc_id: d for d in cards}
     retag, retagged = [], set()
     for r in out.get("retag", []):
         d, c, dom = by_id.get(r.get("card_id")), r.get("cert"), str(r.get("domain"))
-        if (d and d.id not in retagged and c in certs and dom in domain_ids(certs[c]) and (not cert or c == cert)
+        if (d and d.doc_id not in retagged and c in certs and dom in domain_ids(certs[c]) and (not cert or c == cert)
                 and c not in (d.data.get("certs") or {})):
-            retagged.add(d.id)
-            retag.append({"card_id": d.id, "cert": c, "domain": dom})
+            retagged.add(d.doc_id)
+            retag.append({"card_id": d.doc_id, "cert": c, "domain": dom})
 
-    save_docs(docs)
+    save_docs(user, new_docs)
     log.info("generate cert=%s saved=%d skipped_duplicates=%d dropped_invalid=%d retag=%d",
-             cert, len(docs), skipped, dropped, len(retag))
-    return {"cards": [dict(d["data"], id=d["id"]) for d in docs], "retag": retag,
+             cert, len(new_docs), skipped, dropped, len(retag))
+    return {"cards": [dict(d["data"], id=d["id"]) for d in new_docs], "retag": retag,
             "skipped_duplicates": skipped, "dropped_invalid": dropped}
 
 
-def generate(body):
-    request, ctx = generate_request(body)
+def generate(user, body):
+    request, ctx = generate_request(user, body)
     if body.get("background"):
-        return {"job": queue_job(request, ctx)}
-    return generate_finish(call("generate", request), ctx)
+        return {"job": queue_job(user, request, ctx)}
+    return generate_finish(user, call(user, "generate", request), ctx)
 
 
 # ---------- background generation: Message Batches API, 50% off every token ----------
 
-def queue_job(request, ctx):
+def queue_job(user, request, ctx, estimate=0.0):
     """Submits a request as a one-request batch and records a `job` doc; poll_jobs finishes it."""
+    check_budget(user, estimate)
     job_id, now = str(uuid.uuid4()), now_ms()
     try:  # no FALLBACK here: the Batch API rejects the fallbacks parameter
         batch = _batches().create(requests=[{"custom_id": job_id, "params": request}])
@@ -493,7 +513,7 @@ def queue_job(request, ctx):
     except anthropic.APIStatusError as e:
         raise ApiError(502, f"AI batch error ({e.status_code})") from e
     job = {**ctx, "status": "queued", "batch_id": batch.id, "model": request["model"], "created_at": now}
-    save_docs([{"id": job_id, "kind": "job", "data": job, "updated_at": now, "deleted": False}])
+    save_docs(user, [{"id": job_id, "kind": "job", "data": job, "updated_at": now, "deleted": False}])
     log.info("%s job %s queued as %s", ctx.get("task", "generate"), job_id, batch.id)
     return dict(job, id=job_id)
 
@@ -505,7 +525,7 @@ def _card_text(d):
     for key in ("answer", "items", "code", "answer_code", "explanation"):
         if v := c.get(key):
             lines.append(f"{key.replace('_', ' ').capitalize()}: {v if isinstance(v, str) else ' -> '.join(map(str, v))}")
-    return f'<card id="{d.id}" type="{c.get("type")}">\n' + "\n".join(lines)[:4000] + "\n</card>"
+    return f'<card id="{d.doc_id}" type="{c.get("type")}">\n' + "\n".join(lines)[:4000] + "\n</card>"
 
 
 def diagrams_request(cards):
@@ -516,12 +536,16 @@ def diagrams_request(cards):
 
 
 def queue_diagrams():
-    """Queues background diagram jobs for cards no job has looked at yet: the existing deck, imports and new cards.
-    Returns how many jobs it queued."""
+    """Queues background diagram jobs, per user, for cards no job has looked at yet: the existing deck, imports and
+    new cards. Returns how many jobs it queued."""
     if not (settings.CERTDECK_AUTO_DIAGRAMS and settings.ANTHROPIC_API_KEY):
         return 0
+    return sum(_queue_diagrams(a) for a in Account.objects.filter(active=True))
+
+
+def _queue_diagrams(user):
     seen, failures = set(), collections.Counter()
-    for j in Doc.objects.filter(kind="job", deleted=False):
+    for j in docs(user).filter(kind="job", deleted=False):
         if j.data.get("task") != "diagrams":
             continue
         if j.data.get("status") == "failed":
@@ -530,14 +554,14 @@ def queue_diagrams():
             seen.update(j.data.get("card_ids") or [])
     seen |= {c for c, n in failures.items() if n >= 2}  # give up on a card after two failed attempts
     settled = now_ms() - 120_000  # leave cards alone for 2 minutes after their last change
-    todo = [d for d in Doc.objects.filter(kind="card", deleted=False, updated_at__lt=settled).order_by("seq")
-            if d.id not in seen and d.data.get("type") != "occlusion" and not d.data.get("answer_images")]
+    todo = [d for d in docs(user).filter(kind="card", deleted=False, updated_at__lt=settled).order_by("seq")
+            if d.doc_id not in seen and d.data.get("type") != "occlusion" and not d.data.get("answer_images")]
     queued = 0
     for i in range(0, len(todo), DIAGRAM_BATCH):
         chunk = todo[i:i + DIAGRAM_BATCH]
         try:
-            queue_job(diagrams_request(chunk), {"task": "diagrams", "card_ids": [d.id for d in chunk],
-                                                "count": len(chunk), "label": "diagrams"})
+            queue_job(user, diagrams_request(chunk), {"task": "diagrams", "card_ids": [d.doc_id for d in chunk],
+                                                      "count": len(chunk), "label": "diagrams"})
         except ApiError as e:
             log.warning("diagrams: could not queue: %s", e.detail)
             break
@@ -545,9 +569,9 @@ def queue_diagrams():
     return queued
 
 
-def diagrams_finish(out, job):
+def diagrams_finish(user, out, job):
     """Renders the returned diagrams into media files. The app adds them to the cards (it is their only writer)."""
-    from .views import _write_media  # views imports this module
+    from .views import write_media  # views imports this module
     wanted, done = set(job.get("card_ids") or []), {}
     for item in out.get("diagrams", []):
         cid = item.get("card_id")
@@ -560,7 +584,7 @@ def diagrams_finish(out, job):
             continue
         if png:
             done[cid] = hashlib.sha256(png).hexdigest() + ".png"
-            _write_media(done[cid], png)
+            write_media(user, done[cid], png)
     log.info("diagrams: %d of %d cards got one", len(done), len(wanted))
     return {"status": "done", "added": len(done), "diagrams": [{"card_id": c, "image": n} for c, n in done.items()]}
 
@@ -568,8 +592,8 @@ def diagrams_finish(out, job):
 def poll_jobs():
     """Finishes queued jobs whose batch has ended (run every minute). Returns how many it finished."""
     finished = 0
-    for d in Doc.objects.filter(kind="job", deleted=False):
-        job = d.data
+    for d in Doc.objects.filter(kind="job", deleted=False).select_related("user"):
+        job, user = d.data, d.user
         if job.get("status") != "queued":
             continue
         try:
@@ -577,7 +601,7 @@ def poll_jobs():
                 continue
             result = next(iter(_batches().results(job["batch_id"])), None)
         except anthropic.AnthropicError as e:
-            log.warning("job %s: batch %s not readable: %s", d.id, job["batch_id"], e)
+            log.warning("job %s: batch %s not readable: %s", d.doc_id, job["batch_id"], e)
             continue
         now, msg, ok, error = now_ms(), None, False, ""
         try:
@@ -586,23 +610,24 @@ def poll_jobs():
                 raise ApiError(502, f"background request {kind}")
             msg = result.result.message
             if job.get("task") == "diagrams":
-                upd = diagrams_finish(parse(msg), job)
+                upd = diagrams_finish(user, parse(msg), job)
             else:
-                res = generate_finish(parse(msg), job)
+                res = generate_finish(user, parse(msg), job)
                 upd = {"status": "done", "added": len(res["cards"]), "skipped_duplicates": res["skipped_duplicates"],
                        "dropped_invalid": res["dropped_invalid"], "retag": res["retag"]}
             ok = True
         except ApiError as e:
             error = str(e.detail)
             upd = {"status": "failed", "error": error}
-        log_call(job.get("task", "generate"), job.get("model", ""), msg, ok, error, now - job["created_at"], batch=True)
-        save_docs([{"id": d.id, "kind": "job", "data": {**job, **upd, "finished_at": now}, "updated_at": now,
+        log_call(user, job.get("task", "generate"), job.get("model", ""), msg, ok, error, now - job["created_at"],
+                 batch=True)
+        save_docs(user, [{"id": d.doc_id, "kind": "job", "data": {**job, **upd, "finished_at": now}, "updated_at": now,
                     "deleted": False}])
         finished += 1
     return finished
 
 
-def explain(body):
+def explain(user, body):
     card = _card_arg(body)
     fill = body.get("mode") == "fill"
     system = [{"type": "text", "text": TUTOR_PROMPT},
@@ -610,7 +635,7 @@ def explain(body):
               {"type": "text", "text": "The card (JSON):\n" + json.dumps(card, ensure_ascii=False),
                **({} if fill else {"cache_control": {"type": "ephemeral"}})}]
     if fill:
-        out = call("explain_fill", params(system, [{"role": "user", "content": FILL_TASK}], FILL_SCHEMA))
+        out = call(user, "explain_fill", params(system, [{"role": "user", "content": FILL_TASK}], FILL_SCHEMA))
         expl = out.get("option_explanations")
         if card.get("type") != "mcq":
             expl = None
@@ -629,25 +654,25 @@ def explain(body):
         messages.insert(0, {"role": "user", "content": "Explain this card to me in more depth."})
     if messages[-1]["role"] != "user":
         raise ApiError(400, "the last message must be from the user")
-    out = call("explain", params(system, messages, REPLY_SCHEMA))
+    out = call(user, "explain", params(system, messages, REPLY_SCHEMA))
     if not (out.get("reply") or "").strip():
         raise ApiError(502, "AI returned an empty reply")
     return {"reply": out["reply"]}
 
 
-def variants(body):
+def variants(user, body):
     card = _card_arg(body)
     if not isinstance(card.get("id"), str) or not card["id"]:
         raise ApiError(400, "card.id required")
     count, leech = _int(body.get("count"), 1, 1, 3), bool(body.get("leech"))
-    certs = known_certs()
+    certs = known_certs(user)
     system = [{"type": "text", "text": f"{VARIANT_PROMPT}\n\nKnown certifications:\n{certs_text(certs)}"},
               {"type": "text", "text": "Original card (JSON):\n" + json.dumps(card, ensure_ascii=False)}]  # one-shot: no cache
     task = f"Write exactly {count} variant card(s) of the original card."
     task += "\n\n" + LEECH_TASK if leech else " Set explanation and learn to null and videos to []."
-    out = call("variants", params(system, [{"role": "user", "content": task}], VARIANTS_SCHEMA))
+    out = call(user, "variants", params(system, [{"role": "user", "content": task}], VARIANTS_SCHEMA))
 
-    now, docs, dropped = now_ms(), [], 0
+    now, new_docs, dropped = now_ms(), [], 0
     orig_certs = card.get("certs") if isinstance(card.get("certs"), dict) else {}
     for raw in out.get("variants", [])[:count]:
         v = clean_card(raw)
@@ -656,9 +681,9 @@ def variants(body):
             continue
         v.update(certs=orig_certs or card_certs(raw, certs), tags=card.get("tags") or _tags(raw),
                  source=f"ai:variant {raw.get('topic', '')}".strip(), variant_of=card["id"], new=True, created_at=now)
-        docs.append(_card_doc(v, now))
-    save_docs(docs)
-    result = {"variants": [dict(d["data"], id=d["id"]) for d in docs], "dropped_invalid": dropped}
+        new_docs.append(_card_doc(v, now))
+    save_docs(user, new_docs)
+    result = {"variants": [dict(d["data"], id=d["id"]) for d in new_docs], "dropped_invalid": dropped}
     if leech:
         result.update(explanation=out.get("explanation") or "", learn=out.get("learn") or "",
                       videos=_videos(out.get("videos")))
@@ -700,14 +725,14 @@ def _override(o, cards):
     return data
 
 
-def analyze(body):
-    certs = known_certs()
+def analyze(user, body):
+    certs = known_certs(user)
     code = body.get("cert")
     if code not in certs:
         raise ApiError(400, f"unknown cert {code!r}")
-    data, cards = stats.cert_stats(code, certs[code])
+    data, cards = stats.cert_stats(user, code, certs[code])
     system = [{"type": "text", "text": ANALYZE_PROMPT}]
-    out = call("analyze", params(system, [{"role": "user", "content": "Stats (JSON):\n" + json.dumps(data)}], ANALYZE_SCHEMA))
+    out = call(user, "analyze", params(system, [{"role": "user", "content": "Stats (JSON):\n" + json.dumps(data)}], ANALYZE_SCHEMA))
 
     now, analysis_id = now_ms(), str(uuid.uuid4())
     overrides = []
@@ -724,5 +749,5 @@ def analyze(body):
         "videos": _videos(out.get("videos")),
         "override_ids": [o["id"] for o in overrides],
     }
-    save_docs([{"id": analysis_id, "kind": "analysis", "data": analysis, "updated_at": now, "deleted": False}] + overrides)
+    save_docs(user, [{"id": analysis_id, "kind": "analysis", "data": analysis, "updated_at": now, "deleted": False}] + overrides)
     return {**analysis, "id": analysis_id, "overrides": [{"id": o["id"], **o["data"]} for o in overrides]}

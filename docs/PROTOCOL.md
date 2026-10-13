@@ -38,8 +38,19 @@ Card FSRS state lives inside the card doc (`fsrs` object, times in ms).
 Base: `https://certdeck.mithaqstay.com/api/`. All endpoints except `health` need
 `Authorization: Bearer <token>`. JSON in and out. Errors: `{"error": "message"}` with 4xx/5xx.
 
+### Accounts
+Every token belongs to one **account** (`owner` = me: certs + college; `student` = college only), created with
+`manage.py users` (no sign-up, no admin UI). **Everything below is per account**: sync, media, import/export, AI and
+jobs only ever see the caller's own documents and files. Doc ids are unique per account, so fixed ids such as
+`settings` or `DVA-C02` repeat across accounts without colliding. AI work is refused with **402** once the account's
+monthly budget (`cap_usd`, default $10 for students, none for the owner) is used up; studying never needs budget.
+
 ### `GET health`
 `{"ok": true}`.
+
+### `GET me`
+`{name, role: "owner"|"student", month: "YYYY-MM", usd, cap_usd|null, remaining_usd|null}`: who the token
+belongs to (the app shows the cert screens only to the owner) and this month's AI spend against the cap.
 
 ### `POST sync`
 Request: `{"cursor": int, "docs": [doc, ...]}` (the docs the app changed, possibly empty).
@@ -53,7 +64,8 @@ The app loops while `more` is true. A fresh install sends `cursor: 0` and gets e
 ### Media
 Content-addressed images. `name` = `sha256hex.ext` (ext in png|jpg|jpeg|webp|gif).
 - `PUT media/<name>`: raw bytes in the body, idempotent. The server checks that the hash matches.
-- `GET media/<name>`: returns the bytes (404 if missing).
+- `GET media/<name>`: returns the bytes; 404 if missing **or not this account's** (an upload, an import, or a
+  diagram drawn for one of its cards). Files are stored once on disk; knowing a hash never grants access.
 
 ### AI (all synchronous; long timeouts, up to 5 min)
 Every AI response also stores what it creates as documents, so a dropped connection loses

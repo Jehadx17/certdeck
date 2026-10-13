@@ -1,3 +1,5 @@
+import hashlib
+import secrets
 import time
 
 from django.db import models, transaction
@@ -7,6 +9,30 @@ def now_ms():
     return int(time.time() * 1000)
 
 
+def token_hash(token):
+    return hashlib.sha256(token.encode()).hexdigest()
+
+
+class Account(models.Model):
+    """A person with their own token and data. owner = me (certs + college); student = college only."""
+
+    name = models.CharField(max_length=64, unique=True)
+    role = models.CharField(max_length=16, default="student")
+    token_hash = models.CharField(max_length=64, unique=True, null=True)  # sha256 hex of the bearer token
+    cap_usd = models.DecimalField(max_digits=8, decimal_places=2, null=True, blank=True)  # monthly AI budget; null = none
+    active = models.BooleanField(default=True)
+    created = models.DateTimeField(auto_now_add=True)
+
+    def new_token(self):
+        """Sets and returns a fresh token (only its hash is stored)."""
+        token = secrets.token_urlsafe(32)
+        self.token_hash = token_hash(token)
+        return token
+
+    def __str__(self):
+        return self.name
+
+
 class Counter(models.Model):
     """Single row (pk=1, created by the initial migration) holding the last global seq."""
 
@@ -14,18 +40,36 @@ class Counter(models.Model):
 
 
 class Doc(models.Model):
-    id = models.CharField(primary_key=True, max_length=64)
+    """One sync document. Ids are unique per user (`settings`, cert codes and other fixed ids repeat across users)."""
+
+    user = models.ForeignKey(Account, on_delete=models.CASCADE, related_name="docs")
+    doc_id = models.CharField(max_length=64)
     kind = models.CharField(max_length=32, db_index=True)
     data = models.JSONField()
     updated_at = models.BigIntegerField()
     deleted = models.BooleanField(default=False)
     seq = models.BigIntegerField(unique=True)
 
+    class Meta:
+        constraints = [models.UniqueConstraint(fields=["user", "doc_id"], name="doc_user_doc_id")]
+
     def as_json(self):
-        return {"id": self.id, "kind": self.kind, "data": self.data, "updated_at": self.updated_at, "deleted": self.deleted}
+        return {"id": self.doc_id, "kind": self.kind, "data": self.data, "updated_at": self.updated_at,
+                "deleted": self.deleted}
+
+
+class Media(models.Model):
+    """Who may read a content-addressed file. Files are stored once; access is per user."""
+
+    user = models.ForeignKey(Account, on_delete=models.CASCADE)
+    name = models.CharField(max_length=80)
+
+    class Meta:
+        constraints = [models.UniqueConstraint(fields=["user", "name"], name="media_user_name")]
 
 
 class AiCall(models.Model):
+    user = models.ForeignKey(Account, null=True, on_delete=models.SET_NULL)
     endpoint = models.CharField(max_length=32)
     model = models.CharField(max_length=64)
     input_tokens = models.IntegerField(default=0)
@@ -40,18 +84,23 @@ class AiCall(models.Model):
     created = models.DateTimeField(auto_now_add=True)
 
 
-def save_docs(docs):
-    """The only writer of Doc rows. Upserts {id, kind, data, updated_at, deleted} dicts with
+def docs(user):
+    """Every Doc query goes through here: a user only ever sees their own documents."""
+    return Doc.objects.filter(user=user)
+
+
+def save_docs(user, items):
+    """The only writer of Doc rows. Upserts {id, kind, data, updated_at, deleted} dicts for one user with
     last-write-wins (incoming.updated_at >= stored.updated_at) and gives each accepted write a new
     global seq. Locking the counter row serializes writers, so seqs commit in order and a pull
     with a cursor never skips one. Returns the number of accepted docs."""
-    if not docs:
+    if not items:
         return 0
     with transaction.atomic():
         counter = Counter.objects.select_for_update().get(pk=1)
-        stored = dict(Doc.objects.filter(id__in={d["id"] for d in docs}).values_list("id", "updated_at"))
+        stored = dict(docs(user).filter(doc_id__in={d["id"] for d in items}).values_list("doc_id", "updated_at"))
         winners = {}
-        for d in docs:
+        for d in items:
             prev = winners.get(d["id"])
             floor = prev["updated_at"] if prev else stored.get(d["id"])
             if floor is None or d["updated_at"] >= floor:
@@ -59,9 +108,9 @@ def save_docs(docs):
         rows = []
         for d in winners.values():
             counter.value += 1
-            rows.append(Doc(id=d["id"], kind=d["kind"], data=d["data"], updated_at=d["updated_at"],
+            rows.append(Doc(user=user, doc_id=d["id"], kind=d["kind"], data=d["data"], updated_at=d["updated_at"],
                             deleted=bool(d.get("deleted", False)), seq=counter.value))
-        Doc.objects.bulk_create(rows, update_conflicts=True, unique_fields=["id"],
+        Doc.objects.bulk_create(rows, update_conflicts=True, unique_fields=["user", "doc_id"],
                                 update_fields=["kind", "data", "updated_at", "deleted", "seq"])
         counter.save(update_fields=["value"])
     return len(rows)
@@ -87,12 +136,12 @@ DEFAULT_CERTS = {c["code"]: c for c in [
 ]}
 
 
-def known_certs():
-    """{code: cert data}: built-in defaults overridden by synced cert docs."""
+def known_certs(user):
+    """{code: cert data}: built-in defaults overridden by the user's synced cert docs."""
     certs = dict(DEFAULT_CERTS)
-    for doc in Doc.objects.filter(kind="cert", deleted=False):
+    for doc in docs(user).filter(kind="cert", deleted=False):
         if isinstance(doc.data, dict) and doc.data.get("domains"):
-            certs[doc.data.get("code") or doc.id] = doc.data
+            certs[doc.data.get("code") or doc.doc_id] = doc.data
     return certs
 
 

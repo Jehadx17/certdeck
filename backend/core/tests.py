@@ -18,7 +18,7 @@ from django.conf import settings
 from django.core.management import call_command
 from django.test import TestCase, override_settings
 
-from core.models import AiCall, Doc, now_ms, save_docs
+from core.models import Account, AiCall, Doc, Media, now_ms, save_docs, token_hash
 from core.stats import MIN_REVIEWS
 
 TOKEN = "test-token"
@@ -48,6 +48,9 @@ def doc(id, data, kind="card", updated_at=1, deleted=False):
 @override_settings(CERTDECK_API_TOKEN=TOKEN, ANTHROPIC_API_KEY="")
 class ApiTests(TestCase):
     def setUp(self):
+        self.owner = Account.objects.get(role="owner")  # created by migration 0003 from CERTDECK_API_TOKEN
+        self.owner.token_hash = token_hash(TOKEN)
+        self.owner.save()
         media_dir = Path(tempfile.mkdtemp())
         self.addCleanup(shutil.rmtree, media_dir)
         patcher = override_settings(CERTDECK_MEDIA_DIR=media_dir)
@@ -80,7 +83,7 @@ class ApiTests(TestCase):
 
         r = self.post("/api/sync", {"cursor": cursor, "docs": [doc("a", {"v": "old"}, updated_at=5)]}).json()
         self.assertEqual(r, {"docs": [], "cursor": cursor, "more": False})  # older write rejected
-        self.assertEqual(Doc.objects.get(id="a").data, {"v": 1})
+        self.assertEqual(Doc.objects.get(doc_id="a").data, {"v": 1})
 
         r = self.post("/api/sync", {"cursor": cursor, "docs": [doc("a", {"v": 2}, updated_at=10, deleted=True)]}).json()
         self.assertEqual(r["docs"], [doc("a", {"v": 2}, updated_at=10, deleted=True)])  # equal timestamp wins
@@ -89,7 +92,7 @@ class ApiTests(TestCase):
         self.assertEqual(self.post("/api/sync", {"cursor": 0, "docs": [{"id": "x"}]}).status_code, 400)
 
     def test_sync_paging(self):
-        save_docs([doc(f"d{i}", {"i": i}) for i in range(1005)])
+        save_docs(self.owner, [doc(f"d{i}", {"i": i}) for i in range(1005)])
         r = self.post("/api/sync", {"cursor": 0, "docs": []}).json()
         self.assertEqual(len(r["docs"]), 1000)
         self.assertTrue(r["more"])
@@ -98,6 +101,83 @@ class ApiTests(TestCase):
         self.assertFalse(r2["more"])
         ids = [d["id"] for d in r["docs"] + r2["docs"]]
         self.assertEqual(ids, [f"d{i}" for i in range(1005)])  # ordered by seq, nothing skipped
+
+    # ---------- accounts & isolation ----------
+
+    def student(self, name="sara", cap="10"):
+        out = StringIO()
+        call_command("users", "create", name, "--cap", cap, stdout=out)
+        token = out.getvalue().split("Token: ")[1].strip()
+        return Account.objects.get(name=name), {"HTTP_AUTHORIZATION": f"Bearer {token}"}
+
+    def test_me_and_users_command(self):
+        self.assertEqual(self.client.get("/api/me", **AUTH).json()["role"], "owner")
+        sara, auth = self.student()
+        me = self.client.get("/api/me", **auth).json()
+        self.assertEqual((me["name"], me["role"], me["cap_usd"], me["remaining_usd"]), ("sara", "student", 10.0, 10.0))
+        out = StringIO()
+        call_command("users", "rotate", "sara", stdout=out)
+        self.assertEqual(self.client.get("/api/me", **auth).status_code, 401)  # old token revoked
+        new_auth = {"HTTP_AUTHORIZATION": "Bearer " + out.getvalue().split(": ")[1].strip()}
+        self.assertEqual(self.client.get("/api/me", **new_auth).status_code, 200)
+        call_command("users", "disable", "sara", stdout=StringIO())
+        self.assertEqual(self.client.get("/api/me", **new_auth).status_code, 401)
+        call_command("users", "cap", "sara", "none", stdout=StringIO())
+        self.assertIsNone(Account.objects.get(name="sara").cap_usd)
+        with self.assertRaises(Exception):
+            call_command("users", "delete", "sara", stdout=StringIO())  # needs --yes
+        save_docs(sara, [doc("x", {"v": 1})])
+        call_command("users", "delete", "sara", "--yes", stdout=StringIO())
+        self.assertFalse(Doc.objects.filter(doc_id="x").exists())
+        self.assertEqual(self.client.get("/api/me", **{"HTTP_AUTHORIZATION": "Bearer "}).status_code, 401)
+
+    def test_isolation(self):
+        sara, auth = self.student()
+        # Same fixed ids on both sides never collide; each user pulls only their own docs.
+        self.post("/api/sync", {"cursor": 0, "docs": [doc("settings", {"who": "owner"}, kind="settings", updated_at=10),
+                                                      doc("c1", {"type": "basic", "question": "owner Q"})]})
+        r = self.client.post("/api/sync", {"cursor": 0, "docs": [doc("settings", {"who": "sara"}, kind="settings", updated_at=5),
+                                                                 doc("c1", {"type": "basic", "question": "sara Q"},
+                                                                     updated_at=99)]},
+                             content_type="application/json", **auth).json()
+        self.assertEqual({d["id"]: d["data"] for d in r["docs"]},
+                         {"settings": {"who": "sara"}, "c1": {"type": "basic", "question": "sara Q"}})
+        mine = self.post("/api/sync", {"cursor": 0, "docs": []}).json()["docs"]
+        self.assertEqual({d["id"]: d["data"].get("who") or d["data"].get("question") for d in mine},
+                         {"settings": "owner", "c1": "owner Q"})
+        # Media: knowing a file's hash doesn't give access to it.
+        data = b"\x89PNG owner's diagram"
+        name = hashlib.sha256(data).hexdigest() + ".png"
+        self.assertEqual(self.client.put(f"/api/media/{name}", data, content_type="image/png", **AUTH).status_code, 200)
+        self.assertEqual(self.client.get(f"/api/media/{name}", **auth).status_code, 404)
+        self.assertEqual(self.client.get(f"/api/media/{name}", **AUTH).status_code, 200)
+        self.assertEqual(self.client.put(f"/api/media/{name}", data, content_type="image/png", **auth).status_code, 200)
+        self.assertEqual(self.client.get(f"/api/media/{name}", **auth).status_code, 200)  # uploaded it herself
+        # Export holds only the caller's cards.
+        self.assertEqual([c["question"] for c in self.client.get("/api/export", **auth).json()["cards"]], ["sara Q"])
+        # AI endpoints read only the caller's cards (dedupe list, card text).
+        with mock.patch("core.ai._create", return_value=message({"cards": [], "retag": []})) as create:
+            self.client.post("/api/ai/generate", {"topic": "x", "count": 1}, content_type="application/json", **auth)
+        listed = create.call_args.kwargs["messages"][0]["content"][0]["text"]
+        self.assertIn("sara Q", listed)
+        self.assertNotIn("owner Q", listed)
+        self.assertEqual(AiCall.objects.get().user, sara)
+
+    def test_budget_cap(self):
+        sara, auth = self.student(cap="0.05")
+        AiCall.objects.create(user=sara, endpoint="generate", model="m", ok=True, cost_usd="0.049")
+        AiCall.objects.create(user=self.owner, endpoint="generate", model="m", ok=True, cost_usd="50")  # not hers
+        with mock.patch("core.ai._create", return_value=message({"reply": "ok"})):
+            ok = self.client.post("/api/ai/explain", {"card": {"question": "Q"}}, content_type="application/json", **auth)
+        self.assertEqual(ok.status_code, 200)  # $0.049 + this call's cost (tiny) was under the cap when it started
+        AiCall.objects.create(user=sara, endpoint="generate", model="m", ok=True, cost_usd="0.01")
+        r = self.client.post("/api/ai/explain", {"card": {"question": "Q"}}, content_type="application/json", **auth)
+        self.assertEqual(r.status_code, 402)
+        self.assertIn("budget", r.json()["error"])
+        me = self.client.get("/api/me", **auth).json()
+        self.assertEqual(me["remaining_usd"], 0.0)
+        with mock.patch("core.ai._create", return_value=message({"reply": "ok"})):  # the owner has no cap
+            self.assertEqual(self.post("/api/ai/explain", {"card": {"question": "Q"}}).status_code, 200)
 
     # ---------- media ----------
 
@@ -134,7 +214,7 @@ class ApiTests(TestCase):
         example = json.loads(EXAMPLE.read_text())
         r = self.post("/api/import", example)
         self.assertEqual(r.json(), {"imported": len(example["cards"])})
-        save_docs([doc("DVA-C02", {"code": "DVA-C02", "name": "Dev", "domains": [{"id": "1", "name": "Dev", "weight": 1}]},
+        save_docs(self.owner, [doc("DVA-C02", {"code": "DVA-C02", "name": "Dev", "domains": [{"id": "1", "name": "Dev", "weight": 1}]},
                        kind="cert")])
 
         out = self.client.get("/api/export", **AUTH).json()
@@ -156,7 +236,7 @@ class ApiTests(TestCase):
     # ---------- AI ----------
 
     def test_generate(self):
-        save_docs([doc("old1", {"type": "basic", "question": "What is the maximum execution time of an AWS Lambda function?",
+        save_docs(self.owner, [doc("old1", {"type": "basic", "question": "What is the maximum execution time of an AWS Lambda function?",
                                 "answer": "15 min", "certs": {"SAA-C03": "3"}})])
         payload = {
             "cards": [
@@ -189,11 +269,11 @@ class ApiTests(TestCase):
         self.assertEqual(mcq["certs"], {"DVA-C02": "1", "SAA-C03": "3"})
         self.assertEqual(typed["certs"], {"DVA-C02": "2"})
         self.assertTrue(mcq["source"].startswith("ai:DVA-C02 d1 "))
-        stored = Doc.objects.get(id=mcq["id"])
+        stored = Doc.objects.get(doc_id=mcq["id"])
         self.assertEqual(stored.kind, "card")
         self.assertTrue(stored.data["new"])
         self.assertNotIn("fsrs", stored.data)
-        self.assertEqual(Doc.objects.get(id="old1").data["certs"], {"SAA-C03": "3"})  # server never retags itself
+        self.assertEqual(Doc.objects.get(doc_id="old1").data["certs"], {"SAA-C03": "3"})  # server never retags itself
 
         kw = create.call_args.kwargs
         self.assertEqual(kw["model"], "claude-opus-5-5")
@@ -235,13 +315,13 @@ class ApiTests(TestCase):
 
             batches.retrieve.return_value = NS(processing_status="in_progress")
             call_command("poll_jobs")
-            self.assertEqual(Doc.objects.get(id=job["id"]).data["status"], "queued")
+            self.assertEqual(Doc.objects.get(doc_id=job["id"]).data["status"], "queued")
 
             batches.retrieve.return_value = NS(processing_status="ended")
             batches.results.return_value = iter([NS(custom_id=job["id"],
                                                     result=NS(type="succeeded", message=message(payload)))])
             call_command("poll_jobs", stdout=StringIO())
-        done = Doc.objects.get(id=job["id"]).data
+        done = Doc.objects.get(doc_id=job["id"]).data
         self.assertEqual((done["status"], done["added"], done["retag"]), ("done", 1, []))
         self.assertEqual(Doc.objects.filter(kind="card").count(), 1)
         call = AiCall.objects.get()
@@ -263,7 +343,7 @@ class ApiTests(TestCase):
     @unittest.skipUnless(shutil.which("dot"), "needs Graphviz")
     @override_settings(ANTHROPIC_API_KEY="test-key")
     def test_diagrams_job(self):
-        save_docs([doc("a", {"type": "basic", "question": "Where does an EBS volume live?", "answer": "One AZ"}),
+        save_docs(self.owner, [doc("a", {"type": "basic", "question": "Where does an EBS volume live?", "answer": "One AZ"}),
                    doc("b", {"type": "basic", "question": "SSH port?", "answer": "22"}),
                    doc("occ", {"type": "occlusion", "question": "?", "image": "x.png", "masks": []}),
                    doc("pic", {"type": "basic", "question": "?", "answer": "!", "answer_images": ["y.png"]}),
@@ -287,7 +367,7 @@ class ApiTests(TestCase):
 
             batches.retrieve.return_value = NS(processing_status="ended")
             payload = {"diagrams": [{"card_id": "a", "diagram": spec}, {"card_id": "zzz", "diagram": spec}]}
-            batches.results.return_value = iter([NS(custom_id=job.id, result=NS(type="succeeded", message=message(payload)))])
+            batches.results.return_value = iter([NS(custom_id=job.doc_id, result=NS(type="succeeded", message=message(payload)))])
             call_command("poll_jobs", stdout=StringIO())  # finishes the job; a, b are covered now, so nothing new queues
         done = Doc.objects.get(kind="job").data
         self.assertEqual((done["status"], done["added"], [d["card_id"] for d in done["diagrams"]]), ("done", 1, ["a"]))
@@ -297,12 +377,12 @@ class ApiTests(TestCase):
 
     def test_relevant_cards(self):
         from core.ai import MAX_EXISTING_LINES, relevant_cards
-        mk = lambda i, certs, q="unrelated words here": Doc(id=i, kind="card", seq=0, updated_at=0,
+        mk = lambda i, certs, q="unrelated words here": Doc(doc_id=i, kind="card", seq=0, updated_at=0,
                                                             data={"certs": certs, "question": q, "created_at": 0})
         cards = [mk(f"x{i}", {"SAA-C03": "1"}) for i in range(MAX_EXISTING_LINES)] + [
             mk("other_domain", {"DVA-C02": "2"}), mk("same_domain", {"DVA-C02": "1"}),
             mk("overlap", {"SAA-C03": "1"}, "How does SQS visibility timeout work?")]
-        shown = [d.id for d in relevant_cards(cards, "DVA-C02", "1", "SQS visibility timeout")]
+        shown = [d.doc_id for d in relevant_cards(cards, "DVA-C02", "1", "SQS visibility timeout")]
         self.assertEqual(shown[:3], ["same_domain", "overlap", "other_domain"])
         self.assertEqual(len(shown), MAX_EXISTING_LINES)
 
@@ -324,7 +404,7 @@ class ApiTests(TestCase):
     def test_variants_leech(self):
         original = {"type": "basic", "question": "Lambda max timeout?", "answer": "15 min",
                     "certs": {"DVA-C02": "1"}, "tags": ["lambda"]}
-        save_docs([doc("orig", original, updated_at=5)])
+        save_docs(self.owner, [doc("orig", original, updated_at=5)])
         payload = {"variants": [ai_card(question="A job runs 20 minutes. Can Lambda run it?", answer="No, max 15 min"),
                                 ai_card(type="typed", question="Max Lambda timeout in seconds?", answer="900",
                                         certs=[{"cert": "SAA-C03", "domain": "3"}])],
@@ -336,11 +416,11 @@ class ApiTests(TestCase):
         self.assertEqual(len(body["variants"]), 2)
         for v in body["variants"]:
             self.assertEqual((v["variant_of"], v["certs"]), ("orig", {"DVA-C02": "1"}))
-            self.assertTrue(Doc.objects.filter(id=v["id"], kind="card").exists())
+            self.assertTrue(Doc.objects.filter(doc_id=v["id"], kind="card").exists())
         self.assertEqual(body["explanation"], "Think of it as a kitchen timer.")
         self.assertEqual(body["videos"], [{"title": "Lambda limits",
                                            "url": "https://www.youtube.com/results?search_query=aws+lambda+timeout+limit"}])
-        self.assertEqual(Doc.objects.get(id="orig").updated_at, 5)  # original untouched
+        self.assertEqual(Doc.objects.get(doc_id="orig").updated_at, 5)  # original untouched
 
     def test_analyze(self):
         now = now_ms()
@@ -360,7 +440,7 @@ class ApiTests(TestCase):
         cert = doc("DVA-C02", {"code": "DVA-C02", "name": "Dev", "exam_date": "2030-01-01", "active": True,
                                "domains": [{"id": "1", "name": "Dev", "weight": 0.5}, {"id": "2", "name": "Sec", "weight": 0.5}]},
                    kind="cert")
-        save_docs(cards + reviews + [exam, cert])
+        save_docs(self.owner, cards + reviews + [exam, cert])
 
         ov = lambda **kw: {"card_ids": [], "domain": None, "kind": "advance", "days": None, "priority": None,
                            "reason": "weak", **kw}
@@ -407,8 +487,8 @@ class ApiTests(TestCase):
         self.assertEqual(domain_ids[:3], ["c0", "c1", "c2"])  # lowest stability -> lowest retrievability first
         for o in overrides:
             self.assertEqual((o["applied_at"], o["reverted_at"], o["before"]), (None, None, {}))
-            self.assertEqual(Doc.objects.get(id=o["id"]).kind, "override")
-        analysis = Doc.objects.get(id=body["id"])
+            self.assertEqual(Doc.objects.get(doc_id=o["id"]).kind, "override")
+        analysis = Doc.objects.get(doc_id=body["id"])
         self.assertEqual(analysis.data["override_ids"], [o["id"] for o in overrides])
         self.assertEqual(body["actions"][0], {"label": "Generate 15 cards on IAM", "cert": "DVA-C02", "domain": "2",
                                               "topic": "IAM", "count": 50})
@@ -445,15 +525,15 @@ class ApiTests(TestCase):
                 rating = rng.choice([1, 3, 3, 3, 4]) if k else rng.choice([1, 2, 3])
                 reviews.append(doc(f"r{c}-{k}", {"card_id": f"card-{c}", "ts": start + (c + offset) * DAY,
                                                  "rating": rating, "duration_ms": 5000}, kind="review"))
-        save_docs(reviews[:100])
+        save_docs(self.owner, reviews[:100])
         out = StringIO()
         call_command("optimize_fsrs", stdout=out)
-        self.assertIsNone(json.loads(out.getvalue())["optimized_at"])  # too few reviews: defaults, nothing written
-        self.assertFalse(Doc.objects.filter(id="fsrs_params").exists())
+        self.assertIsNone(json.loads(out.getvalue().split(": ", 1)[1])["optimized_at"])  # too few reviews: defaults, nothing written
+        self.assertFalse(Doc.objects.filter(doc_id="fsrs_params").exists())
 
-        save_docs(reviews)
+        save_docs(self.owner, reviews)
         self.assertGreaterEqual(len(reviews), MIN_REVIEWS)
         body = self.post("/api/fsrs/optimize", {}).json()
         self.assertEqual(len(body["parameters"]), 21)
         self.assertEqual(body["review_count"], 700)
-        self.assertEqual(Doc.objects.get(id="fsrs_params").data, body)
+        self.assertEqual(Doc.objects.get(doc_id="fsrs_params").data, body)

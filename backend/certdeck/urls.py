@@ -5,6 +5,7 @@ from core import views
 
 urlpatterns = [
     path("api/health", views.health),
+    path("api/me", views.me),
     path("api/sync", views.sync),
     path("api/media/<str:name>", views.media),
     path("api/ai/generate", views.generate),

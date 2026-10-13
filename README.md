@@ -97,14 +97,23 @@ dc exec certdeck-api python manage.py optimize_fsrs
 curl -s 127.0.0.1:18765/api/health
 ```
 
-### Change the API token
+### Accounts and tokens
+Every phone uses a token that belongs to an **account**: `owner` (me: certs + college) or `student` (college only).
+The owner account was created from the old single `CERTDECK_API_TOKEN` (migration 0003), so that token keeps
+working; `CERTDECK_API_TOKEN` in `.env` is not read after that. Manage accounts on the server:
 ```bash
 ssh root@169.58.7.222
-NEW=$(python3 -c 'import secrets; print(secrets.token_urlsafe(32))')
-sed -i "s/^CERTDECK_API_TOKEN=.*/CERTDECK_API_TOKEN=$NEW/" /opt/certdeck/.env && echo "$NEW"
-cd /opt/certdeck/src/deploy && docker compose --env-file /opt/certdeck/.env up -d certdeck-api
+cd /opt/certdeck/src/deploy && alias users='docker compose --env-file /opt/certdeck/.env exec certdeck-api python manage.py users'
+users create sara              # a student with the default $10/month AI cap; prints her token (shown once)
+users create sara --cap 20     # another cap; --cap none = no cap
+users list                     # everyone, with this month's AI spend
+users cap sara 15              # change a cap
+users rotate sara              # new token; the old one stops working (use `users rotate owner` for mine)
+users disable sara             # block access, keep data (`enable` restores)
+users delete sara --yes        # delete the account and all its data
 ```
-Then in the app: Settings → API token → Save & sync. Change the Anthropic key (`ANTHROPIC_API_KEY`) the same way.
+The student enters the server URL and token once in Settings → Backend & sync. Change the Anthropic key
+(`ANTHROPIC_API_KEY` in `/opt/certdeck/.env`) and restart with `docker compose --env-file /opt/certdeck/.env up -d`.
 
 ### Remove CertDeck from the server
 `rm /etc/nginx/sites-enabled/certdeck && nginx -t && systemctl reload nginx`, then

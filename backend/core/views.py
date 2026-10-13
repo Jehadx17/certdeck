@@ -11,7 +11,6 @@ from datetime import datetime, timezone
 import jsonschema
 from django.conf import settings
 from django.db.models import Count, Sum
-from django.utils.timezone import now as tz_now
 from django.http import FileResponse
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny
@@ -20,7 +19,7 @@ from rest_framework.views import exception_handler as drf_exception_handler
 
 from . import ai, stats
 from .auth import ApiError
-from .models import AiCall, Doc, now_ms, save_docs
+from .models import AiCall, Media, docs, now_ms, save_docs
 
 PAGE = 1000
 MEDIA_NAME = re.compile(r"([0-9a-f]{64})\.(png|jpg|jpeg|webp|gif)")
@@ -59,11 +58,11 @@ def _doc(d):
 @api_view(["POST"])
 def sync(request):
     body = _body(request)
-    cursor, docs = body.get("cursor", 0), body.get("docs") or []
-    if not isinstance(cursor, int) or not isinstance(docs, list):
+    cursor, incoming = body.get("cursor", 0), body.get("docs") or []
+    if not isinstance(cursor, int) or not isinstance(incoming, list):
         raise ApiError(400, "cursor (int) and docs (list) required")
-    save_docs([_doc(d) for d in docs])
-    rows = list(Doc.objects.filter(seq__gt=cursor).order_by("seq")[:PAGE + 1])
+    save_docs(request.account, [_doc(d) for d in incoming])
+    rows = list(docs(request.account).filter(seq__gt=cursor).order_by("seq")[:PAGE + 1])
     more = len(rows) > PAGE
     rows = rows[:PAGE]
     return Response({"docs": [r.as_json() for r in rows], "cursor": rows[-1].seq if rows else cursor, "more": more})
@@ -75,7 +74,8 @@ def _media_path(name):
     return settings.CERTDECK_MEDIA_DIR / name
 
 
-def _write_media(name, data):
+def write_media(user, name, data):
+    """Stores a content-addressed file once and lets [user] read it."""
     path = _media_path(name)
     if hashlib.sha256(data).hexdigest() != name.split(".")[0]:
         raise ApiError(400, f"{name}: sha256 of the bytes doesn't match the name")
@@ -84,16 +84,23 @@ def _write_media(name, data):
         tmp = path.with_name(f".{name}.{uuid.uuid4().hex}.tmp")
         tmp.write_bytes(data)
         os.replace(tmp, path)
+    Media.objects.get_or_create(user=user, name=name)
+
+
+def _own_media(user, name):
+    """The file, if [user] uploaded it (or it was made for them); a hash alone never grants access."""
+    path = _media_path(name)
+    if not path.exists() or not Media.objects.filter(user=user, name=name).exists():
+        raise ApiError(404, "media not found")
+    return path
 
 
 @api_view(["GET", "PUT"])
 def media(request, name):
     if request.method == "PUT":
-        _write_media(name, request.body)
+        write_media(request.account, name, request.body)
         return Response({"ok": True})
-    path = _media_path(name)
-    if not path.exists():
-        raise ApiError(404, "media not found")
+    path = _own_media(request.account, name)
     return FileResponse(path.open("rb"), content_type=MEDIA_TYPES[name.rsplit(".", 1)[1]])
 
 
@@ -116,41 +123,56 @@ def app_apk(request):
 
 @api_view(["POST"])
 def generate(request):
-    return Response(ai.generate(_body(request)))
+    return Response(ai.generate(request.account, _body(request)))
 
 
 @api_view(["POST"])
 def explain(request):
-    return Response(ai.explain(_body(request)))
+    return Response(ai.explain(request.account, _body(request)))
 
 
 @api_view(["POST"])
 def variants(request):
-    return Response(ai.variants(_body(request)))
+    return Response(ai.variants(request.account, _body(request)))
 
 
 @api_view(["POST"])
 def analyze(request):
-    return Response(ai.analyze(_body(request)))
+    return Response(ai.analyze(request.account, _body(request)))
+
+
+def budget(user):
+    """This calendar month's (UTC) AI spend against the user's cap."""
+    month = AiCall.objects.filter(user=user, created__gte=ai.month_start())
+    usd = float(month.aggregate(usd=Sum("cost_usd"))["usd"] or 0)
+    cap = None if user.cap_usd is None else float(user.cap_usd)
+    return {"month": ai.month_start().strftime("%Y-%m"), "usd": round(usd, 6), "cap_usd": cap,
+            "remaining_usd": None if cap is None else round(max(0.0, cap - usd), 6)}
+
+
+@api_view(["GET"])
+def me(request):
+    """Who the token belongs to: the app shows certs only to the owner. Plus this month's budget."""
+    a = request.account
+    return Response({"name": a.name, "role": a.role, **budget(a)})
 
 
 @api_view(["GET"])
 def usage(request):
-    """AI spend from the AiCall log: this calendar month (UTC) and all time."""
-    since = tz_now().replace(day=1, hour=0, minute=0, second=0, microsecond=0)
-    month = AiCall.objects.filter(created__gte=since)
-    agg = month.aggregate(usd=Sum("cost_usd"), calls=Count("id"))
+    """The caller's AI spend from the AiCall log: this calendar month (UTC) and all time."""
+    user = request.account
+    month = AiCall.objects.filter(user=user, created__gte=ai.month_start())
+    agg = month.aggregate(calls=Count("id"))
     return Response({
-        "month": since.strftime("%Y-%m"), "usd": float(agg["usd"] or 0), "calls": agg["calls"],
-        "batch_calls": month.filter(batch=True).count(),
+        **budget(user), "calls": agg["calls"], "batch_calls": month.filter(batch=True).count(),
         "by_endpoint": {r["endpoint"]: float(r["usd"]) for r in month.values("endpoint").annotate(usd=Sum("cost_usd"))},
-        "all_time_usd": float(AiCall.objects.aggregate(usd=Sum("cost_usd"))["usd"] or 0),
+        "all_time_usd": float(AiCall.objects.filter(user=user).aggregate(usd=Sum("cost_usd"))["usd"] or 0),
     })
 
 
 @api_view(["POST"])
 def optimize(request):
-    return Response(stats.optimize())
+    return Response(stats.optimize(request.account))
 
 
 @functools.cache
@@ -165,15 +187,17 @@ def _card_media(card):
 
 @api_view(["GET"])
 def export(request):
-    cards = [dict(d.data, id=d.id) for d in Doc.objects.filter(kind="card", deleted=False).order_by("seq")]
+    user = request.account
+    cards = [dict(d.data, id=d.doc_id) for d in docs(user).filter(kind="card", deleted=False).order_by("seq")]
+    owned = set(Media.objects.filter(user=user).values_list("name", flat=True))
     media = {}
-    for name in {n for c in cards for n in _card_media(c) if isinstance(n, str) and MEDIA_NAME.fullmatch(n)}:
+    for name in {n for c in cards for n in _card_media(c) if isinstance(n, str) and n in owned}:
         path = settings.CERTDECK_MEDIA_DIR / name
-        if path.exists():
+        if MEDIA_NAME.fullmatch(name) and path.exists():
             media[name] = base64.b64encode(path.read_bytes()).decode()
     return Response({
         "format": "certdeck", "version": 1, "exported_at": datetime.now(timezone.utc).isoformat(),
-        "certs": [d.data for d in Doc.objects.filter(kind="cert", deleted=False).order_by("id")],
+        "certs": [d.data for d in docs(user).filter(kind="cert", deleted=False).order_by("doc_id")],
         "cards": cards, "media": media,
     })
 
@@ -193,7 +217,7 @@ def import_(request):
         _media_path(name)
         if hashlib.sha256(media[name]).hexdigest() != name.split(".")[0]:
             raise ApiError(400, f"{name}: sha256 of the bytes doesn't match the name")
-    now, docs = now_ms(), []
+    now, new = now_ms(), []
     for card in body["cards"]:
         card = dict(card)
         card_id = card.pop("id", None) or str(uuid.uuid4())
@@ -202,8 +226,8 @@ def import_(request):
         card.setdefault("created_at", now)
         card.setdefault("source", "import")
         card.setdefault("new", "fsrs" not in card)
-        docs.append({"id": card_id, "kind": "card", "data": card, "updated_at": now, "deleted": False})
+        new.append({"id": card_id, "kind": "card", "data": card, "updated_at": now, "deleted": False})
     for name, data in media.items():
-        _write_media(name, data)
-    save_docs(docs)
-    return Response({"imported": len(docs)})
+        write_media(request.account, name, data)
+    save_docs(request.account, new)
+    return Response({"imported": len(new)})
