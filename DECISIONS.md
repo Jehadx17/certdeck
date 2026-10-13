@@ -190,3 +190,26 @@ Rates from the platform pricing page (Opus 5.5: $4 in, $5 cache write, $0.20 cac
   container) and measured at ~2x real time with the `small` model on 2 vCPUs, with English sentences in mixed lectures
   coming out as garbled Arabic. The user then asked to drop audio: code, container, its 3.45 GB image and the model
   volume were removed.
+
+## Device-test fixes (2026-10-13)
+- **Mixed Arabic/English text** (user report: hard to read, "overlaps"): the Unicode bidi algorithm reorders an
+  English phrase's words and punctuation inside an Arabic sentence (and the other way round). Every run of the other
+  script is now wrapped in a directional isolate (LRI/RLI … PDI) before Markdown rendering; a run continues across
+  inline markup (bold, cloze ‹ ›) and takes the closing marker it opened, so "one copy per ‹class›" stays one unit;
+  code, math and links are untouched. Names inside translated UI sentences use first-strong isolates. Plain-text
+  titles take their direction from their own text. Cloze bold markers moved inside the brackets (`**[` after an Arabic
+  letter wasn't bold).
+- **Progress dialogs** close through their own context: an account switch or a language change rebuilds every screen
+  (the home widget is keyed by language and role), which left the dialog of the screen that opened it on top forever.
+- **Uploads:** returning from the file picker resumes the app, whose upload pass started before the new file was
+  queued; a pass requested while one runs now runs again afterwards.
+- **Polling:** every 30 s while the server processes material or prepares an assessment (so progress shows), every
+  2 min while waiting on the Batch API or to push local changes.
+- **Triage** shares the session's time across question formats (the professor's mix, else even): ranking only by marks
+  per second filled a short session with the quickest cards (cloze) and never practised short answers.
+- **Plan:** at most 2 hours a day per assessment (triage cuts the rest); "behind" only when the cards existed all of
+  yesterday.
+- **Syllabus:** when an assessment's coverage isn't written but the course plan lists topics by week, the coverage
+  is inferred from the weeks since the previous assessment; scope suggestions read the syllabus pages.
+- **Test student kept:** the `qa-student` account and its five sample courses stay on the server at the user's request
+  (for their own testing); it has a $15 monthly cap.

@@ -36,6 +36,7 @@ flutter build apk --release                       # → build/app/outputs/flutte
 flutter test                                      # logic checks
 # sync/restore end-to-end check against a running backend:
 CERTDECK_TEST_URL=http://127.0.0.1:8765 CERTDECK_TEST_TOKEN=devtoken flutter test test/sync_test.dart   # needs a fresh backend DB (SQLITE_PATH=/tmp/x.sqlite3)
+# + CERTDECK_TEST_TOKEN2=<a student's token> to also test switching accounts on one phone
 ```
 
 **Updating the app (forced, from the server):** bump `version:` in `app/pubspec.yaml`, `flutter build apk --release`,
@@ -70,7 +71,7 @@ cd backend
 ~/.local/bin/uv venv --python 3.12 .venv
 ~/.local/bin/uv pip install --python .venv/bin/python --index-strategy unsafe-best-match -r requirements.txt
 .venv/bin/python manage.py migrate
-.venv/bin/python manage.py test                  # 11 tests, Anthropic calls mocked
+.venv/bin/python manage.py test                  # 24 tests (accounts, isolation, caps, college pipeline), Anthropic mocked
 CERTDECK_API_TOKEN=devtoken .venv/bin/python manage.py runserver 127.0.0.1:8765
 ```
 Without `POSTGRES_DB` it uses SQLite. Env vars: see [backend/.env.example](backend/.env.example).
@@ -191,3 +192,26 @@ Format: [docs/cards.schema.json](docs/cards.schema.json) (JSON Schema). Example:
   install starts empty → token → a card created and studied offline → reconnect sync → uninstall/reinstall → token →
   card, FSRS state and review history restored. Server test data was then wiped; the app was left installed,
   connected and empty.
+
+## Verification (2026-10-13, college)
+- Backend: 24 Django tests (accounts and isolation incl. media by hash, caps, users command, uploads with resume and
+  type checks, material → structure → syllabus proposals → preparation → verified problems → sheets → grading, batch
+  mode, page dedupe). Migration 0003 rehearsed on a copy of the production rows, then run in production after a DB +
+  media backup; afterwards the owner's 60 cards (FSRS state), 142 reviews, cert, settings and jobs were compared field by
+  field with the pre-migration copy: identical.
+- Live AI runs on the sample material (test student `qa-student`): MATH106 notes (279 pp, syllabus → 5 proposed
+  assessments), Discrete Math slidebook (383 pp → 12 lectures), Arabic GS111 (74 pp), CS 112 slides (PDF and a real
+  .pptx), English units, a photographed page, a past quiz (→ professor profile with formats and traps). Prepared:
+  CS quiz (107 cards, $1.32), MATH quiz through the Batch API (82 cards, 48 problems all SymPy-verified, $0.67),
+  Arabic quiz (232 cards, $3.16, which led to the estimate/page fixes), English quiz from the phone (23 cards, $0.26
+  against a $0.43 estimate). Model mix measured (DECISIONS.md → College).
+- App: 14 logic tests (modes, triage by format and expected marks, sprint loop, partial credit, rubric/numeric
+  scoring, cloze/LaTeX/bidi text) + end-to-end sync, restore and account-switch tests against a local backend.
+- On the HONOR Magic8 Lite (Android 16): 1.2.2 → 1.3.x keeps the owner's deck; switching to the student and back
+  (wrong token changes nothing); Arabic UI right-to-left; uploads from the phone's file picker; syllabus proposal
+  confirmed and its scope suggested from the course plan; a 15-minute sprint (triage, misses coming back, a
+  misconception); practice exam in the professor's format with fresh AI questions and AI grading of written answers;
+  night-before sheet; exam-morning check; reminders scheduled (daily plan, eve of the exam, exam morning); preparing
+  an assessment from the phone with the cost estimate; offline study with the app's network blocked, synced on
+  reconnect; the forced update installing 1.3.1, 1.3.2 and 1.3.3 by itself. iOS was not tested on a device (at the
+  user's request); the iOS project builds the same code with `app/build-ios.sh`.
