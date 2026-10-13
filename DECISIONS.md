@@ -211,5 +211,16 @@ Rates from the platform pricing page (Opus 5.5: $4 in, $5 cache write, $0.20 cac
   yesterday.
 - **Syllabus:** when an assessment's coverage isn't written but the course plan lists topics by week, the coverage
   is inferred from the weeks since the previous assessment; scope suggestions read the syllabus pages.
+- **Sync while a sync runs** (1.3.4): the request now waits for one more run after the current one (concurrent callers
+  share it) instead of returning at once. A skipped sync left a processed photo on "waiting to upload", and hints
+  typed during a sync reached the server only on the next 2-minute tick (a priorities update could read the old
+  hints). An account switch refuses while anything is still unsynced, whatever the sync returned.
+- **Budget refusal** is rebuilt from its amounts in the app's language: the server's message carries numbers, so the
+  translation table can't match it whole.
+- **Conversion failures** say what to do ("export it as PDF and upload that"). A .pptx that LibreOffice can't convert
+  within the worker's 2 GB fails cleanly (a PDF re-imported as slides, every glyph a shape, needed 3 GB).
+- **Play Protect** on the HONOR asked to upload 1.3.4 to Google for a scan before installing the update (earlier
+  versions installed without asking); the same signed APK was installed over adb instead, keeping the app's data.
+  Another phone may show the same prompt: scanning and then installing is the phone owner's call.
 - **Test student kept:** the `qa-student` account and its five sample courses stay on the server at the user's request
   (for their own testing); it has a $15 monthly cap.

@@ -205,7 +205,7 @@ Format: [docs/cards.schema.json](docs/cards.schema.json) (JSON Schema). Example:
   CS quiz (107 cards, $1.32), MATH quiz through the Batch API (82 cards, 48 problems all SymPy-verified, $0.67),
   Arabic quiz (232 cards, $3.16, which led to the estimate/page fixes), English quiz from the phone (23 cards, $0.26
   against a $0.43 estimate). Model mix measured (DECISIONS.md → College).
-- App: 14 logic tests (modes, triage by format and expected marks, sprint loop, partial credit, rubric/numeric
+- App: 15 logic tests (modes, triage by format and expected marks, sprint loop, partial credit, rubric/numeric
   scoring, cloze/LaTeX/bidi text) + end-to-end sync, restore and account-switch tests against a local backend.
 - On the HONOR Magic8 Lite (Android 16): 1.2.2 → 1.3.x keeps the owner's deck; switching to the student and back
   (wrong token changes nothing); Arabic UI right-to-left; uploads from the phone's file picker; syllabus proposal
@@ -213,5 +213,8 @@ Format: [docs/cards.schema.json](docs/cards.schema.json) (JSON Schema). Example:
   misconception); practice exam in the professor's format with fresh AI questions and AI grading of written answers;
   night-before sheet; exam-morning check; reminders scheduled (daily plan, eve of the exam, exam morning); preparing
   an assessment from the phone with the cost estimate; offline study with the app's network blocked, synced on
-  reconnect; the forced update installing 1.3.1, 1.3.2 and 1.3.3 by itself. iOS was not tested on a device (at the
-  user's request); the iOS project builds the same code with `app/build-ios.sh`.
+  reconnect; the forced update installing 1.3.1, 1.3.2 and 1.3.3 by itself. Then (1.3.3 → 1.3.4): a page photo
+  chosen from the gallery (5 sections read from it); the professor's hints typed on the phone re-ranking the
+  priorities (the hinted points rose to the top); a problem self-graded "Partly" offline, synced as a review with
+  score 0.5; the monthly cap refusing AI work, with the message in Arabic, then restored. iOS was not tested on a
+  device (at the user's request); the iOS project builds the same code with `app/build-ios.sh`.
