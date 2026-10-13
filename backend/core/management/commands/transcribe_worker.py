@@ -52,7 +52,8 @@ class Command(BaseCommand):
                 continue
             mid, t0 = job.data["material_id"], time.monotonic()
             try:
-                # Loaded per recording and freed after: idle, this container holds no model in the shared server's RAM.
+                # One recording per process: it exits afterwards and Docker restarts it, so an idle container holds
+                # no model (Python keeps freed memory otherwise) in the shared server's RAM.
                 model = WhisperModel(settings.CERTDECK_WHISPER_MODEL, device="cpu", compute_type="int8",
                                      cpu_threads=int(os.environ.get("WHISPER_THREADS", "2")),
                                      download_root=os.environ.get("WHISPER_MODELS", "/models"))
@@ -64,3 +65,4 @@ class Command(BaseCommand):
             except Exception as e:  # noqa: BLE001 - one bad file must not stop the queue
                 log.exception("transcription of %s failed", mid)
                 ingest.set_ingest(job.user, mid, status="failed", error=f"transcription failed ({type(e).__name__})")
+            return

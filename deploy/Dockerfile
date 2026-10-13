@@ -20,6 +20,7 @@ CMD ["sh", "-c", "python manage.py migrate --noinput && exec gunicorn certdeck.w
 
 FROM app AS whisper
 USER root
-RUN pip install "faster-whisper>=1.1,<2" && mkdir -p /models && chown certdeck /models
+# PyAV 15 dropped an argument faster-whisper 1.x passes to av.open(), so it stays below 15.
+RUN pip install "faster-whisper>=1.1,<2" "av>=12,<15" && mkdir -p /models && chown certdeck /models
 USER certdeck
 CMD ["nice", "-n", "19", "python", "manage.py", "transcribe_worker"]
