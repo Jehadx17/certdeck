@@ -21,6 +21,8 @@ ALLOWED_HOSTS = [h.strip() for h in env("DJANGO_ALLOWED_HOSTS", "localhost,127.0
 CERTDECK_API_TOKEN = env("CERTDECK_API_TOKEN", "")
 ANTHROPIC_API_KEY = env("ANTHROPIC_API_KEY", "")
 CERTDECK_MODEL = env("CERTDECK_MODEL", "claude-opus-5-5")
+# Background diagrams for cards (Batch API, about $0.005 per card checked); "false" turns them off.
+CERTDECK_AUTO_DIAGRAMS = env("CERTDECK_AUTO_DIAGRAMS", "true").lower() in ("1", "true", "yes")
 CERTDECK_MEDIA_DIR = Path(env("CERTDECK_MEDIA_DIR") or BASE_DIR / "media")
 CARDS_SCHEMA_PATH = BASE_DIR.parent / "docs" / "cards.schema.json"
 
@@ -45,7 +47,7 @@ else:
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.sqlite3",
-            "NAME": BASE_DIR / "db.sqlite3",
+            "NAME": env("SQLITE_PATH") or BASE_DIR / "db.sqlite3",
             "OPTIONS": {"transaction_mode": "IMMEDIATE"},  # serialize writers like select_for_update does on Postgres
         }
     }

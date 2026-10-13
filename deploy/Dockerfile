@@ -2,6 +2,9 @@
 FROM python:3.12-slim
 ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1 PIP_NO_CACHE_DIR=1
 WORKDIR /app/backend
+# Graphviz + a font draw the card diagrams (core/diagram.py).
+RUN apt-get update && apt-get install -y --no-install-recommends graphviz fonts-dejavu-core \
+    && rm -rf /var/lib/apt/lists/*
 COPY backend/requirements.txt .
 # requirements.txt pins the CPU-only torch index (the CUDA build is several GB).
 RUN pip install -r requirements.txt

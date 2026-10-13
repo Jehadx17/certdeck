@@ -2,8 +2,10 @@ import base64
 import hashlib
 import json
 import random
+import re
 import shutil
 import tempfile
+import unittest
 from io import StringIO
 from pathlib import Path
 from types import SimpleNamespace as NS
@@ -232,6 +234,53 @@ class ApiTests(TestCase):
         call = AiCall.objects.get()
         self.assertTrue(call.batch)
         self.assertAlmostEqual(float(call.cost_usd), (100 * 4 + 5 * 5 + 10 * 0.2 + 50 * 20) / 1e6 / 2, places=6)
+
+    def test_diagram_dot_is_escaped(self):
+        from core import diagram
+        dot = diagram.to_dot({"title": 'x" image="/etc/passwd', "groups": [
+            {"id": "a", "label": "A", "kind": "vpc", "parent": "b"}, {"id": "b", "label": "B", "kind": "nope", "parent": "a"}],
+            "nodes": [{"id": "n", "label": 'q"] x [image="/etc/hostname"', "icon": "../../etc/passwd", "group": "a"}],
+            "edges": [{"source": "n", "target": "missing"}], "table": {"columns": ["<b>", "x"], "rows": [["<TD>", "&"]]}})
+        outside_strings = re.sub(r'"(?:[^"\\]|\\.)*"', '""', dot)  # what's left can only be DOT syntax
+        self.assertNotIn("image", outside_strings)  # labels can't add attributes; unknown icon -> no file reference
+        self.assertNotIn("/etc/", outside_strings)
+        self.assertNotIn("->", dot)  # edge to a missing node dropped
+        self.assertIn("&lt;TD&gt;", dot)
+
+    @unittest.skipUnless(shutil.which("dot"), "needs Graphviz")
+    @override_settings(ANTHROPIC_API_KEY="test-key")
+    def test_diagrams_job(self):
+        save_docs([doc("a", {"type": "basic", "question": "Where does an EBS volume live?", "answer": "One AZ"}),
+                   doc("b", {"type": "basic", "question": "SSH port?", "answer": "22"}),
+                   doc("occ", {"type": "occlusion", "question": "?", "image": "x.png", "masks": []}),
+                   doc("pic", {"type": "basic", "question": "?", "answer": "!", "answer_images": ["y.png"]}),
+                   doc("fresh", {"type": "basic", "question": "?", "answer": "!"}, updated_at=now_ms())])
+        spec = {"title": "EBS lives in one AZ", "direction": "TB",
+                "groups": [{"id": "az", "label": "us-east-1a", "kind": "az", "parent": None}],
+                "nodes": [{"id": "i", "label": "EC2", "icon": "aws/compute/ec2", "group": "az", "highlight": False},
+                          {"id": "v", "label": "EBS volume", "icon": "aws/storage/elastic-block-store-ebs-volume",
+                           "group": "az", "highlight": True}],
+                "edges": [{"source": "v", "target": "i", "label": "attached", "dashed": False, "both": False}],
+                "table": None}
+        batches = mock.MagicMock()
+        batches.create.return_value = NS(id="msgbatch_d")
+        with mock.patch("core.ai._batches", return_value=batches):
+            call_command("poll_jobs", stdout=StringIO())
+            job = Doc.objects.get(kind="job")
+            self.assertEqual((job.data["task"], job.data["card_ids"]), ("diagrams", ["a", "b"]))
+            prompt = batches.create.call_args.kwargs["requests"][0]["params"]
+            self.assertIn("aws/compute: ", prompt["system"][0]["text"])
+            self.assertIn('<card id="a" type="basic">', prompt["messages"][0]["content"])
+
+            batches.retrieve.return_value = NS(processing_status="ended")
+            payload = {"diagrams": [{"card_id": "a", "diagram": spec}, {"card_id": "zzz", "diagram": spec}]}
+            batches.results.return_value = iter([NS(custom_id=job.id, result=NS(type="succeeded", message=message(payload)))])
+            call_command("poll_jobs", stdout=StringIO())  # finishes the job; a, b are covered now, so nothing new queues
+        done = Doc.objects.get(kind="job").data
+        self.assertEqual((done["status"], done["added"], [d["card_id"] for d in done["diagrams"]]), ("done", 1, ["a"]))
+        png = (settings.CERTDECK_MEDIA_DIR / done["diagrams"][0]["image"]).read_bytes()
+        self.assertTrue(png.startswith(b"\x89PNG"))
+        self.assertEqual(AiCall.objects.get().endpoint, "diagrams")
 
     def test_relevant_cards(self):
         from core.ai import MAX_EXISTING_LINES, relevant_cards

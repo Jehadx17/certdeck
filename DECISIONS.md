@@ -49,6 +49,18 @@ Significant choices made while building CertDeck, newest at the bottom of each s
 - AI calls are synchronous with long timeouts; whatever they create is saved as docs first, so a dropped
   phone connection loses nothing (next sync pulls it).
 
+## Diagrams (2026-10-13)
+- The user is a visual learner and asked for diagrams on new AI cards, imported cards and the existing deck, of four
+  kinds (architecture, flows, side-by-side, lifecycles), drawn only "when it helps".
+- The model returns a small JSON spec (groups, nodes with icon keys, edges, or a comparison table), never code, and
+  the server renders it with Graphviz using the official AWS / Kubernetes icons (vendored from the MIT-licensed
+  `diagrams` package, 128 px, ~1 MB). Card text can come from imports, so every label is escaped and only vendored
+  icon files are referenced.
+- One sweep in the `certdeck-batches` loop covers every path (imports, app-made and AI cards): cards no diagram job has
+  seen, 2 minutes after their last change, 15 per Batch API request. A card is retried once if a job fails.
+- Single-writer rule kept: the job doc carries `{card_id, image}` and the app appends the image to the card's
+  `answer_images` (like retags). The app applies jobs before its media pass so the image arrives in the same sync.
+
 ## Exams
 - Formats checked against official guides on 2026-10-12: DVA-C02 and SAA-C03 = 65 questions (50 scored),
   130 min, scaled 100–1000, pass 720; CKAD = performance-based, 2 h, pass 66%, 5 domains (20/20/15/25/20),

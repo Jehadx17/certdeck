@@ -265,8 +265,11 @@ class JobsList extends StatelessWidget {
               dense: true,
               contentPadding: EdgeInsets.zero,
               leading: Icon(switch (j['status']) { 'done' => Icons.check_circle_outline, 'failed' => Icons.error_outline, _ => Icons.hourglass_top }),
-              title: Text('${j['count']} cards · ${(j['label'] ?? '').toString().isEmpty ? j['cert'] ?? '' : j['label']}'),
+              title: Text(j['task'] == 'diagrams'
+                  ? 'Diagrams · ${j['count']} cards'
+                  : '${j['count']} cards · ${(j['label'] ?? '').toString().isEmpty ? j['cert'] ?? '' : j['label']}'),
               subtitle: Text(switch (j['status']) {
+                'done' when j['task'] == 'diagrams' => 'Drew ${j['added']} (the rest read fine as text)',
                 'done' => 'Added ${j['added']}${(j['skipped_duplicates'] ?? 0) > 0 ? ' · ${j['skipped_duplicates']} duplicates skipped' : ''}',
                 'failed' => 'Failed: ${j['error']}',
                 _ => 'Queued ${DateTime.fromMillisecondsSinceEpoch(j['created_at'] as int).toString().substring(11, 16)} · arrives on a later sync',

@@ -113,6 +113,9 @@ class Api {
         await Db.setMeta('cursor', '$cursor');
         more = res['more'] == true || push.length == 500;
       }
+      await App.reload();
+      await applyPendingOverrides();
+      await applyFinishedJobs(); // before the media pass, so new diagrams download in this sync
       for (final c in await Db.query('card')) {
         for (final name in cardMedia(c)) {
           if (await Db.mediaFile(name).exists()) continue;
@@ -123,9 +126,6 @@ class Api {
           }
         }
       }
-      await App.reload();
-      await applyPendingOverrides();
-      await applyFinishedJobs();
       final stamp = DateTime.now().toString().substring(0, 16);
       await Db.setMeta('last_sync', stamp);
       lastSync.value = stamp;

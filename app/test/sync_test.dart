@@ -57,4 +57,29 @@ void main() {
     expect(await Api.sync(), isNull);
     expect((await Db.get(card['id']))!['question'], 'Edited on B');
   }, skip: url == null ? 'set CERTDECK_TEST_URL to run' : false);
+
+  test('a finished diagram job is attached to its card and its image downloads in the same sync', () async {
+    sqfliteFfiInit();
+    databaseFactory = databaseFactoryFfi;
+    Api.url = url!;
+    Api.token = Platform.environment['CERTDECK_TEST_TOKEN'];
+    final tmp = await Directory.systemTemp.createTemp('certdeck');
+
+    // Stand-in for the server: a card plus a done diagrams job referencing an uploaded image.
+    await Db.open(dir: '${tmp.path}/server');
+    await App.init();
+    final card = await Db.put('card', {'type': 'basic', 'question': 'Where does EBS live?', 'answer': 'One AZ', 'created_at': nowMs()});
+    final img = await Db.saveMedia([0x89, 0x50, 0x4E, 0x47, ...List.generate(40, (i) => 255 - i)]);
+    await Db.put('job', {'task': 'diagrams', 'status': 'done', 'count': 1, 'added': 1, 'created_at': nowMs(),
+      'card_ids': [card['id']], 'diagrams': [{'card_id': card['id'], 'image': img}]});
+    expect(await Api.sync(), isNull);
+
+    await Db.open(dir: '${tmp.path}/phone');
+    await App.init();
+    await Db.setMeta('cursor', '0');
+    expect(await Api.sync(), isNull);
+    expect((await Db.get(card['id']))!['answer_images'], [img]);
+    expect(await Db.mediaFile(img).exists(), isTrue);
+    expect(await Db.dirtyCount(), greaterThan(0)); // the card change goes back to the server on the next sync
+  }, skip: url == null ? 'set CERTDECK_TEST_URL to run' : false);
 }

@@ -407,13 +407,24 @@ Future<int> applyRetags(List? retag) async {
   return n;
 }
 
-/// Background (Batch API) generations the server finished: apply their retags once.
+/// Background (Batch API) jobs the server finished: apply their retags and diagrams once.
 Future<void> applyFinishedJobs() async {
   for (final j in await Db.query('job')) {
     if (j['status'] == 'done' && j['applied_at'] == null) {
       await applyRetags(j['retag'] as List?);
+      await applyDiagrams(j['diagrams'] as List?);
       await Db.put('job', j..['applied_at'] = nowMs());
     }
+  }
+}
+
+/// Adds server-drawn diagrams to their cards' answer images.
+Future<void> applyDiagrams(List? diagrams) async {
+  for (final d in (diagrams ?? []).cast<Map>()) {
+    final c = await Db.get(d['card_id']);
+    final images = ((c?['answer_images'] as List?) ?? []).cast<String>();
+    if (c == null || images.contains(d['image'])) continue;
+    await Db.put('card', c..['answer_images'] = [...images, d['image']]);
   }
 }
 

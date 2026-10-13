@@ -32,7 +32,7 @@ flutter build apk --release                       # → build/app/outputs/flutte
 ~/Android/Sdk/platform-tools/adb install -r build/app/outputs/flutter-apk/app-release.apk   # phone on USB, USB debugging on
 flutter test                                      # logic checks
 # sync/restore end-to-end check against a running backend:
-CERTDECK_TEST_URL=http://127.0.0.1:8765 CERTDECK_TEST_TOKEN=devtoken flutter test test/sync_test.dart
+CERTDECK_TEST_URL=http://127.0.0.1:8765 CERTDECK_TEST_TOKEN=devtoken flutter test test/sync_test.dart   # needs a fresh backend DB (SQLITE_PATH=/tmp/x.sqlite3)
 ```
 
 Updating the app = bump `version:` in `app/pubspec.yaml`, rebuild, `adb install -r` (data is kept).
@@ -115,6 +115,12 @@ Then in the app: Settings → API token → Save & sync. Change the Anthropic ke
 - **Background generation** (toggle on the Generate tab, also used by one-tap actions) goes through the Message
   Batches API at 50% off; the `certdeck-batches` service finishes jobs (usually within minutes) and the app picks
   the cards up on its next sync.
+- **Diagrams:** every card is looked at once (existing deck, imports, new AI cards; not occlusion cards or cards that
+  already have an answer image). In the background (Batch API, ~$0.005 per card) the AI draws a diagram when a
+  picture helps: architecture (Region/AZ/VPC boxes with official AWS/Kubernetes icons), numbered flows, side-by-side
+  tables, lifecycles. The server renders it with Graphviz (`core/diagram.py`, icons in `core/icons/`) and the app adds
+  it to the card's answer images on the next sync (tap it to zoom; remove it in the card editor).
+  `CERTDECK_AUTO_DIAGRAMS=false` in the server `.env` turns this off.
 - Model: `CERTDECK_MODEL` in `/opt/certdeck/.env` (default `claude-opus-5-5`; `claude-sonnet-5-5` is ~2.5x cheaper,
   see DECISIONS.md). Restart `certdeck-api` and `certdeck-batches` after changing it.
 

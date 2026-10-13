@@ -98,9 +98,19 @@ class MediaImage extends StatelessWidget {
           Container(padding: const EdgeInsets.all(16), color: Colors.white10, child: const Text('Image not downloaded yet (sync to fetch it)')));
 }
 
+/// Card images; tap one to view it full screen with pinch-zoom (diagrams have small labels on a phone).
 Widget images(List? names) => Column(children: [
       for (final n in (names ?? []).cast<String>())
-        Padding(padding: const EdgeInsets.symmetric(vertical: 6), child: ClipRRect(borderRadius: BorderRadius.circular(8), child: MediaImage(n))),
+        Builder(
+          builder: (context) => GestureDetector(
+            onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                builder: (_) => Scaffold(
+                    appBar: AppBar(),
+                    body: InteractiveViewer(maxScale: 6, child: Center(child: MediaImage(n)))))),
+            child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 6), child: ClipRRect(borderRadius: BorderRadius.circular(8), child: MediaImage(n))),
+          ),
+        ),
     ]);
 
 /// Occlusion masks over an image. The Stack takes the image's size, so mask fractions map directly.
