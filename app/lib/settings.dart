@@ -125,7 +125,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     final err = await busy(context, t('Connecting & restoring…'), () => Api.connect(url.text, token.text));
     if (mounted) toast(context, err == null ? t('Connected. Everything is synced.') : t(err));
     Reminders.reschedule().ignore();
-    setState(() => usage = Api.configured ? Api.call('GET', 'usage') : null); // the (maybe new) account's spend
+    if (mounted) setState(() => usage = Api.configured ? Api.call('GET', 'usage') : null); // gone when a role/language change rebuilt it
   }
 
   Future<void> _run(String label, Future<String> Function() f) async {

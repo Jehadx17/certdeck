@@ -219,6 +219,10 @@ Rates from the platform pricing page (Opus 5.5: $4 in, $5 cache write, $0.20 cac
   translation table can't match it whole.
 - **Conversion failures** say what to do ("export it as PDF and upload that"). A .pptx that LibreOffice can't convert
   within the worker's 2 GB fails cleanly (a PDF re-imported as slides, every glyph a shape, needed 3 GB).
+- **Account switch** (1.3.5): the sync asks the server who the token belongs to before downloading card images. On
+  the HONOR one image download stalled for its 60 s timeout mid-restore, and the phone kept the old role (owner tabs
+  over the student's data) until the next sync. The Settings screen no longer updates itself after the switch has
+  rebuilt it (that crashed harmlessly).
 - **Play Protect** on the HONOR asked to upload 1.3.4 to Google for a scan before installing the update (earlier
   versions installed without asking); the same signed APK was installed over adb instead, keeping the app's data.
   Another phone may show the same prompt: scanning and then installing is the phone owner's call.

@@ -172,6 +172,7 @@ class Api {
         more = res['more'] == true || push.length == 500;
       }
       await App.reload();
+      await refreshMe(); // before the media pass: a stalled image download mustn't leave a switched phone in the old role
       await applyPendingOverrides();
       await applyFinishedJobs(); // before the media pass, so new diagrams download in this sync
       for (final c in await Db.query('card')) {
@@ -184,7 +185,6 @@ class Api {
           }
         }
       }
-      await refreshMe();
       final stamp = DateTime.now().toString().substring(0, 16);
       await Db.setMeta('last_sync', stamp);
       lastSync.value = stamp;
