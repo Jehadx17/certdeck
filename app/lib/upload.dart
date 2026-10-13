@@ -21,7 +21,7 @@ class Uploads {
   /// material id -> 0..1 while uploading; the material screen shows it.
   static final progress = ValueNotifier<Map<String, double>>({});
   static final errors = ValueNotifier<Map<String, String>>({});
-  static bool _running = false;
+  static bool _running = false, _again = false;
 
   static Future<Directory> _dir(String materialId) async =>
       Directory(p.join((await getApplicationDocumentsDirectory()).path, 'uploads', materialId)).create(recursive: true);
@@ -61,8 +61,13 @@ class Uploads {
 
   /// Uploads whatever is pending (on app open, after adding material, and on resume). Safe to call repeatedly.
   static Future<void> run() async {
-    if (_running || !Api.configured) return;
+    if (!Api.configured) return;
+    if (_running) {
+      _again = true; // e.g. returning from the file picker resumed the app just before the new file was queued
+      return;
+    }
     _running = true;
+    _again = false;
     try {
       final pending = await _pending();
       progress.value = {for (final id in pending.keys) id: progress.value[id] ?? 0};
@@ -92,6 +97,7 @@ class Uploads {
     } finally {
       _running = false;
     }
+    if (_again) await run();
   }
 
   static Future<void> _one(String id, List<String> paths) async {
