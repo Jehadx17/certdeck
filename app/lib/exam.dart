@@ -7,6 +7,7 @@ import 'ai.dart';
 import 'api.dart';
 import 'cards.dart';
 import 'db.dart';
+import 'i18n.dart';
 import 'logic.dart';
 import 'widgets.dart';
 
@@ -96,7 +97,9 @@ class _ExamScreenState extends State<ExamScreen> {
       return;
     }
     if (!mounted) return;
-    await Navigator.push(context, MaterialPageRoute(builder: (_) => ExamRun(cert, all, int.tryParse(minutes.text) ?? 130)));
+    final m = int.tryParse(minutes.text) ?? 130;
+    await Navigator.push(
+        context, MaterialPageRoute(builder: (_) => ExamRun(all, m, results: (states, flagged, started) => ExamResults(cert, states, flagged, started, m))));
     setState(() {});
   }
 
@@ -194,11 +197,13 @@ class _ExamScreenState extends State<ExamScreen> {
   }
 }
 
+/// A timed exam over [cards] with flags and a review grid; [results] builds the screen shown on submit
+/// (certs: pass mark and domains; college: partial credit and AI grading).
 class ExamRun extends StatefulWidget {
-  final Json cert;
   final List<Json> cards;
   final int minutes;
-  const ExamRun(this.cert, this.cards, this.minutes, {super.key});
+  final Widget Function(List<AnswerState> states, Set<int> flagged, int started) results;
+  const ExamRun(this.cards, this.minutes, {super.key, required this.results});
   @override
   State<ExamRun> createState() => _ExamRunState();
 }
@@ -230,12 +235,12 @@ class _ExamRunState extends State<ExamRun> {
   bool _answered(AnswerState s) => switch (s.type) {
         'mcq' => s.selected.isNotEmpty,
         'ordering' => true,
-        _ => s.typed.trim().isNotEmpty,
+        _ => s.typed.trim().isNotEmpty || s.photos.isNotEmpty,
       };
 
   void _submit() {
     timer.cancel();
-    Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => ExamResults(widget.cert, states, flagged, started, widget.minutes)));
+    Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => widget.results(states, flagged, started)));
   }
 
   Future<void> _confirmSubmit() async {
@@ -243,11 +248,11 @@ class _ExamRunState extends State<ExamRun> {
     final ok = await showDialog<bool>(
         context: context,
         builder: (_) => AlertDialog(
-              title: const Text('Submit exam?'),
-              content: Text(open > 0 ? '$open unanswered (scored as incorrect).' : 'All questions answered.'),
+              title: Text(t('Submit exam?')),
+              content: Text(open > 0 ? t('{n} unanswered (scored as incorrect).', {'n': open}) : t('All questions answered.')),
               actions: [
-                TextButton(onPressed: () => Navigator.pop(context, false), child: const Text('Keep going')),
-                FilledButton(onPressed: () => Navigator.pop(context, true), child: const Text('Submit')),
+                TextButton(onPressed: () => Navigator.pop(context, false), child: Text(t('Keep going'))),
+                FilledButton(onPressed: () => Navigator.pop(context, true), child: Text(t('Submit'))),
               ],
             ));
     if (ok == true) _submit();
@@ -268,14 +273,14 @@ class _ExamRunState extends State<ExamRun> {
       child: Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,
-          title: Text(reviewing ? 'Review answers' : 'Question ${i + 1} / ${states.length}'),
+          title: Text(reviewing ? t('Review answers') : t('Question {i} / {n}', {'i': i + 1, 'n': states.length})),
           actions: [
             Center(
                 child:
                     Text(clock, style: TextStyle(fontFeatures: const [FontFeature.tabularFigures()], color: left.inMinutes < 5 ? cs.error : null))),
             if (!reviewing)
               IconButton(
-                  tooltip: 'Flag for review',
+                  tooltip: t('Flag for review'),
                   icon: Icon(flagged.contains(i) ? Icons.flag : Icons.outlined_flag, color: flagged.contains(i) ? Colors.amber : null),
                   onPressed: () => setState(() => flagged.contains(i) ? flagged.remove(i) : flagged.add(i))),
             IconButton(icon: Icon(reviewing ? Icons.close : Icons.grid_view), onPressed: () => setState(() => reviewing = !reviewing)),
@@ -285,7 +290,7 @@ class _ExamRunState extends State<ExamRun> {
             ? _review(cs)
             : ListView(key: ValueKey(i), padding: const EdgeInsets.all(16), children: [
                 CardView(s, key: ObjectKey(s), onChanged: () => setState(() {})),
-                if (!s.autoGraded && s.type != 'mcq')
+                if (!s.autoGraded && s.type != 'mcq' && !s.written)
                   Padding(
                     padding: const EdgeInsets.only(top: 12),
                     child: TextFormField(
@@ -306,14 +311,14 @@ class _ExamRunState extends State<ExamRun> {
           child: Padding(
             padding: const EdgeInsets.all(8),
             child: reviewing
-                ? FilledButton(onPressed: _confirmSubmit, child: const Text('Submit exam'))
+                ? FilledButton(onPressed: _confirmSubmit, child: Text(t('Submit exam')))
                 : Row(children: [
-                    Expanded(child: OutlinedButton(onPressed: i == 0 ? null : () => setState(() => i--), child: const Text('Previous'))),
+                    Expanded(child: OutlinedButton(onPressed: i == 0 ? null : () => setState(() => i--), child: Text(t('Previous')))),
                     const SizedBox(width: 8),
                     Expanded(
                         child: FilledButton(
                             onPressed: () => setState(() => i < states.length - 1 ? i++ : reviewing = true),
-                            child: Text(i < states.length - 1 ? 'Next' : 'Review'))),
+                            child: Text(i < states.length - 1 ? t('Next') : t('Review')))),
                   ]),
           ),
         ),
@@ -322,7 +327,7 @@ class _ExamRunState extends State<ExamRun> {
   }
 
   Widget _review(ColorScheme cs) => ListView(padding: const EdgeInsets.all(16), children: [
-        Text('${states.where(_answered).length} answered · ${flagged.length} flagged · ${states.where((s) => !_answered(s)).length} unanswered'),
+        Text(t('{a} answered · {f} flagged · {u} unanswered', {'a': states.where(_answered).length, 'f': flagged.length, 'u': states.where((s) => !_answered(s)).length})),
         const SizedBox(height: 12),
         Wrap(spacing: 8, runSpacing: 8, children: [
           for (var j = 0; j < states.length; j++)

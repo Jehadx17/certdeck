@@ -128,6 +128,20 @@ class Db {
   static Future<List<Json>> reviewsSince(int ts) => query('review', where: 'ts >= ?', args: [ts]);
   static Future<int> dirtyCount() async => Sqflite.firstIntValue(await _db.rawQuery('SELECT COUNT(*) FROM docs WHERE dirty = 1')) ?? 0;
 
+  /// Forget everything local (another account signs in on this phone): docs, cursor, settings, images.
+  static Future<void> wipe() async {
+    await _db.delete('docs');
+    await _db.delete('meta');
+    await _db.delete('media');
+    final dir = Directory(mediaDir);
+    if (await dir.exists()) {
+      await for (final f in dir.list()) {
+        await f.delete(recursive: true);
+      }
+    }
+    changes.value++;
+  }
+
   static Future<String?> meta(String key) async {
     final r = await _db.query('meta', where: 'key = ?', whereArgs: [key]);
     return r.isEmpty ? null : r.first['value'] as String?;

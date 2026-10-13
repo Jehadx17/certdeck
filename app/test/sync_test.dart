@@ -6,6 +6,7 @@ import 'dart:io';
 import 'package:certdeck/api.dart';
 import 'package:certdeck/db.dart';
 import 'package:certdeck/logic.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -83,4 +84,33 @@ void main() {
     expect(await Db.mediaFile(img).exists(), isTrue);
     expect(await Db.dirtyCount(), greaterThan(0)); // the card change goes back to the server on the next sync
   }, skip: url == null ? 'set CERTDECK_TEST_URL to run' : false);
+
+  // One phone, two people (CERTDECK_TEST_TOKEN2 = a student account): switching the token pushes the first
+  // account's changes, then the phone holds only the second account's data, and switching back restores the first.
+  final token2 = Platform.environment['CERTDECK_TEST_TOKEN2'];
+  test('switching accounts on one phone never mixes data', () async {
+    FlutterSecureStorage.setMockInitialValues({}); // Api.connect saves the token in secure storage
+    sqfliteFfiInit();
+    databaseFactory = databaseFactoryFfi;
+    final tmp = await Directory.systemTemp.createTemp('certdeck');
+    await Db.open(dir: tmp.path);
+    await App.init();
+    Api.url = url!;
+    Api.token = null;
+    expect(await Api.connect(url, Platform.environment['CERTDECK_TEST_TOKEN']!), isNull);
+    final mine = await Db.put('card', {'type': 'basic', 'question': 'Owner only', 'answer': 'x', 'certs': {'DVA-C02': '1'}, 'created_at': nowMs()});
+    expect(App.role, 'owner');
+
+    expect(await Api.connect(url, token2!), isNull); // the owner's new card is pushed first, then the phone is wiped
+    expect(App.role, 'student');
+    expect(await Db.get(mine['id']), isNull);
+    expect((await Db.query('card')).where((c) => c['question'] == 'Owner only'), isEmpty);
+    final hers = await Db.put('course', {'name': 'Calculus II', 'created_at': nowMs()});
+    expect(await Api.sync(), isNull);
+
+    expect(await Api.connect(url, Platform.environment['CERTDECK_TEST_TOKEN']!), isNull);
+    expect(App.role, 'owner');
+    expect((await Db.get(mine['id']))?['question'], 'Owner only'); // restored from the server
+    expect(await Db.get(hers['id']), isNull);
+  }, skip: url == null || token2 == null ? 'set CERTDECK_TEST_URL and CERTDECK_TEST_TOKEN2 to run' : false);
 }

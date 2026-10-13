@@ -4,44 +4,62 @@ import 'package:image_picker/image_picker.dart';
 
 import 'ai.dart';
 import 'api.dart';
+import 'college_logic.dart';
 import 'db.dart';
+import 'i18n.dart';
 import 'logic.dart';
 import 'widgets.dart';
 
 String plain(String? s) => (s ?? '').replaceAll(RegExp(r'[*_`#>\[\]]|\{\{|\}\}'), '').replaceAll(RegExp(r'\s+'), ' ').trim();
 
 String dueLabel(Json c) {
-  if (isNew(c)) return 'new';
+  if (isNew(c)) return t('new');
   final days = (dueOf(c) - nowMs()) / dayMs;
-  if (days <= 0) return 'due';
-  return days < 1 ? 'due in ${(days * 24).ceil()}h' : 'due in ${days.round()}d';
+  if (days <= 0) return t('due');
+  return days < 1 ? t('due in {n}h', {'n': (days * 24).ceil()}) : t('due in {n}d', {'n': days.round()});
 }
 
 class CardsScreen extends StatefulWidget {
   final String filter;
-  const CardsScreen({super.key, this.filter = 'all'});
+  /// Show only this course's cards (college); null = the cert/course picker decides.
+  final String? course;
+  const CardsScreen({super.key, this.filter = 'all', this.course});
   @override
   State<CardsScreen> createState() => _CardsScreenState();
 }
 
 class _CardsScreenState extends State<CardsScreen> {
   late String filter = widget.filter;
-  String cert = 'active';
+  // 'active' = the active cert; 'any' = everything; a cert code; or 'course:<id>'. Students only have courses.
+  late String cert = widget.course != null ? 'course:${widget.course}' : (App.isOwner ? 'active' : 'any');
   String q = '';
+  List<Json> courseList = [];
 
   static const filters = {
     'all': 'All',
     'due': 'Due',
     'new': 'New',
+    'worked': 'Worked problems',
     'leech': 'Leeches',
     'misconception': 'Misconceptions',
     'suspended': 'Suspended',
   };
 
+  @override
+  void initState() {
+    super.initState();
+    courses().then((l) => mounted ? setState(() => courseList = l) : null);
+  }
+
   bool _match(Json c) {
-    final certId = cert == 'active' ? App.cert['id'] : cert;
-    if (certId != 'any' && !((c['certs'] as Map?) ?? {}).containsKey(certId)) return false;
+    if (cert.startsWith('course:')) {
+      if (c['course'] != cert.substring(7)) return false;
+    } else {
+      final certId = cert == 'active' ? App.cert['id'] : cert;
+      if (certId != 'any' && !((c['certs'] as Map?) ?? {}).containsKey(certId)) return false;
+    }
     final ok = switch (filter) {
+      'worked' => c['worked'] == true || c['similar_kp'] != null,
       'due' => !isNew(c) && dueOf(c) <= nowMs() && !isSuspended(c),
       'new' => isNew(c),
       'leech' => c['leech'] == true,
@@ -60,18 +78,21 @@ class _CardsScreenState extends State<CardsScreen> {
     return Scaffold(
       appBar: AppBar(
         title: TextField(
-          decoration: const InputDecoration(hintText: 'Search cards', border: InputBorder.none, prefixIcon: Icon(Icons.search)),
+          decoration: InputDecoration(hintText: t('Search cards'), border: InputBorder.none, prefixIcon: const Icon(Icons.search)),
           onChanged: (v) => setState(() => q = v),
         ),
         actions: [
           PopupMenuButton<String>(
-            icon: const Icon(Icons.school_outlined),
-            tooltip: 'Certification',
+            icon: const Icon(Icons.filter_list),
+            tooltip: t('Course'),
             onSelected: (v) => setState(() => cert = v),
             itemBuilder: (_) => [
-              CheckedPopupMenuItem(value: 'active', checked: cert == 'active', child: const Text('Active cert')),
-              CheckedPopupMenuItem(value: 'any', checked: cert == 'any', child: const Text('All certs')),
-              for (final c in App.certs) CheckedPopupMenuItem(value: c['id'] as String, checked: cert == c['id'], child: Text(c['code'])),
+              if (App.isOwner) CheckedPopupMenuItem(value: 'active', checked: cert == 'active', child: const Text('Active cert')),
+              CheckedPopupMenuItem(value: 'any', checked: cert == 'any', child: Text(t('All cards'))),
+              if (App.isOwner)
+                for (final c in App.certs) CheckedPopupMenuItem(value: c['id'] as String, checked: cert == c['id'], child: Text(c['code'])),
+              for (final c in courseList)
+                CheckedPopupMenuItem(value: 'course:${c['id']}', checked: cert == 'course:${c['id']}', child: Text(c['name'] ?? '')),
             ],
           ),
         ],
@@ -84,22 +105,23 @@ class _CardsScreenState extends State<CardsScreen> {
               for (final e in filters.entries)
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 3),
-                  child: ChoiceChip(label: Text(e.value), selected: filter == e.key, onSelected: (_) => setState(() => filter = e.key)),
+                  child: ChoiceChip(label: Text(t(e.value)), selected: filter == e.key, onSelected: (_) => setState(() => filter = e.key)),
                 ),
             ]),
           ),
         ),
       ),
       floatingActionButton: FloatingActionButton(
-          tooltip: 'Add card',
-          onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const CardEditor())),
+          tooltip: t('Add card'),
+          onPressed: () => Navigator.push(
+              context, MaterialPageRoute(builder: (_) => CardEditor(course: cert.startsWith('course:') ? cert.substring(7) : (App.isOwner ? null : courseList.firstOrNull?['id'])))),
           child: const Icon(Icons.add)),
       body: Live(
         load: () => Db.query('card', orderBy: 'updated_at DESC'),
         builder: (_, all) {
           final list = all.where(_match).toList();
           if (list.isEmpty) {
-            return const Center(child: Text('No cards here yet.\nTap + to add one, or generate some in the AI tab.', textAlign: TextAlign.center));
+            return Center(child: Text(t('No cards here yet.'), textAlign: TextAlign.center));
           }
           return ListView.separated(
             keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
@@ -107,14 +129,14 @@ class _CardsScreenState extends State<CardsScreen> {
             separatorBuilder: (_, __) => const Divider(height: 1),
             itemBuilder: (_, i) {
               if (i == 0) {
-                return Padding(padding: const EdgeInsets.all(8), child: Text('${list.length} cards', style: const TextStyle(color: Colors.white54)));
+                return Padding(padding: const EdgeInsets.all(8), child: Text(t('{n} cards', {'n': list.length}), style: const TextStyle(color: Colors.white54)));
               }
               final c = list[i - 1];
               final certJ = App.cert;
               return ListTile(
                 title: Text(plain(c['question']), maxLines: 2, overflow: TextOverflow.ellipsis),
                 subtitle: Text([
-                  typeLabels[c['type']] ?? c['type'],
+                  t(typeLabels[c['type']] ?? c['type']),
                   if (domainOf(c, certJ).isNotEmpty) 'D${domainOf(c, certJ)}',
                   (c['certs'] as Map?)?.keys.join('/') ?? '',
                   isSuspended(c) ? 'suspended' : dueLabel(c),
@@ -351,7 +373,9 @@ Future<String?> pickImage(BuildContext context) async {
 
 class CardEditor extends StatefulWidget {
   final Json? card;
-  const CardEditor({super.key, this.card});
+  /// New college card for this course (no cert tags).
+  final String? course;
+  const CardEditor({super.key, this.card, this.course});
   @override
   State<CardEditor> createState() => _CardEditorState();
 }
@@ -360,11 +384,13 @@ class _CardEditorState extends State<CardEditor> {
   late final Json d = widget.card == null
       ? {
           'type': 'basic',
-          'certs': {App.cert['id']: ''},
+          if (widget.course == null) 'certs': {App.cert['id']: ''},
+          if (widget.course != null) 'course': widget.course,
           'source': 'manual',
           'created_at': nowMs()
         }
       : Map<String, dynamic>.from(widget.card!);
+  bool get courseCard => d['course'] != null;
   final _ctl = <String, TextEditingController>{};
   late List<TextEditingController> options = [
     for (final o in ((d['options'] as List?) ?? ['', '', '', ''])) TextEditingController(text: o.toString())
@@ -424,17 +450,27 @@ class _CardEditorState extends State<CardEditor> {
       ];
     }
     if (type == 'occlusion') d['masks'] = masks;
-    d['certs'] = {
-      for (final e in certs.entries)
-        if (e.value.isNotEmpty) e.key: e.value
-    };
+    List<String> lines(String k) => (d.remove(k) as String? ?? '').split('\n').map((s) => s.trim()).where((s) => s.isNotEmpty).toList();
+    if (type == 'problem') d['steps'] = lines('steps_text');
+    if (type == 'short' || type == 'problem') {
+      final points = lines('rubric_text');
+      d['rubric'] = [for (final p in points) {'point': p, 'weight': 1 / points.length}];
+    }
+    if (!courseCard) {
+      d['certs'] = {
+        for (final e in certs.entries)
+          if (e.value.isNotEmpty) e.key: e.value
+      };
+    }
   }
 
   String? _validate() {
     final question = (d['question'] ?? '').toString();
-    if (question.isEmpty && type != 'occlusion') return 'Question is required';
-    if ((d['certs'] as Map).isEmpty) return 'Tag at least one certification domain';
+    if (question.isEmpty && type != 'occlusion') return t('Question is required');
+    if (!courseCard && (d['certs'] as Map).isEmpty) return 'Tag at least one certification domain';
     return switch (type) {
+      'short' || 'problem' when (d['answer'] ?? '').toString().isEmpty => t('Answer is required'),
+      'problem' when (d['steps'] as List).isEmpty => t('Add the solution steps'),
       'mcq' when (d['options'] as List).length < 2 => 'Add at least 2 options',
       'mcq' when (d['correct'] as List).isEmpty => 'Mark the correct option(s)',
       'typed' when (d['answer'] ?? '').toString().isEmpty => 'Answer is required',
@@ -560,8 +596,30 @@ class _CardEditorState extends State<CardEditor> {
         if (type == 'mcq') ..._mcq(cs),
         if (type == 'ordering') ..._ordering(),
         if (const {'basic', 'code', 'typed'}.contains(type))
-          field('answer', type == 'typed' ? 'Exact answer (e.g. aws sts assume-role)' : 'Answer',
-              lines: type == 'typed' ? 1 : 3, mono: type == 'typed'),
+          field('answer', type == 'typed' ? t('Exact answer') : t('Answer'), lines: type == 'typed' ? 1 : 3, mono: type == 'typed'),
+        if (type == 'problem') ...[
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 6),
+            child: TextField(
+              controller: ctl('steps_text', initial: ((d['steps'] as List?) ?? []).join('\n')),
+              minLines: 3,
+              maxLines: 20,
+              decoration: InputDecoration(labelText: t('Solution steps (one per line)'), border: const OutlineInputBorder(), alignLabelWithHint: true),
+            ),
+          ),
+          field('answer', t('Final answer'), lines: 1),
+        ],
+        if (type == 'short') field('answer', t('Model answer'), lines: 3),
+        if (type == 'short' || type == 'problem')
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 6),
+            child: TextField(
+              controller: ctl('rubric_text', initial: [for (final r in ((d['rubric'] as List?) ?? []).cast<Map>()) r['point']].join('\n')),
+              minLines: 2,
+              maxLines: 10,
+              decoration: InputDecoration(labelText: t('Marking points (one per line)'), border: const OutlineInputBorder(), alignLabelWithHint: true),
+            ),
+          ),
         if (type == 'typed') field('accepted', 'Other accepted answers (comma separated)'),
         _imageList('answer_images', 'Answer image'),
         Row(children: [
@@ -571,8 +629,9 @@ class _CardEditorState extends State<CardEditor> {
         field('explanation', 'Why the right answer is right, and why the others are wrong', lines: 4),
         field('tags', 'Tags (comma separated)'),
         const SizedBox(height: 8),
-        Text('Certifications & domains', style: TextStyle(color: cs.primary)),
-        for (final cert in App.certs)
+        if (!courseCard) Text('Certifications & domains', style: TextStyle(color: cs.primary)),
+        if (!courseCard)
+          for (final cert in App.certs)
           Row(children: [
             Checkbox(
                 value: certs.containsKey(cert['id']),

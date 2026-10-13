@@ -46,6 +46,26 @@ class Api {
     await _store.write(key: 'token', value: token);
   }
 
+  /// Saves the server and token. Another account on this phone: push this one's unsynced changes, then start
+  /// from an empty local database so the new account restores cleanly (never mix two people's data).
+  /// Returns null on success, else why it didn't switch.
+  static Future<String?> connect(String newUrl, String newToken) async {
+    final switching = configured && newToken.trim() != token;
+    if (switching) {
+      if ((await Db.meta('uploads') ?? '{}') != '{}') return 'Finish the uploads in progress first (or wait until they are done).';
+      final err = await sync();
+      if (err != null && await Db.dirtyCount() > 0) return 'Couldn\'t upload this account\'s unsynced changes ($err). Connect to the internet first.';
+      await Db.wipe();
+      me.value = null;
+      App.role = 'owner';
+      await App.init();
+    }
+    await configure(newUrl, newToken);
+    final err = await sync();
+    if (switching && err == null) await App.reload();
+    return err;
+  }
+
   static Future<dynamic> call(String method, String path, {Object? body, List<int>? bytes, Duration timeout = const Duration(seconds: 60)}) async {
     if (!configured) throw ApiError('Needs connection: add your server token in Settings', offline: true);
     final uri = Uri.parse('$url/api/$path');
@@ -85,6 +105,19 @@ class Api {
   /// AI calls can take minutes (Opus generating 20 cards with explanations).
   static Future<Json> ai(String path, Json body) async =>
       Map<String, dynamic>.from(await call('POST', path, body: body, timeout: const Duration(minutes: 6)));
+
+  /// Who this token belongs to and their AI budget this month ({name, role, usd, cap_usd, remaining_usd}).
+  static final me = ValueNotifier<Json?>(null);
+
+  static Future<void> refreshMe() async {
+    final m = Map<String, dynamic>.from(await call('GET', 'me'));
+    me.value = m;
+    if (m['role'] is String && m['role'] != App.role) {
+      App.role = m['role'];
+      await Db.setMeta('role', App.role);
+      changes.value++;
+    }
+  }
 
   /// Push media + dirty docs, pull everything newer than our cursor, fetch missing media.
   /// Returns null on success, else an error message.
@@ -126,6 +159,7 @@ class Api {
           }
         }
       }
+      await refreshMe();
       final stamp = DateTime.now().toString().substring(0, 16);
       await Db.setMeta('last_sync', stamp);
       lastSync.value = stamp;

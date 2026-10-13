@@ -3,18 +3,24 @@ import 'package:flutter/material.dart';
 import 'ai.dart';
 import 'api.dart';
 import 'cards.dart';
+import 'package:fsrs/fsrs.dart' as fsrs;
+
 import 'db.dart';
+import 'i18n.dart';
 import 'logic.dart';
 import 'widgets.dart';
 
 /// Queue with Anki-style relearning: cards due again within 30 min come back this session.
-class Session {
+class Session implements StudyQueue {
   final List<Json> queue;
   final List<Json> pending = [];
-  Session(this.queue);
+  final bool relearn;
+  Session(this.queue, {this.relearn = true});
 
+  @override
   int get remaining => queue.length + pending.length;
 
+  @override
   Json? next() {
     pending.sort((a, b) => dueOf(a).compareTo(dueOf(b)));
     if (pending.isNotEmpty && dueOf(pending.first) <= nowMs()) return pending.removeAt(0);
@@ -22,8 +28,9 @@ class Session {
     return pending.isEmpty ? null : pending.removeAt(0);
   }
 
-  void answered(Json card) {
-    if (dueOf(card) <= nowMs() + 30 * 60000) pending.add(card);
+  @override
+  void answered(Json card, double score) {
+    if (relearn && dueOf(card) <= nowMs() + 30 * 60000) pending.add(card);
   }
 }
 
@@ -31,13 +38,17 @@ class StudyScreen extends StatefulWidget {
   final List<Json> queue;
   final String source;
   final String title;
-  const StudyScreen(this.queue, {super.key, this.source = 'study', this.title = 'Study'});
+  /// Pulls cards from this instead of [queue] (the college sprint loop).
+  final StudyQueue? custom;
+  /// Schedules every answer with this (a college assessment's date); null = per card.
+  final fsrs.Scheduler? scheduler;
+  const StudyScreen(this.queue, {super.key, this.source = 'study', this.title = 'Study', this.custom, this.scheduler});
   @override
   State<StudyScreen> createState() => _StudyScreenState();
 }
 
 class _StudyScreenState extends State<StudyScreen> {
-  late final session = Session([...widget.queue]);
+  late final StudyQueue session = widget.custom ?? Session([...widget.queue], relearn: widget.source == 'study');
   Json? card;
   AnswerState? ans;
   Conf? conf;
@@ -58,17 +69,28 @@ class _StudyScreenState extends State<StudyScreen> {
         if (card == null) Api.sync().ignore();
       });
 
-  bool get graded => ans!.autoGraded || ans!.selfGrade != null;
-  bool get misconception => revealed && graded && conf == Conf.sure && !ans!.correct;
+  bool get graded => ans!.written ? ans!.graded : (ans!.autoGraded || ans!.selfGrade != null);
+  bool get misconception => revealed && graded && conf == Conf.sure && ans!.score < .4;
 
   Future<void> _commit() async {
     final a = ans!;
-    final updated =
-        await recordAnswer(card!, conf: conf!, correct: a.correct, source: widget.source, durationMs: nowMs() - a.startedAt, answer: a.answer);
-    if (widget.source == 'study') session.answered(updated);
+    final updated = await recordAnswer(card!,
+        conf: conf!,
+        correct: a.correct,
+        source: widget.source,
+        durationMs: nowMs() - a.startedAt,
+        answer: a.answer,
+        score: a.written ? a.score : null,
+        scheduler: widget.scheduler);
+    session.answered(updated, a.score);
     done++;
     if (a.correct) right++;
     _next();
+  }
+
+  void _selfScore(double v) {
+    setState(() => ans!.selfScore = v);
+    if (!misconception) _commit();
   }
 
   void _selfGrade(bool correct) {
@@ -86,10 +108,10 @@ class _StudyScreenState extends State<StudyScreen> {
           child: Column(mainAxisSize: MainAxisSize.min, children: [
             const Icon(Icons.celebration, size: 64),
             const SizedBox(height: 12),
-            Text(done == 0 ? 'Nothing to study right now.' : 'Session done: $done cards, ${(100 * right / done).round()}% correct',
-                style: Theme.of(context).textTheme.titleMedium),
+            Text(done == 0 ? t('Nothing to study right now.') : t('Session done: {n} answers, {p}% correct', {'n': done, 'p': (100 * right / done).round()}),
+                textAlign: TextAlign.center, style: Theme.of(context).textTheme.titleMedium),
             const SizedBox(height: 20),
-            FilledButton(onPressed: () => Navigator.pop(context), child: const Text('Back')),
+            FilledButton(onPressed: () => Navigator.pop(context), child: Text(t('Back'))),
           ]),
         ),
       );
@@ -98,7 +120,7 @@ class _StudyScreenState extends State<StudyScreen> {
     final cert = App.cert;
     return Scaffold(
       appBar: AppBar(
-        title: Text('${widget.title} · ${session.remaining + 1} left', style: const TextStyle(fontSize: 18)),
+        title: Text('${widget.title} · ${t('{n} left', {'n': session.remaining + 1})}', style: const TextStyle(fontSize: 18)),
         actions: [
           IconButton(
               tooltip: 'Ask AI',
@@ -118,10 +140,10 @@ class _StudyScreenState extends State<StudyScreen> {
                 await Navigator.push(context, MaterialPageRoute(builder: (_) => CardDetail(c['id'])));
               }
             },
-            itemBuilder: (_) => const [
-              PopupMenuItem(value: 'edit', child: Text('Edit card')),
-              PopupMenuItem(value: 'details', child: Text('Card details & history')),
-              PopupMenuItem(value: 'suspend', child: Text('Suspend card')),
+            itemBuilder: (_) => [
+              PopupMenuItem(value: 'edit', child: Text(t('Edit card'))),
+              PopupMenuItem(value: 'details', child: Text(t('Card details & history'))),
+              PopupMenuItem(value: 'suspend', child: Text(t('Suspend card'))),
             ],
           ),
         ],
@@ -132,11 +154,12 @@ class _StudyScreenState extends State<StudyScreen> {
           Expanded(
             child: ListView(padding: const EdgeInsets.all(16), children: [
               Wrap(spacing: 6, children: [
-                _chip(typeLabels[c['type']] ?? c['type']),
+                _chip(t(typeLabels[c['type']] ?? c['type'])),
                 if (domainOf(c, cert).isNotEmpty) _chip(domainName(cert, domainOf(c, cert))),
-                if (isNew(c)) _chip('New', color: cs.primary),
-                if (c['misconception'] == true) _chip('Misconception', color: cs.error),
-                if (c['leech'] == true) _chip('Leech', color: Colors.orange),
+                if (isNew(c)) _chip(t('New'), color: cs.primary),
+                if (c['worked'] == true) _chip(t('Worked example'), color: Colors.lightBlueAccent),
+                if (c['misconception'] == true) _chip(t('Misconception'), color: cs.error),
+                if (c['leech'] == true) _chip(t('Leech'), color: Colors.orange),
               ]),
               const SizedBox(height: 12),
               CardView(ans!, key: ObjectKey(ans), revealed: revealed, misconception: misconception, onChanged: () => setState(() {})),
@@ -174,26 +197,34 @@ class _StudyScreenState extends State<StudyScreen> {
       return Column(mainAxisSize: MainAxisSize.min, children: [
         Padding(
             padding: const EdgeInsets.only(top: 6),
-            child: Text(ready ? 'How confident are you?' : 'Pick an answer first', style: const TextStyle(color: Colors.white54, fontSize: 12))),
+            child: Text(ready ? t('How confident are you?') : t('Pick an answer first'), style: const TextStyle(color: Colors.white54, fontSize: 12))),
         bar([
-          btn(Conf.guess, 'Guessing', Icons.casino_outlined, Colors.orange),
-          btn(Conf.unsure, 'Unsure', Icons.help_outline, Colors.amber),
-          btn(Conf.sure, 'Sure', Icons.verified_outlined, Colors.green),
+          btn(Conf.guess, t('Guessing'), Icons.casino_outlined, Colors.orange),
+          btn(Conf.unsure, t('Unsure'), Icons.help_outline, Colors.amber),
+          btn(Conf.sure, t('Sure'), Icons.verified_outlined, Colors.green),
         ]),
+      ]);
+    }
+    if (!graded && ans!.written) {
+      // Written answers: tick the rubric or grade with AI above, or give a quick verdict here.
+      return bar([
+        FilledButton.tonal(onPressed: () => _selfScore(0), style: FilledButton.styleFrom(foregroundColor: cs.error), child: Text(t('Wrong'))),
+        FilledButton.tonal(onPressed: () => _selfScore(.5), style: FilledButton.styleFrom(foregroundColor: Colors.amber), child: Text(t('Partly'))),
+        FilledButton(onPressed: () => _selfScore(1), child: Text(t('Right'))),
       ]);
     }
     if (!graded) {
       return bar([
         FilledButton.tonal(
-            onPressed: () => _selfGrade(false), style: FilledButton.styleFrom(foregroundColor: cs.error), child: const Text('I was wrong')),
-        FilledButton(onPressed: () => _selfGrade(true), child: const Text('I was right')),
+            onPressed: () => _selfGrade(false), style: FilledButton.styleFrom(foregroundColor: cs.error), child: Text(t('I was wrong'))),
+        FilledButton(onPressed: () => _selfGrade(true), child: Text(t('I was right'))),
       ]);
     }
     return bar([
-      if (ans!.autoGraded)
+      if (ans!.autoGraded && !ans!.written)
         TextButton(
-            onPressed: () => setState(() => ans!.overrideCorrect = !ans!.correct), child: Text(ans!.correct ? 'Actually wrong' : 'Actually right')),
-      FilledButton(onPressed: _commit, child: const Text('Next')),
+            onPressed: () => setState(() => ans!.overrideCorrect = !ans!.correct), child: Text(ans!.correct ? t('Actually wrong') : t('Actually right'))),
+      FilledButton(onPressed: _commit, child: Text(t('Next'))),
     ]);
   }
 }

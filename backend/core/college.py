@@ -492,9 +492,15 @@ def suggest_scope(user, body):
 # ---------- preparing an assessment ----------
 
 def _scope(user, a):
-    """[(key, material, section, ingest)] of the assessment's scope that are processed."""
+    """[(key, material, section, ingest)] of the assessment's scope that are processed. A chapter picked together
+    with some of its own subsections counts as just those subsections, so no page is read twice."""
     want = {_section_key(s.get("material_id"), s.get("section_id")) for s in a.get("scope") or []}
-    return [x for x in course_sections(user, a.get("course_id")) if x[0] in want and x[3].get("status") == "ready"]
+    picked = [x for x in course_sections(user, a.get("course_id")) if x[0] in want and x[3].get("status") == "ready"]
+
+    def inside(x, y):  # x is a level-2 section within level-1 section y of the same material
+        return x[1]["id"] == y[1]["id"] and x[2]["level"] == 2 and y[2]["level"] == 1 \
+            and y[2]["start"] <= x[2]["start"] and x[2]["end"] <= y[2]["end"]
+    return [y for y in picked if not any(inside(x, y) for x in picked if x is not y)]
 
 
 def _kps(user, course_id, keys=None):

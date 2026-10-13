@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:fsrs/fsrs.dart' as fsrs;
 
+import 'college_logic.dart';
 import 'db.dart';
 
 const dayMs = 86400000;
@@ -63,11 +64,17 @@ class App {
   static List<Json> certs = [];
   static List<double>? params;
 
+  /// 'owner' (certs + college) or 'student' (college only), from GET me; owner until the server says otherwise.
+  static String role = 'owner';
+  static bool get isOwner => role != 'student';
+  static String get lang => settings['lang'] == 'ar' ? 'ar' : 'en';
+
   static Future<void> init() async {
     await Db.seed('settings', {'id': 'settings', ...defaultSettings});
     for (final c in defaultCerts) {
       await Db.seed('cert', c);
     }
+    role = await Db.meta('role') ?? 'owner';
     await reload();
   }
 
@@ -151,14 +158,19 @@ fsrs.Rating ratingFor(Conf conf, bool correct, int sureStreak) {
 }
 
 /// Schedules the card, appends a review log, saves both. Returns the updated card.
-Future<Json> recordAnswer(Json card, {required Conf conf, required bool correct, required String source, int? durationMs, Object? answer}) async {
+/// [score] (0..1) is set for graded answers (short answers, problems): partial credit rates Hard.
+/// Course cards are scheduled for the assessment they're studied for (its date caps the intervals).
+Future<Json> recordAnswer(Json card,
+    {required Conf conf, required bool correct, required String source, int? durationMs, Object? answer, double? score, fsrs.Scheduler? scheduler}) async {
   final now = DateTime.now().toUtc();
   final streak = (card['sure_streak'] as int?) ?? 0;
-  final rating = ratingFor(conf, correct, streak);
+  final rating = score == null ? ratingFor(conf, correct, streak) : ratingForScore(conf, score, streak);
+  correct = score == null ? correct : score >= .85;
   final before = toFsrs(card);
   final wasNew = isNew(card);
-  final misconception = conf == Conf.sure && !correct;
-  final f = fromFsrs(schedulerFor(App.cert).reviewCard(before, rating, reviewDateTime: now).card);
+  final misconception = conf == Conf.sure && (score == null ? !correct : score < .4);
+  scheduler ??= card['course'] != null ? schedulerForDate((await assessmentForCard(card))?['date']) : schedulerFor(App.cert);
+  final f = fromFsrs(scheduler.reviewCard(before, rating, reviewDateTime: now).card);
 
   if (rating == fsrs.Rating.again && before.state == fsrs.State.review) card['lapses'] = ((card['lapses'] as int?) ?? 0) + 1;
   card['sure_streak'] = conf == Conf.sure && correct ? streak + 1 : 0;
@@ -185,8 +197,17 @@ Future<Json> recordAnswer(Json card, {required Conf conf, required bool correct,
     'source': source,
     'was_new': wasNew,
     if (answer != null) 'answer': answer,
+    if (score != null) 'score': score,
   });
   return card;
+}
+
+/// What a study screen pulls cards from: the cert/FSRS session or the college sprint loop.
+abstract class StudyQueue {
+  Json? next();
+  /// [score] 1 = right, 0..1 partial, 0 wrong.
+  void answered(Json card, double score);
+  int get remaining;
 }
 
 int startOfToday() {

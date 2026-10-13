@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'ai.dart';
 import 'api.dart';
 import 'cards.dart';
+import 'college.dart';
 import 'db.dart';
 import 'exam.dart';
 import 'home.dart';
+import 'i18n.dart';
 import 'logic.dart';
+import 'notify.dart';
 import 'settings.dart';
 import 'update.dart';
+import 'upload.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -16,7 +21,8 @@ Future<void> main() async {
   await App.init();
   await Api.load();
   runApp(const CertDeck());
-  Api.sync().ignore(); // sync on open
+  Api.sync().then((_) => Reminders.reschedule()).ignore(); // sync on open, then plan the reminders
+  Uploads.run().ignore(); // resume unfinished material uploads
   Updater.check().ignore();
 }
 
@@ -26,9 +32,15 @@ class CertDeck extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final scheme = ColorScheme.fromSeed(seedColor: const Color(0xff2dd4bf), brightness: Brightness.dark, surface: const Color(0xff111316));
-    return MaterialApp(
+    // Rebuilds on settings changes so a language switch applies at once (Arabic = right-to-left everywhere).
+    return ValueListenableBuilder(
+      valueListenable: changes,
+      builder: (_, __, ___) => MaterialApp(
       title: 'CertDeck',
       debugShowCheckedModeBanner: false,
+      locale: Locale(App.lang),
+      supportedLocales: const [Locale('en'), Locale('ar')],
+      localizationsDelegates: GlobalMaterialLocalizations.delegates,
       themeMode: ThemeMode.dark,
       darkTheme: ThemeData(
         colorScheme: scheme,
@@ -38,7 +50,7 @@ class CertDeck extends StatelessWidget {
         appBarTheme: AppBarTheme(backgroundColor: scheme.surface, scrolledUnderElevation: 0),
       ),
       home: const UpdateGate(child: Shell()),
-    );
+    ));
   }
 }
 
@@ -67,27 +79,34 @@ class _ShellState extends State<Shell> with WidgetsBindingObserver {
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.resumed) {
       Api.sync().ignore();
+      Uploads.run().ignore();
       Updater.check().ignore();
     }
+    if (state == AppLifecycleState.paused) Reminders.reschedule().ignore(); // after a session, the plan changed
   }
 
   @override
   Widget build(BuildContext context) {
+    // Students see only the college side; the owner also keeps the cert tabs.
+    final tabs = [
+      if (App.isOwner) (const TodayScreen(), Icons.today_outlined, Icons.today, 'Certs'),
+      (const CollegeScreen(), Icons.school_outlined, Icons.school, t('College')),
+      (const CardsScreen(), Icons.style_outlined, Icons.style, t('Cards')),
+      if (App.isOwner) (const AiScreen(), Icons.auto_awesome_outlined, Icons.auto_awesome, 'AI'),
+      if (App.isOwner) (const ExamScreen(), Icons.timer_outlined, Icons.timer, 'Exam'),
+      (const SettingsScreen(), Icons.settings_outlined, Icons.settings, t('Settings')),
+    ];
+    final i = tab.clamp(0, tabs.length - 1);
     return Scaffold(
-      body: IndexedStack(index: tab, children: const [TodayScreen(), CardsScreen(), AiScreen(), ExamScreen(), SettingsScreen()]),
+      body: IndexedStack(index: i, children: [for (final t in tabs) t.$1]),
       bottomNavigationBar: NavigationBar(
-        selectedIndex: tab,
+        selectedIndex: i,
+        labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
         onDestinationSelected: (i) {
           FocusManager.instance.primaryFocus?.unfocus(); // a focused field on a hidden tab would keep the keyboard up
           setState(() => tab = i);
         },
-        destinations: const [
-          NavigationDestination(icon: Icon(Icons.today_outlined), selectedIcon: Icon(Icons.today), label: 'Today'),
-          NavigationDestination(icon: Icon(Icons.style_outlined), selectedIcon: Icon(Icons.style), label: 'Cards'),
-          NavigationDestination(icon: Icon(Icons.auto_awesome_outlined), selectedIcon: Icon(Icons.auto_awesome), label: 'AI'),
-          NavigationDestination(icon: Icon(Icons.timer_outlined), selectedIcon: Icon(Icons.timer), label: 'Exam'),
-          NavigationDestination(icon: Icon(Icons.settings_outlined), selectedIcon: Icon(Icons.settings), label: 'Settings'),
-        ],
+        destinations: [for (final t in tabs) NavigationDestination(icon: Icon(t.$2), selectedIcon: Icon(t.$3), label: t.$4)],
       ),
     );
   }

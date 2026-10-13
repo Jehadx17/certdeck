@@ -9,7 +9,9 @@ import 'package:share_plus/share_plus.dart';
 
 import 'api.dart';
 import 'db.dart';
+import 'i18n.dart';
 import 'logic.dart';
+import 'notify.dart';
 import 'widgets.dart';
 
 /// Export file per docs/cards.schema.json, images inlined as base64.
@@ -120,10 +122,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
       );
 
   Future<void> _connect() async {
-    await Api.configure(url.text, token.text);
-    if (!mounted) return;
-    final err = await busy(context, 'Connecting & restoring…', () => Api.sync());
-    if (mounted) toast(context, err ?? 'Connected. Everything is synced.');
+    final err = await busy(context, t('Connecting & restoring…'), () => Api.connect(url.text, token.text));
+    if (mounted) toast(context, err ?? t('Connected. Everything is synced.'));
+    Reminders.reschedule().ignore();
     setState(() {});
   }
 
@@ -142,13 +143,51 @@ class _SettingsScreenState extends State<SettingsScreen> {
     Widget header(String t) =>
         Padding(padding: const EdgeInsets.fromLTRB(16, 20, 16, 4), child: Text(t, style: TextStyle(color: cs.primary, fontWeight: FontWeight.bold)));
     return Scaffold(
-      appBar: AppBar(title: const Text('Settings')),
+      appBar: AppBar(title: Text(t('Settings'))),
       // Rebuild after syncs (a restore can change certs, exam dates and limits).
       body: ValueListenableBuilder(
         valueListenable: changes,
         builder: (context, _, __) => ListView(children: [
-          header('Certifications'),
-          for (final c in App.certs)
+          header(t('Language')),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: SegmentedButton<String>(
+              segments: const [ButtonSegment(value: 'en', label: Text('English')), ButtonSegment(value: 'ar', label: Text('العربية'))],
+              selected: {App.lang},
+              onSelectionChanged: (v) async {
+                App.settings['lang'] = v.first;
+                await App.saveSettings();
+                Reminders.reschedule().ignore();
+              },
+            ),
+          ),
+          header(t('Reminders')),
+          SwitchListTile(
+            title: Text(t('Daily study reminder')),
+            subtitle: Text(t('Your plan for the day, at {time}', {'time': Reminders.timeLabel})),
+            value: App.settings['reminders'] != false,
+            onChanged: (v) async {
+              App.settings['reminders'] = v;
+              await App.saveSettings();
+              await Reminders.reschedule();
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.schedule),
+            title: Text(t('Reminder time')),
+            trailing: Text(Reminders.timeLabel),
+            onTap: () async {
+              final picked = await showTimePicker(context: context, initialTime: Reminders.time);
+              if (picked == null) return;
+              App.settings['reminder_minute'] = picked.hour * 60 + picked.minute;
+              await App.saveSettings();
+              await Reminders.reschedule();
+              setState(() {});
+            },
+          ),
+          if (App.isOwner) header('Certifications'),
+          if (App.isOwner)
+            for (final c in App.certs)
             ListTile(
               leading: Radio<String>(value: c['id'], groupValue: App.settings['active_cert'], onChanged: (_) => _setCert(c, active: true)),
               title: Text(c['code']),
@@ -170,26 +209,28 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ]),
               onTap: () => _setCert(c, active: true),
             ),
-          header('Study'),
-          _num('new_per_day', 'New cards per day'),
-          _num('max_reviews_per_day', 'Max reviews per day'),
-          _num('leech_threshold', 'Leech after N lapses'),
-          header('Backend & sync'),
+          if (App.isOwner) ...[
+            header('Study'),
+            _num('new_per_day', 'New cards per day'),
+            _num('max_reviews_per_day', 'Max reviews per day'),
+          ],
+          _num('leech_threshold', t('Leech after N lapses')),
+          header(t('Backend & sync')),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Column(children: [
-              TextField(controller: url, keyboardType: TextInputType.url, decoration: const InputDecoration(labelText: 'Server URL')),
+              TextField(controller: url, keyboardType: TextInputType.url, decoration: InputDecoration(labelText: t('Server URL'))),
               TextField(
                 controller: token,
                 obscureText: !showToken,
                 decoration: InputDecoration(
-                    labelText: 'API token',
+                    labelText: t('API token'),
                     suffixIcon: IconButton(
                         icon: Icon(showToken ? Icons.visibility_off : Icons.visibility), onPressed: () => setState(() => showToken = !showToken))),
               ),
               const SizedBox(height: 8),
               Row(children: [
-                Expanded(child: FilledButton(onPressed: _connect, child: const Text('Save & sync'))),
+                Expanded(child: FilledButton(onPressed: _connect, child: Text(t('Save & sync')))),
               ]),
             ]),
           ),
@@ -197,11 +238,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
             valueListenable: Api.lastSync,
             builder: (_, v, __) => ListTile(
               leading: const Icon(Icons.sync),
-              title: const Text('Sync now'),
-              subtitle: Text('Last sync: $v'),
+              title: Text(t('Sync now')),
+              subtitle: Text(t('Last sync: {v}', {'v': v})),
               onTap: () async {
                 final err = await Api.sync();
-                if (context.mounted) toast(context, err ?? 'Synced');
+                if (context.mounted) toast(context, err ?? t('Synced'));
               },
             ),
           ),
@@ -211,19 +252,23 @@ class _SettingsScreenState extends State<SettingsScreen> {
               final u = snap.data;
               return ListTile(
                 leading: const Icon(Icons.payments_outlined),
-                title: const Text('AI spend this month'),
+                title: Text(t('AI spend this month')),
                 subtitle: Text(usage == null
-                    ? 'Connect the backend to see it'
+                    ? t('Connect the backend to see it')
                     : snap.hasError
-                        ? 'Needs connection (tap to retry)'
+                        ? t('Needs connection (tap to retry)')
                         : u == null
-                            ? 'Loading…'
-                            : '\$${(u['usd'] as num).toStringAsFixed(2)} · ${u['calls']} calls (${u['batch_calls']} in background) · all time \$${(u['all_time_usd'] as num).toStringAsFixed(2)}'),
+                            ? t('Loading…')
+                            : [
+                                '\$${(u['usd'] as num).toStringAsFixed(2)}',
+                                if (u['cap_usd'] != null) t('of \${cap} (\${left} left)', {'cap': (u['cap_usd'] as num).toStringAsFixed(0), 'left': (u['remaining_usd'] as num).toStringAsFixed(2)}),
+                                t('{n} calls', {'n': u['calls']}),
+                              ].join(' · ')),
                 onTap: () => setState(() => usage = Api.call('GET', 'usage')),
               );
             },
           ),
-          ListTile(
+          if (App.isOwner) ListTile(
             leading: const Icon(Icons.tune),
             title: const Text('Re-optimize FSRS parameters'),
             subtitle: Text(App.params == null
@@ -238,8 +283,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   : 'Optimized from ${r?['review_count']} reviews';
             }),
           ),
-          header('Import / export'),
-          ListTile(
+          if (App.isOwner) header('Import / export'),
+          if (App.isOwner) ListTile(
             leading: const Icon(Icons.upload_file),
             title: const Text('Export cards to a file'),
             subtitle: const Text('JSON with images inlined (share or save)'),
@@ -248,7 +293,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               return 'Exported';
             }),
           ),
-          ListTile(
+          if (App.isOwner) ListTile(
             leading: const Icon(Icons.download),
             title: const Text('Import cards from a file'),
             onTap: () async {
@@ -256,7 +301,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               if (data != null && mounted) _run('Importing…', () async => 'Imported ${await importLocal(data)} cards');
             },
           ),
-          ListTile(
+          if (App.isOwner) ListTile(
             leading: const Icon(Icons.cloud_download_outlined),
             title: const Text('Export from server'),
             subtitle: const Text('Downloads the backend\'s full card export'),
@@ -266,7 +311,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               return 'Exported';
             }),
           ),
-          ListTile(
+          if (App.isOwner) ListTile(
             leading: const Icon(Icons.cloud_upload_outlined),
             title: const Text('Import a file through the server'),
             subtitle: const Text('Server validates it against the schema, then it syncs down'),
