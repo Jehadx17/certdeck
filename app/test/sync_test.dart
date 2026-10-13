@@ -70,7 +70,8 @@ void main() {
     await App.init();
     final card = await Db.put('card', {'type': 'basic', 'question': 'Where does EBS live?', 'answer': 'One AZ', 'created_at': nowMs()});
     final img = await Db.saveMedia([0x89, 0x50, 0x4E, 0x47, ...List.generate(40, (i) => 255 - i)]);
-    await Db.put('job', {'task': 'diagrams', 'status': 'done', 'count': 1, 'added': 1, 'created_at': nowMs(),
+    // applied_at set = an older app build already marked it done without attaching diagrams.
+    await Db.put('job', {'task': 'diagrams', 'status': 'done', 'count': 1, 'added': 1, 'created_at': nowMs(), 'applied_at': 1,
       'card_ids': [card['id']], 'diagrams': [{'card_id': card['id'], 'image': img}]});
     expect(await Api.sync(), isNull);
 

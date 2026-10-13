@@ -410,10 +410,15 @@ Future<int> applyRetags(List? retag) async {
 /// Background (Batch API) jobs the server finished: apply their retags and diagrams once.
 Future<void> applyFinishedJobs() async {
   for (final j in await Db.query('job')) {
-    if (j['status'] == 'done' && j['applied_at'] == null) {
+    if (j['status'] != 'done') continue;
+    if (j['applied_at'] == null) {
       await applyRetags(j['retag'] as List?);
-      await applyDiagrams(j['diagrams'] as List?);
       await Db.put('job', j..['applied_at'] = nowMs());
+    }
+    // Own marker: builds from before diagrams set applied_at without attaching them.
+    if (j['diagrams'] != null && j['diagrams_applied_at'] == null) {
+      await applyDiagrams(j['diagrams'] as List?);
+      await Db.put('job', j..['diagrams_applied_at'] = nowMs());
     }
   }
 }
