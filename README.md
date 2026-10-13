@@ -218,5 +218,6 @@ Format: [docs/cards.schema.json](docs/cards.schema.json) (JSON Schema). Example:
   priorities (the hinted points rose to the top); a problem self-graded "Partly" offline, synced as a review with
   score 0.5; the monthly cap refusing AI work, with the message in Arabic, then restored. On 1.3.5: the Calculus formula sheet
   in the English UI (display and inline LaTeX), after the problem cards in the Arabic UI; switching the phone from the
-  student back to the owner (English, 6 tabs, the AWS deck with its exam date and readiness). iOS was not tested on a
+  student back to the owner (English, 6 tabs, the AWS deck with its exam date and readiness). On 1.3.6 the student
+  sees only College and Settings and opens a course's 107 cards from the course; the owner keeps all 6 tabs. iOS was not tested on a
   device (at the user's request); the iOS project builds the same code with `app/build-ios.sh`.
