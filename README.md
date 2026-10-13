@@ -216,5 +216,6 @@ Format: [docs/cards.schema.json](docs/cards.schema.json) (JSON Schema). Example:
   reconnect; the forced update installing 1.3.1, 1.3.2 and 1.3.3 by itself. Then (1.3.3 → 1.3.4): a page photo
   chosen from the gallery (5 sections read from it); the professor's hints typed on the phone re-ranking the
   priorities (the hinted points rose to the top); a problem self-graded "Partly" offline, synced as a review with
-  score 0.5; the monthly cap refusing AI work, with the message in Arabic, then restored. iOS was not tested on a
+  score 0.5; the monthly cap refusing AI work, with the message in Arabic, then restored. On 1.3.5: the Calculus formula sheet
+  in the English UI (display and inline LaTeX), after the problem cards in the Arabic UI. iOS was not tested on a
   device (at the user's request); the iOS project builds the same code with `app/build-ios.sh`.
