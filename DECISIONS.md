@@ -61,6 +61,8 @@ Significant choices made while building CertDeck, newest at the bottom of each s
   versions rather than upgrading the SDK. JDK 17 and the Android SDK are installed under `~/opt` and
   `~/Android/Sdk`. Gradle heap capped at 1.5 GB (the laptop OOM-killed the default 4 GB).
 - The release keystore lives outside the repo in `~/.config/certdeck/release.jks` (`app/android/key.properties`, gitignored).
+- iOS is built on macOS by `app/build-ios.sh` (xcodebuild with automatic signing for the connected iPhone, then
+  `devicectl` install): no App Store, works with a free Apple ID (7-day signature) or a paid team (1 year).
 
 ## Deployment (VPS)
 - At the user's request the backend runs on **169.58.7.222** (the server that hosts mithaqstay.com), not the

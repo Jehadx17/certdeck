@@ -44,6 +44,19 @@ No USB? Upload the APK and open the link on the phone (nginx serves `/opt/certde
 First run: **Settings → Backend & sync** → server URL `https://certdeck.mithaqstay.com` + API token →
 **Save & sync**. On a new phone this restores everything.
 
+### iOS (no App Store)
+Needs macOS with Xcode (the laptop's Hackintosh partition works), an Apple ID, and the iPhone on USB.
+One time: install Xcode, open it, Xcode → Settings → Accounts → add your Apple ID → Manage Certificates… →
++ → Apple Development. On the iPhone: tap Trust when connected, and turn on Settings → Privacy & Security →
+Developer Mode.
+```bash
+git clone https://github.com/Jehadx17/certdeck.git && certdeck/app/build-ios.sh   # later: git pull && app/build-ios.sh
+```
+The script installs Flutter 3.22.2 and CocoaPods if missing, signs with your Apple ID's team and installs the app.
+First launch: Settings → General → VPN & Device Management → trust your Apple ID. A **free** Apple ID signs for
+7 days: re-run the script weekly (your data stays). A paid developer account ($99/yr) signs for a year
+(`CERTDECK_TEAM=<team id>` picks the team if you have several).
+
 ## Backend
 
 ### Local development
