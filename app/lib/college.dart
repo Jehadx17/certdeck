@@ -362,7 +362,7 @@ class MaterialTile extends StatelessWidget {
                 title: autoText(m['title'] ?? '', maxLines: 2, overflow: TextOverflow.ellipsis),
                 subtitle: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                   Text(statusText(status, ing, up), style: TextStyle(color: status == 'failed' ? Colors.redAccent : Colors.white60, fontSize: 13)),
-                  if (status == 'failed' && err != null) Text('$err', style: const TextStyle(color: Colors.redAccent, fontSize: 12)),
+                  if (status == 'failed' && err != null) Text(t('$err'), style: const TextStyle(color: Colors.redAccent, fontSize: 12)),
                   if (up != null || const {'converting', 'mapping', 'queued'}.contains(status))
                     Padding(padding: const EdgeInsets.only(top: 4), child: LinearProgressIndicator(value: up)),
                 ]),
@@ -468,7 +468,7 @@ class MaterialScreen extends StatelessWidget {
             body: ListView(padding: const EdgeInsets.all(12), children: [
               Text(statusText(ing?['status'] ?? 'waiting', ing, Uploads.progress.value[id]), style: const TextStyle(color: Colors.white60)),
               if (ing?['status'] == 'failed') ...[
-                Text('${ing?['error'] ?? ''}', style: const TextStyle(color: Colors.redAccent)),
+                Text(t('${ing?['error'] ?? ''}'), style: const TextStyle(color: Colors.redAccent)),
                 TextButton.icon(
                     icon: const Icon(Icons.refresh),
                     label: Text(t('Try again')),

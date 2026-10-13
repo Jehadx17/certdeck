@@ -7,6 +7,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 
 import 'db.dart';
+import 'i18n.dart';
 import 'logic.dart';
 
 class ApiError implements Exception {
@@ -66,7 +67,7 @@ class Api {
     if (switching) {
       if ((await Db.meta('uploads') ?? '{}') != '{}') return 'Finish the uploads in progress first (or wait until they are done).';
       final err = await sync();
-      if (err != null && await Db.dirtyCount() > 0) return 'Couldn\'t upload this account\'s unsynced changes ($err). Connect to the internet first.';
+      if (await Db.dirtyCount() > 0) return 'Couldn\'t upload this account\'s unsynced changes (${err ?? 'try again'}). Connect to the internet first.';
       await Db.wipe();
       me.value = null;
       App.role = 'owner';
@@ -108,7 +109,7 @@ class Api {
       } catch (_) {
         msg = 'HTTP ${r.statusCode}';
       }
-      throw ApiError(msg);
+      throw ApiError(r.statusCode == 402 ? budgetMessage(msg) : msg);
     }
     if (method == 'GET' && (path.startsWith('media/') || path == 'app/apk')) return r.bodyBytes;
     return r.bodyBytes.isEmpty ? null : jsonDecode(utf8.decode(r.bodyBytes));
@@ -131,11 +132,23 @@ class Api {
     }
   }
 
+  static Future<String?>? _syncRun, _syncNext;
+
   /// Push media + dirty docs, pull everything newer than our cursor, fetch missing media.
-  /// Returns null on success, else an error message.
-  static Future<String?> sync() async {
-    if (!configured) return 'Add your server token in Settings to sync.';
-    if (syncing.value) return null;
+  /// Returns null on success, else an error message. Called while a sync runs, it waits for one more run after
+  /// that one (whose push may have missed the caller's change); concurrent callers share that run.
+  static Future<String?> sync() {
+    if (!configured) return Future.value('Add your server token in Settings to sync.');
+    if (_syncRun != null) {
+      return _syncNext ??= _syncRun!.then((_) {
+        _syncNext = null;
+        return sync();
+      });
+    }
+    return _syncRun = _sync().whenComplete(() => _syncRun = null);
+  }
+
+  static Future<String?> _sync() async {
     syncing.value = true;
     try {
       for (final name in await Db.pendingMedia()) {
@@ -183,4 +196,15 @@ class Api {
       syncing.value = false;
     }
   }
+}
+
+/// The server's budget refusal carries amounts, so it can't be looked up whole in the translations.
+String budgetMessage(String msg) {
+  final m = RegExp(r'\$(\d+(?:\.\d+)?) of \$(\d+(?:\.\d+)?) left(?:, this needs about \$(\d+(?:\.\d+)?))?').firstMatch(msg);
+  if (m == null) return msg;
+  return [
+    t('Monthly AI budget reached: \${left} of \${cap} left.', {'left': m[1], 'cap': m[2]}),
+    if (m[3] != null) t('This needs about \${n}.', {'n': m[3]}),
+    t('Studying still works.'),
+  ].join(' ');
 }

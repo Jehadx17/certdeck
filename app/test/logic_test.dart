@@ -1,5 +1,6 @@
 import 'package:certdeck/cards.dart';
 import 'package:markdown/markdown.dart' as md;
+import 'package:certdeck/api.dart' show budgetMessage;
 import 'package:certdeck/logic.dart';
 import 'package:certdeck/widgets.dart' show clozeBack, clozeFront, isolateRuns;
 import 'package:fsrs/fsrs.dart' as fsrs;
@@ -75,5 +76,18 @@ void main() {
     // Bold right after an Arabic letter: the markers must sit inside the brackets.
     final html = md.markdownToHtml(clozeFront('يُعتنى بـ{{الفكرة العامة}}'));
     expect(html, contains('<strong>…</strong>'));
+  });
+
+  test('the budget refusal reads in Arabic with its amounts', () {
+    const server = r'Monthly AI budget reached: $0.12 of $8.55 left, this needs about $0.25. Studying still works.';
+    App.settings['lang'] = 'ar';
+    final ar = budgetMessage(server);
+    expect(ar, contains('\u20680.12\u2069'));
+    expect(ar, contains('\u20688.55\u2069'));
+    expect(ar, contains('\u20680.25\u2069'));
+    expect(ar, isNot(contains('Monthly')));
+    App.settings['lang'] = 'en';
+    expect(budgetMessage(server), 'Monthly AI budget reached: \$\u20680.12\u2069 of \$\u20688.55\u2069 left. This needs about \$\u20680.25\u2069. Studying still works.');
+    expect(budgetMessage('something else'), 'something else');
   });
 }

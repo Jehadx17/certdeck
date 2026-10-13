@@ -57,6 +57,13 @@ void main() {
     await App.init();
     expect(await Api.sync(), isNull);
     expect((await Db.get(card['id']))!['question'], 'Edited on B');
+
+    // A change made while a sync runs is pushed by the sync its caller awaits (an upload's "tell the server" step).
+    final running = Api.sync();
+    await Db.put('card', (await Db.get(card['id']))!..['question'] = 'Edited mid-sync');
+    expect(await Api.sync(), isNull);
+    expect(await Db.dirtyCount(), 0);
+    expect(await running, isNull);
   }, skip: url == null ? 'set CERTDECK_TEST_URL to run' : false);
 
   test('a finished diagram job is attached to its card and its image downloads in the same sync', () async {

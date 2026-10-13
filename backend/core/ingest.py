@@ -153,10 +153,10 @@ def office_to_pdf(src, timeout=300):
         except FileNotFoundError:
             raise ApiError(500, "LibreOffice is not installed on the server")
         except (subprocess.TimeoutExpired, subprocess.CalledProcessError):
-            raise ApiError(422, f"could not convert {src.name} to PDF")
+            raise ApiError(422, "Could not convert this file to PDF. Export it as PDF and upload that.")
         out = tmp / "in.pdf"
         if not out.exists():
-            raise ApiError(422, f"could not convert {src.name} to PDF")
+            raise ApiError(422, "Could not convert this file to PDF. Export it as PDF and upload that.")
         return out.read_bytes()
 
 
