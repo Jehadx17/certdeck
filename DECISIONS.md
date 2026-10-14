@@ -250,3 +250,7 @@ Rates from the platform pricing page (Opus 5.5: $4 in, $5 cache write, $0.20 cac
   reaches gunicorn from the docker gateway address.
 - **Sizes** (1.4.1, at your request): normal app sizes, no extra text scaling: 50 dp main buttons with 16 sp text,
   56 dp confidence buttons, titles 18–22 sp. Text still follows the phone's own font-size setting.
+- **Photos of handwritten work removed** (2026-10-14, at your request): they cost an AI vision call per grading for
+  little benefit. Written answers are graded from the typed text (AI) or by the student's own verdict / rubric
+  ticks; the server's college/grade no longer accepts images.
+

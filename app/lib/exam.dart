@@ -235,7 +235,7 @@ class _ExamRunState extends State<ExamRun> {
   bool _answered(AnswerState s) => switch (s.type) {
         'mcq' => s.selected.isNotEmpty,
         'ordering' => true,
-        _ => s.typed.trim().isNotEmpty || s.photos.isNotEmpty,
+        _ => s.typed.trim().isNotEmpty,
       };
 
   void _submit() {

@@ -150,7 +150,7 @@ class PracticeResults extends StatefulWidget {
 class _PracticeResultsState extends State<PracticeResults> {
   bool saved = false;
 
-  bool _answered(AnswerState s) => switch (s.type) { 'mcq' => s.selected.isNotEmpty, 'ordering' => true, _ => s.typed.trim().isNotEmpty || s.photos.isNotEmpty };
+  bool _answered(AnswerState s) => switch (s.type) { 'mcq' => s.selected.isNotEmpty, 'ordering' => true, _ => s.typed.trim().isNotEmpty };
   List<AnswerState> get ungraded =>
       widget.states.where((s) => _answered(s) && (s.written ? !s.graded : !s.autoGraded && s.selfGrade == null)).toList();
   double get pct => widget.states.isEmpty ? 0 : widget.states.fold(0.0, (t, s) => t + (_answered(s) ? s.score : 0)) / widget.states.length;

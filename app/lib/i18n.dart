@@ -256,8 +256,6 @@ const _ar = <String, String>{
   'Actually right': 'في الحقيقة صحيح',
   'Your final answer (work it out on paper)': 'إجابتك النهائية (احلها على الورق)',
   'Your answer': 'إجابتك',
-  'Photo of my work (for AI grading)': 'صورة لحلّي (للتصحيح بالذكاء الاصطناعي)',
-  '{n} photo(s) attached': 'أُرفقت {n} صورة',
   'Marking': 'التصحيح',
   'Score {p}%': 'الدرجة {p}%',
   'Final answer matches': 'الإجابة النهائية مطابقة',

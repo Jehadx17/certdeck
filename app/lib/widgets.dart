@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
 
@@ -9,7 +8,6 @@ import 'package:flutter_highlight/themes/atom-one-dark.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_math_fork/flutter_math.dart';
 import 'package:highlight/languages/all.dart' show allLanguages;
-import 'package:image_picker/image_picker.dart';
 import 'package:markdown/markdown.dart' as md;
 import 'package:url_launcher/url_launcher.dart';
 
@@ -323,7 +321,6 @@ class AnswerState {
   final Set<int> rubricMet = {}; // written answers: rubric points the student ticked
   bool rubricTouched = false;
   Json? aiGrade; // {score, verdict, points, feedback} from college/grade
-  final List<String> photos = []; // media names: photos of handwritten work for AI grading
   final int startedAt = nowMs();
 
   AnswerState(this.card)
@@ -454,20 +451,6 @@ class _CardViewState extends State<CardView> {
             widget.onChanged?.call();
           },
         ),
-        if (!widget.revealed)
-          Align(
-            alignment: AlignmentDirectional.centerStart,
-            child: TextButton.icon(
-              icon: const Icon(Icons.photo_camera_outlined),
-              label: Text(s.photos.isEmpty ? t('Photo of my work (for AI grading)') : t('{n} photo(s) attached', {'n': s.photos.length})),
-              onPressed: () async {
-                final n = await pickWorkPhoto(context);
-                if (n == null) return;
-                s.photos.add(n);
-                _changed();
-              },
-            ),
-          ),
       ];
 
   List<Widget> _mcq(ColorScheme cs) {
@@ -609,7 +592,7 @@ class _CardViewState extends State<CardView> {
             secondary: widget.easy ? null : Text('${(((r['weight'] as num?) ?? 0) * 100).round()}%', style: const TextStyle(fontSize: 12, color: Colors.white54)),
           ),
         if (g != null) Padding(padding: const EdgeInsets.only(top: 4), child: Md('${g['feedback']}', style: const TextStyle(fontSize: 14))),
-        if (g == null && widget.onChanged != null && !widget.easy && (s.typed.trim().isNotEmpty || s.photos.isNotEmpty))
+        if (g == null && widget.onChanged != null && !widget.easy && s.typed.trim().isNotEmpty)
           Align(
             alignment: AlignmentDirectional.centerStart,
             child: TextButton.icon(
@@ -810,24 +793,11 @@ class _LiveState<T> extends State<Live<T>> {
 }
 
 
-/// Sends a written answer (and photos of handwritten work) to college/grade.
-Future<Json> gradeAnswer(AnswerState s) async {
+/// Sends a written answer to college/grade (text only: photos of handwritten work were removed, too costly for
+/// what they added).
+Future<Json> gradeAnswer(AnswerState s) {
   final card = Map<String, dynamic>.from(s.card)..remove('fsrs');
-  return Api.ai('college/grade', {
-    'card': card,
-    'answer': s.typed,
-    'images': [
-      for (final n in s.photos)
-        {'media_type': n.endsWith('.png') ? 'image/png' : 'image/jpeg', 'data': base64Encode(await Db.mediaFile(n).readAsBytes())}
-    ],
-  });
-}
-
-/// A photo of handwritten work, from the camera (gallery on long press isn't needed: the camera is what students use).
-Future<String?> pickWorkPhoto(BuildContext context) async {
-  final x = await ImagePicker().pickImage(source: ImageSource.camera, maxWidth: 1800, imageQuality: 80);
-  if (x == null) return null;
-  return Db.saveMedia(await x.readAsBytes());
+  return Api.ai('college/grade', {'card': card, 'answer': s.typed});
 }
 
 /// "Lecture 2, p. 14": where a card comes from; tap to see that page of the student's material.
