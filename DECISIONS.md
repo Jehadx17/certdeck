@@ -258,3 +258,20 @@ Rates from the platform pricing page (Opus 5.5: $4 in, $5 cache write, $0.20 cac
   explanation. The generation rules say so, and the server drops a short card whose answer is longer. Applies to new
   preparations and practice questions; existing cards keep their answers.
 
+## Card importance (2026-10-14)
+Your answers: both sides; the AI rates; a score out of 10; it changes **readiness only** (important cards count
+more); nobody sees it; rate every existing card; same rules for students; re-rate when things change.
+- **College:** builds on the existing per-assessment priority scores. The AI scores each knowledge point 1-10
+  (was 1-5) from the professor's hints, past papers, the syllabus and the material's emphasis; a card's importance
+  is the highest score among the points it tests. Readiness was already weighted by these scores; the sprint's
+  existing "most marks first" ordering keeps using them (unchanged behaviour, finer scale).
+- **Certs:** new. The AI rates each card 1-10 for its cert's exam (exam-guide domains and weights, how often the
+  topic is tested, fundamentals vs trivia) into an `importance-<cert>` doc ({card id: [score, text hash]}). Per-domain
+  readiness becomes the importance-weighted mean recall; unrated cards count as 5. Order and intervals unchanged.
+- **Re-rating, automatic** (the college worker, at most once a minute): cert cards that are new or whose question /
+  answer changed, every card of a cert whose exam-guide domains changed; college assessments whose hints changed
+  (2 minutes after the last edit), whose professor profile is newer than the scores, whose scope gained knowledge
+  points, or whose scores are still on the old 1-5 scale. The manual "Hints changed: update priorities" button goes.
+- **Cost:** the READ model (Sonnet) at low effort, ~60 cards per call; cents per run, charged to the account's budget
+  (a capped student is simply skipped until next month).
+

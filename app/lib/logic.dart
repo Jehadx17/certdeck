@@ -296,7 +296,7 @@ Future<(List<Json>, TodayStats)> buildQueue(Json cert) async {
 Future<List<Json>> buildCramQueue(Json cert, {int limit = 40}) async {
   final cards = (await Db.cardsFor(cert['id'])).where((c) => !isNew(c) && !isSuspended(c)).toList();
   final s = schedulerFor(cert);
-  final r = readiness(cert, await Db.cardsFor(cert['id']));
+  final r = readiness(cert, await Db.cardsFor(cert['id']), importance: await importanceFor(cert['id']));
   final weakDomains = (r.byDomain.entries.toList()..sort((a, b) => a.value.compareTo(b.value))).take(2).map((e) => e.key).toSet();
   double score(Json c) =>
       (c['misconception'] == true ? -2 : 0) +
@@ -314,15 +314,27 @@ class Readiness {
   Readiness(this.byDomain, this.counts, this.predicted);
 }
 
-/// Per-domain readiness = mean recall probability of the domain's cards (new cards count 0);
-/// predicted score = exam-weighted sum.
-Readiness readiness(Json cert, List<Json> cards, [DateTime? at]) {
+/// The AI's exam importance per card (1..10, `importance-<cert>` doc from the server); empty until rated.
+Future<Map<String, int>> importanceFor(String certId) async => {
+      for (final e in (((await Db.get('importance-$certId'))?['scores'] as Map?) ?? {}).entries)
+        e.key as String: ((e.value as List).first as num).toInt(),
+    };
+
+/// Per-domain readiness = mean recall probability of the domain's cards (new cards count 0), each card weighted by
+/// its exam importance (unrated: 5 of 10); predicted score = exam-weighted sum.
+Readiness readiness(Json cert, List<Json> cards, {DateTime? at, Map<String, int> importance = const {}}) {
   final s = schedulerFor(cert);
   final by = <String, double>{}, counts = <String, int>{};
   var predicted = 0.0;
   for (final d in cert['domains'] as List) {
     final list = cards.where((c) => !isSuspended(c) && domainOf(c, cert) == d['id']).toList();
-    final r = list.isEmpty ? 0.0 : list.map((c) => retrievability(s, c, at)).reduce((a, b) => a + b) / list.length;
+    var wSum = 0.0, rSum = 0.0;
+    for (final c in list) {
+      final w = (importance[c['id']] ?? 5).toDouble();
+      wSum += w;
+      rSum += w * retrievability(s, c, at);
+    }
+    final r = wSum == 0 ? 0.0 : rSum / wSum;
     by[d['id']] = r;
     counts[d['id']] = list.length;
     predicted += r * (d['weight'] as num);

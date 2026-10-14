@@ -86,12 +86,13 @@ String formatOf(Json c) => switch (c['type']) {
 class Scope {
   final Json assessment;
   final List<Json> cards; // the scope's cards, not suspended
-  final Map<String, int> priority; // kp id -> 1..5
+  final Map<String, int> priority; // kp id -> importance 1..[priorityScale] (the AI's score for this assessment)
+  final int priorityScale; // 10 (older scores: 5)
   final fsrs.Scheduler scheduler;
   final Pace pace;
   /// Share of marks per format in the professor's past papers (empty = no past papers yet).
   final Map<String, double> formats;
-  Scope(this.assessment, this.cards, this.priority, this.scheduler, this.pace, {this.formats = const {}});
+  Scope(this.assessment, this.cards, this.priority, this.scheduler, this.pace, {this.formats = const {}, this.priorityScale = 10});
 
   int? get days => daysUntil(assessment['date']);
   Mode get mode => modeFor(days);
@@ -99,17 +100,20 @@ class Scope {
   static Future<Scope> load(Json a) async {
     final keys = scopeKeys(a);
     final cards = (await courseCards(a['course_id'])).where((c) => keys.contains(c['section']) && !isSuspended(c) && c['practice'] == null).toList();
-    final prio = ((await Db.get('prio-${a['id']}'))?['scores'] as Map?) ?? {};
+    final prioDoc = await Db.get('prio-${a['id']}');
+    final prio = (prioDoc?['scores'] as Map?) ?? {};
     final formats = ((await Db.get('profile-${a['course_id']}'))?['formats'] as Map?) ?? {};
     return Scope(a, cards, {for (final e in prio.entries) e.key as String: (e.value as num).toInt()}, schedulerForDate(a['date']), await Pace.load(),
-        formats: {for (final e in formats.entries) e.key as String: (e.value as num).toDouble()});
+        formats: {for (final e in formats.entries) e.key as String: (e.value as num).toDouble()}, priorityScale: (prioDoc?['scale'] as int?) ?? 5);
   }
 
-  /// 0.2..1: how much this card's points are likely to count on the assessment.
+  /// 0.1..1: how much this card counts on the assessment: the highest importance among the points it tests
+  /// (unscored: 0.6). Weights readiness and the sprint's "most marks first" order.
   double weight(Json c) {
     final ids = ((c['kp_ids'] as List?) ?? []).cast<String>();
-    final p = ids.isEmpty ? 3 : ids.map((i) => priority[i] ?? 3).reduce(max);
-    return p / 5;
+    final unscored = (priorityScale * .6).round();
+    final p = ids.isEmpty ? unscored : ids.map((i) => priority[i] ?? unscored).reduce(max);
+    return p / priorityScale;
   }
 
   double recall(Json c) => retrievability(scheduler, c);

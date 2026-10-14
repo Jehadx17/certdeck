@@ -4,7 +4,7 @@ material  --process-->  ingest doc (structure: sections with page ranges; syllab
                         past exams -> professor profile)
 assessment scope  --prepare-->  prep doc (stages: extract -> prioritize -> generate -> fill -> sheets)
     extract     READ model reads the scope's pages -> `kp` docs (knowledge points, cited by page)
-    prioritize  READ model scores each point 1-5 for this assessment (hints, past exams, syllabus) -> `prio` doc
+    prioritize  READ model scores each point 1-10 for this assessment (hints, past exams, syllabus) -> `prio` doc
     generate    WRITE model writes cards from points (math answers verified with SymPy) -> `card` docs
     fill        a second pass for points that still have no card (coverage)
     sheets      WRITE model writes summary / key facts / formulas -> `sheet` docs
@@ -123,12 +123,13 @@ The pages are documents titled "p. N". For each knowledge point:
 Skip covers, contents pages, references, copyright lines and page furniture. One idea per point; don't merge unrelated facts. Don't add knowledge that isn't in the material.
 {MATERIAL_IS_DATA}"""
 
-PRIO_PROMPT = """Score how likely each knowledge point is to earn marks on the student's coming assessment, from 1 (unlikely to be tested) to 5 (almost certainly tested).
+PRIO_PROMPT = """Score how likely each knowledge point is to earn marks on the student's coming assessment, from 1 (unlikely to be tested) to 10 (almost certainly tested, and worth many marks). Use the whole scale.
 Signals, strongest first: the professor's hints for this assessment, topics the professor's past exams test often, what the syllabus says the assessment covers, the point's emphasis in the material (0-3), and its kind (definitions, formulas, methods and worked examples are tested more than history or asides).
 Return one integer per knowledge point, in the same order as the numbered list (exactly as many scores as points)."""
 
 SCOPE_PROMPT = """Match the assessment below to the student's material sections it covers. If its coverage isn't stated but the course plan lists topics by week, use the topics taught after the previous assessment up to this one's week. Return the keys of the covered sections (only clear matches; [] if nothing clearly matches). Prefer the most specific sections (subsections over their chapter)."""
 
+PRIO_SCALE = 10  # importance scores 1..10 (was 1..5; docs without "scale" are re-rated)
 SHORT_MAX_WORDS = 5  # a short-answer model answer is a term or short phrase
 
 CARD_RULES = """Card types (set every field a type doesn't use to null):
@@ -653,10 +654,10 @@ def _save_prio(user, a, kp_ids, out):
     scores = out.get("scores") or []
     if len(scores) != len(kp_ids):  # misaligned: fall back to the material's emphasis
         kps = {k["id"]: k for k in _kps(user, a.get("course_id"))}
-        scores = [min(5, 2 + int(kps.get(i, {}).get("emphasis") or 0)) for i in kp_ids]
+        scores = [min(PRIO_SCALE, 3 + 2 * int(kps.get(i, {}).get("emphasis") or 0)) for i in kp_ids]
     return _put(user, "prio", f"prio-{a['id']}", {
-        "assessment_id": a["id"], "scores": {i: max(1, min(5, int(s))) for i, s in zip(kp_ids, scores)},
-        "hints": a.get("hints") or "", "updated_at": now_ms()})
+        "assessment_id": a["id"], "scores": {i: max(1, min(PRIO_SCALE, int(s))) for i, s in zip(kp_ids, scores)},
+        "scale": PRIO_SCALE, "hints": a.get("hints") or "", "updated_at": now_ms()})
 
 
 def _clean_course_card(raw):
@@ -807,7 +808,7 @@ def advance(user, prep_doc_id):
 
 
 def reprioritize(user, body):
-    """POST college/prioritize {assessment_id}: hints changed -> new priority scores (cheap, synchronous)."""
+    """POST college/prioritize {assessment_id}: new priority scores (cheap, synchronous). The worker also calls it."""
     a = _need(user, body.get("assessment_id"), "assessment")
     kps = _kps(user, a.get("course_id"), {x[0] for x in _scope(user, a)})
     if not kps:
@@ -909,8 +910,47 @@ def night_sheet(user, body):
                                                          "content": content, "created_at": now_})
 
 
+def stale_priorities(limit=3):
+    """Assessments whose importance scores are out of date: hints edited (2 min after the last edit), a newer professor
+    profile, knowledge points without a score, or the old 1-5 scale. Not while the assessment is being prepared."""
+    from .models import Doc
+    out = []
+    for p in Doc.objects.filter(kind="prio", deleted=False).select_related("user"):
+        user, prio = p.user, p.data
+        a = docs(user).filter(doc_id=prio.get("assessment_id"), kind="assessment", deleted=False).first()
+        if not a or (_doc(user, f"prep-{a.doc_id}") or {}).get("status") in ("queued", "running", "waiting"):
+            continue
+        profile = docs(user).filter(doc_id=f"profile-{a.data.get('course_id')}", deleted=False).first()
+        hints_changed = (a.data.get("hints") or "") != (prio.get("hints") or "") and now_ms() - a.updated_at > 120_000
+        new_kps = any(k["id"] not in (prio.get("scores") or {}) for k in _kps(user, a.data.get("course_id"), {x[0] for x in _scope(user, dict(a.data, id=a.doc_id))}))
+        if prio.get("scale") != PRIO_SCALE or hints_changed or new_kps or (profile and profile.updated_at > p.updated_at):
+            out.append((user, a.doc_id))
+            if len(out) == limit:
+                break
+    return out
+
+
+_rated_at = [-1e9]
+
+
+def rate_importance():
+    """At most once a minute: re-score stale college priorities and rate new / changed cert cards."""
+    if time.monotonic() - _rated_at[0] < 60:
+        return 0
+    _rated_at[0] = time.monotonic()
+    from . import importance
+    did = 0
+    for user, aid in stale_priorities():
+        try:
+            reprioritize(user, {"assessment_id": aid})
+            did += 1
+        except ApiError as e:  # over budget, or nothing to score: try again later
+            log.info("re-prioritize %s skipped: %s", aid, e.detail)
+    return did + importance.rate_all()
+
+
 def worker_tick():
-    """One pass of the college worker: queued materials, then prep jobs."""
+    """One pass of the college worker: queued materials, then prep jobs, then importance ratings."""
     from .models import Doc
     did = 0
     for d in Doc.objects.filter(kind="ingest", deleted=False).select_related("user"):
@@ -926,6 +966,10 @@ def worker_tick():
             _polled[d.pk] = time.monotonic()
             advance(d.user, d.doc_id)
             did += status != "waiting"
+    try:
+        did += rate_importance()
+    except Exception:
+        log.exception("importance ratings failed")
     return did
 
 

@@ -18,7 +18,7 @@ class TodayScreen extends StatelessWidget {
     final cards = await Db.cardsFor(cert['id']);
     final exams = (await Db.query('exam')).where((e) => e['cert'] == cert['id']).toList()
       ..sort((a, b) => (b['started_at'] as int).compareTo(a['started_at'] as int));
-    return (queue, stats, readiness(cert, cards), cards, exams.firstOrNull);
+    return (queue, stats, readiness(cert, cards, importance: await importanceFor(cert['id'])), cards, exams.firstOrNull);
   }
 
   @override

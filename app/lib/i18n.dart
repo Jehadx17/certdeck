@@ -113,8 +113,6 @@ const _ar = <String, String>{
   'Nothing chosen yet: pick the lectures / chapters this covers.': 'لم يُختر شيء بعد: اختر المحاضرات أو الفصول التي يشملها.',
   '{n} sections chosen': 'تم اختيار {n} قسم',
   'Professor\'s hints (e.g. "focus on chapter 3", "no proofs")': 'تلميحات الأستاذ (مثل: "ركزوا على الفصل 3"، "لا براهين")',
-  'Hints changed: update priorities': 'تغيرت التلميحات: حدّث الأولويات',
-  'Updating priorities…': 'جارٍ تحديث الأولويات…',
   'Prepare': 'تجهيز',
   'Readiness': 'الجاهزية',
   'Study': 'المذاكرة',

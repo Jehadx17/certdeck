@@ -58,6 +58,9 @@ def fake_ai(request_kwargs_log=None):
                 {"kind": "formula", "title": "Power rule", "content": "$\\int u^r du = \\frac{u^{r+1}}{r+1}+C$", "loc": 2, "emphasis": 3},
                 {"kind": "example", "title": "Example 1", "content": "Evaluate $\\int_0^3 x^2 dx$ = 9", "loc": 3, "emphasis": 2},
                 {"kind": "fact", "title": "Empty", "content": " ", "loc": 3, "emphasis": 0}]})
+        if system.startswith("You rate flashcards"):
+            n = len(re.findall(r"(?m)^\d+\. ", kw["messages"][0]["content"]))
+            return message({"scores": [7] * n})
         if system.startswith("Score how likely"):
             n = len(re.findall(r"(?m)^\d+\. ", kw["messages"][0]["content"]))
             return message({"scores": [5] * n})
@@ -185,6 +188,14 @@ class CollegeTests(TestCase):
         self.assertEqual([b["title"] for b in extract["messages"][0]["content"] if b["type"] == "document"], ["p. 2", "p. 3"])
         prio = Doc.objects.get(doc_id=f"prio-{quiz.doc_id}").data["scores"]
         self.assertEqual(sorted(prio.values()), [5, 5])
+        # Importance re-rating triggers: fresh scores are current; edited hints count 2 minutes after the edit.
+        self.assertEqual(college.stale_priorities(), [])
+        a = Doc.objects.get(doc_id=quiz.doc_id)
+        Doc.objects.filter(pk=a.pk).update(data=dict(a.data, hints="Only 5.3"), updated_at=now_ms())
+        self.assertEqual(college.stale_priorities(), [])  # still typing
+        Doc.objects.filter(pk=a.pk).update(updated_at=now_ms() - 180_000)
+        self.assertEqual([aid for _, aid in college.stale_priorities()], [quiz.doc_id])
+        Doc.objects.filter(pk=a.pk).update(data=a.data)
         gen = next(k for k in log if k["system"][0]["text"].startswith("You write study cards"))
         self.assertEqual(gen["model"], "claude-opus-5-5")  # the WRITE model writes cards
         self.assertIn("Substitution will be on it", gen["messages"][0]["content"])
@@ -252,6 +263,28 @@ class CollegeTests(TestCase):
             Image.new("RGB", (400, 600), "white").save(buf, "JPEG")
             self.assertEqual(self.upload(mid, buf.getvalue(), n=n).json()["type"], "jpg")
         self.assertEqual(ingest.build_pdf(self.owner, mid), 2)
+
+
+    def test_cert_importance(self):
+        from core import importance
+        doc = lambda i, data, kind: {"id": i, "kind": kind, "data": data, "updated_at": now_ms(), "deleted": False}
+        cert = {"id": "DVA-C02", "name": "AWS Developer", "domains": [{"id": "1", "name": "Development", "weight": .6},
+                                                                      {"id": "2", "name": "Security", "weight": .4}]}
+        card = lambda q, **kw: {"type": "basic", "question": q, "answer": "a", "certs": {"DVA-C02": "1"}, **kw}
+        save_docs(self.owner, [doc("DVA-C02", cert, "cert"), doc("c1", card("What is S3?"), "card"),
+                               doc("c2", card("What is IAM?"), "card"), doc("c3", card("Gone", suspended=True), "card"),
+                               doc("c4", {"type": "basic", "question": "College card", "answer": "x", "course": "k"}, "card")])
+        with mock.patch("core.ai._create", side_effect=fake_ai()) as ai_call:
+            self.assertEqual(importance.rate_all(), 2)  # suspended and non-cert cards are skipped
+            self.assertEqual(importance.rate_all(), 0)  # nothing changed: no AI call
+            self.assertEqual(ai_call.call_count, 1)
+            save_docs(self.owner, [doc("c2", card("What is IAM, really?"), "card")])
+            self.assertEqual(importance.rate_all(), 1)  # only the edited card
+            save_docs(self.owner, [doc("DVA-C02", dict(cert, domains=cert["domains"][:1]), "cert")])
+            self.assertEqual(importance.rate_all(), 2)  # the exam guide changed: everything again
+        data = Doc.objects.get(doc_id="importance-DVA-C02").data
+        self.assertEqual({k: v[0] for k, v in data["scores"].items()}, {"c1": 7, "c2": 7})
+        self.assertEqual(data["scale"], 10)
 
 
 class ScopePagesTests(TestCase):

@@ -501,16 +501,16 @@ class _AssessmentScreenState extends State<AssessmentScreen> {
   final hints = TextEditingController();
   bool hintsLoaded = false;
 
-  Future<(Json?, Json?, Scope?, Readiness2?, Json?, Map<String, Json>)> _load() async {
+  Future<(Json?, Json?, Scope?, Readiness2?, Map<String, Json>)> _load() async {
     final a = await Db.get(widget.id);
-    if (a == null) return (null, null, null, null, null, <String, Json>{});
+    if (a == null) return (null, null, null, null, <String, Json>{});
     if (!hintsLoaded) {
       hints.text = a['hints'] ?? '';
       hintsLoaded = true;
     }
     final s = await Scope.load(a);
     final sheets = {for (final k in ['summary', 'facts', 'formulas', 'night']) k: await Db.get('sheet-${a['id']}-$k')}..removeWhere((_, v) => v == null);
-    return (a, await prepOf(a['id']), s, s.cards.isEmpty ? null : await readinessOf(s), await Db.get('prio-${a['id']}'), sheets.cast<String, Json>());
+    return (a, await prepOf(a['id']), s, s.cards.isEmpty ? null : await readinessOf(s), sheets.cast<String, Json>());
   }
 
   Future<void> _save(Json a, Map<String, Object?> changes) async {
@@ -522,11 +522,9 @@ class _AssessmentScreenState extends State<AssessmentScreen> {
   Widget build(BuildContext context) => Live(
         load: _load,
         builder: (context, data) {
-          final (a, prep, scope, ready, prio, sheets) = data;
+          final (a, prep, scope, ready, sheets) = data;
           if (a == null) return Scaffold(appBar: AppBar(), body: Center(child: Text(t('Deleted'))));
           final d = daysUntil(a['date']);
-          final running = const {'queued', 'running', 'waiting'}.contains(prep?['status']);
-          final hintsChanged = prio != null && (prio['hints'] ?? '') != (a['hints'] ?? '');
           final cs = Theme.of(context).colorScheme;
           return Scaffold(
             appBar: AppBar(title: Text(a['title'] ?? ''), actions: [
@@ -568,16 +566,6 @@ class _AssessmentScreenState extends State<AssessmentScreen> {
                 decoration: InputDecoration(labelText: t('Professor\'s hints (e.g. "focus on chapter 3", "no proofs")'), border: const OutlineInputBorder()),
                 onChanged: (v) => _save(a, {'hints': v}),
               ),
-              if (hintsChanged && !running)
-                TextButton.icon(
-                  icon: const Icon(Icons.low_priority),
-                  label: Text(t('Hints changed: update priorities')),
-                  onPressed: () async {
-                    await Api.sync();
-                    if (context.mounted) await busy(context, t('Updating priorities…'), () => Api.ai('college/prioritize', {'assessment_id': a['id']}));
-                    Api.sync().ignore();
-                  },
-                ),
               header(context, t('Prepare')),
               PrepCard(a, prep),
               if (scope != null && scope.cards.isNotEmpty) ...[

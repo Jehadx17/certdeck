@@ -28,7 +28,8 @@ Scope scope(List<Json> cards, Map<String, int> prio, {int days = 2, Map<String, 
     prio,
     schedulerForDate(DateTime.now().add(Duration(days: days)).toIso8601String().substring(0, 10)),
     Pace(Pace.defaults),
-    formats: formats);
+    formats: formats,
+    priorityScale: 5); // these tests were written with 1-5 priorities
 
 void main() {
   test('mode from days left', () {
@@ -148,4 +149,25 @@ void main() {
   test('easy app: how a session went', () {
     expect([sessionTier(0, 0), sessionTier(1, 5), sessionTier(3, 5), sessionTier(4, 5), sessionTier(10, 10)], [0, 1, 2, 3, 3]);
   });
+
+  test('importance: college weights on the 1-10 scale, cert readiness weighted by the AI score', () {
+    final s10 = Scope({'id': 'a1', 'date': null, 'scope': []}, [], {'k': 8}, schedulerForDate(null), Pace(Pace.defaults));
+    expect(s10.weight(card('x', kps: ['k'])), closeTo(.8, 1e-9));
+    expect(s10.weight(card('y', kps: ['other'])), closeTo(.6, 1e-9)); // not scored yet
+    final s5 = Scope({'id': 'a1', 'date': null, 'scope': []}, [], {'k': 4}, schedulerForDate(null), Pace(Pace.defaults), priorityScale: 5);
+    expect(s5.weight(card('x', kps: ['k'])), closeTo(.8, 1e-9)); // older 1-5 scores still read right
+
+    final cert = {
+      'id': 'DVA',
+      'domains': [
+        {'id': '1', 'name': 'Dev', 'weight': 1.0}
+      ],
+    };
+    final known = {...card('known', fsrsState: reviewed(1000, 0)), 'certs': {'DVA': '1'}};
+    final fresh = {...card('fresh'), 'certs': {'DVA': '1'}};
+    expect(readiness(cert, [known, fresh]).predicted, closeTo(.5, .01)); // unrated: equal weight
+    expect(readiness(cert, [known, fresh], importance: {'known': 9, 'fresh': 1}).predicted, closeTo(.9, .01));
+    expect(readiness(cert, [known, fresh], importance: {'known': 1, 'fresh': 9}).predicted, closeTo(.1, .01));
+  });
 }
+
