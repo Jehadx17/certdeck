@@ -125,6 +125,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
   Future<void> _connect() async {
     final err = await busy(context, t('Connecting & restoring…'), () => Api.connect(url.text, token.text));
     if (mounted) toast(context, err == null ? t('Connected. Everything is synced.') : t(err));
+    // Opened from a student's "My courses": back to the (new) account's home.
+    if (err == null && mounted && Navigator.of(context).canPop()) Navigator.of(context).popUntil((r) => r.isFirst);
     Reminders.reschedule().ignore();
     if (mounted) setState(() => usage = Api.configured ? Api.call('GET', 'usage') : null); // gone when a role/language change rebuilt it
   }

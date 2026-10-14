@@ -80,11 +80,10 @@ class _StudyScreenState extends State<StudyScreen> {
       });
 
   bool get graded => ans!.written ? ans!.graded : (ans!.autoGraded || ans!.selfGrade != null);
-  bool get misconception => !widget.easy && revealed && graded && conf == Conf.sure && ans!.score < .4;
+  bool get misconception => revealed && graded && conf == Conf.sure && ans!.score < .4;
 
   Future<void> _commit() async {
     final a = ans!;
-    if (widget.easy) conf = easyConf(a.correct, nowMs() - a.startedAt);
     final updated = await recordAnswer(card!,
         conf: conf!,
         correct: a.correct,
@@ -252,7 +251,7 @@ class _StudyScreenState extends State<StudyScreen> {
           child: Column(children: [
             Expanded(
               child: ListView(padding: const EdgeInsets.all(16), children: [
-                CardView(ans!, key: ObjectKey(ans), revealed: revealed, easy: true, onChanged: () => setState(() {})),
+                CardView(ans!, key: ObjectKey(ans), revealed: revealed, easy: true, misconception: misconception, onChanged: () => setState(() {})),
                 const SizedBox(height: 40),
               ]),
             ),
@@ -261,9 +260,10 @@ class _StudyScreenState extends State<StudyScreen> {
         ),
       );
 
-  void _easyCheck() {
+  /// How sure you are doubles as the Check button: one tap rates the confidence and shows the answer.
+  void _easyCheck(Conf c) {
     setState(() {
-      conf = Conf.unsure;
+      conf = c;
       revealed = true;
     });
     if (ans!.autoGraded && ans!.correct) HapticFeedback.mediumImpact();
@@ -271,8 +271,8 @@ class _StudyScreenState extends State<StudyScreen> {
 
   void _easyVerdict(bool yes) {
     if (yes) HapticFeedback.mediumImpact();
-    ans!.written ? ans!.selfScore = yes ? 1 : 0 : ans!.selfGrade = yes;
-    _commit();
+    setState(() => ans!.written ? ans!.selfScore = yes ? 1 : 0 : ans!.selfGrade = yes);
+    if (!misconception) _commit(); // sure but wrong: the warning stays on screen until Next
   }
 
   Widget _easyBottom(ColorScheme cs) {
@@ -283,11 +283,34 @@ class _StudyScreenState extends State<StudyScreen> {
     final a = ans!;
     if (!revealed) {
       final empty = (a.type == 'typed' || a.written) && a.typed.trim().isEmpty;
-      return bar(FilledButton.icon(
-          style: easyButton(),
-          icon: Icon(empty ? Icons.visibility_rounded : Icons.check_rounded, size: 30),
-          label: Text(a.ready ? (empty ? t('Show me the answer') : t('Check')) : t('Pick an answer')),
-          onPressed: a.ready ? _easyCheck : null));
+      if (!a.ready || empty) {
+        return bar(FilledButton.icon(
+            style: easyButton(),
+            icon: const Icon(Icons.visibility_rounded, size: 30),
+            label: Text(a.ready ? t('Show me the answer') : t('Pick an answer')),
+            onPressed: a.ready ? () => _easyCheck(Conf.guess) : null));
+      }
+      Widget sure(Conf c, String label, IconData icon, Color color) => Expanded(
+          child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 4),
+              child: FilledButton(
+                  style: FilledButton.styleFrom(
+                      minimumSize: const Size.fromHeight(76), backgroundColor: color.withOpacity(.22), foregroundColor: color,
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18))),
+                  onPressed: () => _easyCheck(c),
+                  child: Column(mainAxisSize: MainAxisSize.min, children: [
+                    Icon(icon, size: 30),
+                    FittedBox(fit: BoxFit.scaleDown, child: Text(label, maxLines: 1, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold))),
+                  ]))));
+      return bar(Column(mainAxisSize: MainAxisSize.min, children: [
+        Text(t('How sure are you?'), style: const TextStyle(fontSize: 18)),
+        const SizedBox(height: 8),
+        Row(children: [
+          sure(Conf.guess, t('Guessing'), Icons.casino_outlined, Colors.orange),
+          sure(Conf.unsure, t('Unsure'), Icons.help_outline, Colors.amber),
+          sure(Conf.sure, t('Sure'), Icons.verified_outlined, Colors.green),
+        ]),
+      ]));
     }
     if (!graded) {
       return bar(Column(mainAxisSize: MainAxisSize.min, children: [

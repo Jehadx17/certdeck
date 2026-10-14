@@ -53,8 +53,8 @@ Then don't stop again unless something is destructive, affects my other VPS proj
   minute chips, no triage page. "Do more" at the end continues if the child wants.
 - **Answering:**
   - Multiple choice and true/false: large buttons. Tap an answer → immediate right/wrong with a short why.
-  - Remove the confidence step for children: infer it (answer time, changed answers) or ask only occasionally
-    with two faces ("Sure" / "Guessing") if the engine needs it.
+  - Keep the confidence step (Guessing / Unsure / Sure; kept at my request 2026-10-14), as big buttons that also
+    check the answer, so it costs no extra tap.
   - Written answers: one text box, then show the model answer and ask "Did you get it?" with two big buttons
     (Yes / Not yet); "partly" only when the card has a rubric, shown as simple ticks.
   - Cloze and typed answers: big keyboard-friendly box, forgiving matching (already lenient).
@@ -122,7 +122,7 @@ New phone                 Home (student role)                  Study (easy mode)
 | [  ABCD 2345   ]  |     | | Quiz 2   The exam is ...   | |   |  [ option B ]              |
 | [     Start     ] |     | | ***** stars fill up ...    | |   |                            |
 |                   |     | | [ Night before / Morning ] | |   +----------------------------+
-| I have a token    |     | | [        > Study        ]  | |   | [        Check         ]   |
+| I have a token    |     | | [     > Study now       ]  | |   | [Guessing][Unsure][Sure]   |
 +-------------------+     | | [ Try a practice test   ]  | |   |  then: Great job! [Next]   |
                           | +----------------------------+ |   |  or: Did you get it?       |
                           | (other exams, smaller)         |   |      [Not yet]   [Yes]     |
@@ -136,11 +136,11 @@ preparing, and Settings.
   codes in 10 minutes. The app's first screen takes the code; Settings → "Use a code" switches a signed-in phone.
 - **One tap to study:** Study runs about 10 minutes: spaced cards when there's time, else the sprint loop (most
   valuable cards not known yet, each until right twice). No triage page, no minute choice.
-- **Answering:** no confidence step (a quick right answer counts as sure, anything else as unsure, so nobody is
-  flagged with a "misconception"); one Check button ("Show me the answer" when nothing was typed);
+- **Answering:** the confidence buttons (Guessing / Unsure / Sure) are the Check button: one tap rates and shows
+  the answer ("Show me the answer" when nothing was typed); sure-but-wrong still shows the misconception warning;
   self-graded cards ask "Did you get it?" (Yes / Not yet); rubric ticks without percentages; no AI grading button;
   a problem's solution one step at a time. Text 15% larger, buttons at least 56–64 dp.
-- **Night before** (the day before): the night or summary sheet in large text and a short game. **Exam morning**
+- **Night before** (the day before): the night or summary sheet in large text and a quick review. **Exam morning**
   (the day itself): the morning check. **Practice test:** 10 questions from the cards (offline, no AI cost).
 - **Reminders** for a student are short and plain; the update screen is translated.
 - Owner screens are unchanged.

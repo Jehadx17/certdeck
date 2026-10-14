@@ -145,11 +145,8 @@ void main() {
     expect(problem.score, .5);
   });
 
-  test('child app: stars and the inferred confidence', () {
+  test('easy app: stars', () {
     expect([for (final x in [0.0, .09, .1, .5, .95, 1.0, 1.2]) starsFor(x)], [0, 0, 1, 3, 5, 5, 5]);
     expect([sessionStars(0, 0), sessionStars(1, 5), sessionStars(3, 5), sessionStars(4, 5), sessionStars(10, 10)], [0, 1, 2, 3, 3]);
-    expect(easyConf(true, 4000), Conf.sure);
-    expect(easyConf(true, 30000), Conf.unsure); // right but slow
-    expect(easyConf(false, 2000), Conf.unsure); // a quick wrong answer is a mistake, not a misconception
   });
 }

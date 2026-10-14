@@ -77,6 +77,10 @@ CERTDECK_API_TOKEN=devtoken .venv/bin/python manage.py runserver 127.0.0.1:8765
 Without `POSTGRES_DB` it uses SQLite. Env vars: see [backend/.env.example](backend/.env.example).
 
 ## College (students)
+**The student app is the easy version** (EASY.md): new phones sign in with a short code
+(`users code <name>` on the server prints it; valid 24 h, once), the home shows one big **Study now** button per
+prepared exam, and the setup below lives under **My courses**.
+
 How it works: a student adds a **course**, uploads its **material** (slides as PDF or PowerPoint, notes, a textbook,
 photos of pages, the syllabus, past quizzes) and confirms its **quizzes & exams** (the syllabus proposes them with
 weeks and weights). For each one they pick what it covers (chapters, lectures) and add the professor's hints, then tap

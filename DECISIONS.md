@@ -230,3 +230,22 @@ Rates from the platform pricing page (Opus 5.5: $4 in, $5 cache write, $0.20 cac
   Another phone may show the same prompt: scanning and then installing is the phone owner's call.
 - **Test student kept:** the `qa-student` account and its five sample courses stay on the server at the user's request
   (for their own testing); it has a $15 monthly cap.
+
+## Easy student app (2026-10-14, EASY.md)
+- **Audience:** college students, designed to the bar "a child could use it alone". Adult wording; no parent PIN
+  (students do their own setup, under "My courses").
+- **Home:** one card per prepared exam with one big "Study now" button; the most urgent exam first. Night-before
+  and exam-morning buttons appear on the day they apply. Stars (share of the exam's cards mastered) replace the
+  predicted-mark range and percentages on the study screens; the setup screens keep their numbers and costs.
+- **One tap to study:** about 10 minutes, chosen by the engine (spaced when there's time, the sprint loop near the
+  exam). The triage page and the minute chips are owner/setup tools now.
+- **Confidence kept:** an earlier cut inferred it from answer time; you prefer rating it, so Guessing / Unsure /
+  Sure are the Check button (one tap rates and reveals), and sure-but-wrong still flags a misconception.
+- **Practice test:** 10 questions from the cards in the professor's format mix, offline and without AI cost;
+  stars per topic (section titles from the material map) and a round of the missed ones.
+- **Problems:** solution steps one at a time ("Next step"), then the verified answer; rubric ticks without weights.
+- **Sign-in codes:** 8 characters from an alphabet without 0/O/1/I/L, sha256-stored, 24 h, single use; redeeming
+  gives the phone a new token (the account's old token stops working) and wipes/restores the phone's copy like any
+  account switch. Failed codes are throttled globally (30 per 10 minutes) rather than per IP, since every request
+  reaches gunicorn from the docker gateway address.
+

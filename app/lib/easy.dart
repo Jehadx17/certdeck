@@ -30,10 +30,6 @@ Widget stars(int n, {double size = 28, int of = 5}) => Row(mainAxisSize: MainAxi
       for (var i = 0; i < of; i++) Icon(i < n ? Icons.star_rounded : Icons.star_outline_rounded, size: size, color: Colors.amber),
     ]);
 
-/// Students aren't asked how sure they are: a quick right answer counts as sure, anything else as unsure
-/// (so a wrong answer is never flagged as a "misconception").
-Conf easyConf(bool correct, int durationMs) => correct && durationMs < 15000 ? Conf.sure : Conf.unsure;
-
 /// What a session ends with: 1..3 stars from the share of right answers.
 int sessionStars(int right, int done) => done == 0 ? 0 : (right / done >= .8 ? 3 : (right / done >= .5 ? 2 : 1));
 
@@ -91,15 +87,21 @@ class _KidHomeState extends State<EasyHome> {
     return easyScale(
         context,
         Scaffold(
-          appBar: AppBar(
-            title: Text(t('My study'), style: const TextStyle(fontWeight: FontWeight.bold)),
-            actions: [
-              helpButton(context, homeHelp),
-              TextButton.icon(
-                  onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const ManageScreen())),
-                  icon: const Icon(Icons.folder_open_rounded, size: 20),
-                  label: Text(t('My courses'))),
-            ],
+          appBar: AppBar(title: Text(t('My study'), style: const TextStyle(fontWeight: FontWeight.bold))),
+          // Help and the setup screens at the bottom: in reach of a thumb, and the title keeps its room.
+          bottomNavigationBar: SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(8, 0, 8, 8),
+              child: Row(children: [
+                Expanded(child: helpButton(context, homeHelp)),
+                Expanded(
+                    child: TextButton.icon(
+                        style: TextButton.styleFrom(minimumSize: const Size.fromHeight(56)),
+                        onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const ManageScreen())),
+                        icon: const Icon(Icons.folder_open_rounded),
+                        label: Text(t('My courses')))),
+              ]),
+            ),
           ),
           body: Live(
             load: _load,
@@ -180,7 +182,7 @@ class _ExamCard extends StatelessWidget {
           FilledButton.icon(
               style: easyButton(),
               icon: const Icon(Icons.play_arrow_rounded, size: 36),
-              label: Text(t('Study')),
+              label: Text(t('Study now')),
               onPressed: () => easyStudy(context, e.a)),
           const SizedBox(height: 10),
           OutlinedButton.icon(
@@ -277,19 +279,20 @@ Future<void> easyMessage(BuildContext context, IconData icon, String title, Stri
 // ---------------- help ----------------
 
 List<(IconData, String)> get homeHelp => [
-      (Icons.play_arrow_rounded, t('Tap Study. The app picks the questions for you. About 10 minutes.')),
+      (Icons.play_arrow_rounded, t('Tap "Study now". The app picks the questions for you. About 10 minutes.')),
       (Icons.star_rounded, t('Right answers fill your stars.')),
       (Icons.replay_rounded, t('Wrong answers come back later, so you learn them.')),
       (Icons.assignment_turned_in_outlined, t('Try a practice test to see how ready you are.')),
     ];
 
 List<(IconData, String)> get studyHelp => [
-      (Icons.touch_app_rounded, t('Choose or write your answer, then tap Check.')),
-      (Icons.help_outline_rounded, t('Not sure? Make your best guess. That is how you learn.')),
+      (Icons.touch_app_rounded, t('Choose or write your answer, then tap how sure you are: that also shows the answer.')),
+      (Icons.help_outline_rounded, t('Not sure? Make your best guess and tap Guessing. That is how you learn.')),
       (Icons.thumb_up_alt_rounded, t('If the app asks "Did you get it?", compare with the answer and be honest.')),
     ];
 
 Widget helpButton(BuildContext context, List<(IconData, String)> items) => TextButton.icon(
+    style: TextButton.styleFrom(minimumSize: const Size(56, 56)),
     onPressed: () => showDialog(
         context: context,
         builder: (c) => AlertDialog(
@@ -324,7 +327,7 @@ class _KidIntroState extends State<EasyIntro> {
   Widget build(BuildContext context) {
     final pages = [
       (Icons.school_rounded, t('Welcome!'), t('This app helps you get ready for your exams.')),
-      (Icons.play_circle_fill_rounded, t('Tap Study'), t('The app picks the questions. About 10 minutes is enough.')),
+      (Icons.play_circle_fill_rounded, t('Tap "Study now"'), t('The app picks the questions. About 10 minutes is enough.')),
       (Icons.star_rounded, t('Collect stars'), t('Right answers fill your stars. Wrong ones come back later, so you learn them.')),
     ];
     final (icon, title, body) = pages[page];
