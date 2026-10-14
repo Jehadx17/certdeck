@@ -76,6 +76,11 @@ CERTDECK_API_TOKEN=devtoken .venv/bin/python manage.py runserver 127.0.0.1:8765
 ```
 Without `POSTGRES_DB` it uses SQLite. Env vars: see [backend/.env.example](backend/.env.example).
 
+**Card importance** (DECISIONS.md): the AI rates every card 1-10 for how much it matters on its exam (cert cards
+against the exam guide; college cards through their assessment's priority scores). Readiness counts important cards
+more; nobody sees the score. The college worker re-rates new or edited cards, a changed exam guide, and an
+assessment whose hints, professor profile or scope changed.
+
 ## College (students)
 **The student app is the easy version** (EASY.md): new phones sign in with a short code
 (`users code <name>` on the server prints it; valid 24 h, once), the home shows one big **Study now** button per
