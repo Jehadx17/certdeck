@@ -253,3 +253,8 @@ Rates from the platform pricing page (Opus 5.5: $4 in, $5 cache write, $0.20 cac
 - **Photos of handwritten work removed** (2026-10-14, at your request): they cost an AI vision call per grading for
   little benefit. Written answers are graded from the typed text (AI) or by the student's own verdict / rubric
   ticks; the server's college/grade no longer accepts images.
+- **Short-answer cards: at most 5 words** (2026-10-14, at your request): the model answer is a term, name, number or
+  short phrase; broad "explain" topics become several short cards or cloze/MCQ, and the detail lives in the
+  explanation. The generation rules say so, and the server drops a short card whose answer is longer. Applies to new
+  preparations and practice questions; existing cards keep their answers.
+
