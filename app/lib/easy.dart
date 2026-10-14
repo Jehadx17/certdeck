@@ -15,13 +15,13 @@ import 'widgets.dart';
 /// The student's app (EASY.md): one big button per exam, simple enough for a child (the students are college students).
 /// The setup screens (courses, material, scope, settings) are one tap away under "My courses".
 
-const easyButtonHeight = 64.0;
+const easyButtonHeight = 50.0;
 
 ButtonStyle easyButton([Color? color]) => FilledButton.styleFrom(
     minimumSize: const Size.fromHeight(easyButtonHeight),
     backgroundColor: color,
-    textStyle: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)));
+    textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)));
 
 /// 0..5 stars for a 0..1 share.
 int starsFor(double share) => (share.clamp(0, 1) * 5).round();
@@ -33,11 +33,8 @@ Widget stars(int n, {double size = 28, int of = 5}) => Row(mainAxisSize: MainAxi
 /// What a session ends with: 1..3 stars from the share of right answers.
 int sessionStars(int right, int done) => done == 0 ? 0 : (right / done >= .8 ? 3 : (right / done >= .5 ? 2 : 1));
 
-/// Larger text everywhere on the student's screens (still follows the phone's own font size).
-Widget easyScale(BuildContext context, Widget child) {
-  final mq = MediaQuery.of(context);
-  return MediaQuery(data: mq.copyWith(textScaler: TextScaler.linear(mq.textScaler.scale(1) * 1.15)), child: child);
-}
+/// The student's screens use the phone's own text size (kept as a hook for a later size setting).
+Widget easyScale(BuildContext context, Widget child) => child;
 
 class _Exam {
   final Json a;
@@ -96,7 +93,7 @@ class _KidHomeState extends State<EasyHome> {
                 Expanded(child: helpButton(context, homeHelp)),
                 Expanded(
                     child: TextButton.icon(
-                        style: TextButton.styleFrom(minimumSize: const Size.fromHeight(56)),
+                        style: TextButton.styleFrom(minimumSize: const Size.fromHeight(48)),
                         onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const ManageScreen())),
                         icon: const Icon(Icons.folder_open_rounded),
                         label: Text(t('My courses')))),
@@ -120,11 +117,11 @@ class _KidHomeState extends State<EasyHome> {
         child: Padding(
           padding: const EdgeInsets.all(32),
           child: Column(mainAxisSize: MainAxisSize.min, children: [
-            Icon(Icons.menu_book_rounded, size: 96, color: Theme.of(context).colorScheme.primary),
+            Icon(Icons.menu_book_rounded, size: 64, color: Theme.of(context).colorScheme.primary),
             const SizedBox(height: 16),
-            Text(t('Nothing to study yet.'), style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold), textAlign: TextAlign.center),
+            Text(t('Nothing to study yet.'), style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold), textAlign: TextAlign.center),
             const SizedBox(height: 8),
-            Text(t('Tap "My courses" to add your material and exams.'), style: const TextStyle(fontSize: 18), textAlign: TextAlign.center),
+            Text(t('Tap "My courses" to add your material and exams.'), style: const TextStyle(fontSize: 15), textAlign: TextAlign.center),
           ]),
         ),
       );
@@ -155,38 +152,38 @@ class _ExamCard extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(18),
         child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-          autoText(e.course, style: TextStyle(fontSize: 18, color: cs.primary)),
-          autoText(e.a['title'] ?? '', style: TextStyle(fontSize: big ? 28 : 22, fontWeight: FontWeight.bold)),
+          autoText(e.course, style: TextStyle(fontSize: 14, color: cs.primary)),
+          autoText(e.a['title'] ?? '', style: TextStyle(fontSize: big ? 22 : 18, fontWeight: FontWeight.bold)),
           const SizedBox(height: 4),
-          Text(easyWhen(d), style: const TextStyle(fontSize: 18)),
+          Text(easyWhen(d), style: const TextStyle(fontSize: 15)),
           const SizedBox(height: 12),
           Row(children: [
-            stars(starsFor(e.done), size: big ? 32 : 26),
+            stars(starsFor(e.done), size: big ? 22 : 20),
             const SizedBox(width: 8),
-            Expanded(child: Text(t('stars fill up as you learn'), style: const TextStyle(fontSize: 14, color: Colors.white60))),
+            Expanded(child: Text(t('stars fill up as you learn'), style: const TextStyle(fontSize: 12, color: Colors.white60))),
           ]),
           const SizedBox(height: 16),
           if (d == 0)
             FilledButton.icon(
                 style: easyButton(Colors.orange),
-                icon: const Icon(Icons.wb_sunny_rounded, size: 30),
+                icon: const Icon(Icons.wb_sunny_rounded),
                 label: Text(t('Exam morning warm-up')),
                 onPressed: () => easyStudy(context, e.a, kind: 'morning'))
           else if (d == 1)
             FilledButton.icon(
                 style: easyButton(Colors.indigo),
-                icon: const Icon(Icons.nightlight_round, size: 30),
+                icon: const Icon(Icons.nightlight_round),
                 label: Text(t('Night before')),
                 onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => NightBefore(e.a)))),
           if (d != null && d <= 1) const SizedBox(height: 10),
           FilledButton.icon(
               style: easyButton(),
-              icon: const Icon(Icons.play_arrow_rounded, size: 36),
+              icon: const Icon(Icons.play_arrow_rounded),
               label: Text(t('Study now')),
               onPressed: () => easyStudy(context, e.a)),
           const SizedBox(height: 10),
           OutlinedButton.icon(
-              style: OutlinedButton.styleFrom(minimumSize: const Size.fromHeight(56), textStyle: const TextStyle(fontSize: 18)),
+              style: OutlinedButton.styleFrom(minimumSize: const Size.fromHeight(46), textStyle: const TextStyle(fontSize: 15)),
               icon: const Icon(Icons.assignment_turned_in_outlined),
               label: Text(t('Try a practice test')),
               onPressed: () => easyPractice(context, e.a)),
@@ -251,15 +248,15 @@ class NightBefore extends StatelessWidget {
             builder: (context, snap) {
               final sheet = snap.data?.firstWhere((s) => s != null, orElse: () => null);
               return ListView(padding: const EdgeInsets.all(16), children: [
-                Text(t('Read this once, do a quick review, then get some sleep. Sleep helps you remember.'), style: const TextStyle(fontSize: 18)),
+                Text(t('Read this once, do a quick review, then get some sleep. Sleep helps you remember.'), style: const TextStyle(fontSize: 15)),
                 const SizedBox(height: 16),
                 FilledButton.icon(
                     style: easyButton(),
-                    icon: const Icon(Icons.play_arrow_rounded, size: 36),
+                    icon: const Icon(Icons.play_arrow_rounded),
                     label: Text(t('Quick review')),
                     onPressed: () => easyStudy(context, a, kind: 'night')),
                 const SizedBox(height: 20),
-                if (sheet != null) Md(sheet['content'] ?? '', style: const TextStyle(fontSize: 18, height: 1.5)),
+                if (sheet != null) Md(sheet['content'] ?? ''),
               ]);
             },
           ),
@@ -270,9 +267,9 @@ class NightBefore extends StatelessWidget {
 Future<void> easyMessage(BuildContext context, IconData icon, String title, String body) => showDialog(
     context: context,
     builder: (c) => AlertDialog(
-          icon: Icon(icon, size: 56, color: Colors.amber),
+          icon: Icon(icon, size: 40, color: Colors.amber),
           title: Text(title, textAlign: TextAlign.center),
-          content: Text(body, textAlign: TextAlign.center, style: const TextStyle(fontSize: 18)),
+          content: Text(body, textAlign: TextAlign.center),
           actions: [FilledButton(style: easyButton(), onPressed: () => Navigator.pop(c), child: Text(t('OK')))],
         ));
 
@@ -302,9 +299,9 @@ Widget helpButton(BuildContext context, List<(IconData, String)> items) => TextB
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 8),
                     child: Row(children: [
-                      Icon(icon, size: 36, color: Colors.amber),
+                      Icon(icon, size: 26, color: Colors.amber),
                       const SizedBox(width: 12),
-                      Expanded(child: Text(text, style: const TextStyle(fontSize: 18))),
+                      Expanded(child: Text(text)),
                     ]),
                   ),
               ]),
@@ -341,13 +338,13 @@ class _KidIntroState extends State<EasyIntro> {
             child: Column(children: [
               Align(
                   alignment: AlignmentDirectional.centerEnd,
-                  child: TextButton(onPressed: () => Navigator.pop(context, true), child: Text(t('Skip'), style: const TextStyle(fontSize: 18)))),
+                  child: TextButton(onPressed: () => Navigator.pop(context, true), child: Text(t('Skip')))),
               const Spacer(),
-              Icon(icon, size: 140, color: Colors.amber),
+              Icon(icon, size: 88, color: Colors.amber),
               const SizedBox(height: 24),
-              Text(title, style: const TextStyle(fontSize: 32, fontWeight: FontWeight.bold), textAlign: TextAlign.center),
+              Text(title, style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold), textAlign: TextAlign.center),
               const SizedBox(height: 12),
-              Text(body, style: const TextStyle(fontSize: 20), textAlign: TextAlign.center),
+              Text(body, style: const TextStyle(fontSize: 16), textAlign: TextAlign.center),
               const Spacer(),
               Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                 for (var i = 0; i < pages.length; i++)
@@ -433,11 +430,11 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
           body: SafeArea(
             child: ListView(padding: const EdgeInsets.all(24), children: [
               const SizedBox(height: 40),
-              Icon(Icons.school_rounded, size: 110, color: Theme.of(context).colorScheme.primary),
+              Icon(Icons.school_rounded, size: 72, color: Theme.of(context).colorScheme.primary),
               const SizedBox(height: 16),
-              Text(t('Welcome!'), style: const TextStyle(fontSize: 32, fontWeight: FontWeight.bold), textAlign: TextAlign.center),
+              Text(t('Welcome!'), style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold), textAlign: TextAlign.center),
               const SizedBox(height: 8),
-              Text(t('Type the sign-in code you were given.'), style: const TextStyle(fontSize: 20), textAlign: TextAlign.center),
+              Text(t('Type the sign-in code you were given.'), style: const TextStyle(fontSize: 16), textAlign: TextAlign.center),
               const SizedBox(height: 24),
               TextField(
                 controller: code,
@@ -445,7 +442,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 textCapitalization: TextCapitalization.characters,
                 autocorrect: false,
                 enableSuggestions: false,
-                style: const TextStyle(fontSize: 30, letterSpacing: 6, fontWeight: FontWeight.bold),
+                style: const TextStyle(fontSize: 22, letterSpacing: 4, fontWeight: FontWeight.bold),
                 decoration: InputDecoration(hintText: 'ABCD 2345', border: const OutlineInputBorder(), errorText: error, errorMaxLines: 3),
                 onSubmitted: (_) => _go(),
               ),

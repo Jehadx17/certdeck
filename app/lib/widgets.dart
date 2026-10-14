@@ -663,7 +663,7 @@ class _CardViewState extends State<CardView> {
         out.add(Padding(
             padding: const EdgeInsets.only(top: 8),
             child: OutlinedButton.icon(
-                style: OutlinedButton.styleFrom(minimumSize: const Size.fromHeight(52), textStyle: const TextStyle(fontSize: 18)),
+                style: OutlinedButton.styleFrom(minimumSize: const Size.fromHeight(44)),
                 icon: const Icon(Icons.arrow_downward_rounded),
                 label: Text(t('Next step')),
                 onPressed: () => setState(() => _steps++))));

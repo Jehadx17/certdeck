@@ -139,7 +139,8 @@ preparing, and Settings.
 - **Answering:** the confidence buttons (Guessing / Unsure / Sure) are the Check button: one tap rates and shows
   the answer ("Show me the answer" when nothing was typed); sure-but-wrong still shows the misconception warning;
   self-graded cards ask "Did you get it?" (Yes / Not yet); rubric ticks without percentages; no AI grading button;
-  a problem's solution one step at a time. Text 15% larger, buttons at least 56–64 dp.
+  a problem's solution one step at a time. Normal app sizes (1.4.1, at your request): 50 dp buttons, the
+  phone's own text size.
 - **Night before** (the day before): the night or summary sheet in large text and a quick review. **Exam morning**
   (the day itself): the morning check. **Practice test:** 10 questions from the cards (offline, no AI cost).
 - **Reminders** for a student are short and plain; the update screen is translated.

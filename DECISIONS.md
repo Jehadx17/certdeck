@@ -248,4 +248,5 @@ Rates from the platform pricing page (Opus 5.5: $4 in, $5 cache write, $0.20 cac
   gives the phone a new token (the account's old token stops working) and wipes/restores the phone's copy like any
   account switch. Failed codes are throttled globally (30 per 10 minutes) rather than per IP, since every request
   reaches gunicorn from the docker gateway address.
-
+- **Sizes** (1.4.1, at your request): normal app sizes, no extra text scaling: 50 dp main buttons with 16 sp text,
+  56 dp confidence buttons, titles 18–22 sp. Text still follows the phone's own font-size setting.

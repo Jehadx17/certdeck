@@ -244,7 +244,7 @@ class _StudyScreenState extends State<StudyScreen> {
 
   Widget _easyCard(ColorScheme cs) => Scaffold(
         appBar: AppBar(
-          title: Text(t('{n} left', {'n': session.remaining + 1}), style: const TextStyle(fontSize: 20)),
+          title: Text(t('{n} left', {'n': session.remaining + 1})),
           actions: [helpButton(context, studyHelp)],
         ),
         body: SafeArea(
@@ -286,7 +286,7 @@ class _StudyScreenState extends State<StudyScreen> {
       if (!a.ready || empty) {
         return bar(FilledButton.icon(
             style: easyButton(),
-            icon: const Icon(Icons.visibility_rounded, size: 30),
+            icon: const Icon(Icons.visibility_rounded),
             label: Text(a.ready ? t('Show me the answer') : t('Pick an answer')),
             onPressed: a.ready ? () => _easyCheck(Conf.guess) : null));
       }
@@ -295,15 +295,15 @@ class _StudyScreenState extends State<StudyScreen> {
               padding: const EdgeInsets.symmetric(horizontal: 4),
               child: FilledButton(
                   style: FilledButton.styleFrom(
-                      minimumSize: const Size.fromHeight(76), backgroundColor: color.withOpacity(.22), foregroundColor: color,
+                      minimumSize: const Size.fromHeight(56), padding: const EdgeInsets.symmetric(vertical: 6), backgroundColor: color.withOpacity(.22), foregroundColor: color,
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18))),
                   onPressed: () => _easyCheck(c),
                   child: Column(mainAxisSize: MainAxisSize.min, children: [
-                    Icon(icon, size: 30),
-                    FittedBox(fit: BoxFit.scaleDown, child: Text(label, maxLines: 1, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold))),
+                    Icon(icon, size: 22),
+                    FittedBox(fit: BoxFit.scaleDown, child: Text(label, maxLines: 1, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600))),
                   ]))));
       return bar(Column(mainAxisSize: MainAxisSize.min, children: [
-        Text(t('How sure are you?'), style: const TextStyle(fontSize: 18)),
+        Text(t('How sure are you?'), style: const TextStyle(fontSize: 13, color: Colors.white60)),
         const SizedBox(height: 8),
         Row(children: [
           sure(Conf.guess, t('Guessing'), Icons.casino_outlined, Colors.orange),
@@ -314,7 +314,7 @@ class _StudyScreenState extends State<StudyScreen> {
     }
     if (!graded) {
       return bar(Column(mainAxisSize: MainAxisSize.min, children: [
-        Text(t('Did you get it?'), style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
+        Text(t('Did you get it?'), style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
         const SizedBox(height: 10),
         Row(children: [
           Expanded(
@@ -330,14 +330,14 @@ class _StudyScreenState extends State<StudyScreen> {
     final ok = a.correct;
     return bar(Column(mainAxisSize: MainAxisSize.min, children: [
       Row(children: [
-        Icon(ok ? Icons.celebration_rounded : Icons.replay_rounded, size: 36, color: ok ? Colors.amber : Colors.orangeAccent),
+        Icon(ok ? Icons.celebration_rounded : Icons.replay_rounded, size: 24, color: ok ? Colors.amber : Colors.orangeAccent),
         const SizedBox(width: 10),
         Expanded(
             child: Text(ok ? t('Great job!') : (widget.practice ? t('Not quite. Read the answer, then go on.') : t('Not quite. It will come back in a moment.')),
-                style: const TextStyle(fontSize: 20))),
+                style: const TextStyle(fontSize: 15))),
       ]),
       const SizedBox(height: 10),
-      FilledButton.icon(style: easyButton(), icon: const Icon(Icons.arrow_forward_rounded, size: 30), label: Text(t('Next')), onPressed: _commit),
+      FilledButton.icon(style: easyButton(), icon: const Icon(Icons.arrow_forward_rounded), label: Text(t('Next')), onPressed: _commit),
     ]));
   }
 
@@ -347,13 +347,13 @@ class _StudyScreenState extends State<StudyScreen> {
     return Scaffold(
       appBar: AppBar(automaticallyImplyLeading: false),
       body: ListView(padding: const EdgeInsets.all(24), children: [
-        const Icon(Icons.emoji_events_rounded, size: 110, color: Colors.amber),
+        const Icon(Icons.emoji_events_rounded, size: 72, color: Colors.amber),
         const SizedBox(height: 8),
         Text(done == 0 ? t('Nothing to practise right now.') : t('You finished!'),
-            style: const TextStyle(fontSize: 30, fontWeight: FontWeight.bold), textAlign: TextAlign.center),
+            style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold), textAlign: TextAlign.center),
         if (done > 0) ...[
           const SizedBox(height: 12),
-          Center(child: stars(n, size: 52, of: 3)),
+          Center(child: stars(n, size: 36, of: 3)),
           const SizedBox(height: 12),
           Text(
               n == 3
@@ -361,7 +361,7 @@ class _StudyScreenState extends State<StudyScreen> {
                   : n == 2
                       ? t('Good work! A little more practice and you have it.')
                       : t('Good try! The ones you missed come back, so you learn them.'),
-              style: const TextStyle(fontSize: 20),
+              style: const TextStyle(fontSize: 16),
               textAlign: TextAlign.center),
         ],
         if (widget.practice && results.isNotEmpty) ...[
@@ -378,8 +378,8 @@ class _StudyScreenState extends State<StudyScreen> {
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 6),
                     child: Row(children: [
-                      Expanded(child: autoText(e.key, style: const TextStyle(fontSize: 18), maxLines: 2, overflow: TextOverflow.ellipsis)),
-                      stars(sessionStars(e.value.where((x) => x).length, e.value.length), size: 26, of: 3),
+                      Expanded(child: autoText(e.key, style: const TextStyle(fontSize: 14), maxLines: 2, overflow: TextOverflow.ellipsis)),
+                      stars(sessionStars(e.value.where((x) => x).length, e.value.length), size: 18, of: 3),
                     ]),
                   ),
               ]);
@@ -390,14 +390,14 @@ class _StudyScreenState extends State<StudyScreen> {
         if (widget.practice && missed.isNotEmpty)
           FilledButton.icon(
               style: easyButton(),
-              icon: const Icon(Icons.replay_rounded, size: 30),
+              icon: const Icon(Icons.replay_rounded),
               label: Text(t('Practise the ones you missed')),
               onPressed: () => Navigator.pushReplacement(
                   context, MaterialPageRoute(builder: (_) => StudyScreen(missed, easy: true, title: widget.title, scheduler: widget.scheduler)))),
         if (!widget.practice && widget.onMore != null && done > 0)
           FilledButton.icon(
               style: easyButton(),
-              icon: const Icon(Icons.play_arrow_rounded, size: 34),
+              icon: const Icon(Icons.play_arrow_rounded),
               label: Text(t('Do more')),
               onPressed: () {
                 Navigator.pop(context);
@@ -405,7 +405,7 @@ class _StudyScreenState extends State<StudyScreen> {
               }),
         const SizedBox(height: 12),
         OutlinedButton(
-            style: OutlinedButton.styleFrom(minimumSize: const Size.fromHeight(56), textStyle: const TextStyle(fontSize: 20)),
+            style: OutlinedButton.styleFrom(minimumSize: const Size.fromHeight(46), textStyle: const TextStyle(fontSize: 15)),
             onPressed: () => Navigator.pop(context),
             child: Text(t('Done'))),
       ]),
