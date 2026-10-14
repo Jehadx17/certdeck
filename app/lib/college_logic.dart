@@ -205,8 +205,11 @@ List<Json> interleave(List<Json> cards) {
 }
 
 /// In-session successive relearning: a card is learned after [target] correct recalls in a row, spaced by other
-/// cards; a miss brings it back 3 cards later, a correct answer 6 cards later. Cards already well known need one.
+/// cards; a miss brings it back [missGap] cards later, a correct answer [rightGap] cards later (or at the end). Cards already well known need one.
 class SprintSession implements StudyQueue {
+  /// How many other cards come before a card returns: far enough apart that it's recalled, not just remembered from
+  /// a moment ago (3 felt too soon in use).
+  static const missGap = 10, rightGap = 15;
   final List<Json> queue;
   final Map<String, int> streak = {}, target = {};
   int learned = 0;
@@ -233,10 +236,10 @@ class SprintSession implements StudyQueue {
         learned++;
         return;
       }
-      queue.insert(min(6, queue.length), card);
+      queue.insert(min(rightGap, queue.length), card);
     } else {
       streak[id] = 0;
-      queue.insert(min(score > 0 ? 4 : 3, queue.length), card);
+      queue.insert(min(missGap, queue.length), card);
     }
   }
 }

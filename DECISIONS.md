@@ -274,4 +274,7 @@ more); nobody sees it; rate every existing card; same rules for students; re-rat
   points, or whose scores are still on the old 1-5 scale. The manual "Hints changed: update priorities" button goes.
 - **Cost:** the READ model (Sonnet) at low effort, ~60 cards per call; cents per run, charged to the account's budget
   (a capped student is simply skipped until next month).
+- **Sprint spacing** (2026-10-14, at your request: a missed card came back too soon): a miss or partial answer returns
+  after 10 other cards (was 3-4), a right-but-not-yet-learned card after 15 (was 6); with fewer cards left it returns
+  at the end. Constants `SprintSession.missGap` / `rightGap`.
 

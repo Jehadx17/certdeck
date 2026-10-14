@@ -74,16 +74,16 @@ void main() {
     expect(mcqOnly.master.where((c) => c['type'] == 'mcq').length, 5);
   });
 
-  test('sprint loop: right twice in a row to learn, a miss comes back 3 cards later', () {
-    final cards = [for (var i = 0; i < 8; i++) card('c$i')];
+  test('sprint loop: right twice in a row to learn, a miss comes back 10 cards later', () {
+    final cards = [for (var i = 0; i < 30; i++) card('c$i')];
     final s = scope(cards, {});
     final q = SprintSession(cards, s);
     final c0 = q.next()!;
     q.answered(c0, 0); // wrong
-    expect(q.queue.indexOf(c0), 3);
+    expect(q.queue.indexOf(c0), SprintSession.missGap);
     final c1 = q.next()!;
-    q.answered(c1, 1); // right once: not learned yet, back 6 later
-    expect(q.queue.indexOf(c1), 6);
+    q.answered(c1, 1); // right once: not learned yet, back 15 later
+    expect(q.queue.indexOf(c1), SprintSession.rightGap);
     expect(q.learned, 0);
     q.queue.remove(c1);
     q.answered(c1, 1); // right twice in a row
@@ -92,6 +92,11 @@ void main() {
     q.queue.remove(c0);
     q.answered(c0, .5); // partial counts as a miss and resets the streak
     expect(q.streak['c0'], 0);
+    final few = [card('a'), card('b')];
+    final short = SprintSession(few, scope(few, {}));
+    final a = short.next()!;
+    short.answered(a, 0);
+    expect(short.queue.last, a); // fewer cards left than the gap: it comes back at the end
   });
 
   test('a well-known card needs one correct answer in a sprint', () {
