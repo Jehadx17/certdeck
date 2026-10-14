@@ -45,6 +45,33 @@ def health(request):
     return Response({"ok": True})
 
 
+REDEEM_FAILURES = 30  # wrong codes allowed per 10 minutes (all callers together), then 429
+
+
+@api_view(["POST"])
+@permission_classes([AllowAny])
+def redeem(request):
+    """Swaps a one-time sign-in code (users code <name>) for a fresh token, so nobody types a 43-character token."""
+    from django.core.cache import cache
+    from django.utils import timezone
+
+    from .models import Account, token_hash
+
+    if cache.get("redeem_failures", 0) >= REDEEM_FAILURES:
+        raise ApiError(429, "Too many tries. Wait 10 minutes.")
+    code = re.sub(r"[\s-]", "", str(_body(request).get("code", ""))).upper()
+    account = Account.objects.filter(login_code_hash=token_hash(code), active=True,
+                                     login_code_expires__gt=timezone.now()).first() if len(code) == 8 else None
+    if not account:
+        cache.add("redeem_failures", 0, 600)
+        cache.incr("redeem_failures")
+        raise ApiError(400, "That code doesn't work. Check it, or ask for a new one.")
+    token = account.new_token()  # the code works once; this phone gets a token of its own
+    account.login_code_hash = account.login_code_expires = None
+    account.save(update_fields=["token_hash", "login_code_hash", "login_code_expires"])
+    return Response({"token": token, "name": account.name, "role": account.role})
+
+
 def _doc(d):
     """Validates one incoming sync doc."""
     if not (isinstance(d, dict) and isinstance(d.get("id"), str) and 0 < len(d["id"]) <= 64

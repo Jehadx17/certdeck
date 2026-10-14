@@ -54,11 +54,14 @@ class Reminders {
       final d = (daysUntil(p.assessment['date']) ?? 99) - daysAhead;
       if (d < 0) continue;
       behind |= p.behind && daysAhead == 0;
-      items.add(d == 0
-          ? t('{c} {a} today: 10-minute morning check', {'c': p.course, 'a': p.assessment['title']})
-          : t('{c} {a} in {d} days: {m} min today', {'c': p.course, 'a': p.assessment['title'], 'd': d, 'm': p.minutes}));
+      items.add(!App.isOwner
+          ? (d == 0 ? t('{a} is today. A quick warm-up before you go!', {'a': p.assessment['title']}) : kidLine(p.assessment['title'], d))
+          : d == 0
+              ? t('{c} {a} today: 10-minute morning check', {'c': p.course, 'a': p.assessment['title']})
+              : t('{c} {a} in {d} days: {m} min today', {'c': p.course, 'a': p.assessment['title'], 'd': d, 'm': p.minutes}));
     }
     if (items.isEmpty) return null;
+    if (!App.isOwner) return (t('Time to study!'), items.join('\n')); // a child: no "behind", no minutes
     return (behind ? t('You\'re behind: catch up today') : t('Today\'s study plan'), items.join('\n'));
   }
 
@@ -89,8 +92,10 @@ class Reminders {
         final eve = date.subtract(const Duration(hours: 3)); // 21:00 the day before
         final morning = date.add(const Duration(hours: 7, minutes: 30));
         for (final (j, at, title, body) in [
-          (0, eve, t('{a} tomorrow', {'a': p.assessment['title']}), t('Read your night-before sheet, then sleep. Sleep is when it sticks.')),
-          (1, morning, t('{a} today', {'a': p.assessment['title']}), t('10-minute morning check: your weakest points, nothing new.')),
+          (0, eve, t('{a} tomorrow', {'a': p.assessment['title']}),
+              App.isOwner ? t('Read your night-before sheet, then sleep. Sleep is when it sticks.') : t('Play the night-before game, then sleep well.')),
+          (1, morning, t('{a} today', {'a': p.assessment['title']}),
+              App.isOwner ? t('10-minute morning check: your weakest points, nothing new.') : t('A quick warm-up before you go. You can do it!')),
         ]) {
           if (at.isAfter(now)) {
             await _plugin.zonedSchedule(100 + i * 2 + j, title, body, tz.TZDateTime.from(at.toUtc(), tz.UTC), _details,
@@ -104,3 +109,8 @@ class Reminders {
     }
   }
 }
+
+/// A child's daily reminder line: "Science quiz in 3 days. 10 minutes of practice today!"
+String kidLine(String? title, int days) => days == 1
+    ? t('{a} is tomorrow. Play the night-before game tonight!', {'a': title ?? ''})
+    : t('{a} in {d} days. 10 minutes of practice today!', {'a': title ?? '', 'd': days});

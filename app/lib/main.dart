@@ -9,6 +9,7 @@ import 'db.dart';
 import 'exam.dart';
 import 'home.dart';
 import 'i18n.dart';
+import 'kid.dart';
 import 'logic.dart';
 import 'notify.dart';
 import 'settings.dart';
@@ -88,7 +89,9 @@ class _ShellState extends State<Shell> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
-    // Students see only College and Settings (COLLEGE.md); the owner also keeps the cert tabs.
+    if (!Api.configured) return const WelcomeScreen(); // a new phone: sign in with a short code
+    if (!App.isOwner) return const KidHome(); // students: the child-easy app; setup is behind the parent PIN (EASY.md)
+    // The owner keeps the cert tabs.
     final tabs = [
       if (App.isOwner) (const TodayScreen(), Icons.today_outlined, Icons.today, 'Certs'),
       (const CollegeScreen(), Icons.school_outlined, Icons.school, t('College')),

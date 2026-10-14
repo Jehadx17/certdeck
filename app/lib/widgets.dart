@@ -391,7 +391,10 @@ class CardView extends StatefulWidget {
   final bool showExplanation;
   final VoidCallback? onChanged;
   final bool misconception;
-  const CardView(this.state, {super.key, this.revealed = false, this.showExplanation = true, this.onChanged, this.misconception = false});
+  /// The child's version: no percentages or AI grading, a problem's steps one at a time.
+  final bool kid;
+  const CardView(this.state,
+      {super.key, this.revealed = false, this.showExplanation = true, this.onChanged, this.misconception = false, this.kid = false});
 
   @override
   State<CardView> createState() => _CardViewState();
@@ -399,6 +402,7 @@ class CardView extends StatefulWidget {
 
 class _CardViewState extends State<CardView> {
   late final _typed = TextEditingController(text: widget.state.typed);
+  int _steps = 1; // kid: problem steps shown so far
 
   AnswerState get s => widget.state;
   Json get c => s.card;
@@ -581,7 +585,7 @@ class _CardViewState extends State<CardView> {
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Row(children: [
           Expanded(child: Text(t('Marking'), style: TextStyle(color: cs.primary, fontWeight: FontWeight.bold))),
-          if (s.graded && s.numericMatch != true) Text(t('Score {p}%', {'p': (s.score * 100).round()}), style: const TextStyle(fontWeight: FontWeight.bold)),
+          if (s.graded && s.numericMatch != true && !widget.kid) Text(t('Score {p}%', {'p': (s.score * 100).round()}), style: const TextStyle(fontWeight: FontWeight.bold)),
           if (s.numericMatch == true) Text(t('Final answer matches'), style: const TextStyle(color: Colors.green)),
         ]),
         for (final (i, r) in s.rubric.indexed)
@@ -602,10 +606,10 @@ class _CardViewState extends State<CardView> {
                 ? Text('${(g['points'] as List)[i]['note']}',
                     style: const TextStyle(fontSize: 12), textDirection: isRtl('${(g['points'] as List)[i]['note']}') ? TextDirection.rtl : TextDirection.ltr)
                 : null,
-            secondary: Text('${(((r['weight'] as num?) ?? 0) * 100).round()}%', style: const TextStyle(fontSize: 12, color: Colors.white54)),
+            secondary: widget.kid ? null : Text('${(((r['weight'] as num?) ?? 0) * 100).round()}%', style: const TextStyle(fontSize: 12, color: Colors.white54)),
           ),
         if (g != null) Padding(padding: const EdgeInsets.only(top: 4), child: Md('${g['feedback']}', style: const TextStyle(fontSize: 14))),
-        if (g == null && widget.onChanged != null && (s.typed.trim().isNotEmpty || s.photos.isNotEmpty))
+        if (g == null && widget.onChanged != null && !widget.kid && (s.typed.trim().isNotEmpty || s.photos.isNotEmpty))
           Align(
             alignment: AlignmentDirectional.centerStart,
             child: TextButton.icon(
@@ -650,8 +654,20 @@ class _CardViewState extends State<CardView> {
     if (s.type == 'typed') out.add(Md('**${t('Answer')}:** `${c['answer']}`'));
     if (s.type == 'problem') {
       out.add(Text(t('Solution'), style: TextStyle(color: cs.primary, fontWeight: FontWeight.bold)));
-      for (final (i, step) in ((c['steps'] as List?) ?? []).cast<String>().indexed) {
+      final steps = ((c['steps'] as List?) ?? []).cast<String>();
+      final shown = widget.kid ? _steps.clamp(0, steps.length) : steps.length;
+      for (final (i, step) in steps.take(shown).indexed) {
         out.add(Padding(padding: const EdgeInsets.only(top: 4), child: Md('${i + 1}. $step')));
+      }
+      if (shown < steps.length) {
+        out.add(Padding(
+            padding: const EdgeInsets.only(top: 8),
+            child: OutlinedButton.icon(
+                style: OutlinedButton.styleFrom(minimumSize: const Size.fromHeight(52), textStyle: const TextStyle(fontSize: 18)),
+                icon: const Icon(Icons.arrow_downward_rounded),
+                label: Text(t('Next step')),
+                onPressed: () => setState(() => _steps++))));
+        return out; // the answer comes after the last step
       }
       out.add(Padding(
           padding: const EdgeInsets.only(top: 8),

@@ -17,6 +17,8 @@ import jsonschema
 from django.conf import settings
 from django.core.management import call_command
 from django.test import TestCase, override_settings
+from django.utils import timezone
+from datetime import timedelta
 
 from core.models import Account, AiCall, Doc, Media, now_ms, save_docs, token_hash
 from core.stats import MIN_REVIEWS
@@ -130,6 +132,27 @@ class ApiTests(TestCase):
         call_command("users", "delete", "sara", "--yes", stdout=StringIO())
         self.assertFalse(Doc.objects.filter(doc_id="x").exists())
         self.assertEqual(self.client.get("/api/me", **{"HTTP_AUTHORIZATION": "Bearer "}).status_code, 401)
+
+    def test_sign_in_code(self):
+        sara, auth = self.student()
+        out = StringIO()
+        call_command("users", "code", "sara", stdout=out)
+        code = out.getvalue().split(": ")[1].split()[0]
+        self.assertEqual(len(code), 8)
+        redeem = lambda c: self.client.post("/api/redeem", {"code": c}, content_type="application/json")  # no token
+        self.assertEqual(redeem("AAAAAAAA").status_code, 400)
+        r = redeem(f" {code[:4].lower()}-{code[4:]} ")  # typed loosely
+        self.assertEqual((r.status_code, r.json()["role"]), (200, "student"))
+        self.assertEqual(self.client.get("/api/me", HTTP_AUTHORIZATION="Bearer " + r.json()["token"]).json()["name"], "sara")
+        self.assertEqual(self.client.get("/api/me", **auth).status_code, 401)  # the phone's token replaces the old one
+        self.assertEqual(redeem(code).status_code, 400)  # works once
+        call_command("users", "code", "sara", stdout=StringIO())
+        Account.objects.filter(name="sara").update(login_code_expires=timezone.now() - timedelta(minutes=1))
+        self.assertEqual(redeem(Account.objects.get(name="sara").login_code_hash[:8]).status_code, 400)  # expired / wrong
+        from django.core.cache import cache
+        cache.set("redeem_failures", 30, 600)
+        self.assertEqual(redeem(code).status_code, 429)
+        cache.delete("redeem_failures")
 
     def test_isolation(self):
         sara, auth = self.student()

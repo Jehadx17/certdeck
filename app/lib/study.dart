@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'ai.dart';
 import 'api.dart';
@@ -7,6 +8,7 @@ import 'package:fsrs/fsrs.dart' as fsrs;
 
 import 'db.dart';
 import 'i18n.dart';
+import 'kid.dart';
 import 'logic.dart';
 import 'widgets.dart';
 
@@ -42,7 +44,14 @@ class StudyScreen extends StatefulWidget {
   final StudyQueue? custom;
   /// Schedules every answer with this (a college assessment's date); null = per card.
   final fsrs.Scheduler? scheduler;
-  const StudyScreen(this.queue, {super.key, this.source = 'study', this.title = 'Study', this.custom, this.scheduler});
+  /// The child's version (EASY.md): no confidence step, one Check button, stars at the end.
+  final bool kid;
+  /// A practice test (kid): stars per topic at the end and a round of the missed questions.
+  final bool practice;
+  /// "Do more" at the end of a kid session.
+  final VoidCallback? onMore;
+  const StudyScreen(this.queue,
+      {super.key, this.source = 'study', this.title = 'Study', this.custom, this.scheduler, this.kid = false, this.practice = false, this.onMore});
   @override
   State<StudyScreen> createState() => _StudyScreenState();
 }
@@ -54,6 +63,7 @@ class _StudyScreenState extends State<StudyScreen> {
   Conf? conf;
   bool revealed = false;
   int done = 0, right = 0;
+  final results = <(Json, bool)>[]; // each answer this session, for the practice test's topics
 
   @override
   void initState() {
@@ -70,10 +80,11 @@ class _StudyScreenState extends State<StudyScreen> {
       });
 
   bool get graded => ans!.written ? ans!.graded : (ans!.autoGraded || ans!.selfGrade != null);
-  bool get misconception => revealed && graded && conf == Conf.sure && ans!.score < .4;
+  bool get misconception => !widget.kid && revealed && graded && conf == Conf.sure && ans!.score < .4;
 
   Future<void> _commit() async {
     final a = ans!;
+    if (widget.kid) conf = kidConf(a.correct, nowMs() - a.startedAt);
     final updated = await recordAnswer(card!,
         conf: conf!,
         correct: a.correct,
@@ -85,6 +96,7 @@ class _StudyScreenState extends State<StudyScreen> {
     session.answered(updated, a.score);
     done++;
     if (a.correct) right++;
+    results.add((card!, a.correct));
     _next();
   }
 
@@ -101,6 +113,7 @@ class _StudyScreenState extends State<StudyScreen> {
   @override
   Widget build(BuildContext context) {
     final cs = Theme.of(context).colorScheme;
+    if (widget.kid) return kidScale(context, card == null ? _kidEnd(context) : _kidCard(cs));
     if (card == null) {
       return Scaffold(
         appBar: AppBar(title: Text(widget.title)),
@@ -226,5 +239,153 @@ class _StudyScreenState extends State<StudyScreen> {
             onPressed: () => setState(() => ans!.overrideCorrect = !ans!.correct), child: Text(ans!.correct ? t('Actually wrong') : t('Actually right'))),
       FilledButton(onPressed: _commit, child: Text(t('Next'))),
     ]);
+  }
+
+  // ---------------- the child's version ----------------
+
+  Widget _kidCard(ColorScheme cs) => Scaffold(
+        appBar: AppBar(
+          title: Text(t('{n} left', {'n': session.remaining + 1}), style: const TextStyle(fontSize: 20)),
+          actions: [helpButton(context, studyHelp)],
+        ),
+        body: SafeArea(
+          child: Column(children: [
+            Expanded(
+              child: ListView(padding: const EdgeInsets.all(16), children: [
+                CardView(ans!, key: ObjectKey(ans), revealed: revealed, kid: true, onChanged: () => setState(() {})),
+                const SizedBox(height: 40),
+              ]),
+            ),
+            _kidBottom(cs),
+          ]),
+        ),
+      );
+
+  void _kidCheck() {
+    setState(() {
+      conf = Conf.unsure;
+      revealed = true;
+    });
+    if (ans!.autoGraded && ans!.correct) HapticFeedback.mediumImpact();
+  }
+
+  void _kidVerdict(bool yes) {
+    if (yes) HapticFeedback.mediumImpact();
+    ans!.written ? ans!.selfScore = yes ? 1 : 0 : ans!.selfGrade = yes;
+    _commit();
+  }
+
+  Widget _kidBottom(ColorScheme cs) {
+    Widget bar(Widget child) => Container(
+        padding: const EdgeInsets.fromLTRB(16, 10, 16, 16),
+        decoration: BoxDecoration(color: cs.surfaceContainer, border: const Border(top: BorderSide(color: Colors.white10))),
+        child: child);
+    final a = ans!;
+    if (!revealed) {
+      final empty = (a.type == 'typed' || a.written) && a.typed.trim().isEmpty;
+      return bar(FilledButton.icon(
+          style: kidButton(),
+          icon: Icon(empty ? Icons.visibility_rounded : Icons.check_rounded, size: 30),
+          label: Text(a.ready ? (empty ? t('Show me the answer') : t('Check')) : t('Pick an answer')),
+          onPressed: a.ready ? _kidCheck : null));
+    }
+    if (!graded) {
+      return bar(Column(mainAxisSize: MainAxisSize.min, children: [
+        Text(t('Did you get it?'), style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
+        const SizedBox(height: 10),
+        Row(children: [
+          Expanded(
+              child: FilledButton.icon(
+                  style: kidButton(Colors.deepOrange), icon: const Icon(Icons.replay_rounded), label: Text(t('Not yet')), onPressed: () => _kidVerdict(false))),
+          const SizedBox(width: 12),
+          Expanded(
+              child: FilledButton.icon(
+                  style: kidButton(Colors.green), icon: const Icon(Icons.thumb_up_alt_rounded), label: Text(t('Yes')), onPressed: () => _kidVerdict(true))),
+        ]),
+      ]));
+    }
+    final ok = a.correct;
+    return bar(Column(mainAxisSize: MainAxisSize.min, children: [
+      Row(children: [
+        Icon(ok ? Icons.celebration_rounded : Icons.replay_rounded, size: 36, color: ok ? Colors.amber : Colors.orangeAccent),
+        const SizedBox(width: 10),
+        Expanded(
+            child: Text(ok ? t('Great job!') : (widget.practice ? t('Not quite. Read the answer, then go on.') : t('Not quite. It will come back in a moment.')),
+                style: const TextStyle(fontSize: 20))),
+      ]),
+      const SizedBox(height: 10),
+      FilledButton.icon(style: kidButton(), icon: const Icon(Icons.arrow_forward_rounded, size: 30), label: Text(t('Next')), onPressed: _commit),
+    ]));
+  }
+
+  Widget _kidEnd(BuildContext context) {
+    final n = sessionStars(right, done);
+    final missed = [for (final (c, ok) in results) if (!ok) c];
+    return Scaffold(
+      appBar: AppBar(automaticallyImplyLeading: false),
+      body: ListView(padding: const EdgeInsets.all(24), children: [
+        const Icon(Icons.emoji_events_rounded, size: 110, color: Colors.amber),
+        const SizedBox(height: 8),
+        Text(done == 0 ? t('Nothing to practise right now.') : t('You finished!'),
+            style: const TextStyle(fontSize: 30, fontWeight: FontWeight.bold), textAlign: TextAlign.center),
+        if (done > 0) ...[
+          const SizedBox(height: 12),
+          Center(child: stars(n, size: 52, of: 3)),
+          const SizedBox(height: 12),
+          Text(
+              n == 3
+                  ? t('Amazing work!')
+                  : n == 2
+                      ? t('Good work! A little more practice and you have it.')
+                      : t('Good try! The ones you missed come back, so you learn them.'),
+              style: const TextStyle(fontSize: 20),
+              textAlign: TextAlign.center),
+        ],
+        if (widget.practice && results.isNotEmpty) ...[
+          const SizedBox(height: 24),
+          FutureBuilder(
+            future: sectionTitles(),
+            builder: (context, snap) {
+              final by = <String, List<bool>>{};
+              for (final (c, ok) in results) {
+                by.putIfAbsent(snap.data?[c['section']] ?? t('Other questions'), () => []).add(ok);
+              }
+              return Column(children: [
+                for (final e in by.entries)
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 6),
+                    child: Row(children: [
+                      Expanded(child: autoText(e.key, style: const TextStyle(fontSize: 18), maxLines: 2, overflow: TextOverflow.ellipsis)),
+                      stars(sessionStars(e.value.where((x) => x).length, e.value.length), size: 26, of: 3),
+                    ]),
+                  ),
+              ]);
+            },
+          ),
+        ],
+        const SizedBox(height: 28),
+        if (widget.practice && missed.isNotEmpty)
+          FilledButton.icon(
+              style: kidButton(),
+              icon: const Icon(Icons.replay_rounded, size: 30),
+              label: Text(t('Practise the ones you missed')),
+              onPressed: () => Navigator.pushReplacement(
+                  context, MaterialPageRoute(builder: (_) => StudyScreen(missed, kid: true, title: widget.title, scheduler: widget.scheduler)))),
+        if (!widget.practice && widget.onMore != null && done > 0)
+          FilledButton.icon(
+              style: kidButton(),
+              icon: const Icon(Icons.play_arrow_rounded, size: 34),
+              label: Text(t('Do more')),
+              onPressed: () {
+                Navigator.pop(context);
+                widget.onMore!();
+              }),
+        const SizedBox(height: 12),
+        OutlinedButton(
+            style: OutlinedButton.styleFrom(minimumSize: const Size.fromHeight(56), textStyle: const TextStyle(fontSize: 20)),
+            onPressed: () => Navigator.pop(context),
+            child: Text(t('Done'))),
+      ]),
+    );
   }
 }

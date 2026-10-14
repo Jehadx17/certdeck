@@ -2,6 +2,7 @@ import 'package:certdeck/college_logic.dart';
 import 'package:certdeck/db.dart';
 import 'package:certdeck/logic.dart';
 import 'package:certdeck/widgets.dart';
+import 'package:certdeck/kid.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:fsrs/fsrs.dart' as fsrs;
 
@@ -142,5 +143,13 @@ void main() {
     expect(problem.graded, isFalse); // a mismatch still needs a look: the method may earn partial credit
     problem.selfScore = .5;
     expect(problem.score, .5);
+  });
+
+  test('child app: stars and the inferred confidence', () {
+    expect([for (final x in [0.0, .09, .1, .5, .95, 1.0, 1.2]) starsFor(x)], [0, 0, 1, 3, 5, 5, 5]);
+    expect([sessionStars(0, 0), sessionStars(1, 5), sessionStars(3, 5), sessionStars(4, 5), sessionStars(10, 10)], [0, 1, 2, 3, 3]);
+    expect(kidConf(true, 4000), Conf.sure);
+    expect(kidConf(true, 30000), Conf.unsure); // right but slow
+    expect(kidConf(false, 2000), Conf.unsure); // a quick wrong answer is a mistake, not a misconception
   });
 }

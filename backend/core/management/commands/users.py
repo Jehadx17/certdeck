@@ -29,6 +29,7 @@ class Command(BaseCommand):
   users list                        everyone, with this month's AI spend
   users cap sara 15                 change a cap ('none' = no cap)
   users rotate sara                 new token (the old one stops working); prints it
+  users code sara                   one-time sign-in code for the phone, valid 24 h (signing in replaces the token)
   users disable sara / enable sara  block or restore access (data is kept)
   users delete sara --yes           delete the account and ALL its data"""
 
@@ -38,7 +39,7 @@ class Command(BaseCommand):
         return parser
 
     def add_arguments(self, parser):
-        parser.add_argument("action", choices=["create", "list", "cap", "rotate", "disable", "enable", "delete"])
+        parser.add_argument("action", choices=["create", "list", "cap", "rotate", "code", "disable", "enable", "delete"])
         parser.add_argument("name", nargs="?")
         parser.add_argument("value", nargs="?", help="cap in dollars, or 'none' (for `cap`)")
         parser.add_argument("--cap", default=None, help="monthly AI budget in dollars, or 'none' (create)")
@@ -84,6 +85,10 @@ class Command(BaseCommand):
             token = account.new_token()
             account.save(update_fields=["token_hash"])
             self.stdout.write(f"New token for {name}: {token}")
+        elif action == "code":
+            code = account.new_login_code()
+            account.save(update_fields=["login_code_hash", "login_code_expires"])
+            self.stdout.write(f"Sign-in code for {name}: {code}\n(type it in the app's first screen within 24 hours; works once)")
         elif action in ("disable", "enable"):
             account.active = action == "enable"
             account.save(update_fields=["active"])

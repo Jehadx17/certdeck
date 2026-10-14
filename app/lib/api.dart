@@ -79,6 +79,28 @@ class Api {
     return err;
   }
 
+  /// Swaps a one-time sign-in code (`users code <name>` on the server) for this phone's own token and signs in.
+  /// Returns null on success, else a message for the person typing it.
+  static Future<String?> redeem(String code) async {
+    final http.Response r;
+    try {
+      r = await http
+          .post(Uri.parse('$defaultUrl/api/redeem'), headers: {'Content-Type': 'application/json'}, body: jsonEncode({'code': code}))
+          .timeout(const Duration(seconds: 30));
+    } on Exception {
+      return 'No internet. Connect to Wi-Fi and try again.';
+    }
+    String? msg;
+    try {
+      final body = jsonDecode(utf8.decode(r.bodyBytes));
+      if (r.statusCode == 200) return await connect(defaultUrl, body['token'] as String);
+      msg = body['error']?.toString();
+    } on FormatException {
+      msg = null;
+    }
+    return msg ?? 'Something went wrong. Try again in a minute.';
+  }
+
   static Future<dynamic> call(String method, String path, {Object? body, List<int>? bytes, Duration timeout = const Duration(seconds: 60)}) async {
     if (!configured) throw ApiError('Needs connection: add your server token in Settings', offline: true);
     final uri = Uri.parse('$url/api/$path');

@@ -1,0 +1,145 @@
+# CertDeck for College: Make the Student App Child-Easy
+
+Redesign the **student side** of CertDeck (see COLLEGE.md, SPEC.md, README.md, DECISIONS.md, docs/PROTOCOL.md) so a
+child could use it alone: open the app, know what to do, study, and feel good about it, with no help and no
+reading of instructions. Assume the student is about 10 years old, reads Arabic well and English a little, gets
+bored fast, taps whatever is biggest, and never opens Settings on purpose.
+
+## Context
+- The student app today (1.3.6) has two tabs, College and Settings. It works, but it was built for a capable
+  adult. The device tests showed where a child would get stuck:
+  - **Words a child doesn't know:** "Readiness", "Predicted mark 0–35%", "Compressed / Sprint mode", "Master now /
+    Skim / Skip", "scope", "sections chosen", "hints", "knowledge points", "Batch", "sync", "token", and the cost
+    estimates ("$1.32").
+  - **Too many choices:** six session lengths (15–120 min), three confidence buttons before every answer, the
+    Wrong / Partly / Right grading bar, a practice exam form with three number fields, and sheets in four kinds.
+  - **Long paths:** a course → an assessment → scroll to Study → pick minutes → a triage page → Start.
+  - **Setup an adult must do:** pasting a 43-character token, choosing what a quiz covers, uploading material.
+  - **Error text** that's technical or English inside the Arabic screen.
+- **Keep my side exactly as it is.** The owner (me) keeps every screen, word and feature unchanged. All changes
+  apply only when the account role is `student`. The study engine, server, AI pipeline and sync stay as they are;
+  this goal is about what the student sees and touches.
+- Who sets things up: an adult (me, or a parent) does the hard parts once: creating the account, uploading
+  material, setting the exam date and scope. The child only studies. The setup screens can stay adult-level,
+  but they must be clearly separate from the child's screens.
+
+## Before you start: ask me everything in ONE batch
+Then don't stop again unless something is destructive, affects my other VPS projects, or is blocked:
+- Who does the setup in practice (me, a parent, or the child with help), and whether the setup screens should be
+  hidden behind a parent PIN.
+- Whether the child should see marks and percentages at all, or only stars/progress.
+- Rewards: stars, streaks, stickers, sounds? Any the family would object to?
+- The real child (or children) who will test it, their age, and whether I can watch a test session.
+- Which Arabic dialect and level for UI wording (simple MSA vs. Saudi colloquial).
+
+## Ground rules
+- One screen, one job, one big button. If a screen needs explaining, redesign it.
+- **Arabic first**, right-to-left, simple words a 10-year-old knows. English only for terms the course itself uses.
+- Pictures and icons with every action, never icons alone.
+- No numbers that need interpretation: no percentages, ranges, costs, intervals or counts above 20. Use stars,
+  progress bars, "3 left" and emoji-free plain sentences ("You know this one!").
+- No dead ends: every error says what to do next, in the child's language, with one button that does it.
+- Nothing a child can break: no delete, no logout, no token field, no settings that lose data, on child screens.
+- Accessibility: tap targets at least 56 dp, text at least 18 sp (scales with the phone's font size), contrast
+  AA, works one-handed, no time pressure unless the child picks a timed game.
+- Same offline-first behaviour: everything the child does works without internet and syncs later, silently.
+
+## The child's app
+- **Home = one big "Study" button** for the most urgent exam, with a friendly line ("Science quiz on Thursday!")
+  and a simple progress bar (or stars). Below it, other upcoming exams as large cards. Nothing else.
+- **A session is one tap.** The app picks the length (about 10 minutes, or what the plan says) and the cards; no
+  minute chips, no triage page. "Do more" at the end continues if the child wants.
+- **Answering:**
+  - Multiple choice and true/false: large buttons. Tap an answer → immediate right/wrong with a short why.
+  - Remove the confidence step for children: infer it (answer time, changed answers) or ask only occasionally
+    with two faces ("Sure" / "Guessing") if the engine needs it.
+  - Written answers: one text box, then show the model answer and ask "Did you get it?" with two big buttons
+    (Yes / Not yet); "partly" only when the card has a rubric, shown as simple ticks.
+  - Cloze and typed answers: big keyboard-friendly box, forgiving matching (already lenient).
+  - Problems: show the steps one at a time ("Next step"), then the answer.
+- **Feedback that motivates:** a short celebration for right answers and for finishing, gentle wording for
+  wrong ones ("Let's see it again in a moment"), a visible "3 cards left" counter, and an end screen with stars
+  and one sentence about what improved. No scores that feel like failing.
+- **Before the exam:** "Night before" and "Exam morning" become one big button each on the home card when it's
+  their time, as short games of ~10 cards, plus the summary sheet in large readable text.
+- **Practice test:** one button, "Try a practice test", with fixed sensible settings (no form). Results as
+  stars per topic, and "Practise the ones you missed" as the only next step.
+- **Reminders:** one daily reminder at a time the adult picks, worded for a child.
+- **Help:** a tiny first-run walkthrough (3 screens max, skippable) and a "?" on each screen that shows a picture
+  of what to do.
+
+## Setup (adult side)
+- **Sign-in without typing a token:** a QR code or a short one-time code I generate with `manage.py users`
+  (e.g. 6 digits, expires in 24 h) that the phone exchanges for the real token. The long token path stays for me.
+- Adding material, confirming exams, choosing what a quiz covers, hints, preparing (with the cost estimate),
+  budget and language live in a separate "For parents/teachers" area, reached from Settings (behind the PIN if I
+  choose one). Keep these screens as they are, but tidy their wording.
+- Preparing an exam happens there; the child's home only shows exams that have cards ready.
+
+## Out of scope (don't build)
+- Accounts the child creates, chat with an AI tutor, voice (removed earlier at my request), social features,
+  ads, purchases, avatars or shops.
+- Changes to the owner's screens, the server's study logic or the AI generation.
+
+## Delivery and workflow
+- Work on a new branch from `main`. Commit in small steps; push and release through the usual scripts
+  (`deploy/deploy.sh` only if the server changes, `deploy/release-apk.sh` for the app, forced update).
+- Before building, write a short screen-by-screen plan (wireframes in ASCII are enough) into this file under
+  "Design", then build without waiting for approval.
+- Strings go through `t()` with Arabic translations; add tests for any new logic (session picking, inferred
+  confidence, one-time codes).
+- Test on the HONOR with the `qa-student` account (keep its data) and at least one fresh child account created
+  with the new short code; switch the phone back to my owner token at the end.
+
+## Definition of done
+- A new child account can be set up on a phone with a QR/short code in under a minute, without typing a token.
+- On the HONOR, starting from a cold app open, the child reaches the first question of a study session in **one
+  tap**, and every child screen passes the ground rules above (checked screen by screen with screenshots).
+- No child screen shows a percentage, cost, range, technical term, English error, or a way to delete data.
+- A full session works offline and syncs later with no visible error.
+- Night-before, exam-morning and practice-test flows each start with one tap from the home card.
+- If a real child is available: they complete a session alone, without being told what to tap, and I record what
+  confused them; fix those points and recheck.
+- My owner screens are unchanged; my certs, cards and review history are intact; `qa-student` keeps its data.
+- All code is committed and pushed, README.md and DECISIONS.md updated, and you end with a short summary: what
+  changed, before/after screenshots of the main screens, how to create a child account, and anything left.
+
+## Answers assumed (the batch went unanswered; change any of them)
+- Setup is done by an adult; the setup screens sit behind a 4-digit parent PIN chosen the first time they're opened.
+- The child sees no marks or percentages: stars (0–5 per exam, 1–3 per session) and short sentences only.
+- Rewards: stars and a short vibration on right answers. No streaks (nothing to lose for a missed day), no sounds.
+- No test child available yet: checked screen by screen on the HONOR with screenshots.
+- Simple Modern Standard Arabic.
+
+## Design
+```
+New phone                 Child home (student role)            Study (kid mode)
++-------------------+     +--------------------------------+   +----------------------------+
+|   [school icon]   |     | My study        [Help] [Parents]|   | 5 left               [Help]|
+|     Welcome!      |     | +----------------------------+ |   | Question text (bigger)     |
+| Type the code ... |     | | Science 101                | |   |  [ option A ]              |
+| [  ABCD 2345   ]  |     | | Quiz 2   The exam is ...   | |   |  [ option B ]              |
+| [     Start     ] |     | | ***** stars fill up ...    | |   |                            |
+|                   |     | | [ Night before / Morning ] | |   +----------------------------+
+| I have a token    |     | | [        > Study        ]  | |   | [        Check         ]   |
++-------------------+     | | [ Try a practice test   ]  | |   |  then: Great job! [Next]   |
+                          | +----------------------------+ |   |  or: Did you get it?       |
+                          | (other exams, smaller)         |   |      [Not yet]   [Yes]     |
+                          +--------------------------------+   +----------------------------+
+End: trophy, 1-3 stars, one sentence, [Do more] [Done]; a practice test adds stars per topic and
+[Practise the ones you missed]. Parents (PIN) -> the previous student screens: Setup (courses, material,
+exams, preparing) and Settings.
+```
+- **Sign-in:** `manage.py users code <name>` prints an 8-character code (no 0/O/1/I/L), valid 24 h, once.
+  `POST /api/redeem` swaps it for a new token (the phone's own; the old one stops working), throttled after 30 wrong
+  codes in 10 minutes. The app's first screen takes the code; Settings → "Use a code" switches a signed-in phone.
+- **One tap to study:** Study runs about 10 minutes: spaced cards when there's time, else the sprint loop (most
+  valuable cards not known yet, each until right twice). No triage page, no minute choice.
+- **Answering:** no confidence step (a quick right answer counts as sure, anything else as unsure, so a child is
+  never flagged with a "misconception"); one Check button ("Show me the answer" when nothing was typed);
+  self-graded cards ask "Did you get it?" (Yes / Not yet); rubric ticks without percentages; no AI grading button;
+  a problem's solution one step at a time. Text 15% larger, buttons at least 56–64 dp.
+- **Night before** (the day before): the night or summary sheet in large text and a short game. **Exam morning**
+  (the day itself): the morning check. **Practice test:** 10 questions from the cards (offline, no AI cost).
+- **Reminders** for a student are worded for a child; the update screen is translated.
+- Owner screens are unchanged.

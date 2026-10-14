@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
 
 import 'api.dart';
+import 'i18n.dart';
 
 /// Forced self-update. When the server has a newer build (deploy/release-apk.sh), the app locks, downloads it and
 /// installs it (MainActivity.kt). Offline or on any error it keeps working and tries again on the next open/resume,
@@ -32,7 +33,7 @@ class Updater {
         return;
       }
       final name = latest['version_name'];
-      status.value = 'Downloading CertDeck $name…';
+      status.value = t('Downloading the new version ({v})…', {'v': name});
       final apk = File('${dir.path}/update-${latest['version_code']}.apk');
       if (!await apk.exists() || sha256.convert(await apk.readAsBytes()).toString() != latest['sha256']) {
         final bytes = await Api.call('GET', 'app/apk', timeout: const Duration(minutes: 10)) as List<int>;
@@ -43,7 +44,7 @@ class Updater {
         status.value = 'permission';
         return;
       }
-      status.value = 'Installing CertDeck $name…\n\nThe app closes when it\'s done. Open it again to continue.';
+      status.value = t('Installing the new version ({v})…\n\nThe app closes when it\'s done. Open it again to continue.', {'v': name});
       await _ch.invokeMethod('install', apk.path);
     } catch (_) {
       status.value = null;
@@ -76,14 +77,14 @@ class UpdateGate extends StatelessWidget {
                             ? [
                                 const Icon(Icons.system_update, size: 48),
                                 const SizedBox(height: 16),
-                                Text('A new version of CertDeck is ready', style: Theme.of(context).textTheme.titleMedium),
+                                Text(t('A new version of CertDeck is ready'), style: Theme.of(context).textTheme.titleMedium),
                                 const SizedBox(height: 8),
-                                const Text('One time only: allow CertDeck to install its own updates. Tap below, turn on '
-                                    '"Allow from this source", then come back.', textAlign: TextAlign.center),
+                                Text(t('One time only: allow CertDeck to install its own updates. Tap below, turn on "Allow from this source", then come back.'),
+                                    textAlign: TextAlign.center),
                                 const SizedBox(height: 24),
                                 FilledButton(
                                     onPressed: () => const MethodChannel('certdeck/update').invokeMethod('openInstallSettings'),
-                                    child: const Text('Allow updates')),
+                                    child: Text(t('Allow updates'))),
                               ]
                             : [const CircularProgressIndicator(), const SizedBox(height: 24), Text(s, textAlign: TextAlign.center)],
                       ),

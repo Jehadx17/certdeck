@@ -10,6 +10,7 @@ import 'package:share_plus/share_plus.dart';
 import 'api.dart';
 import 'db.dart';
 import 'i18n.dart';
+import 'kid.dart';
 import 'logic.dart';
 import 'notify.dart';
 import 'widgets.dart';
@@ -231,6 +232,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
               const SizedBox(height: 8),
               Row(children: [
                 Expanded(child: FilledButton(onPressed: _connect, child: Text(t('Save & sync')))),
+                const SizedBox(width: 8),
+                // A short code from `users code <name>` instead of a token (switches this phone to that account).
+                OutlinedButton(
+                    onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const WelcomeScreen())), child: Text(t('Use a code'))),
               ]),
             ]),
           ),
