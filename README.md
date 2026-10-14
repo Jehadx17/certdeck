@@ -201,7 +201,7 @@ Format: [docs/cards.schema.json](docs/cards.schema.json) (JSON Schema). Example:
 - On the HONOR, 1.4.0: a fresh account (`kid-test`) signed in with a sign-in code in about 20 s; first-run intro,
   empty home, Help, My courses (the setup screens). On `qa-student` (Arabic): from a cold open, one tap on
   "Study now" reaches the first question; Guessing / Unsure / Sure reveal the answer; "Did you get it?" for
-  self-graded cards; feedback with the source page; a practice test ending in stars per topic and a round of the
+  self-graded cards; feedback with the source page; a practice test ending in a score per topic and a round of the
   missed ones; night-before sheet + quick review; exam-morning warm-up; a problem's steps one at a time. With the
   app's network blocked, sessions and a practice test ran with no error, and 63 answers synced on reconnect. The
   owner's screens and data are unchanged (137 cards incl. the 77 imported, 142 reviews). App tests (15) and backend

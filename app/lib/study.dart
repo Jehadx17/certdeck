@@ -44,9 +44,9 @@ class StudyScreen extends StatefulWidget {
   final StudyQueue? custom;
   /// Schedules every answer with this (a college assessment's date); null = per card.
   final fsrs.Scheduler? scheduler;
-  /// The easy version for students (EASY.md): no confidence step, one Check button, stars at the end.
+  /// The easy version for students (EASY.md): confidence buttons that reveal, plain feedback, a score at the end.
   final bool easy;
-  /// A practice test (easy): stars per topic at the end and a round of the missed questions.
+  /// A practice test (easy): a score per topic at the end and a round of the missed questions.
   final bool practice;
   /// "Do more" at the end of a easy session.
   final VoidCallback? onMore;
@@ -342,7 +342,7 @@ class _StudyScreenState extends State<StudyScreen> {
   }
 
   Widget _easyEnd(BuildContext context) {
-    final n = sessionStars(right, done);
+    final n = sessionTier(right, done);
     final missed = [for (final (c, ok) in results) if (!ok) c];
     return Scaffold(
       appBar: AppBar(automaticallyImplyLeading: false),
@@ -353,7 +353,7 @@ class _StudyScreenState extends State<StudyScreen> {
             style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold), textAlign: TextAlign.center),
         if (done > 0) ...[
           const SizedBox(height: 12),
-          Center(child: stars(n, size: 36, of: 3)),
+          Text(t('{r} of {n} right', {'r': right, 'n': done}), style: const TextStyle(fontSize: 28, fontWeight: FontWeight.bold), textAlign: TextAlign.center),
           const SizedBox(height: 12),
           Text(
               n == 3
@@ -379,7 +379,7 @@ class _StudyScreenState extends State<StudyScreen> {
                     padding: const EdgeInsets.symmetric(vertical: 6),
                     child: Row(children: [
                       Expanded(child: autoText(e.key, style: const TextStyle(fontSize: 14), maxLines: 2, overflow: TextOverflow.ellipsis)),
-                      stars(sessionStars(e.value.where((x) => x).length, e.value.length), size: 18, of: 3),
+                      Text('${e.value.where((x) => x).length}/${e.value.length}', style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w600)),
                     ]),
                   ),
               ]);

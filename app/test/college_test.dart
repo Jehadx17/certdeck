@@ -145,8 +145,7 @@ void main() {
     expect(problem.score, .5);
   });
 
-  test('easy app: stars', () {
-    expect([for (final x in [0.0, .09, .1, .5, .95, 1.0, 1.2]) starsFor(x)], [0, 0, 1, 3, 5, 5, 5]);
-    expect([sessionStars(0, 0), sessionStars(1, 5), sessionStars(3, 5), sessionStars(4, 5), sessionStars(10, 10)], [0, 1, 2, 3, 3]);
+  test('easy app: how a session went', () {
+    expect([sessionTier(0, 0), sessionTier(1, 5), sessionTier(3, 5), sessionTier(4, 5), sessionTier(10, 10)], [0, 1, 2, 3, 3]);
   });
 }

@@ -107,8 +107,10 @@ Then don't stop again unless something is destructive, affects my other VPS proj
 
 ## Answers assumed (the batch went unanswered; change any of them)
 - Setup is done by the students themselves (clarified): no PIN; the setup screens are under "My courses".
-- No marks or percentages on the study screens: stars (0–5 per exam, 1–3 per session) and short sentences only.
-- Rewards: stars and a short vibration on right answers. No streaks (nothing to lose for a missed day), no sounds.
+- **Answered 2026-10-14:** students set up their own courses; numbers instead of stars (your preference): each exam shows
+  "40% learned · 12 of 30 cards" with a progress bar, a session ends with "7 of 10 right", a practice test with a score
+  per topic; short vibration kept; no test user; Modern Standard Arabic.
+- Rewards: a short vibration on right answers. No streaks (nothing to lose for a missed day), no sounds.
 - No test user available yet: checked screen by screen on the HONOR with screenshots.
 - Simple Modern Standard Arabic.
 
@@ -120,14 +122,14 @@ New phone                 Home (student role)                  Study (easy mode)
 |     Welcome!      |     | +----------------------------+ |   | Question text (bigger)     |
 | Type the code ... |     | | Science 101                | |   |  [ option A ]              |
 | [  ABCD 2345   ]  |     | | Quiz 2   The exam is ...   | |   |  [ option B ]              |
-| [     Start     ] |     | | ***** stars fill up ...    | |   |                            |
+| [     Start     ] |     | | 40% learned · 12 of 30 [==] | |   |                            |
 |                   |     | | [ Night before / Morning ] | |   +----------------------------+
 | I have a token    |     | | [     > Study now       ]  | |   | [Guessing][Unsure][Sure]   |
 +-------------------+     | | [ Try a practice test   ]  | |   |  then: Great job! [Next]   |
                           | +----------------------------+ |   |  or: Did you get it?       |
                           | (other exams, smaller)         |   |      [Not yet]   [Yes]     |
                           +--------------------------------+   +----------------------------+
-End: trophy, 1-3 stars, one sentence, [Do more] [Done]; a practice test adds stars per topic and
+End: trophy, "7 of 10 right", one sentence, [Do more] [Done]; a practice test adds a score per topic and
 [Practise the ones you missed]. My courses -> the previous student screens: courses, material, exams,
 preparing, and Settings.
 ```

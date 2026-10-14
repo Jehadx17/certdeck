@@ -23,15 +23,10 @@ ButtonStyle easyButton([Color? color]) => FilledButton.styleFrom(
     textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)));
 
-/// 0..5 stars for a 0..1 share.
-int starsFor(double share) => (share.clamp(0, 1) * 5).round();
 
-Widget stars(int n, {double size = 28, int of = 5}) => Row(mainAxisSize: MainAxisSize.min, children: [
-      for (var i = 0; i < of; i++) Icon(i < n ? Icons.star_rounded : Icons.star_outline_rounded, size: size, color: Colors.amber),
-    ]);
 
-/// What a session ends with: 1..3 stars from the share of right answers.
-int sessionStars(int right, int done) => done == 0 ? 0 : (right / done >= .8 ? 3 : (right / done >= .5 ? 2 : 1));
+/// How a session went, for the closing sentence: 3 = most right, 2 = half or more, 1 = fewer.
+int sessionTier(int right, int done) => done == 0 ? 0 : (right / done >= .8 ? 3 : (right / done >= .5 ? 2 : 1));
 
 /// The student's screens use the phone's own text size (kept as a hook for a later size setting).
 Widget easyScale(BuildContext context, Widget child) => child;
@@ -42,7 +37,8 @@ class _Exam {
   final Scope s;
   _Exam(this.a, this.course, this.s);
   int? get days => s.days;
-  double get done => s.cards.isEmpty ? 0 : s.cards.where(s.mastered).length / s.cards.length;
+  int get learned => s.cards.where(s.mastered).length;
+  double get done => s.cards.isEmpty ? 0 : learned / s.cards.length;
 }
 
 class EasyHome extends StatefulWidget {
@@ -157,11 +153,10 @@ class _ExamCard extends StatelessWidget {
           const SizedBox(height: 4),
           Text(easyWhen(d), style: const TextStyle(fontSize: 15)),
           const SizedBox(height: 12),
-          Row(children: [
-            stars(starsFor(e.done), size: big ? 22 : 20),
-            const SizedBox(width: 8),
-            Expanded(child: Text(t('stars fill up as you learn'), style: const TextStyle(fontSize: 12, color: Colors.white60))),
-          ]),
+          Text(t('{p}% learned · {n} of {m} cards', {'p': (e.done * 100).round(), 'n': e.learned, 'm': e.s.cards.length}),
+              style: const TextStyle(fontSize: 13, color: Colors.white70)),
+          const SizedBox(height: 6),
+          ClipRRect(borderRadius: BorderRadius.circular(4), child: LinearProgressIndicator(value: e.done, minHeight: 8)),
           const SizedBox(height: 16),
           if (d == 0)
             FilledButton.icon(
@@ -223,7 +218,7 @@ Future<void> easyStudy(BuildContext context, Json a, {String kind = 'study'}) as
 }
 
 /// A practice test with fixed settings: 10 questions from the cards (no AI, works offline), feedback per question,
-/// stars per topic at the end.
+/// a score per topic at the end.
 Future<void> easyPractice(BuildContext context, Json a) async {
   final s = await Scope.load(a);
   final cards = pickPractice(s, await Db.get('profile-${a['course_id']}'), 10)..shuffle();
@@ -277,7 +272,7 @@ Future<void> easyMessage(BuildContext context, IconData icon, String title, Stri
 
 List<(IconData, String)> get homeHelp => [
       (Icons.play_arrow_rounded, t('Tap "Study now". The app picks the questions for you. About 10 minutes.')),
-      (Icons.star_rounded, t('Right answers fill your stars.')),
+      (Icons.trending_up_rounded, t('Each exam shows how much you have learned, in cards and percent.')),
       (Icons.replay_rounded, t('Wrong answers come back later, so you learn them.')),
       (Icons.assignment_turned_in_outlined, t('Try a practice test to see how ready you are.')),
     ];
@@ -325,7 +320,7 @@ class _KidIntroState extends State<EasyIntro> {
     final pages = [
       (Icons.school_rounded, t('Welcome!'), t('This app helps you get ready for your exams.')),
       (Icons.play_circle_fill_rounded, t('Tap "Study now"'), t('The app picks the questions. About 10 minutes is enough.')),
-      (Icons.star_rounded, t('Collect stars'), t('Right answers fill your stars. Wrong ones come back later, so you learn them.')),
+      (Icons.trending_up_rounded, t('Watch your progress'), t('Each exam shows how much you have learned. Wrong answers come back later, so you learn them.')),
     ];
     final (icon, title, body) = pages[page];
     final last = page == pages.length - 1;

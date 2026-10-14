@@ -235,8 +235,8 @@ Rates from the platform pricing page (Opus 5.5: $4 in, $5 cache write, $0.20 cac
 - **Audience:** college students, designed to the bar "a child could use it alone". Adult wording; no parent PIN
   (students do their own setup, under "My courses").
 - **Home:** one card per prepared exam with one big "Study now" button; the most urgent exam first. Night-before
-  and exam-morning buttons appear on the day they apply. Stars (share of the exam's cards mastered) replace the
-  predicted-mark range and percentages on the study screens; the setup screens keep their numbers and costs.
+  and exam-morning buttons appear on the day they apply. Progress is shown as numbers (your answer, 2026-10-14: stars replaced): the share and count of the exam's cards
+  learned, with a bar, instead of the predicted-mark range; the setup screens keep their numbers and costs.
 - **One tap to study:** about 10 minutes, chosen by the engine (spaced when there's time, the sprint loop near the
   exam). The triage page and the minute chips are owner/setup tools now.
 - **Confidence kept:** an earlier cut inferred it from answer time; you prefer rating it, so Guessing / Unsure /
@@ -253,4 +253,3 @@ Rates from the platform pricing page (Opus 5.5: $4 in, $5 cache write, $0.20 cac
 - **Photos of handwritten work removed** (2026-10-14, at your request): they cost an AI vision call per grading for
   little benefit. Written answers are graded from the typed text (AI) or by the student's own verdict / rubric
   ticks; the server's college/grade no longer accepts images.
-
