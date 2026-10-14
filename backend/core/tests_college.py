@@ -263,3 +263,9 @@ class ScopePagesTests(TestCase):
         self.assertEqual(college._scope_pages(scope, skip={"m1/s1"}), {"m1/s2": [6], "m1/s3": [7, 8, 9]})
         # Dense prose holds far more knowledge points per page than slides.
         self.assertGreater(college._expected_kps([1300] * 10), 3 * college._expected_kps([350] * 10) / 2)
+
+    def test_short_answers_stay_short(self):
+        short = lambda answer: college._clean_course_card(
+            {"type": "short", "question": "What do we call it?", "explanation": "Because.", "answer": answer})
+        self.assertEqual(short("The default constructor")[0]["answer"], "The default constructor")
+        self.assertEqual(short("one two three four five six"), (None, "too long"))

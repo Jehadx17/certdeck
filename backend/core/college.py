@@ -129,11 +129,13 @@ Return one integer per knowledge point, in the same order as the numbered list (
 
 SCOPE_PROMPT = """Match the assessment below to the student's material sections it covers. If its coverage isn't stated but the course plan lists topics by week, use the topics taught after the previous assessment up to this one's week. Return the keys of the covered sections (only clear matches; [] if nothing clearly matches). Prefer the most specific sections (subsections over their chapter)."""
 
+SHORT_MAX_WORDS = 5  # a short-answer model answer is a term or short phrase
+
 CARD_RULES = """Card types (set every field a type doesn't use to null):
 - mcq: question; options (4, or 5-6 with "(Choose 2)" for multiple answers); correct = 0-based indices; option_explanations = why each option is right or wrong. True/false questions are mcq with options ["True", "False"] (Arabic: ["صح", "خطأ"]).
 - cloze: question with 1-3 blanks written {{answer}} or {{answer::hint}}.
 - basic: question -> answer, for facts best recalled freely.
-- short: a short-answer / definition question as the exam would ask it, asking for one idea a student can answer in a line (split a broad "explain" topic into several short cards); answer = the model answer, brief: one or two short sentences, at most 25 words, no padding or restating the question (the explanation carries the detail); rubric = 2-3 key points [{point, weight}] (weights sum to 1), each a few words, that a grader checks for partial credit.
+- short: a short-answer question whose answer is a term, name, number or short phrase of AT MOST 5 WORDS (e.g. "What do we call ...?", "Name the ..."); never ask the student to explain or describe at length (split a broad topic into several short cards, or use cloze / mcq); answer = the model answer in at most 5 words, nothing else (the explanation carries the detail); rubric = 1-2 key points [{point, weight}] (weights sum to 1), each a few words, that a grader checks.
 - problem: an exam-style problem with all the data needed; steps = the full worked solution, one step per item, each justified; answer = the final answer (with units); rubric = method points for partial credit; check = how to verify the final answer with SymPy, REQUIRED whenever the answer is a number or a formula:
   numeric (expr evaluates to value), equivalent (expr and value are the same expression), derivative (d/d var of expr equals value: use it to check an antiderivative, without "+ C"), solutions (the roots of expr = 0 in var are exactly value, comma-separated).
   expr and value in SymPy syntax: ** for powers, sqrt(), pi, E, exp(), log(), sin(); integrate(f, (x, a, b)), diff(f, x), limit(f, x, a), Sum(f, (n, a, b)); single-letter variables; tolerance for rounded decimals. check = null only for proofs, explanations or non-numeric answers.
@@ -667,6 +669,8 @@ def _clean_course_card(raw):
     if t not in ("short", "problem") or not question or not explanation or not (raw.get("answer") or "").strip():
         return None, "invalid"
     card = {"type": t, "question": question, "explanation": explanation, "answer": raw["answer"].strip()}
+    if t == "short" and len(card["answer"].split()) > SHORT_MAX_WORDS:
+        return None, "too long"  # open-text answers stay a term or short phrase (see CARD_RULES)
     rubric = [r for r in raw.get("rubric") or [] if (r.get("point") or "").strip()]
     total = sum(max(0.0, float(r.get("weight") or 0)) for r in rubric) or 1.0
     card["rubric"] = [{"point": r["point"].strip(), "weight": round(max(0.0, float(r.get("weight") or 0)) / total, 3)}
