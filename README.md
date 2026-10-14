@@ -209,6 +209,7 @@ Format: [docs/cards.schema.json](docs/cards.schema.json) (JSON Schema). Example:
 - On 1.4.1 (normal sizes), every student screen was audited on the HONOR with a screenshot and a text check (no
   %, $, delete, setup jargon or error text): the intro (3), home, Help (2), a question, its revealed answer, the next
   card, exam morning, night-before and its sheet, a practice question, the practice end screen and the missed round.
+  Repeated on 1.4.2 (photos of work removed) in Arabic, and on 1.4.1 in English: no flags.
 
 ## Verification (2026-10-13, college)
 - Backend: 24 Django tests (accounts and isolation incl. media by hash, caps, users command, uploads with resume and
