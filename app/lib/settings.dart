@@ -10,7 +10,7 @@ import 'package:share_plus/share_plus.dart';
 import 'api.dart';
 import 'db.dart';
 import 'i18n.dart';
-import 'kid.dart';
+import 'easy.dart';
 import 'logic.dart';
 import 'notify.dart';
 import 'widgets.dart';

@@ -1,9 +1,11 @@
 # CertDeck for College: Make the Student App Child-Easy
 
-Redesign the **student side** of CertDeck (see COLLEGE.md, SPEC.md, README.md, DECISIONS.md, docs/PROTOCOL.md) so a
-child could use it alone: open the app, know what to do, study, and feel good about it, with no help and no
-reading of instructions. Assume the student is about 10 years old, reads Arabic well and English a little, gets
-bored fast, taps whatever is biggest, and never opens Settings on purpose.
+Redesign the **student side** of CertDeck (see COLLEGE.md, SPEC.md, README.md, DECISIONS.md, docs/PROTOCOL.md) so it
+is as easy as if a child had to use it alone: open the app, know what to do, study, and feel good about it, with no
+help and no reading of instructions. **The users are still college students** (clarified 2026-10-14): the bar is
+child-level ease, the tone stays adult. Design for someone who reads Arabic well and English a little, is tired or
+in a hurry, taps whatever is biggest, and never opens Settings on purpose. Where this file says "the child", read
+"the student, judged by that bar".
 
 ## Context
 - The student app today (1.3.6) has two tabs, College and Settings. It works, but it was built for a capable
@@ -19,9 +21,9 @@ bored fast, taps whatever is biggest, and never opens Settings on purpose.
 - **Keep my side exactly as it is.** The owner (me) keeps every screen, word and feature unchanged. All changes
   apply only when the account role is `student`. The study engine, server, AI pipeline and sync stay as they are;
   this goal is about what the student sees and touches.
-- Who sets things up: an adult (me, or a parent) does the hard parts once: creating the account, uploading
-  material, setting the exam date and scope. The child only studies. The setup screens can stay adult-level,
-  but they must be clearly separate from the child's screens.
+- Setup (uploading material, setting the exam date and scope, preparing) is done by the students themselves, as
+  in COLLEGE.md; I create their accounts. The setup screens can stay as they are, but they must be clearly
+  separate from the everyday study screens.
 
 ## Before you start: ask me everything in ONE batch
 Then don't stop again unless something is destructive, affects my other VPS projects, or is blocked:
@@ -68,13 +70,12 @@ Then don't stop again unless something is destructive, affects my other VPS proj
 - **Help:** a tiny first-run walkthrough (3 screens max, skippable) and a "?" on each screen that shows a picture
   of what to do.
 
-## Setup (adult side)
+## Setup (the student's "My courses")
 - **Sign-in without typing a token:** a QR code or a short one-time code I generate with `manage.py users`
   (e.g. 6 digits, expires in 24 h) that the phone exchanges for the real token. The long token path stays for me.
 - Adding material, confirming exams, choosing what a quiz covers, hints, preparing (with the cost estimate),
-  budget and language live in a separate "For parents/teachers" area, reached from Settings (behind the PIN if I
-  choose one). Keep these screens as they are, but tidy their wording.
-- Preparing an exam happens there; the child's home only shows exams that have cards ready.
+  budget and language live in a separate "My courses" area, one tap from the home. Keep these screens as they are.
+- Preparing an exam happens there; the home only shows exams that have cards ready.
 
 ## Out of scope (don't build)
 - Accounts the child creates, chat with an AI tutor, voice (removed earlier at my request), social features,
@@ -92,30 +93,30 @@ Then don't stop again unless something is destructive, affects my other VPS proj
   with the new short code; switch the phone back to my owner token at the end.
 
 ## Definition of done
-- A new child account can be set up on a phone with a QR/short code in under a minute, without typing a token.
+- A new student account can be set up on a phone with a QR/short code in under a minute, without typing a token.
 - On the HONOR, starting from a cold app open, the child reaches the first question of a study session in **one
   tap**, and every child screen passes the ground rules above (checked screen by screen with screenshots).
 - No child screen shows a percentage, cost, range, technical term, English error, or a way to delete data.
 - A full session works offline and syncs later with no visible error.
 - Night-before, exam-morning and practice-test flows each start with one tap from the home card.
-- If a real child is available: they complete a session alone, without being told what to tap, and I record what
+- If a real student is available: they complete a session alone, without being told what to tap, and I record what
   confused them; fix those points and recheck.
 - My owner screens are unchanged; my certs, cards and review history are intact; `qa-student` keeps its data.
 - All code is committed and pushed, README.md and DECISIONS.md updated, and you end with a short summary: what
-  changed, before/after screenshots of the main screens, how to create a child account, and anything left.
+  changed, before/after screenshots of the main screens, how to create a student account, and anything left.
 
 ## Answers assumed (the batch went unanswered; change any of them)
-- Setup is done by an adult; the setup screens sit behind a 4-digit parent PIN chosen the first time they're opened.
-- The child sees no marks or percentages: stars (0–5 per exam, 1–3 per session) and short sentences only.
+- Setup is done by the students themselves (clarified): no PIN; the setup screens are under "My courses".
+- No marks or percentages on the study screens: stars (0–5 per exam, 1–3 per session) and short sentences only.
 - Rewards: stars and a short vibration on right answers. No streaks (nothing to lose for a missed day), no sounds.
-- No test child available yet: checked screen by screen on the HONOR with screenshots.
+- No test user available yet: checked screen by screen on the HONOR with screenshots.
 - Simple Modern Standard Arabic.
 
 ## Design
 ```
-New phone                 Child home (student role)            Study (kid mode)
+New phone                 Home (student role)                  Study (easy mode)
 +-------------------+     +--------------------------------+   +----------------------------+
-|   [school icon]   |     | My study        [Help] [Parents]|   | 5 left               [Help]|
+|   [school icon]   |     | My study     [Help] [My courses]|   | 5 left               [Help]|
 |     Welcome!      |     | +----------------------------+ |   | Question text (bigger)     |
 | Type the code ... |     | | Science 101                | |   |  [ option A ]              |
 | [  ABCD 2345   ]  |     | | Quiz 2   The exam is ...   | |   |  [ option B ]              |
@@ -127,19 +128,19 @@ New phone                 Child home (student role)            Study (kid mode)
                           | (other exams, smaller)         |   |      [Not yet]   [Yes]     |
                           +--------------------------------+   +----------------------------+
 End: trophy, 1-3 stars, one sentence, [Do more] [Done]; a practice test adds stars per topic and
-[Practise the ones you missed]. Parents (PIN) -> the previous student screens: Setup (courses, material,
-exams, preparing) and Settings.
+[Practise the ones you missed]. My courses -> the previous student screens: courses, material, exams,
+preparing, and Settings.
 ```
 - **Sign-in:** `manage.py users code <name>` prints an 8-character code (no 0/O/1/I/L), valid 24 h, once.
   `POST /api/redeem` swaps it for a new token (the phone's own; the old one stops working), throttled after 30 wrong
   codes in 10 minutes. The app's first screen takes the code; Settings → "Use a code" switches a signed-in phone.
 - **One tap to study:** Study runs about 10 minutes: spaced cards when there's time, else the sprint loop (most
   valuable cards not known yet, each until right twice). No triage page, no minute choice.
-- **Answering:** no confidence step (a quick right answer counts as sure, anything else as unsure, so a child is
-  never flagged with a "misconception"); one Check button ("Show me the answer" when nothing was typed);
+- **Answering:** no confidence step (a quick right answer counts as sure, anything else as unsure, so nobody is
+  flagged with a "misconception"); one Check button ("Show me the answer" when nothing was typed);
   self-graded cards ask "Did you get it?" (Yes / Not yet); rubric ticks without percentages; no AI grading button;
   a problem's solution one step at a time. Text 15% larger, buttons at least 56–64 dp.
 - **Night before** (the day before): the night or summary sheet in large text and a short game. **Exam morning**
   (the day itself): the morning check. **Practice test:** 10 questions from the cards (offline, no AI cost).
-- **Reminders** for a student are worded for a child; the update screen is translated.
+- **Reminders** for a student are short and plain; the update screen is translated.
 - Owner screens are unchanged.

@@ -1,6 +1,3 @@
-import 'dart:convert';
-
-import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
 
 import 'api.dart';
@@ -15,13 +12,13 @@ import 'settings.dart';
 import 'study.dart';
 import 'widgets.dart';
 
-/// The student's app (EASY.md): one big button per exam and nothing a child has to work out. The setup screens
-/// (courses, material, scope, settings) sit behind a parent PIN.
+/// The student's app (EASY.md): one big button per exam, simple enough for a child (the students are college students).
+/// The setup screens (courses, material, scope, settings) are one tap away under "My courses".
 
-const kidButtonHeight = 64.0;
+const easyButtonHeight = 64.0;
 
-ButtonStyle kidButton([Color? color]) => FilledButton.styleFrom(
-    minimumSize: const Size.fromHeight(kidButtonHeight),
+ButtonStyle easyButton([Color? color]) => FilledButton.styleFrom(
+    minimumSize: const Size.fromHeight(easyButtonHeight),
     backgroundColor: color,
     textStyle: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)));
@@ -33,15 +30,15 @@ Widget stars(int n, {double size = 28, int of = 5}) => Row(mainAxisSize: MainAxi
       for (var i = 0; i < of; i++) Icon(i < n ? Icons.star_rounded : Icons.star_outline_rounded, size: size, color: Colors.amber),
     ]);
 
-/// A child isn't asked how sure they are: a quick right answer counts as sure, anything else as unsure
-/// (so a wrong answer is never a "misconception" for them).
-Conf kidConf(bool correct, int durationMs) => correct && durationMs < 15000 ? Conf.sure : Conf.unsure;
+/// Students aren't asked how sure they are: a quick right answer counts as sure, anything else as unsure
+/// (so a wrong answer is never flagged as a "misconception").
+Conf easyConf(bool correct, int durationMs) => correct && durationMs < 15000 ? Conf.sure : Conf.unsure;
 
 /// What a session ends with: 1..3 stars from the share of right answers.
 int sessionStars(int right, int done) => done == 0 ? 0 : (right / done >= .8 ? 3 : (right / done >= .5 ? 2 : 1));
 
-/// Larger text everywhere on the child's screens (still follows the phone's own font size).
-Widget kidScale(BuildContext context, Widget child) {
+/// Larger text everywhere on the student's screens (still follows the phone's own font size).
+Widget easyScale(BuildContext context, Widget child) {
   final mq = MediaQuery.of(context);
   return MediaQuery(data: mq.copyWith(textScaler: TextScaler.linear(mq.textScaler.scale(1) * 1.15)), child: child);
 }
@@ -55,21 +52,26 @@ class _Exam {
   double get done => s.cards.isEmpty ? 0 : s.cards.where(s.mastered).length / s.cards.length;
 }
 
-class KidHome extends StatefulWidget {
-  const KidHome({super.key});
+class EasyHome extends StatefulWidget {
+  const EasyHome({super.key});
   @override
-  State<KidHome> createState() => _KidHomeState();
+  State<EasyHome> createState() => _KidHomeState();
 }
 
-class _KidHomeState extends State<KidHome> {
-  @override
-  void initState() {
-    super.initState();
+class _KidHomeState extends State<EasyHome> {
+  bool _introChecked = false;
+
+  /// The first-run intro, once this screen is on top (right after signing in, the sign-in screen is still closing).
+  void _intro() {
+    if (_introChecked || ModalRoute.of(context)?.isCurrent != true) return;
+    _introChecked = true;
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      if (await Db.meta('kid_intro_done') == null && mounted) {
-        await Navigator.push(context, MaterialPageRoute(fullscreenDialog: true, builder: (_) => const KidIntro()));
-        await Db.setMeta('kid_intro_done', '1');
-      }
+      if (!mounted) return;
+      final nav = Navigator.of(context);
+      if (await Db.meta('easy_intro_done') != null) return;
+      final seen = await nav.push<bool>(MaterialPageRoute(fullscreenDialog: true, builder: (_) => const EasyIntro()));
+      if (seen == true) await Db.setMeta('easy_intro_done', '1');
+      if (seen != true) _introChecked = false; // closed by something else: show it next time
     });
   }
 
@@ -77,21 +79,26 @@ class _KidHomeState extends State<KidHome> {
     final out = <_Exam>[];
     for (final a in await upcoming()) {
       final s = await Scope.load(a);
-      if (s.cards.isEmpty) continue; // not prepared yet: nothing a child can do with it
+      if (s.cards.isEmpty) continue; // not prepared yet: nothing to study
       out.add(_Exam(a, (await Db.get(a['course_id']))?['name'] ?? '', s));
     }
     return out;
   }
 
   @override
-  Widget build(BuildContext context) => kidScale(
+  Widget build(BuildContext context) {
+    _intro();
+    return easyScale(
         context,
         Scaffold(
           appBar: AppBar(
             title: Text(t('My study'), style: const TextStyle(fontWeight: FontWeight.bold)),
             actions: [
               helpButton(context, homeHelp),
-              TextButton.icon(onPressed: () => openParentArea(context), icon: const Icon(Icons.lock_outline, size: 18), label: Text(t('Parents'))),
+              TextButton.icon(
+                  onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const ManageScreen())),
+                  icon: const Icon(Icons.folder_open_rounded, size: 20),
+                  label: Text(t('My courses'))),
             ],
           ),
           body: Live(
@@ -105,6 +112,7 @@ class _KidHomeState extends State<KidHome> {
           ),
         ),
       );
+  }
 
   Widget _empty(BuildContext context) => Center(
         child: Padding(
@@ -114,13 +122,13 @@ class _KidHomeState extends State<KidHome> {
             const SizedBox(height: 16),
             Text(t('Nothing to study yet.'), style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold), textAlign: TextAlign.center),
             const SizedBox(height: 8),
-            Text(t('Ask a parent or teacher to add your lessons.'), style: const TextStyle(fontSize: 18), textAlign: TextAlign.center),
+            Text(t('Tap "My courses" to add your material and exams.'), style: const TextStyle(fontSize: 18), textAlign: TextAlign.center),
           ]),
         ),
       );
 }
 
-String kidWhen(int? d) => d == null
+String easyWhen(int? d) => d == null
     ? ''
     : d == 0
         ? t('The exam is today!')
@@ -148,7 +156,7 @@ class _ExamCard extends StatelessWidget {
           autoText(e.course, style: TextStyle(fontSize: 18, color: cs.primary)),
           autoText(e.a['title'] ?? '', style: TextStyle(fontSize: big ? 28 : 22, fontWeight: FontWeight.bold)),
           const SizedBox(height: 4),
-          Text(kidWhen(d), style: const TextStyle(fontSize: 18)),
+          Text(easyWhen(d), style: const TextStyle(fontSize: 18)),
           const SizedBox(height: 12),
           Row(children: [
             stars(starsFor(e.done), size: big ? 32 : 26),
@@ -158,28 +166,28 @@ class _ExamCard extends StatelessWidget {
           const SizedBox(height: 16),
           if (d == 0)
             FilledButton.icon(
-                style: kidButton(Colors.orange),
+                style: easyButton(Colors.orange),
                 icon: const Icon(Icons.wb_sunny_rounded, size: 30),
                 label: Text(t('Exam morning warm-up')),
-                onPressed: () => kidStudy(context, e.a, kind: 'morning'))
+                onPressed: () => easyStudy(context, e.a, kind: 'morning'))
           else if (d == 1)
             FilledButton.icon(
-                style: kidButton(Colors.indigo),
+                style: easyButton(Colors.indigo),
                 icon: const Icon(Icons.nightlight_round, size: 30),
                 label: Text(t('Night before')),
                 onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => NightBefore(e.a)))),
           if (d != null && d <= 1) const SizedBox(height: 10),
           FilledButton.icon(
-              style: kidButton(),
+              style: easyButton(),
               icon: const Icon(Icons.play_arrow_rounded, size: 36),
               label: Text(t('Study')),
-              onPressed: () => kidStudy(context, e.a)),
+              onPressed: () => easyStudy(context, e.a)),
           const SizedBox(height: 10),
           OutlinedButton.icon(
               style: OutlinedButton.styleFrom(minimumSize: const Size.fromHeight(56), textStyle: const TextStyle(fontSize: 18)),
               icon: const Icon(Icons.assignment_turned_in_outlined),
               label: Text(t('Try a practice test')),
-              onPressed: () => kidPractice(context, e.a)),
+              onPressed: () => easyPractice(context, e.a)),
         ]),
       ),
     );
@@ -187,7 +195,7 @@ class _ExamCard extends StatelessWidget {
 }
 
 /// One tap: about 10 minutes, the app picks the cards (most marks first when the exam is close).
-Future<void> kidStudy(BuildContext context, Json a, {String kind = 'study'}) async {
+Future<void> easyStudy(BuildContext context, Json a, {String kind = 'study'}) async {
   final s = await Scope.load(a);
   var q = <Json>[];
   StudyQueue? custom;
@@ -202,37 +210,37 @@ Future<void> kidStudy(BuildContext context, Json a, {String kind = 'study'}) asy
     }
   }
   if (!context.mounted) return;
-  if (q.isEmpty) return kidMessage(context, Icons.emoji_events_rounded, t('You know all of these for now!'), t('Come back tomorrow, or try a practice test.'));
+  if (q.isEmpty) return easyMessage(context, Icons.emoji_events_rounded, t('You know all of these for now!'), t('Come back tomorrow, or try a practice test.'));
   await Navigator.push(
       context,
       MaterialPageRoute(
           builder: (_) => StudyScreen(q,
-              kid: true,
+              easy: true,
               title: a['title'] ?? '',
               source: kind == 'morning' ? 'cram' : 'study',
               custom: custom,
               scheduler: s.scheduler,
-              onMore: kind == 'morning' ? null : () => kidStudy(context, a))));
+              onMore: kind == 'morning' ? null : () => easyStudy(context, a))));
 }
 
 /// A practice test with fixed settings: 10 questions from the cards (no AI, works offline), feedback per question,
 /// stars per topic at the end.
-Future<void> kidPractice(BuildContext context, Json a) async {
+Future<void> easyPractice(BuildContext context, Json a) async {
   final s = await Scope.load(a);
   final cards = pickPractice(s, await Db.get('profile-${a['course_id']}'), 10)..shuffle();
   if (!context.mounted) return;
-  if (cards.isEmpty) return kidMessage(context, Icons.hourglass_empty_rounded, t('Not ready yet.'), t('Ask a parent or teacher to prepare this exam.'));
+  if (cards.isEmpty) return easyMessage(context, Icons.hourglass_empty_rounded, t('Not ready yet.'), t('Prepare this exam first in "My courses".'));
   await Navigator.push(
-      context, MaterialPageRoute(builder: (_) => StudyScreen(cards, kid: true, practice: true, title: t('Practice test'), source: 'exam', scheduler: s.scheduler)));
+      context, MaterialPageRoute(builder: (_) => StudyScreen(cards, easy: true, practice: true, title: t('Practice test'), source: 'exam', scheduler: s.scheduler)));
 }
 
-/// The summary in large text, then a short game.
+/// The summary in large text, then a quick review.
 class NightBefore extends StatelessWidget {
   final Json a;
   const NightBefore(this.a, {super.key});
 
   @override
-  Widget build(BuildContext context) => kidScale(
+  Widget build(BuildContext context) => easyScale(
         context,
         Scaffold(
           appBar: AppBar(title: Text(t('Night before'))),
@@ -241,13 +249,13 @@ class NightBefore extends StatelessWidget {
             builder: (context, snap) {
               final sheet = snap.data?.firstWhere((s) => s != null, orElse: () => null);
               return ListView(padding: const EdgeInsets.all(16), children: [
-                Text(t('Read this once, play a short game, then sleep well. Sleep helps you remember.'), style: const TextStyle(fontSize: 18)),
+                Text(t('Read this once, do a quick review, then get some sleep. Sleep helps you remember.'), style: const TextStyle(fontSize: 18)),
                 const SizedBox(height: 16),
                 FilledButton.icon(
-                    style: kidButton(),
+                    style: easyButton(),
                     icon: const Icon(Icons.play_arrow_rounded, size: 36),
-                    label: Text(t('Play a short game')),
-                    onPressed: () => kidStudy(context, a, kind: 'night')),
+                    label: Text(t('Quick review')),
+                    onPressed: () => easyStudy(context, a, kind: 'night')),
                 const SizedBox(height: 20),
                 if (sheet != null) Md(sheet['content'] ?? '', style: const TextStyle(fontSize: 18, height: 1.5)),
               ]);
@@ -257,13 +265,13 @@ class NightBefore extends StatelessWidget {
       );
 }
 
-Future<void> kidMessage(BuildContext context, IconData icon, String title, String body) => showDialog(
+Future<void> easyMessage(BuildContext context, IconData icon, String title, String body) => showDialog(
     context: context,
     builder: (c) => AlertDialog(
           icon: Icon(icon, size: 56, color: Colors.amber),
           title: Text(title, textAlign: TextAlign.center),
           content: Text(body, textAlign: TextAlign.center, style: const TextStyle(fontSize: 18)),
-          actions: [FilledButton(style: kidButton(), onPressed: () => Navigator.pop(c), child: Text(t('OK')))],
+          actions: [FilledButton(style: easyButton(), onPressed: () => Navigator.pop(c), child: Text(t('OK')))],
         ));
 
 // ---------------- help ----------------
@@ -303,25 +311,25 @@ Widget helpButton(BuildContext context, List<(IconData, String)> items) => TextB
     label: Text(t('Help')));
 
 /// Three screens on the first open, skippable.
-class KidIntro extends StatefulWidget {
-  const KidIntro({super.key});
+class EasyIntro extends StatefulWidget {
+  const EasyIntro({super.key});
   @override
-  State<KidIntro> createState() => _KidIntroState();
+  State<EasyIntro> createState() => _KidIntroState();
 }
 
-class _KidIntroState extends State<KidIntro> {
+class _KidIntroState extends State<EasyIntro> {
   int page = 0;
 
   @override
   Widget build(BuildContext context) {
     final pages = [
-      (Icons.school_rounded, t('Hello!'), t('This app helps you get ready for your exams.')),
+      (Icons.school_rounded, t('Welcome!'), t('This app helps you get ready for your exams.')),
       (Icons.play_circle_fill_rounded, t('Tap Study'), t('The app picks the questions. About 10 minutes is enough.')),
       (Icons.star_rounded, t('Collect stars'), t('Right answers fill your stars. Wrong ones come back later, so you learn them.')),
     ];
     final (icon, title, body) = pages[page];
     final last = page == pages.length - 1;
-    return kidScale(
+    return easyScale(
       context,
       Scaffold(
         body: SafeArea(
@@ -330,7 +338,7 @@ class _KidIntroState extends State<KidIntro> {
             child: Column(children: [
               Align(
                   alignment: AlignmentDirectional.centerEnd,
-                  child: TextButton(onPressed: () => Navigator.pop(context), child: Text(t('Skip'), style: const TextStyle(fontSize: 18)))),
+                  child: TextButton(onPressed: () => Navigator.pop(context, true), child: Text(t('Skip'), style: const TextStyle(fontSize: 18)))),
               const Spacer(),
               Icon(icon, size: 140, color: Colors.amber),
               const SizedBox(height: 24),
@@ -348,8 +356,8 @@ class _KidIntroState extends State<KidIntro> {
               ]),
               const SizedBox(height: 16),
               FilledButton(
-                  style: kidButton(),
-                  onPressed: () => last ? Navigator.pop(context) : setState(() => page++),
+                  style: easyButton(),
+                  onPressed: () => last ? Navigator.pop(context, true) : setState(() => page++),
                   child: Text(last ? t('Let\'s go!') : t('Next'))),
             ]),
           ),
@@ -359,101 +367,16 @@ class _KidIntroState extends State<KidIntro> {
   }
 }
 
-// ---------------- parents ----------------
+// ---------------- the student's own setup ----------------
 
-String _pinHash(String pin) => sha256.convert(utf8.encode('certdeck-parent-pin:$pin')).toString();
-
-/// The setup screens (courses, material, exams, settings) behind a 4-digit PIN chosen on first use.
-Future<void> openParentArea(BuildContext context) async {
-  final saved = await Db.meta('parent_pin');
-  if (!context.mounted) return;
-  final r = await showDialog<Object>(context: context, builder: (_) => _PinDialog(saved));
-  if (!context.mounted) return;
-  // A new sign-in code resets the PIN (signing in wipes and restores this phone's copy).
-  final page = r == true ? const ParentArea() : (r == 'forgot' ? const WelcomeScreen() : null);
-  if (page != null) await Navigator.push(context, MaterialPageRoute(builder: (_) => page));
-}
-
-class _PinDialog extends StatefulWidget {
-  final String? saved;
-  const _PinDialog(this.saved);
+/// The setup screens as they were: College (courses, material, exams, preparing) and Settings.
+class ManageScreen extends StatefulWidget {
+  const ManageScreen({super.key});
   @override
-  State<_PinDialog> createState() => _PinDialogState();
+  State<ManageScreen> createState() => _ManageScreenState();
 }
 
-class _PinDialogState extends State<_PinDialog> {
-  final pin = TextEditingController();
-  String? first, error;
-
-  Future<void> _submit() async {
-    final p = pin.text.trim();
-    if (!RegExp(r'^\d{4}$').hasMatch(p)) return setState(() => error = t('4 digits, please'));
-    if (widget.saved != null) {
-      if (_pinHash(p) == widget.saved) return Navigator.pop(context, true);
-      return setState(() {
-        error = t('Wrong PIN');
-        pin.clear();
-      });
-    }
-    if (first == null) {
-      return setState(() {
-        first = p;
-        error = null;
-        pin.clear();
-      });
-    }
-    if (p != first) {
-      return setState(() {
-        first = null;
-        error = t('The two PINs were different. Start again.');
-        pin.clear();
-      });
-    }
-    await Db.setMeta('parent_pin', _pinHash(p));
-    if (mounted) Navigator.pop(context, true);
-  }
-
-  @override
-  Widget build(BuildContext context) => AlertDialog(
-        title: Text(widget.saved != null
-            ? t('Parent PIN')
-            : first == null
-                ? t('Choose a 4-digit parent PIN')
-                : t('Type the PIN again')),
-        content: Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-          if (widget.saved == null && first == null)
-            Text(t('Only for parents and teachers: it keeps the setup screens away from the child.'), style: const TextStyle(fontSize: 14)),
-          TextField(
-            controller: pin,
-            autofocus: true,
-            obscureText: true,
-            keyboardType: TextInputType.number,
-            maxLength: 4,
-            textAlign: TextAlign.center,
-            style: const TextStyle(fontSize: 28, letterSpacing: 12),
-            onSubmitted: (_) => _submit(),
-          ),
-          if (error != null) Text(error!, style: TextStyle(color: Theme.of(context).colorScheme.error)),
-          if (widget.saved != null)
-            TextButton(
-                onPressed: () => Navigator.pop(context, 'forgot'),
-                child: Text(t('Forgot it? Sign in again with a new code: nothing is lost.'), style: const TextStyle(fontSize: 12))),
-        ]),
-        actions: [
-          TextButton(onPressed: () => Navigator.pop(context, false), child: Text(t('Cancel'))),
-          FilledButton(onPressed: _submit, child: Text(t('OK'))),
-        ],
-      );
-}
-
-/// The student setup as it was: College (courses, material, exams) and Settings.
-class ParentArea extends StatefulWidget {
-  const ParentArea({super.key});
-  @override
-  State<ParentArea> createState() => _ParentAreaState();
-}
-
-class _ParentAreaState extends State<ParentArea> {
+class _ManageScreenState extends State<ManageScreen> {
   int tab = 0;
   @override
   Widget build(BuildContext context) => Scaffold(
@@ -465,7 +388,7 @@ class _ParentAreaState extends State<ParentArea> {
             setState(() => tab = i);
           },
           destinations: [
-            NavigationDestination(icon: const Icon(Icons.school_outlined), selectedIcon: const Icon(Icons.school), label: t('Setup')),
+            NavigationDestination(icon: const Icon(Icons.school_outlined), selectedIcon: const Icon(Icons.school), label: t('My courses')),
             NavigationDestination(icon: const Icon(Icons.settings_outlined), selectedIcon: const Icon(Icons.settings), label: t('Settings')),
           ],
         ),
@@ -501,7 +424,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   }
 
   @override
-  Widget build(BuildContext context) => kidScale(
+  Widget build(BuildContext context) => easyScale(
         context,
         Scaffold(
           body: SafeArea(
@@ -511,7 +434,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               const SizedBox(height: 16),
               Text(t('Welcome!'), style: const TextStyle(fontSize: 32, fontWeight: FontWeight.bold), textAlign: TextAlign.center),
               const SizedBox(height: 8),
-              Text(t('Type the code your parent or teacher gave you.'), style: const TextStyle(fontSize: 20), textAlign: TextAlign.center),
+              Text(t('Type the sign-in code you were given.'), style: const TextStyle(fontSize: 20), textAlign: TextAlign.center),
               const SizedBox(height: 24),
               TextField(
                 controller: code,
@@ -525,7 +448,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               ),
               const SizedBox(height: 16),
               FilledButton(
-                  style: kidButton(),
+                  style: easyButton(),
                   onPressed: working ? null : _go,
                   child: working ? const CircularProgressIndicator() : Text(t('Start'))),
               const SizedBox(height: 40),

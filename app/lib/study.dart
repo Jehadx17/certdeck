@@ -8,7 +8,7 @@ import 'package:fsrs/fsrs.dart' as fsrs;
 
 import 'db.dart';
 import 'i18n.dart';
-import 'kid.dart';
+import 'easy.dart';
 import 'logic.dart';
 import 'widgets.dart';
 
@@ -44,14 +44,14 @@ class StudyScreen extends StatefulWidget {
   final StudyQueue? custom;
   /// Schedules every answer with this (a college assessment's date); null = per card.
   final fsrs.Scheduler? scheduler;
-  /// The child's version (EASY.md): no confidence step, one Check button, stars at the end.
-  final bool kid;
-  /// A practice test (kid): stars per topic at the end and a round of the missed questions.
+  /// The easy version for students (EASY.md): no confidence step, one Check button, stars at the end.
+  final bool easy;
+  /// A practice test (easy): stars per topic at the end and a round of the missed questions.
   final bool practice;
-  /// "Do more" at the end of a kid session.
+  /// "Do more" at the end of a easy session.
   final VoidCallback? onMore;
   const StudyScreen(this.queue,
-      {super.key, this.source = 'study', this.title = 'Study', this.custom, this.scheduler, this.kid = false, this.practice = false, this.onMore});
+      {super.key, this.source = 'study', this.title = 'Study', this.custom, this.scheduler, this.easy = false, this.practice = false, this.onMore});
   @override
   State<StudyScreen> createState() => _StudyScreenState();
 }
@@ -80,11 +80,11 @@ class _StudyScreenState extends State<StudyScreen> {
       });
 
   bool get graded => ans!.written ? ans!.graded : (ans!.autoGraded || ans!.selfGrade != null);
-  bool get misconception => !widget.kid && revealed && graded && conf == Conf.sure && ans!.score < .4;
+  bool get misconception => !widget.easy && revealed && graded && conf == Conf.sure && ans!.score < .4;
 
   Future<void> _commit() async {
     final a = ans!;
-    if (widget.kid) conf = kidConf(a.correct, nowMs() - a.startedAt);
+    if (widget.easy) conf = easyConf(a.correct, nowMs() - a.startedAt);
     final updated = await recordAnswer(card!,
         conf: conf!,
         correct: a.correct,
@@ -113,7 +113,7 @@ class _StudyScreenState extends State<StudyScreen> {
   @override
   Widget build(BuildContext context) {
     final cs = Theme.of(context).colorScheme;
-    if (widget.kid) return kidScale(context, card == null ? _kidEnd(context) : _kidCard(cs));
+    if (widget.easy) return easyScale(context, card == null ? _easyEnd(context) : _easyCard(cs));
     if (card == null) {
       return Scaffold(
         appBar: AppBar(title: Text(widget.title)),
@@ -241,9 +241,9 @@ class _StudyScreenState extends State<StudyScreen> {
     ]);
   }
 
-  // ---------------- the child's version ----------------
+  // ---------------- the easy version (EASY.md) ----------------
 
-  Widget _kidCard(ColorScheme cs) => Scaffold(
+  Widget _easyCard(ColorScheme cs) => Scaffold(
         appBar: AppBar(
           title: Text(t('{n} left', {'n': session.remaining + 1}), style: const TextStyle(fontSize: 20)),
           actions: [helpButton(context, studyHelp)],
@@ -252,16 +252,16 @@ class _StudyScreenState extends State<StudyScreen> {
           child: Column(children: [
             Expanded(
               child: ListView(padding: const EdgeInsets.all(16), children: [
-                CardView(ans!, key: ObjectKey(ans), revealed: revealed, kid: true, onChanged: () => setState(() {})),
+                CardView(ans!, key: ObjectKey(ans), revealed: revealed, easy: true, onChanged: () => setState(() {})),
                 const SizedBox(height: 40),
               ]),
             ),
-            _kidBottom(cs),
+            _easyBottom(cs),
           ]),
         ),
       );
 
-  void _kidCheck() {
+  void _easyCheck() {
     setState(() {
       conf = Conf.unsure;
       revealed = true;
@@ -269,13 +269,13 @@ class _StudyScreenState extends State<StudyScreen> {
     if (ans!.autoGraded && ans!.correct) HapticFeedback.mediumImpact();
   }
 
-  void _kidVerdict(bool yes) {
+  void _easyVerdict(bool yes) {
     if (yes) HapticFeedback.mediumImpact();
     ans!.written ? ans!.selfScore = yes ? 1 : 0 : ans!.selfGrade = yes;
     _commit();
   }
 
-  Widget _kidBottom(ColorScheme cs) {
+  Widget _easyBottom(ColorScheme cs) {
     Widget bar(Widget child) => Container(
         padding: const EdgeInsets.fromLTRB(16, 10, 16, 16),
         decoration: BoxDecoration(color: cs.surfaceContainer, border: const Border(top: BorderSide(color: Colors.white10))),
@@ -284,10 +284,10 @@ class _StudyScreenState extends State<StudyScreen> {
     if (!revealed) {
       final empty = (a.type == 'typed' || a.written) && a.typed.trim().isEmpty;
       return bar(FilledButton.icon(
-          style: kidButton(),
+          style: easyButton(),
           icon: Icon(empty ? Icons.visibility_rounded : Icons.check_rounded, size: 30),
           label: Text(a.ready ? (empty ? t('Show me the answer') : t('Check')) : t('Pick an answer')),
-          onPressed: a.ready ? _kidCheck : null));
+          onPressed: a.ready ? _easyCheck : null));
     }
     if (!graded) {
       return bar(Column(mainAxisSize: MainAxisSize.min, children: [
@@ -296,11 +296,11 @@ class _StudyScreenState extends State<StudyScreen> {
         Row(children: [
           Expanded(
               child: FilledButton.icon(
-                  style: kidButton(Colors.deepOrange), icon: const Icon(Icons.replay_rounded), label: Text(t('Not yet')), onPressed: () => _kidVerdict(false))),
+                  style: easyButton(Colors.deepOrange), icon: const Icon(Icons.replay_rounded), label: Text(t('Not yet')), onPressed: () => _easyVerdict(false))),
           const SizedBox(width: 12),
           Expanded(
               child: FilledButton.icon(
-                  style: kidButton(Colors.green), icon: const Icon(Icons.thumb_up_alt_rounded), label: Text(t('Yes')), onPressed: () => _kidVerdict(true))),
+                  style: easyButton(Colors.green), icon: const Icon(Icons.thumb_up_alt_rounded), label: Text(t('Yes')), onPressed: () => _easyVerdict(true))),
         ]),
       ]));
     }
@@ -314,11 +314,11 @@ class _StudyScreenState extends State<StudyScreen> {
                 style: const TextStyle(fontSize: 20))),
       ]),
       const SizedBox(height: 10),
-      FilledButton.icon(style: kidButton(), icon: const Icon(Icons.arrow_forward_rounded, size: 30), label: Text(t('Next')), onPressed: _commit),
+      FilledButton.icon(style: easyButton(), icon: const Icon(Icons.arrow_forward_rounded, size: 30), label: Text(t('Next')), onPressed: _commit),
     ]));
   }
 
-  Widget _kidEnd(BuildContext context) {
+  Widget _easyEnd(BuildContext context) {
     final n = sessionStars(right, done);
     final missed = [for (final (c, ok) in results) if (!ok) c];
     return Scaffold(
@@ -334,7 +334,7 @@ class _StudyScreenState extends State<StudyScreen> {
           const SizedBox(height: 12),
           Text(
               n == 3
-                  ? t('Amazing work!')
+                  ? t('Excellent work!')
                   : n == 2
                       ? t('Good work! A little more practice and you have it.')
                       : t('Good try! The ones you missed come back, so you learn them.'),
@@ -366,14 +366,14 @@ class _StudyScreenState extends State<StudyScreen> {
         const SizedBox(height: 28),
         if (widget.practice && missed.isNotEmpty)
           FilledButton.icon(
-              style: kidButton(),
+              style: easyButton(),
               icon: const Icon(Icons.replay_rounded, size: 30),
               label: Text(t('Practise the ones you missed')),
               onPressed: () => Navigator.pushReplacement(
-                  context, MaterialPageRoute(builder: (_) => StudyScreen(missed, kid: true, title: widget.title, scheduler: widget.scheduler)))),
+                  context, MaterialPageRoute(builder: (_) => StudyScreen(missed, easy: true, title: widget.title, scheduler: widget.scheduler)))),
         if (!widget.practice && widget.onMore != null && done > 0)
           FilledButton.icon(
-              style: kidButton(),
+              style: easyButton(),
               icon: const Icon(Icons.play_arrow_rounded, size: 34),
               label: Text(t('Do more')),
               onPressed: () {

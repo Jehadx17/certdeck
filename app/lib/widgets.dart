@@ -391,10 +391,10 @@ class CardView extends StatefulWidget {
   final bool showExplanation;
   final VoidCallback? onChanged;
   final bool misconception;
-  /// The child's version: no percentages or AI grading, a problem's steps one at a time.
-  final bool kid;
+  /// The easy version (EASY.md): no percentages or AI grading, a problem's steps one at a time.
+  final bool easy;
   const CardView(this.state,
-      {super.key, this.revealed = false, this.showExplanation = true, this.onChanged, this.misconception = false, this.kid = false});
+      {super.key, this.revealed = false, this.showExplanation = true, this.onChanged, this.misconception = false, this.easy = false});
 
   @override
   State<CardView> createState() => _CardViewState();
@@ -402,7 +402,7 @@ class CardView extends StatefulWidget {
 
 class _CardViewState extends State<CardView> {
   late final _typed = TextEditingController(text: widget.state.typed);
-  int _steps = 1; // kid: problem steps shown so far
+  int _steps = 1; // easy: problem steps shown so far
 
   AnswerState get s => widget.state;
   Json get c => s.card;
@@ -585,7 +585,7 @@ class _CardViewState extends State<CardView> {
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Row(children: [
           Expanded(child: Text(t('Marking'), style: TextStyle(color: cs.primary, fontWeight: FontWeight.bold))),
-          if (s.graded && s.numericMatch != true && !widget.kid) Text(t('Score {p}%', {'p': (s.score * 100).round()}), style: const TextStyle(fontWeight: FontWeight.bold)),
+          if (s.graded && s.numericMatch != true && !widget.easy) Text(t('Score {p}%', {'p': (s.score * 100).round()}), style: const TextStyle(fontWeight: FontWeight.bold)),
           if (s.numericMatch == true) Text(t('Final answer matches'), style: const TextStyle(color: Colors.green)),
         ]),
         for (final (i, r) in s.rubric.indexed)
@@ -606,10 +606,10 @@ class _CardViewState extends State<CardView> {
                 ? Text('${(g['points'] as List)[i]['note']}',
                     style: const TextStyle(fontSize: 12), textDirection: isRtl('${(g['points'] as List)[i]['note']}') ? TextDirection.rtl : TextDirection.ltr)
                 : null,
-            secondary: widget.kid ? null : Text('${(((r['weight'] as num?) ?? 0) * 100).round()}%', style: const TextStyle(fontSize: 12, color: Colors.white54)),
+            secondary: widget.easy ? null : Text('${(((r['weight'] as num?) ?? 0) * 100).round()}%', style: const TextStyle(fontSize: 12, color: Colors.white54)),
           ),
         if (g != null) Padding(padding: const EdgeInsets.only(top: 4), child: Md('${g['feedback']}', style: const TextStyle(fontSize: 14))),
-        if (g == null && widget.onChanged != null && !widget.kid && (s.typed.trim().isNotEmpty || s.photos.isNotEmpty))
+        if (g == null && widget.onChanged != null && !widget.easy && (s.typed.trim().isNotEmpty || s.photos.isNotEmpty))
           Align(
             alignment: AlignmentDirectional.centerStart,
             child: TextButton.icon(
@@ -655,7 +655,7 @@ class _CardViewState extends State<CardView> {
     if (s.type == 'problem') {
       out.add(Text(t('Solution'), style: TextStyle(color: cs.primary, fontWeight: FontWeight.bold)));
       final steps = ((c['steps'] as List?) ?? []).cast<String>();
-      final shown = widget.kid ? _steps.clamp(0, steps.length) : steps.length;
+      final shown = widget.easy ? _steps.clamp(0, steps.length) : steps.length;
       for (final (i, step) in steps.take(shown).indexed) {
         out.add(Padding(padding: const EdgeInsets.only(top: 4), child: Md('${i + 1}. $step')));
       }
