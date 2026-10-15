@@ -80,15 +80,16 @@ class Db {
   static Future<void> seed(String kind, Json data) =>
       _db.rawInsert(_insert.replaceFirst('OR REPLACE', 'OR IGNORE'), _cols(kind, data, 0, false, false));
 
-  /// Docs from the server: last-write-wins on updated_at.
+  /// Docs from the server: last-write-wins on updated_at. Insert-if-missing, then update-if-newer: no UPSERT
+  /// syntax, which needs SQLite 3.24 (Android 7 ships 3.9).
   static Future<void> applyRemote(List docs) async {
     final b = _db.batch();
     for (final doc in docs) {
       final d = Map<String, dynamic>.from(doc['data'] as Map)..['id'] = doc['id'];
-      b.rawInsert('''${_insert.replaceFirst('OR REPLACE ', '')}
-        ON CONFLICT(id) DO UPDATE SET kind=excluded.kind, data=excluded.data, updated_at=excluded.updated_at,
-          deleted=excluded.deleted, dirty=0, due=excluded.due, certs=excluded.certs, card_id=excluded.card_id, ts=excluded.ts
-        WHERE excluded.updated_at > docs.updated_at''', _cols(doc['kind'], d, doc['updated_at'], doc['deleted'] == true, false));
+      final c = _cols(doc['kind'], d, doc['updated_at'], doc['deleted'] == true, false);
+      b.rawInsert(_insert.replaceFirst('OR REPLACE', 'OR IGNORE'), c);
+      b.rawUpdate('UPDATE docs SET kind=?, data=?, updated_at=?, deleted=?, dirty=0, due=?, certs=?, card_id=?, ts=? '
+          'WHERE id = ? AND updated_at < ?', [c[1], c[2], c[3], c[4], c[6], c[7], c[8], c[9], c[0], c[3]]);
     }
     await b.commit(noResult: true);
     if (docs.isNotEmpty) changes.value++;

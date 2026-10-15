@@ -16,7 +16,7 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 
-from . import billing, ingest, signin
+from . import billing, ingest, limits, signin
 from .auth import ApiError
 from .models import Account, Device
 
@@ -43,19 +43,21 @@ def sign_in(request, provider):
     if provider not in signin.PROVIDERS:
         raise ApiError(404, "not found")
     body = _body(request)
+    limits.hit("signin_ip", limits.client_ip(request))
     claims = signin.verify(provider, body.get("id_token"))
     field = f"{provider}_sub"
     account = Account.objects.filter(**{field: claims["sub"]}).first()
     new = account is None
     if new:
         birth_year = signin.check_birth_year(body.get("birth_year"))
+        limits.hit("signup_ip", limits.client_ip(request))
         name = str(body.get("name") or claims.get("name") or "").strip()[:120]  # Apple sends the name to the app once
         account = Account.objects.create(**{field: claims["sub"]}, email=(claims.get("email") or "")[:254], name=name,
                                          birth_year=birth_year)
         log.info("new account %s via %s (minor=%s)", account.public_id, provider, signin.is_minor(account))
     if not account.active:
-        raise ApiError(403, f"This account is suspended. Write to {settings.DARB_SUPPORT_EMAIL} to appeal.",
-                       code="suspended")
+        raise ApiError(403, f"This account is paused. If you think this is a mistake, write to {settings.DARB_SUPPORT_EMAIL} "
+                            "and we will check it.", code="suspended")
     if provider == "apple" and (rt := signin.apple_refresh_token(body.get("authorization_code"))):
         Account.objects.filter(pk=account.pk).update(apple_refresh_token=rt)
     _, token = Device.issue(account, str(body.get("platform") or ""))
@@ -105,6 +107,7 @@ def guardian(request):
         raise ApiError(400, "Enter your guardian's email address.", code="email")
     if email == (a.email or "").lower():
         raise ApiError(400, "Use your guardian's email, not yours.", code="email")
+    limits.hit("guardian_account", a.pk)
     token = secrets.token_urlsafe(32)
     Account.objects.filter(pk=a.pk).update(guardian_email=email, guardian_token_hash=_consent_hash(token))
     link = f"https://{settings.DARB_DOMAIN}/consent/{token}"

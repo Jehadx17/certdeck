@@ -341,3 +341,14 @@ class ContentBatch(models.Model):
     ctx = models.JSONField(default=dict)
     cost_usd = models.DecimalField(max_digits=10, decimal_places=4, default=0)
     created = models.DateTimeField(auto_now_add=True)
+
+
+class Rate(models.Model):
+    """Fixed-window request counters (core.limits): one row per (key, window), old windows deleted daily."""
+
+    key = models.CharField(max_length=120)
+    bucket = models.BigIntegerField()
+    n = models.IntegerField(default=0)
+
+    class Meta:
+        constraints = [models.UniqueConstraint(fields=["key", "bucket"], name="rate_key_bucket")]

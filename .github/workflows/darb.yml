@@ -73,6 +73,26 @@ jobs:
       - if: failure()
         run: docker compose --env-file .env logs --tail 200
 
+  # Backup + restore drill (docs/DARB-RESTORE.md): encrypted pgBackRest backup + WAL archive, volume destroyed, restore,
+  # every row compared. Runs when deploy/ changes or on demand; the R2 version runs on the server.
+  restore:
+    if: github.event_name == 'workflow_dispatch' || contains(github.event.head_commit.message, '[restore]')
+    runs-on: ubuntu-24.04
+    defaults: {run: {working-directory: darb/deploy}}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Configure
+        run: |
+          cp .env.example .env
+          sed -i "s/^DJANGO_SECRET_KEY=.*/DJANGO_SECRET_KEY=ci-$(openssl rand -hex 24)/; s/^POSTGRES_PASSWORD=.*/POSTGRES_PASSWORD=ci-$(openssl rand -hex 12)/" .env
+          sed -i "s/^ARCHIVE_MODE=.*/ARCHIVE_MODE=on/; s/^PGBACKREST_REPO1_TYPE=.*/PGBACKREST_REPO1_TYPE=posix/; s#^PGBACKREST_REPO1_PATH=.*#PGBACKREST_REPO1_PATH=/var/lib/pgbackrest#" .env
+          sed -i "/^PGBACKREST_REPO1_S3/d; s/^PGBACKREST_REPO1_CIPHER_PASS=.*/PGBACKREST_REPO1_CIPHER_PASS=ci-$(openssl rand -hex 24)/" .env
+          echo "HTTP_PORT=8080" >> .env
+      - run: REVIEWS=500000 bash tests/restore-test.sh 2>&1 | tee restore-report.txt
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with: {name: restore-report, path: darb/deploy/restore-report.txt}
+
   ios:
     # Manual runs, or a pushed commit whose message contains [ios] (dispatch needs the workflow on the default branch).
     if: (github.event_name == 'workflow_dispatch' && inputs.ios) || contains(github.event.head_commit.message, '[ios]')

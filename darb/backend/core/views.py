@@ -7,7 +7,7 @@ from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.views import exception_handler as drf_exception_handler
 
-from . import ai, billing, college, ingest, jobs, packs
+from . import ai, billing, college, ingest, jobs, limits, packs
 from .auth import ApiError
 from .models import REVIEW_MAX_AGE_MS, AiCall, docs, now_ms, reviews_after, save_docs
 
@@ -148,6 +148,7 @@ def report(request):
     """POST report {card_id, kind: question|ai, note}: a student flags a mistake."""
     from .models import PackItem, Report
 
+    limits.hit("report_account", request.account.pk)
     body = _body(request)
     card_id = str(body.get("card_id") or "")[:64]
     if not card_id:
@@ -166,6 +167,7 @@ def report(request):
 def upload(request, material_id, n):
     """Resumable upload of file n of a material: PUT ?offset=<bytes the server has> with the next chunk."""
     billing.require_premium(request.account)  # uploads are a subscriber feature
+    limits.hit("upload_account", request.account.pk)
     if request.method == "GET":
         return Response(ingest.upload_status(request.account, material_id, n))
     try:

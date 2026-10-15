@@ -186,7 +186,8 @@ class Md extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final rtl = isRtl(text);
+    // Numbers and symbols alone ("24", "3 × 4") follow the screen's direction instead of falling back to left-to-right.
+    final rtl = _arabic.hasMatch(text) || _latin.hasMatch(text) ? isRtl(text) : Directionality.of(context) == TextDirection.rtl;
     return Directionality(
       textDirection: rtl ? TextDirection.rtl : TextDirection.ltr,
       child: MarkdownBody(

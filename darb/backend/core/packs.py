@@ -75,7 +75,7 @@ def decrypt(slug, version, key, blob):
 
 
 def cdn(path):
-    return f"https://cdn.{settings.DARB_DOMAIN}/packs/{path}"
+    return f"{settings.DARB_CDN_URL}/packs/{path}"
 
 
 def manifest():

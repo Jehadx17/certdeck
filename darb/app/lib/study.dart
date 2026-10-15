@@ -329,9 +329,12 @@ class _StudyScreenState extends State<StudyScreen> {
 
   Widget _easyCard(ColorScheme cs) => Scaffold(
         appBar: AppBar(
-          title: Text(widget.timedMinutes != null
-              ? '${t('{n} left', {'n': session.remaining + 1})} · ${secondsLeft ~/ 60}:${(secondsLeft % 60).toString().padLeft(2, '0')}'
-              : t('{n} left', {'n': session.remaining + 1})),
+          title: FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Text(widget.timedMinutes != null
+                ? '⏱ ${secondsLeft ~/ 60}:${(secondsLeft % 60).toString().padLeft(2, '0')} · ${t('{n} left', {'n': session.remaining + 1})}'
+                : t('{n} left', {'n': session.remaining + 1})),
+          ),
           actions: [
             IconButton(tooltip: t('Report a mistake'), icon: const Icon(Icons.flag_outlined), onPressed: () => reportMistake(context, card!)),
             helpButton(context, studyHelp),

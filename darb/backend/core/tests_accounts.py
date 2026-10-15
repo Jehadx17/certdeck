@@ -162,3 +162,14 @@ class AgeTests(TestCase):
         today = date(2026, 10, 15)
         self.assertEqual(signin.age_bounds(2009, today), (16, 17))  # 16 or 17: a minor either way
         self.assertEqual(signin.age_bounds(2008, today), (17, 18))  # may still be 17: treated as a minor
+
+
+class CleanupTests(TestCase):
+    def test_unconfirmed_minors_are_deleted_after_30_days(self):
+        from core import tasks
+        from django.utils.timezone import now as tz_now
+        minor, _ = make_account("m@example.com", birth_year=date.today().year - 14)
+        adult, _ = make_account("a@example.com", birth_year=date.today().year - 30)
+        Account.objects.update(created=tz_now() - timedelta(days=31))
+        tasks.drop_unconfirmed_minors()
+        self.assertEqual(list(Account.objects.values_list("email", flat=True)), ["a@example.com"])

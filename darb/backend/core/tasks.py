@@ -2,7 +2,7 @@
 import logging
 import time
 
-from . import autopilot, college, reteach
+from . import autopilot, college, limits, reteach
 from .auth import ApiError
 from .jobs import enqueue, handler
 from .models import docs, ensure_review_partitions
@@ -55,5 +55,28 @@ def every(name, seconds, fn):
             log.exception("periodic %s failed", name)
 
 
+PENDING_GUARDIAN_DAYS = 30
+
+
+def drop_unconfirmed_minors():
+    """Under-18 accounts whose guardian never confirmed: deleted after 30 days (minimum data, docs/DARB-PDPL.md)."""
+    from datetime import timedelta
+
+    from django.utils.timezone import now as tz_now
+
+    from .accounts import delete_account
+    from .models import Account
+    from .signin import needs_guardian
+
+    old = Account.objects.filter(guardian_ok_at__isnull=True, birth_year__isnull=False,
+                                 created__lt=tz_now() - timedelta(days=PENDING_GUARDIAN_DAYS))
+    for a in old:
+        if needs_guardian(a):
+            delete_account(a)
+
+
 def periodic():
     every("partitions", 3600, ensure_review_partitions)
+    every("rate-cleanup", 86400, limits.cleanup)
+    every("anomalies", 3600, limits.anomalies)
+    every("unconfirmed-minors", 86400, drop_unconfirmed_minors)

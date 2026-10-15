@@ -53,6 +53,11 @@ class Darb extends StatelessWidget {
         themeMode: App.themeMode,
         theme: darbTheme(Brightness.light),
         darkTheme: darbTheme(Brightness.dark),
+        // Tablets and large phones: content keeps a readable width, centred (every screen, one place).
+        builder: (context, child) => ColoredBox(
+          color: Theme.of(context).colorScheme.surface,
+          child: Center(child: ConstrainedBox(constraints: const BoxConstraints(maxWidth: 720), child: child)),
+        ),
         // Keyed by language: switching rebuilds every screen (strings and direction).
         home: Shell(key: ValueKey(App.lang)),
       ),

@@ -54,6 +54,7 @@ DARB_ENTITLEMENT = "premium"
 # Packs: built files are on the CDN (https://cdn.<domain>/packs/...); their keys are wrapped with this 32-byte key
 # (base64). Generate: python -c "import base64,os; print(base64.b64encode(os.urandom(32)).decode())"
 DARB_PACK_KEK = env("DARB_PACK_KEK", "")
+DARB_CDN_URL = env("DARB_CDN_URL", f"https://cdn.{DARB_DOMAIN}")  # a local file server in development
 
 # Email (guardian consent, deletion confirmations): any SMTP provider. Unset host = printed to the log (development).
 EMAIL_HOST = env("EMAIL_HOST", "")

@@ -91,7 +91,7 @@ reviews your appeal (see the Terms of Use).
 - **Shared explanations:** an explanation of a question from our study packs may be saved and shown to other students who
   ask about the same question. These saved explanations contain no personal data.
 - **Limits:** AI answers are written by a computer, not a teacher, and can be wrong. They are labelled "AI", and each one
-  has a Report button. AI grading in Darb is practice only and never decides a grade, admission or certificate.
+  has "Report this answer". AI grading in Darb is practice only and never decides a grade, admission or certificate.
 - **Safety:** every AI request carries safety instructions that keep answers on studying and suitable for students aged
   12 and over, and students cannot chat freely with the AI. More detail: [AI and minors statement](https://darbedu.sa/ai-and-minors).
 
