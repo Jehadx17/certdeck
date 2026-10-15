@@ -392,7 +392,7 @@ class _ManageScreenState extends State<ManageScreen> {
 
 // ---------------- sign in ----------------
 
-/// The first screen on a new phone: a short code instead of a server token.
+/// The first screen on a new phone: sign in (or register) with email and password.
 class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({super.key});
   @override
@@ -400,16 +400,18 @@ class WelcomeScreen extends StatefulWidget {
 }
 
 class _WelcomeScreenState extends State<WelcomeScreen> {
-  final code = TextEditingController();
+  final email = TextEditingController();
+  final password = TextEditingController();
   String? error;
   bool working = false;
+  bool register = false;
 
   Future<void> _go() async {
     setState(() {
       working = true;
       error = null;
     });
-    final err = await Api.redeem(code.text);
+    final err = await Api.signIn(email.text.trim(), password.text, register: register);
     if (!mounted) return;
     if (err == null) return Navigator.of(context).popUntil((r) => r.isFirst); // opened from Settings or the PIN: back to the new home
     setState(() {
@@ -429,23 +431,34 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               const SizedBox(height: 16),
               Text(t('Welcome!'), style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold), textAlign: TextAlign.center),
               const SizedBox(height: 8),
-              Text(t('Type the sign-in code you were given.'), style: const TextStyle(fontSize: 16), textAlign: TextAlign.center),
               const SizedBox(height: 24),
               TextField(
-                controller: code,
-                textAlign: TextAlign.center,
-                textCapitalization: TextCapitalization.characters,
+                controller: email,
+                keyboardType: TextInputType.emailAddress,
                 autocorrect: false,
                 enableSuggestions: false,
-                style: const TextStyle(fontSize: 22, letterSpacing: 4, fontWeight: FontWeight.bold),
-                decoration: InputDecoration(hintText: 'ABCD 2345', border: const OutlineInputBorder(), errorText: error, errorMaxLines: 3),
+                autofillHints: const [AutofillHints.email],
+                decoration: InputDecoration(labelText: t('Email'), border: const OutlineInputBorder()),
+              ),
+              const SizedBox(height: 12),
+              TextField(
+                controller: password,
+                obscureText: true,
+                autofillHints: const [AutofillHints.password],
+                decoration: InputDecoration(labelText: t('Password'), border: const OutlineInputBorder(), errorText: error, errorMaxLines: 3),
                 onSubmitted: (_) => _go(),
               ),
               const SizedBox(height: 16),
               FilledButton(
                   style: easyButton(),
                   onPressed: working ? null : _go,
-                  child: working ? const CircularProgressIndicator() : Text(t('Start'))),
+                  child: working ? const CircularProgressIndicator() : Text(register ? t('Create account') : t('Sign in'))),
+              TextButton(
+                  onPressed: () => setState(() {
+                        register = !register;
+                        error = null;
+                      }),
+                  child: Text(register ? t('I already have an account') : t('Create an account'))),
               const SizedBox(height: 40),
               TextButton(
                   onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const SettingsScreen())),

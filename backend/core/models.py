@@ -9,9 +9,6 @@ def now_ms():
     return int(time.time() * 1000)
 
 
-LOGIN_CODE_ALPHABET = "ABCDEFGHJKMNPQRSTUVWXYZ23456789"
-
-
 def token_hash(token):
     return hashlib.sha256(token.encode()).hexdigest()
 
@@ -25,8 +22,8 @@ class Account(models.Model):
     cap_usd = models.DecimalField(max_digits=8, decimal_places=2, null=True, blank=True)  # monthly AI budget; null = none
     active = models.BooleanField(default=True)
     created = models.DateTimeField(auto_now_add=True)
-    login_code_hash = models.CharField(max_length=64, null=True, blank=True)  # one-time sign-in code (sha256), see new_login_code
-    login_code_expires = models.DateTimeField(null=True, blank=True)
+    email = models.EmailField(unique=True, null=True, blank=True)  # lowercase; the sign-in name
+    password = models.CharField(max_length=128, blank=True)  # django make_password hash
 
     def new_token(self):
         """Sets and returns a fresh token (only its hash is stored)."""
@@ -34,14 +31,15 @@ class Account(models.Model):
         self.token_hash = token_hash(token)
         return token
 
-    def new_login_code(self, hours=24):
-        """Sets and returns a one-time sign-in code: 8 characters a child can type (no 0/O, 1/I/L), valid for [hours]."""
-        from django.utils import timezone
+    def set_password(self, raw):
+        from django.contrib.auth.hashers import make_password
 
-        code = "".join(secrets.choice(LOGIN_CODE_ALPHABET) for _ in range(8))
-        self.login_code_hash = token_hash(code)
-        self.login_code_expires = timezone.now() + timezone.timedelta(hours=hours)
-        return code
+        self.password = make_password(raw)
+
+    def check_password(self, raw):
+        from django.contrib.auth.hashers import check_password
+
+        return bool(self.password) and check_password(raw, self.password)
 
     def __str__(self):
         return self.name

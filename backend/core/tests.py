@@ -133,26 +133,32 @@ class ApiTests(TestCase):
         self.assertFalse(Doc.objects.filter(doc_id="x").exists())
         self.assertEqual(self.client.get("/api/me", **{"HTTP_AUTHORIZATION": "Bearer "}).status_code, 401)
 
-    def test_sign_in_code(self):
+    def test_email_sign_in(self):
         sara, auth = self.student()
-        out = StringIO()
-        call_command("users", "code", "sara", stdout=out)
-        code = out.getvalue().split(": ")[1].split()[0]
-        self.assertEqual(len(code), 8)
-        redeem = lambda c: self.client.post("/api/redeem", {"code": c}, content_type="application/json")  # no token
-        self.assertEqual(redeem("AAAAAAAA").status_code, 400)
-        r = redeem(f" {code[:4].lower()}-{code[4:]} ")  # typed loosely
+        post = lambda path, email, pw: self.client.post(path, {"email": email, "password": pw}, content_type="application/json")
+        self.assertEqual(post("/api/signup", "bad", "longenough").status_code, 400)
+        self.assertEqual(post("/api/signup", "new@x.com", "short").status_code, 400)
+        r = post("/api/signup", " New@X.com ", "longenough")
         self.assertEqual((r.status_code, r.json()["role"]), (200, "student"))
-        self.assertEqual(self.client.get("/api/me", HTTP_AUTHORIZATION="Bearer " + r.json()["token"]).json()["name"], "sara")
-        self.assertEqual(self.client.get("/api/me", **auth).status_code, 401)  # the phone's token replaces the old one
-        self.assertEqual(redeem(code).status_code, 400)  # works once
-        call_command("users", "code", "sara", stdout=StringIO())
-        Account.objects.filter(name="sara").update(login_code_expires=timezone.now() - timedelta(minutes=1))
-        self.assertEqual(redeem(Account.objects.get(name="sara").login_code_hash[:8]).status_code, 400)  # expired / wrong
+        me = self.client.get("/api/me", HTTP_AUTHORIZATION="Bearer " + r.json()["token"]).json()
+        self.assertEqual(me["name"], "new@x.com")
+        self.assertEqual(post("/api/signup", "new@x.com", "longenough").status_code, 400)  # taken
+        self.assertEqual(post("/api/login", "new@x.com", "wrongpass").status_code, 400)
+        self.assertEqual(post("/api/login", "nobody@x.com", "longenough").status_code, 400)
+        r2 = post("/api/login", "NEW@x.com", "longenough")
+        self.assertEqual(r2.status_code, 200)
+        self.assertEqual(self.client.get("/api/me", HTTP_AUTHORIZATION="Bearer " + r.json()["token"]).status_code, 401)  # replaced
+        with mock.patch("getpass.getpass", return_value="longenough"):
+            call_command("users", "login", "sara", "Sara@x.com", stdout=StringIO())
+        self.assertEqual(post("/api/login", "sara@x.com", "longenough").json()["name"], "sara")
+        call_command("users", "disable", "sara", stdout=StringIO())
+        self.assertEqual(post("/api/login", "sara@x.com", "longenough").status_code, 400)
         from django.core.cache import cache
-        cache.set("redeem_failures", 30, 600)
-        self.assertEqual(redeem(code).status_code, 429)
-        cache.delete("redeem_failures")
+        cache.clear()
+        for _ in range(10):
+            post("/api/login", "new@x.com", "wrongpass")
+        self.assertEqual(post("/api/login", "new@x.com", "longenough").status_code, 429)
+        cache.clear()
 
     def test_isolation(self):
         sara, auth = self.student()

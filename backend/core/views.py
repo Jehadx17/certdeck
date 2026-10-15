@@ -7,9 +7,12 @@ import os
 import re
 import uuid
 from datetime import datetime, timezone
+from decimal import Decimal
 
 import jsonschema
 from django.conf import settings
+from django.core.exceptions import ValidationError
+from django.core.validators import validate_email
 from django.db.models import Count, Sum
 from django.http import FileResponse
 from rest_framework.decorators import api_view, permission_classes
@@ -45,31 +48,58 @@ def health(request):
     return Response({"ok": True})
 
 
-REDEEM_FAILURES = 30  # wrong codes allowed per 10 minutes (all callers together), then 429
+LOGIN_FAILURES = 10  # wrong passwords per email per 10 minutes, then 429
+DEFAULT_CAP = Decimal("10")  # monthly AI budget of a self-registered student
+
+
+def _credentials(request):
+    body = _body(request)
+    email, password = str(body.get("email", "")).strip().lower(), str(body.get("password", ""))
+    try:
+        validate_email(email)
+    except ValidationError:
+        raise ApiError(400, "Enter a valid email address.")
+    return email, password
+
+
+def _signed_in(account):
+    token = account.new_token()  # one token per account: signing in on another phone replaces it
+    account.save()
+    return Response({"token": token, "name": account.name, "role": account.role})
 
 
 @api_view(["POST"])
 @permission_classes([AllowAny])
-def redeem(request):
-    """Swaps a one-time sign-in code (users code <name>) for a fresh token, so nobody types a 43-character token."""
+def signup(request):
+    from .models import Account
+
+    email, password = _credentials(request)
+    if len(password) < 8:
+        raise ApiError(400, "The password needs at least 8 characters.")
+    if Account.objects.filter(email=email).exists() or Account.objects.filter(name=email).exists():
+        raise ApiError(400, "That email already has an account. Sign in instead.")
+    account = Account(name=email, email=email, cap_usd=DEFAULT_CAP)
+    account.set_password(password)
+    return _signed_in(account)
+
+
+@api_view(["POST"])
+@permission_classes([AllowAny])
+def login(request):
     from django.core.cache import cache
-    from django.utils import timezone
 
-    from .models import Account, token_hash
+    from .models import Account
 
-    if cache.get("redeem_failures", 0) >= REDEEM_FAILURES:
+    email, password = _credentials(request)
+    key = "login_failures:" + hashlib.sha256(email.encode()).hexdigest()
+    if cache.get(key, 0) >= LOGIN_FAILURES:
         raise ApiError(429, "Too many tries. Wait 10 minutes.")
-    code = re.sub(r"[\s-]", "", str(_body(request).get("code", ""))).upper()
-    account = Account.objects.filter(login_code_hash=token_hash(code), active=True,
-                                     login_code_expires__gt=timezone.now()).first() if len(code) == 8 else None
-    if not account:
-        cache.add("redeem_failures", 0, 600)
-        cache.incr("redeem_failures")
-        raise ApiError(400, "That code doesn't work. Check it, or ask for a new one.")
-    token = account.new_token()  # the code works once; this phone gets a token of its own
-    account.login_code_hash = account.login_code_expires = None
-    account.save(update_fields=["token_hash", "login_code_hash", "login_code_expires"])
-    return Response({"token": token, "name": account.name, "role": account.role})
+    account = Account.objects.filter(email=email, active=True).first()
+    if not (account and account.check_password(password)):
+        cache.add(key, 0, 600)
+        cache.incr(key)
+        raise ApiError(400, "Wrong email or password.")
+    return _signed_in(account)
 
 
 def _doc(d):

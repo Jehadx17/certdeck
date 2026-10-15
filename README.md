@@ -82,8 +82,8 @@ more; nobody sees the score. The college worker re-rates new or edited cards, a 
 assessment whose hints, professor profile or scope changed.
 
 ## College (students)
-**The student app is the easy version** (EASY.md): new phones sign in with a short code
-(`users code <name>` on the server prints it; valid 24 h, once), the home shows one big **Study now** button per
+**The student app is the easy version** (EASY.md): new phones sign in (or register) with email and
+password (`users login <name> <email>` attaches them to an existing account), the home shows one big **Study now** button per
 prepared exam, and the setup below lives under **My courses**.
 
 How it works: a student adds a **course**, uploads its **material** (slides as PDF or PowerPoint, notes, a textbook,

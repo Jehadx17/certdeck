@@ -235,9 +235,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
               Row(children: [
                 Expanded(child: FilledButton(onPressed: _connect, child: Text(t('Save & sync')))),
                 const SizedBox(width: 8),
-                // A short code from `users code <name>` instead of a token (switches this phone to that account).
+                // Email and password instead of a token (switches this phone to that account).
                 OutlinedButton(
-                    onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const WelcomeScreen())), child: Text(t('Use a code'))),
+                    onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const WelcomeScreen())), child: Text(t('Sign in'))),
               ]),
             ]),
           ),

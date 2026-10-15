@@ -133,9 +133,10 @@ End: trophy, "7 of 10 right", one sentence, [Do more] [Done]; a practice test ad
 [Practise the ones you missed]. My courses -> the previous student screens: courses, material, exams,
 preparing, and Settings.
 ```
-- **Sign-in:** `manage.py users code <name>` prints an 8-character code (no 0/O/1/I/L), valid 24 h, once.
-  `POST /api/redeem` swaps it for a new token (the phone's own; the old one stops working), throttled after 30 wrong
-  codes in 10 minutes. The app's first screen takes the code; Settings → "Use a code" switches a signed-in phone.
+- **Sign-in:** email + password. `POST /api/signup` makes a student (default cap) and `POST /api/login` signs in; both
+  return a new token (the phone's own; the old one stops working). Logins are throttled to 10 wrong passwords per email
+  per 10 minutes. Existing accounts: `manage.py users login <name> <email>` asks for a password. No reset or email
+  verification yet: reset by running that command again. Settings → "Sign in" switches a signed-in phone.
 - **One tap to study:** Study runs about 10 minutes: spaced cards when there's time, else the sprint loop (most
   valuable cards not known yet, each until right twice). No triage page, no minute choice.
 - **Answering:** the confidence buttons (Guessing / Unsure / Sure) are the Check button: one tap rates and shows

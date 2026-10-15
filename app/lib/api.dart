@@ -79,13 +79,14 @@ class Api {
     return err;
   }
 
-  /// Swaps a one-time sign-in code (`users code <name>` on the server) for this phone's own token and signs in.
+  /// Signs in (or registers a new account) with email and password and connects this phone.
   /// Returns null on success, else a message for the person typing it.
-  static Future<String?> redeem(String code) async {
+  static Future<String?> signIn(String email, String password, {bool register = false}) async {
     final http.Response r;
     try {
       r = await http
-          .post(Uri.parse('$defaultUrl/api/redeem'), headers: {'Content-Type': 'application/json'}, body: jsonEncode({'code': code}))
+          .post(Uri.parse('$defaultUrl/api/${register ? 'signup' : 'login'}'),
+              headers: {'Content-Type': 'application/json'}, body: jsonEncode({'email': email, 'password': password}))
           .timeout(const Duration(seconds: 30));
     } on Exception {
       return 'No internet. Connect to Wi-Fi and try again.';
