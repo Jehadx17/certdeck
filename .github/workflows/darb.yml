@@ -16,8 +16,6 @@ on:
 
 concurrency: {group: "darb-${{ github.ref }}", cancel-in-progress: true}
 
-# A piped command (… | tee report) fails the step when the command fails.
-defaults: {run: {shell: "bash -eo pipefail {0}"}}
 
 jobs:
   backend:
@@ -28,7 +26,7 @@ jobs:
         env: {POSTGRES_PASSWORD: postgres}
         ports: ["5432:5432"]
         options: --health-cmd pg_isready --health-interval 5s --health-retries 20
-    defaults: {run: {working-directory: darb/backend}}
+    defaults: {run: {working-directory: darb/backend, shell: "bash -eo pipefail {0}"}}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -40,7 +38,7 @@ jobs:
 
   app:
     runs-on: ubuntu-24.04
-    defaults: {run: {working-directory: darb/app}}
+    defaults: {run: {working-directory: darb/app, shell: "bash -eo pipefail {0}"}}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-java@v4
@@ -54,7 +52,7 @@ jobs:
 
   stack:
     runs-on: ubuntu-24.04
-    defaults: {run: {working-directory: darb/deploy}}
+    defaults: {run: {working-directory: darb/deploy, shell: "bash -eo pipefail {0}"}}
     steps:
       - uses: actions/checkout@v4
       - name: Configure
@@ -81,7 +79,7 @@ jobs:
   restore:
     if: github.event_name == 'workflow_dispatch' || contains(github.event.head_commit.message, '[restore]')
     runs-on: ubuntu-24.04
-    defaults: {run: {working-directory: darb/deploy}}
+    defaults: {run: {working-directory: darb/deploy, shell: "bash -eo pipefail {0}"}}
     steps:
       - uses: actions/checkout@v4
       - name: Configure
@@ -90,7 +88,7 @@ jobs:
           sed -i "s/^DJANGO_SECRET_KEY=.*/DJANGO_SECRET_KEY=ci-$(openssl rand -hex 24)/; s/^POSTGRES_PASSWORD=.*/POSTGRES_PASSWORD=ci-$(openssl rand -hex 12)/" .env
           sed -i "s/^ARCHIVE_MODE=.*/ARCHIVE_MODE=on/; s/^PGBACKREST_REPO1_TYPE=.*/PGBACKREST_REPO1_TYPE=posix/; s#^PGBACKREST_REPO1_PATH=.*#PGBACKREST_REPO1_PATH=/var/lib/pgbackrest#" .env
           sed -i "/^PGBACKREST_REPO1_S3/d; s/^PGBACKREST_REPO1_CIPHER_PASS=.*/PGBACKREST_REPO1_CIPHER_PASS=ci-$(openssl rand -hex 24)/" .env
-          echo "HTTP_PORT=8080" >> .env
+          printf 'HTTP_PORT=8080\nPG_SHARED_BUFFERS=1GB\nPG_EFFECTIVE_CACHE=4GB\n' >> .env
       - run: REVIEWS=500000 bash tests/restore-test.sh 2>&1 | tee restore-report.txt
       - uses: actions/upload-artifact@v4
         if: always()
@@ -100,7 +98,7 @@ jobs:
   loadtest:
     if: github.event_name == 'workflow_dispatch' || contains(github.event.head_commit.message, '[loadtest]')
     runs-on: ubuntu-24.04
-    defaults: {run: {working-directory: darb/deploy}}
+    defaults: {run: {working-directory: darb/deploy, shell: "bash -eo pipefail {0}"}}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -121,7 +119,7 @@ jobs:
     # Manual runs, or a pushed commit whose message contains [ios] (dispatch needs the workflow on the default branch).
     if: (github.event_name == 'workflow_dispatch' && inputs.ios) || contains(github.event.head_commit.message, '[ios]')
     runs-on: macos-15
-    defaults: {run: {working-directory: darb/app}}
+    defaults: {run: {working-directory: darb/app, shell: "bash -eo pipefail {0}"}}
     steps:
       - uses: actions/checkout@v4
       # Xcode 26.3: the newest that runs on Sequoia (the Hackintosh) and meets Apple's Xcode 26 upload rule.

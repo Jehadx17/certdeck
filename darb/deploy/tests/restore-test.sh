@@ -10,8 +10,10 @@ REVIEWS=${REVIEWS:-500000}
 t() { date +%s.%N; }
 sql() { $DC exec -T db psql -U "$POSTGRES_USER" -d "$POSTGRES_DB" -tAc "$1"; }
 set -a; . ./.env; set +a
+trap 'echo "== FAILED; database log:"; $DC logs --tail 80 db' ERR
 
-$DC up -d --build db pgbouncer migrate api nginx
+$DC build
+$DC up -d db pgbouncer migrate api nginx
 for i in $(seq 1 60); do curl -fsS localhost:${HTTP_PORT:-80}/api/health >/dev/null 2>&1 && break; sleep 2; done
 TOKEN=$($DC exec -T api python manage.py users create restore@example.com | sed 's/Token: //')
 

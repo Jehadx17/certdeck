@@ -5,8 +5,10 @@
 set -euo pipefail
 cd "$(dirname "$0")/.."
 DC="docker compose --env-file .env"
+trap 'echo "== FAILED; logs:"; $DC logs --tail 60 db api slow' ERR
 mkdir -p tests/out
-$DC up -d --build --scale api=2
+$DC build
+$DC up -d --scale api=2
 for i in $(seq 1 60); do curl -fsS localhost:${HTTP_PORT:-80}/api/health >/dev/null 2>&1 && break; sleep 2; done
 $DC exec -T api python manage.py loadtest_seed --accounts 3000 > tests/tokens.txt
 cd tests

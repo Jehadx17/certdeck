@@ -37,6 +37,7 @@ services:
 
   pgbouncer:
     image: darb-db:latest
+    pull_policy: never  # built by the db service, never on a registry
     restart: unless-stopped
     env_file: .env
     user: postgres
@@ -46,6 +47,7 @@ services:
 
   backup:
     image: darb-db:latest
+    pull_policy: never
     restart: unless-stopped
     env_file: .env
     user: postgres

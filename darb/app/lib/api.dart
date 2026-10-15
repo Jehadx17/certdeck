@@ -4,7 +4,9 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:flutter/services.dart' show rootBundle;
 import 'package:http/http.dart' as http;
+import 'package:http/io_client.dart';
 
 import 'db.dart';
 import 'i18n.dart';
@@ -34,6 +36,17 @@ class Api {
   static Timer? _timer;
 
   static bool get configured => (token ?? '').isNotEmpty;
+
+  /// Every request goes through this client. Over HTTPS it trusts only the root CAs that sign Cloudflare's edge
+  /// certificates (assets/roots.pem: Let's Encrypt, Google Trust Services, SSL.com and their cross-signers), not the
+  /// phone's store: a proxy with a user-installed CA can't read the API (certificate pinning, docs/DARB-SECURITY.md).
+  static http.Client client = http.Client();
+
+  static Future<void> pin() async {
+    if (!defaultUrl.startsWith('https://')) return; // local development over plain HTTP
+    final roots = (await rootBundle.load('assets/roots.pem')).buffer.asUint8List();
+    client = IOClient(HttpClient(context: SecurityContext(withTrustedRoots: false)..setTrustedCertificatesBytes(roots)));
+  }
 
   static Future<void> load() async {
     token = await _store.read(key: 'token');
@@ -74,7 +87,7 @@ class Api {
     newUrl = newUrl.trim().replaceAll(RegExp(r'/+$'), '');
     // Check the new token with the server before touching anything: a typo must never cost local data.
     try {
-      final r = await http.get(Uri.parse('$newUrl/api/me'), headers: {'Authorization': 'Bearer ${newToken.trim()}'}).timeout(const Duration(seconds: 30));
+      final r = await client.get(Uri.parse('$newUrl/api/me'), headers: {'Authorization': 'Bearer ${newToken.trim()}'}).timeout(const Duration(seconds: 30));
       if (r.statusCode == 401) return 'The server doesn\'t recognise this token. Nothing was changed.';
       if (r.statusCode >= 400) return 'Server error (HTTP ${r.statusCode}). Nothing was changed.';
     } on Exception {
@@ -102,9 +115,9 @@ class Api {
     final http.Response r;
     try {
       r = await (switch (method) {
-        'GET' => http.get(uri, headers: headers),
-        'PUT' => http.put(uri, headers: headers, body: bytes),
-        _ => http.post(uri, headers: headers, body: jsonEncode(body)),
+        'GET' => client.get(uri, headers: headers),
+        'PUT' => client.put(uri, headers: headers, body: bytes),
+        _ => client.post(uri, headers: headers, body: jsonEncode(body)),
       })
           .timeout(timeout);
     } on SocketException {

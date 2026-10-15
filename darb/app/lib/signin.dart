@@ -55,7 +55,7 @@ class Auth {
   static Future<String?> signIn(String provider, Map<String, dynamic> token, {int? birthYear}) async {
     final http.Response r;
     try {
-      r = await http
+      r = await Api.client
           .post(Uri.parse('${Api.defaultUrl}/api/auth/$provider'),
               headers: {'Content-Type': 'application/json'},
               body: jsonEncode({...token, 'platform': Platform.operatingSystem, 'birth_year': ?birthYear}))

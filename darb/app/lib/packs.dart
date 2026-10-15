@@ -36,7 +36,7 @@ class Packs {
         data = await compute(decryptPack, (await file.readAsBytes(), slug, key['version'] as int, base64.decode(key['key'] as String)));
         data['seed'] = key['seed'];
       } else {
-        final r = await http.get(Uri.parse(pack['sample_url'] as String)).timeout(const Duration(minutes: 2));
+        final r = await Api.client.get(Uri.parse(pack['sample_url'] as String)).timeout(const Duration(minutes: 2));
         if (r.statusCode != 200) return 'Download failed (HTTP ${r.statusCode})';
         data = jsonDecode(utf8.decode(gzip.decode(r.bodyBytes))) as Json;
       }
@@ -56,7 +56,7 @@ class Packs {
   static Future<void> download(Uri uri, File file, {required int size, required String sha256, void Function(double)? onProgress}) async {
     if (await file.exists() && await file.length() == size) return;
     final part = File('${file.path}.part');
-    final client = http.Client();
+    final client = Api.client;
     try {
       for (var attempt = 0; attempt < 5; attempt++) {
         final have = await part.exists() ? await part.length() : 0;
@@ -84,7 +84,7 @@ class Packs {
       }
       await part.rename(file.path);
     } finally {
-      client.close();
+      // the shared client stays open
     }
   }
 

@@ -14,6 +14,7 @@ import 'upload.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Api.pin();
   await Db.open();
   await App.init();
   await Api.load();
