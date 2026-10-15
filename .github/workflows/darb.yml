@@ -74,7 +74,8 @@ jobs:
         run: docker compose --env-file .env logs --tail 200
 
   ios:
-    if: github.event_name == 'workflow_dispatch' && inputs.ios
+    # Manual runs, or a pushed commit whose message contains [ios] (dispatch needs the workflow on the default branch).
+    if: (github.event_name == 'workflow_dispatch' && inputs.ios) || contains(github.event.head_commit.message, '[ios]')
     runs-on: macos-15
     defaults: {run: {working-directory: darb/app}}
     steps:
