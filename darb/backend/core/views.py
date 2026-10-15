@@ -1,13 +1,13 @@
 import json
 
-from django.db.models import Sum
+from django.db.models import F, Sum
 from django.http import FileResponse
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.views import exception_handler as drf_exception_handler
 
-from . import ai, billing, college, ingest, jobs
+from . import ai, billing, college, ingest, jobs, packs
 from .auth import ApiError
 from .models import REVIEW_MAX_AGE_MS, AiCall, docs, now_ms, reviews_after, save_docs
 
@@ -95,7 +95,10 @@ def sync(request):
         raise ApiError(400, "docs and reviews must be lists")
     if len(incoming) > PUSH_MAX or len(reviews) > PUSH_MAX:
         raise ApiError(413, f"at most {PUSH_MAX} docs and {PUSH_MAX} reviews per request")
-    save_docs(request.account, [_doc(d) for d in incoming], [_review(r, now) for r in reviews])
+    # Pack cards never live in the sync table (content comes from the pack, schedule from the review log): an old or
+    # modified app sending one is ignored.
+    incoming = [d for d in map(_doc, incoming) if not (d["kind"] == "card" and d["data"].get("pack"))]
+    save_docs(request.account, incoming, [_review(r, now) for r in reviews])
     _queue_work(request.account, incoming, reviews)
     rows = list(docs(request.account).filter(seq__gt=cursor).order_by("seq")[:PAGE + 1])
     revs = reviews_after(request.account, rcursor, PAGE + 1)
@@ -124,6 +127,37 @@ def me(request):
     """Who is signed in, plus this month's AI budget."""
     from .accounts import account_json
     return Response({**account_json(request.account), **budget(request.account)})
+
+
+# ---------- packs and reports ----------
+
+@api_view(["GET"])
+def pack_list(request):
+    """Every published pack (the app picks the ones for the student's segment); files and samples are on the CDN."""
+    return Response({"packs": packs.manifest(), "premium": billing.is_premium(request.account)})
+
+
+@api_view(["POST"])
+def pack_key(request, slug):
+    ip = request.META.get("HTTP_CF_CONNECTING_IP") or request.META.get("REMOTE_ADDR")
+    return Response(packs.issue_key(request.account, request.device, slug, ip=ip))
+
+
+@api_view(["POST"])
+def report(request):
+    """POST report {card_id, kind: question|ai, note}: a student flags a mistake."""
+    from .models import PackItem, Report
+
+    body = _body(request)
+    card_id = str(body.get("card_id") or "")[:64]
+    if not card_id:
+        raise ApiError(400, "card_id required")
+    Report.objects.create(account=request.account, card_id=card_id, kind="ai" if body.get("kind") == "ai" else "question",
+                          note=str(body.get("note") or "")[:1000])
+    slug, _, n = card_id.rpartition(":")
+    if slug and n.isdigit():
+        PackItem.objects.filter(pack__slug=slug, n=int(n)).update(reports=F("reports") + 1)
+    return Response({"ok": True})
 
 
 # ---------- college ----------

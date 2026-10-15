@@ -121,6 +121,11 @@ class SyncTests(TestCase):
             u = unpack_flags(pack_flags(r))
             self.assertEqual({k: u[k] for k in r}, r)
 
+    def test_pack_cards_are_never_stored(self):
+        self.sync({"docs": [doc("qudurat-verbal:7", {"pack": "qudurat-verbal", "question": "x"}, "card"),
+                            doc("mine", {"question": "y"}, "card")]})
+        self.assertEqual(list(Doc.objects.filter(kind="card").values_list("doc_id", flat=True)), ["mine"])
+
     def test_reviews_queue_the_daily_job(self):
         self.sync({"reviews": [review("q:1", now_ms())]})
         self.sync({"reviews": [review("q:2", now_ms())]})

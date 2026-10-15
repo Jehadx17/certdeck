@@ -17,6 +17,9 @@ urlpatterns = [
     path("api/billing/revenuecat", accounts.revenuecat_webhook),
     path("api/billing/refresh", accounts.billing_refresh),
     path("api/sync", views.sync),
+    path("api/packs", views.pack_list),
+    path("api/packs/<slug:slug>/key", views.pack_key),
+    path("api/report", views.report),
     path("api/ai/explain", views.explain),
     # uploads (subscribers): resumable PDF/photo uploads -> cards, practice and sheets for an exam
     path("api/upload/<str:material_id>/<int:n>", views.upload),

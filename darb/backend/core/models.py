@@ -257,3 +257,86 @@ class Job(models.Model):
 
     class Meta:
         constraints = [models.UniqueConstraint(fields=["kind", "account", "ref"], name="job_kind_account_ref")]
+
+
+class Pack(models.Model):
+    """A pre-built content pack (docs/DARB-PACKS.md): its items are PackItem rows; students download the built,
+    encrypted file from the CDN and get its key only while subscribed."""
+
+    slug = models.SlugField(max_length=48, unique=True)  # card ids are "<slug>:<n>"
+    title_ar = models.CharField(max_length=120)
+    title_en = models.CharField(max_length=120)
+    segments = models.JSONField(default=list)  # middle | high | university | cert
+    exams = models.JSONField(default=list)  # qudurat | tahsili | school | ...
+    grades = models.JSONField(default=list)  # empty = every grade of the segment
+    subject = models.CharField(max_length=60, blank=True)
+    version = models.IntegerField(default=0)  # bumped by every build
+    items = models.IntegerField(default=0)
+    size = models.BigIntegerField(default=0)
+    sha256 = models.CharField(max_length=64, blank=True)
+    key_wrapped = models.TextField(blank=True)  # this version's AES key, wrapped with DARB_PACK_KEK
+    sample_size = models.IntegerField(default=20)  # free, plaintext sample items
+    published = models.BooleanField(default=False)
+    tutor_reviewed = models.BooleanField(default=False)
+    sources = models.JSONField(default=list)  # [{source, kind, rights, note}] (the per-pack source log)
+    error_rate = models.FloatField(null=True, blank=True)  # measured by the audit (docs/DARB-PACKS.md)
+    error_ci = models.CharField(max_length=40, blank=True)
+    updated = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.slug
+
+
+class PackItem(models.Model):
+    """One question/card of a pack and the checks it went through."""
+
+    STATUSES = ("draft", "verified", "quarantined", "rejected")
+    pack = models.ForeignKey(Pack, on_delete=models.CASCADE, related_name="rows")
+    n = models.IntegerField()
+    data = models.JSONField()  # the card (type, question, options, correct, answer, explanation, hint, topic, difficulty)
+    status = models.CharField(max_length=12, default="draft")
+    checks = models.JSONField(default=dict)  # blind solve, code check, duplicate, judge notes
+    source = models.CharField(max_length=120, blank=True)  # ai:<model> | pdf:<file> (tutor-reviewed) | ...
+    reports = models.IntegerField(default=0)  # "report a mistake" count from students
+
+    class Meta:
+        constraints = [models.UniqueConstraint(fields=["pack", "n"], name="packitem_pack_n")]
+        indexes = [models.Index(fields=["pack", "status"], name="packitem_pack_status")]
+
+
+class PackGrant(models.Model):
+    """A pack key handed to a device (rate limits, anomaly rules, leak tracing)."""
+
+    account = models.ForeignKey(Account, on_delete=models.CASCADE)
+    device = models.ForeignKey(Device, on_delete=models.SET_NULL, null=True)
+    pack = models.ForeignKey(Pack, on_delete=models.CASCADE)
+    version = models.IntegerField()
+    ip = models.GenericIPAddressField(null=True)
+    created = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        indexes = [models.Index(fields=["device", "created"], name="packgrant_device_created")]
+
+
+class Report(models.Model):
+    """"Report a mistake" on a question or an AI answer. When I mark it fixed, the student gets a notice in the app."""
+
+    account = models.ForeignKey(Account, on_delete=models.SET_NULL, null=True)
+    card_id = models.CharField(max_length=64)
+    kind = models.CharField(max_length=16, default="question")  # question | ai
+    note = models.TextField(blank=True)
+    status = models.CharField(max_length=12, default="open")  # open | fixed | rejected
+    created = models.DateTimeField(auto_now_add=True)
+    resolved = models.DateTimeField(null=True, blank=True)
+
+
+class ContentBatch(models.Model):
+    """One Batch API job of the content pipeline (core.content); ctx maps each request to what it covers."""
+
+    pack = models.ForeignKey(Pack, on_delete=models.CASCADE)
+    stage = models.CharField(max_length=12)  # generate | solve | equiv | audit
+    batch_id = models.CharField(max_length=80)
+    status = models.CharField(max_length=12, default="submitted")
+    ctx = models.JSONField(default=dict)
+    cost_usd = models.DecimalField(max_digits=10, decimal_places=4, default=0)
+    created = models.DateTimeField(auto_now_add=True)

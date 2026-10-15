@@ -1,3 +1,4 @@
+import json
 from datetime import timedelta
 from decimal import Decimal
 from types import SimpleNamespace as NS
@@ -107,3 +108,27 @@ class AdminTests(TestCase):
         self.assertEqual(self.client.get("/darb-admin/core/config/").status_code, 200)
         self.client.logout()
         self.assertEqual(self.client.get("/darb-admin/core/account/").status_code, 302)  # login required
+
+
+class EvalHarnessTests(TestCase):
+    """The eval harness runs end to end on mocked models (the real run needs the API key and costs a few dollars)."""
+
+    def test_run_and_summarize(self):
+        from core import evals
+
+        def create(**kw):
+            if kw["model"] == evals.JUDGE:  # the judge: Haiku's output (whichever position) scores a bit lower
+                s = {"correctness": 5, "teaching": 5, "language": 5, "overall": 5, "errors": []}
+                return message({"output_1": s, "output_2": {**s, "overall": 4}})
+            if "points" in json.dumps(kw["output_config"]["format"]["schema"]):  # grading
+                return message({"points": [], "score": 1.0, "verdict": "correct", "feedback": "", "error_type": "none"})
+            return message({"reply": "ok", "variants": [], "cards": []})
+        with mock.patch("core.ai._create", side_effect=create):
+            results = evals.run(["explain", "grade"], log=lambda *_: None)
+        s = evals.summarize(results)
+        self.assertEqual(s["explain"]["n"], 12)
+        self.assertAlmostEqual(s["explain"]["base_overall"] + s["explain"]["cand_overall"], 9)
+        self.assertEqual(s["grade"]["n"], 10)
+        self.assertGreater(s["grade"]["haiku_mae"], 0)  # "always correct" misses the partial and wrong golds
+        self.assertFalse(s["grade"]["pass"])
+        self.assertIn("plus_session", evals.session_cost(s))

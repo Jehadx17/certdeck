@@ -612,7 +612,7 @@ def _stage_requests(user, prep, a, stage):
             for pages in _chunks(todo[key], PAGES_PER_REQUEST):
                 content = _page_blocks(pdf, pages) + [{"type": "text", "text": f"{head} Extract its knowledge points."}]
                 reqs.append((f"x{len(reqs)}", params(sys_, [{"role": "user", "content": content}], KPS_SCHEMA,
-                                                     model=read_model()), ctx_base))
+                                                     max_tokens=16000, model=read_model()), ctx_base))
     elif stage == "prioritize":
         kps = _kps(user, course_id, set(keys))
         if kps:
@@ -622,19 +622,13 @@ def _stage_requests(user, prep, a, stage):
         prio = (_doc(user, f"prio-{a['id']}") or {}).get("scores") or {}
         todo = [k for k in _kps(user, course_id, set(keys)) if k["id"] not in covered]
         profile = _doc(user, f"profile-{course_id}")
-        sys_ = [{"type": "text", "text": GENERATE_PROMPT, "cache_control": {"type": "ephemeral"}}]
         context = f"{_assessment_text(a)}\n{_profile_text(profile)}"
         by_section = {}
         for k in todo:
             by_section.setdefault(k.get("section"), []).append(k)
         for section, kps in by_section.items():
             for group in _chunks(sorted(kps, key=lambda k: k.get("loc") or 0), KPS_PER_REQUEST):
-                listing = "\n\n".join(
-                    f"[{k['id']}] {k.get('kind')} · {k.get('title')} · p.{k.get('loc')} · emphasis {k.get('emphasis')} · "
-                    f"priority {prio.get(k['id'], 3)}\n{k.get('content')}" for k in group)
-                reqs.append((f"g{len(reqs)}", params(sys_, [{"role": "user", "content":
-                    f"{context}\n\nKnowledge points:\n\n{listing}\n\nWrite the cards for these {len(group)} knowledge points."
-                    + (" Each of them still has no card: cover every one." if stage == "fill" else "")}], CARDS_SCHEMA),
+                reqs.append((f"g{len(reqs)}", generate_request(context, group, prio, fill=stage == "fill"),
                              {"section": section, "kp_ids": [k["id"] for k in group]}))
     elif stage == "sheets":
         kps = _kps(user, course_id, set(keys))
@@ -642,8 +636,20 @@ def _stage_requests(user, prep, a, stage):
             listing = "\n\n".join(f"{k.get('title')} (p.{k.get('loc')}, {k.get('kind')}): {k.get('content')}"
                                   for k in sorted(kps, key=lambda k: (keys.index(k['section']) if k.get('section') in keys else 0, k.get("loc") or 0)))
             reqs.append(("s0", params([{"type": "text", "text": SHEETS_PROMPT}], [{"role": "user", "content":
-                f"{_assessment_text(a)}\n\nKnowledge points in scope order:\n\n{listing}"}], SHEETS_SCHEMA), {}))
+                f"{_assessment_text(a)}\n\nKnowledge points in scope order:\n\n{listing}"}], SHEETS_SCHEMA,
+                max_tokens=12000), {}))
     return reqs
+
+
+def generate_request(context, kps, prio=None, fill=False):
+    """Cards for up to KPS_PER_REQUEST knowledge points (used by preparation and by the AI eval)."""
+    listing = "\n\n".join(
+        f"[{k['id']}] {k.get('kind')} · {k.get('title')} · p.{k.get('loc')} · emphasis {k.get('emphasis')} · "
+        f"priority {(prio or {}).get(k['id'], 3)}\n{k.get('content')}" for k in kps)
+    return params([{"type": "text", "text": GENERATE_PROMPT, "cache_control": {"type": "ephemeral"}}],
+                  [{"role": "user", "content": f"{context}\n\nKnowledge points:\n\n{listing}\n\nWrite the cards for these "
+                    f"{len(kps)} knowledge points." + (" Each of them still has no card: cover every one." if fill else "")}],
+                  CARDS_SCHEMA, max_tokens=16000)
 
 
 def _prio_request(user, a, kps):
@@ -831,12 +837,18 @@ def grade(user, body):
         raise ApiError(400, "card required")
     if not answer:
         raise ApiError(400, "write an answer first")
-    blocks = []
+    return grade_result(ai.call(user, "college_grade", grade_request(card, answer[:4000])))
+
+
+def grade_request(card, answer):
     ref = {k: card.get(k) for k in ("type", "question", "answer", "rubric", "steps", "options", "correct", "explanation") if card.get(k)}
-    blocks.append({"type": "text", "text": f"Question and marking reference (JSON):\n{json.dumps(ref, ensure_ascii=False)}\n\n"
-                                          f"<student_answer>\n{answer}\n</student_answer>"})
-    out = ai.call(user, "college_grade", params([{"type": "text", "text": GRADE_PROMPT}], [{"role": "user", "content": blocks}],
-                                                GRADE_SCHEMA, effort="low"))
+    text = (f"Question and marking reference (JSON):\n{json.dumps(ref, ensure_ascii=False)}\n\n"
+            f"<student_answer>\n{answer}\n</student_answer>")
+    return params([{"type": "text", "text": GRADE_PROMPT}], [{"role": "user", "content": [{"type": "text", "text": text}]}],
+                  GRADE_SCHEMA, max_tokens=2000)
+
+
+def grade_result(out):
     score = max(0.0, min(1.0, float(out.get("score") or 0)))
     verdict = "correct" if score >= 0.85 else "wrong" if score < 0.4 else "partial"
     return {"score": round(score, 3), "verdict": verdict, "points": out.get("points") or [], "feedback": out.get("feedback") or "",
@@ -860,7 +872,8 @@ def practice(user, body):
         [{"type": "text", "text": PRACTICE_PROMPT}],
         [{"role": "user", "content": f"{_assessment_text(a)}\n{_profile_text(_doc(user, f'profile-{course_id}'))}\n\n"
                                      f"Existing card questions (don't repeat):\n" + "\n".join(f"- {q[:100]}" for q in existing[-150:])
-                                     + f"\n\nKnowledge points:\n\n{listing}\n\nWrite {count} exam questions."}], CARDS_SCHEMA))
+                                     + f"\n\nKnowledge points:\n\n{listing}\n\nWrite {count} exam questions."}], CARDS_SCHEMA,
+        max_tokens=16000))
     by_id = {k["id"]: k for k in kps}
     now, new = now_ms(), []
     for raw in (out.get("cards") or [])[:count]:

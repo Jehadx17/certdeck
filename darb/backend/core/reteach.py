@@ -34,13 +34,16 @@ def candidates(user, now):
     return out[:PER_DAY - sum(t > now - 86_400_000 for t in marks.values())]
 
 
+def reteach_request(card):
+    system = [{"type": "text", "text": f"{RETEACH_PROMPT}\n\n{ai.CARD_RULES}"},
+              {"type": "text", "text": "Original card (JSON):\n" + json.dumps(card, ensure_ascii=False)}]
+    return ai.params(system, [{"role": "user", "content": RETEACH_TASK}], RETEACH_SCHEMA, max_tokens=3000)
+
+
 def reteach(user, card_doc, now=None):
     """Writes the new cards and the marker for one card doc; returns how many cards were kept."""
     now, card = now or now_ms(), dict(card_doc.data, id=card_doc.doc_id)
-    system = [{"type": "text", "text": f"{RETEACH_PROMPT}\n\n{ai.CARD_RULES}"},
-              {"type": "text", "text": "Original card (JSON):\n" + json.dumps(card, ensure_ascii=False)}]
-    out = ai.call(user, "reteach", ai.params(system, [{"role": "user", "content": RETEACH_TASK}], RETEACH_SCHEMA,
-                                             effort="low"), estimate=0.01)
+    out = ai.call(user, "reteach", reteach_request(card), estimate=0.01)
     new_docs = []
     for raw in out.get("variants", [])[:2]:
         v = ai.clean_card(raw)

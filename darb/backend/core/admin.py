@@ -9,7 +9,7 @@ from django.db.models.functions import TruncDate
 from django.utils.timezone import now as tz_now
 
 from . import ai, billing, signin
-from .models import Account, AiCall, Config, Device
+from .models import Account, AiCall, Config, Device, Pack, PackItem, Report, now_ms, save_docs
 
 admin.site.site_header = admin.site.site_title = "Darb admin"
 
@@ -110,3 +110,47 @@ class AiCallAdmin(admin.ModelAdmin):
             "top_users": list(month.values("user__email", "user__public_id").annotate(usd=Sum("cost_usd")).order_by("-usd")[:10]),
         }}
         return super().changelist_view(request, extra_context)
+
+
+@admin.register(Report)
+class ReportAdmin(admin.ModelAdmin):
+    list_display = ("created", "card_id", "kind", "note", "status", "account")
+    list_filter = ("status", "kind")
+    search_fields = ("card_id", "note")
+    actions = ["mark_fixed", "mark_rejected"]
+
+    @admin.action(description="Fixed: tell the student (a notice in their app)")
+    def mark_fixed(self, request, qs):
+        for r in qs.filter(status="open"):
+            if r.account:
+                save_docs(r.account, [{"id": f"notice-report-{r.pk}", "kind": "notice", "updated_at": now_ms(), "deleted": False,
+                                       "data": {"kind": "report_fixed", "card_id": r.card_id, "created_at": now_ms()}}])
+        qs.update(status="fixed", resolved=tz_now())
+
+    @admin.action(description="Not a mistake")
+    def mark_rejected(self, request, qs):
+        qs.update(status="rejected", resolved=tz_now())
+
+
+class PackItemInline(admin.TabularInline):
+    model = PackItem
+    fields = ("n", "status", "source", "reports")
+    readonly_fields = fields
+    extra = 0
+    show_change_link = True
+    ordering = ("-reports", "n")
+    max_num = 0
+
+
+@admin.register(Pack)
+class PackAdmin(admin.ModelAdmin):
+    list_display = ("slug", "title_ar", "version", "items", "error_rate", "error_ci", "published", "tutor_reviewed")
+    list_filter = ("published",)
+    readonly_fields = ("version", "items", "size", "sha256", "key_wrapped", "error_rate", "error_ci")
+
+
+@admin.register(PackItem)
+class PackItemAdmin(admin.ModelAdmin):
+    list_display = ("pack", "n", "status", "source", "reports")
+    list_filter = ("pack", "status")
+    search_fields = ("data",)

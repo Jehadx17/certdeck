@@ -56,10 +56,11 @@ class Db {
 
   static const _insert = 'INSERT OR REPLACE INTO docs(id,kind,data,updated_at,deleted,dirty,due,certs,card_id,ts) VALUES(?,?,?,?,?,?,?,?,?,?)';
 
-  /// Local write; marked dirty so the next sync pushes it.
+  /// Local write; marked dirty so the next sync pushes it. Pack cards never sync (their content comes from the pack,
+  /// their schedule is rebuilt from the review log), so they are written clean.
   static Future<Json> put(String kind, Json data, {bool deleted = false}) async {
     data['id'] ??= uuid.v4();
-    await _db.rawInsert(_insert, _cols(kind, data, nowMs(), deleted, true));
+    await _db.rawInsert(_insert, _cols(kind, data, nowMs(), deleted, data['pack'] == null));
     changes.value++;
     return data;
   }
@@ -127,6 +128,13 @@ class Db {
   static Future<List<Json>> reviewsFor(String cardId) => query('review', where: 'card_id = ?', args: [cardId], orderBy: 'ts DESC');
   static Future<List<Json>> reviewsSince(int ts) => query('review', where: 'ts >= ?', args: [ts]);
   static Future<int> dirtyCount() async => Sqflite.firstIntValue(await _db.rawQuery('SELECT COUNT(*) FROM docs WHERE dirty = 1')) ?? 0;
+
+  /// Removes a pack's cards (ids are "<slug>:<n>"): before a new version is imported, or when a subscription lapsed
+  /// (the free sample is then imported again). No JSON functions: Android 7's SQLite may not have them.
+  static Future<void> deletePack(String slug) async {
+    await _db.delete('docs', where: "kind = 'card' AND id LIKE ?", whereArgs: ['$slug:%']);
+    changes.value++;
+  }
 
   /// Forget everything local (another account signs in on this phone): docs, cursor, settings, images.
   static Future<void> wipe() async {

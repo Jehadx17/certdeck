@@ -107,9 +107,6 @@ class App {
 
   static Future<void> init() async {
     await Db.seed('settings', {'id': 'settings', ...defaultSettings});
-    for (final c in defaultCerts) {
-      await Db.seed('cert', c);
-    }
     await reload();
   }
 
@@ -121,7 +118,8 @@ class App {
     params = p is List && p.length == fsrs.defaultParameters.length ? p.map((e) => (e as num).toDouble()).toList() : null;
   }
 
-  static Json get cert => certs.firstWhere((c) => c['id'] == settings['active_cert'], orElse: () => certs.first);
+  /// What scheduling aims at: the exam and date from onboarding (Darb has no certification list).
+  static Json get cert => {'id': 'goal', 'exam': settings['exam'], 'exam_date': settings['exam_date']};
   static int setting(String k) => (settings[k] as num?)?.toInt() ?? defaultSettings[k] as int;
 
   static Future<void> saveSettings() async {
@@ -181,6 +179,33 @@ Json fromFsrs(fsrs.Card k) => {
       'due': k.due.millisecondsSinceEpoch,
       'last_review': k.lastReview?.millisecondsSinceEpoch,
     };
+
+/// A card's schedule rebuilt from its reviews, oldest first (pack cards aren't synced; their review log is). Mirrors
+/// what [recordAnswer] stores: FSRS state, lapses, the sure streak, misconception and leech flags.
+Json replay(Json card, List<Json> reviews, [fsrs.Scheduler? scheduler]) {
+  scheduler ??= schedulerFor(App.cert);
+  var k = fsrs.Card(cardId: 0, due: _utc(reviews.first['ts'] as int));
+  var lapses = 0, streak = 0;
+  var misconception = false;
+  for (final r in reviews) {
+    final rating = fsrs.Rating.values.firstWhere((x) => x.value == r['rating'], orElse: () => fsrs.Rating.good);
+    if (rating == fsrs.Rating.again && k.state == fsrs.State.review) lapses++;
+    k = scheduler.reviewCard(k, rating, reviewDateTime: _utc(r['ts'] as int)).card;
+    final correct = r['correct'] == true;
+    streak = r['confidence'] == 'sure' && correct ? streak + 1 : 0;
+    if (r['misconception'] == true) misconception = true;
+    if (streak >= 2) misconception = false;
+  }
+  return {
+    ...card,
+    'fsrs': fromFsrs(k),
+    'new': false,
+    'lapses': lapses,
+    'sure_streak': streak,
+    'misconception': misconception,
+    if (lapses >= App.setting('leech_threshold')) 'leech': true,
+  };
+}
 
 double retrievability(fsrs.Scheduler s, Json c, [DateTime? at]) =>
     isNew(c) ? 0 : s.getCardRetrievability(toFsrs(c), currentDateTime: (at ?? DateTime.now()).toUtc());

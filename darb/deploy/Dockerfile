@@ -9,6 +9,8 @@ COPY backend/requirements.txt .
 # requirements.txt pins the CPU-only torch index (the FSRS optimizer; the CUDA build is several GB).
 RUN pip install -r requirements.txt
 COPY backend /app
+# The admin's CSS/JS, served by WhiteNoise from the image (no shared static volume).
+RUN DJANGO_SECRET_KEY=build-only python manage.py collectstatic --noinput -v0
 RUN useradd -r -u 10001 darb && mkdir -p /data/uploads && chown darb /data/uploads
 USER darb
 EXPOSE 8000

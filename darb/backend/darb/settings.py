@@ -51,6 +51,10 @@ DARB_REVENUECAT_WEBHOOK_AUTH = env("DARB_REVENUECAT_WEBHOOK_AUTH", "")
 DARB_REVENUECAT_API_KEY = env("DARB_REVENUECAT_API_KEY", "")  # secret (v1) key, for GET/DELETE subscriber
 DARB_ENTITLEMENT = "premium"
 
+# Packs: built files are on the CDN (https://cdn.<domain>/packs/...); their keys are wrapped with this 32-byte key
+# (base64). Generate: python -c "import base64,os; print(base64.b64encode(os.urandom(32)).decode())"
+DARB_PACK_KEK = env("DARB_PACK_KEK", "")
+
 # Email (guardian consent, deletion confirmations): any SMTP provider. Unset host = printed to the log (development).
 EMAIL_HOST = env("EMAIL_HOST", "")
 EMAIL_PORT = int(env("EMAIL_PORT", "587"))
