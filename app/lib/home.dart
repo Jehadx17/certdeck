@@ -12,8 +12,11 @@ Future<void> studyCert(BuildContext context, List<Json> queue) => Navigator.push
     context,
     MaterialPageRoute(
         builder: (_) => StudyScreen(queue, onMore: () async {
-              final (next, _) = await buildQueue(App.cert);
-              if (context.mounted && next.isNotEmpty) studyCert(context, next);
+              var (next, _) = await buildQueue(App.cert);
+              if (next.isEmpty) next = await buildExtraQueue(App.cert); // today's plan is done: keep going if you want
+              if (!context.mounted) return;
+              if (next.isEmpty) return toast(context, 'Nothing left to study. Everything is fresh.');
+              studyCert(context, next);
             })));
 
 /// Today + the minimal stats: due/new, per-domain readiness, predicted score vs exam date,
@@ -82,9 +85,15 @@ class TodayScreen extends StatelessWidget {
               const SizedBox(height: 16),
               FilledButton.icon(
                 style: FilledButton.styleFrom(padding: const EdgeInsets.all(18)),
-                onPressed: queue.isEmpty ? null : () => studyCert(context, queue),
+                onPressed: () async {
+                  var q = queue;
+                  if (q.isEmpty) q = await buildExtraQueue(cert); // all done for today: study ahead
+                  if (!context.mounted) return;
+                  if (q.isEmpty) return toast(context, 'Nothing left to study. Everything is fresh.');
+                  studyCert(context, q);
+                },
                 icon: const Icon(Icons.play_arrow),
-                label: Text(queue.isEmpty ? 'All done for today' : 'Study (${queue.length}) · about ${App.sessionMinutes} min'),
+                label: Text(queue.isEmpty ? 'Done for today · study ahead' : 'Study (${queue.length}) · about ${App.sessionMinutes} min'),
               ),
               const SizedBox(height: 8),
               FilledButton.tonalIcon(

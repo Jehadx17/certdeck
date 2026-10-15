@@ -357,6 +357,28 @@ Future<(List<Json>, TodayStats)> buildQueue(Json cert, {int? minutes}) async {
   return (capByTime(queue, minutes ?? App.sessionBudget, await avgCardSeconds()), TodayStats(due.length, news.length, newDone, reviewsDone, plan));
 }
 
+/// Studying more than today's plan: the daily new-card limit is ignored and cards that are not due yet come in, the most
+/// forgotten first (an early review is fine for FSRS). Never empty while the cert has cards that are not at 97% recall.
+Future<List<Json>> buildExtraQueue(Json cert, {int? minutes}) async {
+  final cards = await Db.cardsFor(cert['id']);
+  final s = schedulerFor(cert);
+  final imp = await importanceFor(cert['id']);
+  final now = nowMs();
+  double value(Json c) => (imp[c['id']] ?? 5) / 10 * (1 - retrievability(s, c)) + (c['misconception'] == true ? .5 : 0);
+  final ahead = cards.where((c) => !isNew(c) && !isSuspended(c) && dueOf(c) > now && retrievability(s, c) < .97).toList()
+    ..sort((a, b) => value(b).compareTo(value(a)));
+  final news = orderNew(cards, cert);
+  // Two reviews, then a new card, so extra time still goes mostly to what is slipping.
+  final queue = <Json>[];
+  var ni = 0;
+  for (var i = 0; i < ahead.length; i++) {
+    queue.add(ahead[i]);
+    if ((i + 1) % 2 == 0 && ni < news.length) queue.add(news[ni++]);
+  }
+  queue.addAll(news.skip(ni));
+  return capByTime(queue, minutes ?? App.sessionBudget, await avgCardSeconds());
+}
+
 /// Weak-area / final-days review: misconceptions first, then the weakest domains' least
 /// retained cards, regardless of due date.
 Future<List<Json>> buildCramQueue(Json cert, {int limit = 40}) async {
