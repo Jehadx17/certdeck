@@ -259,6 +259,8 @@ const _ar = <String, String>{
   'Final answer matches': 'الإجابة النهائية مطابقة',
   'Grade my answer with AI': 'صحّح إجابتي بالذكاء الاصطناعي',
   'Grading…': 'جارٍ التصحيح…',
+  'Translating…': 'جارٍ الترجمة…',
+  'Translate to Arabic': 'ترجم إلى العربية',
   'Solution': 'الحل',
   'Checked by computer algebra': 'تم التحقق بالحساب الرمزي',
   'Explanation': 'الشرح',

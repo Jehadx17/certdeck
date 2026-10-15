@@ -7,6 +7,7 @@ import 'package:flutter_highlight/flutter_highlight.dart';
 import 'package:flutter_highlight/themes/atom-one-dark.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_math_fork/flutter_math.dart';
+import 'package:google_mlkit_translation/google_mlkit_translation.dart';
 import 'package:highlight/languages/all.dart' show allLanguages;
 import 'package:markdown/markdown.dart' as md;
 import 'package:url_launcher/url_launcher.dart';
@@ -381,6 +382,9 @@ class AnswerState {
       };
 }
 
+final _models = OnDeviceTranslatorModelManager();
+final _toArabic = OnDeviceTranslator(sourceLanguage: TranslateLanguage.english, targetLanguage: TranslateLanguage.arabic);
+
 /// Renders a card's question, its answer input, and (when revealed) the answer + explanation.
 class CardView extends StatefulWidget {
   final AnswerState state;
@@ -400,6 +404,30 @@ class CardView extends StatefulWidget {
 class _CardViewState extends State<CardView> {
   late final _typed = TextEditingController(text: widget.state.typed);
   int _steps = 1; // easy: problem steps shown so far
+  String? _arabic; // the shown text translated, while the translate icon is on
+
+  /// English → Arabic on the phone (Google ML Kit, free). The first use downloads the ~30MB model, then it works offline.
+  Future<void> _translate() async {
+    if (_arabic != null) return setState(() => _arabic = null);
+    final question = c['question']?.toString() ?? '';
+    final parts = [
+      s.type == 'cloze' ? (widget.revealed ? clozeBack(question) : clozeFront(question)) : question,
+      if (s.type == 'mcq') for (final i in s.optionOrder) '• ${(c['options'] as List)[i]}',
+      if (s.type == 'ordering') for (final it in s.order) '• $it',
+      if (widget.revealed) ...[
+        if (s.type == 'problem') ...((c['steps'] as List?) ?? []).map((e) => '$e'),
+        '${c['answer'] ?? ''}',
+        if (widget.showExplanation) '${c['explanation'] ?? ''}',
+      ],
+    ].where((p) => p.trim().isNotEmpty).toList();
+    final res = await busy(context, t('Translating…'), () async {
+      for (final l in [TranslateLanguage.english, TranslateLanguage.arabic]) {
+        if (!await _models.isModelDownloaded(l.bcpCode)) await _models.downloadModel(l.bcpCode);
+      }
+      return Future.wait(parts.map(_toArabic.translateText));
+    });
+    if (res != null && mounted) setState(() => _arabic = res.join('\n\n'));
+  }
 
   AnswerState get s => widget.state;
   Json get c => s.card;
@@ -413,6 +441,7 @@ class _CardViewState extends State<CardView> {
   void didUpdateWidget(CardView old) {
     super.didUpdateWidget(old);
     if (old.state != widget.state) _typed.text = widget.state.typed;
+    if (old.state != widget.state || old.revealed != widget.revealed) _arabic = null; // translated text is stale
   }
 
   @override
@@ -421,7 +450,21 @@ class _CardViewState extends State<CardView> {
     final revealed = widget.revealed;
     final question = c['question']?.toString() ?? '';
     return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-      if (s.type == 'cloze') Md(revealed ? clozeBack(question) : clozeFront(question)) else Md(question),
+      Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        Expanded(child: s.type == 'cloze' ? Md(revealed ? clozeBack(question) : clozeFront(question)) : Md(question)),
+        IconButton(
+            tooltip: t('Translate to Arabic'),
+            visualDensity: VisualDensity.compact,
+            icon: Icon(Icons.translate, color: _arabic != null ? cs.primary : Colors.white54),
+            onPressed: _translate),
+      ]),
+      if (_arabic != null)
+        Container(
+          margin: const EdgeInsets.only(top: 8),
+          padding: const EdgeInsets.all(12),
+          decoration: BoxDecoration(color: cs.surfaceContainerHigh, borderRadius: BorderRadius.circular(10)),
+          child: Directionality(textDirection: TextDirection.rtl, child: Md(_arabic!)),
+        ),
       if (s.type == 'mcq' && s.correctSet.length > 1)
         Padding(
             padding: const EdgeInsets.only(top: 4),

@@ -16,7 +16,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 # In Windows, build-name is used as the major, minor, and patch parts
 # of the product and file versions while build-number is used as the build suffix.
-version: 1.4.4+17
+version: 1.4.5+18
 
 environment:
   sdk: '>=3.4.3 <4.0.0'
@@ -55,6 +55,7 @@ dependencies:
     sdk: flutter
   flutter_local_notifications: 17.2.4
   timezone: ^0.9.4
+  google_mlkit_translation: 0.12.0  # 0.13 needs compileSdk 35, which AGP 7.3 can't build
 
 dependency_overrides:
   meta: 1.12.0  # fsrs 2.x asks ^1.15 only for @visibleForTesting; Flutter 3.22 pins 1.12
