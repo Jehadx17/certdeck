@@ -16,6 +16,9 @@ on:
 
 concurrency: {group: "darb-${{ github.ref }}", cancel-in-progress: true}
 
+# A piped command (… | tee report) fails the step when the command fails.
+defaults: {run: {shell: "bash -eo pipefail {0}"}}
+
 jobs:
   backend:
     runs-on: ubuntu-24.04
@@ -92,6 +95,27 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: always()
         with: {name: restore-report, path: darb/deploy/restore-report.txt}
+
+  # Load test at the 100k-student peak (docs/DARB-LOADTEST.md); repeated on the VPS once it exists.
+  loadtest:
+    if: github.event_name == 'workflow_dispatch' || contains(github.event.head_commit.message, '[loadtest]')
+    runs-on: ubuntu-24.04
+    defaults: {run: {working-directory: darb/deploy}}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.12"}
+      - run: pip install locust==2.32.4
+      - name: Configure
+        run: |
+          cp .env.example .env
+          sed -i "s/^DJANGO_SECRET_KEY=.*/DJANGO_SECRET_KEY=ci-$(openssl rand -hex 24)/; s/^POSTGRES_PASSWORD=.*/POSTGRES_PASSWORD=ci-$(openssl rand -hex 12)/" .env
+          printf 'HTTP_PORT=8080\nDARB_AI_STUB_MS=3000\nPG_SHARED_BUFFERS=1GB\nPG_EFFECTIVE_CACHE=4GB\n' >> .env
+          nproc; free -g
+      - run: bash tests/loadtest.sh 2>&1 | tee loadtest-report.txt
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with: {name: loadtest-report, path: "darb/deploy/loadtest-report.txt\ndarb/deploy/tests/out/"}
 
   ios:
     # Manual runs, or a pushed commit whose message contains [ios] (dispatch needs the workflow on the default branch).

@@ -19,7 +19,7 @@ echo "== seed: $REVIEWS reviews + docs"
 T0=$(t)
 ACC=$(sql "SELECT id FROM core_account WHERE email='restore@example.com'")
 sql "INSERT INTO core_review (account_id, seq, ts, card, rating, flags, duration_ms)
-     SELECT $ACC, g, (extract(epoch from now())*1000)::bigint - (g % 200) * 86400000 - g, 'qudurat-verbal:' || (g % 1200), 1 + g % 4, g % 64, 4000
+     SELECT $ACC, g, (extract(epoch from now())*1000)::bigint - (g % 200)::bigint * 86400000 - g, 'qudurat-verbal:' || (g % 1200), 1 + g % 4, g % 64, 4000
      FROM generate_series(1, $REVIEWS) g" >/dev/null
 for i in $(seq 1 20); do
   curl -fsS -X POST localhost:${HTTP_PORT:-80}/api/sync -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json' \

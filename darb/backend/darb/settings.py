@@ -33,6 +33,8 @@ DARB_DOMAIN = env("DARB_DOMAIN", "darbedu.sa")
 ALLOWED_HOSTS = _list("DJANGO_ALLOWED_HOSTS", f"{DARB_DOMAIN},localhost,127.0.0.1")
 
 ANTHROPIC_API_KEY = env("ANTHROPIC_API_KEY", "")
+# Load tests only: AI answers come from a stub after this many ms (ignored whenever a real key is set).
+DARB_AI_STUB_MS = int(env("DARB_AI_STUB_MS", "0"))
 # Course uploads (PDF/photos) live on the worker server's disk: <dir>/<account id>/<material id>/
 DARB_UPLOAD_DIR = Path(env("DARB_UPLOAD_DIR") or BASE_DIR / "uploads")
 

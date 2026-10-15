@@ -40,6 +40,12 @@ def _client():
 
 def _create(**kwargs):
     """Streams one Messages call and returns the final message (tests mock this)."""
+    if settings.DARB_AI_STUB_MS and not settings.ANTHROPIC_API_KEY:  # load tests: real latency, no cost
+        import random
+        from types import SimpleNamespace as NS
+        time.sleep(settings.DARB_AI_STUB_MS / 1000 * random.uniform(0.5, 1.5))
+        return NS(stop_reason="end_turn", content=[NS(type="text", text=json.dumps({"reply": "stub"}))],
+                  usage=NS(input_tokens=1500, output_tokens=400, cache_read_input_tokens=0, cache_creation_input_tokens=0))
     if not settings.ANTHROPIC_API_KEY:
         raise ApiError(503, "ANTHROPIC_API_KEY is not configured on the server")
     with _client().messages.stream(**kwargs) as stream:
