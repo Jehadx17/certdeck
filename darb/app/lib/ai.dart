@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'api.dart';
 import 'cards.dart';
 import 'db.dart';
+import 'i18n.dart';
 import 'logic.dart';
 import 'widgets.dart';
 
@@ -339,7 +340,7 @@ class _InsightsTabState extends State<InsightsTab> {
           else ...[
             const SizedBox(height: 8),
             Text('From ${DateTime.fromMillisecondsSinceEpoch(a['created_at'] as int).toString().substring(0, 16)}',
-                style: const TextStyle(color: Colors.white54, fontSize: 12)),
+                style: TextStyle(color: muted(context), fontSize: 12)),
             const SizedBox(height: 8),
             Md(a['summary'] ?? ''),
             const SizedBox(height: 12),
@@ -452,7 +453,7 @@ class _ChatScreenState extends State<ChatScreen> {
   Widget build(BuildContext context) {
     final cs = Theme.of(context).colorScheme;
     return Scaffold(
-      appBar: AppBar(title: const Text('Explain this card')),
+      appBar: AppBar(title: Text(t('Explain this card'))),
       body: SafeArea(
         child: Column(children: [
           const OnlineBanner(),
@@ -462,10 +463,10 @@ class _ChatScreenState extends State<ChatScreen> {
               if (messages.isEmpty)
                 Wrap(spacing: 6, children: [
                   for (final q in [
-                    'Explain this to me in depth',
-                    'Give me an analogy',
-                    'What are the common traps here?',
-                    'How would the exam test this?'
+                    t('Explain this to me in depth'),
+                    t('Give me an example'),
+                    t('What are the common traps here?'),
+                    t('How would the exam test this?'),
                   ])
                     ActionChip(label: Text(q), onPressed: () => _send(q)),
                 ]),
@@ -478,7 +479,21 @@ class _ChatScreenState extends State<ChatScreen> {
                     constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width * .88),
                     decoration: BoxDecoration(
                         color: m['role'] == 'user' ? cs.primaryContainer : cs.surfaceContainerHigh, borderRadius: BorderRadius.circular(12)),
-                    child: Md('${m['text']}'),
+                    child: m['role'] == 'user'
+                        ? Md('${m['text']}')
+                        : Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                            // Every AI answer says it is AI and can be reported (Play's AI-content policy, Anthropic's minors rules).
+                            Row(children: [
+                              Chip(label: Text(t('AI')), visualDensity: VisualDensity.compact, padding: EdgeInsets.zero),
+                              const Spacer(),
+                              IconButton(
+                                  tooltip: t('Report this answer'),
+                                  visualDensity: VisualDensity.compact,
+                                  icon: const Icon(Icons.flag_outlined, size: 18),
+                                  onPressed: () => reportMistake(context, widget.card, ai: '${m['text']}')),
+                            ]),
+                            Md('${m['text']}'),
+                          ]),
                   ),
                 ),
               if (sending) const Padding(padding: EdgeInsets.all(12), child: LinearProgressIndicator()),
@@ -493,7 +508,7 @@ class _ChatScreenState extends State<ChatScreen> {
                       controller: input,
                       minLines: 1,
                       maxLines: 4,
-                      decoration: const InputDecoration(hintText: 'Ask a follow-up…', border: OutlineInputBorder()))),
+                      decoration: InputDecoration(hintText: t('Ask about this question…'), border: const OutlineInputBorder()))),
               IconButton(onPressed: _send, icon: const Icon(Icons.send)),
             ]),
           ),
@@ -501,4 +516,29 @@ class _ChatScreenState extends State<ChatScreen> {
       ),
     );
   }
+}
+
+
+/// Before the first AI feature: who the AI is, what is sent, and that it can be wrong (App Store 5.1.2(i), Anthropic's
+/// rules for products used by minors). Asked once; the answer is a synced setting.
+Future<bool> ensureAiConsent(BuildContext context) async {
+  if (App.settings['ai_consent'] is int) return true;
+  final ok = await showDialog<bool>(
+    context: context,
+    builder: (c) => AlertDialog(
+      title: Text(t('AI explanations')),
+      content: Text(t('Explanations, grading of written answers and cards from your uploads are written by an AI (Claude, by Anthropic). '
+          'To answer, we send it the question and your answer or your pages, never your name or email. '
+          'AI can make mistakes: tap the flag to report one.')),
+      actions: [
+        TextButton(onPressed: () => Navigator.pop(c, false), child: Text(t('Not now'))),
+        FilledButton(onPressed: () => Navigator.pop(c, true), child: Text(t('OK, use AI'))),
+      ],
+    ),
+  );
+  if (ok == true) {
+    App.settings['ai_consent'] = nowMs();
+    await App.saveSettings();
+  }
+  return ok == true;
 }

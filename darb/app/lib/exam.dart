@@ -120,7 +120,7 @@ class _ExamScreenState extends State<ExamScreen> {
             _performance(cert)
                 ? 'Official format: performance-based tasks, ${ex['minutes']} min, pass ${ex['pass_pct']}%. Simulated with typed-command and YAML tasks.'
                 : 'Official format: ${ex['questions']} questions, ${ex['minutes']} min, scaled 100–1000, pass 720 (≈${ex['pass_pct']}%).',
-            style: const TextStyle(color: Colors.white70)),
+            style: TextStyle(color: muted(context))),
         const SizedBox(height: 12),
         Row(children: [
           Expanded(
@@ -159,7 +159,7 @@ class _ExamScreenState extends State<ExamScreen> {
           builder: (_, exams) {
             final list = exams.where((e) => e['cert'] == cert['id']).toList()
               ..sort((a, b) => (b['started_at'] as int).compareTo(a['started_at'] as int));
-            if (list.isEmpty) return const Padding(padding: EdgeInsets.all(8), child: Text('None yet', style: TextStyle(color: Colors.white54)));
+            if (list.isEmpty) return Padding(padding: EdgeInsets.all(8), child: Text('None yet', style: TextStyle(color: muted(context))));
             return Column(children: [
               for (final e in list)
                 ListTile(

@@ -72,6 +72,8 @@ def ensure_pack(bp):
     pack, _ = Pack.objects.update_or_create(slug=bp["slug"], defaults=dict(
         title_ar=bp["title_ar"], title_en=bp["title_en"], segments=bp.get("segments", []), exams=bp.get("exams", []),
         grades=bp.get("grades", []), subject=bp.get("subject", ""),
+        topics=[{"id": t["id"], "title_ar": t["title_ar"], "title_en": t.get("title_en", ""), "weight": t.get("weight") or
+                 t["count"] / max(1, sum(x["count"] for x in bp["topics"]))} for t in bp["topics"]],
         sources=[{"source": s["url"], "kind": "official blueprint (format and topics only)", "rights": "facts, no text copied",
                   "note": s.get("what", "")} for s in bp.get("sources", [])] + [{
                   "source": f"{GEN_MODEL} (original items)", "kind": "generated", "rights": "ours", "note": ""}]))

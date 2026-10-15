@@ -270,6 +270,7 @@ class Pack(models.Model):
     exams = models.JSONField(default=list)  # qudurat | tahsili | school | ...
     grades = models.JSONField(default=list)  # empty = every grade of the segment
     subject = models.CharField(max_length=60, blank=True)
+    topics = models.JSONField(default=list)  # [{id, title_ar, title_en, weight}] from the blueprint: the app's "domains"
     version = models.IntegerField(default=0)  # bumped by every build
     items = models.IntegerField(default=0)
     size = models.BigIntegerField(default=0)

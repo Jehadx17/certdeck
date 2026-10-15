@@ -30,6 +30,9 @@ const typeLabels = {
 
 void openUrl(String url) => launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
 
+/// Secondary text that reads in both themes (CertDeck was dark-only and used white54/60/70).
+Color muted(BuildContext context) => Theme.of(context).colorScheme.onSurfaceVariant;
+
 void toast(BuildContext context, String msg) => ScaffoldMessenger.of(context)
   ..hideCurrentSnackBar()
   ..showSnackBar(SnackBar(content: Text(msg)));
@@ -212,7 +215,7 @@ class MediaImage extends StatelessWidget {
       width: fill ? double.infinity : null,
       fit: fill ? BoxFit.fitWidth : null,
       errorBuilder: (_, __, ___) =>
-          Container(padding: const EdgeInsets.all(16), color: Colors.white10, child: Text(t('Image not downloaded yet (sync to fetch it)'))));
+          Container(padding: const EdgeInsets.all(16), color: Theme.of(context).colorScheme.outlineVariant, child: Text(t('Image not downloaded yet (sync to fetch it)'))));
 }
 
 /// Card images; tap one to view it full screen with pinch-zoom (diagrams have small labels on a phone).
@@ -469,7 +472,7 @@ class _CardViewState extends State<CardView> {
           return Card(
             margin: const EdgeInsets.symmetric(vertical: 4),
             shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10), side: BorderSide(color: border ?? Colors.white12, width: border == null ? 1 : 2)),
+                borderRadius: BorderRadius.circular(10), side: BorderSide(color: border ?? Theme.of(context).colorScheme.outlineVariant, width: border == null ? 1 : 2)),
             child: InkWell(
               borderRadius: BorderRadius.circular(10),
               onTap: widget.revealed
@@ -494,7 +497,7 @@ class _CardViewState extends State<CardView> {
                             : (multi
                                 ? (chosen ? Icons.check_box : Icons.check_box_outline_blank)
                                 : (chosen ? Icons.radio_button_checked : Icons.radio_button_off)),
-                        color: border ?? Colors.white54,
+                        color: border ?? muted(context),
                         size: 22),
                     const SizedBox(width: 10),
                     Expanded(child: Md(options[i])),
@@ -502,7 +505,7 @@ class _CardViewState extends State<CardView> {
                   if (widget.revealed && widget.showExplanation && i < expl.length && expl[i].isNotEmpty && (chosen || right))
                     Padding(
                       padding: const EdgeInsets.only(left: 32, top: 6),
-                      child: Md(expl[i], style: TextStyle(color: chosen && !right ? cs.error : Colors.white70, fontSize: 14)),
+                      child: Md(expl[i], style: TextStyle(color: chosen && !right ? cs.error : muted(context), fontSize: 14)),
                     ),
                 ]),
               ),
@@ -514,7 +517,7 @@ class _CardViewState extends State<CardView> {
           if (!s.selected.contains(i) && !s.correctSet.contains(i) && i < expl.length && expl[i].isNotEmpty)
             Padding(
                 padding: const EdgeInsets.only(left: 8, top: 2),
-                child: Md('• *${options[i]}*: ${expl[i]}', style: const TextStyle(color: Colors.white54, fontSize: 13))),
+                child: Md('• *${options[i]}*: ${expl[i]}', style: TextStyle(color: muted(context), fontSize: 13))),
     ];
   }
 
@@ -589,7 +592,7 @@ class _CardViewState extends State<CardView> {
                 ? Text('${(g['points'] as List)[i]['note']}',
                     style: const TextStyle(fontSize: 12), textDirection: isRtl('${(g['points'] as List)[i]['note']}') ? TextDirection.rtl : TextDirection.ltr)
                 : null,
-            secondary: widget.easy ? null : Text('${(((r['weight'] as num?) ?? 0) * 100).round()}%', style: const TextStyle(fontSize: 12, color: Colors.white54)),
+            secondary: widget.easy ? null : Text('${(((r['weight'] as num?) ?? 0) * 100).round()}%', style: TextStyle(fontSize: 12, color: muted(context))),
           ),
         if (g != null) Padding(padding: const EdgeInsets.only(top: 4), child: Md('${g['feedback']}', style: const TextStyle(fontSize: 14))),
         if (g == null && widget.onChanged != null && !widget.easy && s.typed.trim().isNotEmpty)
@@ -846,4 +849,29 @@ class SourcePage extends StatelessWidget {
               : Center(child: snap.hasError ? NeedsConnection('${snap.error}') : const CircularProgressIndicator()),
         ),
       );
+}
+
+
+/// "Report a mistake" on any question, or on an AI answer ([ai] = its text): the note goes to the admin's list; the
+/// student gets a notice once it's fixed.
+Future<void> reportMistake(BuildContext context, Json card, {String? ai}) async {
+  final note = TextEditingController();
+  final send = await showDialog<bool>(
+    context: context,
+    builder: (c) => AlertDialog(
+      title: Text(ai == null ? t('Report a mistake') : t('Report this answer')),
+      content: TextField(controller: note, maxLines: 3, decoration: InputDecoration(hintText: t('What is wrong? (optional)'))),
+      actions: [
+        TextButton(onPressed: () => Navigator.pop(c, false), child: Text(t('Cancel'))),
+        FilledButton(onPressed: () => Navigator.pop(c, true), child: Text(t('Send'))),
+      ],
+    ),
+  );
+  if (send != true || !context.mounted) return;
+  final ok = await busy(context, t('Sending…'), () => Api.call('POST', 'report', body: {
+        'card_id': card['id'],
+        'kind': ai == null ? 'question' : 'ai',
+        'note': [note.text.trim(), if (ai != null) 'AI: ${ai.length > 500 ? ai.substring(0, 500) : ai}'].where((x) => x.isNotEmpty).join('\n'),
+      }));
+  if (ok != null && context.mounted) toast(context, t('Thanks! We will check it.'));
 }

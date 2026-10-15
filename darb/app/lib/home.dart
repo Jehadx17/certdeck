@@ -68,7 +68,7 @@ class TodayScreen extends StatelessWidget {
                       : days < 0
                           ? 'Exam date passed'
                           : 'Exam in $days day${days == 1 ? '' : 's'} · ${cert['exam_date']}',
-                  style: TextStyle(color: finalDays ? Colors.amber : Colors.white60)),
+                  style: TextStyle(color: finalDays ? Colors.amber : muted(context))),
               const SizedBox(height: 16),
               Row(children: [
                 _stat(context, '${st.due}', 'due'),
@@ -97,7 +97,7 @@ class TodayScreen extends StatelessWidget {
               ),
               const SizedBox(height: 8),
               FilledButton.tonalIcon(
-                style: finalDays ? null : FilledButton.styleFrom(backgroundColor: Colors.transparent, side: const BorderSide(color: Colors.white24)),
+                style: finalDays ? null : FilledButton.styleFrom(backgroundColor: Colors.transparent, side: BorderSide(color: Theme.of(context).colorScheme.outlineVariant)),
                 onPressed: () async {
                   final q = await buildCramQueue(cert);
                   if (!context.mounted) return;
@@ -117,7 +117,7 @@ class TodayScreen extends StatelessWidget {
               if (lastExam != null)
                 Text(
                     'Last simulation: ${((lastExam['score_pct'] as num) * 100).round()}%${lastExam['scaled'] != null ? ' (${lastExam['scaled']})' : ''}',
-                    style: const TextStyle(color: Colors.white60, fontSize: 13)),
+                    style: TextStyle(color: muted(context), fontSize: 13)),
               const SizedBox(height: 8),
               for (final d in cert['domains'] as List)
                 Padding(
@@ -127,7 +127,7 @@ class TodayScreen extends StatelessWidget {
                       Expanded(child: Text('${d['name']}', style: const TextStyle(fontSize: 13))),
                       Text(
                           '${((r.byDomain[d['id']] ?? 0) * 100).round()}% · ${r.counts[d['id']]} cards · ${((d['weight'] as num) * 100).round()}% of exam',
-                          style: const TextStyle(fontSize: 12, color: Colors.white60)),
+                          style: TextStyle(fontSize: 12, color: muted(context))),
                     ]),
                     const SizedBox(height: 3),
                     LinearProgressIndicator(
@@ -161,7 +161,7 @@ class TodayScreen extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 14),
             child: Column(children: [
               Text(value, style: Theme.of(context).textTheme.headlineMedium),
-              Text(label, style: const TextStyle(color: Colors.white60)),
+              Text(label, style: TextStyle(color: muted(context))),
             ]),
           ),
         ),

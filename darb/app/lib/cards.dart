@@ -174,7 +174,7 @@ class _CardsScreenState extends State<CardsScreen> {
             separatorBuilder: (_, __) => const Divider(height: 1),
             itemBuilder: (_, i) {
               if (i == 0) {
-                return Padding(padding: const EdgeInsets.all(8), child: Text(t('{n} cards', {'n': list.length}), style: const TextStyle(color: Colors.white54)));
+                return Padding(padding: const EdgeInsets.all(8), child: Text(t('{n} cards', {'n': list.length}), style: TextStyle(color: muted(context))));
               }
               final c = list[i - 1];
               final certJ = App.cert;
@@ -306,7 +306,7 @@ class _CardDetailState extends State<CardDetail> {
                   if ((c['priority'] ?? 0) != 0) 'priority ${c['priority']}',
                   if (App.isOwner) 'source: ${c['source'] ?? 'manual'}',
                 ].join(' · '),
-                style: const TextStyle(color: Colors.white60)),
+                style: TextStyle(color: muted(context))),
             if (c['leech'] == true) ...[
               const SizedBox(height: 12),
               FilledButton.tonalIcon(
@@ -351,7 +351,7 @@ class _CardDetailState extends State<CardDetail> {
                       : null,
                 ),
               ),
-            if (reviews.isEmpty) Text(t('Not reviewed yet'), style: const TextStyle(color: Colors.white54)),
+            if (reviews.isEmpty) Text(t('Not reviewed yet'), style: TextStyle(color: muted(context))),
             for (final r in reviews)
               ListTile(
                 dense: true,
@@ -778,7 +778,7 @@ class _CardEditorState extends State<CardEditor> {
               icon: const Icon(Icons.image_outlined),
               label: const Text('Pick image (gallery, camera, URL)'))
         else ...[
-          const Text('Drag to cover a region. Tap a region to label or delete it.', style: TextStyle(color: Colors.white60)),
+          Text('Drag to cover a region. Tap a region to label or delete it.', style: TextStyle(color: muted(context))),
           const SizedBox(height: 6),
           MaskEditor(image: d['image'], masks: masks, onChanged: () => setState(() {})),
           if (isNewCard)

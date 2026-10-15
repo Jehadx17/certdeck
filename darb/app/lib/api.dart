@@ -37,6 +37,8 @@ class Api {
 
   static Future<void> load() async {
     token = await _store.read(key: 'token');
+    final cached = await Db.meta('me');
+    if (cached != null && token != null) me.value = Map<String, dynamic>.from(jsonDecode(cached) as Map);
     url = await _store.read(key: 'url') ?? defaultUrl;
     lastSync.value = await Db.meta('last_sync') ?? 'never';
     // Every 30 s while the server is processing material or preparing an assessment for us (so progress shows);
@@ -137,9 +139,15 @@ class Api {
   /// Who this token belongs to and their AI budget this month ({name, role, usd, cap_usd, remaining_usd}).
   static final me = ValueNotifier<Json?>(null);
 
+  /// Who is signed in (guardian state, Plus). Cached on the phone so an offline start knows the last state; [meFresh]
+  /// is true only once the server answered in this run (a lapse is acted on only then).
   static Future<void> refreshMe() async {
     me.value = Map<String, dynamic>.from(await call('GET', 'me'));
+    meFresh = true;
+    await Db.setMeta('me', jsonEncode(me.value));
   }
+
+  static bool meFresh = false;
 
   static Future<String?>? _syncRun, _syncNext;
 

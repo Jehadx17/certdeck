@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -52,8 +53,11 @@ class StudyScreen extends StatefulWidget {
   final bool practice;
   /// "Do more" at the end of a easy session.
   final VoidCallback? onMore;
+  /// A timed practice test: the clock counts down and the test ends when it reaches zero (exam pace).
+  final int? timedMinutes;
   const StudyScreen(this.queue,
-      {super.key, this.source = 'study', this.title = 'Study', this.custom, this.scheduler, this.easy = false, this.practice = false, this.onMore});
+      {super.key, this.source = 'study', this.title = 'Study', this.custom, this.scheduler, this.easy = false, this.practice = false, this.onMore,
+      this.timedMinutes});
   @override
   State<StudyScreen> createState() => _StudyScreenState();
 }
@@ -70,15 +74,36 @@ class _StudyScreenState extends State<StudyScreen> {
   final started = DateTime.now();
   late final int planned = widget.custom?.remaining ?? widget.queue.length;
   bool completed = false, studying = false; // studying: a new card shown first, for a student new to the subject
+  bool hinted = false; // the hint was shown: a right answer then counts as Hard, never Sure
+  Timer? _clock;
+
+  /// Seconds left of a timed practice test.
+  int get secondsLeft => max(0, widget.timedMinutes! * 60 - DateTime.now().difference(started).inSeconds);
 
   @override
   void initState() {
     super.initState();
     _next();
+    if (widget.timedMinutes != null) {
+      _clock = Timer.periodic(const Duration(seconds: 1), (_) {
+        if (!mounted) return;
+        if (secondsLeft == 0 && card != null) {
+          _clock?.cancel();
+          setState(() {
+            card = null; // time is up: the score so far
+            completed = true;
+            if (done > 0) _logSession();
+          });
+        } else {
+          setState(() {});
+        }
+      });
+    }
   }
 
   @override
   void dispose() {
+    _clock?.cancel();
     if (!completed && done > 0) _logSession();
     super.dispose();
   }
@@ -105,6 +130,7 @@ class _StudyScreenState extends State<StudyScreen> {
   }
 
   void _next() => setState(() {
+        hinted = false;
         card = session.next();
         ans = card == null ? null : AnswerState(card!);
         conf = null;
@@ -169,9 +195,9 @@ class _StudyScreenState extends State<StudyScreen> {
             const SizedBox(height: 12),
             Text(done == 0 ? t('Nothing to study right now.') : t('Session done: {n} answers, {p}% correct', {'n': done, 'p': (100 * right / done).round()}),
                 textAlign: TextAlign.center, style: Theme.of(context).textTheme.titleMedium),
-            if (done > 0) Text(t('{m} min', {'m': minutes}), style: const TextStyle(color: Colors.white60)),
+            if (done > 0) Text(t('{m} min', {'m': minutes}), style: TextStyle(color: muted(context))),
             if (calibrationLine != null)
-              Padding(padding: const EdgeInsets.fromLTRB(24, 10, 24, 0), child: Text(calibrationLine!, textAlign: TextAlign.center, style: const TextStyle(color: Colors.white70))),
+              Padding(padding: const EdgeInsets.fromLTRB(24, 10, 24, 0), child: Text(calibrationLine!, textAlign: TextAlign.center, style: TextStyle(color: muted(context)))),
             const SizedBox(height: 20),
             if (done > 0 && widget.onMore != null)
               Padding(
@@ -247,12 +273,12 @@ class _StudyScreenState extends State<StudyScreen> {
       label: Text(text, style: TextStyle(fontSize: 12, color: color)),
       visualDensity: VisualDensity.compact,
       padding: EdgeInsets.zero,
-      side: BorderSide(color: color ?? Colors.white24));
+      side: BorderSide(color: color ?? Theme.of(context).colorScheme.outlineVariant));
 
   Widget _bottom(ColorScheme cs) {
     Widget bar(List<Widget> children) => Container(
         padding: const EdgeInsets.fromLTRB(12, 8, 12, 12),
-        decoration: BoxDecoration(color: cs.surfaceContainer, border: const Border(top: BorderSide(color: Colors.white10))),
+        decoration: BoxDecoration(color: cs.surfaceContainer, border: Border(top: BorderSide(color: Theme.of(context).colorScheme.outlineVariant))),
         child: Row(children: [for (final w in children) Expanded(child: Padding(padding: const EdgeInsets.symmetric(horizontal: 4), child: w))]));
     if (!revealed) {
       final ready = ans!.ready;
@@ -268,7 +294,7 @@ class _StudyScreenState extends State<StudyScreen> {
       return Column(mainAxisSize: MainAxisSize.min, children: [
         Padding(
             padding: const EdgeInsets.only(top: 6),
-            child: Text(ready ? t('How confident are you?') : t('Pick an answer first'), style: const TextStyle(color: Colors.white54, fontSize: 12))),
+            child: Text(ready ? t('How confident are you?') : t('Pick an answer first'), style: TextStyle(color: muted(context), fontSize: 12))),
         bar([
           btn(Conf.guess, t('Guessing'), Icons.casino_outlined, Colors.orange),
           btn(Conf.unsure, t('Unsure'), Icons.help_outline, Colors.amber),
@@ -303,8 +329,13 @@ class _StudyScreenState extends State<StudyScreen> {
 
   Widget _easyCard(ColorScheme cs) => Scaffold(
         appBar: AppBar(
-          title: Text(t('{n} left', {'n': session.remaining + 1})),
-          actions: [helpButton(context, studyHelp)],
+          title: Text(widget.timedMinutes != null
+              ? '${t('{n} left', {'n': session.remaining + 1})} · ${secondsLeft ~/ 60}:${(secondsLeft % 60).toString().padLeft(2, '0')}'
+              : t('{n} left', {'n': session.remaining + 1})),
+          actions: [
+            IconButton(tooltip: t('Report a mistake'), icon: const Icon(Icons.flag_outlined), onPressed: () => reportMistake(context, card!)),
+            helpButton(context, studyHelp),
+          ],
         ),
         body: SafeArea(
           child: Column(children: [
@@ -313,12 +344,31 @@ class _StudyScreenState extends State<StudyScreen> {
                 if (isNew(card!) && !revealed)
                   Padding(
                       padding: const EdgeInsets.only(bottom: 10),
-                      child: Text(t('A new one! Make your best guess first. Guessing is how you learn it.'), style: const TextStyle(fontSize: 14, color: Colors.white60))),
+                      child: Text(t('A new one! Make your best guess first. Guessing is how you learn it.'), style: TextStyle(fontSize: 14, color: muted(context)))),
                 if (studying)
                   Padding(
                       padding: const EdgeInsets.only(bottom: 10),
-                      child: Text(t('A new one! Read it, then tap Got it. It comes back soon as a question.'), style: const TextStyle(fontSize: 14, color: Colors.white60))),
+                      child: Text(t('A new one! Read it, then tap Got it. It comes back soon as a question.'), style: TextStyle(fontSize: 14, color: muted(context)))),
                 CardView(ans!, key: ObjectKey(ans), revealed: revealed, easy: true, misconception: misconception, onChanged: () => setState(() {})),
+                if (!revealed && '${card!['hint'] ?? ''}'.isNotEmpty)
+                  Align(
+                    alignment: AlignmentDirectional.centerStart,
+                    child: hinted
+                        ? Padding(padding: const EdgeInsets.only(top: 10), child: Text('💡 ${card!['hint']}', style: TextStyle(color: muted(context))))
+                        : TextButton.icon(icon: const Icon(Icons.lightbulb_outline), label: Text(t('Hint')), onPressed: () => setState(() => hinted = true)),
+                  ),
+                if (revealed)
+                  Align(
+                    alignment: AlignmentDirectional.centerStart,
+                    child: TextButton.icon(
+                        icon: const Icon(Icons.auto_awesome_outlined),
+                        label: Text(t('Explain more (AI)')),
+                        onPressed: () async {
+                          if (await ensureAiConsent(context) && context.mounted) {
+                            Navigator.push(context, MaterialPageRoute(builder: (_) => ChatScreen(card!)));
+                          }
+                        }),
+                  ),
                 const SizedBox(height: 40),
               ]),
             ),
@@ -330,7 +380,7 @@ class _StudyScreenState extends State<StudyScreen> {
   /// How sure you are doubles as the Check button: one tap rates the confidence and shows the answer.
   void _easyCheck(Conf c) {
     setState(() {
-      conf = c;
+      conf = hinted && c == Conf.sure ? Conf.unsure : c; // with the hint, at most Hard
       revealed = true;
     });
     if (ans!.autoGraded && ans!.correct) HapticFeedback.mediumImpact();
@@ -345,7 +395,7 @@ class _StudyScreenState extends State<StudyScreen> {
   Widget _easyBottom(ColorScheme cs) {
     Widget bar(Widget child) => Container(
         padding: const EdgeInsets.fromLTRB(16, 10, 16, 16),
-        decoration: BoxDecoration(color: cs.surfaceContainer, border: const Border(top: BorderSide(color: Colors.white10))),
+        decoration: BoxDecoration(color: cs.surfaceContainer, border: Border(top: BorderSide(color: Theme.of(context).colorScheme.outlineVariant))),
         child: child);
     final a = ans!;
     if (studying) {
@@ -373,7 +423,7 @@ class _StudyScreenState extends State<StudyScreen> {
                     FittedBox(fit: BoxFit.scaleDown, child: Text(label, maxLines: 1, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600))),
                   ]))));
       return bar(Column(mainAxisSize: MainAxisSize.min, children: [
-        Text(t('How sure are you?'), style: const TextStyle(fontSize: 13, color: Colors.white60)),
+        Text(t('How sure are you?'), style: TextStyle(fontSize: 13, color: muted(context))),
         const SizedBox(height: 8),
         Row(children: [
           sure(Conf.guess, t('Guessing'), Icons.casino_outlined, Colors.orange),
@@ -425,7 +475,7 @@ class _StudyScreenState extends State<StudyScreen> {
           const SizedBox(height: 12),
           if (App.settings['nerves'] != true) // students who get nervous about tests see no score, only the message
             Text(t('{r} of {n} right', {'r': right, 'n': done}), style: const TextStyle(fontSize: 28, fontWeight: FontWeight.bold), textAlign: TextAlign.center),
-          Text(t('{n} cards · {m} min', {'n': done, 'm': minutes}), style: const TextStyle(fontSize: 14, color: Colors.white60), textAlign: TextAlign.center),
+          Text(t('{n} cards · {m} min', {'n': done, 'm': minutes}), style: TextStyle(fontSize: 14, color: muted(context)), textAlign: TextAlign.center),
           const SizedBox(height: 12),
           Text(
               n == 3
@@ -436,7 +486,7 @@ class _StudyScreenState extends State<StudyScreen> {
               style: const TextStyle(fontSize: 16),
               textAlign: TextAlign.center),
           if (calibrationLine != null)
-            Padding(padding: const EdgeInsets.only(top: 12), child: Text(calibrationLine!, style: const TextStyle(fontSize: 14, color: Colors.white70), textAlign: TextAlign.center)),
+            Padding(padding: const EdgeInsets.only(top: 12), child: Text(calibrationLine!, style: TextStyle(fontSize: 14, color: muted(context)), textAlign: TextAlign.center)),
         ],
         if (widget.practice && results.isNotEmpty) ...[
           const SizedBox(height: 24),

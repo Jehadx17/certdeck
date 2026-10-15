@@ -4,7 +4,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'api.dart';
 import 'billing.dart';
 import 'db.dart';
-import 'easy.dart';
+import 'darb_home.dart';
 import 'guardian.dart';
 import 'logic.dart';
 import 'notify.dart';
@@ -96,7 +96,7 @@ class _ShellState extends State<Shell> with WidgetsBindingObserver {
           if (!Api.configured) return const WelcomeScreen();
           if (me?['guardian'] == 'pending') return const GuardianScreen();
           if (!onboarded) return const OnboardingScreen();
-          return const EasyHome();
+          return const DarbHome();
         },
       );
 }

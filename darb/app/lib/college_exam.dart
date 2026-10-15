@@ -101,7 +101,7 @@ class _PracticeSetupState extends State<PracticeSetup> {
                           .map((e) => '${t(e.key.toString())} ${((e.value as num) * 100).round()}%')
                           .join(', ')
                     }),
-              style: const TextStyle(color: Colors.white70)),
+              style: TextStyle(color: muted(context))),
           const SizedBox(height: 16),
           Row(children: [
             Expanded(child: TextField(controller: count, keyboardType: TextInputType.number, decoration: InputDecoration(labelText: t('Questions'), border: const OutlineInputBorder()))),
@@ -113,7 +113,7 @@ class _PracticeSetupState extends State<PracticeSetup> {
           Padding(
               padding: const EdgeInsets.only(top: 6),
               child: Text(t('New questions you haven\'t seen cost about \$0.05 each and need a connection; the rest come from your cards.'),
-                  style: const TextStyle(color: Colors.white54, fontSize: 12))),
+                  style: TextStyle(color: muted(context), fontSize: 12))),
           const SizedBox(height: 16),
           FilledButton.icon(onPressed: _start, icon: const Icon(Icons.timer_outlined), label: Text(t('Start'))),
           const SizedBox(height: 24),
@@ -122,7 +122,7 @@ class _PracticeSetupState extends State<PracticeSetup> {
             load: () async => (await Db.query('exam')).where((e) => e['assessment_id'] == widget.a['id']).toList()
               ..sort((a, b) => (b['started_at'] as int).compareTo(a['started_at'] as int)),
             builder: (_, list) => Column(children: [
-              if (list.isEmpty) Padding(padding: const EdgeInsets.all(8), child: Text(t('None yet'), style: const TextStyle(color: Colors.white54))),
+              if (list.isEmpty) Padding(padding: const EdgeInsets.all(8), child: Text(t('None yet'), style: TextStyle(color: muted(context)))),
               for (final e in list)
                 ListTile(
                   leading: const Icon(Icons.assignment_turned_in_outlined),

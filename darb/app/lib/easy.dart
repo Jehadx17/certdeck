@@ -160,7 +160,7 @@ class _ExamCard extends StatelessWidget {
           Text(easyWhen(d), style: const TextStyle(fontSize: 15)),
           const SizedBox(height: 12),
           Text(t('{p}% learned · {n} of {m} cards', {'p': (e.done * 100).round(), 'n': e.learned, 'm': e.s.cards.length}),
-              style: const TextStyle(fontSize: 13, color: Colors.white70)),
+              style: TextStyle(fontSize: 13, color: muted(context))),
           const SizedBox(height: 6),
           ClipRRect(borderRadius: BorderRadius.circular(4), child: LinearProgressIndicator(value: e.done, minHeight: 8)),
           const SizedBox(height: 16),
@@ -379,7 +379,7 @@ class _KidIntroState extends State<EasyIntro> {
                       width: 12,
                       height: 12,
                       margin: const EdgeInsets.all(6),
-                      decoration: BoxDecoration(shape: BoxShape.circle, color: i == page ? Colors.amber : Colors.white24)),
+                      decoration: BoxDecoration(shape: BoxShape.circle, color: i == page ? Colors.amber : Theme.of(context).colorScheme.outlineVariant)),
               ]),
               const SizedBox(height: 16),
               FilledButton(

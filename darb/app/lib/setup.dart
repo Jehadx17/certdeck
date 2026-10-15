@@ -6,6 +6,7 @@ import 'easy.dart';
 import 'i18n.dart';
 import 'logic.dart';
 import 'notify.dart';
+import 'widgets.dart';
 
 /// Six short questions after sign-up (and under Settings → Study setup). Only things that change how the app
 /// studies with you: time, reminder hour, how new the subject is, the goal, test nerves, language.
@@ -73,7 +74,7 @@ class _SetupScreenState extends State<SetupScreen> {
           ),
           body: SafeArea(
             child: ListView(padding: const EdgeInsets.all(20), children: [
-              Text(t('A few quick questions so the app fits you. You can change them later in Settings.'), style: const TextStyle(fontSize: 14, color: Colors.white60)),
+              Text(t('A few quick questions so the app fits you. You can change them later in Settings.'), style: TextStyle(fontSize: 14, color: muted(context))),
               const SizedBox(height: 20),
               _q(t('How long can you study each day?'), [for (final m in const [5, 10, 15, 20]) (m, t('{m} min', {'m': m}))], minutes, (v) => minutes = v as int),
               _q(t('When do you usually study?'), [(8 * 60, t('Morning')), (14 * 60, t('Afternoon')), (18 * 60, t('Evening')), (21 * 60, t('Night'))], reminder,

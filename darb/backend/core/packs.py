@@ -41,8 +41,10 @@ def unwrap(slug, wrapped):
 
 
 def card(pack, item):
-    """The card as the app stores it: id "<slug>:<n>", the pack's slug, and the item's content."""
-    return {**item.data, "id": f"{pack.slug}:{item.n}", "pack": pack.slug}
+    """The card as the app stores it: id "<slug>:<n>", the pack's slug, its topic as the study "domain" (the app's
+    weighted queue, readiness and mock tests run on topics), and the item's content."""
+    return {**item.data, "id": f"{pack.slug}:{item.n}", "pack": pack.slug,
+            "certs": {pack.slug: item.data.get("topic") or "t1"}}
 
 
 def build(pack):
@@ -53,7 +55,7 @@ def build(pack):
         raise ValueError(f"{pack.slug}: no verified items")
     version = pack.version + 1
     meta = {"slug": pack.slug, "version": version, "title_ar": pack.title_ar, "title_en": pack.title_en,
-            "subject": pack.subject}
+            "subject": pack.subject, "exams": pack.exams, "topics": pack.topics}
     body = gzip.compress(json.dumps({**meta, "cards": [card(pack, i) for i in items]}, ensure_ascii=False).encode())
     key, nonce = AESGCM.generate_key(bit_length=256), os.urandom(12)
     blob = MAGIC + nonce + AESGCM(key).encrypt(nonce, body, f"darb:{pack.slug}:{version}".encode())
@@ -78,7 +80,7 @@ def cdn(path):
 
 def manifest():
     return [{"slug": p.slug, "title_ar": p.title_ar, "title_en": p.title_en, "segments": p.segments, "exams": p.exams,
-             "grades": p.grades, "subject": p.subject, "version": p.version, "items": p.items, "size": p.size,
+             "grades": p.grades, "subject": p.subject, "topics": p.topics, "version": p.version, "items": p.items, "size": p.size,
              "sha256": p.sha256, "url": cdn(f"{p.slug}/{p.version}.dpk"), "sample_url": cdn(f"{p.slug}/sample-{p.version}.json.gz")}
             for p in Pack.objects.filter(published=True).order_by("slug")]
 

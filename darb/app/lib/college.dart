@@ -81,7 +81,7 @@ class CollegeScreen extends StatelessWidget {
                   Padding(
                       padding: const EdgeInsets.all(8),
                       child: Text(list.isEmpty ? t('Add a course, then its material and its next quiz or exam.') : t('Nothing planned: no quiz or exam in the next 3 weeks.'),
-                          style: const TextStyle(color: Colors.white60))),
+                          style: TextStyle(color: muted(context)))),
                 for (final p in plan) PlanCard(p),
                 header(context, t('Courses')),
                 for (final c in list)
@@ -119,7 +119,7 @@ class BudgetLine extends StatelessWidget {
                       'left': (me['remaining_usd'] as num).toStringAsFixed(2),
                       'cap': (me['cap_usd'] as num).toStringAsFixed(0),
                     }),
-                    style: TextStyle(color: (me['remaining_usd'] as num) < 1 ? Colors.orange : Colors.white60, fontSize: 13)),
+                    style: TextStyle(color: (me['remaining_usd'] as num) < 1 ? Colors.orange : muted(context), fontSize: 13)),
               ),
       );
 }
@@ -257,12 +257,12 @@ class CourseScreen extends StatelessWidget {
               header(context, t('Quizzes & exams'),
                   trailing: TextButton.icon(icon: const Icon(Icons.add), label: Text(t('Add')), onPressed: () => newAssessment(context, id))),
               if (assess.isEmpty)
-                Text(t('Add your next quiz or exam, or upload the syllabus and the app proposes them.'), style: const TextStyle(color: Colors.white60)),
+                Text(t('Add your next quiz or exam, or upload the syllabus and the app proposes them.'), style: TextStyle(color: muted(context))),
               for (final a in assess) AssessmentTile(a),
               header(context, t('Material'),
                   trailing: TextButton.icon(icon: const Icon(Icons.upload_file), label: Text(t('Add')), onPressed: () => addMaterial(context, id))),
               if (mats.isEmpty)
-                Text(t('Upload slides, notes, a textbook, photos, the syllabus or past exams.'), style: const TextStyle(color: Colors.white60)),
+                Text(t('Upload slides, notes, a textbook, photos, the syllabus or past exams.'), style: TextStyle(color: muted(context))),
               for (final m in mats) MaterialTile(m, ing[m['id']]),
               if (profile != null) ...[
                 header(context, t('Your professor\'s exams')),
@@ -283,7 +283,7 @@ class CourseScreen extends StatelessWidget {
                                   .where((e) => (e.value as num) > 0)
                                   .map((e) => '${t(e.key.toString())} ${((e.value as num) * 100).round()}%')
                                   .join(' · '),
-                              style: const TextStyle(color: Colors.white60, fontSize: 12)),
+                              style: TextStyle(color: muted(context), fontSize: 12)),
                         ]))),
               ],
               header(context, t('Cards')),
@@ -318,7 +318,7 @@ class AssessmentTile extends StatelessWidget {
           if (a['date'] == null && a['weeks'] != null) t('week {w}', {'w': a['weeks']}),
           if (a['weight_pct'] != null) '${a['weight_pct']}%',
         ].join(' · ')),
-        trailing: d != null && d < 0 ? Text(t('Past'), style: const TextStyle(color: Colors.white38)) : const Icon(Icons.chevron_right),
+        trailing: d != null && d < 0 ? Text(t('Past'), style: TextStyle(color: Theme.of(context).colorScheme.outlineVariant)) : Icon(Icons.chevron_right),
         onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => AssessmentScreen(a['id']))),
       ),
     );
@@ -361,7 +361,7 @@ class MaterialTile extends StatelessWidget {
                 leading: Icon(materialKinds[m['kind']]?.$1 ?? Icons.insert_drive_file_outlined),
                 title: autoText(m['title'] ?? '', maxLines: 2, overflow: TextOverflow.ellipsis),
                 subtitle: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                  Text(statusText(status, ing, up), style: TextStyle(color: status == 'failed' ? Colors.redAccent : Colors.white60, fontSize: 13)),
+                  Text(statusText(status, ing, up), style: TextStyle(color: status == 'failed' ? Colors.redAccent : muted(context), fontSize: 13)),
                   if (status == 'failed' && err != null) Text(t('$err'), style: const TextStyle(color: Colors.redAccent, fontSize: 12)),
                   if (up != null || const {'converting', 'mapping', 'queued'}.contains(status))
                     Padding(padding: const EdgeInsets.only(top: 4), child: LinearProgressIndicator(value: up)),
@@ -466,7 +466,7 @@ class MaterialScreen extends StatelessWidget {
               ),
             ]),
             body: ListView(padding: const EdgeInsets.all(12), children: [
-              Text(statusText(ing?['status'] ?? 'waiting', ing, Uploads.progress.value[id]), style: const TextStyle(color: Colors.white60)),
+              Text(statusText(ing?['status'] ?? 'waiting', ing, Uploads.progress.value[id]), style: TextStyle(color: muted(context))),
               if (ing?['status'] == 'failed') ...[
                 Text(t('${ing?['error'] ?? ''}'), style: const TextStyle(color: Colors.redAccent)),
                 TextButton.icon(
@@ -557,7 +557,7 @@ class _AssessmentScreenState extends State<AssessmentScreen> {
                   ((a['scope'] as List?) ?? []).isEmpty
                       ? t('Nothing chosen yet: pick the lectures / chapters this covers.')
                       : t('{n} sections chosen', {'n': (a['scope'] as List).length}),
-                  style: const TextStyle(color: Colors.white60)),
+                  style: TextStyle(color: muted(context))),
               const SizedBox(height: 8),
               TextField(
                 controller: hints,
@@ -576,7 +576,7 @@ class _AssessmentScreenState extends State<AssessmentScreen> {
                   Mode.sprint => t('Short on time: each card comes back in this session until you get it right twice, most valuable first.'),
                   Mode.compressed => t('Spread over the days left, spaced so it sticks until the exam. Practice exams at the midpoint and 2 days before.'),
                   Mode.long => t('Spaced repetition up to the exam date, plus review of earlier material.'),
-                }, style: const TextStyle(color: Colors.white60, fontSize: 13)),
+                }, style: TextStyle(color: muted(context), fontSize: 13)),
                 const SizedBox(height: 8),
                 Wrap(spacing: 8, runSpacing: 8, children: [
                   for (final m in [15, 30, 45, 60, 90, 120])
@@ -823,7 +823,7 @@ class PrepCard extends StatelessWidget {
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           if (p == null)
             Text(t('The AI reads the chosen sections, extracts everything examinable, ranks it for this assessment and writes cards, practice questions and sheets.'),
-                style: const TextStyle(color: Colors.white70)),
+                style: TextStyle(color: muted(context))),
           if (status == 'queued' || status == 'running') ...[
             Text(t('Preparing: {stage}', {'stage': t(p!['stage'] ?? '')})),
             const Padding(padding: EdgeInsets.symmetric(vertical: 8), child: LinearProgressIndicator()),
@@ -874,7 +874,7 @@ class ReadinessCard extends StatelessWidget {
                 if (r.practice != null) t('and your last practice exam ({p}%)', {'p': (r.practice! * 100).round()}),
                 if (r.reviews < 30) t('· few answers yet, so the range is wide'),
               ].join(' '),
-              style: const TextStyle(color: Colors.white60, fontSize: 12)),
+              style: TextStyle(color: muted(context), fontSize: 12)),
           const SizedBox(height: 10),
           FutureBuilder<Map<String, String>>(
             future: _sectionNames(r.sections.keys),
@@ -885,7 +885,7 @@ class ReadinessCard extends StatelessWidget {
                   child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                     Row(children: [
                       Expanded(child: autoText(snap.data?[sc.key] ?? '…', maxLines: 1, overflow: TextOverflow.ellipsis, style: const TextStyle(fontSize: 13))),
-                      Text(t('{m}/{n} known · {s} seen', {'m': sc.mastered, 'n': sc.cards, 's': sc.seen}), style: const TextStyle(fontSize: 12, color: Colors.white60)),
+                      Text(t('{m}/{n} known · {s} seen', {'m': sc.mastered, 'n': sc.cards, 's': sc.seen}), style: TextStyle(fontSize: 12, color: muted(context))),
                     ]),
                     const SizedBox(height: 3),
                     LinearProgressIndicator(
@@ -982,7 +982,7 @@ class TriageScreen extends StatelessWidget {
               tri.skim.isEmpty && tri.skip.isEmpty
                   ? t('Everything fits. Each card comes back until you get it right twice in a row.')
                   : t('Not everything fits in {n} minutes, so this is ordered by the marks it can earn you.', {'n': tri.minutes}),
-              style: const TextStyle(color: Colors.white70)),
+              style: TextStyle(color: muted(context))),
         ),
         group(t('Master now'), t('about {n} min including repeats', {'n': masterMin}), tri.master, Colors.green),
         if (tri.skim.isNotEmpty) group(t('Skim'), t('read these on the summary sheet'), tri.skim, Colors.amber),
