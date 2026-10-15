@@ -13,7 +13,9 @@ import 'logic.dart';
 class ApiError implements Exception {
   final String message;
   final bool offline;
-  ApiError(this.message, {this.offline = false});
+  /// The server's machine-readable reason: premium, guardian, budget, daily, too_long, suspended, ...
+  final String? code;
+  ApiError(this.message, {this.offline = false, this.code});
   @override
   String toString() => message;
 }
@@ -44,6 +46,16 @@ class Api {
       ticks++;
       if (await serverBusy() || (ticks % 4 == 0 && (await Db.dirtyCount() > 0 || await serverWaiting()))) sync().ignore();
     });
+  }
+
+  /// Signed out or account deleted: forget the token and everything local.
+  static Future<void> forget() async {
+    token = null;
+    await _store.delete(key: 'token');
+    await Db.wipe();
+    me.value = null;
+    await App.init();
+    changes.value++;
   }
 
   static Future<void> configure(String newUrl, String newToken) async {
@@ -105,13 +117,14 @@ class Api {
     }
     online.value = true;
     if (r.statusCode >= 400) {
-      String msg;
+      Map body;
       try {
-        msg = jsonDecode(utf8.decode(r.bodyBytes))['error'].toString();
+        body = jsonDecode(utf8.decode(r.bodyBytes)) as Map;
       } catch (_) {
-        msg = 'HTTP ${r.statusCode}';
+        body = {'error': 'HTTP ${r.statusCode}'};
       }
-      throw ApiError(r.statusCode == 402 ? budgetMessage(msg) : msg);
+      // Server messages are English keys translated here; budget refusals carry their reset date.
+      throw ApiError(t('${body['error']}', {'date': '${body['resets_on'] ?? ''}'}), code: body['code'] as String?);
     }
     if (method == 'GET' && path.startsWith('media/')) return r.bodyBytes;
     return r.bodyBytes.isEmpty ? null : jsonDecode(utf8.decode(r.bodyBytes));
@@ -192,14 +205,3 @@ Json reviewWire(Json d) {
 
 /// A pulled review -> a local review doc, with the same deterministic id the phone that recorded it used.
 Json reviewDoc(Map r) => {'id': 'r:${r['card_id']}:${r['ts']}', 'kind': 'review', 'data': r, 'updated_at': r['ts'], 'deleted': false};
-
-/// The server's budget refusal carries amounts, so it can't be looked up whole in the translations.
-String budgetMessage(String msg) {
-  final m = RegExp(r'\$(\d+(?:\.\d+)?) of \$(\d+(?:\.\d+)?) left(?:, this needs about \$(\d+(?:\.\d+)?))?').firstMatch(msg);
-  if (m == null) return msg;
-  return [
-    t('Monthly AI budget reached: \${left} of \${cap} left.', {'left': m[1], 'cap': m[2]}),
-    if (m[3] != null) t('This needs about \${n}.', {'n': m[3]}),
-    t('Studying still works.'),
-  ].join(' ');
-}

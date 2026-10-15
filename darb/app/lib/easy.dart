@@ -1,7 +1,5 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-import 'api.dart';
 import 'cards.dart';
 import 'college.dart';
 import 'college_exam.dart';
@@ -427,48 +425,6 @@ class _ManageScreenState extends State<ManageScreen> {
 // ---------------- sign in ----------------
 
 /// The first screen on a new phone: sign in (or register) with email and password.
-class WelcomeScreen extends StatefulWidget {
-  const WelcomeScreen({super.key});
-  @override
-  State<WelcomeScreen> createState() => _WelcomeScreenState();
-}
-
-class _WelcomeScreenState extends State<WelcomeScreen> {
-  final devToken = TextEditingController();
-  String? error;
-
-  @override
-  Widget build(BuildContext context) => easyScale(
-        context,
-        Scaffold(
-          body: SafeArea(
-            child: ListView(padding: const EdgeInsets.all(24), children: [
-              const SizedBox(height: 40),
-              Icon(Icons.school_rounded, size: 72, color: Theme.of(context).colorScheme.primary),
-              const SizedBox(height: 16),
-              Text(t('Welcome to Darb'), style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold), textAlign: TextAlign.center),
-              const SizedBox(height: 32),
-              // Google and Apple sign-in (docs/DARB-PROTOCOL.md → Accounts) replace this screen's placeholder in Phase 1.
-              if (kDebugMode) ...[
-                TextField(
-                  controller: devToken,
-                  decoration: InputDecoration(labelText: 'Dev token (debug builds only)', errorText: error, border: const OutlineInputBorder()),
-                ),
-                const SizedBox(height: 12),
-                FilledButton(
-                  onPressed: () async {
-                    final err = await Api.connect(Api.defaultUrl, devToken.text);
-                    if (mounted) setState(() => error = err);
-                  },
-                  child: const Text('Connect'),
-                ),
-              ],
-            ]),
-          ),
-        ),
-      );
-}
-
 /// "material/section" -> section title, for naming a practice test's topics.
 Future<Map<String, String>> sectionTitles() async => {
       for (final i in await Db.query('ingest'))

@@ -2,10 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'api.dart';
+import 'billing.dart';
 import 'db.dart';
 import 'easy.dart';
+import 'guardian.dart';
 import 'logic.dart';
 import 'notify.dart';
+import 'onboarding.dart';
+import 'signin.dart';
 import 'upload.dart';
 
 Future<void> main() async {
@@ -14,7 +18,8 @@ Future<void> main() async {
   await App.init();
   await Api.load();
   runApp(const Darb());
-  Api.sync().then((_) => Reminders.reschedule()).ignore(); // sync on open, then plan the reminders
+  // Who am I (guardian state, subscription) first: it decides the first screen even when a sync is refused.
+  if (Api.configured) Api.refreshMe().then((_) => Billing.start(Api.me.value!['id'] as String)).catchError((_) {}).whenComplete(() => Api.sync().then((_) => Reminders.reschedule())).ignore();
   Uploads.run().ignore(); // resume unfinished uploads
 }
 
@@ -83,6 +88,15 @@ class _ShellState extends State<Shell> with WidgetsBindingObserver {
     if (state == AppLifecycleState.paused) Reminders.reschedule().ignore(); // after a session, the plan changed
   }
 
+  /// Sign in → (under 18) the guardian's OK → onboarding → home.
   @override
-  Widget build(BuildContext context) => Api.configured ? const EasyHome() : const WelcomeScreen();
+  Widget build(BuildContext context) => ValueListenableBuilder(
+        valueListenable: Api.me,
+        builder: (_, me, __) {
+          if (!Api.configured) return const WelcomeScreen();
+          if (me?['guardian'] == 'pending') return const GuardianScreen();
+          if (!onboarded) return const OnboardingScreen();
+          return const EasyHome();
+        },
+      );
 }

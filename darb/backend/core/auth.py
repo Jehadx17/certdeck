@@ -6,9 +6,10 @@ from rest_framework.permissions import BasePermission
 class ApiError(APIException):
     """An error the app shows. [code] is a stable machine-readable reason (premium, guardian, budget, too_young, ...)."""
 
-    def __init__(self, status, message, code=None):
+    def __init__(self, status, message, code=None, extra=None):
         self.status_code = status
         self.error_code = code
+        self.extra = extra or {}  # more fields for the app, e.g. resets_on
         super().__init__(message)
 
 

@@ -1,11 +1,21 @@
+from django.conf import settings
+from django.contrib import admin
 from django.http import JsonResponse
 from django.urls import path
 
-from core import views
+from core import accounts, views
 
 urlpatterns = [
+    path(settings.DARB_ADMIN_PATH, admin.site.urls),
     path("api/health", views.health),
     path("api/me", views.me),
+    path("api/auth/signout", accounts.sign_out),
+    path("api/auth/<str:provider>", accounts.sign_in),
+    path("api/account", accounts.account),
+    path("api/account/guardian", accounts.guardian),
+    path("consent/<str:token>", accounts.consent_page),
+    path("api/billing/revenuecat", accounts.revenuecat_webhook),
+    path("api/billing/refresh", accounts.billing_refresh),
     path("api/sync", views.sync),
     path("api/ai/explain", views.explain),
     # uploads (subscribers): resumable PDF/photo uploads -> cards, practice and sheets for an exam

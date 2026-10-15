@@ -7,7 +7,7 @@ from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.views import exception_handler as drf_exception_handler
 
-from . import ai, college, ingest, jobs
+from . import ai, billing, college, ingest, jobs
 from .auth import ApiError
 from .models import REVIEW_MAX_AGE_MS, AiCall, docs, now_ms, reviews_after, save_docs
 
@@ -22,6 +22,7 @@ def exception_handler(exc, context):
         response.data = {"error": str(getattr(exc, "detail", exc))}
         if getattr(exc, "error_code", None):
             response.data["code"] = exc.error_code
+        response.data.update(getattr(exc, "extra", None) or {})
     return response
 
 
@@ -121,8 +122,8 @@ def budget(user):
 @api_view(["GET"])
 def me(request):
     """Who is signed in, plus this month's AI budget."""
-    a = request.account
-    return Response({"id": a.public_id, "name": a.name, "email": a.email, **budget(a)})
+    from .accounts import account_json
+    return Response({**account_json(request.account), **budget(request.account)})
 
 
 # ---------- college ----------
@@ -130,6 +131,7 @@ def me(request):
 @api_view(["GET", "PUT"])
 def upload(request, material_id, n):
     """Resumable upload of file n of a material: PUT ?offset=<bytes the server has> with the next chunk."""
+    billing.require_premium(request.account)  # uploads are a subscriber feature
     if request.method == "GET":
         return Response(ingest.upload_status(request.account, material_id, n))
     try:
@@ -141,19 +143,23 @@ def upload(request, material_id, n):
 
 @api_view(["POST"])
 def upload_done(request, material_id, n):
+    billing.require_premium(request.account)
     return Response(ingest.upload_done(request.account, material_id, n, _body(request).get("sha256")))
 
 
 @api_view(["GET"])
 def page_image(request, material_id, page):
     """One page of a processed material as a PNG (the app shows a card's source page)."""
+    billing.require_premium(request.account)
     path = ingest.page_png(request.account, material_id, page)
     return FileResponse(path.open("rb"), content_type="image/png")
 
 
-def _college(fn):
+def _college(fn, premium=True):
     @api_view(["POST"])
     def view(request):
+        if premium:
+            billing.require_premium(request.account)
         return Response(fn(request.account, _body(request)))
     view.__name__ = fn.__name__
     return view
@@ -163,6 +169,6 @@ process = _college(college.start_processing)
 prepare = _college(college.prepare)
 suggest_scope = _college(college.suggest_scope)
 prioritize = _college(college.reprioritize)
-grade = _college(college.grade)
+grade = _college(college.grade, premium=False)  # grading practice answers: free within the AI quota
 practice = _college(college.practice)
 night = _college(college.night_sheet)

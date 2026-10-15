@@ -62,8 +62,31 @@ EMAIL_BACKEND = ("django.core.mail.backends.smtp.EmailBackend" if EMAIL_HOST
 DEFAULT_FROM_EMAIL = env("DEFAULT_FROM_EMAIL", f"Darb <no-reply@{DARB_DOMAIN}>")
 DARB_SUPPORT_EMAIL = env("DARB_SUPPORT_EMAIL", f"support@{DARB_DOMAIN}")
 
-INSTALLED_APPS = ["core"]
-MIDDLEWARE = ["django.middleware.security.SecurityMiddleware"]
+# The admin (account lookup, entitlement, quota reset, AI spend, caps) is Django's own; everything else is the API.
+INSTALLED_APPS = ["django.contrib.admin", "django.contrib.auth", "django.contrib.contenttypes", "django.contrib.sessions",
+                  "django.contrib.messages", "django.contrib.staticfiles", "core"]
+MIDDLEWARE = [
+    "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
+    "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.common.CommonMiddleware",
+    "django.middleware.csrf.CsrfViewMiddleware",
+    "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "django.contrib.messages.middleware.MessageMiddleware",
+    "django.middleware.clickjacking.XFrameOptionsMiddleware",
+]
+TEMPLATES = [{
+    "BACKEND": "django.template.backends.django.DjangoTemplates", "APP_DIRS": True,
+    "OPTIONS": {"context_processors": ["django.template.context_processors.request",
+                                       "django.contrib.auth.context_processors.auth",
+                                       "django.contrib.messages.context_processors.messages"]},
+}]
+STATIC_URL = "/static/"
+STATIC_ROOT = BASE_DIR / "static"
+# A path that isn't /admin/ (bots scan it). In production Cloudflare Access sits in front of it (docs/DARB-OPS.md).
+DARB_ADMIN_PATH = env("DARB_ADMIN_PATH", "darb-admin/")
+SESSION_COOKIE_SECURE = CSRF_COOKIE_SECURE = not DEBUG
+CSRF_TRUSTED_ORIGINS = [f"https://{DARB_DOMAIN}"]
 ROOT_URLCONF = "darb.urls"
 WSGI_APPLICATION = "darb.wsgi.application"
 APPEND_SLASH = False

@@ -16,6 +16,10 @@ from core import college, ingest
 from core.models import AiCall, Doc, Job, now_ms, save_docs
 from core.tests import drain, make_account, message
 
+from django.utils.timezone import now as tz_now
+
+PAID = tz_now() + timedelta(days=30)
+
 
 def pdf_bytes(pages=3, text="Page"):
     """A small real PDF (Pillow) with [pages] pages."""
@@ -36,7 +40,7 @@ def fake_ai(request_kwargs_log=None):
     def create(**kw):
         if request_kwargs_log is not None:
             request_kwargs_log.append(kw)
-        system = kw["system"][0]["text"]
+        system = kw["system"][1]["text"]
         if system.startswith("You map the structure"):
             return message({"language": "en", "title": "Calculus notes", "sections": [
                 {"title": "Course plan", "level": 1, "start": 1, "end": 1, "kind": "other"},
@@ -91,7 +95,7 @@ def fake_ai(request_kwargs_log=None):
 class CollegeTests(TestCase):
     def setUp(self):
         college.WORKERS = 1
-        self.owner, self.auth = make_account()
+        self.owner, self.auth = make_account(premium_until=PAID)  # uploads are a subscriber feature
         tmp = Path(tempfile.mkdtemp())
         self.addCleanup(shutil.rmtree, tmp)
         p = override_settings(DARB_UPLOAD_DIR=tmp / "uploads")
@@ -177,7 +181,7 @@ class CollegeTests(TestCase):
         kps = Doc.objects.filter(kind="kp")
         self.assertEqual(kps.count(), 2)  # the empty point was dropped
         self.assertEqual({k.data["section"] for k in kps}, {f"{mid}/s2"})
-        extract = next(k for k in log if k["system"][0]["text"].startswith("You extract"))
+        extract = next(k for k in log if k["system"][1]["text"].startswith("You extract"))
         self.assertEqual([b["title"] for b in extract["messages"][0]["content"] if b["type"] == "document"], ["p. 2", "p. 3"])
         prio = Doc.objects.get(doc_id=f"prio-{quiz.doc_id}").data["scores"]
         self.assertEqual(sorted(prio.values()), [5, 5])
@@ -187,7 +191,7 @@ class CollegeTests(TestCase):
                                           "data": dict(a.data, hints="Only 5.3")}]})
         self.assertTrue(Job.objects.filter(kind="prio", ref=quiz.doc_id).exists())
         self.assertEqual(drain(), 0)  # not due yet
-        gen = next(k for k in log if k["system"][0]["text"].startswith("You write study cards"))
+        gen = next(k for k in log if k["system"][1]["text"].startswith("You write study cards"))
         self.assertEqual(gen["model"], "claude-haiku-5-5")
         self.assertIn("Substitution will be on it", gen["messages"][0]["content"])
 
@@ -237,7 +241,7 @@ class CollegeTests(TestCase):
         self.assertNotIn("fallbacks", json.dumps(batches.create.call_args.kwargs))
 
         # Another account sees none of it: not the docs, not the files, not the pages.
-        _, sara = make_account("sara@example.com")
+        _, sara = make_account("sara@example.com", premium_until=PAID)
         self.assertEqual(self.client.get(f"/api/upload/{mid}/0", **sara).json(), {"size": 0, "done": False})
         self.assertEqual(self.post("/api/college/process", {"material_id": mid}, sara).status_code, 404)
         self.assertEqual(self.post("/api/college/prepare", {"assessment_id": aid}, sara).status_code, 404)

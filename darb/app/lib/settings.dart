@@ -1,11 +1,16 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'api.dart';
+import 'billing.dart';
 import 'db.dart';
 import 'i18n.dart';
 import 'logic.dart';
 import 'notify.dart';
-import 'setup.dart';
+import 'onboarding.dart';
+import 'signin.dart';
 import 'widgets.dart';
 
 /// Settings hold only what the spec lists: theme, language, account, subscription, notifications, study goal / exam
@@ -50,7 +55,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             leading: const Icon(Icons.flag_outlined),
             title: Text(t('Study goal and exam date')),
             onTap: () async {
-              await Navigator.push(context, MaterialPageRoute(builder: (_) => const SetupScreen()));
+              await Navigator.push(context, MaterialPageRoute(builder: (_) => const OnboardingScreen()));
               if (mounted) setState(() {});
             },
           ),
@@ -73,6 +78,52 @@ class _SettingsScreenState extends State<SettingsScreen> {
               subtitle: Text('${me?['email'] ?? ''}'),
             ),
           ),
+          ListTile(
+            leading: const Icon(Icons.logout),
+            title: Text(t('Sign out')),
+            onTap: () async {
+              final err = await Api.sync(); // push this phone's progress first
+              if (!context.mounted) return;
+              if (err != null && !await _confirm(context, t('Sign out without saving?'),
+                  t('Some progress on this phone hasn\'t reached the server yet (no connection). Signing out now loses it.'))) {
+                return;
+              }
+              await Auth.signOut();
+              await Billing.stop();
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.delete_forever_outlined, color: cs.error),
+            title: Text(t('Delete my account'), style: TextStyle(color: cs.error)),
+            onTap: () => _delete(context),
+          ),
+          header(t('Subscription')),
+          ValueListenableBuilder(
+            valueListenable: Api.me,
+            builder: (_, me, __) => Column(children: [
+              ListTile(
+                leading: const Icon(Icons.workspace_premium_outlined),
+                title: Text(Billing.premium ? t('Darb Plus') : t('Free')),
+                subtitle: Billing.premium && me?['premium_until'] != null
+                    ? Text(t('Renews or ends on {date}', {'date': '${me!['premium_until']}'.substring(0, 10)}))
+                    : null,
+                trailing: Billing.premium ? null : FilledButton(onPressed: () => openPaywall(context), child: Text(t('Upgrade'))),
+              ),
+              ListTile(
+                leading: const Icon(Icons.manage_accounts_outlined),
+                title: Text(t('Manage or cancel')),
+                onTap: () => launchUrl(Billing.manageUrl, mode: LaunchMode.externalApplication),
+              ),
+              ListTile(
+                leading: const Icon(Icons.restore),
+                title: Text(t('Restore purchases')),
+                onTap: () async {
+                  final err = await busy(context, t('Talking to the store…'), Billing.restore);
+                  if (context.mounted) toast(context, err ?? t('Welcome to Darb Plus!'));
+                },
+              ),
+            ]),
+          ),
           ExpansionTile(
             leading: const Icon(Icons.more_horiz),
             title: Text(t('Advanced')),
@@ -92,6 +143,33 @@ class _SettingsScreenState extends State<SettingsScreen> {
       ),
     );
   }
+}
+
+Future<bool> _confirm(BuildContext context, String title, String body) async =>
+    await showDialog<bool>(
+      context: context,
+      builder: (c) => AlertDialog(title: Text(title), content: Text(body), actions: [
+        TextButton(onPressed: () => Navigator.pop(c, false), child: Text(t('Cancel'))),
+        TextButton(onPressed: () => Navigator.pop(c, true), child: Text(t('Continue'))),
+      ]),
+    ) ==
+    true;
+
+/// Deletes the account on the server and everything on this phone (App Store 5.1.1(v): in the app, no email detour).
+Future<void> _delete(BuildContext context) async {
+  final ok = await _confirm(
+      context,
+      t('Delete your account?'),
+      [
+        t('Your progress, uploads and settings are deleted from Darb\'s servers and this phone. This can\'t be undone.'),
+        if (Billing.premium)
+          t('Your subscription is billed by {store}: cancel it there too, or it keeps renewing.', {'store': Platform.isIOS ? 'App Store' : 'Google Play'}),
+      ].join('\n\n'));
+  if (!ok || !context.mounted) return;
+  final done = await busy(context, t('Deleting…'), () => Api.call('DELETE', 'account'));
+  if (done == null) return;
+  await Billing.stop();
+  await Api.forget();
 }
 
 /// Pushes and pulls now; shows a spinner while a sync runs.

@@ -1,6 +1,6 @@
 import 'package:darb/cards.dart';
 import 'package:markdown/markdown.dart' as md;
-import 'package:darb/api.dart' show budgetMessage;
+import 'package:darb/i18n.dart';
 import 'package:darb/logic.dart';
 import 'package:darb/widgets.dart' show clozeBack, clozeFront, isolateRuns;
 import 'package:fsrs/fsrs.dart' as fsrs;
@@ -129,16 +129,14 @@ void main() {
     expect(html, contains('<strong>…</strong>'));
   });
 
-  test('the budget refusal reads in Arabic with its amounts', () {
-    const server = r'Monthly AI budget reached: $0.12 of $8.55 left, this needs about $0.25. Studying still works.';
+  test('the AI budget refusal reads in Arabic with its reset date, no dollar amounts', () {
+    const server = "You've used this month's AI help. It comes back on {date}. Studying still works.";
     App.settings['lang'] = 'ar';
-    final ar = budgetMessage(server);
-    expect(ar, contains('\u20680.12\u2069'));
-    expect(ar, contains('\u20688.55\u2069'));
-    expect(ar, contains('\u20680.25\u2069'));
-    expect(ar, isNot(contains('Monthly')));
+    final ar = t(server, {'date': '2026-11-01'});
+    expect(ar, contains('\u20682026-11-01\u2069'));
+    expect(ar, isNot(contains('used')));
+    expect(ar, isNot(contains(r'$')));
     App.settings['lang'] = 'en';
-    expect(budgetMessage(server), 'Monthly AI budget reached: \$\u20680.12\u2069 of \$\u20688.55\u2069 left. This needs about \$\u20680.25\u2069. Studying still works.');
-    expect(budgetMessage('something else'), 'something else');
+    expect(t(server, {'date': '2026-11-01'}), contains('comes back on \u20682026-11-01\u2069'));
   });
 }

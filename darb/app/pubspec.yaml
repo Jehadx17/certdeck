@@ -33,6 +33,9 @@ dependencies:
   crypto: ^3.0.7
   flutter_local_notifications: ^20.1.0
   timezone: ^0.10.1
+  google_sign_in: ^7.2.0
+  sign_in_with_apple: ^7.0.1
+  purchases_flutter: ^10.16.0
 
 dev_dependencies:
   flutter_test:

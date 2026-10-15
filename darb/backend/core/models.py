@@ -1,4 +1,5 @@
 import hashlib
+from decimal import Decimal
 import secrets
 import time
 from datetime import datetime, timezone
@@ -30,10 +31,12 @@ class Account(models.Model):
     guardian_email = models.EmailField(blank=True)  # under 18: who confirms (docs/DARB-PDPL.md)
     guardian_token_hash = models.CharField(max_length=64, blank=True, db_index=True)
     guardian_ok_at = models.DateTimeField(null=True, blank=True)
+    guardian_weekly = models.BooleanField(default=False)  # the guardian asked for a weekly study summary
     apple_refresh_token = models.TextField(blank=True)  # only to revoke it when the account is deleted
     seq = models.BigIntegerField(default=0)  # last sync seq given to this account's writes (per-user cursor)
     premium_until = models.DateTimeField(null=True, blank=True)  # set from RevenueCat by the backend only
     cap_usd = models.DecimalField(max_digits=8, decimal_places=2, null=True, blank=True)  # null = the tier's cap
+    quota_reset_at = models.DateTimeField(null=True, blank=True)  # admin "reset quota": spend counts from here
     active = models.BooleanField(default=True)
     suspended = models.CharField(max_length=200, blank=True)  # why, when the anomaly rules or I suspended it
     created = models.DateTimeField(auto_now_add=True)
@@ -96,6 +99,32 @@ class AiCall(models.Model):
 
     class Meta:
         indexes = [models.Index(fields=["user", "created"], name="aicall_user_created")]
+
+
+class Config(models.Model):
+    """What I change from the admin without an app update (one row)."""
+
+    free_cap_usd = models.DecimalField(max_digits=6, decimal_places=3, default=Decimal("0.03"))
+    paid_cap_usd = models.DecimalField(max_digits=6, decimal_places=3, default=Decimal("0.50"))
+    free_daily_ai = models.IntegerField(default=10)  # AI calls per day
+    paid_daily_ai = models.IntegerField(default=200)
+    daily_spend_alert_usd = models.DecimalField(max_digits=8, decimal_places=2, default=Decimal("20"))
+
+    class Meta:
+        verbose_name = verbose_name_plural = "config"
+
+    @classmethod
+    def get(cls):
+        return cls.objects.get_or_create(pk=1)[0]
+
+
+class AiCache(models.Model):
+    """An AI answer every student can reuse (same feature, same card content, same language, same prompt version)."""
+
+    key = models.CharField(max_length=64, unique=True)
+    value = models.JSONField()
+    hits = models.IntegerField(default=0)
+    created = models.DateTimeField(auto_now_add=True)
 
 
 def docs(user):
