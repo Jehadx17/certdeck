@@ -81,6 +81,23 @@ against the exam guide; college cards through their assessment's priority scores
 more; nobody sees the score. The college worker re-rates new or edited cards, a changed exam guide, and an
 assessment whose hints, professor profile or scope changed.
 
+**Short sessions and autopilot** (research behind it: retrieval practice, spacing, successive relearning, pretesting,
+calibration; "learning styles" are deliberately not used, there is no evidence that matching them helps):
+- A session is about 5 / 10 / 15 / 20 minutes (setup answer, the student can change it per session; certs too: "Do more"
+  builds the next batch). Cert queues rank due cards by importance x forgotten, so a big backlog is cut to what matters.
+- Setup screen after sign-up (and Settings → Study setup): time per day, usual study hour, "where and when" line, how well
+  the subject is known (new → read a new card first, otherwise guess first), goal (pass/good/top shifts retention),
+  test nerves (no score shown), language. Students never see FSRS parameters or limits.
+- End of session: cards, minutes, and a calibration line ("Sure 8 times, right 6"). Sessions are logged (`session` docs).
+- `GET api/metrics` (owner: `?user=name`): days active, session minutes and completion, recall by days since last review,
+  calibration, recurring error types.
+- Autopilot (`core/autopilot.py`, weekly per account, needs 30+ reviews): rules + a bounded Sonnet supervisor set session
+  minutes, new cards/day, a retention shift (-0.05..+0.03) and a load factor (0.8..1.2) in the synced `autopilot` doc;
+  a change followed by a drop is reverted. The owner can switch it off in Settings. `manage.py autopilot [--no-ai]` runs it by hand.
+- FSRS parameters are fitted per account weekly and only saved if they beat the current ones on held-out reviews.
+- Cards that become leeches or misconceptions get an AI re-teach (atomic cards, mnemonic, contrast card; 3 per account per day,
+  `core/reteach.py`); explanations carry an analogy and a worked example; written answers get an `error_type` label.
+
 ## College (students)
 **The student app is the easy version** (EASY.md): new phones sign in (or register) with email and
 password (`users login <name> <email>` attaches them to an existing account), the home shows one big **Study now** button per

@@ -12,6 +12,7 @@ import 'db.dart';
 import 'i18n.dart';
 import 'easy.dart';
 import 'logic.dart';
+import 'setup.dart';
 import 'notify.dart';
 import 'widgets.dart';
 
@@ -164,6 +165,27 @@ class _SettingsScreenState extends State<SettingsScreen> {
               },
             ),
           ),
+          header(t('Study')),
+          ListTile(
+            leading: const Icon(Icons.tune_rounded),
+            title: Text(t('Study setup')),
+            subtitle: Text(t('Time, goal, how well you know the subject')),
+            onTap: () async {
+              await Navigator.push(context, MaterialPageRoute(builder: (_) => const SetupScreen()));
+              if (mounted) setState(() {});
+            },
+          ),
+          if (App.isOwner)
+            SwitchListTile(
+              title: const Text('Autopilot'),
+              subtitle: const Text('Tune session length, new cards and retention from my own results'),
+              value: App.settings['autopilot'] != false,
+              onChanged: (v) async {
+                App.settings['autopilot'] = v;
+                await App.saveSettings();
+                setState(() {});
+              },
+            ),
           header(t('Reminders')),
           SwitchListTile(
             title: Text(t('Daily study reminder')),
@@ -213,7 +235,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               onTap: () => _setCert(c, active: true),
             ),
           if (App.isOwner) ...[
-            header('Study'),
+            header('Limits'),
             _num('new_per_day', 'New cards per day'),
             _num('max_reviews_per_day', 'Max reviews per day'),
           ],

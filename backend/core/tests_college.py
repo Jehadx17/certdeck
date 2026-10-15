@@ -86,7 +86,7 @@ def fake_ai(request_kwargs_log=None):
             return message({"summary": "## Ch 5\n- substitution (p. 3)", "facts": "- power rule", "formulas": None})
         if system.startswith("You grade a student's answer"):
             return message({"points": [{"point": "antiderivative", "met": True, "note": "ok"}], "score": 0.5,
-                            "verdict": "correct", "feedback": "Evaluate the bounds."})
+                            "verdict": "correct", "feedback": "Evaluate the bounds.", "error_type": "Missing Step"})
         raise AssertionError(f"unexpected prompt: {system[:60]}")
     return create
 
@@ -221,6 +221,7 @@ class CollegeTests(TestCase):
         with mock.patch("core.ai._create", side_effect=fake_ai(log)):
             g = self.post("/api/college/grade", {"card": problem, "answer": "x^3/3"}).json()
         self.assertEqual((g["score"], g["verdict"]), (0.5, "partial"))  # verdict follows the score, not the model's word
+        self.assertEqual(g["error_type"], "missing step")
         self.assertEqual(self.post("/api/college/grade", {"card": problem, "answer": ""}).status_code, 400)
 
     def test_background_mode_and_student_isolation(self):

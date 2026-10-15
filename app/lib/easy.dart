@@ -9,6 +9,7 @@ import 'db.dart';
 import 'i18n.dart';
 import 'logic.dart';
 import 'settings.dart';
+import 'setup.dart';
 import 'study.dart';
 import 'widgets.dart';
 
@@ -57,10 +58,16 @@ class _KidHomeState extends State<EasyHome> {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       if (!mounted) return;
       final nav = Navigator.of(context);
-      if (await Db.meta('easy_intro_done') != null) return;
-      final seen = await nav.push<bool>(MaterialPageRoute(fullscreenDialog: true, builder: (_) => const EasyIntro()));
-      if (seen == true) await Db.setMeta('easy_intro_done', '1');
-      if (seen != true) _introChecked = false; // closed by something else: show it next time
+      var seen = await Db.meta('easy_intro_done') != null;
+      if (!seen) {
+        seen = await nav.push<bool>(MaterialPageRoute(fullscreenDialog: true, builder: (_) => const EasyIntro())) == true;
+        if (seen) await Db.setMeta('easy_intro_done', '1');
+        if (!seen) _introChecked = false; // closed by something else: show it next time
+      }
+      // The study setup, once: new sign-ups after the intro, and students who were already here.
+      if (seen && mounted && await Db.meta('setup_done') == null) {
+        await nav.push(MaterialPageRoute(fullscreenDialog: true, builder: (_) => const SetupScreen()));
+      }
     });
   }
 
@@ -174,8 +181,11 @@ class _ExamCard extends StatelessWidget {
           FilledButton.icon(
               style: easyButton(),
               icon: const Icon(Icons.play_arrow_rounded),
-              label: Text(t('Study now')),
+              label: Text(t('Study now · {m} min', {'m': App.sessionMinutes})),
               onPressed: () => easyStudy(context, e.a)),
+          Align(
+              alignment: AlignmentDirectional.centerEnd,
+              child: TextButton(onPressed: () => pickSessionMinutes(context), child: Text(t('Change time'), style: const TextStyle(fontSize: 13)))),
           const SizedBox(height: 10),
           OutlinedButton.icon(
               style: OutlinedButton.styleFrom(minimumSize: const Size.fromHeight(46), textStyle: const TextStyle(fontSize: 15)),
@@ -188,7 +198,7 @@ class _ExamCard extends StatelessWidget {
   }
 }
 
-/// One tap: about 10 minutes, the app picks the cards (most marks first when the exam is close).
+/// One tap: a session of the student's length (10 minutes unless the setup or the autopilot says otherwise), the app picks the cards (most marks first when the exam is close).
 Future<void> easyStudy(BuildContext context, Json a, {String kind = 'study'}) async {
   final s = await Scope.load(a);
   var q = <Json>[];
@@ -196,10 +206,11 @@ Future<void> easyStudy(BuildContext context, Json a, {String kind = 'study'}) as
   if (kind == 'morning') {
     q = morningCheck(s);
   } else {
-    if (s.mode != Mode.sprint) q = pacedQueue(s, 10);
+    final minutes = App.sessionBudget;
+    if (s.mode != Mode.sprint) q = pacedQueue(s, minutes);
     if (q.isEmpty) {
       // close to the exam, or nothing due: the most valuable cards not known yet, each until right twice
-      q = plan(s, 10).master;
+      q = plan(s, minutes).master;
       custom = SprintSession(q, s);
     }
   }
@@ -215,6 +226,28 @@ Future<void> easyStudy(BuildContext context, Json a, {String kind = 'study'}) as
               custom: custom,
               scheduler: s.scheduler,
               onMore: kind == 'morning' ? null : () => easyStudy(context, a))));
+}
+
+/// 5 / 10 / 15 / 20 minutes: the student's own choice for the next sessions (the autopilot may adjust it later).
+Future<void> pickSessionMinutes(BuildContext context) async {
+  final v = await showModalBottomSheet<int>(
+      context: context,
+      builder: (c) => SafeArea(
+              child: Padding(
+            padding: const EdgeInsets.all(20),
+            child: Column(mainAxisSize: MainAxisSize.min, children: [
+              Text(t('How long do you want to study?'), style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+              const SizedBox(height: 16),
+              Wrap(spacing: 10, children: [
+                for (final m in const [5, 10, 15, 20])
+                  ChoiceChip(label: Text(t('{m} min', {'m': m})), selected: App.sessionMinutes == m, onSelected: (_) => Navigator.pop(c, m)),
+              ]),
+            ]),
+          )));
+  if (v == null) return;
+  App.settings['session_minutes'] = v;
+  App.settings['session_minutes_set_at'] = nowMs();
+  await App.saveSettings();
 }
 
 /// A practice test with fixed settings: 10 questions from the cards (no AI, works offline), feedback per question,
@@ -271,7 +304,7 @@ Future<void> easyMessage(BuildContext context, IconData icon, String title, Stri
 // ---------------- help ----------------
 
 List<(IconData, String)> get homeHelp => [
-      (Icons.play_arrow_rounded, t('Tap "Study now". The app picks the questions for you. About 10 minutes.')),
+      (Icons.play_arrow_rounded, t('Tap "Study now". The app picks the questions for you. You choose how long.')),
       (Icons.trending_up_rounded, t('Each exam shows how much you have learned, in cards and percent.')),
       (Icons.replay_rounded, t('Wrong answers come back later, so you learn them.')),
       (Icons.assignment_turned_in_outlined, t('Try a practice test to see how ready you are.')),
@@ -319,7 +352,7 @@ class _KidIntroState extends State<EasyIntro> {
   Widget build(BuildContext context) {
     final pages = [
       (Icons.school_rounded, t('Welcome!'), t('This app helps you get ready for your exams.')),
-      (Icons.play_circle_fill_rounded, t('Tap "Study now"'), t('The app picks the questions. About 10 minutes is enough.')),
+      (Icons.play_circle_fill_rounded, t('Tap "Study now"'), t('The app picks the questions. A few minutes is enough.')),
       (Icons.trending_up_rounded, t('Watch your progress'), t('Each exam shows how much you have learned. Wrong answers come back later, so you learn them.')),
     ];
     final (icon, title, body) = pages[page];

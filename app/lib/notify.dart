@@ -6,6 +6,7 @@ import 'package:timezone/data/latest.dart' as tzdata;
 import 'package:timezone/timezone.dart' as tz;
 
 import 'college_logic.dart';
+import 'db.dart';
 import 'i18n.dart';
 import 'logic.dart';
 
@@ -16,9 +17,23 @@ class Reminders {
   static final _plugin = FlutterLocalNotificationsPlugin();
   static bool _ready = false;
 
+  /// The hour the student actually studies (from their reviews), used until they pick a time themselves.
+  static int? _learnedMinute;
+
   static TimeOfDay get time {
-    final m = (App.settings['reminder_minute'] as int?) ?? 18 * 60;
+    final m = (App.settings['reminder_minute'] as int?) ?? _learnedMinute ?? 18 * 60;
     return TimeOfDay(hour: m ~/ 60, minute: m % 60);
+  }
+
+  /// The most common hour of day among the last 30 days' reviews (at least 20 of them), as minutes after midnight.
+  static Future<int?> _studyHour() async {
+    final hours = <int, int>{};
+    for (final r in await Db.reviewsSince(nowMs() - 30 * dayMs)) {
+      final h = DateTime.fromMillisecondsSinceEpoch(r['ts'] as int).hour;
+      hours[h] = (hours[h] ?? 0) + 1;
+    }
+    if (hours.values.fold(0, (a, b) => a + b) < 20) return null;
+    return hours.entries.reduce((a, b) => b.value > a.value ? b : a).key * 60;
   }
 
   static String get timeLabel => '${time.hour.toString().padLeft(2, '0')}:${time.minute.toString().padLeft(2, '0')}';
@@ -65,14 +80,38 @@ class Reminders {
     return (behind ? t('You\'re behind: catch up today') : t('Today\'s study plan'), items.join('\n'));
   }
 
+  /// "After dinner, at my desk": the student's own words from the setup, added to the reminder.
+  static String _withIntention(String body) {
+    final i = (App.settings['intention'] as String?)?.trim() ?? '';
+    return i.isEmpty ? body : '$body\n$i';
+  }
+
+  /// Cert study (no college plan): one line a day with the time the session takes.
+  static Future<void> _certReminders() async {
+    if (!App.isOwner) return;
+    final (queue, st) = await buildQueue(App.cert);
+    if (queue.isEmpty && st.due == 0) return;
+    final now = DateTime.now();
+    final body = _withIntention(t('{n} cards due: about {m} min.', {'n': st.due + st.newAvailable, 'm': App.sessionMinutes}));
+    await _askPermission();
+    for (var day = 0; day < 7; day++) {
+      final at = DateTime(now.year, now.month, now.day + day, time.hour, time.minute);
+      if (at.isBefore(now)) continue;
+      await _plugin.zonedSchedule(200 + day, t('Time to study'), body, tz.TZDateTime.from(at.toUtc(), tz.UTC), _details,
+          androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
+          uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime);
+    }
+  }
+
   static Future<void> reschedule() async {
     if (!(Platform.isAndroid || Platform.isIOS)) return;
     try {
       await _init();
       await _plugin.cancelAll();
       if (App.settings['reminders'] == false) return;
+      _learnedMinute = await _studyHour();
       final plan = await todayPlan();
-      if (plan.isEmpty) return;
+      if (plan.isEmpty) return _certReminders();
       await _askPermission();
       final now = DateTime.now();
       for (var day = 0; day < 7; day++) {
@@ -80,7 +119,7 @@ class Reminders {
         if (msg == null) continue;
         var at = DateTime(now.year, now.month, now.day + day, time.hour, time.minute);
         if (at.isBefore(now)) continue;
-        await _plugin.zonedSchedule(day, msg.$1, msg.$2, tz.TZDateTime.from(at.toUtc(), tz.UTC), _details,
+        await _plugin.zonedSchedule(day, msg.$1, _withIntention(msg.$2), tz.TZDateTime.from(at.toUtc(), tz.UTC), _details,
             androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
             uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime);
       }
@@ -113,4 +152,4 @@ class Reminders {
 /// A student's daily reminder line (EASY.md wording): "Science quiz in 3 days. 10 minutes of practice today!"
 String easyLine(String? title, int days) => days == 1
     ? t('{a} is tomorrow. Do the night-before review tonight.', {'a': title ?? ''})
-    : t('{a} in {d} days. 10 minutes of practice today!', {'a': title ?? '', 'd': days});
+    : t('{a} in {d} days. {m} minutes of practice today!', {'a': title ?? '', 'd': days, 'm': App.sessionMinutes});

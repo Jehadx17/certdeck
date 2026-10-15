@@ -210,7 +210,7 @@ CARD_RULES = """Card format (set every field a type doesn't use to null):
 - typed: question = prompt; answer = canonical short answer (CLI command, service/API/field name); accepted = other acceptable forms.
 - code: question = task or "what does this do?"; code = snippet shown with the question and/or answer_code = snippet shown with the answer; language = yaml|json|bash|python|...; answer = short markdown answer.
 - ordering: question = what to order; items = 3-7 steps in the CORRECT order.
-- Every card: explanation = markdown explaining why the right answer is right AND why each wrong option (or the common misconception) is wrong. certs = [{cert, domain}] for EVERY known certification whose official domains the card fits (overlap is common, e.g. Lambda limits fit DVA-C02 domain 1 and SAA-C03 domain 3), using only the codes and domain ids listed below. tags = 1-4 lowercase topic tags (e.g. lambda, iam, kubectl). topic = a few words naming the specific topic.
+- Every card: explanation = markdown explaining why the right answer is right AND why each wrong option (or the common misconception) is wrong, then one short memory aid: a concrete analogy or mnemonic (and, where the concept is a process or calculation, a 2-3 line worked example). Keep it short; skip the aid only when it would be forced. certs = [{cert, domain}] for EVERY known certification whose official domains the card fits (overlap is common, e.g. Lambda limits fit DVA-C02 domain 1 and SAA-C03 domain 3), using only the codes and domain ids listed below. tags = 1-4 lowercase topic tags (e.g. lambda, iam, kubectl). topic = a few words naming the specific topic.
 - Markdown everywhere; fenced code blocks with a language. Be technically accurate and current. One concept per card. Test what the real exam rewards, not trivia."""
 
 GENERATE_PROMPT = f"""You write flashcards for CertDeck, a spaced-repetition app the student uses to pass IT certification exams.
@@ -229,7 +229,7 @@ PERFORMANCE_EXAM_STYLE = """Exam style: this exam is performance-based (hands-on
 TUTOR_PROMPT = """You are an expert, patient tutor helping a student prepare for an IT certification exam with CertDeck flashcards.
 The student is asking about the flashcard below. Answer in markdown: precise, concrete and concise, with examples where they help. Explicitly correct misconceptions and relate the answer to how the real exam tests it. If the card itself is wrong or outdated, say so clearly."""
 
-FILL_TASK = """Write this card's explanation in markdown: why the correct answer is right AND why each wrong option (or the most common misconception) is wrong.
+FILL_TASK = """Write this card's explanation in markdown: why the correct answer is right AND why each wrong option (or the most common misconception) is wrong. End with one short memory aid: a concrete analogy or mnemonic (and, for a process or calculation, a 2-3 line worked example).
 If the card is an mcq, also return option_explanations: one string per option in the same order, each saying why that option is right or wrong. Otherwise return null for option_explanations."""
 
 VARIANT_PROMPT = f"""You write variant flashcards for CertDeck, a spaced-repetition app for IT certification exams.
@@ -245,7 +245,7 @@ LEECH_TASK = """This card is a leech: the student keeps failing it. Also return:
 ANALYZE_PROMPT = """You are a study coach analyzing a student's spaced-repetition data for one certification exam (CertDeck app).
 Scheduling is FSRS by default and stays the default. Propose scheduling overrides only when the data clearly justifies them: misconceptions (answered "sure" but wrong), weak domains close to the exam date, or clearly mastered cards (high retrievability, no lapses) whose reviews can be pushed out. Every override needs a specific reason.
 
-Input: per-domain stats (cards, new cards, reviews, accuracy, lapses, misconception reviews and currently flagged cards, leeches, confidence calibration = review accuracy per confidence level guess/unsure/sure, mean FSRS retrievability, exam-simulation accuracy), exam weights, recent exam simulations, days until the exam, and the worst cards.
+Input: study_habits (days active in the last 7/28 days, average session minutes and seconds per review, recall accuracy by days since the card's last review, confidence calibration, recurring error types of graded written answers) and per-domain stats (cards, new cards, reviews, accuracy, lapses, misconception reviews and currently flagged cards, leeches, confidence calibration = review accuracy per confidence level guess/unsure/sure, mean FSRS retrievability, exam-simulation accuracy), exam weights, recent exam simulations, days until the exam, and the worst cards.
 Calibration: "sure" with low accuracy means overconfidence (dangerous); "guess" with high accuracy means underconfidence.
 
 Return:
@@ -254,7 +254,7 @@ Return:
 - actions: concrete one-tap actions, mainly generating cards for gaps: label (e.g. "Generate 15 cards on SQS visibility timeout"), domain id, topic, count (5-30).
 - videos: 2-5 YouTube searches {title, query} for the weakest topics.
 - overrides (0-10, each at most 50 cards): kind "advance" (review sooner; days = how many days earlier, or null = due now), "postpone" (days = how many days later, 1-30; only for mastered cards), "priority" (priority -2..2, higher = earlier in the queue). Target card_ids from worst_cards, or set card_ids [] and domain to a domain id to target that domain's cards. Use domain null when card_ids are given.
-Be specific and honest; never invent data that isn't in the input."""
+Use study_habits in the summary when it matters (few study days, very long reviews, weak recall after long gaps, a recurring error type) and say what to change. Be specific and honest; never invent data that isn't in the input."""
 
 
 DIAGRAM_PROMPT = """You add diagrams to CertDeck flashcards. The student is a visual learner preparing for IT certification exams (AWS, Kubernetes). A card's diagram is shown on its answer side, after the answer and before the explanation.
@@ -751,6 +751,10 @@ def analyze(user, body):
     if code not in certs:
         raise ApiError(400, f"unknown cert {code!r}")
     data, cards = stats.cert_stats(user, code, certs[code])
+    habits = stats.metrics(user)
+    data["study_habits"] = {k: habits[k] for k in (
+        "days_active_last_7", "days_active_last_28", "avg_session_minutes", "avg_seconds_per_review", "error_types",
+        "recall_by_days_since_last_review", "calibration")}
     system = [{"type": "text", "text": ANALYZE_PROMPT}]
     out = call(user, "analyze", params(system, [{"role": "user", "content": "Stats (JSON):\n" + json.dumps(data)}], ANALYZE_SCHEMA))
 

@@ -504,6 +504,8 @@ class ApiTests(TestCase):
         self.assertIsNotNone(sent["days_until_exam"])
         self.assertEqual(sent["worst_cards"][0]["id"], "c3")
         self.assertLessEqual(len(sent["worst_cards"]), 25)
+        self.assertEqual(sent["study_habits"]["days_active_last_7"], 1)  # the study habits go to the coach too
+        self.assertIn("avg_seconds_per_review", sent["study_habits"])
 
         overrides = body["overrides"]
         self.assertEqual(len(overrides), 10)
@@ -544,16 +546,65 @@ class ApiTests(TestCase):
         self.assertEqual(r.status_code, 503)
         self.assertEqual(AiCall.objects.filter(ok=False).count(), len(cases) + 1)
 
+    # ---------- metrics ----------
+
+    def test_metrics(self):
+        t0 = now_ms() - 10 * DAY
+        rv = lambda i, cid, ts, ok, conf="sure", dur=4000: doc(
+            f"m{i}", {"card_id": cid, "ts": ts, "correct": ok, "confidence": conf, "duration_ms": dur,
+                      "misconception": conf == "sure" and not ok}, kind="review")
+        save_docs(self.owner, [
+            rv(1, "a", t0, True), rv(2, "b", t0 + 60_000, False),            # session 1 (day 0)
+            rv(3, "a", t0 + 8 * DAY, True), rv(4, "b", t0 + 8 * DAY + 60_000, False, "unsure"),  # session 2, 8d after
+        ])
+        m = self.client.get("/api/metrics", **AUTH).json()
+        self.assertEqual((m["reviews"], m["sessions"], m["days_active_last_7"]), (4, 2, 1))
+        self.assertEqual(m["recall_by_days_since_last_review"]["7-14d"], {"reviews": 2, "accuracy_pct": 50.0})
+        self.assertEqual(m["calibration"]["sure"]["misconception_rate_pct"], 33.3)
+        self.assertEqual(m["avg_session_reviews"], 2.0)
+        self.assertIsNone(m["session_completion_pct"])
+        save_docs(self.owner, [doc(f"s{i}", {"started_at": now_ms() - i * 1000, "completed": i < 3}, kind="session")
+                               for i in range(4)])
+        save_docs(self.owner, [doc("m9", {"card_id": "z", "ts": t0 + 9 * DAY, "correct": True, "confidence": "unsure",
+                                          "study_first": True}, kind="review")])
+        m = self.client.get("/api/metrics", **AUTH).json()
+        self.assertEqual((m["session_completion_pct"], m["sessions_logged_last_28"]), (75.0, 4))
+        self.assertEqual(m["calibration"]["unsure"]["reviews"], 1)  # the study-first review is not counted
+
+        student = Account.objects.create(name="stu", role="student", token_hash=token_hash("stu-token"))
+        stu = {"HTTP_AUTHORIZATION": "Bearer stu-token"}
+        self.assertEqual(self.client.get("/api/metrics", **stu).json()["reviews"], 0)
+        self.assertEqual(self.client.get("/api/metrics?user=" + self.owner.name, **stu).status_code, 403)
+        self.assertEqual(self.client.get("/api/metrics?user=stu", **AUTH).json()["reviews"], 0)
+        self.assertEqual(self.client.get("/api/metrics?user=nobody", **AUTH).status_code, 404)
+
     # ---------- FSRS ----------
 
-    def test_optimize(self):
+    def _reviews(self, simulate):
+        """1120 review docs: 160 cards x 7 reviews at fixed day offsets. simulate=False: random ratings (no signal);
+        True: recall sampled from FSRS with slower-forgetting parameters than the defaults (a learnable signal)."""
+        from datetime import datetime, timezone
+        from fsrs import Card, Rating, Scheduler
+        from fsrs.scheduler import DEFAULT_PARAMETERS
         rng = random.Random(1)
+        true = Scheduler(parameters=[w * 3 if i < 4 else w for i, w in enumerate(DEFAULT_PARAMETERS)], enable_fuzzing=False)
         start, reviews = now_ms() - 400 * DAY, []
-        for c in range(100):
+        for c in range(160):
+            card = Card(card_id=c)
             for k, offset in enumerate([0, 1, 3, 8, 20, 45, 90]):
-                rating = rng.choice([1, 3, 3, 3, 4]) if k else rng.choice([1, 2, 3])
-                reviews.append(doc(f"r{c}-{k}", {"card_id": f"card-{c}", "ts": start + (c + offset) * DAY,
-                                                 "rating": rating, "duration_ms": 5000}, kind="review"))
+                ts = start + (c + offset) * DAY
+                if simulate:
+                    when = datetime.fromtimestamp(ts / 1000, timezone.utc)
+                    ok = k == 0 or rng.random() < true.get_card_retrievability(card, when)
+                    rating = 3 if ok else 1
+                    card = true.review_card(card, Rating(rating), when)[0]
+                else:
+                    rating = rng.choice([1, 3, 3, 3, 4]) if k else rng.choice([1, 2, 3])
+                reviews.append(doc(f"r{c}-{k}", {"card_id": f"card-{c}", "ts": ts, "rating": rating, "duration_ms": 5000}, kind="review"))
+        return reviews
+
+    def test_optimize(self):
+        reviews = self._reviews(simulate=True)
         save_docs(self.owner, reviews[:100])
         out = StringIO()
         call_command("optimize_fsrs", stdout=out)
@@ -564,5 +615,119 @@ class ApiTests(TestCase):
         self.assertGreaterEqual(len(reviews), MIN_REVIEWS)
         body = self.post("/api/fsrs/optimize", {}).json()
         self.assertEqual(len(body["parameters"]), 21)
-        self.assertEqual(body["review_count"], 700)
+        self.assertEqual(body["review_count"], 1120)
+        self.assertIsNotNone(body["optimized_at"])  # the fit beat the defaults on the held-out 20%
         self.assertEqual(Doc.objects.get(doc_id="fsrs_params").data, body)
+
+    def test_optimize_keeps_params_when_fit_is_not_better(self):
+        from fsrs.scheduler import DEFAULT_PARAMETERS
+        save_docs(self.owner, self._reviews(simulate=True))
+        worse = [w * 0.2 if i < 4 else w for i, w in enumerate(DEFAULT_PARAMETERS)]  # forgets much faster than this data does
+        with mock.patch("fsrs.Optimizer") as opt:
+            opt.return_value.compute_optimal_parameters.return_value = worse
+            body = self.post("/api/fsrs/optimize", {}).json()
+        self.assertIsNone(body["optimized_at"])
+        self.assertEqual(body["parameters"], list(DEFAULT_PARAMETERS))
+        self.assertFalse(Doc.objects.filter(doc_id="fsrs_params").exists())
+
+
+@override_settings(CERTDECK_API_TOKEN=TOKEN, ANTHROPIC_API_KEY="")
+class AutopilotTests(TestCase):
+    def setUp(self):
+        from core import autopilot
+        self.ap = autopilot
+        self.user = Account.objects.get(role="owner")
+        self.now = now_ms()
+
+    def reviews(self, days_ago, per_day=1, card="c", ok=True, start=0):
+        """One review doc per (day, k); each a different card unless [card] is given a fixed id."""
+        out = []
+        for i, d in enumerate(days_ago):
+            for k in range(per_day):
+                out.append(doc(f"a{start}-{i}-{k}", {"card_id": card if card != "c" else f"c{start}-{i}-{k}", "ts": self.now - d * DAY + k * 60_000,
+                                                  "correct": ok, "confidence": "sure", "rating": 3 if ok else 1, "duration_ms": 4000},
+                               kind="review"))
+        return out
+
+    def autopilot_doc(self, data, updated_days_ago):
+        save_docs(self.user, [doc("autopilot", {**self.ap.blank(), **data, "updated_at": self.now - updated_days_ago * DAY},
+                                  kind="autopilot")])
+
+    def test_rules(self):
+        save_docs(self.user, self.reviews(range(30, 10, -1), per_day=2))  # 40 reviews, nothing in the last 10 days
+        low = self.ap.tune(self.user, self.now)
+        self.assertEqual((low["session_minutes"], low["new_per_day"]), (5, 15))  # one step down, x0.75
+        self.assertIn("few study days", low["reason"])
+
+        Doc.objects.filter(kind="review").delete()
+        save_docs(self.user, self.reviews(range(0, 6), per_day=6, start=1))  # studied 6 of the last 7 days
+        high = self.ap.tune(self.user, self.now)
+        self.assertEqual((high["session_minutes"], high["new_per_day"]), (10, 24))  # x1.2
+
+        self.autopilot_doc({"new_per_day": 39, "retention_adj": 0.03}, updated_days_ago=8)
+        high = self.ap.tune(self.user, self.now)
+        self.assertEqual(high["new_per_day"], 40)  # capped
+        self.assertEqual(high["retention_adj"], 0.03)
+
+    def test_long_gap_recall_moves_retention(self):
+        first = [doc(f"f{i}", {"card_id": f"g{i}", "ts": self.now - 40 * DAY, "correct": True, "confidence": "sure", "rating": 3}, kind="review") for i in range(35)]
+        second = [doc(f"s{i}", {"card_id": f"g{i}", "ts": self.now - 10 * DAY, "correct": i < 5, "confidence": "sure", "rating": 3 if i < 5 else 1}, kind="review") for i in range(35)]
+        save_docs(self.user, first + second)  # 35 reviews 30 days after the previous one, 14% right
+        self.assertEqual(self.ap.tune(self.user, self.now)["retention_adj"], 0.02)
+
+    def test_cooldown_and_revert_on_drop(self):
+        save_docs(self.user, self.reviews(range(30, 10, -1), per_day=2))
+        prev = {"session_minutes": 15, "new_per_day": 30, "retention_adj": 0.0, "load_factor": 1.0, "reason": "before", "updated_at": 1}
+        self.autopilot_doc({"session_minutes": 5, "new_per_day": 10, "history": [prev], "snapshot": {"days_active_last_7": 6, "recall_14d": None, "recall_7_14d": None}}, updated_days_ago=2)
+        self.assertIsNone(self.ap.tune(self.user, self.now))  # changed 2 days ago: too early to judge or change again
+
+        self.autopilot_doc({"session_minutes": 5, "new_per_day": 10, "history": [prev], "snapshot": {"days_active_last_7": 6, "recall_14d": None, "recall_7_14d": None}}, updated_days_ago=8)
+        out = self.ap.tune(self.user, self.now)  # 6 active days then, 0 now: a drop of 3+ days
+        self.assertTrue(out["reverted"])
+        self.assertEqual((out["session_minutes"], out["new_per_day"], out["history"]), (15, 30, []))
+        self.assertTrue(out["reason"].startswith("Reverted"))
+
+    def test_supervise_clamps_model_output_and_survives_budget(self):
+        m = {"x": 1}
+        proposal = {**self.ap.blank(), "retention_adj": 0.02, "reason": "rules"}
+        wild = message({"retention_adj_delta": 5, "load_factor": 9, "reason": "go wild"})
+        with mock.patch("core.ai._create", return_value=wild) as create:
+            out = self.ap.supervise(self.user, m, proposal, self.now)
+        self.assertEqual((out["retention_adj"], out["load_factor"]), (0.03, 1.2))  # 0.02 + 0.03 -> clamped to 0.03
+        self.assertEqual(create.call_args.kwargs["model"], settings.CERTDECK_READ_MODEL)
+        self.assertEqual(AiCall.objects.get(endpoint="autopilot").user, self.user)
+
+        self.user.cap_usd = "0.001"
+        self.user.save()
+        with mock.patch("core.ai._create") as create:
+            self.assertIs(self.ap.supervise(self.user, m, proposal, self.now), proposal)  # over budget: rules only
+        create.assert_not_called()
+
+    def test_run_saves_doc_and_skips_small_accounts(self):
+        save_docs(self.user, self.reviews(range(0, 10), per_day=2))  # 20 reviews
+        self.assertIsNone(self.ap.run(self.user, self.now, use_ai=False))
+        self.assertFalse(Doc.objects.filter(kind="autopilot").exists())
+        save_docs(self.user, self.reviews(range(0, 6), per_day=5, start=1))  # 50 reviews, 6 active days
+        out = self.ap.run(self.user, self.now, use_ai=False)
+        saved = Doc.objects.get(doc_id="autopilot", user=self.user).data
+        self.assertEqual(saved, out)
+        self.assertEqual((saved["new_per_day"], saved["history"][0]["new_per_day"]), (24, None))
+        self.assertIsNone(self.ap.run(self.user, self.now, use_ai=False))  # weekly cooldown
+        call_command("autopilot", "--no-ai", stdout=StringIO())
+
+    def test_reteach_writes_two_cards_once(self):
+        from core import reteach
+        card = {"type": "basic", "question": "Q?", "answer": "A", "explanation": "E", "leech": True, "lapses": 6,
+                "certs": {"DVA-C02": "1"}, "tags": ["lambda"], "course": "course-1", "section": "m/s1", "kp_ids": ["k1"]}
+        save_docs(self.user, [doc("leech-1", card), doc("fine", {**card, "leech": False})])
+        reply = message({"variants": [ai_card(question="Atomic?", answer="A1"), ai_card(question="X vs Y?", answer="A2")]})
+        with mock.patch("core.ai._create", return_value=reply) as create:
+            self.assertEqual(reteach.run(self.user, self.now), 2)
+            self.assertEqual(reteach.run(self.user, self.now), 0)  # already re-taught: no second call
+        self.assertEqual(create.call_count, 1)
+        new = [d.data for d in Doc.objects.filter(kind="card") if d.data.get("variant_of") == "leech-1"]
+        self.assertEqual(len(new), 2)
+        self.assertEqual({(c["course"], c["section"], c["kp_ids"][0], c["new"]) for c in new}, {("course-1", "m/s1", "k1", True)})
+        marker = Doc.objects.get(doc_id="reteach-leech-1").data
+        self.assertEqual(len(marker["new_card_ids"]), 2)
+        self.assertEqual(Doc.objects.get(doc_id="leech-1").data, card)  # the student's card doc is untouched

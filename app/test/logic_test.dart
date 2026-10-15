@@ -7,6 +7,47 @@ import 'package:fsrs/fsrs.dart' as fsrs;
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
+  test('a session is capped to its minutes, new cards cost double, at least one card always fits', () {
+    final old = {'id': 'o', 'fsrs': {'state': 2}};
+    final fresh = {'id': 'n'}; // no fsrs: new
+    final q = [old, old, fresh, old, old];
+    expect(capByTime(q, 1, 30).length, 2); // 30 + 30 = 60 s
+    expect(capByTime([fresh, old], 1, 30).length, 1); // the new card costs 60 s
+    expect(capByTime([fresh], 1, 600).length, 1);
+    expect(capByTime(q, 60, 30).length, 5);
+  });
+
+  test('calibration counts Sure answers and the right ones', () {
+    final s = sureStats([(Conf.sure, true), (Conf.sure, false), (Conf.guess, true), (Conf.sure, true)]);
+    expect((s.sure, s.sureRight), (3, 2));
+  });
+
+  test('goal shifts retention, new learners study new cards first', () {
+    expect(goalRetentionAdj('pass'), lessThan(0));
+    expect(goalRetentionAdj('top'), greaterThan(0));
+    expect(goalRetentionAdj(null), 0);
+    App.settings = {...defaultSettings, 'expertise': 'new'};
+    expect(studyFirst({'id': 'n'}), isTrue);
+    expect(studyFirst({'id': 'o', 'fsrs': {'state': 2}}), isFalse);
+    App.settings = {...defaultSettings, 'expertise': 'know'};
+    expect(studyFirst({'id': 'n'}), isFalse);
+    App.settings = {...defaultSettings};
+  });
+
+  test('the student pick beats the autopilot until its next update', () {
+    App.role = 'student';
+    App.settings = {...defaultSettings, 'session_minutes': 10};
+    App.autopilot = {'session_minutes': 5, 'updated_at': 2000};
+    expect(App.sessionMinutes, 5);
+    App.settings['session_minutes_set_at'] = 3000;
+    expect(App.sessionMinutes, 10);
+    App.autopilot = {'session_minutes': 15, 'updated_at': 4000};
+    expect(App.sessionMinutes, 15);
+    App.role = 'owner';
+    App.autopilot = {};
+    App.settings = {...defaultSettings};
+  });
+
   test('confidence → FSRS rating', () {
     expect(ratingFor(Conf.sure, false, 3), fsrs.Rating.again);
     expect(ratingFor(Conf.guess, true, 0), fsrs.Rating.hard);

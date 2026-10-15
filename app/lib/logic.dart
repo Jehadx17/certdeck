@@ -9,7 +9,10 @@ const dayMs = 86400000;
 
 enum Conf { guess, unsure, sure }
 
-const defaultSettings = {'new_per_day': 20, 'max_reviews_per_day': 200, 'leech_threshold': 5, 'active_cert': 'DVA-C02'};
+const defaultSettings = {'new_per_day': 20, 'max_reviews_per_day': 200, 'leech_threshold': 5, 'active_cert': 'DVA-C02', 'session_minutes': 10};
+
+/// Desired-retention shift for what the student is aiming at (the setup question): pass / good grade / top grade.
+double goalRetentionAdj(String? goal) => switch (goal) { 'pass' => -.03, 'top' => .02, _ => 0 };
 
 /// Official formats, checked against the exam guides on 2026-10-12 (see DECISIONS.md).
 final defaultCerts = <Json>[
@@ -64,6 +67,29 @@ class App {
   static List<Json> certs = [];
   static List<double>? params;
 
+  /// The server's autopilot doc (session length, new cards/day, retention shift, load): tuned from the student's own
+  /// data, never edited by them. The owner can switch it off in Settings.
+  static Json autopilot = {};
+  static bool get autopilotOn => !isOwner || settings['autopilot'] != false;
+  static num? _auto(String k) => autopilotOn ? autopilot[k] as num? : null;
+
+  /// Minutes in one study session: the autopilot's, else the setup answer (default 10).
+  /// The student's own pick wins until the autopilot's next update.
+  static int get sessionMinutes {
+    final chosen = (settings['session_minutes_set_at'] as num?) ?? 0;
+    final auto = (autopilot['updated_at'] as num?) ?? 0;
+    final fromAuto = auto > chosen ? _auto('session_minutes') : null;
+    return (fromAuto ?? settings['session_minutes'] as num? ?? 10).toInt().clamp(5, 30);
+  }
+
+  /// The AI supervisor's multiplier on the amount of work (0.8..1.2): applied to new cards and to the session's minutes.
+  static double get loadFactor => (_auto('load_factor')?.toDouble() ?? 1.0).clamp(.8, 1.2);
+  static int get newPerDay => ((_auto('new_per_day') ?? setting('new_per_day')) * loadFactor).round().clamp(1, 100);
+  /// [sessionMinutes] scaled by [loadFactor], the time a session is built for.
+  static int get sessionBudget => (sessionMinutes * loadFactor).round().clamp(3, 36);
+  /// Goal shift plus the autopilot's, kept inside 0.80..0.97 when applied in [schedulerFor].
+  static double get retentionAdj => goalRetentionAdj(settings['goal'] as String?) + (_auto('retention_adj')?.toDouble() ?? 0);
+
   /// 'owner' (certs + college) or 'student' (college only), from GET me; owner until the server says otherwise.
   static String role = 'owner';
   static bool get isOwner => role != 'student';
@@ -81,7 +107,8 @@ class App {
   static Future<void> reload() async {
     settings = {...defaultSettings, ...?await Db.get('settings')};
     certs = await Db.query('cert', orderBy: 'id');
-    final p = (await Db.get('fsrs_params'))?['parameters'];
+    autopilot = await Db.get('autopilot') ?? {};
+    final p =(await Db.get('fsrs_params'))?['parameters'];
     params = p is List && p.length == fsrs.defaultParameters.length ? p.map((e) => (e as num).toDouble()).toList() : null;
   }
 
@@ -112,7 +139,7 @@ int? daysToExam(Json cert) {
 /// intervals are capped so every card comes back before the exam.
 fsrs.Scheduler schedulerFor(Json cert) {
   final d = daysToExam(cert);
-  final retention = d == null ? 0.9 : 0.95 - 0.05 * min(max(d, 0), 60) / 60;
+  final retention = ((d == null ? 0.9 : 0.95 - 0.05 * min(max(d, 0), 60) / 60) + App.retentionAdj).clamp(.80, .97);
   final maxIv = d != null && d > 0 ? d : 36500;
   try {
     return fsrs.Scheduler(parameters: App.params ?? fsrs.defaultParameters, desiredRetention: retention, maximumInterval: maxIv);
@@ -157,11 +184,21 @@ fsrs.Rating ratingFor(Conf conf, bool correct, int sureStreak) {
   return sureStreak >= 1 ? fsrs.Rating.easy : fsrs.Rating.good;
 }
 
+/// A new card for a student who said they are new to the subject (setup): read it first, then it comes back as a
+/// question. Everyone else guesses first (the pretesting effect).
+bool studyFirst(Json card) => isNew(card) && App.settings['expertise'] == 'new';
+
+/// How many answers were rated Sure, and how many of those were right (the calibration line at the end of a session).
+({int sure, int sureRight}) sureStats(Iterable<(Conf, bool)> answers) {
+  final sure = answers.where((a) => a.$1 == Conf.sure);
+  return (sure: sure.length, sureRight: sure.where((a) => a.$2).length);
+}
+
 /// Schedules the card, appends a review log, saves both. Returns the updated card.
 /// [score] (0..1) is set for graded answers (short answers, problems): partial credit rates Hard.
 /// Course cards are scheduled for the assessment they're studied for (its date caps the intervals).
 Future<Json> recordAnswer(Json card,
-    {required Conf conf, required bool correct, required String source, int? durationMs, Object? answer, double? score, fsrs.Scheduler? scheduler}) async {
+    {required Conf conf, required bool correct, required String source, int? durationMs, Object? answer, double? score, fsrs.Scheduler? scheduler, bool studyFirst = false, String? errorType}) async {
   final now = DateTime.now().toUtc();
   final streak = (card['sure_streak'] as int?) ?? 0;
   final rating = score == null ? ratingFor(conf, correct, streak) : ratingForScore(conf, score, streak);
@@ -196,6 +233,8 @@ Future<Json> recordAnswer(Json card,
     'duration_ms': durationMs,
     'source': source,
     'was_new': wasNew,
+    if (studyFirst) 'study_first': true,
+    if (errorType != null && errorType.isNotEmpty) 'error_type': errorType,
     if (answer != null) 'answer': answer,
     if (score != null) 'score': score,
   });
@@ -219,7 +258,7 @@ int startOfToday() {
 /// active cert is introduced a buffer (≤14 days) before the exam. Domains are interleaved by
 /// official weight in [orderNew].
 ({int limit, int paced, int remaining, int? days}) newPlan(Json cert, List<Json> cards) {
-  final base = App.setting('new_per_day');
+  final base = App.newPerDay;
   final remaining = cards.where((c) => isNew(c) && !isSuspended(c)).length;
   final d = daysToExam(cert);
   if (d == null || d <= 0 || remaining == 0) return (limit: base, paced: 0, remaining: remaining, days: d);
@@ -262,19 +301,46 @@ class TodayStats {
   TodayStats(this.due, this.newAvailable, this.newDone, this.reviewsDone, this.plan);
 }
 
-Future<(List<Json>, TodayStats)> buildQueue(Json cert) async {
+/// Seconds one card usually takes this student (median of their own answers in the last 60 days), 30 if unknown.
+Future<double> avgCardSeconds() async {
+  final ds = [
+    for (final r in await Db.reviewsSince(nowMs() - 60 * dayMs))
+      if (r['duration_ms'] is int && r['duration_ms'] > 2000 && r['duration_ms'] < 20 * 60000) r['duration_ms'] as int
+  ]..sort();
+  return ds.length < 10 ? 30 : ds[ds.length ~/ 2] / 1000;
+}
+
+/// The first cards of [queue] that fit in [minutes] (a new card takes about twice as long), order kept; always at least one.
+List<Json> capByTime(List<Json> queue, int minutes, double secondsPerCard) {
+  final out = <Json>[];
+  var used = 0.0;
+  for (final c in queue) {
+    final cost = secondsPerCard * (isNew(c) ? 2 : 1);
+    if (out.isNotEmpty && used + cost > minutes * 60) break;
+    out.add(c);
+    used += cost;
+  }
+  return out;
+}
+
+/// Today's cards, one session at a time: [minutes] of work (the session length), the most valuable first. Studying again
+/// builds the next batch, because answered cards are no longer due and new ones are counted in newDone.
+Future<(List<Json>, TodayStats)> buildQueue(Json cert, {int? minutes}) async {
   final cards = await Db.cardsFor(cert['id']);
   final today = await Db.reviewsSince(startOfToday());
   final newDone = today.where((r) => r['was_new'] == true && r['source'] != 'exam').length;
   final reviewsDone = today.where((r) => r['was_new'] != true && r['source'] == 'study').length;
   final now = nowMs();
-  int rank(Json c) => (c['fsrs']['state'] != 2 ? 4 : 0) + (c['misconception'] == true ? 2 : 0);
+  final sched = schedulerFor(cert);
+  final imp = await importanceFor(cert['id']);
+  // Learning cards first, then what is worth most now: importance x forgotten (a big backlog is cut to the best, not the oldest).
+  double value(Json c) =>
+      (imp[c['id']] ?? 5) / 10 * (1 - retrievability(sched, c)) + (c['misconception'] == true ? .5 : 0) + ((c['priority'] as int?) ?? 0) * .05;
+  int rank(Json c) => c['fsrs']['state'] != 2 ? 1 : 0;
   final due = cards.where((c) => !isNew(c) && !isSuspended(c) && dueOf(c) <= now).toList()
     ..sort((a, b) {
       final r = rank(b) - rank(a);
-      if (r != 0) return r;
-      final p = ((b['priority'] as int?) ?? 0) - ((a['priority'] as int?) ?? 0);
-      return p != 0 ? p : dueOf(a).compareTo(dueOf(b));
+      return r != 0 ? r : value(b).compareTo(value(a));
     });
   final reviews = due.take(max(0, App.setting('max_reviews_per_day') - reviewsDone)).toList();
   final plan = newPlan(cert, cards);
@@ -288,7 +354,7 @@ Future<(List<Json>, TodayStats)> buildQueue(Json cert) async {
     if (gap > 0 && (i + 1) % gap == 0 && ni < news.length) queue.add(news[ni++]);
   }
   queue.addAll(news.skip(ni));
-  return (queue, TodayStats(due.length, news.length, newDone, reviewsDone, plan));
+  return (capByTime(queue, minutes ?? App.sessionBudget, await avgCardSeconds()), TodayStats(due.length, news.length, newDone, reviewsDone, plan));
 }
 
 /// Weak-area / final-days review: misconceptions first, then the weakest domains' least

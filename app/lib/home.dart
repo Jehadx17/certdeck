@@ -7,6 +7,15 @@ import 'logic.dart';
 import 'study.dart';
 import 'widgets.dart';
 
+/// One cert session (about [App.sessionMinutes] minutes); "Do more" at the end builds the next batch.
+Future<void> studyCert(BuildContext context, List<Json> queue) => Navigator.push(
+    context,
+    MaterialPageRoute(
+        builder: (_) => StudyScreen(queue, onMore: () async {
+              final (next, _) = await buildQueue(App.cert);
+              if (context.mounted && next.isNotEmpty) studyCert(context, next);
+            })));
+
 /// Today + the minimal stats: due/new, per-domain readiness, predicted score vs exam date,
 /// leeches and misconceptions.
 class TodayScreen extends StatelessWidget {
@@ -63,7 +72,7 @@ class TodayScreen extends StatelessWidget {
                 _stat(context, '${st.newAvailable}', 'new today'),
                 _stat(context, '${st.plan.remaining}', 'unseen'),
               ]),
-              if (st.plan.paced > App.setting('new_per_day'))
+              if (st.plan.paced > App.newPerDay)
                 Padding(
                   padding: const EdgeInsets.only(top: 8),
                   child: Text(
@@ -73,9 +82,9 @@ class TodayScreen extends StatelessWidget {
               const SizedBox(height: 16),
               FilledButton.icon(
                 style: FilledButton.styleFrom(padding: const EdgeInsets.all(18)),
-                onPressed: queue.isEmpty ? null : () => Navigator.push(context, MaterialPageRoute(builder: (_) => StudyScreen(queue))),
+                onPressed: queue.isEmpty ? null : () => studyCert(context, queue),
                 icon: const Icon(Icons.play_arrow),
-                label: Text(queue.isEmpty ? 'All done for today' : 'Study (${queue.length})'),
+                label: Text(queue.isEmpty ? 'All done for today' : 'Study (${queue.length}) · about ${App.sessionMinutes} min'),
               ),
               const SizedBox(height: 8),
               FilledButton.tonalIcon(

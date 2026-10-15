@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -64,6 +66,10 @@ class _StudyScreenState extends State<StudyScreen> {
   bool revealed = false;
   int done = 0, right = 0;
   final results = <(Json, bool)>[]; // each answer this session, for the practice test's topics
+  final calib = <(Conf, bool)>[]; // confidence and result of each answer, for the calibration line
+  final started = DateTime.now();
+  late final int planned = widget.custom?.remaining ?? widget.queue.length;
+  bool completed = false, studying = false; // studying: a new card shown first, for a student new to the subject
 
   @override
   void initState() {
@@ -71,12 +77,50 @@ class _StudyScreenState extends State<StudyScreen> {
     _next();
   }
 
+  @override
+  void dispose() {
+    if (!completed && done > 0) _logSession();
+    super.dispose();
+  }
+
+  /// One doc per session: planned vs answered, finished or left early (the autopilot's completion signal).
+  void _logSession() => Db.put('session', {
+        'id': 'sess-${started.millisecondsSinceEpoch}',
+        'started_at': started.millisecondsSinceEpoch,
+        'ended_at': nowMs(),
+        'source': widget.source,
+        'planned': planned,
+        'done': done,
+        'completed': completed,
+      }).ignore();
+
+  int get minutes => max(1, (DateTime.now().difference(started).inSeconds / 60).round());
+
+  /// "You said Sure 8 times and were right 6." Only once there are a few Sure answers to talk about.
+  String? get calibrationLine {
+    final s = sureStats(calib);
+    if (s.sure < 3) return null;
+    final line = t('You said Sure {n} times and were right {r}.', {'n': s.sure, 'r': s.sureRight});
+    return s.sureRight < s.sure ? '$line ${t('When you are Sure and wrong, that is the best moment to learn it.')}' : line;
+  }
+
   void _next() => setState(() {
         card = session.next();
         ans = card == null ? null : AnswerState(card!);
         conf = null;
         revealed = false;
-        if (card == null) Api.sync().ignore();
+        studying = widget.easy && card != null && studyFirst(card!);
+        if (studying) {
+          conf = Conf.unsure;
+          revealed = true;
+          ans!.overrideCorrect = true;
+          ans!.selfGrade = true;
+        }
+        if (card == null) {
+          completed = true;
+          if (done > 0) _logSession();
+          Api.sync().ignore();
+        }
       });
 
   bool get graded => ans!.written ? ans!.graded : (ans!.autoGraded || ans!.selfGrade != null);
@@ -91,10 +135,13 @@ class _StudyScreenState extends State<StudyScreen> {
         durationMs: nowMs() - a.startedAt,
         answer: a.answer,
         score: a.written ? a.score : null,
-        scheduler: widget.scheduler);
+        scheduler: widget.scheduler,
+        studyFirst: studying,
+        errorType: (a.written && !a.correct) ? (a.aiGrade ?? const {})['error_type']?.toString() : null);
     session.answered(updated, a.score);
     done++;
     if (a.correct) right++;
+    if (!studying) calib.add((conf!, a.correct));
     results.add((card!, a.correct));
     _next();
   }
@@ -122,7 +169,19 @@ class _StudyScreenState extends State<StudyScreen> {
             const SizedBox(height: 12),
             Text(done == 0 ? t('Nothing to study right now.') : t('Session done: {n} answers, {p}% correct', {'n': done, 'p': (100 * right / done).round()}),
                 textAlign: TextAlign.center, style: Theme.of(context).textTheme.titleMedium),
+            if (done > 0) Text(t('{m} min', {'m': minutes}), style: const TextStyle(color: Colors.white60)),
+            if (calibrationLine != null)
+              Padding(padding: const EdgeInsets.fromLTRB(24, 10, 24, 0), child: Text(calibrationLine!, textAlign: TextAlign.center, style: const TextStyle(color: Colors.white70))),
             const SizedBox(height: 20),
+            if (done > 0 && widget.onMore != null)
+              Padding(
+                  padding: const EdgeInsets.only(bottom: 8),
+                  child: FilledButton.tonal(
+                      onPressed: () {
+                        Navigator.pop(context);
+                        widget.onMore!();
+                      },
+                      child: Text(t('Do more')))),
             FilledButton(onPressed: () => Navigator.pop(context), child: Text(t('Back'))),
           ]),
         ),
@@ -251,6 +310,14 @@ class _StudyScreenState extends State<StudyScreen> {
           child: Column(children: [
             Expanded(
               child: ListView(padding: const EdgeInsets.all(16), children: [
+                if (isNew(card!) && !revealed)
+                  Padding(
+                      padding: const EdgeInsets.only(bottom: 10),
+                      child: Text(t('A new one! Make your best guess first. Guessing is how you learn it.'), style: const TextStyle(fontSize: 14, color: Colors.white60))),
+                if (studying)
+                  Padding(
+                      padding: const EdgeInsets.only(bottom: 10),
+                      child: Text(t('A new one! Read it, then tap Got it. It comes back soon as a question.'), style: const TextStyle(fontSize: 14, color: Colors.white60))),
                 CardView(ans!, key: ObjectKey(ans), revealed: revealed, easy: true, misconception: misconception, onChanged: () => setState(() {})),
                 const SizedBox(height: 40),
               ]),
@@ -281,6 +348,9 @@ class _StudyScreenState extends State<StudyScreen> {
         decoration: BoxDecoration(color: cs.surfaceContainer, border: const Border(top: BorderSide(color: Colors.white10))),
         child: child);
     final a = ans!;
+    if (studying) {
+      return bar(FilledButton.icon(style: easyButton(), icon: const Icon(Icons.check_rounded), label: Text(t('Got it')), onPressed: _commit));
+    }
     if (!revealed) {
       final empty = (a.type == 'typed' || a.written) && a.typed.trim().isEmpty;
       if (!a.ready || empty) {
@@ -353,7 +423,9 @@ class _StudyScreenState extends State<StudyScreen> {
             style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold), textAlign: TextAlign.center),
         if (done > 0) ...[
           const SizedBox(height: 12),
-          Text(t('{r} of {n} right', {'r': right, 'n': done}), style: const TextStyle(fontSize: 28, fontWeight: FontWeight.bold), textAlign: TextAlign.center),
+          if (App.settings['nerves'] != true) // students who get nervous about tests see no score, only the message
+            Text(t('{r} of {n} right', {'r': right, 'n': done}), style: const TextStyle(fontSize: 28, fontWeight: FontWeight.bold), textAlign: TextAlign.center),
+          Text(t('{n} cards · {m} min', {'n': done, 'm': minutes}), style: const TextStyle(fontSize: 14, color: Colors.white60), textAlign: TextAlign.center),
           const SizedBox(height: 12),
           Text(
               n == 3
@@ -363,6 +435,8 @@ class _StudyScreenState extends State<StudyScreen> {
                       : t('Good try! The ones you missed come back, so you learn them.'),
               style: const TextStyle(fontSize: 16),
               textAlign: TextAlign.center),
+          if (calibrationLine != null)
+            Padding(padding: const EdgeInsets.only(top: 12), child: Text(calibrationLine!, style: const TextStyle(fontSize: 14, color: Colors.white70), textAlign: TextAlign.center)),
         ],
         if (widget.practice && results.isNotEmpty) ...[
           const SizedBox(height: 24),

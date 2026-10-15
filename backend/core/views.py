@@ -22,7 +22,7 @@ from rest_framework.views import exception_handler as drf_exception_handler
 
 from . import ai, college, ingest, stats
 from .auth import ApiError
-from .models import AiCall, Media, docs, now_ms, save_docs
+from .models import Account, AiCall, Media, docs, now_ms, save_docs
 
 PAGE = 1000
 MEDIA_NAME = re.compile(r"([0-9a-f]{64})\.(png|jpg|jpeg|webp|gif)")
@@ -225,6 +225,20 @@ def usage(request):
         "by_endpoint": {r["endpoint"]: float(r["usd"]) for r in month.values("endpoint").annotate(usd=Sum("cost_usd"))},
         "all_time_usd": float(AiCall.objects.filter(user=user).aggregate(usd=Sum("cost_usd"))["usd"] or 0),
     })
+
+
+@api_view(["GET"])
+def metrics(request):
+    """Study metrics for the caller; the owner can read a student's with ?user=<name>."""
+    user = request.account
+    name = request.query_params.get("user")
+    if name:
+        if user.role != "owner":
+            raise ApiError(403, "Only the owner can read another account's metrics")
+        user = Account.objects.filter(name=name).first()
+        if not user:
+            raise ApiError(404, "No such account")
+    return Response(stats.metrics(user))
 
 
 @api_view(["POST"])
