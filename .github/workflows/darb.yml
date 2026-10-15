@@ -1,0 +1,98 @@
+# Darb CI: backend tests on Postgres, Flutter analyze/test/build, the Docker stack end to end, and (on demand or when
+# iOS files change) an iOS simulator build that launches the app. CertDeck (app/, backend/) is not touched.
+name: darb
+on:
+  push:
+    branches: [darb]
+    paths: ["darb/**", ".github/workflows/darb.yml"]
+  pull_request:
+    paths: ["darb/**", ".github/workflows/darb.yml"]
+  workflow_dispatch:
+    inputs:
+      ios:
+        description: "Also build and launch on the iOS simulator (macOS minutes cost 10x)"
+        type: boolean
+        default: true
+
+concurrency: {group: "darb-${{ github.ref }}", cancel-in-progress: true}
+
+jobs:
+  backend:
+    runs-on: ubuntu-24.04
+    services:
+      postgres:
+        image: postgres:16
+        env: {POSTGRES_PASSWORD: postgres}
+        ports: ["5432:5432"]
+        options: --health-cmd pg_isready --health-interval 5s --health-retries 20
+    defaults: {run: {working-directory: darb/backend}}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.12", cache: pip, cache-dependency-path: darb/backend/requirements.txt}
+      - run: sudo apt-get update && sudo apt-get install -y poppler-utils
+      - run: pip install -r requirements.txt
+      - run: python manage.py test core -v 2
+        env: {DATABASE_URL: "postgres://postgres:postgres@127.0.0.1:5432/darb", DARB_TESTING: "1"}
+
+  app:
+    runs-on: ubuntu-24.04
+    defaults: {run: {working-directory: darb/app}}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with: {distribution: temurin, java-version: "17"}
+      - uses: subosito/flutter-action@v2
+        with: {flutter-version: "3.35.7", channel: stable, cache: true}
+      - run: flutter pub get
+      - run: flutter analyze --no-fatal-infos
+      - run: flutter test
+      - run: flutter build apk --debug
+
+  stack:
+    runs-on: ubuntu-24.04
+    defaults: {run: {working-directory: darb/deploy}}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Configure
+        run: |
+          cp .env.example .env
+          sed -i "s/^DJANGO_SECRET_KEY=.*/DJANGO_SECRET_KEY=ci-$(openssl rand -hex 24)/; s/^POSTGRES_PASSWORD=.*/POSTGRES_PASSWORD=ci-$(openssl rand -hex 12)/" .env
+          echo "HTTP_PORT=8080" >> .env && echo "HTTPS_PORT=8443" >> .env
+      - run: docker compose --env-file .env up -d --build --scale api=2
+      - name: Health through nginx
+        run: for i in $(seq 1 60); do curl -fsS localhost:8080/api/health && break; sleep 2; done
+      - name: Sync round trip through nginx and PgBouncer
+        run: |
+          TOKEN=$(docker compose --env-file .env exec -T api python manage.py users create ci@example.com | sed 's/Token: //')
+          NOW=$(($(date +%s)*1000))
+          curl -fsS -X POST localhost:8080/api/sync -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json' \
+            -d "{\"cursor\":0,\"docs\":[{\"id\":\"settings\",\"kind\":\"settings\",\"data\":{\"lang\":\"ar\"},\"updated_at\":$NOW}],\"reviews\":[{\"ts\":$NOW,\"card_id\":\"q:1\",\"rating\":3}]}" \
+            | tee /dev/stderr | python3 -c 'import json,sys; r=json.load(sys.stdin); assert r["docs"][0]["data"]=={"lang":"ar"} and len(r["reviews"])==1'
+          docker compose --env-file .env exec -T worker python manage.py worker --once
+      - if: failure()
+        run: docker compose --env-file .env logs --tail 200
+
+  ios:
+    if: github.event_name == 'workflow_dispatch' && inputs.ios
+    runs-on: macos-15
+    defaults: {run: {working-directory: darb/app}}
+    steps:
+      - uses: actions/checkout@v4
+      # Xcode 26.3: the newest that runs on Sequoia (the Hackintosh) and meets Apple's Xcode 26 upload rule.
+      - run: sudo xcode-select -s /Applications/Xcode_26.3.app && xcodebuild -version
+      - uses: subosito/flutter-action@v2
+        with: {flutter-version: "3.35.7", channel: stable, cache: true}
+      - run: flutter pub get && flutter build ios --simulator --debug
+      - name: Launch on a simulator and take a screenshot
+        run: |
+          xcrun simctl list runtimes
+          DEV=$(xcrun simctl create darb "iPhone SE (3rd generation)" 2>/dev/null || xcrun simctl create darb "iPhone 16e")
+          xcrun simctl boot "$DEV"
+          xcrun simctl install "$DEV" build/ios/iphonesimulator/Runner.app
+          xcrun simctl launch "$DEV" sa.darbedu.app
+          sleep 25
+          xcrun simctl io "$DEV" screenshot ios-launch.png
+          xcrun simctl spawn "$DEV" launchctl list | grep -q sa.darbedu.app && echo "app is running"
+      - uses: actions/upload-artifact@v4
+        with: {name: ios-simulator, path: darb/app/ios-launch.png}

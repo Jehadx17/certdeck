@@ -1,0 +1,99 @@
+# Darb backend: one compose file for every size (docs/DARB-INFRA.md).
+#   launch (one VPS):  docker compose --env-file .env up -d          (every service on this host)
+#   split later:       run `db`, `pgbouncer`, `backup` on the DB VPS; `nginx` + `api` on app VPSes; `slow` + `worker`
+#                      on the worker VPS, pointing DATABASE_URL at the DB VPS's PgBouncer and NGINX_SLOW at the worker.
+# Secrets live in deploy/.env (gitignored; see .env.example), never in the image or git.
+name: darb
+x-app: &app
+  build: {context: .., dockerfile: deploy/Dockerfile}
+  image: darb-api:latest
+  restart: unless-stopped
+  env_file: .env
+  environment:
+    DATABASE_URL: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@pgbouncer:6432/${POSTGRES_DB}
+    DARB_UPLOAD_DIR: /data/uploads
+  networks: [internal]
+
+services:
+  db:
+    build: {context: .., dockerfile: deploy/Dockerfile.db}
+    image: darb-db:latest
+    restart: unless-stopped
+    env_file: .env
+    # WAL archiving to R2 (pgBackRest) when ARCHIVE_MODE=on; wal_level=replica + senders for a hot standby.
+    command: ["postgres", "-c", "max_connections=200", "-c", "shared_buffers=${PG_SHARED_BUFFERS:-2GB}",
+              "-c", "effective_cache_size=${PG_EFFECTIVE_CACHE:-6GB}", "-c", "work_mem=16MB",
+              "-c", "maintenance_work_mem=512MB", "-c", "wal_level=replica", "-c", "max_wal_senders=5",
+              "-c", "archive_mode=${ARCHIVE_MODE:-off}", "-c", "archive_command=pgbackrest --stanza=darb archive-push %p",
+              "-c", "archive_timeout=60", "-c", "autovacuum_vacuum_scale_factor=0.05",
+              "-c", "autovacuum_analyze_scale_factor=0.02", "-c", "log_min_duration_statement=500"]
+    volumes: [pgdata:/var/lib/postgresql/data, pgsock:/var/run/postgresql]
+    shm_size: 1g
+    networks: [internal]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      retries: 30
+
+  pgbouncer:
+    image: darb-db:latest
+    restart: unless-stopped
+    env_file: .env
+    user: postgres
+    command: ["pgbouncer.sh"]
+    depends_on: {db: {condition: service_healthy}}
+    networks: [internal]
+
+  backup:
+    image: darb-db:latest
+    restart: unless-stopped
+    env_file: .env
+    user: postgres
+    command: ["backup.sh"]
+    volumes: [pgdata:/var/lib/postgresql/data, pgsock:/var/run/postgresql]
+    depends_on: {db: {condition: service_healthy}}
+    networks: [internal]
+    profiles: [backup]  # on once R2 is configured: --profile backup
+
+  migrate:
+    <<: *app
+    restart: "no"
+    command: ["python", "manage.py", "migrate", "--noinput"]
+    depends_on: {pgbouncer: {condition: service_started}}
+
+  # Sync, account, billing webhook, pack keys: short requests only. Stateless; scale with `--scale api=N`.
+  api:
+    <<: *app
+    depends_on: {migrate: {condition: service_completed_successfully}}
+
+  # AI and upload endpoints: many threads waiting on Anthropic, so a slow call never holds a sync worker.
+  # 110 s stays under Cloudflare's 125 s limit.
+  slow:
+    <<: *app
+    command: ["gunicorn", "darb.wsgi", "-b", "0.0.0.0:8000", "-w", "2", "--threads", "32", "--timeout", "110",
+              "--access-logfile", "-"]
+    volumes: [uploads:/data/uploads]
+    depends_on: {migrate: {condition: service_completed_successfully}}
+
+  # The job queue: uploads, preparations, autopilot, re-teach, maintenance. Scale with `--scale worker=N`.
+  worker:
+    <<: *app
+    command: ["python", "manage.py", "worker"]
+    volumes: [uploads:/data/uploads]
+    depends_on: {migrate: {condition: service_completed_successfully}}
+
+  nginx:
+    image: nginx:1.27-alpine
+    restart: unless-stopped
+    volumes: ["./nginx.conf:/etc/nginx/nginx.conf:ro", "./darb-locations.conf:/etc/nginx/darb-locations.conf:ro",
+              "${TLS_DIR:-./tls}:/etc/nginx/tls:ro"]
+    ports: ["${HTTP_PORT:-80}:80", "${HTTPS_PORT:-443}:443"]
+    depends_on: [api, slow]
+    networks: [internal]
+
+networks:
+  internal: {}
+volumes:
+  pgdata: {}
+  pgsock: {}
+  uploads: {}
