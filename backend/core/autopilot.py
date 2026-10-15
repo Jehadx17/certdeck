@@ -103,8 +103,13 @@ def tune(user, now=None, m=None, cur=None):
         return out
 
     setup = _setup(user)
-    minutes = cur["session_minutes"] or setup.get("session_minutes") or 10
-    new = cur["new_per_day"] or setup.get("new_per_day") or 20
+    # What the student or owner picked after the last autopilot change is the starting point, not the old override.
+    def start(key, default):
+        picked = setup.get(key) if (setup.get(key + "_set_at") or 0) > cur["updated_at"] else None
+        return picked or cur[key] or setup.get(key) or default
+
+    minutes = start("session_minutes", 10)
+    new = start("new_per_day", 20)
     retention, reason = cur["retention_adj"], []
     history_days = (now - m["first_review_ts"]) / DAY if m["first_review_ts"] else 0
     active = m["days_active_last_7"]

@@ -7,6 +7,16 @@ import 'package:fsrs/fsrs.dart' as fsrs;
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
+  test('unseen cards keep a share of the session even with a long backlog', () {
+    final due = [for (var i = 0; i < 100; i++) {'id': 'd$i', 'fsrs': {'state': 2}}];
+    final fresh = [for (var i = 0; i < 20; i++) {'id': 'n$i'}];
+    final q = mixByTime(due, fresh, 10, 30); // 600 s: 30% = 180 s -> 3 new cards (60 s each), 14 reviews
+    expect(q.where(isNew).length, 3);
+    expect(q.length, 3 + 14);
+    expect(mixByTime(due.take(2).toList(), fresh, 10, 30).where(isNew).length, 9); // few reviews: the time goes to new cards
+    expect(mixByTime(due, [], 10, 30).length, 20);
+  });
+
   test('a session is capped to its minutes, new cards cost double, at least one card always fits', () {
     final old = {'id': 'o', 'fsrs': {'state': 2}};
     final fresh = {'id': 'n'}; // no fsrs: new

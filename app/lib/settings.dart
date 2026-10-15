@@ -117,6 +117,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               final n = int.tryParse(v);
               if (n == null || n < 0) return;
               App.settings[key] = n;
+              if (key == 'new_per_day') App.settings['new_per_day_set_at'] = nowMs();
               await App.saveSettings();
             },
           ),

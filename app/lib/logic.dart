@@ -84,7 +84,13 @@ class App {
 
   /// The AI supervisor's multiplier on the amount of work (0.8..1.2): applied to new cards and to the session's minutes.
   static double get loadFactor => (_auto('load_factor')?.toDouble() ?? 1.0).clamp(.8, 1.2);
-  static int get newPerDay => ((_auto('new_per_day') ?? setting('new_per_day')) * loadFactor).round().clamp(1, 100);
+  /// New cards per day: the owner's own number wins until the autopilot's next update (then the autopilot starts from it).
+  static int get newPerDay {
+    final chosen = (settings['new_per_day_set_at'] as num?) ?? 0;
+    final auto = (autopilot['updated_at'] as num?) ?? 0;
+    final fromAuto = auto > chosen ? _auto('new_per_day') : null;
+    return fromAuto == null ? setting('new_per_day') : (fromAuto * loadFactor).round().clamp(1, 100);
+  }
   /// [sessionMinutes] scaled by [loadFactor], the time a session is built for.
   static int get sessionBudget => (sessionMinutes * loadFactor).round().clamp(3, 36);
   /// Goal shift plus the autopilot's, kept inside 0.80..0.97 when applied in [schedulerFor].
@@ -345,16 +351,43 @@ Future<(List<Json>, TodayStats)> buildQueue(Json cert, {int? minutes}) async {
   final reviews = due.take(max(0, App.setting('max_reviews_per_day') - reviewsDone)).toList();
   final plan = newPlan(cert, cards);
   final news = orderNew(cards, cert).take(max(0, plan.limit - newDone)).toList();
-  // Spread new cards evenly through the reviews.
-  final queue = <Json>[];
-  final gap = news.isEmpty ? 0 : (reviews.length / news.length).ceil();
-  var ni = 0;
-  for (var i = 0; i < reviews.length; i++) {
-    queue.add(reviews[i]);
-    if (gap > 0 && (i + 1) % gap == 0 && ni < news.length) queue.add(news[ni++]);
+  final queue = mixByTime(reviews, news, minutes ?? App.sessionBudget, await avgCardSeconds());
+  return (queue, TodayStats(due.length, news.length, newDone, reviewsDone, plan));
+}
+
+/// A session of [minutes] where unseen cards get at least [newShare] of the time (they hold what the student does not
+/// know yet, so a long review backlog must not push them out), the rest going to [reviews] in their order. New cards are
+/// spread evenly through the reviews. A new card takes about twice as long as a review.
+List<Json> mixByTime(List<Json> reviews, List<Json> news, int minutes, double secondsPerCard, {double newShare = .3}) {
+  final budget = minutes * 60.0, newCost = secondsPerCard * 2;
+  final takeNew = <Json>[];
+  var used = 0.0;
+  for (final c in news) {
+    if (takeNew.isNotEmpty && used + newCost > budget * newShare) break;
+    takeNew.add(c);
+    used += newCost;
   }
-  queue.addAll(news.skip(ni));
-  return (capByTime(queue, minutes ?? App.sessionBudget, await avgCardSeconds()), TodayStats(due.length, news.length, newDone, reviewsDone, plan));
+  final takeRev = <Json>[];
+  for (final c in reviews) {
+    if (takeRev.isNotEmpty && used + secondsPerCard > budget) break;
+    takeRev.add(c);
+    used += secondsPerCard;
+  }
+  // Time the reviews could not use (few due) goes to more new cards.
+  for (final c in news.skip(takeNew.length)) {
+    if (used + newCost > budget) break;
+    takeNew.add(c);
+    used += newCost;
+  }
+  final queue = <Json>[];
+  final gap = takeNew.isEmpty ? 0 : (takeRev.length / takeNew.length).ceil();
+  var ni = 0;
+  for (var i = 0; i < takeRev.length; i++) {
+    queue.add(takeRev[i]);
+    if (gap > 0 && (i + 1) % gap == 0 && ni < takeNew.length) queue.add(takeNew[ni++]);
+  }
+  queue.addAll(takeNew.skip(ni));
+  return queue;
 }
 
 /// Studying more than today's plan: the daily new-card limit is ignored and cards that are not due yet come in, the most

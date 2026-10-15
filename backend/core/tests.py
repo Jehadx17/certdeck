@@ -669,6 +669,14 @@ class AutopilotTests(TestCase):
         self.assertEqual(high["new_per_day"], 40)  # capped
         self.assertEqual(high["retention_adj"], 0.03)
 
+    def test_a_pick_made_after_the_last_change_is_the_starting_point(self):
+        save_docs(self.user, self.reviews(range(0, 6), per_day=6, start=1))  # studied most days: x1.2
+        self.autopilot_doc({"new_per_day": 10}, updated_days_ago=8)
+        save_docs(self.user, [doc("settings", {"new_per_day": 30, "new_per_day_set_at": self.now - DAY}, kind="settings")])
+        self.assertEqual(self.ap.tune(self.user, self.now)["new_per_day"], 36)  # from the picked 30, not the old 10
+        save_docs(self.user, [doc("settings", {"new_per_day": 30, "new_per_day_set_at": self.now - 20 * DAY}, kind="settings", updated_at=2)])
+        self.assertEqual(self.ap.tune(self.user, self.now)["new_per_day"], 12)  # an old pick no longer overrides
+
     def test_long_gap_recall_moves_retention(self):
         first = [doc(f"f{i}", {"card_id": f"g{i}", "ts": self.now - 40 * DAY, "correct": True, "confidence": "sure", "rating": 3}, kind="review") for i in range(35)]
         second = [doc(f"s{i}", {"card_id": f"g{i}", "ts": self.now - 10 * DAY, "correct": i < 5, "confidence": "sure", "rating": 3 if i < 5 else 1}, kind="review") for i in range(35)]
