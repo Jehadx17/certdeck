@@ -140,8 +140,11 @@ jobs:
       # The screen walkthrough (integration_test/walkthrough_test.dart): AR/EN x light/dark, every main screen, on the
       # OLDEST iOS runtime this image has at iPhone SE size, then the newest at the largest iPhone. Fails on overflow.
       - name: Walkthrough on the oldest iOS runtime (small) and the newest (large)
-        timeout-minutes: 60
+        timeout-minutes: 75
         run: |
+          # The image's oldest runtime is 18.5; 16.4 is the oldest Xcode 26 is reported to install headlessly
+          # (developer.apple.com/forums/thread/847134). Falls back to the image's oldest if the download fails.
+          xcodebuild -downloadPlatform iOS -buildVersion 16.4 || echo "iOS 16.4 runtime not available"
           read OLD NEW < <(xcrun simctl list runtimes -j | python3 -c 'import json,sys; r=sorted((tuple(map(int,x["version"].split("."))),x["identifier"]) for x in json.load(sys.stdin)["runtimes"] if x["platform"]=="iOS" and x["isAvailable"]); print(r[0][1], r[-1][1])')
           echo "oldest $OLD, newest $NEW"
           # Built once, installed on each (a drive per device would rebuild for ~8 min each).

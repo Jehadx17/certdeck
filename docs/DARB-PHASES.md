@@ -157,3 +157,50 @@ intermediates, both mine. Current-Android checks now run on the CI's Linux emula
 
 **Exit check (eval shows Haiku passes per feature; cost per typical session measured) needs:** the Anthropic API key
 (DARB-NEEDS-ME.md item 6). The run costs about $3-6.
+
+## Phases 3-4: Packs (pipeline built; content waiting on the Anthropic key and blueprints)
+The format, the generation and verification pipeline, encryption and key issuing, resumable downloads and the CDN are
+described in [DARB-PACKS.md](DARB-PACKS.md) and [DARB-SECURITY.md](DARB-SECURITY.md). Building قدرات, تحصيلي and the
+school packs needs the Anthropic key (DARB-NEEDS-ME.md item 6). تحصيلي and school-subject blueprints are pending
+question 6. The per-pack error-rate report fills in when the pipeline runs.
+
+## Phase 5: Segment UX and polish (2026-10-16)
+**Built:**
+- per-segment home screens (middle, high, university, certification);
+- minimal Settings, the paywall, help and support;
+- light/dark, Arabic RTL, and offline/empty states;
+- a weighted-percentage calculator (high school);
+- a placement test that shows an honest level range (Wilson 95%).
+
+**Exit check met:** the walkthrough (`integration_test/walkthrough_test.dart`) covers every main screen and every
+segment in Arabic and English, light and dark. It fails on any overflow or exception. It passed in CI run
+[38956484671](https://github.com/Jehadx17/certdeck/actions/runs/38956484671), 40 screens on each of 4 devices:
+
+| Device | Screen | OS |
+|---|---|---|
+| iPhone SE (3rd gen) | 375×667 | iOS 18.5, the oldest runtime on the CI image (16.4 is being added) |
+| iPhone 16 Pro Max | 440×956 | iOS 26.2 |
+| Nexus S profile | 320×533 | Android 7.0 (API 24, the minimum) |
+| Pixel C tablet | 1280×852 | Android 7.0 (API 24, the minimum) |
+
+Screenshots are in the run's artifacts.
+
+**Gap:** no iOS 13-15 simulator run. 16.4 is the oldest runtime Xcode 26 is reported to install headlessly, so iOS 13-15 is covered only
+by building against the iOS 13 minimum.
+
+## Phase 6: Hardening and scale (2026-10-16)
+**Built:**
+- rate limits (nginx per IP, Django per account and device) and anomaly suspension;
+- pack watermarking and certificate pinning;
+- an obfuscated release build (`build-release.sh`);
+- Sentry for backend errors, the AI spend alert, and the deep health check for uptime;
+- reminders: an annual renewal reminder 3 days before, and the guardian's weekly email (signed stop link).
+
+**Exit check met:**
+- [DARB-LOADTEST.md](DARB-LOADTEST.md): 100k-student peak at 91 req/s with 0 errors and sync p95 260 ms on a 2-vCPU
+  runner; a 3× spike with 0 errors; the scaling triggers.
+- [DARB-RESTORE.md](DARB-RESTORE.md): 510,000 rows restored from an encrypted backup plus WAL, identical by checksum.
+
+**Open:**
+- device attestation (Play Integrity / App Attest), pending question 7;
+- both tests repeated on the VPS against R2, once they exist.

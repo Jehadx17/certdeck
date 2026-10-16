@@ -20,7 +20,8 @@ void main() {
   // One build serves every simulator (CI), so the name comes from the device: OS, version, logical screen size.
   String device(WidgetTester tester) {
     final s = tester.view.physicalSize / tester.view.devicePixelRatio;
-    final v = RegExp(r'\d+(\.\d+)?').firstMatch(Platform.operatingSystemVersion)?[0] ?? '';
+    // iOS reports "Version 18.5 (Build …)"; Android only a kernel string, so no version there.
+    final v = Platform.isIOS ? (RegExp(r'\d+(\.\d+)?').firstMatch(Platform.operatingSystemVersion)?[0] ?? '') : '';
     return const String.fromEnvironment('DEVICE', defaultValue: '') == ''
         ? '${Platform.operatingSystem}$v-${s.width.round()}x${s.height.round()}'
         : const String.fromEnvironment('DEVICE');

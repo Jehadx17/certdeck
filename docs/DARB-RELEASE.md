@@ -52,8 +52,8 @@
 | RevenueCat sandbox purchases on both platforms; a lapsed subscription loses access | Claude | ✔ backend tested · ⏳ sandbox run |
 | AI: Haiku only, < 100k tokens, per-user cap, eval passes per feature | Claude | ✔ built · ⏳ eval run (key) |
 | Packs: قدرات, تحصيلي, school subjects built, audited (≤ 2% error) or listed as blocked | Claude | ⏳ key + blueprints (question 6) |
-| Light/dark, Arabic RTL, minimal settings, onboarding: small + large screens, old Android (7.0) | Claude | ✔ Android 7.0 walkthrough by hand · ⏳ automated walkthrough in CI (`[walkthrough]`: oldest iOS runtime at SE size, newest at Pro Max, API 24 phone + tablet) |
-| Load test at the 100k-student profile; restore test | Claude | ⏳ CI runs (DARB-LOADTEST.md, DARB-RESTORE.md), then on the VPS |
+| Light/dark, Arabic RTL, minimal settings, onboarding: small + large screens, old Android (7.0) | Claude | ✔ CI walkthrough passed (run 38956484671): iOS 18.5 SE, iOS 26.2 Pro Max, Android 7.0 phone + tablet, AR/EN × light/dark · ⏳ iOS 16.4 run |
+| Load test at the 100k-student profile; restore test | Claude | ✔ CI runs passed (DARB-LOADTEST.md, DARB-RESTORE.md) · ⏳ repeat on the VPS + R2 |
 | Monitoring: Sentry errors, uptime, AI spend alert | Claude | ✔ built · 👤 accounts |
 
 ## Submission (👤)
