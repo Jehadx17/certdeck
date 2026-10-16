@@ -1,0 +1,168 @@
+{
+  "slug": "tahsili-math",
+  "title_ar": "التحصيلي - الرياضيات",
+  "title_en": "Tahsili - Mathematics",
+  "segments": [
+    "high"
+  ],
+  "exams": [
+    "tahsili"
+  ],
+  "grades": [
+    "general",
+    "cs_eng",
+    "health"
+  ],
+  "subject": "mathematics",
+  "language": "ar",
+  "format": "MCQ, 4 options (أ ب ج د). Scientific-track Tahsili is reported (unofficial) as 110 items in 5 sections of 22 across 4 subjects, 2 h 05 min total (ETEC page snippet, now 404), i.e. roughly 68 s per item (derived). Per-subject share of the test: unverified (assumed ~25% each). Covers all three secondary years; reported 20/30/50 grade split is unverified. No calculator assumed.",
+  "sources": [
+    {
+      "url": "https://etec.gov.sa/ar/centers/qiyas",
+      "what": "ETEC Qiyas centre page (fetched 2026-10-16). Fetched text carried no Tahsili specification (no item count, subject weights or guide link), so no official Tahsili table could be verified.",
+      "date": "page updated 2026-09-20"
+    },
+    {
+      "url": "https://etec.gov.sa/en/productsandservices/Qiyas/Education/ScientificSpecialists",
+      "what": "ETEC page 'Academic Achievement Test for Scientific Specializations': search snippet only says the test measures achievement in the science section of general secondary, in Arabic, duration 2 h 05 min. The URL returned 404 when fetched, so unverified.",
+      "date": "page footer 2025-09-29 (404)"
+    },
+    {
+      "url": "https://www.mualimi.app/ar/blog/tahsili-saat-exam-guide",
+      "what": "UNOFFICIAL secondary source: scientific tracks 110 MCQ in 5 sections of 22, 2 h 05 min, Arabic or English; subjects biology & environmental science, chemistry, physics, mathematics; grades covered roughly equally. Unverified.",
+      "date": "no date"
+    },
+    {
+      "url": "https://mqalaty.net/%D9%83%D9%85-%D8%B9%D8%AF%D8%AF-%D8%A7%D8%B3%D8%A6%D9%84%D8%A9-%D8%A7%D9%84%D8%AA%D8%AD%D8%B5%D9%8A%D9%84%D9%8A/",
+      "what": "UNOFFICIAL secondary source: claims content split 20% first / 30% second / 50% third secondary year. Unverified; used only as a soft guide for topic weights.",
+      "date": "cites ETEC dated 2025-07-01"
+    },
+    {
+      "url": "",
+      "what": "unverified: unit/topic list reflects Darb's reading of the Saudi MOE textbooks and the usual scope of the course, not a fetched official table of contents. Re-check against the MOE textbook portal (ien.edu.sa, login-gated; catalogue not reachable by the research tool) before generation. Subject weights per track and the per-topic weights below are Darb's allocation: roughly proportional to secondary-year coverage (20/30/50, unverified) and to topic breadth.",
+      "date": "no date"
+    }
+  ],
+  "topics": [
+    {
+      "id": "t1",
+      "title_ar": "المعادلات والمتباينات",
+      "title_en": "Equations and inequalities",
+      "unit": "التحصيلي · جبر",
+      "weight": 0.08,
+      "count": 56,
+      "item_types": [
+        "mcq"
+      ],
+      "notes": "Linear, quadratic, absolute-value, rational; solving and modelling. Easy to medium."
+    },
+    {
+      "id": "t2",
+      "title_ar": "الدوال وتمثيلها",
+      "title_en": "Functions and graphs",
+      "unit": "التحصيلي · جبر",
+      "weight": 0.12,
+      "count": 84,
+      "item_types": [
+        "mcq"
+      ],
+      "notes": "Domain/range, linear, quadratic, polynomial, piecewise, transformations, inverse and composition."
+    },
+    {
+      "id": "t3",
+      "title_ar": "الأسس والجذور واللوغاريتمات",
+      "title_en": "Exponents, radicals, logarithms",
+      "unit": "التحصيلي · جبر",
+      "weight": 0.1,
+      "count": 70,
+      "item_types": [
+        "mcq"
+      ],
+      "notes": "Laws of exponents, exponential/log functions and equations."
+    },
+    {
+      "id": "t4",
+      "title_ar": "كثيرات الحدود والتحليل والمقادير الكسرية",
+      "title_en": "Polynomials, factoring, rational expressions",
+      "unit": "التحصيلي · جبر",
+      "weight": 0.08,
+      "count": 56,
+      "item_types": [
+        "mcq"
+      ],
+      "notes": "Operations, factor/remainder theorem, simplification."
+    },
+    {
+      "id": "t5",
+      "title_ar": "المتتابعات والمتسلسلات",
+      "title_en": "Sequences and series",
+      "unit": "التحصيلي · جبر",
+      "weight": 0.07,
+      "count": 49,
+      "item_types": [
+        "mcq"
+      ],
+      "notes": "Arithmetic, geometric, sigma notation, sums."
+    },
+    {
+      "id": "t6",
+      "title_ar": "حساب المثلثات",
+      "title_en": "Trigonometry",
+      "unit": "التحصيلي · مثلثات",
+      "weight": 0.12,
+      "count": 84,
+      "item_types": [
+        "mcq"
+      ],
+      "notes": "Ratios, unit circle, identities, trig functions and equations, laws of sines/cosines."
+    },
+    {
+      "id": "t7",
+      "title_ar": "الهندسة والهندسة التحليلية",
+      "title_en": "Geometry and coordinate geometry",
+      "unit": "التحصيلي · هندسة",
+      "weight": 0.12,
+      "count": 84,
+      "item_types": [
+        "mcq"
+      ],
+      "notes": "Lines, circles, conics, area/volume, similarity, distance and midpoint."
+    },
+    {
+      "id": "t8",
+      "title_ar": "المتجهات والمصفوفات",
+      "title_en": "Vectors and matrices",
+      "unit": "التحصيلي · جبر",
+      "weight": 0.08,
+      "count": 56,
+      "item_types": [
+        "mcq"
+      ],
+      "notes": "Vector operations, dot product, matrix operations, determinants, 2x2 systems."
+    },
+    {
+      "id": "t9",
+      "title_ar": "الإحصاء والاحتمال",
+      "title_en": "Statistics and probability",
+      "unit": "التحصيلي · إحصاء",
+      "weight": 0.12,
+      "count": 84,
+      "item_types": [
+        "mcq"
+      ],
+      "notes": "Measures of centre/spread, counting, permutations/combinations, probability rules, distributions (basic)."
+    },
+    {
+      "id": "t10",
+      "title_ar": "النهايات والتفاضل والتكامل",
+      "title_en": "Limits, derivatives, integrals",
+      "unit": "التحصيلي · تفاضل وتكامل",
+      "weight": 0.11,
+      "count": 77,
+      "item_types": [
+        "mcq"
+      ],
+      "notes": "Intro level: limits, derivative rules, simple applications, basic integrals. Medium to hard."
+    }
+  ]
+}

@@ -1,0 +1,132 @@
+{
+  "slug": "school-math-m2",
+  "title_ar": "الرياضيات - الصف الثاني المتوسط",
+  "title_en": "Mathematics - Middle Grade 2",
+  "segments": [
+    "middle"
+  ],
+  "exams": [
+    "school"
+  ],
+  "grades": [
+    "m2"
+  ],
+  "subject": "math",
+  "language": "ar",
+  "format": "MCQ, 4 options (أ ب ج د); school-test style, one correct answer; no official per-item time (school exams are untimed per item). Edition: MOE three-term textbooks 1447-1448 AH (2025-27), edition year per secondary sources only (unverified).",
+  "sources": [
+    {
+      "url": "https://www.okaz.com.sa/news/local/2208489",
+      "what": "Press report of the MOE study plan: middle stage 35 periods/week, 10 subjects in grades 1-2 and 11 in grade 3 (plus activity); secondary general track 32 periods/week.",
+      "date": "2025-08-12"
+    },
+    {
+      "url": "https://mhtwyat.com/?p=246746",
+      "what": "UNOFFICIAL summary of the 1448 middle-school plan (three-term system): subjects Quran, Islamic studies, Arabic, social studies, math, science, English, digital skills, art, PE/self-defense, critical thinking, life & family skills; it cites an MOE 'developed study plans' PDF dated 2026-08-20 that was not itself fetched.",
+      "date": "2026-08-20 (cited MOE PDF)"
+    },
+    {
+      "url": "",
+      "what": "unverified: unit/topic list reflects Darb's reading of the Saudi MOE textbooks and the usual scope of the course, not a fetched official table of contents. Re-check against the MOE textbook portal (ien.edu.sa, login-gated; catalogue not reachable by the research tool) before generation.",
+      "date": "no date"
+    }
+  ],
+  "topics": [
+    {
+      "id": "t1",
+      "title_ar": "الأعداد النسبية والأسس",
+      "title_en": "Rational numbers and exponents",
+      "unit": "الرياضيات م2 · وحدة (غير مؤكد)",
+      "weight": 0.12,
+      "count": 36,
+      "item_types": [
+        "mcq"
+      ],
+      "notes": "Operations, scientific notation, laws of exponents."
+    },
+    {
+      "id": "t2",
+      "title_ar": "المعادلات والمتباينات",
+      "title_en": "Equations and inequalities",
+      "unit": "الرياضيات م2 · وحدة (غير مؤكد)",
+      "weight": 0.14,
+      "count": 42,
+      "item_types": [
+        "mcq"
+      ],
+      "notes": "Multi-step, variables on both sides, inequalities."
+    },
+    {
+      "id": "t3",
+      "title_ar": "الدوال الخطية والميل",
+      "title_en": "Linear functions and slope",
+      "unit": "الرياضيات م2 · وحدة (غير مؤكد)",
+      "weight": 0.14,
+      "count": 42,
+      "item_types": [
+        "mcq"
+      ],
+      "notes": "Slope, intercepts, graphs, rate of change."
+    },
+    {
+      "id": "t4",
+      "title_ar": "أنظمة المعادلات",
+      "title_en": "Systems of equations",
+      "unit": "الرياضيات م2 · وحدة (غير مؤكد)",
+      "weight": 0.09,
+      "count": 27,
+      "item_types": [
+        "mcq"
+      ],
+      "notes": "Graphing, substitution, elimination (intro)."
+    },
+    {
+      "id": "t5",
+      "title_ar": "الأعداد الحقيقية ونظرية فيثاغورس",
+      "title_en": "Real numbers and the Pythagorean theorem",
+      "unit": "الرياضيات م2 · وحدة (غير مؤكد)",
+      "weight": 0.13,
+      "count": 39,
+      "item_types": [
+        "mcq"
+      ],
+      "notes": "Roots, irrationals, right triangles, distance."
+    },
+    {
+      "id": "t6",
+      "title_ar": "التطابق والتشابه والتحويلات الهندسية",
+      "title_en": "Congruence, similarity, transformations",
+      "unit": "الرياضيات م2 · وحدة (غير مؤكد)",
+      "weight": 0.13,
+      "count": 39,
+      "item_types": [
+        "mcq"
+      ],
+      "notes": "Reflection, translation, rotation, dilation, scale."
+    },
+    {
+      "id": "t7",
+      "title_ar": "المساحة والحجم",
+      "title_en": "Area and volume",
+      "unit": "الرياضيات م2 · وحدة (غير مؤكد)",
+      "weight": 0.13,
+      "count": 39,
+      "item_types": [
+        "mcq"
+      ],
+      "notes": "Circles, cylinders, cones, composite figures."
+    },
+    {
+      "id": "t8",
+      "title_ar": "الإحصاء والاحتمال",
+      "title_en": "Statistics and probability",
+      "unit": "الرياضيات م2 · وحدة (غير مؤكد)",
+      "weight": 0.12,
+      "count": 36,
+      "item_types": [
+        "mcq"
+      ],
+      "notes": "Scatter plots, compound events, sampling."
+    }
+  ]
+}

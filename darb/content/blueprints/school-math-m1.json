@@ -1,0 +1,137 @@
+{
+  "slug": "school-math-m1",
+  "title_ar": "الرياضيات - الصف الأول المتوسط",
+  "title_en": "Mathematics - Middle Grade 1",
+  "segments": [
+    "middle"
+  ],
+  "exams": [
+    "school"
+  ],
+  "grades": [
+    "m1"
+  ],
+  "subject": "math",
+  "language": "ar",
+  "format": "MCQ, 4 options (أ ب ج د); school-test style, one correct answer; no official per-item time (school exams are untimed per item). Edition: MOE three-term textbooks 1447-1448 AH (2025-27), edition year per secondary sources only (unverified).",
+  "sources": [
+    {
+      "url": "https://www.okaz.com.sa/news/local/2208489",
+      "what": "Press report of the MOE study plan: middle stage 35 periods/week, 10 subjects in grades 1-2 and 11 in grade 3 (plus activity); secondary general track 32 periods/week.",
+      "date": "2025-08-12"
+    },
+    {
+      "url": "https://mhtwyat.com/?p=246746",
+      "what": "UNOFFICIAL summary of the 1448 middle-school plan (three-term system): subjects Quran, Islamic studies, Arabic, social studies, math, science, English, digital skills, art, PE/self-defense, critical thinking, life & family skills; it cites an MOE 'developed study plans' PDF dated 2026-08-20 that was not itself fetched.",
+      "date": "2026-08-20 (cited MOE PDF)"
+    },
+    {
+      "url": "https://mhtwyat.com/?p=280724",
+      "what": "UNOFFICIAL: grade m1 math term-1 book has 4 units (algebra & functions; integers; linear equations & functions; ratio & proportion). Edition 1447.",
+      "date": "no date"
+    },
+    {
+      "url": "",
+      "what": "unverified: unit/topic list reflects Darb's reading of the Saudi MOE textbooks and the usual scope of the course, not a fetched official table of contents. Re-check against the MOE textbook portal (ien.edu.sa, login-gated; catalogue not reachable by the research tool) before generation.",
+      "date": "no date"
+    }
+  ],
+  "topics": [
+    {
+      "id": "t1",
+      "title_ar": "الجبر والدوال: العبارات والمتغيرات",
+      "title_en": "Algebra: expressions and variables",
+      "unit": "الرياضيات م1 · الوحدة 1",
+      "weight": 0.12,
+      "count": 36,
+      "item_types": [
+        "mcq"
+      ],
+      "notes": "Evaluate/simplify expressions, order of operations, function tables. Easy. (unit title per secondary source)"
+    },
+    {
+      "id": "t2",
+      "title_ar": "الأعداد الصحيحة",
+      "title_en": "Integers",
+      "unit": "الرياضيات م1 · الوحدة 2",
+      "weight": 0.13,
+      "count": 39,
+      "item_types": [
+        "mcq"
+      ],
+      "notes": "Four operations, absolute value, number line, word problems. Easy."
+    },
+    {
+      "id": "t3",
+      "title_ar": "المعادلات الخطية والدوال",
+      "title_en": "Linear equations and functions",
+      "unit": "الرياضيات م1 · الوحدة 3",
+      "weight": 0.15,
+      "count": 45,
+      "item_types": [
+        "mcq"
+      ],
+      "notes": "One- and two-step equations, inequalities, graphing linear functions. Easy-medium."
+    },
+    {
+      "id": "t4",
+      "title_ar": "النسبة والتناسب",
+      "title_en": "Ratio and proportion",
+      "unit": "الرياضيات م1 · الوحدة 4",
+      "weight": 0.13,
+      "count": 39,
+      "item_types": [
+        "mcq"
+      ],
+      "notes": "Rates, unit rate, proportion, percent. Easy-medium."
+    },
+    {
+      "id": "t5",
+      "title_ar": "الكسور والأعداد النسبية",
+      "title_en": "Fractions and rational numbers",
+      "unit": "الرياضيات م1 · الفصل 2 (غير مؤكد)",
+      "weight": 0.12,
+      "count": 36,
+      "item_types": [
+        "mcq"
+      ],
+      "notes": "Operations, comparing, decimals, exponents. Unit placement unverified."
+    },
+    {
+      "id": "t6",
+      "title_ar": "الهندسة: الزوايا والمثلثات والمضلعات",
+      "title_en": "Geometry: angles, triangles, polygons",
+      "unit": "الرياضيات م1 · الفصل 2-3 (غير مؤكد)",
+      "weight": 0.13,
+      "count": 39,
+      "item_types": [
+        "mcq"
+      ],
+      "notes": "Angle relations, triangle sum, classification."
+    },
+    {
+      "id": "t7",
+      "title_ar": "المحيط والمساحة والحجم",
+      "title_en": "Perimeter, area, volume",
+      "unit": "الرياضيات م1 · الفصل 3 (غير مؤكد)",
+      "weight": 0.12,
+      "count": 36,
+      "item_types": [
+        "mcq"
+      ],
+      "notes": "Rectangles, triangles, circles (intro), prisms."
+    },
+    {
+      "id": "t8",
+      "title_ar": "الإحصاء والاحتمال",
+      "title_en": "Statistics and probability",
+      "unit": "الرياضيات م1 · الفصل 3 (غير مؤكد)",
+      "weight": 0.1,
+      "count": 30,
+      "item_types": [
+        "mcq"
+      ],
+      "notes": "Mean/median/mode, graphs, simple probability."
+    }
+  ]
+}

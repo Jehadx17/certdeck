@@ -1,0 +1,120 @@
+{
+  "slug": "school-science-m3",
+  "title_ar": "العلوم - الصف الثالث المتوسط",
+  "title_en": "Science - Middle Grade 3",
+  "segments": [
+    "middle"
+  ],
+  "exams": [
+    "school"
+  ],
+  "grades": [
+    "m3"
+  ],
+  "subject": "science",
+  "language": "ar",
+  "format": "MCQ, 4 options (أ ب ج د); school-test style, one correct answer; no official per-item time (school exams are untimed per item). Edition: MOE three-term textbooks 1447-1448 AH (2025-27), edition year per secondary sources only (unverified).",
+  "sources": [
+    {
+      "url": "https://www.okaz.com.sa/news/local/2208489",
+      "what": "Press report of the MOE study plan: middle stage 35 periods/week, 10 subjects in grades 1-2 and 11 in grade 3 (plus activity); secondary general track 32 periods/week.",
+      "date": "2025-08-12"
+    },
+    {
+      "url": "https://mhtwyat.com/?p=246746",
+      "what": "UNOFFICIAL summary of the 1448 middle-school plan (three-term system): subjects Quran, Islamic studies, Arabic, social studies, math, science, English, digital skills, art, PE/self-defense, critical thinking, life & family skills; it cites an MOE 'developed study plans' PDF dated 2026-08-20 that was not itself fetched.",
+      "date": "2026-08-20 (cited MOE PDF)"
+    },
+    {
+      "url": "",
+      "what": "unverified: unit/topic list reflects Darb's reading of the Saudi MOE textbooks and the usual scope of the course, not a fetched official table of contents. Re-check against the MOE textbook portal (ien.edu.sa, login-gated; catalogue not reachable by the research tool) before generation.",
+      "date": "no date"
+    }
+  ],
+  "topics": [
+    {
+      "id": "t1",
+      "title_ar": "المركبات والمخاليط والمحاليل",
+      "title_en": "Compounds, mixtures, solutions",
+      "unit": "العلوم م3 · الكيمياء",
+      "weight": 0.14,
+      "count": 42,
+      "item_types": [
+        "mcq"
+      ],
+      "notes": "Bonding types, solubility."
+    },
+    {
+      "id": "t2",
+      "title_ar": "الأحماض والقواعد والتفاعلات",
+      "title_en": "Acids, bases and reactions",
+      "unit": "العلوم م3 · الكيمياء",
+      "weight": 0.14,
+      "count": 42,
+      "item_types": [
+        "mcq"
+      ],
+      "notes": "pH scale, neutralisation, rates of reaction."
+    },
+    {
+      "id": "t3",
+      "title_ar": "الكهرباء والمغناطيسية",
+      "title_en": "Electricity and magnetism",
+      "unit": "العلوم م3 · الفيزياء",
+      "weight": 0.18,
+      "count": 54,
+      "item_types": [
+        "mcq"
+      ],
+      "notes": "Circuits, current, magnets, electromagnets."
+    },
+    {
+      "id": "t4",
+      "title_ar": "الضوء والصوت",
+      "title_en": "Light and sound",
+      "unit": "العلوم م3 · الفيزياء",
+      "weight": 0.12,
+      "count": 36,
+      "item_types": [
+        "mcq"
+      ],
+      "notes": "Reflection, refraction, wave properties."
+    },
+    {
+      "id": "t5",
+      "title_ar": "الوراثة والتطور",
+      "title_en": "Genetics and evolution",
+      "unit": "العلوم م3 · الأحياء",
+      "weight": 0.16,
+      "count": 48,
+      "item_types": [
+        "mcq"
+      ],
+      "notes": "DNA, inheritance, adaptation, natural selection."
+    },
+    {
+      "id": "t6",
+      "title_ar": "البيئة والنظم البيئية",
+      "title_en": "Ecology and ecosystems",
+      "unit": "العلوم م3 · الأحياء",
+      "weight": 0.14,
+      "count": 42,
+      "item_types": [
+        "mcq"
+      ],
+      "notes": "Food webs, cycles, human impact."
+    },
+    {
+      "id": "t7",
+      "title_ar": "الكون والفضاء",
+      "title_en": "The universe and space",
+      "unit": "العلوم م3 · علوم الأرض",
+      "weight": 0.12,
+      "count": 36,
+      "item_types": [
+        "mcq"
+      ],
+      "notes": "Stars, galaxies, space exploration."
+    }
+  ]
+}

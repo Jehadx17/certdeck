@@ -1,0 +1,96 @@
+{
+  "slug": "school-digital-m3",
+  "title_ar": "المهارات الرقمية - الصف الثالث المتوسط",
+  "title_en": "Digital Skills - Middle Grade 3",
+  "segments": [
+    "middle"
+  ],
+  "exams": [
+    "school"
+  ],
+  "grades": [
+    "m3"
+  ],
+  "subject": "digital",
+  "language": "ar",
+  "format": "MCQ, 4 options (أ ب ج د); school-test style, one correct answer; no official per-item time (school exams are untimed per item). Edition: MOE three-term textbooks 1447-1448 AH (2025-27), edition year per secondary sources only (unverified).",
+  "sources": [
+    {
+      "url": "https://www.okaz.com.sa/news/local/2208489",
+      "what": "Press report of the MOE study plan: middle stage 35 periods/week, 10 subjects in grades 1-2 and 11 in grade 3 (plus activity); secondary general track 32 periods/week.",
+      "date": "2025-08-12"
+    },
+    {
+      "url": "https://mhtwyat.com/?p=246746",
+      "what": "UNOFFICIAL summary of the 1448 middle-school plan (three-term system): subjects Quran, Islamic studies, Arabic, social studies, math, science, English, digital skills, art, PE/self-defense, critical thinking, life & family skills; it cites an MOE 'developed study plans' PDF dated 2026-08-20 that was not itself fetched.",
+      "date": "2026-08-20 (cited MOE PDF)"
+    },
+    {
+      "url": "",
+      "what": "unverified: unit/topic list reflects Darb's reading of the Saudi MOE textbooks and the usual scope of the course, not a fetched official table of contents. Re-check against the MOE textbook portal (ien.edu.sa, login-gated; catalogue not reachable by the research tool) before generation.",
+      "date": "no date"
+    }
+  ],
+  "topics": [
+    {
+      "id": "t1",
+      "title_ar": "الحاسب ومكوناته",
+      "title_en": "Computer hardware and software",
+      "unit": "المهارات الرقمية م3 · الحاسب",
+      "weight": 0.15,
+      "count": 38,
+      "item_types": [
+        "mcq"
+      ],
+      "notes": "Parts, OS, storage."
+    },
+    {
+      "id": "t2",
+      "title_ar": "الأمن الرقمي والمواطنة الرقمية",
+      "title_en": "Digital safety and citizenship",
+      "unit": "المهارات الرقمية م3 · الأمن",
+      "weight": 0.2,
+      "count": 50,
+      "item_types": [
+        "mcq"
+      ],
+      "notes": "Passwords, privacy, phishing, ethics."
+    },
+    {
+      "id": "t3",
+      "title_ar": "البرمجة",
+      "title_en": "Programming basics",
+      "unit": "المهارات الرقمية م3 · البرمجة",
+      "weight": 0.25,
+      "count": 62,
+      "item_types": [
+        "mcq"
+      ],
+      "notes": "Sequences, loops, conditions, blocks and simple Python reading."
+    },
+    {
+      "id": "t4",
+      "title_ar": "معالجة النصوص والعروض والجداول",
+      "title_en": "Documents, slides, spreadsheets",
+      "unit": "المهارات الرقمية م3 · التطبيقات",
+      "weight": 0.25,
+      "count": 62,
+      "item_types": [
+        "mcq"
+      ],
+      "notes": "Formatting, formulas basics."
+    },
+    {
+      "id": "t5",
+      "title_ar": "البيانات والذكاء الاصطناعي",
+      "title_en": "Data and AI basics",
+      "unit": "المهارات الرقمية م3 · البيانات",
+      "weight": 0.15,
+      "count": 38,
+      "item_types": [
+        "mcq"
+      ],
+      "notes": "Data types, simple AI concepts."
+    }
+  ]
+}

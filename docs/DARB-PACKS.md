@@ -52,4 +52,12 @@ Filled by `manage.py packs status` after phase 4 runs (needs the Anthropic key).
 | (none built yet) | | | | | | | |
 
 Blueprints ready: `qudurat-verbal` (5 topics, 1,200 items) and `qudurat-quant` (9 topics, 1,200 items), both from
-ETEC's official GAT guide. تحصيلي and the MOE school subjects are not written yet (question 6 to you).
+ETEC's official GAT guide.
+
+Since 2026-10-16: 46 more (48 packs, 18,402 planned items; table in `darb/content/blueprints/README.md`, gaps in
+`TODO.md`): تحصيلي math, physics, chemistry and biology (700 each); middle school m1-m3 × 7 subjects; high school h1 × 11
+subjects and h2/h3 general track × 5. Their topic lists are **unverified**: ETEC's تحصيلي specification wasn't
+reachable online and the MOE textbook portal (ien.edu.sa) needs a login, so they follow secondary sources and the
+usual course scope. 👤 If you have the official تحصيلي guide or an ien.edu.sa login, I swap them for the real tables of
+contents. Packs generated from an unverified blueprint are audited like any other (≤ 2% error) and say "unverified
+outline" in the per-pack report.

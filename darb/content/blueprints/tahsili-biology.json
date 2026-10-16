@@ -1,0 +1,192 @@
+{
+  "slug": "tahsili-biology",
+  "title_ar": "التحصيلي - الأحياء وعلم البيئة",
+  "title_en": "Tahsili - Biology and Environmental Science",
+  "segments": [
+    "high"
+  ],
+  "exams": [
+    "tahsili"
+  ],
+  "grades": [
+    "general",
+    "cs_eng",
+    "health"
+  ],
+  "subject": "biology",
+  "language": "ar",
+  "format": "MCQ, 4 options (أ ب ج د). Scientific-track Tahsili is reported (unofficial) as 110 items in 5 sections of 22 across 4 subjects, 2 h 05 min total (ETEC page snippet, now 404), i.e. roughly 68 s per item (derived). Per-subject share of the test: unverified (assumed ~25% each). Covers all three secondary years; reported 20/30/50 grade split is unverified. No calculator assumed.",
+  "sources": [
+    {
+      "url": "https://etec.gov.sa/ar/centers/qiyas",
+      "what": "ETEC Qiyas centre page (fetched 2026-10-16). Fetched text carried no Tahsili specification (no item count, subject weights or guide link), so no official Tahsili table could be verified.",
+      "date": "page updated 2026-09-20"
+    },
+    {
+      "url": "https://etec.gov.sa/en/productsandservices/Qiyas/Education/ScientificSpecialists",
+      "what": "ETEC page 'Academic Achievement Test for Scientific Specializations': search snippet only says the test measures achievement in the science section of general secondary, in Arabic, duration 2 h 05 min. The URL returned 404 when fetched, so unverified.",
+      "date": "page footer 2025-09-29 (404)"
+    },
+    {
+      "url": "https://www.mualimi.app/ar/blog/tahsili-saat-exam-guide",
+      "what": "UNOFFICIAL secondary source: scientific tracks 110 MCQ in 5 sections of 22, 2 h 05 min, Arabic or English; subjects biology & environmental science, chemistry, physics, mathematics; grades covered roughly equally. Unverified.",
+      "date": "no date"
+    },
+    {
+      "url": "https://mqalaty.net/%D9%83%D9%85-%D8%B9%D8%AF%D8%AF-%D8%A7%D8%B3%D8%A6%D9%84%D8%A9-%D8%A7%D9%84%D8%AA%D8%AD%D8%B5%D9%8A%D9%84%D9%8A/",
+      "what": "UNOFFICIAL secondary source: claims content split 20% first / 30% second / 50% third secondary year. Unverified; used only as a soft guide for topic weights.",
+      "date": "cites ETEC dated 2025-07-01"
+    },
+    {
+      "url": "",
+      "what": "unverified: unit/topic list reflects Darb's reading of the Saudi MOE textbooks and the usual scope of the course, not a fetched official table of contents. Re-check against the MOE textbook portal (ien.edu.sa, login-gated; catalogue not reachable by the research tool) before generation. Subject weights per track and the per-topic weights below are Darb's allocation: roughly proportional to secondary-year coverage (20/30/50, unverified) and to topic breadth.",
+      "date": "no date"
+    }
+  ],
+  "topics": [
+    {
+      "id": "t1",
+      "title_ar": "الخلية وتركيبها ووظائفها",
+      "title_en": "The cell",
+      "unit": "التحصيلي · الخلية",
+      "weight": 0.1,
+      "count": 70,
+      "item_types": [
+        "mcq"
+      ],
+      "notes": "Organelles, membrane transport, cell cycle, microscopy."
+    },
+    {
+      "id": "t2",
+      "title_ar": "الجزيئات الحيوية",
+      "title_en": "Biomolecules",
+      "unit": "التحصيلي · الخلية",
+      "weight": 0.06,
+      "count": 42,
+      "item_types": [
+        "mcq"
+      ],
+      "notes": "Carbohydrates, lipids, proteins, nucleic acids, enzymes."
+    },
+    {
+      "id": "t3",
+      "title_ar": "البناء الضوئي والتنفس الخلوي",
+      "title_en": "Photosynthesis and respiration",
+      "unit": "التحصيلي · الطاقة",
+      "weight": 0.09,
+      "count": 63,
+      "item_types": [
+        "mcq"
+      ],
+      "notes": "Stages, inputs/outputs, ATP."
+    },
+    {
+      "id": "t4",
+      "title_ar": "الوراثة المندلية",
+      "title_en": "Mendelian genetics",
+      "unit": "التحصيلي · الوراثة",
+      "weight": 0.09,
+      "count": 63,
+      "item_types": [
+        "mcq"
+      ],
+      "notes": "Crosses, Punnett squares, incomplete/co-dominance, pedigrees, sex linkage."
+    },
+    {
+      "id": "t5",
+      "title_ar": "الوراثة الجزيئية والهندسة الوراثية",
+      "title_en": "Molecular genetics and biotechnology",
+      "unit": "التحصيلي · الوراثة",
+      "weight": 0.09,
+      "count": 63,
+      "item_types": [
+        "mcq"
+      ],
+      "notes": "DNA replication, transcription/translation, mutations, PCR, cloning."
+    },
+    {
+      "id": "t6",
+      "title_ar": "التطور والتنوع",
+      "title_en": "Evolution and diversity",
+      "unit": "التحصيلي · التطور",
+      "weight": 0.07,
+      "count": 49,
+      "item_types": [
+        "mcq"
+      ],
+      "notes": "Natural selection, evidence, speciation, classification."
+    },
+    {
+      "id": "t7",
+      "title_ar": "الكائنات الدقيقة والفطريات والطلائعيات",
+      "title_en": "Microbes, fungi and protists",
+      "unit": "التحصيلي · التنوع",
+      "weight": 0.06,
+      "count": 42,
+      "item_types": [
+        "mcq"
+      ],
+      "notes": "Bacteria, viruses, fungi, protists."
+    },
+    {
+      "id": "t8",
+      "title_ar": "النباتات",
+      "title_en": "Plants",
+      "unit": "التحصيلي · التنوع",
+      "weight": 0.08,
+      "count": 56,
+      "item_types": [
+        "mcq"
+      ],
+      "notes": "Structure, transport, reproduction, plant hormones."
+    },
+    {
+      "id": "t9",
+      "title_ar": "الحيوانات (اللافقاريات والفقاريات)",
+      "title_en": "Animal diversity",
+      "unit": "التحصيلي · التنوع",
+      "weight": 0.07,
+      "count": 49,
+      "item_types": [
+        "mcq"
+      ],
+      "notes": "Phyla, body plans, adaptations."
+    },
+    {
+      "id": "t10",
+      "title_ar": "جسم الإنسان: الهضم والدوران والتنفس والإخراج",
+      "title_en": "Human body: digestion, circulation, respiration, excretion",
+      "unit": "التحصيلي · جسم الإنسان",
+      "weight": 0.11,
+      "count": 77,
+      "item_types": [
+        "mcq"
+      ],
+      "notes": "Structure and function, health."
+    },
+    {
+      "id": "t11",
+      "title_ar": "جسم الإنسان: الأعصاب والغدد والمناعة والتكاثر",
+      "title_en": "Human body: nervous, endocrine, immune, reproduction",
+      "unit": "التحصيلي · جسم الإنسان",
+      "weight": 0.08,
+      "count": 56,
+      "item_types": [
+        "mcq"
+      ],
+      "notes": "Neurons, hormones, immunity, reproduction."
+    },
+    {
+      "id": "t12",
+      "title_ar": "علم البيئة",
+      "title_en": "Ecology and environmental science",
+      "unit": "التحصيلي · البيئة",
+      "weight": 0.1,
+      "count": 70,
+      "item_types": [
+        "mcq"
+      ],
+      "notes": "Ecosystems, energy flow, cycles, populations, conservation, human impact."
+    }
+  ]
+}
