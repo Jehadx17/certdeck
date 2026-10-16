@@ -627,3 +627,11 @@ Future<bool> serverBusy() async =>
 
 /// Waiting on the Batch API (background cards or a preparation): results come within the hour, poll gently.
 Future<bool> serverWaiting() async => await hasQueuedJobs() || (await Db.query('prep')).any((p) => p['status'] == 'waiting');
+
+/// 95% Wilson interval for [right] of [n], in percent: an honest "your level now" range from a short practice test.
+(int, int) levelRange(int right, int n) {
+  const z = 1.96;
+  final p = right / n, d = 1 + z * z / n;
+  final mid = (p + z * z / (2 * n)) / d, half = z * sqrt(p * (1 - p) / n + z * z / (4 * n * n)) / d;
+  return (((mid - half) * 100).round().clamp(0, 100), ((mid + half) * 100).round().clamp(0, 100));
+}

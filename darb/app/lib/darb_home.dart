@@ -13,6 +13,7 @@ import 'logic.dart';
 import 'packs.dart';
 import 'settings.dart';
 import 'study.dart';
+import 'weighted.dart';
 import 'widgets.dart';
 
 /// Darb's home, one per segment (docs/GOAL-DARB.md → Product): the exam and the plan, one big "Study now", practice
@@ -144,7 +145,7 @@ class _DarbHomeState extends State<DarbHome> {
             const SizedBox(height: 8),
             if (d.installed.isNotEmpty)
               Row(children: [
-                Expanded(child: OutlinedButton.icon(icon: const Icon(Icons.timer_outlined), label: Text(t('Practice test')),
+                Expanded(child: OutlinedButton.icon(icon: const Icon(Icons.timer_outlined), label: Text((d.predicted ?? 0) == 0 ? t('Placement test') : t('Practice test')),
                     onPressed: () => _practice(context, d.installed))),
                 const SizedBox(width: 8),
                 Expanded(child: OutlinedButton.icon(icon: const Icon(Icons.replay), label: Text(t('My mistakes')),
@@ -162,6 +163,17 @@ class _DarbHomeState extends State<DarbHome> {
                     if (!Billing.premium && !await openPaywall(context)) return;
                     if (context.mounted) Navigator.push(context, MaterialPageRoute(builder: (_) => const CollegeScreen()));
                   },
+                ),
+              ),
+            ],
+            if (seg == 'high') ...[
+              const SizedBox(height: 8),
+              Card(
+                child: ListTile(
+                  leading: const Icon(Icons.calculate_outlined),
+                  title: Text(t('Weighted percentage')),
+                  subtitle: Text(t('Calculate it from your three results')),
+                  onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const WeightedScreen())),
                 ),
               ),
             ],

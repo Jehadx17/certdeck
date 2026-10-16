@@ -20,6 +20,7 @@ services:
     image: darb-db:latest
     restart: unless-stopped
     env_file: .env
+    environment: {PGBACKREST_PG1_USER: "${POSTGRES_USER}"}  # pgBackRest connects as the app's superuser, not "postgres"
     # WAL archiving to R2 (pgBackRest) when ARCHIVE_MODE=on; wal_level=replica + senders for a hot standby.
     command: ["postgres", "-c", "max_connections=200", "-c", "shared_buffers=${PG_SHARED_BUFFERS:-2GB}",
               "-c", "effective_cache_size=${PG_EFFECTIVE_CACHE:-6GB}", "-c", "work_mem=16MB",
@@ -53,6 +54,7 @@ services:
     env_file: .env
     user: postgres
     command: ["backup.sh"]
+    environment: {PGBACKREST_PG1_USER: "${POSTGRES_USER}"}
     volumes: [pgdata:/var/lib/postgresql/data, pgsock:/var/run/postgresql]
     depends_on: {db: {condition: service_healthy}}
     networks: [internal]

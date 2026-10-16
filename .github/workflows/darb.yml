@@ -117,7 +117,7 @@ jobs:
 
   ios:
     # Manual runs, or a pushed commit whose message contains [ios] (dispatch needs the workflow on the default branch).
-    if: (github.event_name == 'workflow_dispatch' && inputs.ios) || contains(github.event.head_commit.message, '[ios]')
+    if: (github.event_name == 'workflow_dispatch' && inputs.ios) || contains(github.event.head_commit.message, '[ios]') || contains(github.event.head_commit.message, '[walkthrough]')
     runs-on: macos-15
     defaults: {run: {working-directory: darb/app, shell: "bash -eo pipefail {0}"}}
     steps:
@@ -137,5 +137,49 @@ jobs:
           sleep 25
           xcrun simctl io "$DEV" screenshot ios-launch.png
           xcrun simctl spawn "$DEV" launchctl list | grep -q sa.darbedu.app && echo "app is running"
+      # The screen walkthrough (integration_test/walkthrough_test.dart): AR/EN x light/dark, every main screen, on the
+      # OLDEST iOS runtime this image has at iPhone SE size, then the newest at the largest iPhone. Fails on overflow.
+      - name: Walkthrough on the oldest iOS runtime (small) and the newest (large)
+        run: |
+          read OLD NEW < <(xcrun simctl list runtimes -j | python3 -c 'import json,sys; r=sorted((tuple(map(int,x["version"].split("."))),x["identifier"]) for x in json.load(sys.stdin)["runtimes"] if x["platform"]=="iOS" and x["isAvailable"]); print(r[0][1], r[-1][1])')
+          echo "oldest $OLD, newest $NEW"
+          SMALL=$(xcrun simctl create small "iPhone SE (3rd generation)" "$OLD")
+          LARGE=$(xcrun simctl create large "iPhone 16 Pro Max" "$NEW" 2>/dev/null || xcrun simctl create large "iPhone 17 Pro Max" "$NEW")
+          for DEV in "$SMALL:se-${OLD##*iOS-}" "$LARGE:max-${NEW##*iOS-}"; do
+            xcrun simctl boot "${DEV%%:*}"
+            flutter drive --driver test_driver/integration_test.dart --target integration_test/walkthrough_test.dart -d "${DEV%%:*}" \
+              --dart-define=DARB_API=http://127.0.0.1:9 --dart-define=DEVICE="ios${DEV#*:}"
+            xcrun simctl shutdown "${DEV%%:*}"
+          done
       - uses: actions/upload-artifact@v4
-        with: {name: ios-simulator, path: darb/app/ios-launch.png}
+        if: always()
+        with: {name: ios-simulator, path: "darb/app/ios-launch.png\ndarb/app/build/walkthrough/"}
+
+  # The same walkthrough on Android 7.0 (API 24, the minimum) at a small phone and a tablet size.
+  walkthrough-android:
+    if: github.event_name == 'workflow_dispatch' || contains(github.event.head_commit.message, '[walkthrough]')
+    runs-on: ubuntu-24.04
+    strategy: {matrix: {profile: [Nexus S, pixel_c]}, fail-fast: false}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with: {distribution: temurin, java-version: "17"}
+      - uses: subosito/flutter-action@v2
+        with: {flutter-version: "3.35.7", channel: stable, cache: true}
+      - name: Enable KVM
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules && sudo udevadm trigger --name-match=kvm
+      - run: flutter pub get
+        working-directory: darb/app
+      - uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 24
+          arch: x86_64
+          profile: ${{ matrix.profile }}
+          disable-animations: true
+          working-directory: darb/app
+          script: flutter drive --driver test_driver/integration_test.dart --target integration_test/walkthrough_test.dart --dart-define=DARB_API=http://127.0.0.1:9 --dart-define=DEVICE=android24-${{ matrix.profile == 'pixel_c' && 'tablet' || 'small' }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with: {name: "walkthrough-android-${{ strategy.job-index }}", path: darb/app/build/walkthrough/}

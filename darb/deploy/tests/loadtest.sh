@@ -5,6 +5,8 @@
 set -euo pipefail
 cd "$(dirname "$0")/.."
 DC="docker compose --project-directory $PWD --env-file $PWD/.env"  # absolute: the script cds into tests/
+env_get() { grep "^$1=" .env | tail -1 | cut -d= -f2- || true; }  # not sourced: placeholders like <account-id> aren't shell
+HTTP_PORT=$(env_get HTTP_PORT); POSTGRES_USER=$(env_get POSTGRES_USER); POSTGRES_DB=$(env_get POSTGRES_DB)
 trap 'echo "== FAILED; logs:"; $DC logs --tail 60 db api slow nginx' ERR
 mkdir -p tests/out
 $DC build
@@ -19,8 +21,8 @@ locust -f locustfile.py --headless -u 100 -r 20 -t 5m --host http://localhost:${
 ( sleep 60; stats spike ) &
 locust -f locustfile.py --headless -u 300 -r 50 -t 2m --host http://localhost:${HTTP_PORT:-80} --csv out/spike --only-summary 2>&1 | tail -25
 cd ..
-$DC exec -T db psql -U "$(grep ^POSTGRES_USER .env | cut -d= -f2)" -d "$(grep ^POSTGRES_DB .env | cut -d= -f2)" -c \
+$DC exec -T db psql -U "$POSTGRES_USER" -d "$POSTGRES_DB" -c \
   "SELECT xact_commit, xact_rollback, round(100.0*blks_hit/nullif(blks_hit+blks_read,0),2) AS cache_hit_pct, deadlocks FROM pg_stat_database WHERE datname=current_database()" > tests/out/postgres.txt
-$DC exec -T db psql -U "$(grep ^POSTGRES_USER .env | cut -d= -f2)" -d "$(grep ^POSTGRES_DB .env | cut -d= -f2)" -c \
+$DC exec -T db psql -U "$POSTGRES_USER" -d "$POSTGRES_DB" -c \
   "SELECT relname, n_live_tup, pg_size_pretty(pg_total_relation_size(relid)) FROM pg_stat_user_tables ORDER BY pg_total_relation_size(relid) DESC LIMIT 6" >> tests/out/postgres.txt
 cat tests/out/*.txt

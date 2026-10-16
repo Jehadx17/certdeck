@@ -4,3 +4,4 @@ RUN apt-get update && apt-get install -y --no-install-recommends pgbackrest pgbo
     && rm -rf /var/lib/apt/lists/* && mkdir -p /var/lib/pgbackrest /var/log/pgbackrest /var/spool/pgbackrest \
     && chown -R postgres:postgres /var/lib/pgbackrest /var/log/pgbackrest /var/spool/pgbackrest
 COPY deploy/pgbouncer.sh deploy/backup.sh /usr/local/bin/
+COPY --chmod=755 deploy/initdb-pgbackrest.sh /docker-entrypoint-initdb.d/90-pgbackrest.sh

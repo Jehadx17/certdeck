@@ -490,6 +490,11 @@ class _StudyScreenState extends State<StudyScreen> {
               textAlign: TextAlign.center),
           if (calibrationLine != null)
             Padding(padding: const EdgeInsets.only(top: 12), child: Text(calibrationLine!, style: TextStyle(fontSize: 14, color: muted(context)), textAlign: TextAlign.center)),
+          if (widget.practice && done >= 10 && App.settings['nerves'] != true)
+            Padding(
+                padding: const EdgeInsets.only(top: 12),
+                child: Text(t('Your level now: about {lo}-{hi}% right on questions like these.',
+                    {'lo': levelRange(right, done).$1, 'hi': levelRange(right, done).$2}), textAlign: TextAlign.center)),
         ],
         if (widget.practice && results.isNotEmpty) ...[
           const SizedBox(height: 24),
