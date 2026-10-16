@@ -92,9 +92,42 @@ def webhook(request):
             Account.objects.filter(pk=account.pk).update(premium_until=until)
         elif event.get("type") == "CANCELLATION" and event.get("cancel_reason") == "CUSTOMER_SUPPORT":  # a refund
             Account.objects.filter(pk=account.pk).update(premium_until=tz_now())
+        if (event.get("product_id") or "").startswith("darb_annual"):
+            schedule_reminder(account, event.get("type"))
     log.info("revenuecat %s %s env=%s accounts=%d", event.get("type"), event.get("product_id"),
              event.get("environment"), len(accounts))
     return 200, {"ok": True}  # unknown users too: RevenueCat must not retry forever
+
+
+REMIND_DAYS = 3
+
+
+def schedule_reminder(account, kind):
+    """Annual plans: an email 3 days before the renewal charge (DARB-COMPETITORS.md #4). Re-scheduled on every
+    purchase or renewal; turning off auto-renew or expiring drops it."""
+    from .jobs import enqueue
+    from .models import Job
+    Job.objects.filter(kind="renewal_reminder", account=account).delete()
+    if kind not in ("INITIAL_PURCHASE", "RENEWAL", "UNCANCELLATION", "PRODUCT_CHANGE"):
+        return
+    until = Account.objects.get(pk=account.pk).premium_until
+    if until and until.year < 9999:
+        enqueue("renewal_reminder", account, delay=max(0, (until - tz_now()).total_seconds() - REMIND_DAYS * 86400))
+
+
+def send_reminder(account):
+    """The job: still premium and renewing within the next 4 days (a refund or an expiry would have dropped it)."""
+    from django.core.mail import send_mail
+    left = account.premium_until and (account.premium_until - tz_now()).total_seconds() / 86400
+    if not (account.active and account.email and left and 0 < left <= REMIND_DAYS + 1):
+        return
+    day = account.premium_until.strftime("%Y-%m-%d")
+    send_mail(
+        "درب: يتجدد اشتراكك السنوي قريبًا / Darb: your annual plan renews soon",
+        f"يتجدد اشتراك درب بلس السنوي يوم {day}. لإلغائه: الإعدادات ← إدارة أو إلغاء في التطبيق، أو من حسابك في المتجر.\n\n"
+        f"Your Darb Plus annual plan renews on {day}. To cancel: Settings → Manage or cancel in the app, or your "
+        f"App Store / Google Play account.\nQuestions: {settings.DARB_SUPPORT_EMAIL}",
+        None, [account.email])
 
 
 def forget(account):

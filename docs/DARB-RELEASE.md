@@ -19,7 +19,7 @@
 | Bundle/application id `sa.darbedu.app` | Claude | ✔ |
 | Play target API 36; Xcode 26 / iOS 26 SDK; minimums Android 7.0 (API 24), iOS 13 | Claude | ✔ (DARB-DEVICES.md) |
 | Release signing: Android upload key (generated on your machine, never in git) + Play App Signing; iOS distribution certificate + profile via the ASC API key | Claude, after your accounts | ⏳ |
-| Release build obfuscated (`--obfuscate --split-debug-info`), symbols kept for Sentry | Claude | ✔ `darb/app/build-release.sh` (refuses to build an upload without the upload key) · ⏳ first signed build |
+| Release build obfuscated (`--obfuscate --split-debug-info`), symbols kept in `build/symbols` (Play Console and Xcode Organizer show app crashes; backend errors go to Sentry) | Claude | ✔ `darb/app/build-release.sh` (refuses to build an upload without the upload key) · ⏳ first signed build |
 | Signed Android App Bundle uploaded to **internal testing**, then closed testing | Claude | ⏳ needs Play Console |
 | iOS archive uploaded to **TestFlight** (CI macOS runner or the Hackintosh on Xcode 26.3) | Claude | ⏳ needs Apple account |
 | iPhone only (no iPad screenshots) | Claude | ✔ |

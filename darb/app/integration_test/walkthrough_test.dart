@@ -17,11 +17,18 @@ import 'package:integration_test/integration_test.dart';
 /// screenshots go to build/walkthrough/. No server: run with --dart-define=DARB_API=http://127.0.0.1:9 (offline).
 void main() {
   final binding = IntegrationTestWidgetsFlutterBinding.ensureInitialized();
-  const device = String.fromEnvironment('DEVICE', defaultValue: 'device');
+  // One build serves every simulator (CI), so the name comes from the device: OS, version, logical screen size.
+  String device(WidgetTester tester) {
+    final s = tester.view.physicalSize / tester.view.devicePixelRatio;
+    final v = RegExp(r'\d+(\.\d+)?').firstMatch(Platform.operatingSystemVersion)?[0] ?? '';
+    return const String.fromEnvironment('DEVICE', defaultValue: '') == ''
+        ? '${Platform.operatingSystem}$v-${s.width.round()}x${s.height.round()}'
+        : const String.fromEnvironment('DEVICE');
+  }
 
   Future<void> shot(WidgetTester tester, String name) async {
     await tester.pumpAndSettle(const Duration(milliseconds: 100), EnginePhase.sendSemanticsUpdate, const Duration(seconds: 20));
-    await binding.takeScreenshot('$device-${App.lang}-${App.settings['theme']}-$name');
+    await binding.takeScreenshot('${device(tester)}-${App.lang}-${App.settings['theme']}-$name');
   }
 
   Future<void> start(WidgetTester tester, String lang, String theme, {bool signedIn = true, String? segment}) async {

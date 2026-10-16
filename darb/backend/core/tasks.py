@@ -51,6 +51,12 @@ def guardian_weekly(account, ref):
     return WEEK
 
 
+@handler("renewal_reminder")
+def renewal_reminder(account, ref):
+    from .billing import send_reminder
+    send_reminder(account)
+
+
 _last = {}
 
 

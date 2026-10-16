@@ -140,16 +140,19 @@ jobs:
       # The screen walkthrough (integration_test/walkthrough_test.dart): AR/EN x light/dark, every main screen, on the
       # OLDEST iOS runtime this image has at iPhone SE size, then the newest at the largest iPhone. Fails on overflow.
       - name: Walkthrough on the oldest iOS runtime (small) and the newest (large)
+        timeout-minutes: 60
         run: |
           read OLD NEW < <(xcrun simctl list runtimes -j | python3 -c 'import json,sys; r=sorted((tuple(map(int,x["version"].split("."))),x["identifier"]) for x in json.load(sys.stdin)["runtimes"] if x["platform"]=="iOS" and x["isAvailable"]); print(r[0][1], r[-1][1])')
           echo "oldest $OLD, newest $NEW"
+          # Built once, installed on each (a drive per device would rebuild for ~8 min each).
+          flutter build ios --simulator --debug -t integration_test/walkthrough_test.dart --dart-define=DARB_API=http://127.0.0.1:9
           SMALL=$(xcrun simctl create small "iPhone SE (3rd generation)" "$OLD")
           LARGE=$(xcrun simctl create large "iPhone 16 Pro Max" "$NEW" 2>/dev/null || xcrun simctl create large "iPhone 17 Pro Max" "$NEW")
-          for DEV in "$SMALL:se-${OLD##*iOS-}" "$LARGE:max-${NEW##*iOS-}"; do
-            xcrun simctl boot "${DEV%%:*}"
-            flutter drive --driver test_driver/integration_test.dart --target integration_test/walkthrough_test.dart -d "${DEV%%:*}" \
-              --dart-define=DARB_API=http://127.0.0.1:9 --dart-define=DEVICE="ios${DEV#*:}"
-            xcrun simctl shutdown "${DEV%%:*}"
+          for DEV in "$SMALL" "$LARGE"; do
+            xcrun simctl boot "$DEV"
+            flutter drive --driver test_driver/integration_test.dart --target integration_test/walkthrough_test.dart -d "$DEV" \
+              --use-application-binary build/ios/iphonesimulator/Runner.app
+            xcrun simctl shutdown "$DEV"
           done
       - uses: actions/upload-artifact@v4
         if: always()
@@ -166,8 +169,9 @@ jobs:
         with: {distribution: temurin, java-version: "17"}
       - uses: subosito/flutter-action@v2
         with: {flutter-version: "3.35.7", channel: stable, cache: true}
-      - name: Enable KVM
+      - name: Free disk (the emulator's 7.2 GB userdata doesn't fit otherwise) and enable KVM
         run: |
+          sudo rm -rf /usr/share/dotnet /opt/ghc /usr/local/share/boost /opt/hostedtoolcache/CodeQL /usr/local/.ghcup && df -h ~
           echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
           sudo udevadm control --reload-rules && sudo udevadm trigger --name-match=kvm
       - run: flutter pub get
@@ -178,9 +182,8 @@ jobs:
           arch: x86_64
           profile: ${{ matrix.profile }}
           disable-animations: true
-          disk-size: 2048M  # the default userdata partition (7.2 GB) doesn't fit on the runner
           working-directory: darb/app
-          script: flutter drive --driver test_driver/integration_test.dart --target integration_test/walkthrough_test.dart --dart-define=DARB_API=http://127.0.0.1:9 --dart-define=DEVICE=android24-${{ matrix.profile == 'pixel_c' && 'tablet' || 'small' }}
+          script: flutter drive --driver test_driver/integration_test.dart --target integration_test/walkthrough_test.dart --dart-define=DARB_API=http://127.0.0.1:9
       - uses: actions/upload-artifact@v4
         if: always()
         with: {name: "walkthrough-android-${{ strategy.job-index }}", path: darb/app/build/walkthrough/}

@@ -75,7 +75,7 @@ services:
   # 110 s stays under Cloudflare's 125 s limit.
   slow:
     <<: *app
-    command: ["gunicorn", "darb.wsgi", "-b", "0.0.0.0:8000", "-w", "2", "--threads", "32", "--timeout", "110",
+    command: ["gunicorn", "darb.wsgi", "-b", "0.0.0.0:8000", "-w", "2", "--threads", "32", "--timeout", "110", "--keep-alive", "75",
               "--access-logfile", "-"]
     volumes: [uploads:/data/uploads]
     depends_on: {migrate: {condition: service_completed_successfully}}

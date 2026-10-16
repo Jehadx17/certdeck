@@ -155,6 +155,28 @@ class AccountTests(TestCase):
         self.assertFalse(self.client.get("/api/me", **auth).json()["premium"])
         self.assertEqual(upload().status_code, 403)
 
+    def test_annual_renewal_reminder_3_days_before(self):
+        from core import jobs, tasks  # noqa: F401 (tasks registers the handlers)
+        from core.models import Job
+        a, _ = make_account()
+
+        def hook(kind, days):
+            event = {"event": {"type": kind, "app_user_id": a.public_id, "product_id": "darb_annual",
+                               "expiration_at_ms": int((tz_now() + timedelta(days=days)).timestamp() * 1000)}}
+            self.client.post("/api/billing/revenuecat", json.dumps(event), content_type="application/json",
+                             HTTP_AUTHORIZATION="Bearer hook-secret")
+
+        hook("INITIAL_PURCHASE", 365)
+        job = Job.objects.get(kind="renewal_reminder", account=a)
+        self.assertAlmostEqual((job.run_at - tz_now()).total_seconds() / 86400, 362, places=2)
+        hook("CANCELLATION", 365)  # auto-renew turned off: no reminder
+        self.assertFalse(Job.objects.filter(kind="renewal_reminder").exists())
+        hook("UNCANCELLATION", 2)  # renews in 2 days: due now
+        self.assertTrue(jobs.run_one())
+        self.assertEqual(len(mail.outbox), 1)
+        self.assertIn("renews on", mail.outbox[0].body)
+        self.assertFalse(Job.objects.filter(kind="renewal_reminder").exists())
+
     @override_settings(DARB_REVENUECAT_API_KEY="sk_test")
     def test_backend_reads_the_entitlement_from_revenuecat(self):
         a, auth = make_account()

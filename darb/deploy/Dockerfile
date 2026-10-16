@@ -14,4 +14,5 @@ RUN DJANGO_SECRET_KEY=build-only python manage.py collectstatic --noinput -v0
 RUN useradd -r -u 10001 darb && mkdir -p /data/uploads && chown darb /data/uploads
 USER darb
 EXPOSE 8000
-CMD ["gunicorn", "darb.wsgi", "-b", "0.0.0.0:8000", "-w", "4", "--threads", "4", "--timeout", "30", "--access-logfile", "-"]
+# keep-alive 75 s > nginx's upstream 60 s: nginx always closes first (else a reused, just-closed socket = 502)
+CMD ["gunicorn", "darb.wsgi", "-b", "0.0.0.0:8000", "-w", "4", "--threads", "4", "--timeout", "30", "--keep-alive", "75", "--access-logfile", "-"]
