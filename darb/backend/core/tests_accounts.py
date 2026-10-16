@@ -104,6 +104,22 @@ class AccountTests(TestCase):
         self.assertTrue(a.guardian_ok_at and a.guardian_weekly)
         self.assertEqual(self.post("/api/sync", {"docs": []}, auth).status_code, 200)
         self.assertEqual(self.client.get("/api/me", **auth).json()["guardian"], "ok")
+        # The weekly summary the guardian asked for: queued a week out, sent with this week's numbers, stoppable.
+        from core import jobs
+        from core.models import Job
+        from core.tasks import guardian_weekly
+        self.assertTrue(Job.objects.filter(kind="guardian_weekly", account=a).exists())
+        now_ms = int(time.time() * 1000)
+        self.post("/api/sync", {"reviews": [{"ts": now_ms - 1000, "card_id": "q:1", "rating": 3, "correct": True},
+                                            {"ts": now_ms - 900, "card_id": "q:2", "rating": 1}]}, auth)
+        mail.outbox.clear()
+        self.assertEqual(guardian_weekly(Account.objects.get(pk=a.pk), ""), 7 * 86400)
+        self.assertEqual(mail.outbox[0].to, ["mom@example.com"])
+        self.assertIn("answered 2 questions, 50% right", mail.outbox[0].body)
+        stop = re.search(r"https://\S+(/weekly-off/\S+)", mail.outbox[0].body).group(1)
+        self.assertEqual(self.client.get(stop.replace("weekly-off/", "weekly-off/x")).status_code, 404)
+        self.client.get(stop)
+        self.assertIsNone(guardian_weekly(Account.objects.get(pk=a.pk), ""))  # off: the job ends
         # The same link withdraws consent later: the account and its data are deleted.
         self.assertContains(self.client.get(f"/consent/{link}"), "withdraw")
         self.client.post(f"/consent/{link}", {"action": "withdraw"})

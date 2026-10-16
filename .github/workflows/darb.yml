@@ -178,6 +178,7 @@ jobs:
           arch: x86_64
           profile: ${{ matrix.profile }}
           disable-animations: true
+          disk-size: 2048M  # the default userdata partition (7.2 GB) doesn't fit on the runner
           working-directory: darb/app
           script: flutter drive --driver test_driver/integration_test.dart --target integration_test/walkthrough_test.dart --dart-define=DARB_API=http://127.0.0.1:9 --dart-define=DEVICE=android24-${{ matrix.profile == 'pixel_c' && 'tablet' || 'small' }}
       - uses: actions/upload-artifact@v4

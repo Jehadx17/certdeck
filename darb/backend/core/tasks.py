@@ -41,6 +41,16 @@ def daily(account, ref):
     reteach.run(account)
 
 
+@handler("guardian_weekly")
+def guardian_weekly(account, ref):
+    """Queued when the guardian asks for it; sends, then runs again a week later until it is switched off."""
+    from .accounts import WEEK, send_weekly
+    if not (account.guardian_weekly and account.guardian_ok_at and account.guardian_email):
+        return None
+    send_weekly(account)
+    return WEEK
+
+
 _last = {}
 
 

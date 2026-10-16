@@ -14,6 +14,7 @@ urlpatterns = [
     path("api/account", accounts.account),
     path("api/account/guardian", accounts.guardian),
     path("consent/<str:token>", accounts.consent_page),
+    path("weekly-off/<str:token>", accounts.weekly_off),
     path("api/billing/revenuecat", accounts.revenuecat_webhook),
     path("api/billing/refresh", accounts.billing_refresh),
     path("api/sync", views.sync),

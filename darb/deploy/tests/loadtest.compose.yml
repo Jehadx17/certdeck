@@ -1,0 +1,5 @@
+# Load-test only (tests/loadtest.sh): nginx.conf plus trusting the Docker network's CF-Connecting-IP.
+services:
+  nginx:
+    volumes: ["./tests/out/nginx-loadtest.conf:/etc/nginx/nginx.conf:ro", "./darb-locations.conf:/etc/nginx/darb-locations.conf:ro",
+              "${TLS_DIR:-./tls}:/etc/nginx/tls:ro"]

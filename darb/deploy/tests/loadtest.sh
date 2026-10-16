@@ -4,11 +4,14 @@
 # Stage 2: 300 students for 2 min (launch-day spike). Prints the report; artifacts in tests/out/.
 set -euo pipefail
 cd "$(dirname "$0")/.."
-DC="docker compose --project-directory $PWD --env-file $PWD/.env"  # absolute: the script cds into tests/
+# Absolute paths: the script cds into tests/. The override makes nginx trust the test's CF-Connecting-IP (each simulated
+# student is its own IP, as behind Cloudflare), so the per-IP limits still apply but per student, not to the one CI IP.
+DC="docker compose --project-directory $PWD --env-file $PWD/.env -f $PWD/docker-compose.yml -f $PWD/tests/loadtest.compose.yml"
 env_get() { grep "^$1=" .env | tail -1 | cut -d= -f2- || true; }  # not sourced: placeholders like <account-id> aren't shell
 HTTP_PORT=$(env_get HTTP_PORT); POSTGRES_USER=$(env_get POSTGRES_USER); POSTGRES_DB=$(env_get POSTGRES_DB)
 trap 'echo "== FAILED; logs:"; $DC logs --tail 60 db api slow nginx' ERR
 mkdir -p tests/out
+sed 's#real_ip_header#set_real_ip_from 172.16.0.0/12; real_ip_header#' nginx.conf > tests/out/nginx-loadtest.conf
 $DC build
 $DC up -d --scale api=2
 for i in $(seq 1 60); do curl -fsS localhost:${HTTP_PORT:-80}/api/health >/dev/null 2>&1 && break; sleep 2; done

@@ -19,7 +19,7 @@
 | Bundle/application id `sa.darbedu.app` | Claude | ✔ |
 | Play target API 36; Xcode 26 / iOS 26 SDK; minimums Android 7.0 (API 24), iOS 13 | Claude | ✔ (DARB-DEVICES.md) |
 | Release signing: Android upload key (generated on your machine, never in git) + Play App Signing; iOS distribution certificate + profile via the ASC API key | Claude, after your accounts | ⏳ |
-| Release build obfuscated (`--obfuscate --split-debug-info`), symbols kept for Sentry | Claude | ⏳ (at the signed build) |
+| Release build obfuscated (`--obfuscate --split-debug-info`), symbols kept for Sentry | Claude | ✔ `darb/app/build-release.sh` (refuses to build an upload without the upload key) · ⏳ first signed build |
 | Signed Android App Bundle uploaded to **internal testing**, then closed testing | Claude | ⏳ needs Play Console |
 | iOS archive uploaded to **TestFlight** (CI macOS runner or the Hackintosh on Xcode 26.3) | Claude | ⏳ needs Apple account |
 | iPhone only (no iPad screenshots) | Claude | ✔ |
@@ -52,7 +52,7 @@
 | RevenueCat sandbox purchases on both platforms; a lapsed subscription loses access | Claude | ✔ backend tested · ⏳ sandbox run |
 | AI: Haiku only, < 100k tokens, per-user cap, eval passes per feature | Claude | ✔ built · ⏳ eval run (key) |
 | Packs: قدرات, تحصيلي, school subjects built, audited (≤ 2% error) or listed as blocked | Claude | ⏳ key + blueprints (question 6) |
-| Light/dark, Arabic RTL, minimal settings, onboarding: small + large screens, old Android (7.0) | Claude | ✔ Android 7.0 walkthrough · ⏳ old iOS simulator walkthrough |
+| Light/dark, Arabic RTL, minimal settings, onboarding: small + large screens, old Android (7.0) | Claude | ✔ Android 7.0 walkthrough by hand · ⏳ automated walkthrough in CI (`[walkthrough]`: oldest iOS runtime at SE size, newest at Pro Max, API 24 phone + tablet) |
 | Load test at the 100k-student profile; restore test | Claude | ⏳ CI runs (DARB-LOADTEST.md, DARB-RESTORE.md), then on the VPS |
 | Monitoring: Sentry errors, uptime, AI spend alert | Claude | ✔ built · 👤 accounts |
 

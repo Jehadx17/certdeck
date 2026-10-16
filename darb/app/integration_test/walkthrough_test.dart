@@ -41,9 +41,10 @@ void main() {
   }
 
   Future<void> open(WidgetTester tester, Widget screen, String name) async {
-    Navigator.of(tester.element(find.byType(Shell))).push(MaterialPageRoute(builder: (_) => screen));
+    final nav = Navigator.of(tester.element(find.byType(Shell))); // before the push: Shell is offstage after it
+    nav.push(MaterialPageRoute(builder: (_) => screen));
     await shot(tester, name);
-    Navigator.of(tester.element(find.byType(Shell))).pop();
+    nav.pop();
     await tester.pumpAndSettle();
   }
 

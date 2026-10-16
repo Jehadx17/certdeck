@@ -7,6 +7,7 @@ import secrets
 
 from django.conf import settings
 from django.core.exceptions import ValidationError
+from django.core import signing
 from django.core.mail import send_mail
 from django.core.validators import validate_email
 from django.http import HttpResponse, JsonResponse
@@ -16,7 +17,7 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 
-from . import billing, ingest, limits, signin
+from . import billing, ingest, jobs, limits, signin
 from .auth import ApiError
 from .models import Account, Device
 
@@ -148,6 +149,8 @@ def consent_page(request, token):
             Account.objects.filter(pk=a.pk).update(guardian_ok_at=tz_now(),
                                                    guardian_weekly=request.POST.get("weekly") == "on")
             log.info("guardian confirmed for %s", a.public_id)
+            if request.POST.get("weekly") == "on":
+                jobs.enqueue("guardian_weekly", a, delay=WEEK)
             return _page(f"<h2>شكرًا، تمت الموافقة.</h2><p>يمكن لـ {who} الآن استخدام درب.</p>"
                          f"<p class=en>Thank you. {who} can now use Darb. Keep this email: the same link withdraws "
                          "consent at any time.</p>")
@@ -190,3 +193,44 @@ def billing_refresh(request):
     """The app just bought or restored: re-read the entitlement from RevenueCat now instead of waiting for the webhook."""
     billing.refresh(request.account)
     return Response(account_json(request.account))
+
+
+# ---------- the guardian's weekly summary (asked for on the consent page) ----------
+
+WEEK = 7 * 86400
+
+
+def weekly_stats(a, days=7):
+    """Days studied (Riyadh dates), questions answered and how many were right in the last [days] days."""
+    from django.db import connection
+    with connection.cursor() as c:
+        c.execute("""SELECT count(DISTINCT (to_timestamp(ts / 1000.0) AT TIME ZONE 'Asia/Riyadh')::date), count(*),
+                            count(*) FILTER (WHERE flags & 1 = 1)
+                     FROM core_review WHERE account_id = %s AND ts >= (extract(epoch FROM now()) - %s) * 1000""",
+                  [a.pk, days * 86400])
+        return c.fetchone()
+
+
+def send_weekly(a):
+    studied, answered, right = weekly_stats(a)
+    pct = round(100 * right / answered) if answered else 0
+    who = a.name or a.email
+    stop = f"https://{settings.DARB_DOMAIN}/weekly-off/{signing.dumps(a.public_id, salt='weekly-off')}"
+    send_mail(
+        f"درب: ملخص الأسبوع لـ {who} / Darb: {who}'s week",
+        f"ذاكر {who} في {studied} من آخر ٧ أيام، وأجاب عن {answered} سؤالًا، صحيح منها {pct}٪.\n"
+        f"لإيقاف هذه الرسالة: {stop}\n\n"
+        f"{who} studied on {studied} of the last 7 days and answered {answered} questions, {pct}% right.\n"
+        f"To stop these emails: {stop}\nQuestions: {settings.DARB_SUPPORT_EMAIL}",
+        None, [a.guardian_email])
+
+
+@csrf_exempt
+def weekly_off(request, token):
+    """GET /weekly-off/<signed id>: one click stops the weekly summary (the link is signed, never guessable)."""
+    try:
+        public_id = signing.loads(token, salt="weekly-off")
+    except signing.BadSignature:
+        return _page("<h2>الرابط غير صالح.</h2><p class=en>This link is not valid.</p>", 404)
+    Account.objects.filter(public_id=public_id).update(guardian_weekly=False)
+    return _page("<h2>تم إيقاف الملخص الأسبوعي.</h2><p class=en>The weekly summary is off.</p>")

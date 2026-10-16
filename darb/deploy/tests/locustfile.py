@@ -18,8 +18,10 @@ class Student(HttpUser):
     wait_time = constant_throughput(1)
 
     def on_start(self):
-        self.token = TOKENS[next(_next) % len(TOKENS)]
-        self.h = {"Authorization": f"Bearer {self.token}"}
+        n = next(_next)
+        self.token = TOKENS[n % len(TOKENS)]
+        # One IP per student, as Cloudflare reports it (nginx trusts it only in the load test's override).
+        self.h = {"Authorization": f"Bearer {self.token}", "CF-Connecting-IP": f"10.{n >> 16 & 255}.{n >> 8 & 255}.{n & 255}"}
         self.cursor = self.rcursor = 0
 
     @task(70)
