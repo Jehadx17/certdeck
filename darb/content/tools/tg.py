@@ -13,7 +13,7 @@ from pathlib import Path
 
 from telethon import TelegramClient
 
-HOME = Path(__file__).resolve().parent
+HOME = Path.home() / ".config/darb-tg"  # api keys + session: never next to the repo copy of this script
 OUT = Path("/home/jehad/Documents/Projects/learning/darb/content/sources/qudurat/mezla")
 MIN_FREE = 1.0e9  # stop before the disk fills (laptop disk is nearly full)
 SERVER = os.environ.get("TG_SERVER")  # e.g. root@169.58.7.222:/opt/darb/sources/mezla
