@@ -46,7 +46,7 @@ DARB_APPLE_TEAM_ID = env("DARB_APPLE_TEAM_ID", "")
 DARB_APPLE_KEY_ID = env("DARB_APPLE_KEY_ID", "")
 DARB_APPLE_KEY = Path(env("DARB_APPLE_KEY_FILE")).read_text() if env("DARB_APPLE_KEY_FILE") else ""
 DARB_MIN_AGE = 12
-DARB_GUARDIAN_CONSENT = _flag("DARB_GUARDIAN_CONSENT", "true")  # under-18s need a guardian's confirmation
+DARB_GUARDIAN_CONSENT = _flag("DARB_GUARDIAN_CONSENT", "false")  # on: under-18s need a guardian's email confirmation (off: owner, 2026-10-16)
 
 # Billing: RevenueCat decides nothing by itself; its webhook and REST API feed account.premium_until.
 DARB_REVENUECAT_WEBHOOK_AUTH = env("DARB_REVENUECAT_WEBHOOK_AUTH", "")

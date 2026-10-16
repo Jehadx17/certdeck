@@ -23,6 +23,7 @@
 | Signed Android App Bundle uploaded to **internal testing**, then closed testing | Claude | ⏳ needs Play Console |
 | iOS archive uploaded to **TestFlight** (CI macOS runner or the Hackintosh on Xcode 26.3) | Claude | ⏳ needs Apple account |
 | iPhone only (no iPad screenshots) | Claude | ✔ |
+| App icon (iOS set, Android legacy + adaptive), Play 512 icon, feature graphics AR/EN: the sign-in mark (Material `route_rounded`, Apache 2.0) + "درب" in Tajawal (SIL OFL) on the app teal, `darb/store/make-art.py` → `darb/store/out/` | Claude | ✔ placeholder · 👤 replace with a designed logo if you want one (rerun the script with it) |
 
 ## Store listing (draft: DARB-STORE-LISTING.md)
 | Item | Owner | Status |
@@ -32,8 +33,8 @@
 | Category (Education); contact email; privacy policy URL; web deletion URL | Claude drafted · 👤 publish the pages | ⏳ |
 | Apple age rating **9+** (Kids Category: Not Applicable); Google target audience incl. 9-12, Families policy declarations; IARC questionnaire | 👤 submit the answers drafted in DARB-STORE-LISTING.md | |
 | Google Data safety form + Apple App Privacy labels | 👤 submit the drafted answers | |
-| Subscription products `darb_weekly` / `darb_monthly` / `darb_annual` (SAR 19 / 29 / 199), group "Darb Plus", intro offer | Claude creates them via the APIs once keys exist · 👤 confirm prices (Apple price points, 3-month plan question) | ⏳ |
-| App Review notes + demo account (adult, so the reviewer skips the guardian step) | Claude drafted · 👤 create the demo Google/Apple account | ⏳ |
+| Subscription products `darb_weekly` / `darb_monthly` / `darb_annual` (SAR 19 / 29 / 199), group "Darb Plus"; no intro offer or free trial (owner decision 2026-10-16) | Claude creates them via the APIs once keys exist · 👤 confirm prices (Apple price points; nearest point if SAR 19 / 29 / 199 is missing; no 3-month plan, decided) | ⏳ |
+| App Review notes + demo account (adult; the age gate is the only minors flow) | Claude drafted · 👤 create the demo Google/Apple account | ⏳ |
 | AI disclosure: in-app consent before the first AI use + AI labels + reporting (built); listing and privacy policy mention AI | Claude | ✔ app · drafted listing |
 
 ## Legal and compliance (drafts in `darb/legal/`, DARB-PDPL.md)
@@ -42,18 +43,19 @@
 | Privacy policy, terms, support, deletion, AI-and-minors pages (Arabic + English) | Claude drafted · 👤 lawyer review | ⏳ |
 | Pages live at `darbedu.sa/privacy`, `/terms`, `/support`, `/delete-account`, `/ai-and-minors` (+ `/ar/`) | Claude (served by nginx) · 👤 approve the text | ⏳ |
 | SDAIA SCCs with processors; transfer risk assessment; DPIA (minors); registration decision; DPO decision | 👤 + lawyer | |
-| Guardian consent method confirmed by the lawyer | 👤 | |
+| Lawyer confirms no guardian consent is needed (owner decision 2026-10-16), or the switch (`DARB_GUARDIAN_CONSENT`) goes back on | 👤 | |
 | Anthropic's child-safety prompt requested (if they provide one) | 👤 | |
 
 ## Product checks (exit checks per phase: DARB-PHASES.md)
 | Item | Owner | Status |
 |---|---|---|
-| Google + Apple sign-in, age gate, guardian consent, account deletion (in app + web) | Claude | ✔ built and tested · ⏳ sandbox run on devices |
+| Google + Apple sign-in, age gate (guardian consent switch off by default), account deletion (in app + web) | Claude | ✔ built and tested · ⏳ sandbox run on devices |
 | RevenueCat sandbox purchases on both platforms; a lapsed subscription loses access | Claude | ✔ backend tested · ⏳ sandbox run |
 | AI: Haiku only, < 100k tokens, per-user cap, eval passes per feature | Claude | ✔ built · ⏳ eval run (key) |
 | Packs: قدرات, تحصيلي, school subjects built, audited (≤ 2% error) or listed as blocked | Claude | ⏳ key + blueprints (question 6) |
-| Light/dark, Arabic RTL, minimal settings, onboarding: small + large screens, old Android (7.0) | Claude | ✔ CI walkthrough passed (run 38956484671): iOS 18.5 SE, iOS 26.2 Pro Max, Android 7.0 phone + tablet, AR/EN × light/dark · ⏳ iOS 16.4 run |
+| Light/dark, Arabic RTL, minimal settings, onboarding: small + large screens, old Android (7.0), old iOS (16.4) | Claude | ✔ CI walkthrough passed (runs 38956484671, 38959852858): iOS 16.4 + 18.5 SE, iOS 26.2 Pro Max, Android 7.0 phone + tablet, AR/EN × light/dark |
 | Load test at the 100k-student profile; restore test | Claude | ✔ CI runs passed (DARB-LOADTEST.md, DARB-RESTORE.md) · ⏳ repeat on the VPS + R2 |
+| Devices failing Play Integrity / App Attest get free features only, no Darb Plus content (decided 2026-10-16) | Claude | ⏳ |
 | Monitoring: Sentry errors, uptime, AI spend alert | Claude | ✔ built · 👤 accounts |
 
 ## Submission (👤)

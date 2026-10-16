@@ -145,7 +145,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
                   title: Text(_planName(p.packageType), style: const TextStyle(fontWeight: FontWeight.bold)),
                   subtitle: p.packageType == PackageType.annual
                       ? Text(t('Best value: {price} a month', {'price': p.storeProduct.pricePerMonthString ?? ''}))
-                      : (p.storeProduct.introductoryPrice?.price == 0 ? Text(t('Free trial first')) : null),
+                      : null,
                   trailing: Text(p.storeProduct.priceString, style: const TextStyle(fontSize: 16)),
                   onTap: () => setState(() => chosen = p),
                 ),
@@ -154,7 +154,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
             FilledButton(
               style: FilledButton.styleFrom(minimumSize: const Size.fromHeight(52)),
               onPressed: chosen == null ? null : () => _run(() => Billing.buy(chosen!)),
-              child: Text(chosen?.storeProduct.introductoryPrice?.price == 0 ? t('Start the free trial') : t('Subscribe')),
+              child: Text(t('Subscribe')),
             ),
             TextButton(onPressed: () => _run(Billing.restore), child: Text(t('Restore purchases'))),
             Text(

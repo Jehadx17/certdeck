@@ -27,7 +27,7 @@ log = logging.getLogger(__name__)
 def account_json(a):
     return {"id": a.public_id, "name": a.name, "email": a.email, "birth_year": a.birth_year,
             "premium": billing.is_premium(a), "premium_until": a.premium_until.isoformat() if a.premium_until else None,
-            "guardian": ("pending" if signin.needs_guardian(a) else "ok" if signin.is_minor(a) else "not_needed"),
+            "guardian": ("pending" if signin.needs_guardian(a) else "ok" if signin.is_minor(a) and settings.DARB_GUARDIAN_CONSENT else "not_needed"),
             "guardian_email": a.guardian_email}
 
 

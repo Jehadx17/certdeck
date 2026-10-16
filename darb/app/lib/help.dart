@@ -14,7 +14,6 @@ const faq = [
   ('Why does AI help stop sometimes?', 'Each account has a monthly amount of AI help. It comes back at the start of next month. Studying always works.'),
   ('How do I cancel my subscription?', 'In Settings → Subscription → Manage or cancel. It opens the App Store or Google Play page, where cancelling takes effect at the end of the paid period.'),
   ('Can I get a refund?', 'Payments go through the App Store or Google Play, so refunds follow their rules. Request one from them; we are happy to help by email.'),
-  ('Why does my guardian need to agree?', 'Saudi data protection law requires a parent or guardian to agree for students under 18. They confirm once by email.'),
   ('How do I delete my account?', 'Settings → Account → Delete my account. Everything is deleted from our servers and this phone.'),
   ('Are these the real exam questions?', 'No. Darb\'s questions are original practice questions in the official format and topics, checked carefully. Darb is not affiliated with Qiyas (ETEC) or the Ministry of Education.'),
 ];

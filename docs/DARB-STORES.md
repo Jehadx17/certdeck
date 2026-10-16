@@ -53,6 +53,7 @@ Google's 12-tester/14-day closed test and puts the company, not you, on the stor
 - Intro offers: Apple free trial 3 days-1 year, one intro offer per subscription group; subscriptions must last 7+ days
   (3.1.2(a)) ([intro offers](https://developer.apple.com/help/app-store-connect/manage-subscriptions/set-up-introductory-offers-for-auto-renewable-subscriptions/)).
   Google free trial 3 days-3 years ([12154973](https://support.google.com/googleplay/android-developer/answer/12154973)).
+  Darb uses none (owner decision 2026-10-16): the free plan is the trial.
 
 ## Disclosures
 - Google Data safety form: required on every track, even closed testing ([10787469](https://support.google.com/googleplay/android-developer/answer/10787469)).

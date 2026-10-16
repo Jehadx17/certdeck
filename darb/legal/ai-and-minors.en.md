@@ -24,13 +24,10 @@ let minors use Claude to put specific safeguards in place and to describe them p
 - **Limits:** the birth year is declared by the student, and we do not check identity documents. We ask only for the year,
   to keep the data we hold to the minimum the law requires. [LAWYER: confirm this is adequate]
 
-## 3. Guardian consent
-- A student under 18 must give a parent's or guardian's email. The guardian receives a link, reads a plain description
-  of Darb, including that AI is used and what is sent to it, and confirms or declines.
-- **Until the guardian confirms, no AI feature runs**, nothing is synced and no purchase is offered. The student can
-  only study the free sample on the phone.
-- The guardian can withdraw consent at any time from the same link. That deletes the account and its data.
-- A guardian who declines also causes the account to be deleted.
+## 3. Guardians
+- Darb does not ask a student's guardian for consent or collect a guardian's email.
+- A guardian can write to support@darbedu.sa to see, correct or delete their child's data.
+- The student can delete the account at any time in the app (Settings → Account → Delete my account).
 
 ## 4. Content filtering and safety instructions
 - **Every** AI request starts with a fixed safety instruction. It tells the model:
@@ -73,7 +70,7 @@ anything else outside the app. Darb is not affiliated with the Education and Tra
 Ministry of Education.
 
 ## 8. Privacy
-- We follow Saudi Arabia's Personal Data Protection Law (PDPL), including guardian consent for under-18s.
+- We follow Saudi Arabia's Personal Data Protection Law (PDPL).
 - Anthropic receives only the study text a feature needs. It does not use it to train models, and deletes it within 30
   days unless it is needed to investigate misuse or the law requires otherwise.
 - Darb has no ads and no tracking, and never sells data.

@@ -24,15 +24,12 @@ Email **support@darbedu.sa** from the email address of your Darb account, with t
 - If you write from a different address, we will ask you to confirm the request from your account email before we
   delete anything.
 
-**Guardians** of students under 18 can use the link in the consent email ("Withdraw consent and delete"), or email us from
-the address they confirmed with.
+**Guardians** of students under 18 can email us at the same address to ask for their child's account to be deleted.
 
 For email requests, we reply when the deletion is done.
 
 ## What is deleted
 - Your account: name, email, Google or Apple account identifier, birth year
-- Your guardian's email and the consent record [LAWYER: unless a minimal consent record must be kept, see the privacy
-  policy, section 10]
 - All your study data: settings, sessions, review history, your cards, saved AI explanations and feedback
 - Your uploaded PDFs and photos, and everything made from them
 - Sign-in access on all your phones. We also revoke Darb's Sign in with Apple access, and delete your customer record

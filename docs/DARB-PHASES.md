@@ -87,7 +87,7 @@ intermediates, both mine. Current-Android checks now run on the CI's Linux emula
 - **Age gate:** a new account gives its birth year only (minimum data). Under 12 is refused. Under 18 (Saudi majority,
   counted conservatively) needs a **guardian's email confirmation** before anything syncs or reaches AI. The guardian's
   consent page confirms; the same link later withdraws consent, which deletes the account. Opt-in weekly summary.
-  DARB_GUARDIAN_CONSENT switches it off.
+  DARB_GUARDIAN_CONSENT switches it off; off by default since 2026-10-16 (owner decision, DARB-NEEDS-ME.md answers).
 - **Account deletion:** in the app (Settings → Delete my account), with the store-billing warning Apple requires.
   The server deletes everything (devices, docs, reviews, jobs, uploads), revokes the Apple refresh token, and deletes
   the RevenueCat subscriber.
@@ -174,19 +174,20 @@ question 6. The per-pack error-rate report fills in when the pipeline runs.
 
 **Exit check met:** the walkthrough (`integration_test/walkthrough_test.dart`) covers every main screen and every
 segment in Arabic and English, light and dark. It fails on any overflow or exception. It passed in CI run
-[38956484671](https://github.com/Jehadx17/certdeck/actions/runs/38956484671), 40 screens on each of 4 devices:
+[38956484671](https://github.com/Jehadx17/certdeck/actions/runs/38956484671), 40 screens on each of 4 devices, and
+again in [38959852858](https://github.com/Jehadx17/certdeck/actions/runs/38959852858) with the SE on iOS 16.4:
 
 | Device | Screen | OS |
 |---|---|---|
-| iPhone SE (3rd gen) | 375×667 | iOS 18.5, the oldest runtime on the CI image (16.4 is being added) |
+| iPhone SE (3rd gen) | 375×667 | iOS 16.4 (downloaded in CI) and iOS 18.5 |
 | iPhone 16 Pro Max | 440×956 | iOS 26.2 |
 | Nexus S profile | 320×533 | Android 7.0 (API 24, the minimum) |
 | Pixel C tablet | 1280×852 | Android 7.0 (API 24, the minimum) |
 
 Screenshots are in the run's artifacts.
 
-**Gap:** no iOS 13-15 simulator run. 16.4 is the oldest runtime Xcode 26 is reported to install headlessly, so iOS 13-15 is covered only
-by building against the iOS 13 minimum.
+**Gap:** no iOS 13-15 simulator run. 16.4 is the oldest runtime Xcode 26 installs headlessly
+(developer.apple.com/forums/thread/847134), so iOS 13-15 is covered only by building against the iOS 13 minimum.
 
 ## Phase 6: Hardening and scale (2026-10-16)
 **Built:**

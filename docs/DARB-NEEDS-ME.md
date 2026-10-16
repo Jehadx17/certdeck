@@ -26,3 +26,15 @@ gitignored), or on the server in `/opt/darb/.env`, and tell me the file is ready
 
 ## Where things stand
 Updated as phases finish; see [DARB-PHASES.md](DARB-PHASES.md) for the per-phase reports.
+
+## Your answers (2026-10-16)
+| # | Question | Answer | Done |
+|---|---|---|---|
+| 1 | Guardian email consent for under-18s? | **No** | `DARB_GUARDIAN_CONSENT` defaults to off (the code stays; the lawyer confirms another legal basis or it goes back on, DARB-PDPL.md) |
+| 2 | Nearest Apple price point if SAR 19/29/199 isn't exact? | Yes | applied when the products are created |
+| 3 | Certification segment = your own uploads only? | Yes | as built |
+| 4 | Free trial? | **No trial; the free plan (limited access) is the trial** | paywall trial labels removed; no intro offers |
+| 5 | Keep the server in Germany (Contabo)? | Yes | as planned; the lawyer covers the transfer |
+| 6 | Restart the exam-outline (blueprint) research? | Yes | running |
+| 7 | Phones failing the genuine-device check? | Free features only | the spec default; enforced once Play Integrity / App Attest keys exist |
+| 8 | 3-month plan or a lower annual price? | No | weekly / monthly / annual only |

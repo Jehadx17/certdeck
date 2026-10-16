@@ -7,7 +7,7 @@ This policy covers the Darb (درب) app (`sa.darbedu.app`) on Android and iOS a
 
 ## In short (for students)
 - You sign in with Google or Apple. We get your name and email from them, and you tell us your birth year.
-- If you are under 18, a parent or guardian must agree before your study syncs or the AI works.
+- If you are under 18, we do not ask for a guardian's email. A guardian can write to us to see, correct or delete your data.
 - We save your study progress so that it stays with you on every phone you use.
 - When you use AI features, the question, your answer or your uploaded pages go to Anthropic's AI. Your name and email
   are never sent with them.
@@ -30,7 +30,6 @@ address **[ADDRESS]**. We are the **controller** of your personal data: we decid
 |---|---|---|---|
 | Account | Name and email address (Apple may give us a private relay address instead of your email), your Google or Apple account identifier, a random Darb account ID | Google or Apple, when you sign in | everyone |
 | Birth year | The year only, not the full date | You, at sign-up | everyone |
-| Guardian | Your guardian's email, the date, time and method of their consent or withdrawal, and whether they asked for a weekly study summary | You and your guardian | students under 18 |
 | Study data | Onboarding answers (stage, grade or track, exam, exam date), settings (theme, language, study goal), study sessions, review history (which question, right or wrong, your confidence, time taken, score), cards you make, and AI explanations and feedback saved to your account | The app | everyone |
 | Uploads | PDFs and photos you upload, and the cards, summaries and practice made from them | You | subscribers |
 | Mistake reports | The question, the type of report and your note | You | when you report |
@@ -48,22 +47,20 @@ the AI to grade them (see section 6).
 ## 4. Why we use it, and our legal basis
 | # | Purpose | Data used | Legal basis |
 |---|---|---|---|
-| 1 | Create your account and sign you in | Account, device | Providing the service you signed up for (contract). For under-18s, also the guardian's consent. |
-| 2 | Check your age and obtain a guardian's consent for under-18s | Birth year, guardian | Legal obligation (PDPL Art. 5; Implementing Regulation Art. 13) |
+| 1 | Create your account and sign you in | Account, device | Providing the service you signed up for (contract). |
+| 2 | Check your age (under 12 is refused) | Birth year | Providing the service within its age limit (contract) [LAWYER: confirm] |
 | 3 | Save and sync your study, schedule reviews and adjust difficulty automatically | Study data | Contract |
 | 4 | Provide Darb Plus and check your subscription | Subscription, Darb account ID | Contract |
-| 5 | AI explanations, grading of practice answers, re-teaching, making cards from uploads | The question or card, your answer or question, your uploaded pages | Your consent, given on the AI screen before the first AI use (the guardian's for under-18s), and contract |
+| 5 | AI explanations, grading of practice answers, re-teaching, making cards from uploads | The question or card, your answer or question, your uploaded pages | Your consent, given on the AI screen before the first AI use and contract |
 | 6 | Keep AI use within the daily and monthly limits | AI usage | Contract |
-| 7 | Send the weekly study summary to a guardian who asked for it | Study totals, guardian email | The guardian's consent (opt-in, can be turned off) |
-| 8 | Fix reported mistakes | Mistake reports | Legitimate interest in accurate content |
-| 9 | Protect students, the service and our content: rate limits, app-integrity checks, invisible marking of the questions we serve so that leaks can be traced, detection of abuse, suspension | Device and security, server logs, account ID | Legitimate interest [LAWYER: confirm] |
-| 10 | Find and fix crashes | Crash reports | Legitimate interest |
-| 11 | Answer support questions and rights requests | Support messages, account | Contract and legal obligation |
-| 12 | Meet legal duties, keep required records, answer lawful requests from authorities | As needed | Legal obligation |
+| 7 | Fix reported mistakes | Mistake reports | Legitimate interest in accurate content |
+| 8 | Protect students, the service and our content: rate limits, app-integrity checks, invisible marking of the questions we serve so that leaks can be traced, detection of abuse, suspension | Device and security, server logs, account ID | Legitimate interest [LAWYER: confirm] |
+| 9 | Find and fix crashes | Crash reports | Legitimate interest |
+| 10 | Answer support questions and rights requests | Support messages, account | Contract and legal obligation |
+| 11 | Meet legal duties, keep required records, answer lawful requests from authorities | As needed | Legal obligation |
 
-[LAWYER: confirm the basis for each purpose; whether purposes 1, 3 and 4 also need the guardian's consent for
-under-18s; and the basis for holding a minor's account data (name, email, birth year, guardian email) while consent is
-pending.]
+[LAWYER: confirm the basis for each purpose, and confirm a legal basis other than consent for processing the data of
+students under 18, since Darb has no guardian consent step.]
 
 **Automated decisions.** Darb adjusts your study plan, session length and difficulty automatically. This has no legal
 effect on you. Our abuse rules may suspend an account automatically. If that happens, the app tells you, and a person
@@ -73,8 +70,7 @@ reviews your appeal (see the Terms of Use).
 - We do not show ads or use any data for advertising.
 - We do not track you across other apps or websites. We do not collect the advertising ID.
 - We do not sell, rent or trade personal data.
-- We do not send marketing emails. The only emails we send are the guardian consent email, the weekly summary when a
-  guardian asks for it, and replies to your messages.
+- We do not send marketing emails. The only emails we send are replies to your messages.
 - Our web pages use no tracking or advertising cookies.
 
 ## 6. AI features
@@ -83,7 +79,7 @@ reviews your appeal (see the Terms of Use).
 - **Who runs the AI:** Anthropic PBC (the Claude model), in the United States.
 - **What is sent:** only what the feature needs: the text of the card or question, your answer or question about it, and
   for uploads, the pages you uploaded.
-- **What is never sent:** your name, email, account ID or guardian's details.
+- **What is never sent:** your name, email, or account ID.
 - **What Anthropic does with it:** it uses the data only to answer us. It does not use it to train its models. It
   deletes it within 30 days, unless it is needed to investigate misuse or the law requires otherwise.
 - **Your choice:** the app asks for your consent before the first AI use and names Anthropic. If you don't agree, you can
@@ -99,21 +95,14 @@ reviews your appeal (see the Terms of Use).
 - Darb is for students aged **12 and over**. We ask for your birth year only, and we do not create an account for anyone
   younger than 12.
 - **Under 13:** Google and Apple require that a parent manages the account you sign in with.
-- **Under 18:** Saudi law requires a parent's or legal guardian's consent. When you sign up, we ask for your guardian's
-  email and send them a link. Your guardian reads what Darb does and confirms. Until they confirm, you can study the free
-  sample on your phone only. Nothing is synced, no AI runs and no purchase is offered. If your guardian declines, we
-  delete the account and its data.
-- **What guardians can do:** see, correct or delete their child's data, and withdraw consent at any time. The link in the
-  consent email withdraws consent and deletes the account. Guardians can also write to support@darbedu.sa from the
-  email address they confirmed with.
+- **Under 18:** we do not ask for a guardian's email and there is no guardian approval step. Your birth year is the only
+  age information we hold.
+- **What guardians can do:** write to support@darbedu.sa to see, correct or delete their child's data. Students can also
+  delete the account themselves in the app (Settings → Account → Delete my account).
 - **Purchases:** subscriptions are bought through the Apple or Google account on the phone. For minors that account is
   usually managed by a parent (Ask to Buy or Family Link). [LAWYER: decide whether a minor may enter the subscription
-  contract and whether the guardian's consent covers it]
+  contract]
 - We do not sell children's data, show ads to anyone, or use any data for advertising.
-
-[LAWYER: confirm that a confirmed guardian email is "appropriate means" to verify guardianship under IR Art. 13, and set
-how long an account waiting for consent is kept before deletion. That deletion is not automated yet; OWNER to build it
-once the period is set.]
 
 ## 8. Who receives your data
 We share data only with the providers below, and with each one only what its job needs. Each one acts on our
@@ -127,7 +116,7 @@ instructions under a written contract, except where marked.
 | RevenueCat, Inc. | Subscription management | Your random Darb account ID and the store's subscription status | United States |
 | Apple Inc. and Google LLC | Sign-in, in-app purchases and app-integrity checks | Data you give them under their own terms. They act as independent controllers. [LAWYER: confirm] | United States and global |
 | Functional Software, Inc. (Sentry) | Crash reports | Crash reports, without name, email or ID | [United States or EU: OWNER to choose the data region] |
-| [EMAIL PROVIDER] | Sending emails | The guardian's email, the student's name or email in the consent email, weekly summaries, support replies | [COUNTRY] |
+| [EMAIL PROVIDER] | Sending emails | Support replies | [COUNTRY] |
 | Authorities | When Saudi law requires it | Only what the law requires | Saudi Arabia |
 
 [LAWYER: add a clause on transfer of the data if the company is merged or sold, if wanted.]
@@ -149,7 +138,7 @@ count as a transfer.]
 ## 10. How long we keep it
 | Data | Kept | Then |
 |---|---|---|
-| Account, birth year, guardian email and consent | While your account exists | Deleted within 30 days of account deletion. Backups age out within 35 more days. |
+| Account and birth year | While your account exists | Deleted within 30 days of account deletion. Backups age out within 35 more days. |
 | Study data, cards and saved AI output | While your account exists | Same as above |
 | Uploads | While your account exists | Deleted at once when you delete them or your account |
 | Sign-in tokens | Until you sign out on that phone or delete the account | Deleted |
@@ -159,7 +148,6 @@ count as a transfer.]
 | Server logs | 14 days | Rotated |
 | Crash reports | 30 days | Deleted by Sentry [OWNER: confirm the plan's retention] |
 | Support emails | [LAWYER: set the period, e.g. 2 years after the last message] | Deleted |
-| Consent records | [LAWYER: decide whether a minimal record (date, method, guardian email) must be kept for the life of the account + 5 years under IR Art. 33. The app currently deletes it with the account.] | |
 
 We also ask our providers to delete their copies when the purpose ends.
 
@@ -173,7 +161,7 @@ Under the Personal Data Protection Law (PDPL), you have the right to:
 
 **How to use them:** delete your account in the app (**Settings → Account → Delete my account**) or on
 https://darbedu.sa/delete-account. For anything else, email support@darbedu.sa from your account email (guardians: from
-the email they confirmed with). We may ask you to confirm your identity first.
+the email they write from, with the student's account email). We may ask you to confirm your identity first.
 
 **Our response time:** within **30 days**. If we need up to 30 more days, we will tell you why before the first 30 end.
 

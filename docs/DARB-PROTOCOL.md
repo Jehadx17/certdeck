@@ -60,7 +60,7 @@ Side effects (queued for the worker, never done in the request):
   ID token (signature against Google's / Apple's JWKS, issuer, audience, expiry). The response is
   `{token, account: {...}, new: bool}`.
 - Each phone gets its own token (`Device`). Signing out deletes that device's token.
-- Under-18 sign-up asks for a guardian (see DARB-PDPL.md → Guardian consent); details are added in phase 1.
+- Under-18 guardian endpoints exist behind the backend switch `DARB_GUARDIAN_CONSENT`, which defaults to **off** (owner decision 2026-10-16; see DARB-PDPL.md → Guardian consent). While off, sign-up only applies the birth-year age gate.
 - `GET me` → `{id, name, email, premium, premium_until, month, usd, cap_usd, remaining_usd, resets_on}`.
 
 ## Uploads (subscribers)

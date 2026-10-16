@@ -72,7 +72,7 @@ Notes:
 أسئلة درب مادة تدريبية أصلية كُتبت بمساعدة الذكاء الاصطناعي وروجعت قبل نشرها، وليست أسئلة اختبارات رسمية. ودرب غير تابع لهيئة تقويم التعليم والتدريب (قياس) ولا لوزارة التعليم. ولا نعدك بأي درجة.
 
 الخصوصية
-سجّل الدخول بحساب Google أو Apple. يحتاج الطالب دون 18 سنة إلى موافقة أحد والديه أو وليّه عبر البريد الإلكتروني. لا إعلانات، ولا تتبّع، ولا بيع للبيانات. ولا تصل ميزات الذكاء الاصطناعي إلى اسمك أو بريدك أبدًا.
+سجّل الدخول بحساب Google أو Apple. لا إعلانات، ولا تتبّع، ولا بيع للبيانات. ولا تصل ميزات الذكاء الاصطناعي إلى اسمك أو بريدك أبدًا.
 
 شروط الاستخدام: https://darbedu.sa/ar/terms
 سياسة الخصوصية: https://darbedu.sa/ar/privacy
@@ -110,7 +110,7 @@ HONEST ABOUT THE CONTENT
 Darb's questions are original practice material written with the help of AI and checked before release. They are not official exam questions. Darb is not affiliated with the Education and Training Evaluation Commission (Qiyas) or the Ministry of Education. We do not promise any score.
 
 PRIVACY
-Sign in with Google or Apple. Students under 18 need a parent's or guardian's consent by email. No ads, no tracking, no data sale. AI features never receive your name or email.
+Sign in with Google or Apple. No ads, no tracking, no data sale. AI features never receive your name or email.
 
 Terms of use: https://darbedu.sa/terms
 Privacy policy: https://darbedu.sa/privacy
@@ -129,8 +129,7 @@ Support: support@darbedu.sa
 | Play contact | support@darbedu.sa, [PUBLIC PHONE] (required for organization accounts), https://darbedu.sa |
 | Apple review contact | [NAME], [PHONE], support@darbedu.sa |
 
-The URLs follow one pattern: English at the bare path, Arabic under `/ar/`. [OWNER: publish all pages before submitting;
-the guardian consent page already links to `/privacy`]
+The URLs follow one pattern: English at the bare path, Arabic under `/ar/`. [OWNER: publish all pages before submitting]
 
 ## 4. Category
 - **Apple:** primary **Education**, no secondary. Kids Category: **Not Applicable** (DARB-STORES.md).
@@ -145,8 +144,8 @@ read on 2026-10-16 (only part of the page could be read, so the questionnaire wo
 
 | Questionnaire item | Answer | Why |
 |---|---|---|
-| Parental Controls | No | Guardians consent, can withdraw consent and delete the account, and can get a weekly summary. They cannot restrict content, so this is not a parental control. |
-| Age Assurance | Yes | Birth-year gate at sign-up: under 12 is refused, under 18 needs a guardian. It is self-declared. Whether self-declaration counts as age assurance: UNVERIFIED. Either answer stays in the 4+ tier. |
+| Parental Controls | No | No guardian accounts, consent step or controls. A guardian can contact support to access, correct or delete the child's data. |
+| Age Assurance | Yes | Birth-year gate at sign-up: under 12 is refused. It is self-declared. Whether self-declaration counts as age assurance: UNVERIFIED. Either answer stays in the 4+ tier. |
 | Unrestricted Web Access | No | Links open only Darb's own pages and the store's subscription page |
 | User-Generated Content | No | Uploads and cards are private to their owner; nothing is shown to other users |
 | Messaging and Chat | No | No user-to-user messaging. AI help is tied to the question on screen. |
@@ -184,7 +183,7 @@ Expected: IARC 3+ / Everyone. Saudi Arabia gets the IARC generic rating (DARB-ST
   Play treats 9-12 as children, so the **Families policy applies** ([9867159](https://support.google.com/googleplay/android-developer/answer/9867159),
   [9893335](https://support.google.com/googleplay/android-developer/answer/9893335)).
 - **Mixed audience:** Darb serves students from 12 to university and certification. The birth-year screen is neutral (it
-  doesn't suggest an answer). Under-12s are refused, and under-18s go through the guardian step.
+  doesn't suggest an answer). Under-12s are refused; there is no guardian step (owner decision 2026-10-16).
 - **Families declarations:**
   - Ads: none, and no ad SDKs.
   - Advertising ID: not used. The manifest removes `com.google.android.gms.permission.AD_ID`; answer "No" in the
@@ -212,9 +211,9 @@ exempt, so that point is UNVERIFIED; the wording read was the definition only.
 | Play data type | Collected | Shared | Purposes | Required or optional | Darb data |
 |---|---|---|---|---|---|
 | Personal info → Name | Yes | No | App functionality, Account management | Required | From Google or Apple sign-in |
-| Personal info → Email address | Yes | No | App functionality, Account management | Required | Sign-in email; the guardian's email for under-18s |
+| Personal info → Email address | Yes | No | App functionality, Account management | Required | Sign-in email |
 | Personal info → User IDs | Yes | No | App functionality, Account management, Fraud prevention, security and compliance | Required | Google or Apple account ID, Darb account ID (sent to RevenueCat) |
-| Personal info → Other info | Yes | No | App functionality, Account management, Fraud prevention, security and compliance | Required | Birth year (age gate, guardian consent) |
+| Personal info → Other info | Yes | No | App functionality, Account management, Fraud prevention, security and compliance | Required | Birth year (age gate) |
 | Financial info → Purchase history | Yes | No | App functionality, Account management | Optional | Subscription status from RevenueCat. Payment details stay with Google Play. |
 | Photos and videos → Photos | Yes | No | App functionality | Optional | Uploads (subscribers), processed by Anthropic |
 | Files and docs | Yes | No | App functionality | Optional | PDF uploads |
@@ -243,7 +242,7 @@ Definitions are from [app-privacy-details](https://developer.apple.com/app-store
 | Apple data type | Collected | Linked to user | Used for tracking | Purposes |
 |---|---|---|---|---|
 | Contact Info → Name | Yes | Yes | No | App Functionality |
-| Contact Info → Email Address | Yes | Yes | No | App Functionality (sign-in email and the guardian's email) |
+| Contact Info → Email Address | Yes | Yes | No | App Functionality (sign-in email) |
 | User Content → Photos or Videos | Yes | Yes | No | App Functionality (uploads) |
 | User Content → Other User Content | Yes | Yes | No | App Functionality (cards, answers sent for AI grading, PDFs, mistake reports) |
 | Identifiers → User ID | Yes | Yes | No | App Functionality |
@@ -252,7 +251,7 @@ Definitions are from [app-privacy-details](https://developer.apple.com/app-store
 | Usage Data → Product Interaction | Yes | Yes | No | App Functionality, Product Personalization (adaptive study plan) |
 | Diagnostics → Crash Data | Yes | No | No | App Functionality |
 | Diagnostics → Other Diagnostic Data | Yes | No | No | App Functionality (device model, OS version) |
-| Other Data → Other Data Types | Yes | Yes | No | App Functionality (birth year, guardian consent record) |
+| Other Data → Other Data Types | Yes | Yes | No | App Functionality (birth year, age gate) |
 
 **Not collected:** Health and Fitness, Financial Info, Location, Sensitive Info, Contacts, Emails or Text Messages, Audio,
 Gameplay Content, Customer Support (support is by email outside the app), Browsing History, Search History, Advertising
@@ -276,8 +275,7 @@ Group reference name **Darb Plus**; group display name AR **درب بلس**, EN 
   App Store Connect treats equal levels: UNVERIFIED.
 - **Price points:** whether SAR 19.00 / 29.00 / 199.00 exist as exact Apple price points is UNVERIFIED (DARB-STORES.md).
   Pick them in App Store Connect.
-- **Introductory offer:** a free trial of [TRIAL LENGTH] on `darb_annual` only. Apple allows 3 days to 1 year, and one
-  intro offer per group per customer.
+- **Introductory offer:** none. No introductory offer or free trial (owner decision 2026-10-16); the free plan is the trial.
 - **Family Sharing:** off. [OWNER: entitlements are bound to the Darb account]
 - **Review screenshot:** a screenshot of the in-app paywall at any accepted iPhone size (e.g. 1206x2622). It must show
   the three plans with price and period, the auto-renew text, the Terms and Privacy links, and "Restore purchases".
@@ -304,13 +302,14 @@ Three subscriptions, each with one auto-renewing base plan:
 | مساعدة أكبر من الذكاء الاصطناعي | 31 | More AI help every day and month | 32 |
 | حوّل ملفاتك وصورك إلى بطاقات | 28 | Turn your PDFs and photos into cards | 36 |
 
-- **Free trial offer:** on `darb_annual` / `p1y` only, for [TRIAL LENGTH], for new customers. Google allows 3 days to 3
-  years.
+- **Offers:** none (same decision: no free trial on any plan).
+- **Unattested devices** (failing Play Integrity / App Attest): decided 2026-10-16, they get free features only (no Darb
+  Plus content).
 - In RevenueCat, attach all six store products to one entitlement and one offering. The product IDs can never be
   reused, so create them only once the names are final.
 
 ## 10. App Review notes
-Apple allows 4,000 bytes; this template is 2,295 bytes. For Play, paste the same text into App content → App access,
+Apple allows 4,000 bytes; this template is 2,040 bytes. For Play, paste the same text into App content → App access,
 "All or some functionality is restricted".
 
 ```
@@ -322,8 +321,8 @@ Darb offers only Sign in with Apple and Sign in with Google (no passwords). You 
   Password: [DEMO_GOOGLE_PASSWORD]
 A new account is asked for a birth year. Choose any year that makes you 18 or older (e.g. 1990) and you go straight in. The demo Google account already has an adult birth year.
 
-MINORS (GUARDIAN STEP)
-If the birth year makes the user under 18, the app asks for a parent's or guardian's email and sends them a consent link. Until the guardian confirms, only the on-device free sample works: no sync, no AI, no purchases. Under 12 is refused. To see this flow, sign in with a new Apple ID, choose birth year 2012, and enter an email address you can open.
+MINORS
+Darb has an age gate: a birth year under 12 is refused. There is no other flow for minors and no demo is needed.
 
 SUBSCRIPTIONS (sandbox)
 Group "Darb Plus": darb_weekly (SAR 19/week), darb_monthly (SAR 29/month), darb_annual (SAR 199/year), auto-renewing. Tap "اشترك" (Upgrade) in Settings → Subscription, choose a plan and pay with your sandbox account. Settings → Subscription also has "Manage or cancel" and "Restore purchases". Our server checks entitlements through RevenueCat. The demo account has no active subscription.

@@ -85,6 +85,13 @@ class AccountTests(TestCase):
         self.assertFalse(Account.objects.exists())
         self.assertEqual(self.sign_in(birth_year=date.today().year - 12).status_code, 200)  # 11 or 12: allowed
 
+    def test_minor_without_the_guardian_step(self):  # the default (DARB_GUARDIAN_CONSENT off)
+        r = self.sign_in("apple", sub="a-1", birth_year=self.minor, name="Sara")
+        self.assertEqual(r.json()["account"]["guardian"], "not_needed")
+        auth = {"HTTP_AUTHORIZATION": f"Bearer {r.json()['token']}"}
+        self.assertEqual(self.post("/api/sync", {"docs": []}, auth).status_code, 200)
+
+    @override_settings(DARB_GUARDIAN_CONSENT=True)
     def test_minor_needs_the_guardian_before_anything_is_stored(self):
         r = self.sign_in("apple", sub="a-1", birth_year=self.minor, name="Sara")
         self.assertEqual(r.json()["account"]["guardian"], "pending")
@@ -210,4 +217,7 @@ class CleanupTests(TestCase):
         adult, _ = make_account("a@example.com", birth_year=date.today().year - 30)
         Account.objects.update(created=tz_now() - timedelta(days=31))
         tasks.drop_unconfirmed_minors()
+        self.assertEqual(Account.objects.count(), 2)  # the default: no guardian step, so nobody is unconfirmed
+        with override_settings(DARB_GUARDIAN_CONSENT=True):
+            tasks.drop_unconfirmed_minors()
         self.assertEqual(list(Account.objects.values_list("email", flat=True)), ["a@example.com"])

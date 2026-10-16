@@ -16,10 +16,9 @@ With your Google account or your Apple account. Darb has no passwords. Use the s
 Google and then with Apple creates two separate Darb accounts. If you are under 13, the Google or Apple account must be
 one that your parent manages.
 
-**2. Why does my guardian need to agree, and what if the email doesn't arrive?**
-Saudi data protection law requires a parent's or guardian's consent for students under 18. Your guardian gets an email
-with a link, reads what Darb does and taps "I agree". Until then you can study the free sample on your phone. If the
-email doesn't arrive, ask them to check their spam folder, then enter their email again in the app to send a new link.
+**2. Can my parent or guardian see or delete my data?**
+Yes. Your guardian can email support@darbedu.sa to see, correct or delete your data. You can also delete your account
+yourself in the app: **Settings → Account → Delete my account**.
 
 **3. Can I study without internet?**
 Yes. Downloaded packs and your progress stay on your phone. Darb saves your progress to your account when you are back
@@ -55,8 +54,7 @@ downloaded there. Update to iOS 14 or later before you subscribe. [OWNER: see th
 checklist]
 
 **10. What happens to my data?**
-We keep only what Darb needs: your name and email from Google or Apple, your birth year, your guardian's email if you
-are under 18, and your study progress. No ads, no tracking, and we never sell data. AI features send the question and
+We keep only what Darb needs: your name and email from Google or Apple, your birth year, and your study progress. No ads, no tracking, and we never sell data. AI features send the question and
 your answer to Anthropic's AI without your name or email. Details are in the
 [privacy policy](https://darbedu.sa/privacy).
 

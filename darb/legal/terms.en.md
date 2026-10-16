@@ -5,12 +5,12 @@ prevails if the two versions differ]
 
 These terms are an agreement between you and **[COMPANY]** (commercial registration no. **[CR]**, [ADDRESS]), which runs
 the Darb (درب) app and darbedu.sa ("Darb", "we"). By creating an account or using Darb, you accept these terms and our
-[privacy policy](https://darbedu.sa/privacy). If you are under 18, your parent or legal guardian accepts them with you.
+[privacy policy](https://darbedu.sa/privacy). If you are under 18, please read them with your parent or legal guardian.
 
 ## 1. Who can use Darb
 - You must be **12 or older**.
-- **Under 18:** you need your parent's or legal guardian's consent. We ask for it by email when you sign up. Until your
-  guardian confirms, you can only study the free sample on your phone.
+- **Under 18:** please read these terms with your parent or legal guardian. Your guardian can contact support to see,
+  correct or delete your data.
 - **Under 13:** you must sign in with a Google or Apple account that a parent manages.
 - You must give your real birth year.
 
@@ -43,8 +43,7 @@ free today behind the paywall for people who already use it.
 - **Auto-renewal:** your subscription renews automatically at the end of each period for the same length and price,
   unless you cancel it at least 24 hours before the period ends. The store charges your account within the 24 hours
   before the period ends.
-- **Free trial:** when a plan offers a free trial ([TRIAL LENGTH]), the paid subscription starts automatically when the
-  trial ends unless you cancel at least 24 hours before it ends. A free trial is offered only once per store account.
+- **No free trial:** Darb Plus has no free trial or introductory offer. The free plan above is the way to try Darb.
 - **Cancelling:** you can cancel only in the store: on iPhone, **Settings → [your name] → Subscriptions**; on Android,
   **Google Play → Profile → Payments & subscriptions → Subscriptions**. In Darb, **Settings → Subscription → Manage or
   cancel** opens that page. After you cancel, Darb Plus stays on until the end of the period you paid for.

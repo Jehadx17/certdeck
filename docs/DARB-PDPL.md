@@ -34,11 +34,12 @@ Research only, not legal advice. Checked 2026-10-15. "Unverified" = only seconda
    - Google lets users manage their own account from 13 ([Google](https://support.google.com/accounts/answer/1350409)).
      Apple requires parents to create accounts under 13 ([Apple](https://support.apple.com/en-us/102617)). So a
      12-year-old signs in with a parent-managed account, and neither sign-in proves guardianship.
-   - **Built in Darb (switchable, see DARB-PROTOCOL.md → guardian):** under-18 sign-up asks for a guardian's email; the
-     guardian gets a link, reads a short notice and confirms. Until then the account can study the free sample on the
-     phone, but nothing is synced, no AI runs and no purchase is offered. The time and method of the consent are
-     recorded, and the guardian can withdraw it from the same link. The lawyer decides whether a confirmed email is
-     "appropriate means" or whether more is needed.
+   - **Owner decision 2026-10-16: no guardian consent step at launch (DARB_GUARDIAN_CONSENT=false). The lawyer must confirm a legal basis other than consent for under-18s, or the switch goes back on.**
+   - **Built in Darb but off (see DARB-PROTOCOL.md → guardian):** with the switch on, under-18 sign-up asks for a
+     guardian's email; the guardian gets a link, reads a short notice and confirms, and until then nothing is synced, no
+     AI runs and no purchase is offered. With the switch off, only the birth-year age gate applies (under 12 refused).
+     A guardian can still write to support to access, correct or delete the child's data, and the student can delete
+     the account in the app.
    - Whether a minor may enter the subscription contract is also for the lawyer. Purchases go through the store account,
      which for minors is usually a parent-managed account (Ask to Buy / Family Link).
 
@@ -93,7 +94,7 @@ Research only, not legal advice. Checked 2026-10-15. "Unverified" = only seconda
 | 2 | SDAIA SCCs (controller-to-processor) with Contabo, Cloudflare, Anthropic, RevenueCat, Sentry, the email provider, or another documented basis | you + lawyer |
 | 3 | Transfer risk assessment per destination (Art. 7) | lawyer, from item 1 |
 | 4 | DPIA for minors' data | lawyer, from item 1 |
-| 5 | Legal basis per purpose; confirm the guardian email flow is enough verification | lawyer |
+| 5 | Legal basis per purpose. Owner decision 2026-10-16: no guardian consent step at launch (DARB_GUARDIAN_CONSENT=false). The lawyer must confirm a legal basis other than consent for under-18s, or the switch goes back on. | lawyer |
 | 6 | Under-13: sign-in needs a parent-managed Google/Apple account (stated in the sign-up screen) | built |
 | 7 | Register with SDAIA (arguable now, mandatory if the draft passes); track the draft after 2026-11-05 | you |
 | 8 | DPO decision; publish the contact in the privacy policy | you + lawyer |
@@ -109,22 +110,21 @@ Research only, not legal advice. Checked 2026-10-15. "Unverified" = only seconda
 ## Retention schedule (draft)
 | Data | Kept | Deleted |
 |---|---|---|
-| Account (name, email from Google/Apple, birth year, guardian email and consent record) | while the account exists | within 30 days of deletion; backups age out within 35 days (backup retention) |
+| Account (name, email from Google/Apple, birth year) | while the account exists | within 30 days of deletion; backups age out within 35 days (backup retention) |
 | Study data (settings, sessions, review log, uploads, AI outputs) | while the account exists | same as above; uploads deleted at once |
 | Subscription status | while the account exists | entitlement records kept by Apple/Google/RevenueCat under their own terms |
 | AI call log (tokens, cost; no content) | 13 months | then dropped |
 | Server logs (IP, path) | 14 days | rotated |
-| Consent records | life of the account + 5 years | IR Art. 33 |
 
 ## Draft privacy-policy wording
 The full drafts are in `darb/legal/` (privacy, terms, deletion, support), in Arabic and English. Key paragraphs:
 
 > **Where your data goes.** We store your account and study data on servers run by Contabo in Germany, and backups (encrypted) in Cloudflare R2 storage restricted to the European Union. When you use AI features, the study content you send is processed by Anthropic in the United States [and other countries where Anthropic runs its models]. These transfers are needed to provide the app. We protect them with the Standard Contractual Clauses issued by the Saudi Data and AI Authority (SDAIA). We assessed their risks before starting, and we send each service only what it needs.
 
-> **Students under 18.** Under Saudi law, you need a parent or legal guardian's consent to use Darb until you reach 18. When you sign up, we ask for your guardian's email and they confirm by opening the link we send them. Guardians can see, correct or delete their child's data, and can withdraw consent at any time. Students under 13 need a Google or Apple account that a parent manages. We do not sell children's data, show ads, or use any data for advertising.
+> **Students under 18.** We do not ask for a guardian's email. Guardians can write to us to see, correct or delete their child's data, and students can delete their account in the app. Students under 13 need a Google or Apple account that a parent manages. We do not sell children's data, show ads, or use any data for advertising.
 
 > **AI features.** Some features, such as explanations, grading of practice answers and making cards from your uploads, send the text of your cards, answers and uploaded pages to Anthropic's Claude AI. We never send your name or email with these requests. AI responses are generated by a computer, not a teacher, and may contain mistakes; every AI answer has a Report button. Grading in Darb is for practice only. Anthropic does not use this data to train its models and deletes it within 30 days, unless it is needed to investigate misuse or the law requires it.
 
 > **How long we keep data.** We keep your account and study history while your account is active. If you delete your account, we delete your data within 30 days, and it disappears from our backups within 35 more days. We ask our providers to delete their copies.
 
-> **Your rights.** You, or your guardian, can ask to know what data we hold, get a copy, correct it, delete it, or withdraw consent: in the app (Settings → Account) or by email to support@darbedu.sa. We reply within 30 days; if we need up to 30 more, we will tell you why. If you are not satisfied, you can complain to SDAIA.
+> **Your rights.** You, or your guardian, can ask to know what data we hold, get a copy, correct it or delete it: in the app (Settings → Account) or by email to support@darbedu.sa. We reply within 30 days; if we need up to 30 more, we will tell you why. If you are not satisfied, you can complain to SDAIA.
