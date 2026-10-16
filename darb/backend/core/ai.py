@@ -240,18 +240,24 @@ FILL_SCHEMA = _obj(explanation=S, option_explanations=_null(SL))
 BOOL = {"type": "boolean"}
 # ---------- prompts ----------
 
+STYLE = """Writing: Arabic text is Modern Standard Arabic (فصحى) with correct gender and number agreement; never dialect (عشان، اللي، نقدر، يعني، لازم for يجب). Don't mix English notes or tags into Arabic text (English technical terms the material itself uses are fine). Every analogy, mnemonic and example must be literally correct: drop it rather than give a loose one. Name the exact mistake behind each wrong option. Recompute every number before writing it. Speak to the student directly ("you"), never about them."""
+
 CARD_RULES = """Card format (set every field a type doesn't use to null):
 - basic: question = front, answer = back.
 - mcq: question = exam-style scenario stem; options = 4 plausible options (5-6 for multiple response, and say "(Choose 2)"/"(Choose 3)" in the stem); correct = 0-based indices of the correct options; option_explanations = one string per option, same order, saying why that option is right or wrong. No "all/none of the above".
-- cloze: question = text with 1-3 blanks written {{answer}} or {{answer::hint}}.
+- cloze: question = text with 1-3 blanks written {{answer}} or {{answer::hint}}. Nothing else on the card (the rest of the text, the hint, the explanation's first line) may give a blank away; hints are in the card's language and point to the idea, not the word.
 - typed: question = prompt; answer = canonical short answer (CLI command, service/API/field name); accepted = other acceptable forms.
 - code: question = task or "what does this do?"; code = snippet shown with the question and/or answer_code = snippet shown with the answer; language = yaml|json|bash|python|...; answer = short markdown answer.
-- ordering: question = what to order; items = 3-7 steps in the CORRECT order.
+- ordering: question = what to order; items = 3-7 steps in the CORRECT order, only for steps with one strict order (never steps that happen at the same time).
 - Every card: explanation = markdown explaining why the right answer is right AND why each wrong option (or the common misconception) is wrong, then one short memory aid: a concrete analogy or mnemonic (and, where the concept is a process or calculation, a 2-3 line worked example). Keep it short; skip the aid only when it would be forced. tags = 1-4 lowercase topic tags. topic = a few words naming the specific topic.
-- Markdown everywhere; fenced code blocks with a language. Be technically accurate and current. One concept per card. Test what the real exam rewards, not trivia."""
+- Markdown everywhere; fenced code blocks with a language. Be technically accurate and current. One concept per card. Test what the real exam rewards, not trivia. No two cards test the same fact.
+""" + STYLE
 
-TUTOR_PROMPT = """You are an expert, patient tutor in Darb, a study app for Saudi students (middle school, high school, university, certifications).
-The student is asking about the study card below. Answer in the student's language (Arabic unless they write in English), in markdown: precise, concrete and concise, with an example where it helps. Explicitly correct misconceptions and relate the answer to how the exam tests it. If the card itself is wrong, say so clearly."""
+TUTOR_PROMPT = f"""You are an expert, patient tutor in Darb, a study app for Saudi students (middle school, high school, university, certifications).
+The student is asking about the study card below. Answer in markdown: precise, concrete and concise, with an example where it helps. Explicitly correct misconceptions and relate the answer to how the exam tests it. If the card itself is wrong or its explanation is misleading, say so clearly and give the correct version. No filler about the chat or the student.
+{STYLE}"""
+REPLY_IN = {"ar": "Reply in Arabic (Modern Standard), whatever language the card is in.",
+            "en": "Reply in English, whatever language the card is in (keep Arabic terms only where the student needs them)."}
 
 FILL_TASK = """Write this card's explanation in markdown: why the correct answer is right AND why each wrong option (or the most common misconception) is wrong. End with one short memory aid: a concrete analogy or mnemonic (and, for a process or calculation, a 2-3 line worked example).
 If the card is an mcq, also return option_explanations: one string per option in the same order, each saying why that option is right or wrong. Otherwise return null for option_explanations."""
@@ -335,7 +341,7 @@ def _card_arg(body):
 
 # ---------- endpoints ----------
 
-PROMPT_VERSION = 1  # bump when a runtime prompt changes, so cached answers aren't reused across versions
+PROMPT_VERSION = 3  # bump when a runtime prompt changes, so cached answers aren't reused across versions
 
 
 def content_key(feature, card, lang=""):
@@ -347,7 +353,7 @@ def content_key(feature, card, lang=""):
 
 def explain_request(card, chat, lang="ar"):
     """(request, first): a tutor reply about [card] after [chat] ([{role, text}]); first = no student question yet."""
-    system = [{"type": "text", "text": TUTOR_PROMPT},
+    system = [{"type": "text", "text": f"{TUTOR_PROMPT}\n{REPLY_IN[lang]}"},
               {"type": "text", "text": "The card (JSON):\n" + json.dumps(card, ensure_ascii=False),
                "cache_control": {"type": "ephemeral"}}]
     messages = [{"role": m["role"], "content": str(m["text"])[:2000]} for m in chat][-HISTORY:]  # never the whole chat
@@ -359,17 +365,17 @@ def explain_request(card, chat, lang="ar"):
                      else "Explain this card to me in more depth."}]
     if messages[-1]["role"] != "user":
         raise ApiError(400, "the last message must be from the user")
-    return params(system, messages, REPLY_SCHEMA, max_tokens=1500), first
+    return params(system, messages, REPLY_SCHEMA, max_tokens=3000, effort="medium"), first
 
 
 def explain(user, body):
     card = _card_arg(body)
     fill = body.get("mode") == "fill"
-    system = [{"type": "text", "text": TUTOR_PROMPT},
+    lang = "en" if body.get("lang") == "en" else "ar"
+    system = [{"type": "text", "text": f"{TUTOR_PROMPT}\n{REPLY_IN[lang]}"},
               # Chat follow-ups re-read the card from cache; a one-shot fill would only pay the write surcharge.
               {"type": "text", "text": "The card (JSON):\n" + json.dumps(card, ensure_ascii=False),
                **({} if fill else {"cache_control": {"type": "ephemeral"}})}]
-    lang = "en" if body.get("lang") == "en" else "ar"
     if fill:
         out = call(user, "explain_fill", params(system, [{"role": "user", "content": FILL_TASK}], FILL_SCHEMA,
                                                 max_tokens=3000), cache_key=content_key("fill", card, lang))

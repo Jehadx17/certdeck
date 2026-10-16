@@ -16,11 +16,15 @@ class Command(BaseCommand):
     def add_arguments(self, parser):
         parser.add_argument("features", nargs="*", help="explain grade cards reteach (default: all)")
         parser.add_argument("--raw", help="also save every output to this JSON file")
+        parser.add_argument("--from", dest="src", help="rebuild the report from a --raw file (no API calls)")
 
-    def handle(self, *args, features=None, raw=None, **options):
-        if not settings.ANTHROPIC_API_KEY:
+    def handle(self, *args, features=None, raw=None, src=None, **options):
+        if src:
+            results = json.loads(Path(src).read_text())
+        elif not settings.ANTHROPIC_API_KEY:
             raise CommandError("ANTHROPIC_API_KEY is not set")
-        results = evals.run(features or None, log=self.stdout.write)
+        else:
+            results = evals.run(features or None, log=self.stdout.write)
         if raw:
             Path(raw).write_text(json.dumps(results, ensure_ascii=False, indent=1, default=str))
         summary = evals.summarize(results)

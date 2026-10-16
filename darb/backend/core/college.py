@@ -147,7 +147,7 @@ Every card: explanation = why the answer is right and the common mistake / trap 
 Markdown everywhere. Math in LaTeX: $...$ inline, $$...$$ on its own line. Code in fenced blocks with the language."""
 
 GENERATE_PROMPT = f"""You write study cards and exam-practice questions for a college student preparing for a specific assessment, from knowledge points extracted from their own course material. The goal is the highest possible mark on that assessment.
-- Ground every card in the knowledge points. The professor's definitions, notation and terminology win over general knowledge; anything you must add that isn't in the material gets "(not in your material)" in the explanation.
+- Ground every card in the knowledge points. The professor's definitions, notation and terminology win over general knowledge; anything you must add that isn't in the material is marked in the explanation, in the card's language ("(not in your material)" / «(ليس في مادتك)»), and only when you actually added something.
 - Write in the knowledge point's language: Arabic stays Arabic, mixed stays mixed the way the professor teaches it; keep the English terms the material uses.
 - Every knowledge point gets at least one card. High-priority points (4-5) get 2-3 cards testing them from different angles (recall, recognition, application); low-priority points (1-2) one simple card.
 - Match the assessment's question formats and the professor's style. Definitions -> short + cloze; facts -> mcq / true-false / cloze; formulas -> state it (cloze/short) and apply it (problem); procedures -> ordering + problem; worked examples -> a problem card reproducing the professor's method (worked = true) plus 1-2 new similar problems with different numbers (similar_to = the example's id); comparisons -> mcq / short.
@@ -649,7 +649,7 @@ def generate_request(context, kps, prio=None, fill=False):
     return params([{"type": "text", "text": GENERATE_PROMPT, "cache_control": {"type": "ephemeral"}}],
                   [{"role": "user", "content": f"{context}\n\nKnowledge points:\n\n{listing}\n\nWrite the cards for these "
                     f"{len(kps)} knowledge points." + (" Each of them still has no card: cover every one." if fill else "")}],
-                  CARDS_SCHEMA, max_tokens=16000)
+                  CARDS_SCHEMA, max_tokens=16000, effort="medium")
 
 
 def _prio_request(user, a, kps):

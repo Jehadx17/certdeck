@@ -37,7 +37,7 @@ def candidates(user, now):
 def reteach_request(card):
     system = [{"type": "text", "text": f"{RETEACH_PROMPT}\n\n{ai.CARD_RULES}"},
               {"type": "text", "text": "Original card (JSON):\n" + json.dumps(card, ensure_ascii=False)}]
-    return ai.params(system, [{"role": "user", "content": RETEACH_TASK}], RETEACH_SCHEMA, max_tokens=3000)
+    return ai.params(system, [{"role": "user", "content": RETEACH_TASK}], RETEACH_SCHEMA, max_tokens=6000, effort="medium")
 
 
 def reteach(user, card_doc, now=None):
