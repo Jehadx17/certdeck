@@ -43,6 +43,16 @@ server only checks, encrypts and serves them.
 5. **Build and publish:** `packs build <slug> --out DIR` (on the server, which holds `DARB_PACK_KEK`), upload to the
    CDN, then `packs publish <slug>`.
 
+**Student-collected questions (owner decision 2026-10-17):** the owner chose to use questions that students collect
+after the test, starting with the Telegram channel `t.me/MezlaQ3` («تسريبات مظله - قدرات»). This replaces the "never
+real items" rule for قدرات packs. The basis is a lawyer's verbal advice that this is lawful in Saudi Arabia. A written
+opinion is a release blocker (DARB-RELEASE.md).
+- The downloads are kept in `darb/content/sources/qudurat/mezla/`, which git ignores.
+- Every item still needs a correct, checkable answer.
+- Duplicates are merged. Incomplete items, and items whose answer can't be established, go to the owner as questions;
+  nothing is guessed.
+- Each item's `source` records the post it came from.
+
 **Ship rule:** a pack ships only if its audited error rate is at most **2%** (`content.MAX_ERROR_RATE`). Otherwise it is
 listed as blocked in the per-pack report below for you to decide.
 
