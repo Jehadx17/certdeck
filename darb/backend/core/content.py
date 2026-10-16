@@ -177,7 +177,8 @@ def ingest_generated(pack, results, ctxs, source=f"ai:{GEN_MODEL}", status="draf
                 continue
             seen.append(q)
             n += 1
-            PackItem.objects.create(pack=pack, n=n, data=card, status=status, source=source)
+            src = f"{source} {raw['source']}" if isinstance(raw.get("source"), str) else source  # e.g. the Telegram post
+            PackItem.objects.create(pack=pack, n=n, data=card, status=status, source=src[:120])
             stats["added"] += 1
     return stats
 
@@ -185,7 +186,7 @@ def ingest_generated(pack, results, ctxs, source=f"ai:{GEN_MODEL}", status="draf
 def import_items(slug, path):
     """Items written offline (Claude Code, one JSON object per line, same shape as generated items plus "topic") ->
     the pack, through the same code checks and duplicate filter. They count as verified: the author's own blind solve
-    replaces the API one (docs/DARB-PACKS.md)."""
+    replaces the API one (docs/DARB-PACKS.md). An optional per-line "source" (the post it came from) is appended."""
     pack = ensure_pack(blueprint(slug))
     topics = {t["id"] for t in pack.topics}
     rows = [json.loads(line) for line in Path(path).read_text().splitlines() if line.strip()]
