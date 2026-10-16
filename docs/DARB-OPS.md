@@ -1,6 +1,11 @@
 # Darb: operations runbook
 
-## First deploy (one Contabo VPS 8, Germany, Ubuntu 24.04)
+## Today: shared host
+Darb runs on the CertDeck server (169.58.7.222) at `darb.mithaqstay.com`: `/opt/darb` (own compose project `darb`, own DB),
+host nginx site `/etc/nginx/sites-available/darb` → Darb's nginx on 127.0.0.1:18800, Let's Encrypt via certbot.timer,
+backups to `/opt/darb/backups`. Deploy with `darb/deploy/deploy.sh`. Never touch `/opt/certdeck`.
+
+## First deploy on its own server (one Contabo VPS 8, Germany, Ubuntu 24.04)
 1. On the server:
    - install Docker;
    - `ufw allow 22,443/tcp` and allow port 80 only from Cloudflare's ranges (or close it);
@@ -34,7 +39,7 @@
 | What | How often | How |
 |---|---|---|
 | Backups | daily (full on Sundays, differential otherwise) + continuous WAL | `backup` service (pgBackRest → R2, encrypted, 5 fulls kept). Check `docker compose exec -u postgres db pgbackrest --stanza=darb info` weekly |
-| Restore drill | before launch, then quarterly | `darb/deploy/tests/restore-test.sh` (on a spare VPS against R2), result into DARB-RESTORE.md |
+| Restore drill | before launch, then quarterly | `darb/deploy/tests/restore-drill.sh` on the server (non-destructive), result into DARB-RESTORE.md |
 | Review-log partitions | automatic (worker, hourly) | 14 months back, 2 ahead |
 | AI spend | daily glance | admin → AI calls (month total, per paying account, top accounts) |
 | Mistake reports | daily | admin → Reports → fix the item (admin → Pack items), "Fixed: tell the student" |

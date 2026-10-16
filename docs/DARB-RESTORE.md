@@ -27,6 +27,14 @@ The most writes that can be lost is about 1 minute (`archive_timeout` 60 s).
 - pgBackRest connected as `postgres`, which isn't the database's user. Now `PGBACKREST_PG1_USER=$POSTGRES_USER`.
 - The healthcheck counted the entrypoint's socket-only init server as healthy. It now checks over TCP.
 
-## Still to do (👤 VPS + R2 first)
-Repeat the test on a spare VPS against the real R2 repository: set `PGBACKREST_REPO1_TYPE=s3` and the R2 keys, run the
-same script, and add the result here. Then run it every quarter (DARB-OPS.md).
+## Drill on the live server: passed (2026-10-17, darb.mithaqstay.com, shared CertDeck host)
+`darb/deploy/tests/restore-drill.sh` (non-destructive: the live database is only read) restored full backup
+20261016-223334F plus the archived WAL from the encrypted posix repository `/opt/darb/backups` into a throwaway
+container with no network and the repository mounted read-only. Restore + recovery took **2 s**; row counts of all
+**41 tables** match the live database. Live Darb has no student data yet, so this proves the server's backup chain
+(archiving, encryption, restore, WAL replay), not restore speed at volume; the 500k-review run above covers that.
+Fixed on the way: recovery refused to start with `max_connections` below the primary's 200; the drill now sets it.
+
+## Still to do (👤 R2 first)
+Move the repository to R2 (`PGBACKREST_REPO1_TYPE=s3` and the R2 keys; today it is on the same disk as the database, so
+a lost server loses both), rerun the drill, and add the result here. Then run it every quarter (DARB-OPS.md).

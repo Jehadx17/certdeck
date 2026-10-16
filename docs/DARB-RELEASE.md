@@ -9,8 +9,8 @@
 | `darbedu.sa` + Cloudflare + R2 buckets (EU) | 👤 | |
 | Google Play Console (organization) | 👤 | |
 | Apple Developer Program (organization) + Small Business Program | 👤 | |
-| Anthropic API key (Darb workspace, spend limit) | 👤 | |
-| Contabo VPS 8 (Germany) with SSH access | 👤 | |
+| Anthropic API key (Darb workspace, spend limit) | 👤 | ✔ on the server |
+| Server: shared CertDeck host 169.58.7.222, `darb.mithaqstay.com` (owner decision 2026-10-16, instead of a Contabo VPS) | 👤 | ✔ deployed, TLS, nightly encrypted backups |
 | RevenueCat project + keys; Google Cloud project (OAuth clients, Play Integrity, service account); App Store Connect API key + In-App Purchase key; SMTP; Sentry + Better Stack | 👤 | |
 
 ## Build
@@ -55,7 +55,7 @@
 | AI: Haiku only, < 100k tokens, per-user cap, eval passes per feature | Claude | ✔ built · ⏳ eval run (key) |
 | Packs: قدرات, تحصيلي, school subjects built, audited (≤ 2% error) or listed as blocked | Claude | ⏳ key + blueprints (question 6) |
 | Light/dark, Arabic RTL, minimal settings, onboarding: small + large screens, old Android (7.0), old iOS (16.4) | Claude | ✔ CI walkthrough passed (runs 38956484671, 38959852858): iOS 16.4 + 18.5 SE, iOS 26.2 Pro Max, Android 7.0 phone + tablet, AR/EN × light/dark |
-| Load test at the 100k-student profile; restore test | Claude | ✔ CI runs passed (DARB-LOADTEST.md, DARB-RESTORE.md) · ⏳ repeat on the VPS + R2 |
+| Load test at the 100k-student profile; restore test | Claude | ✔ CI runs passed (DARB-LOADTEST.md, DARB-RESTORE.md) · ✔ restore drill on the server 2026-10-17 · 👤 R2 for off-server backups; load test not repeated on the shared host (it would load CertDeck) |
 | Devices failing Play Integrity / App Attest get free features only, no Darb Plus content (decided 2026-10-16) | Claude | ⏳ |
 | Monitoring: Sentry errors, uptime, AI spend alert | Claude | ✔ built · 👤 accounts |
 
