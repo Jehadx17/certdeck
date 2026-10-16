@@ -75,8 +75,25 @@ def drop_unconfirmed_minors():
             delete_account(a)
 
 
+def spend_alert():
+    """The last 24 hours of AI spend over the admin's threshold: an error log line, which Sentry turns into an alert."""
+    from datetime import timedelta
+
+    from django.db.models import Sum
+    from django.utils.timezone import now as tz_now
+
+    from .models import AiCall, Config
+
+    usd = float(AiCall.objects.filter(created__gte=tz_now() - timedelta(days=1)).aggregate(s=Sum("cost_usd"))["s"] or 0)
+    limit = float(Config.get().daily_spend_alert_usd)
+    if usd > limit:
+        log.error("AI spend alert: $%.2f in the last 24 h (threshold $%.2f)", usd, limit)
+    return usd
+
+
 def periodic():
     every("partitions", 3600, ensure_review_partitions)
     every("rate-cleanup", 86400, limits.cleanup)
     every("anomalies", 3600, limits.anomalies)
     every("unconfirmed-minors", 86400, drop_unconfirmed_minors)
+    every("spend-alert", 3600, spend_alert)

@@ -4,12 +4,13 @@
 # Stage 2: 300 students for 2 min (launch-day spike). Prints the report; artifacts in tests/out/.
 set -euo pipefail
 cd "$(dirname "$0")/.."
-DC="docker compose --env-file .env"
-trap 'echo "== FAILED; logs:"; $DC logs --tail 60 db api slow' ERR
+DC="docker compose --project-directory $PWD --env-file $PWD/.env"  # absolute: the script cds into tests/
+trap 'echo "== FAILED; logs:"; $DC logs --tail 60 db api slow nginx' ERR
 mkdir -p tests/out
 $DC build
 $DC up -d --scale api=2
 for i in $(seq 1 60); do curl -fsS localhost:${HTTP_PORT:-80}/api/health >/dev/null 2>&1 && break; sleep 2; done
+curl -fsS "localhost:${HTTP_PORT:-80}/api/health?deep=1" >/dev/null  # up, through nginx, PgBouncer and Postgres
 $DC exec -T api python manage.py loadtest_seed --accounts 3000 > tests/tokens.txt
 cd tests
 stats() { docker stats --no-stream --format '{{.Name}} cpu={{.CPUPerc}} mem={{.MemUsage}}' > "out/docker-$1.txt"; }

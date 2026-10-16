@@ -141,3 +141,10 @@ LOGGING = {
     "handlers": {"console": {"class": "logging.StreamHandler"}},
     "root": {"handlers": ["console"], "level": "INFO"},
 }
+
+# Errors to Sentry (free Developer plan) when a DSN is set; no personal data (send_default_pii off).
+if env("SENTRY_DSN"):
+    import sentry_sdk
+
+    sentry_sdk.init(dsn=env("SENTRY_DSN"), send_default_pii=False, traces_sample_rate=0.0,
+                    environment=env("SENTRY_ENVIRONMENT", "production"))

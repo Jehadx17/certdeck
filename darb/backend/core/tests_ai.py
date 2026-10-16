@@ -132,3 +132,13 @@ class EvalHarnessTests(TestCase):
         self.assertGreater(s["grade"]["haiku_mae"], 0)  # "always correct" misses the partial and wrong golds
         self.assertFalse(s["grade"]["pass"])
         self.assertIn("plus_session", evals.session_cost(s))
+
+
+class SpendAlertTests(TestCase):
+    def test_alert_over_threshold(self):
+        from core import tasks
+        a, _ = make_account()
+        AiCall.objects.create(user=a, endpoint="explain", model=ai.MODEL, cost_usd=Decimal("25"), ok=True)
+        with self.assertLogs("core.tasks", level="ERROR") as logs:
+            self.assertEqual(tasks.spend_alert(), 25.0)
+        self.assertIn("AI spend alert", logs.output[0])

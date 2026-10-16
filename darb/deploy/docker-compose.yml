@@ -31,7 +31,8 @@ services:
     shm_size: 1g
     networks: [internal]
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      # Over TCP: the entrypoint's temporary init server listens only on the socket, so nothing starts before the real one.
+      test: ["CMD-SHELL", "pg_isready -h 127.0.0.1 -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
       interval: 5s
       retries: 30
 

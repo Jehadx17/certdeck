@@ -10,3 +10,4 @@ pypdf>=5,<7
 pillow>=11,<13
 PyJWT[crypto]>=2.10,<3
 whitenoise>=6.8,<7
+sentry-sdk[django]>=2.20,<3
