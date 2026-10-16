@@ -49,7 +49,57 @@ Filled by `manage.py packs status` after phase 4 runs (needs the Anthropic key).
 
 | pack | items | verified | quarantined | rejected | audited error rate (95% CI) | ships | cost |
 |---|---|---|---|---|---|---|---|
-| (none built yet) | | | | | | | |
+| `qudurat-quant` | 1,200 planned | | | | | ⛔ blocked: Anthropic key (DARB-NEEDS-ME #6); official outline | |
+| `qudurat-verbal` | 1,200 planned | | | | | ⛔ blocked: Anthropic key (DARB-NEEDS-ME #6); official outline | |
+| `school-arabic-h1` | 350 planned | | | | | ⛔ blocked: Anthropic key (DARB-NEEDS-ME #6); unverified outline | |
+| `school-arabic-m1` | 300 planned | | | | | ⛔ blocked: Anthropic key (DARB-NEEDS-ME #6); unverified outline | |
+| `school-arabic-m2` | 300 planned | | | | | ⛔ blocked: Anthropic key (DARB-NEEDS-ME #6); unverified outline | |
+| `school-arabic-m3` | 300 planned | | | | | ⛔ blocked: Anthropic key (DARB-NEEDS-ME #6); unverified outline | |
+| `school-biology-h1` | 350 planned | | | | | ⛔ blocked: Anthropic key (DARB-NEEDS-ME #6); unverified outline | |
+| `school-biology-h2` | 350 planned | | | | | ⛔ blocked: Anthropic key (DARB-NEEDS-ME #6); unverified outline | |
+| `school-biology-h3` | 350 planned | | | | | ⛔ blocked: Anthropic key (DARB-NEEDS-ME #6); unverified outline | |
+| `school-chemistry-h1` | 350 planned | | | | | ⛔ blocked: Anthropic key (DARB-NEEDS-ME #6); unverified outline | |
+| `school-chemistry-h2` | 350 planned | | | | | ⛔ blocked: Anthropic key (DARB-NEEDS-ME #6); unverified outline | |
+| `school-chemistry-h3` | 350 planned | | | | | ⛔ blocked: Anthropic key (DARB-NEEDS-ME #6); unverified outline | |
+| `school-critical-thinking-h1` | 351 planned | | | | | ⛔ blocked: Anthropic key (DARB-NEEDS-ME #6); unverified outline | |
+| `school-digital-h1` | 350 planned | | | | | ⛔ blocked: Anthropic key (DARB-NEEDS-ME #6); unverified outline | |
+| `school-digital-m1` | 250 planned | | | | | ⛔ blocked: Anthropic key (DARB-NEEDS-ME #6); unverified outline | |
+| `school-digital-m2` | 250 planned | | | | | ⛔ blocked: Anthropic key (DARB-NEEDS-ME #6); unverified outline | |
+| `school-digital-m3` | 250 planned | | | | | ⛔ blocked: Anthropic key (DARB-NEEDS-ME #6); unverified outline | |
+| `school-earth-h1` | 352 planned | | | | | ⛔ blocked: Anthropic key (DARB-NEEDS-ME #6); unverified outline | |
+| `school-english-h1` | 350 planned | | | | | ⛔ blocked: Anthropic key (DARB-NEEDS-ME #6); unverified outline | |
+| `school-english-h2` | 350 planned | | | | | ⛔ blocked: Anthropic key (DARB-NEEDS-ME #6); unverified outline | |
+| `school-english-h3` | 350 planned | | | | | ⛔ blocked: Anthropic key (DARB-NEEDS-ME #6); unverified outline | |
+| `school-english-m1` | 300 planned | | | | | ⛔ blocked: Anthropic key (DARB-NEEDS-ME #6); unverified outline | |
+| `school-english-m2` | 300 planned | | | | | ⛔ blocked: Anthropic key (DARB-NEEDS-ME #6); unverified outline | |
+| `school-english-m3` | 300 planned | | | | | ⛔ blocked: Anthropic key (DARB-NEEDS-ME #6); unverified outline | |
+| `school-islamic-h1` | 349 planned | | | | | ⛔ blocked: Anthropic key (DARB-NEEDS-ME #6); unverified outline | |
+| `school-islamic-m1` | 250 planned | | | | | ⛔ blocked: Anthropic key (DARB-NEEDS-ME #6); unverified outline | |
+| `school-islamic-m2` | 250 planned | | | | | ⛔ blocked: Anthropic key (DARB-NEEDS-ME #6); unverified outline | |
+| `school-islamic-m3` | 250 planned | | | | | ⛔ blocked: Anthropic key (DARB-NEEDS-ME #6); unverified outline | |
+| `school-math-h1` | 350 planned | | | | | ⛔ blocked: Anthropic key (DARB-NEEDS-ME #6); unverified outline | |
+| `school-math-h2` | 350 planned | | | | | ⛔ blocked: Anthropic key (DARB-NEEDS-ME #6); unverified outline | |
+| `school-math-h3` | 350 planned | | | | | ⛔ blocked: Anthropic key (DARB-NEEDS-ME #6); unverified outline | |
+| `school-math-m1` | 300 planned | | | | | ⛔ blocked: Anthropic key (DARB-NEEDS-ME #6); unverified outline | |
+| `school-math-m2` | 300 planned | | | | | ⛔ blocked: Anthropic key (DARB-NEEDS-ME #6); unverified outline | |
+| `school-math-m3` | 300 planned | | | | | ⛔ blocked: Anthropic key (DARB-NEEDS-ME #6); unverified outline | |
+| `school-physics-h1` | 350 planned | | | | | ⛔ blocked: Anthropic key (DARB-NEEDS-ME #6); unverified outline | |
+| `school-physics-h2` | 350 planned | | | | | ⛔ blocked: Anthropic key (DARB-NEEDS-ME #6); unverified outline | |
+| `school-physics-h3` | 350 planned | | | | | ⛔ blocked: Anthropic key (DARB-NEEDS-ME #6); unverified outline | |
+| `school-science-m1` | 300 planned | | | | | ⛔ blocked: Anthropic key (DARB-NEEDS-ME #6); unverified outline | |
+| `school-science-m2` | 300 planned | | | | | ⛔ blocked: Anthropic key (DARB-NEEDS-ME #6); unverified outline | |
+| `school-science-m3` | 300 planned | | | | | ⛔ blocked: Anthropic key (DARB-NEEDS-ME #6); unverified outline | |
+| `school-social-h1` | 350 planned | | | | | ⛔ blocked: Anthropic key (DARB-NEEDS-ME #6); unverified outline | |
+| `school-social-m1` | 250 planned | | | | | ⛔ blocked: Anthropic key (DARB-NEEDS-ME #6); unverified outline | |
+| `school-social-m2` | 250 planned | | | | | ⛔ blocked: Anthropic key (DARB-NEEDS-ME #6); unverified outline | |
+| `school-social-m3` | 250 planned | | | | | ⛔ blocked: Anthropic key (DARB-NEEDS-ME #6); unverified outline | |
+| `tahsili-biology` | 700 planned | | | | | ⛔ blocked: Anthropic key (DARB-NEEDS-ME #6); unverified outline | |
+| `tahsili-chemistry` | 700 planned | | | | | ⛔ blocked: Anthropic key (DARB-NEEDS-ME #6); unverified outline | |
+| `tahsili-math` | 700 planned | | | | | ⛔ blocked: Anthropic key (DARB-NEEDS-ME #6); unverified outline | |
+| `tahsili-physics` | 700 planned | | | | | ⛔ blocked: Anthropic key (DARB-NEEDS-ME #6); unverified outline | |
+
+Status 2026-10-17: no pack is built. Every pack above is **blocked for you** on the Anthropic key; the pipeline
+(generate → verify → audit → encrypt) is built and tested (Phases 3-4 report).
 
 Blueprints ready: `qudurat-verbal` (5 topics, 1,200 items) and `qudurat-quant` (9 topics, 1,200 items), both from
 ETEC's official GAT guide.
