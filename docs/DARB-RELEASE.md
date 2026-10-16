@@ -43,7 +43,7 @@
 | Privacy policy, terms, support, deletion, AI-and-minors pages (Arabic + English) | Claude drafted · 👤 lawyer review | ⏳ |
 | Pages live at `darbedu.sa/privacy`, `/terms`, `/support`, `/delete-account`, `/ai-and-minors` (+ `/ar/`) | Claude (served by nginx) · 👤 approve the text | ⏳ |
 | SDAIA SCCs with processors; transfer risk assessment; DPIA (minors); registration decision; DPO decision | 👤 + lawyer | |
-| Lawyer's **written** opinion that the قدرات packs may use student-collected test questions (t.me/MezlaQ3 etc.; verbal OK 2026-10-17, DARB-PACKS.md) | 👤 + lawyer | |
+| Lawyer's **written** opinion that the قدرات packs may use student-collected test questions (t.me/MezlaQ3 etc.; verbal OK 2026-10-17, DARB-PACKS.md), including Mezla's "all rights reserved" notice on its sheets (credited, not licensed) | 👤 + lawyer | |
 | Lawyer confirms no guardian consent is needed (owner decision 2026-10-16), or the switch (`DARB_GUARDIAN_CONSENT`) goes back on | 👤 | |
 | Anthropic's child-safety prompt requested (if they provide one) | 👤 | |
 

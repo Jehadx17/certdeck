@@ -52,6 +52,11 @@ opinion is a release blocker (DARB-RELEASE.md).
 - Duplicates are merged. Incomplete items, and items whose answer can't be established, go to the owner as questions;
   nothing is guessed.
 - Each item's `source` records the post it came from.
+- Mezla's sheets say «جميع الحقوق محفوظة لمنصة مظلة التعليمية». The owner's choice (2026-10-17) is to credit Mezla
+  for every item taken from them; the credit goes in the pack's `sources`, the item's `source` and an in-app sources
+  list. What is reused is only the question (ETEC's, as recalled by students) and the fact of its answer. Every
+  question is re-typed in Darb's format and every answer is re-solved. The explanations are written by us. Mezla's
+  images, layout and wording of explanations are never reused.
 
 **Ship rule:** a pack ships only if its audited error rate is at most **2%** (`content.MAX_ERROR_RATE`). Otherwise it is
 listed as blocked in the per-pack report below for you to decide.
