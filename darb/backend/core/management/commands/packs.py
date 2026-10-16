@@ -11,12 +11,13 @@ class Command(BaseCommand):
     help = """The content pipeline (docs/DARB-PACKS.md):
   packs run <slug>...        one pass per pack: collect ended batches, submit the next stage (re-run until complete)
   packs run --all            every blueprint in darb/content/blueprints
+  packs import <slug> FILE.jsonl   load items written offline (Claude Code), through the code checks
   packs status               items per status, error rate, cost per pack
   packs build <slug> --out DIR   encrypt the verified items as a new version (+ sample) into DIR (upload to R2/CDN)
   packs publish <slug> / unpublish <slug>"""
 
     def add_arguments(self, parser):
-        parser.add_argument("action", choices=["run", "status", "build", "publish", "unpublish", "demo"])
+        parser.add_argument("action", choices=["run", "import", "status", "build", "publish", "unpublish", "demo"])
         parser.add_argument("slugs", nargs="*")
         parser.add_argument("--all", action="store_true")
         parser.add_argument("--out", default="")
@@ -52,7 +53,11 @@ class Command(BaseCommand):
                     "explanation": f"الإجابة {ans}.", "hint": hint, "topic": topic, "difficulty": 1 + n % 3})
             slugs, out = ["demo-quant"], out or "/tmp/darb-cdn"
             action = "build"
-        if action == "run":
+        if action == "import":
+            if len(slugs) != 2:
+                raise CommandError("usage: packs import <slug> FILE.jsonl")
+            self.stdout.write(json.dumps(content.import_items(*slugs), ensure_ascii=False))
+        elif action == "run":
             for slug in slugs:
                 self.stdout.write(content.advance(slug))
         elif action == "status":

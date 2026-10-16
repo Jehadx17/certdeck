@@ -23,6 +23,26 @@ the study "domains", so new cards interleave by topic weight and readiness is pe
 | audit | Opus 5.5, max effort, Batch | random sample of 60 verified items; error = wrong key, wrong question, wrong explanation, bad language, unsuitable for 12-18, or a likely verbatim exam item. The measured error rate has a 95% Wilson interval; items found wrong are rejected |
 | build | `packs build --out` (then uploaded to R2) | verified items only; a new version and key each build |
 
+## Authoring in Claude Code (owner decision 2026-10-17: the default; the API pipeline above stays as a fallback)
+The owner writes pack items, and turns PDFs and slides into items, in Claude Code on their own subscription. The
+server only checks, encrypts and serves them.
+1. **Write:** one session per pack, given `darb/content/blueprints/<slug>.json`, which sets the topics, their counts
+   and the format. Output: `<slug>.jsonl`, one item per line:
+   `{"type":"mcq","question":"…","options":["…","…","…","…"],"correct":[1],"explanation":"…","hint":"…","topic":"t1","difficulty":2,"skill":"…"}`
+   (or `"type":"basic"` with `"answer"`). For a computable item add
+   `"check":{"kind":"numeric","expr":"12/3*7","value":"28","var":null}`. `correct` counts from 0, and `topic` is a
+   topic id from the blueprint. Write original items only, never real exam items.
+2. **Blind check:** a *fresh* session gets the items without `correct`/`answer` and answers them. Drop every item it
+   gets wrong or calls flawed.
+3. **Audit:** a third session reviews a random 60 against the same error list as the API audit. The error count goes
+   into this report's table.
+4. **Load:** copy the file to the server, then run
+   `docker compose -p darb exec api python manage.py packs import <slug> /path/<slug>.jsonl`. The code checks run on
+   every line: the shape, SymPy, and near-duplicates (also against earlier imports). Lines with an unknown topic are
+   counted and skipped. Lines that pass are stored as `verified` with `source = claude-code:<file>`.
+5. **Build and publish:** `packs build <slug> --out DIR` (on the server, which holds `DARB_PACK_KEK`), upload to the
+   CDN, then `packs publish <slug>`.
+
 **Ship rule:** a pack ships only if its audited error rate is at most **2%** (`content.MAX_ERROR_RATE`). Otherwise it is
 listed as blocked in the per-pack report below for you to decide.
 

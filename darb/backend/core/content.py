@@ -160,7 +160,7 @@ def clean_item(raw, topic):
     return card, None
 
 
-def ingest_generated(pack, results, ctxs):
+def ingest_generated(pack, results, ctxs, source=f"ai:{GEN_MODEL}", status="draft"):
     seen = [norm(q) for q in PackItem.objects.filter(pack=pack).values_list("data__question", flat=True)]
     n = (PackItem.objects.filter(pack=pack).order_by("-n").values_list("n", flat=True).first() or 0)
     stats = {"added": 0, "invalid": 0, "duplicate": 0, "check failed": 0, "check does not match the key": 0}
@@ -177,8 +177,22 @@ def ingest_generated(pack, results, ctxs):
                 continue
             seen.append(q)
             n += 1
-            PackItem.objects.create(pack=pack, n=n, data=card, status="draft", source=f"ai:{GEN_MODEL}")
+            PackItem.objects.create(pack=pack, n=n, data=card, status=status, source=source)
             stats["added"] += 1
+    return stats
+
+
+def import_items(slug, path):
+    """Items written offline (Claude Code, one JSON object per line, same shape as generated items plus "topic") ->
+    the pack, through the same code checks and duplicate filter. They count as verified: the author's own blind solve
+    replaces the API one (docs/DARB-PACKS.md)."""
+    pack = ensure_pack(blueprint(slug))
+    topics = {t["id"] for t in pack.topics}
+    rows = [json.loads(line) for line in Path(path).read_text().splitlines() if line.strip()]
+    ok = {f"l{k}": r for k, r in enumerate(rows) if r.get("topic") in topics}
+    stats = ingest_generated(pack, {c: {"items": [r]} for c, r in ok.items()}, {c: {"topic": r["topic"]} for c, r in ok.items()},
+                             source=f"claude-code:{Path(path).name}"[:120], status="verified")
+    stats["unknown topic"] = len(rows) - len(ok)
     return stats
 
 

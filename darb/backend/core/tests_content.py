@@ -81,6 +81,17 @@ class PipelineTests(TestCase):
         self.assertEqual((gen["model"], gen["output_config"]["effort"]), ("claude-opus-5-5", "high"))
         self.assertNotIn("fallbacks", json.dumps(fake.batches))  # the Batch API rejects it
 
+    def test_import_offline_items(self):
+        tmp = Path(tempfile.mkdtemp())
+        (tmp / "demo-quant.json").write_text(json.dumps(BP, ensure_ascii=False))
+        rows = [dict(i, topic="t1") for i in gen_items(5)] + [dict(gen_items(5)[1], topic="t1"),  # a repeat
+                                                               dict(gen_items(6)[0], topic="nope")]
+        (tmp / "items.jsonl").write_text("\n".join(json.dumps(r, ensure_ascii=False) for r in rows) + "\n")
+        with mock.patch.object(content, "BLUEPRINTS", tmp):
+            stats = content.import_items("demo-quant", tmp / "items.jsonl")
+        self.assertEqual((stats["added"], stats["check failed"], stats["duplicate"], stats["unknown topic"]), (3, 1, 1, 1))
+        self.assertEqual(set(PackItem.objects.values_list("status", "source")), {("verified", "claude-code:items.jsonl")})
+
     def test_wilson_interval(self):
         lo, hi = content.wilson(1, 60)
         self.assertTrue(0 < lo < 1 / 60 < hi < 0.1)
