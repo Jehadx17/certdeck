@@ -5,5 +5,4 @@ services:
   db:
     volumes: ["/opt/darb/backups:/var/lib/pgbackrest"]
   backup:
-    profiles: []
     volumes: ["/opt/darb/backups:/var/lib/pgbackrest"]

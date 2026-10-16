@@ -8,5 +8,5 @@ cd "$(git rev-parse --show-toplevel)"
 git archive --format=tar HEAD darb/backend darb/deploy | ssh "$HOST" 'set -e
   cd /opt/darb && rm -rf src.new && mkdir src.new && tar -x -C src.new && rm -rf src && mv src.new src
   cd src/darb/deploy && cp /opt/darb/.env .env
-  docker compose -p darb --env-file /opt/darb/.env -f docker-compose.yml -f shared-host.compose.yml up -d --build --remove-orphans
-  docker compose -p darb --env-file /opt/darb/.env -f docker-compose.yml -f shared-host.compose.yml ps --format "{{.Service}}: {{.Status}}"'
+  docker compose -p darb --env-file /opt/darb/.env -f docker-compose.yml -f shared-host.compose.yml --profile backup up -d --build --remove-orphans
+  docker compose -p darb --env-file /opt/darb/.env -f docker-compose.yml -f shared-host.compose.yml --profile backup ps --format "{{.Service}}: {{.Status}}"'
