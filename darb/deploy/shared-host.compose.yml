@@ -1,0 +1,9 @@
+# Shared host (darb.mithaqstay.com on the CertDeck server, owner decision 2026-10-17): the host's nginx owns 80/443
+# and proxies to Darb's nginx on 127.0.0.1:${HTTP_PORT} (deploy/nginx-host-darb.conf). Backups go to a posix repo on
+# the host disk (/opt/darb/backups) until R2 exists: same disk, so not off-site (docs/DARB-OPS.md).
+services:
+  db:
+    volumes: ["/opt/darb/backups:/var/lib/pgbackrest"]
+  backup:
+    profiles: []
+    volumes: ["/opt/darb/backups:/var/lib/pgbackrest"]
