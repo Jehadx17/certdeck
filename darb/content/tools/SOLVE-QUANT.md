@@ -30,5 +30,7 @@ write one JSON line to OUT with:
     western digits>","var":null}; omit otherwise.
 
 Be strict: a slightly wrong number in an option, an approximate answer without «تقريبًا», or a problem with two readings
-is NOT ok. Every input line produces exactly one output line (overwrite OUT if it exists). When finished, reply with
+is NOT ok. If you had to assume anything the question doesn't state (a missing % sign, one part per
+person, whether zero counts, what the start time means), the status is "ambiguous" and the note says the assumption.
+Run every check expression with `python3 -I -c` (plain python arithmetic is fine; sympy may not be installed). Every input line produces exactly one output line (overwrite OUT if it exists). When finished, reply with
 only counts per status.

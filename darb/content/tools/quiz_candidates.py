@@ -38,7 +38,8 @@ def build(src, chan):
         out.append({"cid": f"{chan}-{min(x['id'] for x in posts)}", "question": clean(first["question"]),
                     "options": [clean(o["text"]) for o in first["options"]],
                     "vote": [round(votes[key(o["text"])] / len(posts)) for o in first["options"]],
-                    "posts": sorted(x["id"] for x in posts), "other_versions": by_q[q] - 1})
+                    "posts": sorted(x["id"] for x in posts), "other_versions": by_q[q] - 1,
+                    "source": f"mezla:{chan}/{min(x['id'] for x in posts)}"})
     return sorted(out, key=lambda c: c["posts"][0])
 
 
