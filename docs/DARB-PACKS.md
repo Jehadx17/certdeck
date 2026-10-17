@@ -32,8 +32,9 @@ server only checks, encrypts and serves them.
    (or `"type":"basic"` with `"answer"`). For a computable item add
    `"check":{"kind":"numeric","expr":"12/3*7","value":"28","var":null}`. `correct` counts from 0, and `topic` is a
    topic id from the blueprint. Write original items only, never real exam items.
-2. **Blind check:** a *fresh* session gets the items without `correct`/`answer` and answers them. Drop every item it
-   gets wrong or calls flawed.
+2. **Blind check:** `tools/author_merge.py prep <dir>` shuffles every item's options and the order (writers leave the key
+   in a pattern, and a solver once copied the pattern). A *fresh* session then gets the items without `correct`/`answer` and answers them. Drop every item it
+   gets wrong or calls flawed (`author_merge.py <dir> <slug>`).
 3. **Audit:** a third session reviews a random 60 against the same error list as the API audit. The error count goes
    into this report's table.
 4. **Load:** copy the file to the server, then run
@@ -132,7 +133,7 @@ The import is yours to run (live DB).
 | `school-social-m3` | 250 planned | | | | | ⛔ blocked: Anthropic key (DARB-NEEDS-ME #6); unverified outline | |
 | `tahsili-biology` | 700 planned | | | | | ⛔ blocked: Anthropic key (DARB-NEEDS-ME #6); unverified outline | |
 | `tahsili-chemistry` | 700 planned | | | | | ⛔ blocked: Anthropic key (DARB-NEEDS-ME #6); unverified outline | |
-| `tahsili-math` | 700 planned | | | | | ⛔ blocked: Anthropic key (DARB-NEEDS-ME #6); unverified outline | |
+| `tahsili-math` | 699 | 699 | — | 1 (blind solver disagreed) | 0/60 = 0% (0–6.0%) | ✅ ships once you run the import; unverified outline | $0 API (Claude Code) |
 | `tahsili-physics` | 700 planned | | | | | ⛔ blocked: Anthropic key (DARB-NEEDS-ME #6); unverified outline | |
 
 Status 2026-10-17: no pack is built. Every pack above is **blocked for you** on the Anthropic key; the pipeline
