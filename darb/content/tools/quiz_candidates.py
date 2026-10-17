@@ -21,11 +21,14 @@ def key(s):
 
 def build(src, chan):
     groups = collections.defaultdict(list)
-    for line in open(src, encoding="utf-8"):
-        x = json.loads(line)
+    passage = None  # a reading passage is a text post («استيعاب المقروء (قطعة …)») followed by its run of polls
+    for x in sorted((json.loads(l) for l in open(src, encoding="utf-8")), key=lambda r: r["id"]):
         p = x.get("poll")
+        if not p and (x.get("text") or "").strip():
+            passage = x["text"].strip() if re.search("استيعاب|قطعة", x["text"]) else None
         if not p or len(key(p["question"])) < 8 or len(p["options"]) != 4:
             continue
+        x["passage"] = passage
         groups[(key(p["question"]), tuple(sorted(key(o["text"]) for o in p["options"])))].append(x)
     by_q = collections.Counter(q for q, _ in groups)
     out = []
@@ -39,6 +42,7 @@ def build(src, chan):
                     "options": [clean(o["text"]) for o in first["options"]],
                     "vote": [round(votes[key(o["text"])] / len(posts)) for o in first["options"]],
                     "posts": sorted(x["id"] for x in posts), "other_versions": by_q[q] - 1,
+                    **({"passage": posts[0]["passage"]} if posts[0]["passage"] else {}),
                     "source": f"mezla:{chan}/{min(x['id'] for x in posts)}"})
     return sorted(out, key=lambda c: c["posts"][0])
 
@@ -49,11 +53,14 @@ def demo():
         (1, "🟢 ركوب : ترجل", [("أ : ب", 10), ("ج : د", 70), ("هـ : و", 10), ("ز : ح", 10)]),
         (2, "ركوب : ترجّل.", [("ج : د", 50), ("أ : ب", 30), ("هـ : و", 10), ("ز : ح", 10)]),  # repost, options reordered
         (3, "ركوب : ترجل", [("أ : ب", 25), ("ج : د", 25), ("هـ : و", 25), ("س : ش", 25)]),  # another version
-        (4, ".", [("أ", 25), ("ب", 25), ("ج", 25), ("د", 25)])]]  # image-only
+        (4, ".", [("أ", 25), ("ب", 25), ("ج", 25), ("د", 25)]),  # image-only
+        (6, "يفهم من النص أن", [("و", 25), ("ز", 25), ("ح", 25), ("ط", 25)])]]  # under the passage at id 5
+    rows.insert(4, {"id": 5, "text": "استيعاب المقروء (قطعة الماء): الماء أصل الحياة."})
     with tempfile.NamedTemporaryFile("w", suffix=".jsonl", delete=False) as f:
         f.write("\n".join(json.dumps(r, ensure_ascii=False) for r in rows))
     c = build(f.name, "T")
-    assert len(c) == 2 and c[0]["posts"] == [1, 2] and c[0]["vote"] == [20, 60, 10, 10] and c[0]["other_versions"] == 1, c
+    assert len(c) == 3 and c[0]["posts"] == [1, 2] and c[0]["vote"] == [20, 60, 10, 10] and c[0]["other_versions"] == 1, c
+    assert "passage" not in c[0] and c[2]["passage"].endswith("أصل الحياة."), c
     print("ok")
 
 
