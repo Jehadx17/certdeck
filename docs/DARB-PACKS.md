@@ -99,10 +99,10 @@ The import is yours to run (live DB).
 | `school-chemistry-h1` | 349 | 349 | — | 1 (blind solver or audit) | 0/60 = 0.0% (0.0%–6.0%) | ✅ ships once you run the import; unverified outline | $0 API (Claude Code) |
 | `school-chemistry-h2` | 347 | 347 | — | 3 (blind solver or audit) | 0/60 = 0.0% (0.0%–6.0%) | ✅ ships once you run the import; unverified outline | $0 API (Claude Code) |
 | `school-chemistry-h3` | 349 | 349 | — | 1 (blind solver or audit) | 0/60 = 0.0% (0.0%–6.0%) | ✅ ships once you run the import; unverified outline | $0 API (Claude Code) |
-| `school-critical-thinking-h1` | 351 planned | | | | | ⛔ blocked: Anthropic key (DARB-NEEDS-ME #6); unverified outline | |
-| `school-digital-h1` | 350 planned | | | | | ⛔ blocked: Anthropic key (DARB-NEEDS-ME #6); unverified outline | |
-| `school-digital-m1` | 250 planned | | | | | ⛔ blocked: Anthropic key (DARB-NEEDS-ME #6); unverified outline | |
-| `school-digital-m2` | 250 planned | | | | | ⛔ blocked: Anthropic key (DARB-NEEDS-ME #6); unverified outline | |
+| `school-critical-thinking-h1` | 333 | 333 | — | 19 (blind solver or audit) | 1/60 = 1.7% (0.3%–8.9%) | ✅ ships once you run the import; unverified outline | $0 API (Claude Code) |
+| `school-digital-h1` | 347 | 347 | — | 3 (blind solver or audit) | 0/60 = 0.0% (0.0%–6.0%) | ✅ ships once you run the import; unverified outline | $0 API (Claude Code) |
+| `school-digital-m1` | 250 | 250 | — | 0 (blind solver or audit) | 0/60 = 0.0% (0.0%–6.0%) | ✅ ships once you run the import; unverified outline | $0 API (Claude Code) |
+| `school-digital-m2` | 249 | 249 | — | 1 (blind solver or audit) | 0/60 = 0.0% (0.0%–6.0%) | ✅ ships once you run the import; unverified outline | $0 API (Claude Code) |
 | `school-digital-m3` | 250 planned | | | | | ⛔ blocked: Anthropic key (DARB-NEEDS-ME #6); unverified outline | |
 | `school-earth-h1` | 352 planned | | | | | ⛔ blocked: Anthropic key (DARB-NEEDS-ME #6); unverified outline | |
 | `school-english-h1` | 350 planned | | | | | ⛔ blocked: Anthropic key (DARB-NEEDS-ME #6); unverified outline | |
