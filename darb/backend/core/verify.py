@@ -22,8 +22,9 @@ FUNCS = {
     "atanh", "exp", "log", "ln", "sqrt", "cbrt", "root", "Abs", "factorial", "binomial", "gamma", "floor", "ceiling",
     "integrate", "diff", "limit", "Sum", "summation", "Product", "Rational", "pi", "E", "I", "oo", "Integer", "Float",
     "simplify", "expand", "factor", "Matrix", "det", "Min", "Max", "gcd", "lcm", "Mod", "nCr", "nPr",
+    "min", "max", "abs", "round", "int",  # Python spellings the model writes
 }
-TOKEN = re.compile(r"\s*(?:(\d+(?:\.\d+)?(?:[eE][-+]?\d+)?)|([A-Za-z_][A-Za-z_0-9]*)|(\*\*|[-+*/^(),\[\]=]))")
+TOKEN = re.compile(r"\s*(?:(\d+(?:\.\d+)?(?:[eE][-+]?\d+)?)|([A-Za-z_][A-Za-z_0-9]*)|(\*\*|//|[-+*/%^(),\[\]=]))")
 KINDS = ("numeric", "equivalent", "derivative", "solutions")
 DIGITS = str.maketrans("٠١٢٣٤٥٦٧٨٩٫×÷−", "0123456789.*/-")
 
@@ -91,7 +92,9 @@ def _run(spec):  # in the child process
 
     names = {n: getattr(sp, n) for n in FUNCS if hasattr(sp, n)}
     names.update(lcm=lambda *a: functools.reduce(sp.lcm, a), gcd=lambda *a: functools.reduce(sp.gcd, a), ln=sp.log, cbrt=sp.cbrt, summation=sp.summation, nCr=sp.binomial,
-                 nPr=lambda n, k: sp.factorial(n) / sp.factorial(n - k))
+                 nPr=lambda n, k: sp.factorial(n) / sp.factorial(n - k), min=sp.Min, max=sp.Max, abs=sp.Abs,
+                 round=lambda x, n=0: sp.Float(round(float(x), int(n))) if n else sp.Integer(round(float(x))),
+                 int=lambda x: sp.sign(x) * sp.floor(sp.Abs(x)))
     tf = standard_transformations + (implicit_multiplication_application, convert_xor)
     sympy_names = {k: v for k, v in vars(sp).items() if not k.startswith("_")}
 

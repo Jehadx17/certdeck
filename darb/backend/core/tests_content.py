@@ -100,6 +100,9 @@ class PipelineTests(TestCase):
             self.assertTrue(verify.matches_key(num(value), key), (value, key))
         self.assertFalse(verify.matches_key(num("9.5"), "١١,٥"))
         self.assertTrue(verify.check({"kind": "numeric", "expr": "lcm(6, 10, 8)", "value": "120"}))
+        for expr, value in [("(9+16)%24", "1"), ("54321*12345//10 % 10", "4"), ("round(1470*1.07)", "1573"),
+                            ("min(27//4, 19//2)", "6"), ("max(60, 65)", "65"), ("abs(abs(-6)-2+4)", "8"), ("int(7777/10/20)", "38")]:
+            self.assertTrue(verify.check({"kind": "numeric", "expr": expr, "value": value}), expr)
 
     def test_wilson_interval(self):
         lo, hi = content.wilson(1, 60)
