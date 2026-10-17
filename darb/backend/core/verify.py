@@ -10,6 +10,7 @@ memory and time limits.
     check = {"kind": "derivative", "expr": "(x**2+1)**51/102", "value": "x*(x**2+1)**50", "var": "x"}  # d/dx expr == value
     check = {"kind": "solutions", "expr": "x**2 - 5*x + 6", "value": "2, 3", "var": "x"}  # roots of expr == 0
 """
+import functools
 import json
 import re
 import resource
@@ -24,6 +25,26 @@ FUNCS = {
 }
 TOKEN = re.compile(r"\s*(?:(\d+(?:\.\d+)?(?:[eE][-+]?\d+)?)|([A-Za-z_][A-Za-z_0-9]*)|(\*\*|[-+*/^(),\[\]=]))")
 KINDS = ("numeric", "equivalent", "derivative", "solutions")
+DIGITS = str.maketrans("٠١٢٣٤٥٦٧٨٩٫×÷−", "0123456789.*/-")
+
+
+def _plain(text):
+    """Arabic digits, a decimal comma (٥,٢) and a trailing minus (١٢-) -> Western notation."""
+    t = re.sub(r"(\d),(\d)", r"\1.\2", str(text).translate(DIGITS))  # ponytail: a thousands comma reads as a decimal
+    return re.sub(r"(\d+(?:\.\d+)?)-(?![\d(])", r"-\1", t)
+
+
+def numbers(text):
+    return [float(x) for x in re.findall(r"-?\d+(?:\.\d+)?", _plain(text))]
+
+
+def matches_key(spec, key_text):
+    """False when a check's value is a number but isn't the key option: not a number written in it, and the option
+    isn't an expression worth that value (2^4, 6 × 7)."""
+    want, key = numbers(spec.get("value")), numbers(key_text)
+    if not want or not key or any(abs(w - k) < 1e-6 for w in want for k in key):
+        return True
+    return spec.get("kind") == "numeric" and safe(_plain(key_text)) and check(dict(spec, expr=_plain(key_text)))
 
 
 def safe(expr):
@@ -69,7 +90,7 @@ def _run(spec):  # in the child process
                                             standard_transformations)
 
     names = {n: getattr(sp, n) for n in FUNCS if hasattr(sp, n)}
-    names.update(ln=sp.log, cbrt=sp.cbrt, summation=sp.summation, nCr=sp.binomial,
+    names.update(lcm=lambda *a: functools.reduce(sp.lcm, a), gcd=lambda *a: functools.reduce(sp.gcd, a), ln=sp.log, cbrt=sp.cbrt, summation=sp.summation, nCr=sp.binomial,
                  nPr=lambda n, k: sp.factorial(n) / sp.factorial(n - k))
     tf = standard_transformations + (implicit_multiplication_application, convert_xor)
     sympy_names = {k: v for k, v in vars(sp).items() if not k.startswith("_")}

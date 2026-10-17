@@ -126,10 +126,6 @@ def generate_requests(pack, bp):
     return reqs
 
 
-def _numbers(text):
-    return [float(x) for x in re.findall(r"-?\d+(?:\.\d+)?", str(text).translate(DIGITS))]
-
-
 def clean_item(raw, topic):
     """A generated item -> card data, or (None, reason)."""
     q, expl = (raw.get("question") or "").strip(), (raw.get("explanation") or "").strip()
@@ -153,8 +149,7 @@ def clean_item(raw, topic):
     if check:
         if not verify.check(check):
             return None, "check failed"
-        want, key_nums = _numbers(check.get("value")), _numbers(key_text)
-        if want and key_nums and not any(abs(w - k) < 1e-6 for w in want for k in key_nums):
+        if not verify.matches_key(check, key_text):
             return None, "check does not match the key"
         card["check"], card["verified_math"] = check, True
     return card, None

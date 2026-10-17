@@ -93,6 +93,14 @@ class PipelineTests(TestCase):
         self.assertEqual(set(PackItem.objects.values_list("status", "source")), {("verified", "claude-code:items.jsonl"),
                                                                                        ("verified", "claude-code:items.jsonl mezla:MezlaQ4/28246")})
 
+    def test_check_matches_arabic_keys(self):
+        from core import verify
+        num = lambda v: {"kind": "numeric", "expr": v, "value": v}
+        for value, key in [("5.2", "٥,٢"), ("-11", "١١-"), ("16", "2^4"), ("42", "6 × 7"), ("1/3", "١/٣")]:
+            self.assertTrue(verify.matches_key(num(value), key), (value, key))
+        self.assertFalse(verify.matches_key(num("9.5"), "١١,٥"))
+        self.assertTrue(verify.check({"kind": "numeric", "expr": "lcm(6, 10, 8)", "value": "120"}))
+
     def test_wilson_interval(self):
         lo, hi = content.wilson(1, 60)
         self.assertTrue(0 < lo < 1 / 60 < hi < 0.1)

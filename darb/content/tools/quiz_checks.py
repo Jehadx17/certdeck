@@ -10,16 +10,10 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "backend" / "core"))
 import verify  # noqa: E402
 
-DIGITS = str.maketrans("٠١٢٣٤٥٦٧٨٩٫", "0123456789.")
-
-
-def numbers(text):
-    return [float(x) for x in re.findall(r"-?\d+(?:\.\d+)?", str(text).translate(DIGITS))]
-
 
 def plain(value):
     """'2 : 3' -> '2/3', '63%' -> '63', '29 عام' -> '29'; else None."""
-    v = str(value).translate(DIGITS)
+    v = str(value).translate(verify.DIGITS)
     m = re.fullmatch(r"\s*(-?\d+(?:\.\d+)?)\s*:\s*(-?\d+(?:\.\d+)?)\s*", v)
     if m:
         return f"{m[1]}/{m[2]}"
@@ -27,7 +21,7 @@ def plain(value):
     return m[0].replace(" ", "") if m and m[0] != v.strip() else None
 
 
-def triage(item, run=verify.check):
+def triage(item, run=verify.check, matches=verify.matches_key):
     """-> (item, None) to import, or (item, why) for the owner."""
     c = item.get("check")
     if not c:
@@ -36,8 +30,7 @@ def triage(item, run=verify.check):
         c = item["check"] = dict(c, value=plain(c["value"]))
     if not run(c):
         return item, f"the solver's maths check doesn't evaluate: {c.get('expr')} = {c.get('value')}"
-    want, key = numbers(c["value"]), numbers(item["options"][item["correct"][0]])
-    if want and key and not any(abs(w - k) < 1e-6 for w in want for k in key):
+    if not matches(c, item["options"][item["correct"][0]]):
         return item, f"the solver's maths check ({c['value']}) isn't the number in the key option"
     return item, None
 
@@ -45,6 +38,8 @@ def triage(item, run=verify.check):
 def demo():
     fake = lambda c: c["value"] in ("63", "2/3", "5")  # stands in for SymPy
     it = lambda v, key="63%": {"options": [key, "b", "c", "d"], "correct": [0], "check": {"kind": "numeric", "expr": "x", "value": v}}
+    same = lambda c, key: c["value"] != "5"  # stands in for verify.matches_key: 5 isn't in the key
+    triage = lambda i, run: globals()["triage"](i, run, same)
     assert triage(it("63%"), fake) == ({**it("63"), "check": {"kind": "numeric", "expr": "x", "value": "63"}}, None)
     assert triage(it("2 : 3", "2 : 3"), fake)[1] is None and triage(it("7"), fake)[1].startswith("the solver's maths check doesn't")
     assert "isn't the number" in triage(it("5"), fake)[1]
