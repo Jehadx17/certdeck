@@ -61,5 +61,5 @@ if __name__ == "__main__":
     with open(owner_path, "a", encoding="utf-8") as f:
         for i, why in ask:
             opts = "  ".join(f"({'أبجد'[k]}) {o}" for k, o in enumerate(i["options"]))
-            f.write(f"- **{i['source']}**: {i['question']}\n  - {opts}\n  - why: {why}; the solver's answer is {'أبجد'[i['correct'][0]]}\n")
+            f.write(f"- **{i.get('source', 'claude-code')}**: {i['question']}\n  - {opts}\n  - why: {why}; the solver's answer is {'أبجد'[i['correct'][0]]}\n")
     print(f"{len(kept)} kept, {len(ask)} to the owner")

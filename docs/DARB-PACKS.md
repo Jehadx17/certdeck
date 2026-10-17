@@ -131,10 +131,10 @@ The import is yours to run (live DB).
 | `school-social-m1` | 250 planned | | | | | ⛔ blocked: Anthropic key (DARB-NEEDS-ME #6); unverified outline | |
 | `school-social-m2` | 250 planned | | | | | ⛔ blocked: Anthropic key (DARB-NEEDS-ME #6); unverified outline | |
 | `school-social-m3` | 250 planned | | | | | ⛔ blocked: Anthropic key (DARB-NEEDS-ME #6); unverified outline | |
-| `tahsili-biology` | 700 planned | | | | | ⛔ blocked: Anthropic key (DARB-NEEDS-ME #6); unverified outline | |
-| `tahsili-chemistry` | 700 planned | | | | | ⛔ blocked: Anthropic key (DARB-NEEDS-ME #6); unverified outline | |
+| `tahsili-biology` | 696 | 696 | — | 4 (3 blind solver, 1 audit) | 1/60 = 1.7% (0.3–8.9%) | ✅ ships once you run the import; unverified outline | $0 API (Claude Code) |
+| `tahsili-chemistry` | 697 | 697 | — | 3 (blind solver disagreed or flagged) | 0/60 = 0% (0–6.0%) | ✅ ships once you run the import; unverified outline | $0 API (Claude Code) |
 | `tahsili-math` | 699 | 699 | — | 1 (blind solver disagreed) | 0/60 = 0% (0–6.0%) | ✅ ships once you run the import; unverified outline | $0 API (Claude Code) |
-| `tahsili-physics` | 700 planned | | | | | ⛔ blocked: Anthropic key (DARB-NEEDS-ME #6); unverified outline | |
+| `tahsili-physics` | 699 | 699 | — | 1 (blind solver: arguable) | 0/60 = 0% (0–6.0%) | ✅ ships once you run the import; unverified outline | $0 API (Claude Code) |
 
 Status 2026-10-17: no pack is built. Every pack above is **blocked for you** on the Anthropic key; the pipeline
 (generate → verify → audit → encrypt) is built and tested (Phases 3-4 report).
