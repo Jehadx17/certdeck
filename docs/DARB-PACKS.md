@@ -111,10 +111,10 @@ The import is yours to run (live DB).
 | `school-english-m1` | 298 | 298 | — | 2 (blind solver or audit) | 0/60 = 0.0% (0.0%–6.0%) | ✅ ships once you run the import; unverified outline | $0 API (Claude Code) |
 | `school-english-m2` | 298 | 298 | — | 3 (blind solver or audit) | 1/60 = 1.7% (0.3%–8.9%) | ✅ ships once you run the import; unverified outline | $0 API (Claude Code) |
 | `school-english-m3` | 297 | 297 | — | 3 (blind solver or audit) | 0/60 = 0.0% (0.0%–6.0%) | ✅ ships once you run the import; unverified outline | $0 API (Claude Code) |
-| `school-islamic-h1` | 349 planned | | | | | ⛔ blocked: Anthropic key (DARB-NEEDS-ME #6); unverified outline | |
-| `school-islamic-m1` | 250 planned | | | | | ⛔ blocked: Anthropic key (DARB-NEEDS-ME #6); unverified outline | |
-| `school-islamic-m2` | 250 planned | | | | | ⛔ blocked: Anthropic key (DARB-NEEDS-ME #6); unverified outline | |
-| `school-islamic-m3` | 250 planned | | | | | ⛔ blocked: Anthropic key (DARB-NEEDS-ME #6); unverified outline | |
+| `school-islamic-h1` | 347 | 347 | — | 3 (blind solver or audit) | 1/60 = 1.7% (0.3%–8.9%) | ✅ ships once you run the import; unverified outline | $0 API (Claude Code) |
+| `school-islamic-m1` | 248 | 248 | — | 2 (blind solver or audit) | 0/60 = 0.0% (0.0%–6.0%) | ✅ ships once you run the import; unverified outline | $0 API (Claude Code) |
+| `school-islamic-m2` | 246 | 246 | — | 4 (blind solver or audit) | 0/60 = 0.0% (0.0%–6.0%) | ✅ ships once you run the import; unverified outline | $0 API (Claude Code) |
+| `school-islamic-m3` | 247 | 247 | — | 3 (blind solver or audit) | 0/60 = 0.0% (0.0%–6.0%) | ✅ ships once you run the import; unverified outline | $0 API (Claude Code) |
 | `school-math-h1` | 350 planned | | | | | ⛔ blocked: Anthropic key (DARB-NEEDS-ME #6); unverified outline | |
 | `school-math-h2` | 350 planned | | | | | ⛔ blocked: Anthropic key (DARB-NEEDS-ME #6); unverified outline | |
 | `school-math-h3` | 350 planned | | | | | ⛔ blocked: Anthropic key (DARB-NEEDS-ME #6); unverified outline | |
