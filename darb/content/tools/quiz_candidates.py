@@ -26,6 +26,8 @@ def build(src, chan):
         p = x.get("poll")
         if not p and (x.get("text") or "").strip():
             passage = x["text"].strip() if re.search("استيعاب|قطعة", x["text"]) else None
+        if p and not re.match(r"\s*[\d٠-٩]+\s*[-ـ.)]", p["question"]) and not re.search("النص|الفقرة|القطعة|الكاتب", p["question"]):
+            passage = None  # a poll of another type ends the passage's run
         if not p or len(key(p["question"])) < 8 or len(p["options"]) != 4:
             continue
         x["passage"] = passage
@@ -54,13 +56,15 @@ def demo():
         (2, "ركوب : ترجّل.", [("ج : د", 50), ("أ : ب", 30), ("هـ : و", 10), ("ز : ح", 10)]),  # repost, options reordered
         (3, "ركوب : ترجل", [("أ : ب", 25), ("ج : د", 25), ("هـ : و", 25), ("س : ش", 25)]),  # another version
         (4, ".", [("أ", 25), ("ب", 25), ("ج", 25), ("د", 25)]),  # image-only
-        (6, "يفهم من النص أن", [("و", 25), ("ز", 25), ("ح", 25), ("ط", 25)])]]  # under the passage at id 5
+        (6, "يفهم من النص أن", [("و", 25), ("ز", 25), ("ح", 25), ("ط", 25)]),  # under the passage at id 5
+        (7, "إعياء : إرهاق", [("ي", 25), ("ك", 25), ("ل", 25), ("م", 25)]),  # another type: the passage ends
+        (8, "٢- المقصود بالفقرة", [("ن", 25), ("س", 25), ("ع", 25), ("ف", 25)])]]
     rows.insert(4, {"id": 5, "text": "استيعاب المقروء (قطعة الماء): الماء أصل الحياة."})
     with tempfile.NamedTemporaryFile("w", suffix=".jsonl", delete=False) as f:
         f.write("\n".join(json.dumps(r, ensure_ascii=False) for r in rows))
     c = build(f.name, "T")
-    assert len(c) == 3 and c[0]["posts"] == [1, 2] and c[0]["vote"] == [20, 60, 10, 10] and c[0]["other_versions"] == 1, c
-    assert "passage" not in c[0] and c[2]["passage"].endswith("أصل الحياة."), c
+    assert len(c) == 5 and c[0]["posts"] == [1, 2] and c[0]["vote"] == [20, 60, 10, 10] and c[0]["other_versions"] == 1, c
+    assert "passage" not in c[0] and c[2]["passage"].endswith("أصل الحياة.") and "passage" not in c[3] and "passage" not in c[4], c
     print("ok")
 
 
