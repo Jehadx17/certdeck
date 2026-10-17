@@ -4,6 +4,7 @@ An item is kept only when the solver called it "ok" AND its answer is the studen
 (solver unsure, or solver and vote disagree) goes to the owner list with both answers; nothing is guessed."""
 import glob
 import json
+import re
 import sys
 
 ITEM = ("question", "options", "explanation", "hint", "topic", "difficulty", "skill", "check")
@@ -22,6 +23,8 @@ def merge(cands, solves):
             ask.append((c, s, f"{s['status']}: {s.get('note', '')}"))
         elif s["correct"] != top:
             ask.append((c, s, f"solver says {LETTERS[s['correct']]}, {said}"))
+        elif any(re.search(r"\([^)]*:[^)]*\)", o) for o in c["options"]):  # «أ : ب (ج : د)»: which pair got the votes?
+            ask.append((c, s, "an option offers two pairs; which one is meant?"))
         elif c.get("other_versions"):
             ask.append((c, s, "the same question was also posted with other options; which version is right?"))
         else:
@@ -37,6 +40,8 @@ def demo():
                        {x["cid"]: x for x in [s("T-1", "ok", 1), s("T-2", "ok", 1), s("T-3", "incomplete", None), s("T-4", "ok", 1)]})
     assert [i["source"] for i in items] == ["mezla:T/5"] and items[0]["correct"] == [1], items
     assert [a[0]["cid"] for a in ask] == ["T-2", "T-3", "T-4", "T-5"], ask
+    two = dict(c("T-6", [0, 90, 5, 5]), options=["a", "هلال : بدر (غيوم : مطر)", "c", "d"])
+    assert not merge([two], {"T-6": s("T-6", "ok", 1)})[0]
     sheet = dict(c("S-q1", [0] * 4), key=2)  # a printed key overrides the vote
     assert merge([sheet], {"S-q1": s("S-q1", "ok", 2)})[0] and not merge([sheet], {"S-q1": s("S-q1", "ok", 2)})[1]
     print("ok")
