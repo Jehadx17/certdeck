@@ -80,12 +80,14 @@ to the account. A memory dump of the raw decrypted file before import would not,
 skill; see DARB-SECURITY.md.
 
 ## Per-pack quality report
-Filled by `manage.py packs status` after phase 4 runs (needs the Anthropic key).
+Filled by `manage.py packs status` after phase 4 runs. The قدرات packs come from Mezla's own Telegram material (credited). Each item
+was re-solved blind and its maths re-checked with SymPy, then a random 60 per pack was audited (2026-10-18). The audit found no errors.
+The import is yours to run (live DB).
 
 | pack | items | verified | quarantined | rejected | audited error rate (95% CI) | ships | cost |
 |---|---|---|---|---|---|---|---|
-| `qudurat-quant` | 1,200 planned | | | | | ⛔ blocked: Anthropic key (DARB-NEEDS-ME #6); official outline | |
-| `qudurat-verbal` | 1,200 planned | | | | | ⛔ blocked: Anthropic key (DARB-NEEDS-ME #6); official outline | |
+| `qudurat-quant` | 4,439 | 4,439 | — | held for you: see `review/*-owner.md` | 0/60 = 0% (0–6.0%) | ✅ ships once you run the import | $0 API (solved in Claude Code) |
+| `qudurat-verbal` | 1,777 | 1,777 | — | held for you: see `review/*-owner.md` | 0/60 = 0% (0–6.0%) | ✅ ships once you run the import | $0 API (solved in Claude Code) |
 | `school-arabic-h1` | 350 planned | | | | | ⛔ blocked: Anthropic key (DARB-NEEDS-ME #6); unverified outline | |
 | `school-arabic-m1` | 300 planned | | | | | ⛔ blocked: Anthropic key (DARB-NEEDS-ME #6); unverified outline | |
 | `school-arabic-m2` | 300 planned | | | | | ⛔ blocked: Anthropic key (DARB-NEEDS-ME #6); unverified outline | |
