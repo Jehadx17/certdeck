@@ -47,7 +47,13 @@ def merge(cands, solves):
             ask += [(c, s, "the same question was posted with other options and the versions' answers differ") for c, s in versions]
     # a failed version of a kept question is a repeat, not a question for the owner
     ask = [a for a in ask if not (a[0].get("other_versions") and qkey(a[0]) in covered)]
-    return items, ask
+    seen, unique = set(), []
+    for i in items:  # the same image question posted twice is one item
+        k = key(i["question"] + "".join(sorted(i["options"])) + i["options"][i["correct"][0]])
+        if k not in seen:
+            seen.add(k)
+            unique.append(i)
+    return unique, ask
 
 
 def qkey(c):  # «يفهم من النص» under two passages is two questions
@@ -63,7 +69,7 @@ def demo():
                                  "source": "mezla:T/5"}
     s = lambda cid, st, k: {"cid": cid, "status": st, "correct": k, "question": "q", "options": list("abcd"), "topic": "t1", "note": "n"}
     items, ask = merge([c("T-1", [10, 70, 10, 10]), c("T-2", [70, 10, 10, 10]), c("T-3", [10, 70, 10, 10]), c("T-4", [0, 90, 5, 5], 1), c("T-5", [25] * 4)],
-                       {x["cid"]: x for x in [s("T-1", "ok", 1), s("T-2", "ok", 1), s("T-3", "incomplete", None), s("T-4", "ok", 1)]})
+                       {x["cid"]: x for x in [s("T-1", "ok", 1), s("T-2", "ok", 1), s("T-3", "incomplete", None), dict(s("T-4", "ok", 1), question="q4")]})
     assert [i["source"] for i in items] == ["mezla:T/5"] * 2 and items[0]["correct"] == [1], items  # T-4: its one version passes
     assert [a[0]["cid"] for a in ask] == ["T-2", "T-3", "T-5"], ask
     two = dict(c("T-6", [0, 90, 5, 5]), options=["a", "هلال : بدر (غيوم : مطر)", "c", "d"])
@@ -77,6 +83,8 @@ def demo():
     assert [i["source"] for i in kept] == ["mezla:T/5"] and len(kept) == 1 and not asked, (kept, asked)  # V-4 disagrees with its vote: a repeat
     v3["options"] = ["x", "y", "b", "z"]
     assert len(merge([v1, v3], {"V-1": s("V-1", "ok", 1), "V-3": dict(s("V-3", "ok", 1), options=v3["options"])})[1]) == 2  # «b» vs «y»
+    twice = merge([c("D-1", [0, 90, 5, 5]), c("D-2", [0, 90, 5, 5])], {x: s(x, "ok", 1) for x in ("D-1", "D-2")})[0]
+    assert len(twice) == 1, twice
     sheet = dict(c("S-q1", [0] * 4), key=2)  # a printed key overrides the vote
     assert merge([sheet], {"S-q1": s("S-q1", "ok", 2)})[0] and not merge([sheet], {"S-q1": s("S-q1", "ok", 2)})[1]
     print("ok")
