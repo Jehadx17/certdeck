@@ -25,6 +25,8 @@ def merge(cands, solves):
             ask.append((c, s, f"solver says {LETTERS[s['correct']]}, {said}"))
         elif any(re.search(r"\([^)]*:[^)]*\)", o) for o in c["options"]):  # «أ : ب (ج : د)»: which pair got the votes?
             ask.append((c, s, "an option offers two pairs; which one is meant?"))
+        elif any("(" in o and "(" not in t for o, t in zip(c["options"], s.get("options") or c["options"])):
+            ask.append((c, s, "an option offered alternative wordings in brackets; which one is meant?"))
         elif c.get("other_versions"):
             ask.append((c, s, "the same question was also posted with other options; which version is right?"))
         else:
@@ -42,6 +44,8 @@ def demo():
     assert [a[0]["cid"] for a in ask] == ["T-2", "T-3", "T-4", "T-5"], ask
     two = dict(c("T-6", [0, 90, 5, 5]), options=["a", "هلال : بدر (غيوم : مطر)", "c", "d"])
     assert not merge([two], {"T-6": s("T-6", "ok", 1)})[0]
+    alt = dict(c("T-7", [0, 90, 5, 5]), options=["a", "غير الرؤية (غير الوسيلة)", "c", "d"])
+    assert not merge([alt], {"T-7": s("T-7", "ok", 1)})[0]  # the solver dropped the bracketed wording
     sheet = dict(c("S-q1", [0] * 4), key=2)  # a printed key overrides the vote
     assert merge([sheet], {"S-q1": s("S-q1", "ok", 2)})[0] and not merge([sheet], {"S-q1": s("S-q1", "ok", 2)})[1]
     print("ok")
