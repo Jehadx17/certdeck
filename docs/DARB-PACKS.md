@@ -136,8 +136,9 @@ The import is yours to run (live DB).
 | `tahsili-math` | 699 | 699 | — | 1 (blind solver disagreed) | 0/60 = 0% (0–6.0%) | ✅ ships once you run the import; unverified outline | $0 API (Claude Code) |
 | `tahsili-physics` | 699 | 699 | — | 1 (blind solver: arguable) | 0/60 = 0% (0–6.0%) | ✅ ships once you run the import; unverified outline | $0 API (Claude Code) |
 
-Status 2026-10-17: no pack is built. Every pack above is **blocked for you** on the Anthropic key; the pipeline
-(generate → verify → audit → encrypt) is built and tested (Phases 3-4 report).
+Status 2026-10-18: all 48 packs are authored, blind-solved, checked and audited (22,183 items), each at or under the
+2% ship line. None is in the live DB yet: the import (and then `packs build` / publish, which read from it) is yours to run.
+Items were written and solved in Claude Code, not through the API pipeline (which is built and tested; Phases 3-4 report).
 
 Blueprints ready: `qudurat-verbal` (5 topics, 1,200 items) and `qudurat-quant` (9 topics, 1,200 items), both from
 ETEC's official GAT guide.
