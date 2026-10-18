@@ -37,8 +37,9 @@ server only checks, encrypts and serves them.
    gets wrong or calls flawed (`author_merge.py <dir> <slug>`).
 3. **Audit:** a third session reviews a random 60 against the same error list as the API audit. The error count goes
    into this report's table.
-4. **Load:** copy the file to the server, then run
-   `docker compose -p darb exec api python manage.py packs import <slug> /path/<slug>.jsonl`. The code checks run on
+4. **Load:** the files are already in `/opt/darb/sources` on the server. On the server run
+   `bash /opt/darb/src/darb/deploy/import-packs.sh` (all packs) or `... import-packs.sh <slug>...` (it copies each
+   file into the api container and runs `manage.py packs import <slug> <file>`). The code checks run on
    every line: the shape, SymPy, and near-duplicates (also against earlier imports). Lines with an unknown topic are
    counted and skipped. Lines that pass are stored as `verified` with `source = claude-code:<file>`.
 5. **Build and publish:** `packs build <slug> --out DIR` (on the server, which holds `DARB_PACK_KEK`), upload to the
