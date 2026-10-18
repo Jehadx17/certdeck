@@ -52,8 +52,8 @@
 |---|---|---|
 | Google + Apple sign-in, age gate (guardian consent switch off by default), account deletion (in app + web) | Claude | ✔ built and tested · ⏳ sandbox run on devices |
 | RevenueCat sandbox purchases on both platforms; a lapsed subscription loses access | Claude | ✔ backend tested · ⏳ sandbox run |
-| AI: Haiku only, < 100k tokens, per-user cap, eval passes per feature | Claude | ✔ built · ⏳ eval run (key) |
-| Packs: قدرات, تحصيلي, school subjects built, audited (≤ 2% error) or listed as blocked | Claude | ⏳ key + blueprints (question 6) |
+| AI: Haiku only, < 100k tokens, per-user cap, eval passes per feature | Claude | ✔ built · ✔ eval run (DARB-AI-EVAL.md): grade, reteach, Arabic pass; explain and cards meet the 4.0 bar with no wrong answers but fail "≤ 0.3 below Opus/Sonnet" · 👤 accept or not |
+| Packs: قدرات, تحصيلي, school subjects built, audited (≤ 2% error) or listed as blocked | Claude | ✔ 48 packs authored and audited, each ≤ 2% (DARB-PACKS.md) · 👤 run `import-packs.sh` on the server; then build/publish needs R2 |
 | Light/dark, Arabic RTL, minimal settings, onboarding: small + large screens, old Android (7.0), old iOS (16.4) | Claude | ✔ CI walkthrough passed (runs 38956484671, 38959852858): iOS 16.4 + 18.5 SE, iOS 26.2 Pro Max, Android 7.0 phone + tablet, AR/EN × light/dark |
 | Load test at the 100k-student profile; restore test | Claude | ✔ CI runs passed (DARB-LOADTEST.md, DARB-RESTORE.md) · ✔ restore drill on the server 2026-10-17 · 👤 R2 for off-server backups; load test not repeated on the shared host (it would load CertDeck) |
 | Devices failing Play Integrity / App Attest get free features only, no Darb Plus content (decided 2026-10-16) | Claude | ⏳ |
