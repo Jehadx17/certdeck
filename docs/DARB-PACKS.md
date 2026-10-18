@@ -45,6 +45,69 @@ server only checks, encrypts and serves them.
 5. **Build and publish:** `packs build <slug> --out DIR` (on the server, which holds `DARB_PACK_KEK`), upload to the
    CDN, then `packs publish <slug>`.
 
+### Import + build dry run (2026-10-18)
+`bash /opt/darb/src/darb/deploy/tests/packs-dryrun.sh` runs every file in `/opt/darb/sources` through `packs import`
+on a throwaway DB and builds it with a throwaway key, then decrypts it back and counts the cards. The live DB and
+`DARB_PACK_KEK` are not touched. Result: **all 48 packs build and decrypt; 21,403 of 22,183 lines kept**, about
+70 min in all (mostly `qudurat-quant`: SymPy runs on every checked item). Expect the same time for your real import.
+
+The first run dropped a third of every maths pack: the option check and the near-duplicate filter ignored signs and
+symbols (`-10` = `10`, `x ≤ 1` = `x ≥ 1`) and treated other questions on one reading passage as repeats. That was
+fixed in c00e5f3. The 772 that are still dropped were spot-checked and are real repeats: the same Telegram question
+posted again with other spacing or digits, or an English item written twice. The 7 invalid lines are quant items
+with two equal options.
+
+| pack | lines | cards built & decrypted | invalid | repeat | size |
+|---|---|---|---|---|---|
+| `qudurat-quant` | 4,439 | 3,888 | 7 | 543 | 586 KB |
+| `school-arabic-h1` | 344 | 344 | 0 | 0 | 37 KB |
+| `school-arabic-m1` | 297 | 296 | 0 | 1 | 29 KB |
+| `school-arabic-m2` | 296 | 293 | 0 | 3 | 29 KB |
+| `school-arabic-m3` | 296 | 296 | 0 | 0 | 31 KB |
+| `school-biology-h1` | 349 | 349 | 0 | 0 | 35 KB |
+| `school-biology-h2` | 350 | 350 | 0 | 0 | 39 KB |
+| `school-biology-h3` | 349 | 349 | 0 | 0 | 36 KB |
+| `school-chemistry-h1` | 349 | 347 | 0 | 2 | 34 KB |
+| `school-chemistry-h2` | 347 | 347 | 0 | 0 | 38 KB |
+| `school-chemistry-h3` | 349 | 349 | 0 | 0 | 37 KB |
+| `school-critical-thinking-h1` | 333 | 333 | 0 | 0 | 44 KB |
+| `school-digital-h1` | 347 | 347 | 0 | 0 | 34 KB |
+| `school-digital-m1` | 250 | 250 | 0 | 0 | 27 KB |
+| `school-digital-m2` | 249 | 249 | 0 | 0 | 29 KB |
+| `school-digital-m3` | 250 | 249 | 0 | 1 | 28 KB |
+| `school-earth-h1` | 349 | 349 | 0 | 0 | 36 KB |
+| `school-english-h1` | 347 | 347 | 0 | 0 | 31 KB |
+| `school-english-h2` | 425 | 343 | 0 | 82 | 34 KB |
+| `school-english-h3` | 349 | 349 | 0 | 0 | 39 KB |
+| `school-english-m1` | 298 | 298 | 0 | 0 | 25 KB |
+| `school-english-m2` | 298 | 297 | 0 | 1 | 26 KB |
+| `school-english-m3` | 297 | 297 | 0 | 0 | 26 KB |
+| `school-islamic-h1` | 347 | 347 | 0 | 0 | 40 KB |
+| `school-islamic-m1` | 248 | 248 | 0 | 0 | 28 KB |
+| `school-islamic-m2` | 246 | 246 | 0 | 0 | 28 KB |
+| `school-islamic-m3` | 247 | 247 | 0 | 0 | 26 KB |
+| `school-math-h1` | 346 | 346 | 0 | 0 | 31 KB |
+| `school-math-h2` | 348 | 348 | 0 | 0 | 30 KB |
+| `school-math-h3` | 350 | 349 | 0 | 1 | 31 KB |
+| `school-math-m1` | 299 | 299 | 0 | 0 | 28 KB |
+| `school-math-m2` | 299 | 299 | 0 | 0 | 27 KB |
+| `school-math-m3` | 298 | 297 | 0 | 1 | 26 KB |
+| `school-physics-h1` | 345 | 344 | 0 | 1 | 40 KB |
+| `school-physics-h2` | 349 | 349 | 0 | 0 | 39 KB |
+| `school-physics-h3` | 347 | 347 | 0 | 0 | 40 KB |
+| `school-science-m1` | 300 | 300 | 0 | 0 | 32 KB |
+| `school-science-m2` | 299 | 299 | 0 | 0 | 32 KB |
+| `school-science-m3` | 300 | 300 | 0 | 0 | 31 KB |
+| `school-social-h1` | 346 | 346 | 0 | 0 | 38 KB |
+| `school-social-m1` | 249 | 249 | 0 | 0 | 26 KB |
+| `school-social-m2` | 247 | 247 | 0 | 0 | 28 KB |
+| `school-social-m3` | 248 | 248 | 0 | 0 | 27 KB |
+| `tahsili-biology` | 696 | 696 | 0 | 0 | 77 KB |
+| `tahsili-chemistry` | 697 | 696 | 0 | 1 | 75 KB |
+| `tahsili-math` | 699 | 697 | 0 | 2 | 49 KB |
+| `tahsili-physics` | 699 | 699 | 0 | 0 | 77 KB |
+| `qudurat-verbal` | 1,777 | 1,644 | 0 | 133 | 238 KB |
+
 **Student-collected questions (owner decision 2026-10-17):** the owner chose to use questions that students collect
 after the test, starting with the Telegram channel `t.me/MezlaQ3` («تسريبات مظله - قدرات»). This replaces the "never
 real items" rule for قدرات packs. The basis is a lawyer's verbal advice that this is lawful in Saudi Arabia. A written
@@ -84,7 +147,7 @@ skill; see DARB-SECURITY.md.
 ## Per-pack quality report
 Filled by `manage.py packs status` after phase 4 runs. The قدرات packs come from Mezla's own Telegram material (credited). Each item
 was re-solved blind and its maths re-checked with SymPy, then a random 60 per pack was audited (2026-10-18). The audit found no errors.
-The import is yours to run (live DB).
+The import is yours to run (live DB). "items" here are the authored lines; the import keeps 21,403 of them (repeats and invalid lines dropped, see the dry run above).
 
 | pack | items | verified | quarantined | rejected | audited error rate (95% CI) | ships | cost |
 |---|---|---|---|---|---|---|---|
