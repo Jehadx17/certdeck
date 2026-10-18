@@ -1,11 +1,13 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:crypto/crypto.dart';
 import 'package:flutter/foundation.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:sqflite_common_ffi_web/sqflite_ffi_web.dart';
 import 'package:uuid/uuid.dart';
 
 typedef Json = Map<String, dynamic>;
@@ -24,9 +26,17 @@ class Db {
 
   /// [dir] overrides the app directories (used by the sync integration test).
   static Future<void> open({String? dir}) async {
-    mediaDir = p.join(dir ?? (await getApplicationDocumentsDirectory()).path, 'media');
-    await Directory(mediaDir).create(recursive: true);
-    _db = await openDatabase(p.join(dir ?? await getDatabasesPath(), 'certdeck.db'), version: 1, onCreate: (db, _) async {
+    if (kIsWeb) {
+      // ponytail: no web worker, sqlite runs on the UI isolate; fine for one student's cards
+      databaseFactory = databaseFactoryFfiWebNoWebWorker;
+    } else {
+      mediaDir = p.join(dir ?? (await getApplicationDocumentsDirectory()).path, 'media');
+      await Directory(mediaDir).create(recursive: true);
+    }
+    _db = await openDatabase(kIsWeb ? 'certdeck.db' : p.join(dir ?? await getDatabasesPath(), 'certdeck.db'), version: 1, onOpen: (db) async {
+      // Web has no files: images live as blobs in the database.
+      if (kIsWeb) await db.execute('CREATE TABLE IF NOT EXISTS blob(name TEXT PRIMARY KEY, bytes BLOB NOT NULL)');
+    }, onCreate: (db, _) async {
       await db.execute('''CREATE TABLE docs(id TEXT PRIMARY KEY, kind TEXT NOT NULL, data TEXT NOT NULL,
         updated_at INTEGER NOT NULL, deleted INTEGER NOT NULL DEFAULT 0, dirty INTEGER NOT NULL DEFAULT 0,
         due INTEGER, certs TEXT, card_id TEXT, ts INTEGER)''');
@@ -133,8 +143,10 @@ class Db {
     await _db.delete('docs');
     await _db.delete('meta');
     await _db.delete('media');
-    final dir = Directory(mediaDir);
-    if (await dir.exists()) {
+    if (kIsWeb) {
+      await _db.delete('blob');
+    } else if (await Directory(mediaDir).exists()) {
+      final dir = Directory(mediaDir);
       await for (final f in dir.list()) {
         await f.delete(recursive: true);
       }
@@ -153,12 +165,24 @@ class Db {
   // ---- media: content-addressed files (sha256.ext) ----
   static File mediaFile(String name) => File(p.join(mediaDir, name));
 
+  static Future<bool> mediaExists(String name) async =>
+      kIsWeb ? (await _db.query('blob', columns: ['name'], where: 'name = ?', whereArgs: [name])).isNotEmpty : mediaFile(name).exists();
+
+  static Future<Uint8List?> mediaBytes(String name) async {
+    if (!kIsWeb) return await mediaFile(name).exists() ? mediaFile(name).readAsBytes() : null;
+    final r = await _db.query('blob', where: 'name = ?', whereArgs: [name]);
+    return r.isEmpty ? null : r.first['bytes'] as Uint8List;
+  }
+
+  static Future<void> mediaWrite(String name, List<int> bytes) => kIsWeb
+      ? _db.insert('blob', {'name': name, 'bytes': Uint8List.fromList(bytes)}, conflictAlgorithm: ConflictAlgorithm.replace)
+      : mediaFile(name).writeAsBytes(bytes, flush: true);
+
   /// Stores image bytes as `sha256.ext`; ext comes from the file's magic bytes (the server
   /// accepts png/jpg/gif/webp only). Throws FormatException for anything else.
   static Future<String> saveMedia(List<int> bytes) async {
     final name = '${sha256.convert(bytes)}.${imageExt(bytes)}';
-    final f = mediaFile(name);
-    if (!await f.exists()) await f.writeAsBytes(bytes, flush: true);
+    if (!await mediaExists(name)) await mediaWrite(name, bytes);
     await _db.insert('media', {'name': name, 'uploaded': 0}, conflictAlgorithm: ConflictAlgorithm.ignore);
     return name;
   }

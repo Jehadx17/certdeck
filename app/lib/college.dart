@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -399,6 +400,7 @@ Future<void> addMaterial(BuildContext context, String courseId) async {
     ),
   );
   if (kind == null || !context.mounted) return;
+  if (kIsWeb) return toast(context, t('Upload lecture material from the phone app for now'));
   var paths = <String>[];
   String? name;
   if (kind == 'photos') {

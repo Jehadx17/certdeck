@@ -1,4 +1,4 @@
-import 'dart:io';
+import 'dart:typed_data';
 import 'dart:math';
 
 import 'package:flutter/foundation.dart';
@@ -209,11 +209,15 @@ class MediaImage extends StatelessWidget {
   final bool fill;
   const MediaImage(this.name, {super.key, this.fill = true});
   @override
-  Widget build(BuildContext context) => Image.file(Db.mediaFile(name),
-      width: fill ? double.infinity : null,
-      fit: fill ? BoxFit.fitWidth : null,
-      errorBuilder: (_, __, ___) =>
-          Container(padding: const EdgeInsets.all(16), color: Colors.white10, child: Text(t('Image not downloaded yet (sync to fetch it)'))));
+  Widget build(BuildContext context) {
+    Widget missing(_, __, ___) =>
+        Container(padding: const EdgeInsets.all(16), color: Colors.white10, child: Text(t('Image not downloaded yet (sync to fetch it)')));
+    final w = fill ? double.infinity : null, fit = fill ? BoxFit.fitWidth : null;
+    if (!kIsWeb) return Image.file(Db.mediaFile(name), width: w, fit: fit, errorBuilder: missing);
+    return FutureBuilder<Uint8List?>(
+        future: Db.mediaBytes(name),
+        builder: (c, s) => s.data == null ? missing(c, null, null) : Image.memory(s.data!, width: w, fit: fit, errorBuilder: missing));
+  }
 }
 
 /// Card images; tap one to view it full screen with pinch-zoom (diagrams have small labels on a phone).
@@ -452,6 +456,7 @@ class _CardViewState extends State<CardView> {
     return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
       Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Expanded(child: s.type == 'cloze' ? Md(revealed ? clozeBack(question) : clozeFront(question)) : Md(question)),
+        if (!kIsWeb) // ML Kit on-device translation has no web version
         IconButton(
             tooltip: t('Translate to Arabic'),
             visualDensity: VisualDensity.compact,
@@ -873,19 +878,19 @@ class SourcePage extends StatelessWidget {
   final int page;
   const SourcePage(this.materialId, this.page, this.title, {super.key});
 
-  Future<File> _load() async {
-    final f = File('${Db.mediaDir}/page-$materialId-$page.png');
-    if (!await f.exists()) await f.writeAsBytes(await Api.call('GET', 'college/page/$materialId/$page') as List<int>, flush: true);
-    return f;
+  Future<Uint8List> _load() async {
+    final name = 'page-$materialId-$page.png';
+    if (!await Db.mediaExists(name)) await Db.mediaWrite(name, await Api.call('GET', 'college/page/$materialId/$page') as List<int>);
+    return (await Db.mediaBytes(name))!;
   }
 
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(title: Text('$title · ${t('p.')} $page')),
-        body: FutureBuilder<File>(
+        body: FutureBuilder<Uint8List>(
           future: _load(),
           builder: (context, snap) => snap.hasData
-              ? InteractiveViewer(maxScale: 5, child: Center(child: Image.file(snap.data!)))
+              ? InteractiveViewer(maxScale: 5, child: Center(child: Image.memory(snap.data!)))
               : Center(child: snap.hasError ? NeedsConnection('${snap.error}') : const CircularProgressIndicator()),
         ),
       );

@@ -20,7 +20,7 @@ class ApiError implements Exception {
 
 class Api {
   static const _store = FlutterSecureStorage(aOptions: AndroidOptions(encryptedSharedPreferences: true));
-  static const defaultUrl = 'https://certdeck.mithaqstay.com';
+  static final defaultUrl = kIsWeb ? Uri.base.origin : 'https://certdeck.mithaqstay.com'; // web is served by the API's own host
   static String url = defaultUrl;
   static String? token;
   static final online = ValueNotifier<bool?>(null);
@@ -175,9 +175,9 @@ class Api {
     syncing.value = true;
     try {
       for (final name in await Db.pendingMedia()) {
-        final f = Db.mediaFile(name);
         try {
-          if (await f.exists()) await call('PUT', 'media/$name', bytes: await f.readAsBytes());
+          final b = await Db.mediaBytes(name);
+          if (b != null) await call('PUT', 'media/$name', bytes: b);
         } on ApiError catch (e) {
           if (e.offline) rethrow; // rejected by the server: skip it rather than block every future sync
         }
@@ -200,9 +200,9 @@ class Api {
       await applyFinishedJobs(); // before the media pass, so new diagrams download in this sync
       for (final c in await Db.query('card')) {
         for (final name in cardMedia(c)) {
-          if (await Db.mediaFile(name).exists()) continue;
+          if (await Db.mediaExists(name)) continue;
           try {
-            await Db.mediaFile(name).writeAsBytes(await call('GET', 'media/$name') as List<int>, flush: true); // already on the server
+            await Db.mediaWrite(name, await call('GET', 'media/$name') as List<int>); // already on the server
           } on ApiError catch (e) {
             if (e.offline) rethrow; // missing on server: skip, the card shows a placeholder
           }

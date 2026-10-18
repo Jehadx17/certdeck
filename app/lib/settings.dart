@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'dart:convert';
 import 'dart:io';
 
@@ -22,8 +23,8 @@ Future<Json> buildExport() async {
   final media = <String, String>{};
   for (final c in cards) {
     for (final n in cardMedia(c)) {
-      final f = Db.mediaFile(n);
-      if (await f.exists()) media[n] = base64Encode(await f.readAsBytes());
+      final b = await Db.mediaBytes(n);
+      if (b != null) media[n] = base64Encode(b);
     }
   }
   return {
@@ -65,6 +66,10 @@ Future<int> importLocal(Json data) async {
 }
 
 Future<void> shareJson(Json data, String name) async {
+  if (kIsWeb) {
+    await Share.shareXFiles([XFile.fromData(utf8.encode(jsonEncode(data)), mimeType: 'application/json', name: name)], subject: name);
+    return;
+  }
   final f = File(p.join((await getTemporaryDirectory()).path, name));
   await f.writeAsString(jsonEncode(data));
   await Share.shareXFiles([XFile(f.path, mimeType: 'application/json')], subject: name);

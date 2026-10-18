@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'dart:io';
 
 import 'package:crypto/crypto.dart';
@@ -20,7 +21,7 @@ class Updater {
   static bool _busy = false;
 
   static Future<void> check() async {
-    if (!Platform.isAndroid || !Api.configured || _busy) return;
+    if (kIsWeb || !Platform.isAndroid || !Api.configured || _busy) return;
     _busy = true;
     _ch.setMethodCallHandler((call) async => status.value = null); // 'failed': install cancelled or rejected
     try {

@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -104,7 +105,7 @@ class Reminders {
   }
 
   static Future<void> reschedule() async {
-    if (!(Platform.isAndroid || Platform.isIOS)) return;
+    if (kIsWeb || !(Platform.isAndroid || Platform.isIOS)) return;
     try {
       await _init();
       await _plugin.cancelAll();

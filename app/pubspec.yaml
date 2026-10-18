@@ -56,6 +56,7 @@ dependencies:
   flutter_local_notifications: 17.2.4
   timezone: ^0.9.4
   google_mlkit_translation: 0.12.0  # 0.13 needs compileSdk 35, which AGP 7.3 can't build
+  sqflite_common_ffi_web: ^0.4.3+1
 
 dependency_overrides:
   meta: 1.12.0  # fsrs 2.x asks ^1.15 only for @visibleForTesting; Flutter 3.22 pins 1.12
