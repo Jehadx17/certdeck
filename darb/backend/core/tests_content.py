@@ -21,7 +21,8 @@ def gen_items(k):
     """Four generated items: two good, one with a wrong SymPy check, one the solver will disagree with."""
     item = lambda q, opts, c, check=None: dict(type="mcq", question=q, options=opts, correct=[c], answer=None,
                                                explanation="لأن...", hint="فكّر في...", difficulty=2, skill="نسبة", check=check)
-    return [item(f"ما ناتج {k}+٣؟", [str(k), str(k + 3), "٠", "١٠٠"], 1, {"kind": "numeric", "expr": f"{k}+3", "value": str(k + 3), "var": None}),
+    # the same maths question every batch: a repeat (same numbers and answer) is dropped, not added again
+    return [item("ما ناتج ٢+٣؟", ["٢", "٥", "٠", "١٠٠"], 1, {"kind": "numeric", "expr": "2+3", "value": "5", "var": None}),
             item("سؤال جيد ٢", ["أ", "ب", "ج", "د"], 0),
             item("مفتاح خطأ", ["٤", "٥", "٦", "٧"], 0, {"kind": "numeric", "expr": "2+2", "value": "5", "var": None}),
             item("سيخالفه المحلّل", ["أ", "ب", "ج", "د"], 2)]
