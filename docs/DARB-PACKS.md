@@ -137,6 +137,27 @@ and any PDF/tutor material with its rights status. Anything unclear is flagged i
 **Estimated cost** (to be replaced with measured numbers in phase 4): about $7 generation + $2 solving + $1.5 audit
 per 1,200-item pack, so about $10-12 per pack.
 
+### Real collected questions only (owner decision 2026-10-18)
+Claude-written items are removed: all 13,083 school items and the 2,788 written Tahsili items (the school packs stay
+empty until real material exists). Every item now comes from questions students collected and posted on Telegram.
+Each one is kept only when a blind solve (Sonnet, `SOLVE-*.md`) agrees with the students' most-voted option or the
+sheet's printed key, and it then passes the code checks (`quiz_checks.py`). Repeats across channels are dropped
+(`quiz_dedupe.py`, the newest post wins), and every item keeps its posted date (`seen`), newest first, since recent
+questions are the likeliest to come back. Failed items are written to `*-owner.md` lists for the owner and are never
+guessed.
+
+| Pack | New real items | Channels (credited in each item's `source`, `tg:<channel>/<post>`) |
+|---|---|---|
+| `qudurat-quant` | 689 (+ Mezla) | Mezla channels, t_mo7wsab, qodrat_77, others in the priority list |
+| `qudurat-verbal` | 800 (+ Mezla) | same |
+| `tahsili-biology` | 2,319 | T7selly_QA, stepbystep0, chemquiz_sa, earlier Tahsili channels |
+| `tahsili-chemistry` | 1,989 | same |
+| `tahsili-physics` | 1,384 | same |
+| `tahsili-math` | 581 | same |
+
+The live delete and import are run by the owner (commands in the session report). The error-rate columns above
+will be refreshed after that import.
+
 ## Watermark (leak tracing)
 Each subscriber's key response carries a seed derived from their account (HMAC of the server secret). At import, the
 app shuffles each multiple-choice card's options in an order derived from the seed and the card id, and appends an
