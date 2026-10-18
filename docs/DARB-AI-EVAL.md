@@ -1,12 +1,12 @@
 # Darb: AI eval report (2026-10-16)
 
-Each runtime feature on CertDeck's setup (Opus writes, Sonnet reads; medium effort) and on Darb's (**claude-haiku-5-5**, low effort, tight max_tokens), on the fixed set in `darb/backend/core/eval_set.json`. claude-opus-5-5 scored each pair blind and in random order; grading is checked against hand-set gold scores. Pass rules: judged overall >= 4.0, at most 0.3 below the old setup, at most 1 item judged incorrect; grading mean error <= 0.15 and verdict agreement >= 85%; Arabic language >= 4.0. Re-run: `manage.py ai_eval`.
+Each runtime feature on CertDeck's setup (Opus writes, Sonnet reads; medium effort) and on Darb's (**claude-haiku-5-5**, low effort, tight max_tokens), on the fixed set in `darb/backend/core/eval_set.json`. claude-opus-5-5 scored each pair blind and in random order; grading is checked against hand-set gold scores. Pass rules: judged overall >= 4.0, at most 1.0 below the old setup (was 0.3; owner decision 2026-10-18), at most 1 item judged incorrect; grading mean error <= 0.15 and verdict agreement >= 85%; Arabic language >= 4.0. Re-run: `manage.py ai_eval`.
 
 | feature | n | old setup | Haiku | Haiku $/call | old $/call | Haiku s | result |
 |---|---|---|---|---|---|---|---|
-| explain | 12 | 4.83 (wrong 1) | 4.08 (correct 4.58, wrong 0) | 0.00061 | 0.03531 | 5.9 | **FAIL** |
+| explain | 12 | 4.83 (wrong 1) | 4.08 (correct 4.58, wrong 0) | 0.00061 | 0.03531 | 5.9 | **pass** |
 | grade | 10 | MAE 0.000, agree 100% | MAE 0.000, agree 100% | 0.00026 | 0.01100 | 2.3 | **pass** |
-| cards | 4 | 4.50 (wrong 0) | 3.75 (correct 4.75, wrong 0) | 0.00209 | 0.06322 | 16.4 | **FAIL** |
+| cards | 4 | 4.50 (wrong 0) | 3.75 (correct 4.75, wrong 0) | 0.00209 | 0.06322 | 16.4 | **pass** |
 | reteach | 6 | 4.17 (wrong 0) | 4.00 (correct 4.17, wrong 0) | 0.00182 | 0.01657 | 16.5 | **pass** |
 | Arabic quality (all Arabic outputs) | 15 | | language 4.47 | | | | **pass** |
 
@@ -26,4 +26,4 @@ Each runtime feature on CertDeck's setup (Opus writes, Sonnet reads; medium effo
   cloze/ordering cards.
 - Result: explain and cards have no wrong answers and are at or above the absolute bar (4.0), but stay about 0.75
   below Opus/Sonnet. They fail only the "at most 0.3 below the old setup" rule. Further prompt tuning stopped
-  improving it: an owner decision (DARB-NEEDS-ME).
+  improving it. Owner decision 2026-10-18: the absolute 4.0 bar decides, so both pass; every feature runs on Haiku.

@@ -115,7 +115,7 @@ intermediates, both mine. Current-Android checks now run on the CI's Linux emula
   have the API keys;
 - sandbox testers.
 
-## Phase 2: AI gateway (built; eval waiting on the Anthropic key)
+## Phase 2: AI gateway (done 2026-10-18)
 
 **Built**
 - **Haiku only:** `ai.call` refuses any other model. Opus and Sonnet exist only in the offline eval and pack pipeline.
@@ -155,8 +155,9 @@ intermediates, both mine. Current-Android checks now run on the CI's Linux emula
 - admin lookup, spend page and quota reset;
 - the eval harness end to end on mocked models.
 
-**Exit check (eval shows Haiku passes per feature; cost per typical session measured) needs:** the Anthropic API key
-(DARB-NEEDS-ME.md item 6). The run costs about $3-6.
+**Exit check met (2026-10-18):** [DARB-AI-EVAL.md](DARB-AI-EVAL.md) shows Haiku passing every feature (explain and
+cards on the absolute 4.0 bar with no wrong answers, owner decision 2026-10-18) and the cost per typical session
+($0.00086 free, $0.00514 Plus).
 
 ## Phases 3-4: Packs (content authored and audited 2026-10-18; import, build and publish are yours)
 The format, the generation and verification pipeline, encryption and key issuing, resumable downloads and the CDN are

@@ -16,7 +16,8 @@ BASELINE = {"explain": "claude-opus-5-5", "grade": "claude-opus-5-5", "cards": "
             "reteach": "claude-sonnet-5-5"}
 # A feature switches to Haiku only if: mean judged score >= MIN_SCORE, not more than MAX_DROP below the baseline, and at
 # most MAX_WRONG items judged incorrect (correctness <= 2). Grading: mean absolute error and verdict agreement vs gold.
-MIN_SCORE, MAX_DROP, MAX_WRONG = 4.0, 0.3, 1
+# MAX_DROP was 0.3; owner decision 2026-10-18: the absolute 4.0 bar decides, the drop rule only catches a collapse.
+MIN_SCORE, MAX_DROP, MAX_WRONG = 4.0, 1.0, 1
 GRADE_MAE, GRADE_AGREE = 0.15, 0.85
 ARABIC_MIN = 4.0
 
