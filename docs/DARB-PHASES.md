@@ -158,11 +158,15 @@ intermediates, both mine. Current-Android checks now run on the CI's Linux emula
 **Exit check (eval shows Haiku passes per feature; cost per typical session measured) needs:** the Anthropic API key
 (DARB-NEEDS-ME.md item 6). The run costs about $3-6.
 
-## Phases 3-4: Packs (pipeline built; content waiting on the Anthropic key and blueprints)
+## Phases 3-4: Packs (content authored and audited 2026-10-18; import, build and publish are yours)
 The format, the generation and verification pipeline, encryption and key issuing, resumable downloads and the CDN are
-described in [DARB-PACKS.md](DARB-PACKS.md) and [DARB-SECURITY.md](DARB-SECURITY.md). Building قدرات, تحصيلي and the
-school packs needs the Anthropic key (DARB-NEEDS-ME.md item 6). تحصيلي and school-subject blueprints are pending
-question 6. The per-pack error-rate report fills in when the pipeline runs.
+described in [DARB-PACKS.md](DARB-PACKS.md) and [DARB-SECURITY.md](DARB-SECURITY.md).
+
+All 48 packs (قدرات verbal and quant, 4 تحصيلي, 42 school) are written or transcribed in Claude Code, blind-solved,
+SymPy-checked and audited on a random 60 each; every pack is at or under the 2% ship line (per-pack table and 95% CIs in
+DARB-PACKS.md; 22,183 items). The files are on the server in `/opt/darb/sources`. The import (live DB) is yours:
+`bash /opt/darb/src/darb/deploy/import-packs.sh`; then `packs build` / publish need `DARB_PACK_KEK` and R2.
+School and تحصيلي outlines are still unverified (no official tables of contents; question 6).
 
 ## Phase 5: Segment UX and polish (2026-10-16)
 **Built:**
