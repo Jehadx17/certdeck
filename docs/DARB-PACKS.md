@@ -147,7 +147,7 @@ skill; see DARB-SECURITY.md.
 ## Per-pack quality report
 Filled by `manage.py packs status` after phase 4 runs. The قدرات packs come from Mezla's own Telegram material (credited). Each item
 was re-solved blind and its maths re-checked with SymPy, then a random 60 per pack was audited (2026-10-18). The audit found no errors.
-The import is yours to run (live DB). "items" here are the authored lines; the import keeps 21,403 of them (repeats and invalid lines dropped, see the dry run above).
+"items" here are the authored lines; the live import (2026-10-18) kept 21,404 of them (repeats and invalid lines dropped, see the dry run above).
 
 | pack | items | verified | quarantined | rejected | audited error rate (95% CI) | ships | cost |
 |---|---|---|---|---|---|---|---|
@@ -201,7 +201,7 @@ The import is yours to run (live DB). "items" here are the authored lines; the i
 | `tahsili-physics` | 699 | 699 | — | 1 (blind solver: arguable) | 0/60 = 0% (0–6.0%) | ✅ ships once you run the import; unverified outline | $0 API (Claude Code) |
 
 Status 2026-10-18: all 48 packs are authored, blind-solved, checked and audited (22,183 items), each at or under the
-2% ship line. None is in the live DB yet: the import (and then `packs build` / publish, which read from it) is yours to run.
+2% ship line. Imported into the live DB: **live since 2026-10-18: 48 packs, 21,404 verified items** (matches the dry run; quant has one extra near-repeat). `packs build` / publish need `DARB_PACK_KEK` and R2.
 Items were written and solved in Claude Code, not through the API pipeline (which is built and tested; Phases 3-4 report).
 
 Blueprints ready: `qudurat-verbal` (5 topics, 1,200 items) and `qudurat-quant` (9 topics, 1,200 items), both from

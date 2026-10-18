@@ -23,7 +23,7 @@ gitignored), or on the server in `/opt/darb/.env`, and tell me the file is ready
 | 14 | **Content**: the PDFs (قدرات, تحصيلي, school subjects), any tutor videos, and each tutor's written permission | | your pace | tutor-reviewed packs (AI-only packs don't wait for this) |
 | 15 | **Lawyer**: review DARB-PDPL.md and `darb/legal/` (privacy, terms, deletion, support), the SDAIA SCCs, and the guardian-consent method | lawyer fees | | release |
 | 16 | **Store submissions**: press Submit, answer reviewers | | Apple ~24-48 h; Google up to 7 days for new accounts | launch |
-| 17 | **Pack import**: on the server run `bash /opt/darb/src/darb/deploy/import-packs.sh` (live DB; ~70 min; the dry run kept 21,403 of 22,183, DARB-PACKS.md). Publishing the encrypted packs then needs item 3 (R2) and `DARB_PACK_KEK` in `/opt/darb/.env` | | ~70 min | packs in the app |
+| 17 | ~~**Pack import**~~ done 2026-10-18 (48 packs, 21,404 items). Publishing the encrypted packs needs item 3 (R2) and `DARB_PACK_KEK` in `/opt/darb/.env` | | | packs in the app |
 | 18 | **Telegram**: sign the Darb Telethon session out (Telegram → Settings → Devices) now that collection is done | | 1 min | security |
 
 ## Where things stand

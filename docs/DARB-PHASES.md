@@ -159,14 +159,14 @@ intermediates, both mine. Current-Android checks now run on the CI's Linux emula
 cards on the absolute 4.0 bar with no wrong answers, owner decision 2026-10-18) and the cost per typical session
 ($0.00086 free, $0.00514 Plus).
 
-## Phases 3-4: Packs (content authored and audited 2026-10-18; import, build and publish are yours)
+## Phases 3-4: Packs (authored, audited and imported 2026-10-18; build and publish wait for R2)
 The format, the generation and verification pipeline, encryption and key issuing, resumable downloads and the CDN are
 described in [DARB-PACKS.md](DARB-PACKS.md) and [DARB-SECURITY.md](DARB-SECURITY.md).
 
 All 48 packs (قدرات verbal and quant, 4 تحصيلي, 42 school) are written or transcribed in Claude Code, blind-solved,
 SymPy-checked and audited on a random 60 each; every pack is at or under the 2% ship line (per-pack table and 95% CIs in
-DARB-PACKS.md; 22,183 items). The files are on the server in `/opt/darb/sources`. The import (live DB) is yours:
-`bash /opt/darb/src/darb/deploy/import-packs.sh`; then `packs build` / publish need `DARB_PACK_KEK` and R2.
+DARB-PACKS.md; 22,183 items). The files are on the server in `/opt/darb/sources`. The import (`import-packs.sh`) is done, **live since 2026-10-18: 48 packs, 21,404 verified items** (matches the dry run; quant has one extra near-repeat);
+`packs build` / publish need `DARB_PACK_KEK` and R2.
 School and تحصيلي outlines are still unverified (no official tables of contents; question 6).
 
 ## Phase 5: Segment UX and polish (2026-10-16)
