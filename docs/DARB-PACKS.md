@@ -201,7 +201,7 @@ was re-solved blind and its maths re-checked with SymPy, then a random 60 per pa
 | `tahsili-physics` | 699 | 699 | — | 1 (blind solver: arguable) | 0/60 = 0% (0–6.0%) | ✅ ships once you run the import; unverified outline | $0 API (Claude Code) |
 
 Status 2026-10-18: all 48 packs are authored, blind-solved, checked and audited (22,183 items), each at or under the
-2% ship line. Imported into the live DB: **live since 2026-10-18: 48 packs, 21,404 verified items** (matches the dry run; quant has one extra near-repeat). `packs build` / publish need `DARB_PACK_KEK` and R2.
+2% ship line. Imported into the live DB: **live since 2026-10-18: 48 packs, 21,404 verified items** (matches the dry run; quant has one extra near-repeat). All 48 built v1 with the live `DARB_PACK_KEK` and decrypted back (48/48, 0 mismatches), files in `/opt/darb/packs-out`, unpublished. Upload to R2, then `packs publish`, waits for R2 (NEEDS-ME 3).
 Items were written and solved in Claude Code, not through the API pipeline (which is built and tested; Phases 3-4 report).
 
 Blueprints ready: `qudurat-verbal` (5 topics, 1,200 items) and `qudurat-quant` (9 topics, 1,200 items), both from
