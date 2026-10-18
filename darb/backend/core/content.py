@@ -146,6 +146,8 @@ def clean_item(raw, topic):
     card = {"type": raw["type"], "question": q, "explanation": expl, "hint": (raw.get("hint") or "").strip(),
             "difficulty": max(1, min(3, int(raw.get("difficulty") or 2))), "skill": (raw.get("skill") or "").strip()[:60],
             "topic": topic}
+    if raw.get("seen"):  # the date the question was last posted: newer ones are likelier on the next exam
+        card["seen"] = str(raw["seen"])[:10]
     if raw["type"] == "mcq":
         opts, correct = raw.get("options") or [], raw.get("correct") or []
         if len(opts) != 4 or len(correct) != 1 or not 0 <= correct[0] < 4 or len({" ".join(str(o).split()) for o in opts}) != 4:

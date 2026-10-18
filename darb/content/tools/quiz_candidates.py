@@ -43,10 +43,11 @@ def build(src, chan):
         out.append({"cid": f"{chan}-{min(x['id'] for x in posts)}", "question": clean(first["question"]),
                     "options": [clean(o["text"]) for o in first["options"]],
                     "vote": [round(votes[key(o["text"])] / len(posts)) for o in first["options"]],
-                    "posts": sorted(x["id"] for x in posts), "other_versions": by_q[q] - 1,
+                    "posts": sorted(x["id"] for x in posts), "seen": max(x.get("date") or "" for x in posts)[:10],
+                    "other_versions": by_q[q] - 1,
                     **({"passage": posts[0]["passage"]} if posts[0]["passage"] else {}),
-                    "source": f"mezla:{chan}/{min(x['id'] for x in posts)}"})
-    return sorted(out, key=lambda c: c["posts"][0])
+                    "source": f"{'mezla' if chan.startswith('Mezla') else 'tg'}:{chan}/{min(x['id'] for x in posts)}"})
+    return sorted(out, key=lambda c: -c["posts"][-1])  # newest first: recent questions are likelier on the next exam
 
 
 def demo():
@@ -63,7 +64,7 @@ def demo():
     with tempfile.NamedTemporaryFile("w", suffix=".jsonl", delete=False) as f:
         f.write("\n".join(json.dumps(r, ensure_ascii=False) for r in rows))
     c = build(f.name, "T")
-    assert len(c) == 5 and c[0]["posts"] == [1, 2] and c[0]["vote"] == [20, 60, 10, 10] and c[0]["other_versions"] == 1, c
+    assert len(c) == 5 and c[-1]["posts"] == [1, 2] and c[-1]["vote"] == [20, 60, 10, 10] and c[-1]["other_versions"] == 1, c
     assert "passage" not in c[0] and c[2]["passage"].endswith("أصل الحياة.") and "passage" not in c[3] and "passage" not in c[4], c
     print("ok")
 

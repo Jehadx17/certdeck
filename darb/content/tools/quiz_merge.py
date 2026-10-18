@@ -61,7 +61,8 @@ def qkey(c):  # «يفهم من النص» under two passages is two questions
 
 
 def item(c, s):
-    return dict({k: s[k] for k in ITEM if k in s}, type="mcq", correct=[s["correct"]], source=c["source"])
+    return dict({k: s[k] for k in ITEM + ("pack",) if k in s}, type="mcq", correct=[s["correct"]], source=c["source"],
+                **({"seen": c["seen"]} if c.get("seen") else {}))
 
 
 def demo():
@@ -108,7 +109,7 @@ if __name__ == "__main__":
     with open(owner_path, "w", encoding="utf-8") as f:
         f.write(f"# Questions for you ({len(ask)} of {len(cands)})\nReply per id: the right letter, «fix: …», or «drop».\n\n")
         for c, s, why in ask:
-            opts = "  ".join(f"({LETTERS[k]}) {o} [{c['vote'][k]}%]" for k, o in enumerate((s or {}).get("options") or c["options"]))
+            opts = "  ".join(f"({LETTERS[k]}) {o}" + (f" [{c['vote'][k]}%]" if "vote" in c else "") for k, o in enumerate((s or {}).get("options") or c["options"]))
             mine = f"\n  - solver's working: {s.get('my_answer', '')}" if s else ""
             f.write(f"- **{c['cid']}** ({c['source']}): {(s or {}).get('question') or c['question']}\n  - {opts}\n  - why: {why}{mine}\n")
     print(f"{len(items)} items kept, {len(ask)} questions for the owner, of {len(cands)}")

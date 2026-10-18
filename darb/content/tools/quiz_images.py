@@ -43,7 +43,7 @@ def build(src, img, chan, also=frozenset()):
         out.append({"cid": f"{chan}-{r['id']}", "image": f, "question": f"[image {Path(f).name}]",
                     **({"text": r["poll"]["question"]} if r["id"] in also else {}),
                     "options": [o["text"] for o in r["poll"]["options"]], "vote": vote,
-                    "posts": sorted(x["id"] for x, _ in g), "other_versions": 0, "source": f"mezla:{chan}/{r['id']}"})
+                    "posts": sorted(x["id"] for x, _ in g), "other_versions": 0, "source": f"{'mezla' if chan.startswith('Mezla') else 'tg'}:{chan}/{r['id']}"})
     return sorted(out, key=lambda c: c["posts"][0])
 
 
