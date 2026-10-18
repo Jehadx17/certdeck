@@ -64,6 +64,18 @@ def norm(text):
     return " ".join(re.sub(r"[^\w]+", " ", str(text).translate(DIGITS).lower()).split())
 
 
+def maths(text):
+    """The numbers and maths symbols norm() drops: -10 vs 10 or x ≤ 1 vs x ≥ 1 are different, not the same."""
+    return tuple(re.findall(r"\d+|[-−+*/^=<>≤≥|√×÷²³]", str(text).translate(DIGITS)))
+
+
+def dup_key(d):
+    """What must match exactly for two similar stems to be one question: their numbers and their answer (another
+    question on the same reading passage has another answer)."""
+    key = d["options"][d["correct"][0]] if d.get("options") else d.get("answer", "")
+    return maths(d["question"]), norm(key), maths(key)
+
+
 def blueprint(slug):
     return json.loads((BLUEPRINTS / f"{slug}.json").read_text())
 
@@ -136,7 +148,7 @@ def clean_item(raw, topic):
             "topic": topic}
     if raw["type"] == "mcq":
         opts, correct = raw.get("options") or [], raw.get("correct") or []
-        if len(opts) != 4 or len(correct) != 1 or not 0 <= correct[0] < 4 or len({norm(o) for o in opts}) != 4:
+        if len(opts) != 4 or len(correct) != 1 or not 0 <= correct[0] < 4 or len({" ".join(str(o).split()) for o in opts}) != 4:
             return None, "invalid"
         card.update(options=opts, correct=correct)
         key_text = opts[correct[0]]
@@ -156,7 +168,7 @@ def clean_item(raw, topic):
 
 
 def ingest_generated(pack, results, ctxs, source=f"ai:{GEN_MODEL}", status="draft"):
-    seen = [norm(q) for q in PackItem.objects.filter(pack=pack).values_list("data__question", flat=True)]
+    seen = [(norm(d["question"]), dup_key(d)) for d in PackItem.objects.filter(pack=pack).values_list("data", flat=True)]
     n = (PackItem.objects.filter(pack=pack).order_by("-n").values_list("n", flat=True).first() or 0)
     stats = {"added": 0, "invalid": 0, "duplicate": 0, "check failed": 0, "check does not match the key": 0}
     for cid, out in results.items():
@@ -165,9 +177,9 @@ def ingest_generated(pack, results, ctxs, source=f"ai:{GEN_MODEL}", status="draf
             if not card:
                 stats[why] = stats.get(why, 0) + 1
                 continue
-            q = norm(card["question"])
-            m = difflib.SequenceMatcher(None, "", q)
-            if any(m.set_seq1(s) or (m.quick_ratio() >= DUP and m.ratio() >= DUP) for s in seen):
+            q = norm(card["question"]), dup_key(card)
+            m = difflib.SequenceMatcher(None, "", q[0])
+            if any(x == q[1] and (m.set_seq1(s) or (m.quick_ratio() >= DUP and m.ratio() >= DUP)) for s, x in seen):
                 stats["duplicate"] += 1
                 continue
             seen.append(q)

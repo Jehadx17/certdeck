@@ -93,6 +93,16 @@ class PipelineTests(TestCase):
         self.assertEqual(set(PackItem.objects.values_list("status", "source")), {("verified", "claude-code:items.jsonl"),
                                                                                        ("verified", "claude-code:items.jsonl mezla:MezlaQ4/28246")})
 
+    def test_maths_and_passages_are_not_duplicates(self):
+        mcq = lambda q, opts, k=0: {"type": "mcq", "question": q, "options": opts, "correct": [k], "explanation": "e"}
+        for opts in (["11", "-10", "10", "20"], ["x ≤ 1", "x ≥ 1", "x ≤ -1", "x ≥ -1"], ["dog's", "dogs'", "dog'", "dogs"]):
+            self.assertIsNotNone(content.clean_item(mcq("q", opts), "t1")[0], opts)
+        self.assertIsNone(content.clean_item(mcq("q", ["a", "b", " a", "c"]), "t1")[0])
+        key = lambda q, k=0: content.dup_key(mcq(q, ["16", "8", "4", "2"], k))
+        self.assertNotEqual(key("ما حل x/2 + x/6 = 32"), key("ما حل x/2 + x/4 = 24"))  # other numbers
+        self.assertNotEqual(key("النص… ما الفكرة الرئيسة؟"), key("النص… ما معنى الأجيال؟", 1))  # same passage, other answer
+        self.assertEqual(key("ما العدد الذي إذا أضفت له نصفه وربعه أصبح ٢٨؟"), key("ما العدد الذي إذا أضيف إليه نصفه وربعه يصبح 28"))
+
     def test_check_matches_arabic_keys(self):
         from core import verify
         num = lambda v: {"kind": "numeric", "expr": v, "value": v}
