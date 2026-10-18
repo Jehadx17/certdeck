@@ -210,3 +210,28 @@ Screenshots are in the run's artifacts.
 **Open:**
 - device attestation (Play Integrity / App Attest), pending question 7;
 - both tests repeated on the VPS against R2, once they exist.
+
+## Phase 7: Release prep (2026-10-18)
+**Built:**
+- `build-release.sh` (obfuscated, symbols kept; refuses an upload build without the upload key);
+- store art (`darb/store/make-art.py`), listings in Arabic and English, age rating, data-safety and privacy answers,
+  subscription products and review notes ([DARB-STORE-LISTING.md](DARB-STORE-LISTING.md));
+- privacy, terms, support, deletion and AI-and-minors pages drafted (AR + EN), nginx config ready to serve them.
+
+**Exit check met:** [DARB-RELEASE.md](DARB-RELEASE.md) has every store requirement ticked (✔) or assigned to you
+(👤, naming what it is blocked on); no row is left open.
+
+**Not done (set aside by you on 2026-10-18):** signing, the AAB upload to internal testing, the TestFlight upload,
+screenshots from the release build, sandbox sign-in and purchases on devices, and attestation. All need the Play
+Console and Apple Developer accounts, RevenueCat and the Mac.
+
+## Final status (2026-10-18)
+| Goal | Status |
+|---|---|
+| New app, new bundle ID (`sa.darbedu.app`), new backend; CertDeck untouched | ✔ live at darb.mithaqstay.com; /opt/certdeck not changed by Darb |
+| Backend deployed and load-tested; restore tested | ✔ DARB-LOADTEST.md, DARB-RESTORE.md, restore drill on the server |
+| AI: Haiku passes per feature | ✔ DARB-AI-EVAL.md (4.0 bar, your decision) |
+| All packs built and verified | ✔ 48 packs, 21,404 verified items, encrypted v1 files decrypt back with the live key · 👤 R2 (NEEDS-ME 3), then Claude uploads and publishes |
+| Sandbox sign-in and purchases on devices | 👤 set aside: store accounts, Google Cloud / Apple keys, RevenueCat |
+| Signed builds uploaded to internal testing and TestFlight | 👤 set aside: store accounts, the Mac |
+| Only your actions remain before Submit | ✔ DARB-RELEASE.md and DARB-NEEDS-ME.md list them; the lawyer's written opinion is a release blocker |
