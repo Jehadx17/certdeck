@@ -60,5 +60,6 @@ class Command(BaseCommand):
                   f"**${sess['plus_session']:.5f}**; 20 sessions/month: ${sess['plus_month_20_sessions']:.4f} "
                   f"(Plus cap ${evals.ai.Config.get().paid_cap_usd}).",
                   f"- This eval run cost ${run_usd:.2f} (judge ${judge_usd:.2f}).", ""]
-        REPORT.write_text("\n".join(lines))
-        self.stdout.write(f"wrote {REPORT}")
+        report = REPORT if REPORT.parent.is_dir() else Path("/tmp/DARB-AI-EVAL.md")  # no docs/ inside the container
+        report.write_text("\n".join(lines))
+        self.stdout.write(f"wrote {report}")
