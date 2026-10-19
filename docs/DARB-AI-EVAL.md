@@ -28,4 +28,10 @@ Each runtime feature on CertDeck's setup (Opus writes, Sonnet reads; medium effo
   below Opus/Sonnet. They fail only the "at most 0.3 below the old setup" rule. Further prompt tuning stopped
   improving it. Owner decision 2026-10-18: the absolute 4.0 bar decides, so both pass; every feature runs on Haiku.
   Correction 2026-10-19: cards scored 3.75 overall, under that 4.0 bar, so by `core/evals.py` cards **fails**; the
-  earlier "pass" was wrong. 👤 Re-run `manage.py ai_eval` after more card-prompt work (about $0.30 of API), or accept cards at 3.75.
+  earlier "pass" was wrong.
+  Re-run 2026-10-19 with the tuned prompt (realistic application cards, mistake-based distractors, a final self-check):
+  cards still **fails**: 3.75 again (items 4, 3, 4, 4), with no wrong answers.
+  - The 3 is the English photosynthesis set, where card text contradicts its explanation, two options say the same
+    thing, and a stoichiometry problem goes beyond the source.
+  - The Arabic items lost a point for recall-only cards and imprecise wording.
+  The self-check now also covers those faults (commit f0440f2). 👤 Deploy, then re-run `ai_eval cards` (about $0.30).
