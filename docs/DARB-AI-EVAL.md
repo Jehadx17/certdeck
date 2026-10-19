@@ -6,7 +6,7 @@ Each runtime feature on CertDeck's setup (Opus writes, Sonnet reads; medium effo
 |---|---|---|---|---|---|---|---|
 | explain | 12 | 4.83 (wrong 1) | 4.08 (correct 4.58, wrong 0) | 0.00061 | 0.03531 | 5.9 | **pass** |
 | grade | 10 | MAE 0.000, agree 100% | MAE 0.000, agree 100% | 0.00026 | 0.01100 | 2.3 | **pass** |
-| cards | 4 | 4.50 (wrong 0) | 3.75 (correct 4.75, wrong 0) | 0.00209 | 0.06322 | 16.4 | **fail** (3.75 < 4.0; see note) |
+| cards | 4 | 4.50 (wrong 0) | 3.25 (correct 4.25, wrong 0) | 0.00209 | 0.06322 | 16.4 | **fail** (3.25 < 4.0; see note) |
 | reteach | 6 | 4.17 (wrong 0) | 4.00 (correct 4.17, wrong 0) | 0.00182 | 0.01657 | 16.5 | **pass** |
 | Arabic quality (all Arabic outputs) | 15 | | language 4.47 | | | | **pass** |
 
@@ -34,4 +34,8 @@ Each runtime feature on CertDeck's setup (Opus writes, Sonnet reads; medium effo
   - The 3 is the English photosynthesis set, where card text contradicts its explanation, two options say the same
     thing, and a stoichiometry problem goes beyond the source.
   - The Arabic items lost a point for recall-only cards and imprecise wording.
-  The self-check now also covers those faults (commit f0440f2). 👤 Deploy, then re-run `ai_eval cards` (about $0.30).
+  The self-check now also covers those faults (commit f0440f2).
+  Re-run 2026-10-19 on f0440f2: cards **fails**, 3.25 (items 4, 3, 3, 3), no wrong answers. The longer self-check
+  made it worse. The judge's faults: duplicate cards, explanation slips (light called a reactant, "left side" in RTL
+  text), a meta note leaking into an explanation, English symbols/units in Arabic text, awkward Arabic grammar, and
+  recall-only cards. Prompt tuning on Haiku at medium effort has stalled at 3.25-3.75 over four runs.
