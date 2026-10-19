@@ -201,10 +201,10 @@ The fix files are `darb/content/sources/solves/review-2026-10-19/fixes-<pack>.js
 
 | pack | fixed | dropped |
 |---|---|---|
-| `qudurat-verbal` | 166 | 41 |
-| `tahsili-biology` | 209 | 27 |
+| `qudurat-verbal` | 250 | 52 |
+| `tahsili-biology` | 225 | 31 |
 | `tahsili-chemistry` | 162 | 12 |
-| `tahsili-math` | 33 | 7 |
+| `tahsili-math` | 39 | 7 |
 
 Re-audit: a fresh 60-item sample from each pack, with the fixes applied, checked blind by Opus 5.5. Results are in
 `reout-*.jsonl` in the same folder.
@@ -217,8 +217,21 @@ Re-audit: a fresh 60-item sample from each pack, with the fixes applied, checked
 | `tahsili-math` | 6.7% | 3/60 = 5.0% (1.7–13.7%) ❌ | a wrong explanation, a "2/2" option equal to the key, list separators that read as decimal points |
 
 Every item the re-audit found wrong is now fixed or dropped in the fix files. Across the 240 items re-audited, no key
-was wrong. Biology, verbal and math are still above the 2% bar on these samples. 👤 Your call on those three: ship
-them, or hold them for another review pass with Opus.
+was wrong.
+
+**Second pass, Opus 5.5.** Biology, verbal and math were still above 2%, so Opus 5.5 reviewed every remaining item in those
+three packs with the same brief, plus the faults the re-audit had found: cut-off text, passages that contradict their key,
+options equal to the key, and separators read as decimal points. It made 132 more changes, 14 of them drops (`opout-*.jsonl`).
+The counts above include them. A third blind Opus audit then checked a fresh sample of 60 per pack, excluding items already
+audited (seed 20261020, `re2out-*.jsonl`):
+
+| pack | after pass 1 | after pass 2 | ships (≤ 2%) |
+|---|---|---|---|
+| `tahsili-biology` | 3.3% | 0/60 = 0.0% (0.0–6.0%) | ✅ |
+| `tahsili-math` | 5.0% | 0/60 = 0.0% (0.0–6.0%) | ✅ |
+| `qudurat-verbal` | 5.0% | 1/60 = 1.7% (0.3–8.9%), dropped | ✅ |
+
+All six packs are now at or below 2% on their latest samples, which become live once the fix files are applied and the packs rebuilt.
 
 Blueprints ready: `qudurat-verbal` (5 topics, 1,200 items) and `qudurat-quant` (9 topics, 1,200 items), both from
 ETEC's official GAT guide.
