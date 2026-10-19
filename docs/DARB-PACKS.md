@@ -231,7 +231,33 @@ audited (seed 20261020, `re2out-*.jsonl`):
 | `tahsili-math` | 5.0% | 0/60 = 0.0% (0.0–6.0%) | ✅ |
 | `qudurat-verbal` | 5.0% | 1/60 = 1.7% (0.3–8.9%), dropped | ✅ |
 
-All six packs are now at or below 2% on their latest samples, which become live once the fix files are applied and the packs rebuilt.
+All six packs are now at or below 2% on their latest samples.
+
+**Live 2026-10-19.** `packs fix` applied:
+
+| pack | fixed | dropped | rejected |
+|---|---|---|---|
+| verbal | 250 | 52 | 0 |
+| biology | 223 | 31 | 2 |
+| chemistry | 160 | 12 | 2 |
+| math | 34 | 7 | 5 |
+
+Rejected means a fix would have moved the key or failed the checks, so the item was taken out instead. A scan of the
+built packs then found 13 more placeholder options, in quant (5) and physics (8), and those items were dropped.
+
+Built and decrypted back:
+
+| pack | version | cards |
+|---|---|---|
+| quant | v4 | 4,403 |
+| verbal | v3 | 2,253 |
+| biology | v3 | 1,812 |
+| chemistry | v3 | 1,598 |
+| physics | v4 | 1,043 |
+| math | v3 | 450 |
+
+All six packs have 0 placeholder options and 0 leftover labels. Spot checks show the fixed text and the dropped items as
+expected. The fix files for quant and physics are in the same folder.
 
 Blueprints ready: `qudurat-verbal` (5 topics, 1,200 items) and `qudurat-quant` (9 topics, 1,200 items), both from
 ETEC's official GAT guide.
