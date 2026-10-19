@@ -187,8 +187,38 @@ and age fit. Being a recalled real exam item is not an error here. Results are i
 | `school-*` (41 packs) | 0 | — | — | the written items were deleted 2026-10-19 (real questions only) | ❌ **blocked for you**: no real school material |
 
 No audited answer key was wrong: the faults are in the text around the answer (OCR and post leftovers, typos,
-explanations). 👤 Your call for the four blocked packs: (a) ship anyway, since the keys are right, (b) I add code
-checks for leftover post labels and run a typo/explanation review pass over every item, then re-audit, or (c) hold them.
+explanations). Owner chose (b): add code checks for the leftover labels, run a review pass, then audit again.
+
+**Clean-up 2026-10-19.** `clean_item` now strips leftover post labels. Sonnet 5.5 reviewed the text of every item in the four
+packs (brief: `darb/content/tools/REVIEW-TEXT.md`; fixes text only, never writes a question or moves the key). Three
+further drops were made in code:
+- 23 error-spotting items whose key word is missing from the sentence: the saved sentence had already been corrected.
+- 43 items with a placeholder option such as "-".
+- the slips the re-audit found.
+
+The fix files are `darb/content/sources/solves/review-2026-10-19/fixes-<pack>.jsonl` and are applied with
+`packs fix <slug> FILE`:
+
+| pack | fixed | dropped |
+|---|---|---|
+| `qudurat-verbal` | 166 | 41 |
+| `tahsili-biology` | 209 | 27 |
+| `tahsili-chemistry` | 162 | 12 |
+| `tahsili-math` | 33 | 7 |
+
+Re-audit: a fresh 60-item sample from each pack, with the fixes applied, checked blind by Opus 5.5. Results are in
+`reout-*.jsonl` in the same folder.
+
+| pack | before | after | what was left |
+|---|---|---|---|
+| `tahsili-chemistry` | 5.0% | 1/60 = 1.7% (0.3–8.9%) ✅ | a placeholder option |
+| `tahsili-biology` | 6.7% | 2/60 = 3.3% (0.9–11.4%) ❌ | a placeholder option, a typo in an option |
+| `qudurat-verbal` | 11.7% | 3/60 = 5.0% (1.7–13.7%) ❌ | a question cut off, two passages that contradict their key |
+| `tahsili-math` | 6.7% | 3/60 = 5.0% (1.7–13.7%) ❌ | a wrong explanation, a "2/2" option equal to the key, list separators that read as decimal points |
+
+Every item the re-audit found wrong is now fixed or dropped in the fix files. Across the 240 items re-audited, no key
+was wrong. Biology, verbal and math are still above the 2% bar on these samples. 👤 Your call on those three: ship
+them, or hold them for another review pass with Opus.
 
 Blueprints ready: `qudurat-verbal` (5 topics, 1,200 items) and `qudurat-quant` (9 topics, 1,200 items), both from
 ETEC's official GAT guide.
