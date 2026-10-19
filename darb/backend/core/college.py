@@ -155,7 +155,19 @@ GENERATE_PROMPT = f"""You write study cards and exam-practice questions for a co
 - Application cards use new, realistic numbers and situations (not the material's own example restated); distractors are the answers a student gets from a real mistake (wrong unit, swapped quantities, a missed step), each named in its option explanation.
 
 {CARD_RULES}
-Before answering, check every card: the answer is right and recomputed; the card's own text, answer and explanation agree with each other (what the explanation says the card shows, the card shows); the card can't be answered from its own wording; every option is a different claim (no two options mean the same) and the explanation says why each wrong option is wrong; the card stays within the knowledge points' scope and level (no method or topic the material doesn't teach); every statement is precise (magnitude vs direction, exact conditions), and the memory aid is literally correct; each field holds what its type asks (ordering: items in order, answer null); no two cards test the same fact. Fix or drop any card that fails."""
+Before answering, check every card: the answer is right and recomputed; the card can't be answered from its own wording; the explanation says why each wrong option is wrong; the memory aid is literally correct; no two cards test the same fact. Fix or drop any card that fails."""
+
+REVIEW_PROMPT = f"""You check a draft set of study cards written for a college student from knowledge points of their own course material, and return the corrected set. Check every card against the knowledge points; fix it in place, or drop it when it can't be fixed:
+- The answer is right (recompute every number); the card's text, answer, options and explanation agree with each other.
+- Every statement is true and precise, including the reasoning in the explanation and the common-mistake note (not only the answer); memory aids and analogies are literally correct; in Arabic text, right and left follow right-to-left reading.
+- The card stays within the knowledge points' scope and level. Keep the material's own notation, symbols and units (Arabic material: its Arabic symbols and units).
+- The card can't be answered from its own wording; a hint doesn't give the answer away; every option is a distinct claim.
+- No two cards test the same fact: drop the weaker of each pair. Application beats restating the material's own example.
+- No notes to yourself in any field; each field holds what its type asks.
+- The language is correct and natural: Modern Standard Arabic grammar (كليهما after a preposition, complete sentences) or clear English, in the knowledge point's language.
+Keep every good card exactly as it is, keep at least one card per knowledge point, and return all the kept cards.
+
+{CARD_RULES}"""
 
 PRACTICE_PROMPT = f"""You write fresh exam questions for a college student's coming assessment, as their professor would set them: the same question formats, difficulty and wording style as the professor's past papers (profile below), drawn from the knowledge points of the assessment's scope, weighted toward high-priority points. Never repeat an existing card's question. Ground everything in the knowledge points and keep their language.
 
@@ -533,7 +545,7 @@ def _expected_kps(chars):
 
 def _generation_usd(cards):
     wp = ai.PRICES.get(ai.MODEL, (4, 5, 0.2, 20))
-    return cards * (100 * wp[0] + 600 * wp[3]) / 1e6
+    return 2 * cards * (100 * wp[0] + 600 * wp[3]) / 1e6  # generate + review
 
 
 def estimate(user, a):
@@ -592,7 +604,7 @@ def prepare(user, body):
     return out
 
 
-STAGES = ["extract", "prioritize", "generate", "fill", "sheets", "done"]
+STAGES = ["extract", "prioritize", "generate", "review", "fill", "sheets", "done"]  # review: a second pass over the drafts
 
 
 def _stage_requests(user, prep, a, stage):
@@ -619,12 +631,18 @@ def _stage_requests(user, prep, a, stage):
         kps = _kps(user, course_id, set(keys))
         if kps:
             reqs.append(("p0", _prio_request(user, a, kps), {"kp_ids": [k["id"] for k in kps]}))
-    elif stage in ("generate", "fill"):
-        covered = _covered(user, course_id)
+    elif stage in ("generate", "fill", "review"):
         prio = (_doc(user, f"prio-{a['id']}") or {}).get("scores") or {}
-        todo = [k for k in _kps(user, course_id, set(keys)) if k["id"] not in covered]
         profile = _doc(user, f"profile-{course_id}")
         context = f"{_assessment_text(a)}\n{_profile_text(profile)}"
+        if stage == "review":
+            kps = {k["id"]: k for k in _kps(user, course_id, set(keys))}
+            for cid, d in (prep.get("drafts") or {}).items():
+                group = [kps[i] for i in d["ctx"]["kp_ids"] if i in kps]
+                reqs.append((f"r{cid}", review_request(context, group, d["cards"], prio), {**d["ctx"], "draft": d["cards"]}))
+            return reqs
+        covered = _covered(user, course_id)
+        todo = [k for k in _kps(user, course_id, set(keys)) if k["id"] not in covered]
         by_section = {}
         for k in todo:
             by_section.setdefault(k.get("section"), []).append(k)
@@ -643,11 +661,23 @@ def _stage_requests(user, prep, a, stage):
     return reqs
 
 
-def generate_request(context, kps, prio=None, fill=False):
-    """Cards for up to KPS_PER_REQUEST knowledge points (used by preparation and by the AI eval)."""
-    listing = "\n\n".join(
+def _kp_listing(kps, prio):
+    return "\n\n".join(
         f"[{k['id']}] {k.get('kind')} · {k.get('title')} · p.{k.get('loc')} · emphasis {k.get('emphasis')} · "
         f"priority {(prio or {}).get(k['id'], 3)}\n{k.get('content')}" for k in kps)
+
+
+def review_request(context, kps, cards, prio=None):
+    """The second pass over generate_request's draft [cards] (used by preparation and by the AI eval)."""
+    return params([{"type": "text", "text": REVIEW_PROMPT, "cache_control": {"type": "ephemeral"}}],
+                  [{"role": "user", "content": f"{context}\n\nKnowledge points:\n\n{_kp_listing(kps, prio)}\n\n"
+                    f"Draft cards (JSON):\n{json.dumps(cards, ensure_ascii=False)}"}],
+                  CARDS_SCHEMA, max_tokens=16000, effort="medium")
+
+
+def generate_request(context, kps, prio=None, fill=False):
+    """Cards for up to KPS_PER_REQUEST knowledge points (used by preparation and by the AI eval)."""
+    listing = _kp_listing(kps, prio)
     return params([{"type": "text", "text": GENERATE_PROMPT, "cache_control": {"type": "ephemeral"}}],
                   [{"role": "user", "content": f"{context}\n\nKnowledge points:\n\n{listing}\n\nWrite the cards for these "
                     f"{len(kps)} knowledge points." + (" Each of them still has no card: cover every one." if fill else "")}],
@@ -713,7 +743,9 @@ def _finish(user, prep, a, stage, results, ctxs):
         ctx = ctxs.get(cid) or {}
         if isinstance(out, Exception) or out is None:
             stats["failed_requests"] += 1
-            continue
+            if not ctx.get("draft"):
+                continue
+            out = {"cards": ctx["draft"]}  # the review failed: keep the unreviewed cards
         if stage == "extract":
             for p in out.get("points") or []:
                 content = (p.get("content") or "").strip()
@@ -725,7 +757,7 @@ def _finish(user, prep, a, stage, results, ctxs):
                     "content": content, "loc": int(p.get("loc") or 0), "emphasis": max(0, min(3, int(p.get("emphasis") or 0))), "created_at": now}})
         elif stage == "prioritize":
             _save_prio(user, a, ctx.get("kp_ids") or [], out)
-        elif stage in ("generate", "fill"):
+        elif stage in ("review", "fill"):
             allowed = set(ctx.get("kp_ids") or [])
             kps = {k["id"]: k for k in _kps(user, course_id)}
             for raw in out.get("cards") or []:
@@ -802,7 +834,13 @@ def advance(user, prep_doc_id):
                     return 60
                 prep = _put(user, "prep", prep_doc_id, {**prep, "status": "running", "progress": f"{stage}: {len(reqs)} requests"})
                 results = _run_now(user, f"college_{stage}", reqs, costs) if reqs else {}
-            stats = _finish(user, prep, a, stage, results, ctxs)
+            if stage == "generate":  # the drafts wait in the prep doc for the review stage
+                prep["drafts"] = {cid: {"ctx": ctxs[cid], "cards": out.get("cards") or []}
+                                  for cid, out in results.items() if isinstance(out, dict)}
+                stats = {"failed_requests": sum(not isinstance(out, dict) for out in results.values())}
+            else:
+                stats = _finish(user, prep, a, stage, results, ctxs)
+                prep["drafts"] = None
             nxt = STAGES[STAGES.index(stage) + 1]
             prep = _put(user, "prep", prep_doc_id, {
                 **prep, "stage": nxt, "pending": None, "cost_usd": round(prep.get("cost_usd", 0) + sum(costs), 6),

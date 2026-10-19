@@ -87,6 +87,9 @@ def run(features=None, log=print):
             req = _requests(feature, item)
             base, base_usd, base_s = _run(req, BASELINE[feature])
             cand, cand_usd, cand_s = _run(req, ai.MODEL)
+            if feature == "cards" and isinstance(cand, dict):  # Darb's second pass over the drafts
+                cand, usd, s = _run(college.review_request(item["context"], item["kps"], cand["cards"]), ai.MODEL)
+                cand_usd, cand_s = cand_usd + usd, cand_s + s
             row = {"i": i, "lang": item.get("lang", "ar"), "base_usd": base_usd, "cand_usd": cand_usd,
                    "base_s": base_s, "cand_s": cand_s, "base_out": base, "cand_out": cand}
             if feature == "grade":

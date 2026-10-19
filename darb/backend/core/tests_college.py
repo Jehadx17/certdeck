@@ -82,6 +82,8 @@ def fake_ai(request_kwargs_log=None):
                      rubric=[{"point": "formula", "weight": 1}]),
                 dict(base, type="cloze", question="The power rule needs $r \\neq$ {{-1}}."),
             ]})
+        if system.startswith("You check a draft set"):  # the review keeps the drafts as they are
+            return message({"cards": json.loads(kw["messages"][0]["content"].split("Draft cards (JSON):\n", 1)[1])})
         if system.startswith("From the knowledge points"):
             return message({"summary": "## Ch 5\n- substitution (p. 3)", "facts": "- power rule", "formulas": None})
         if system.startswith("You grade a student's answer"):
@@ -211,6 +213,7 @@ class CollegeTests(TestCase):
         self.assertEqual(set(sheets), {"summary", "facts"})  # formulas: null -> no sheet
         self.assertGreater(prep["cost_usd"], 0)
         self.assertTrue(AiCall.objects.filter(endpoint="college_generate").exists())
+        self.assertTrue(AiCall.objects.filter(endpoint="college_review").exists())
 
         # Grading a written answer against the rubric.
         with mock.patch("core.ai._create", side_effect=fake_ai(log)):
