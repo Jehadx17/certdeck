@@ -6,7 +6,7 @@ Each runtime feature on CertDeck's setup (Opus writes, Sonnet reads; medium effo
 |---|---|---|---|---|---|---|---|
 | explain | 12 | 4.83 (wrong 1) | 4.08 (correct 4.58, wrong 0) | 0.00061 | 0.03531 | 5.9 | **pass** |
 | grade | 10 | MAE 0.000, agree 100% | MAE 0.000, agree 100% | 0.00026 | 0.01100 | 2.3 | **pass** |
-| cards | 4 | 4.50 (wrong 0) | 3.50 (correct 4.00, wrong 0) | 0.00533 | 0.07655 | 34.3 | **fail** (3.50 < 4.0; see note) |
+| cards | 4 | 4.50 (wrong 0) | 3.50 (correct 4.00, wrong 0) | 0.00533 | 0.07655 | 34.3 | **accepted below the bar** (3.50 < 4.0, no wrong answers; owner waiver 2026-10-19) |
 | reteach | 6 | 4.17 (wrong 0) | 4.00 (correct 4.17, wrong 0) | 0.00182 | 0.01657 | 16.5 | **pass** |
 | Arabic quality (all Arabic outputs) | 15 | | language 4.47 | | | | **pass** |
 
@@ -47,4 +47,5 @@ Each runtime feature on CertDeck's setup (Opus writes, Sonnet reads; medium effo
   Re-run 2026-10-19 on 4f2c16e: cards **fails**, 3.50 (items 3, 3, 4, 4), no wrong answers. Geometry rose to 4 but
   still used Latin units despite the rule; physics and photosynthesis fell to 3 (explanation slips, a scrambled
   ordering card). Over five runs the score moves between 3.25 and 3.75 with no trend: on Haiku the faults move
-  between items rather than go away. Owner decision needed: a stronger model for cards, or accept cards below 4.0.
+  between items rather than go away. Owner decision 2026-10-19: cards are accepted below 4.0. They ship on Haiku with the review pass (no wrong answer
+  in any run); no more tuning for now.
