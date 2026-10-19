@@ -138,9 +138,13 @@ def generate_requests(pack, bp):
     return reqs
 
 
+# a post's own label left at the start of a question: «سؤال تحصيلي 47»، «ؤال٦٦)»
+LEFTOVER = re.compile(r"^\W*(?:سؤال|ؤال)\s*(?:تحصيلي\s*)?[0-9٠-٩]+\s*[)/:.\-–]?\s*")
+
+
 def clean_item(raw, topic):
     """A generated item -> card data, or (None, reason)."""
-    q, expl = (raw.get("question") or "").strip(), (raw.get("explanation") or "").strip()
+    q, expl = LEFTOVER.sub("", (raw.get("question") or "").strip()), (raw.get("explanation") or "").strip()
     if not q or not expl or raw.get("type") not in ("mcq", "basic"):
         return None, "invalid"
     card = {"type": raw["type"], "question": q, "explanation": expl, "hint": (raw.get("hint") or "").strip(),
@@ -203,6 +207,38 @@ def import_items(slug, path):
     stats = ingest_generated(pack, {c: {"items": [r]} for c, r in ok.items()}, {c: {"topic": r["topic"]} for c, r in ok.items()},
                              source=f"claude-code:{Path(path).name}"[:120], status="verified")
     stats["unknown topic"] = len(rows) - len(ok)
+    return stats
+
+
+def fix_items(slug, path):
+    """Reviewed text fixes for live items, one JSON object per line: {"n": 12, "question"/"options"/"explanation"/"hint": ...}
+    or {"n": 12, "drop": "why"}. A fix goes through clean_item again and may not move the key: a fixed item whose old key
+    text now sits under another option, or that fails the checks, is rejected instead (never guessed)."""
+    pack = Pack.objects.get(slug=slug)
+    stats = {"fixed": 0, "dropped": 0, "rejected": 0, "missing": 0}
+    for line in Path(path).read_text().splitlines():
+        if not line.strip():
+            continue
+        fix = json.loads(line)
+        it = PackItem.objects.filter(pack=pack, n=fix["n"], status="verified").first()
+        if not it:
+            stats["missing"] += 1
+            continue
+        if fix.get("drop"):
+            it.status, it.checks = "rejected", dict(it.checks, review=f"dropped: {fix['drop']}"[:300])
+            stats["dropped"] += 1
+        else:
+            new = dict(it.data, **{k: fix[k] for k in ("question", "options", "explanation", "hint") if k in fix})
+            card, why = clean_item(new, it.data["topic"])
+            old = it.data.get("options") and norm(it.data["options"][it.data["correct"][0]])  # the key may get a typo fixed, not a new place
+            moved = card and card["type"] == "mcq" and any(norm(o) == old for k, o in enumerate(card["options"]) if k != card["correct"][0])
+            if not card or moved:
+                it.status, it.checks = "rejected", dict(it.checks, review=f"fix rejected: {why or 'the key changed'}")
+                stats["rejected"] += 1
+            else:
+                it.data, it.checks = dict(card, **{k: it.data[k] for k in ("seen",) if k in it.data}), dict(it.checks, review="fixed")
+                stats["fixed"] += 1
+        it.save(update_fields=["data", "status", "checks"])
     return stats
 
 

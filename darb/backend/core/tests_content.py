@@ -94,6 +94,22 @@ class PipelineTests(TestCase):
         self.assertEqual(set(PackItem.objects.values_list("status", "source")), {("verified", "claude-code:items.jsonl"),
                                                                                        ("verified", "claude-code:items.jsonl mezla:MezlaQ4/28246")})
 
+    def test_fix_live_items(self):
+        pack = Pack.objects.create(slug="fx", title_ar="x", title_en="x", topics=[{"id": "t1"}])
+        mcq = lambda q: {"type": "mcq", "question": q, "options": ["حادث", "ب", "ج", "د"], "correct": [0], "explanation": "e", "topic": "t1"}
+        for n in (1, 2, 3, 4):
+            PackItem.objects.create(pack=pack, n=n, status="verified", data=dict(mcq(f"سؤال تحصيلي {n}) س{n}؟"), seen="2026-01-02"))
+        fixes = [{"n": 1, "options": ["حادث السير", "ب", "ج", "د"], "explanation": "صحيح"},  # a typo, same key
+                 {"n": 2, "drop": "no error to find"}, {"n": 3, "options": ["ب", "حادث", "ج", "د"]},  # moves the key
+                 {"n": 9, "hint": "h"}]
+        path = Path(tempfile.mkdtemp()) / "fix.jsonl"
+        path.write_text("\n".join(json.dumps(f, ensure_ascii=False) for f in fixes))
+        self.assertEqual(content.fix_items("fx", path), {"fixed": 1, "dropped": 1, "rejected": 1, "missing": 1})
+        one = PackItem.objects.get(pack=pack, n=1)
+        self.assertEqual((one.status, one.data["question"], one.data["explanation"], one.data["seen"]), ("verified", "س1؟", "صحيح", "2026-01-02"))
+        self.assertEqual(list(PackItem.objects.filter(pack=pack).order_by("n").values_list("status", flat=True)),
+                         ["verified", "rejected", "rejected", "verified"])
+
     def test_maths_and_passages_are_not_duplicates(self):
         mcq = lambda q, opts, k=0: {"type": "mcq", "question": q, "options": opts, "correct": [k], "explanation": "e"}
         for opts in (["11", "-10", "10", "20"], ["x ≤ 1", "x ≥ 1", "x ≤ -1", "x ≥ -1"], ["dog's", "dogs'", "dog'", "dogs"]):
