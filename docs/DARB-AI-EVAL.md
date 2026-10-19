@@ -6,7 +6,7 @@ Each runtime feature on CertDeck's setup (Opus writes, Sonnet reads; medium effo
 |---|---|---|---|---|---|---|---|
 | explain | 12 | 4.83 (wrong 1) | 4.08 (correct 4.58, wrong 0) | 0.00061 | 0.03531 | 5.9 | **pass** |
 | grade | 10 | MAE 0.000, agree 100% | MAE 0.000, agree 100% | 0.00026 | 0.01100 | 2.3 | **pass** |
-| cards | 4 | 4.50 (wrong 0) | 3.25 (correct 4.25, wrong 0) | 0.00209 | 0.06322 | 16.4 | **fail** (3.25 < 4.0; see note) |
+| cards | 4 | 4.50 (wrong 0) | 3.75 (correct 4.25, wrong 0) | 0.00473 | 0.07655 | 33.8 | **fail** (3.75 < 4.0; see note) |
 | reteach | 6 | 4.17 (wrong 0) | 4.00 (correct 4.17, wrong 0) | 0.00182 | 0.01657 | 16.5 | **pass** |
 | Arabic quality (all Arabic outputs) | 15 | | language 4.47 | | | | **pass** |
 
@@ -39,3 +39,8 @@ Each runtime feature on CertDeck's setup (Opus writes, Sonnet reads; medium effo
   made it worse. The judge's faults: duplicate cards, explanation slips (light called a reactant, "left side" in RTL
   text), a meta note leaking into an explanation, English symbols/units in Arabic text, awkward Arabic grammar, and
   recall-only cards. Prompt tuning on Haiku at medium effort has stalled at 3.25-3.75 over four runs.
+  Re-run 2026-10-19 with a Haiku review pass over the drafts (76be196): cards **fails**, 3.75 (items 4, 4, 3, 4), no
+  wrong answers. The physics, photosynthesis and analogy sets reached 4. The geometry set stayed at 3: the review
+  cut it to two plain problems (it treated the recall cards as duplicates), and Haiku wrote Latin units (cm) and
+  variables in Arabic text that the source doesn't use. The review rules now keep every angle per point and require
+  Arabic units and variables. 👤 Deploy, then re-run `ai_eval cards` (about $0.40).

@@ -160,12 +160,12 @@ Before answering, check every card: the answer is right and recomputed; the card
 REVIEW_PROMPT = f"""You check a draft set of study cards written for a college student from knowledge points of their own course material, and return the corrected set. Check every card against the knowledge points; fix it in place, or drop it when it can't be fixed:
 - The answer is right (recompute every number); the card's text, answer, options and explanation agree with each other.
 - Every statement is true and precise, including the reasoning in the explanation and the common-mistake note (not only the answer); memory aids and analogies are literally correct; in Arabic text, right and left follow right-to-left reading.
-- The card stays within the knowledge points' scope and level. Keep the material's own notation, symbols and units (Arabic material: its Arabic symbols and units).
+- The card stays within the knowledge points' scope and level. Keep the material's own notation, symbols and units. In Arabic cards, units and variables are Arabic (سم، م²، كجم، نيوتن؛ أ، ب، ج، ق) unless the material itself writes them in Latin letters; this includes steps and rubrics.
 - The card can't be answered from its own wording; a hint doesn't give the answer away; every option is a distinct claim.
-- No two cards test the same fact: drop the weaker of each pair. Application beats restating the material's own example.
+- Drop only a card that repeats another (the same fact asked the same way). A recall card, a cloze and an application problem on the same point are different angles: keep them all. Never reduce a knowledge point to fewer cards or fewer angles than the draft gives it.
 - No notes to yourself in any field; each field holds what its type asks.
 - The language is correct and natural: Modern Standard Arabic grammar (كليهما after a preposition, complete sentences) or clear English, in the knowledge point's language.
-Keep every good card exactly as it is, keep at least one card per knowledge point, and return all the kept cards.
+Keep every good card exactly as it is and return all the kept cards.
 
 {CARD_RULES}"""
 
