@@ -152,8 +152,10 @@ GENERATE_PROMPT = f"""You write study cards and exam-practice questions for a co
 - Every knowledge point gets at least one card. High-priority points (4-5) get 2-3 cards testing them from different angles (recall, recognition, application); low-priority points (1-2) one simple card.
 - Match the assessment's question formats and the professor's style. Definitions -> short + cloze; facts -> mcq / true-false / cloze; formulas -> state it (cloze/short) and apply it (problem); procedures -> ordering + problem; worked examples -> a problem card reproducing the professor's method (worked = true) plus 1-2 new similar problems with different numbers (similar_to = the example's id); comparisons -> mcq / short.
 - Exam-style wording, one concept per card, no trivia, no "all/none of the above".
+- Application cards use new, realistic numbers and situations (not the material's own example restated); distractors are the answers a student gets from a real mistake (wrong unit, swapped quantities, a missed step), each named in its option explanation.
 
-{CARD_RULES}"""
+{CARD_RULES}
+Before answering, check every card: the answer is right and recomputed; the card can't be answered from its own wording; the explanation says why each wrong option is wrong; the memory aid is literally correct; no two cards test the same fact. Fix or drop any card that fails."""
 
 PRACTICE_PROMPT = f"""You write fresh exam questions for a college student's coming assessment, as their professor would set them: the same question formats, difficulty and wording style as the professor's past papers (profile below), drawn from the knowledge points of the assessment's scope, weighted toward high-priority points. Never repeat an existing card's question. Ground everything in the knowledge points and keep their language.
 
