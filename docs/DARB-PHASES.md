@@ -155,8 +155,9 @@ intermediates, both mine. Current-Android checks now run on the CI's Linux emula
 - admin lookup, spend page and quota reset;
 - the eval harness end to end on mocked models.
 
-**Exit check met (2026-10-18):** [DARB-AI-EVAL.md](DARB-AI-EVAL.md) shows Haiku passing every feature (explain and
-cards on the absolute 4.0 bar with no wrong answers, owner decision 2026-10-18) and the cost per typical session
+**Exit check met (2026-10-18):** [DARB-AI-EVAL.md](DARB-AI-EVAL.md) shows Haiku passing explain, grade, reteach and
+Arabic quality. Cards scored 3.25-3.75 over five runs (2026-10-19, with a Haiku review pass), never a wrong answer,
+and are accepted below the 4.0 bar by owner waiver 2026-10-19. It also shows the cost per typical session
 ($0.00086 free, $0.00514 Plus).
 
 ## Phases 3-4: Packs (authored, audited, imported and built 2026-10-18; publish waits for R2)
@@ -167,6 +168,8 @@ All 48 packs (قدرات verbal and quant, 4 تحصيلي, 42 school) are writte
 SymPy-checked and audited on a random 60 each; every pack is at or under the 2% ship line (per-pack table and 95% CIs in
 DARB-PACKS.md; 22,183 items). The files are on the server in `/opt/darb/sources`. The import (`import-packs.sh`) is done, **live since 2026-10-18: 48 packs, 21,404 verified items** (matches the dry run; quant has one extra near-repeat); all 48 built v1 with the live `DARB_PACK_KEK` and decrypted back (48/48, 0 mismatches), files in `/opt/darb/packs-out`, unpublished.
 Upload + `packs publish` wait for R2.
+2026-10-19: text clean-up and Opus re-audit of the six قدرات/تحصيلي packs (all at or under 2% on fresh samples),
+fixes applied live and rebuilt (quant v4, verbal v3, biology v3, chemistry v3, physics v4, math v3); see DARB-PACKS.md.
 School and تحصيلي outlines are still unverified (no official tables of contents; question 6).
 
 ## Phase 5: Segment UX and polish (2026-10-16)
@@ -230,7 +233,7 @@ Console and Apple Developer accounts, RevenueCat and the Mac.
 |---|---|
 | New app, new bundle ID (`sa.darbedu.app`), new backend; CertDeck untouched | ✔ live at darb.mithaqstay.com; /opt/certdeck not changed by Darb |
 | Backend deployed and load-tested; restore tested | ✔ DARB-LOADTEST.md, DARB-RESTORE.md, restore drill on the server |
-| AI: Haiku passes per feature | ✔ DARB-AI-EVAL.md (4.0 bar, your decision) |
+| AI: Haiku passes per feature | ✔ DARB-AI-EVAL.md (cards 3.50 < 4.0 accepted by your waiver 2026-10-19) |
 | All packs built and verified | ✔ 48 packs, 21,404 verified items, encrypted v1 files decrypt back with the live key · 👤 R2 (NEEDS-ME 3), then Claude uploads and publishes |
 | Sandbox sign-in and purchases on devices | 👤 set aside: store accounts, Google Cloud / Apple keys, RevenueCat |
 | Signed builds uploaded to internal testing and TestFlight | 👤 set aside: store accounts, the Mac |
