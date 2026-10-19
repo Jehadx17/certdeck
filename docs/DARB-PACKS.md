@@ -148,15 +148,17 @@ guessed.
 
 | Pack | New real items | Channels (credited in each item's `source`, `tg:<channel>/<post>`) |
 |---|---|---|
-| `qudurat-quant` | 689 (+ Mezla) | Mezla channels, t_mo7wsab, qodrat_77, others in the priority list |
-| `qudurat-verbal` | 800 (+ Mezla) | same |
-| `tahsili-biology` | 2,319 | T7selly_QA, stepbystep0, chemquiz_sa, earlier Tahsili channels |
-| `tahsili-chemistry` | 1,989 | same |
-| `tahsili-physics` | 1,384 | same |
-| `tahsili-math` | 581 | same |
+| `qudurat-quant` | 689 → 519 added; 4,408 live | Mezla channels, t_mo7wsab, qodrat_77, others in the priority list |
+| `qudurat-verbal` | 800 → 661 added; 2,305 live | same |
+| `tahsili-biology` | 2,319 → 1,845 live | T7selly_QA, stepbystep0, chemquiz_sa, earlier Tahsili channels |
+| `tahsili-chemistry` | 1,989 → 1,612 live | same |
+| `tahsili-physics` | 1,384 → 1,051 live | same |
+| `tahsili-math` | 581 → 462 live | same |
 
-The live delete and import are run by the owner (commands in the session report). The error-rate columns above
-will be refreshed after that import.
+Live 2026-10-19: the 15,871 written items were deleted, then the six packs were imported (11,683 items in all). The
+import drops near-duplicates (the same question posted with other wording across channels) and items whose topic id
+is not in the pack: tahsili-math, for example, was 102 duplicates and 17 unknown topics. The school packs are empty
+and are not built: **blocked for the owner** until real school material exists.
 
 ## Watermark (leak tracing)
 Each subscriber's key response carries a seed derived from their account (HMAC of the server secret). At import, the
