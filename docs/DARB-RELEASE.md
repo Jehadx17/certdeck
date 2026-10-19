@@ -52,7 +52,7 @@
 |---|---|---|
 | Google + Apple sign-in, age gate (guardian consent switch off by default), account deletion (in app + web) | Claude | ✔ built and tested · 👤 blocked on you: the store accounts and Google Cloud / Apple keys for the sandbox run on devices |
 | RevenueCat sandbox purchases on both platforms; a lapsed subscription loses access | Claude | ✔ backend tested · 👤 blocked on you: RevenueCat + sandbox testers for the sandbox run |
-| AI: Haiku only, < 100k tokens, per-user cap, eval passes per feature | Claude | ✔ built · ✔ eval passes per feature (DARB-AI-EVAL.md; explain and cards on the absolute 4.0 bar, owner decision 2026-10-18) |
+| AI: Haiku only, < 100k tokens, per-user cap, eval passes per feature | Claude | ✔ built · ✘ cards eval fails (3.25 < 4.0, DARB-AI-EVAL.md); explain, grade, reteach pass. Fix: Haiku review pass (76be196). 👤 deploy, then Claude re-runs the eval |
 | Packs: قدرات, تحصيلي, school subjects built, audited (≤ 2% error) or listed as blocked | Claude | ✔ 48 packs authored and audited, each ≤ 2% (DARB-PACKS.md) · ✔ imported (21,404 live) and built: 48 encrypted v1 files decrypt back with the live key (`/opt/darb/packs-out`) · 👤 blocked on you: R2 to upload, then Claude publishes |
 | Light/dark, Arabic RTL, minimal settings, onboarding: small + large screens, old Android (7.0), old iOS (16.4) | Claude | ✔ CI walkthrough passed (runs 38956484671, 38959852858): iOS 16.4 + 18.5 SE, iOS 26.2 Pro Max, Android 7.0 phone + tablet, AR/EN × light/dark |
 | Load test at the 100k-student profile; restore test | Claude | ✔ CI runs passed (DARB-LOADTEST.md, DARB-RESTORE.md) · ✔ restore drill on the server 2026-10-17 · 👤 R2 for off-server backups; load test not repeated on the shared host (it would load CertDeck) |
