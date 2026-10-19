@@ -160,6 +160,10 @@ import drops near-duplicates (the same question posted with other wording across
 is not in the pack: tahsili-math, for example, was 102 duplicates and 17 unknown topics. The school packs are empty
 and are not built: **blocked for the owner** until real school material exists.
 
+Built 2026-10-19 at v2 (`packs build`, in the api container's `/tmp/packs`). Each `.dpk` was decrypted back with its
+wrapped key and the card count matched the pack: quant 4,408, verbal 2,305, biology 1,845, chemistry 1,612, physics
+1,051, maths 462. The R2 upload and `packs publish` are **for the owner**.
+
 ## Watermark (leak tracing)
 Each subscriber's key response carries a seed derived from their account (HMAC of the server secret). At import, the
 app shuffles each multiple-choice card's options in an order derived from the seed and the card id, and appends an
