@@ -172,64 +172,23 @@ to the account. A memory dump of the raw decrypted file before import would not,
 skill; see DARB-SECURITY.md.
 
 ## Per-pack quality report
-Filled by `manage.py packs status` after phase 4 runs. The قدرات packs come from Mezla's own Telegram material (credited). Each item
-was re-solved blind and its maths re-checked with SymPy, then a random 60 per pack was audited (2026-10-18). The audit found no errors.
-"items" here are the authored lines; the live import (2026-10-18) kept 21,404 of them (repeats and invalid lines dropped, see the dry run above).
+Audit 2026-10-19 of the six live packs (v2 build): 60 cards per pack were picked at random (seed 20261019) from the
+decrypted `.dpk` and checked blind by Opus 5.5 in Claude Code for the key, the question, the explanation, the Arabic
+and age fit. Being a recalled real exam item is not an error here. Results are in `darb/content/sources/solves/out-*.jsonl`.
 
-| pack | items | verified | quarantined | rejected | audited error rate (95% CI) | ships | cost |
-|---|---|---|---|---|---|---|---|
-| `qudurat-quant` | 4,439 | 4,439 | — | held for you: see `review/*-owner.md` | 0/60 = 0% (0–6.0%) | ✅ ships once you run the import | $0 API (solved in Claude Code) |
-| `qudurat-verbal` | 1,777 | 1,777 | — | held for you: see `review/*-owner.md` | 0/60 = 0% (0–6.0%) | ✅ ships once you run the import | $0 API (solved in Claude Code) |
-| `school-arabic-h1` | 344 | 344 | — | 6 (blind solver or audit) | 0/60 = 0.0% (0.0%–6.0%) | ✅ ships once you run the import; unverified outline | $0 API (Claude Code) |
-| `school-arabic-m1` | 297 | 297 | — | 3 (blind solver or audit) | 0/60 = 0.0% (0.0%–6.0%) | ✅ ships once you run the import; unverified outline | $0 API (Claude Code) |
-| `school-arabic-m2` | 296 | 296 | — | 4 (blind solver or audit) | 0/60 = 0.0% (0.0%–6.0%) | ✅ ships once you run the import; unverified outline | $0 API (Claude Code) |
-| `school-arabic-m3` | 296 | 296 | — | 4 (blind solver or audit) | 0/60 = 0.0% (0.0%–6.0%) | ✅ ships once you run the import; unverified outline | $0 API (Claude Code) |
-| `school-biology-h1` | 349 | 349 | — | 1 (blind solver or audit) | 0/60 = 0.0% (0.0%–6.0%) | ✅ ships once you run the import; unverified outline | $0 API (Claude Code) |
-| `school-biology-h2` | 350 | 350 | — | 0 (blind solver or audit) | 0/60 = 0.0% (0.0%–6.0%) | ✅ ships once you run the import; unverified outline | $0 API (Claude Code) |
-| `school-biology-h3` | 349 | 349 | — | 1 (blind solver or audit) | 0/60 = 0.0% (0.0%–6.0%) | ✅ ships once you run the import; unverified outline | $0 API (Claude Code) |
-| `school-chemistry-h1` | 349 | 349 | — | 1 (blind solver or audit) | 0/60 = 0.0% (0.0%–6.0%) | ✅ ships once you run the import; unverified outline | $0 API (Claude Code) |
-| `school-chemistry-h2` | 347 | 347 | — | 3 (blind solver or audit) | 0/60 = 0.0% (0.0%–6.0%) | ✅ ships once you run the import; unverified outline | $0 API (Claude Code) |
-| `school-chemistry-h3` | 349 | 349 | — | 1 (blind solver or audit) | 0/60 = 0.0% (0.0%–6.0%) | ✅ ships once you run the import; unverified outline | $0 API (Claude Code) |
-| `school-critical-thinking-h1` | 333 | 333 | — | 19 (blind solver or audit) | first audit 2/60 (explanations naming an option by position; 17 such items dropped); re-audit on a fresh sample: 1/60 = 1.7% (0.3%–8.9%) | ✅ ships once you run the import; unverified outline | $0 API (Claude Code) |
-| `school-digital-h1` | 347 | 347 | — | 3 (blind solver or audit) | 0/60 = 0.0% (0.0%–6.0%) | ✅ ships once you run the import; unverified outline | $0 API (Claude Code) |
-| `school-digital-m1` | 250 | 250 | — | 0 (blind solver or audit) | 0/60 = 0.0% (0.0%–6.0%) | ✅ ships once you run the import; unverified outline | $0 API (Claude Code) |
-| `school-digital-m2` | 249 | 249 | — | 1 (blind solver or audit) | 0/60 = 0.0% (0.0%–6.0%) | ✅ ships once you run the import; unverified outline | $0 API (Claude Code) |
-| `school-digital-m3` | 250 | 250 | — | 0 (blind solver or audit) | 0/60 = 0.0% (0.0%–6.0%) | ✅ ships once you run the import; unverified outline | $0 API (Claude Code) |
-| `school-earth-h1` | 349 | 349 | — | 3 (blind solver or audit) | 0/60 = 0.0% (0.0%–6.0%) | ✅ ships once you run the import; unverified outline | $0 API (Claude Code) |
-| `school-english-h1` | 347 | 347 | — | 3 (blind solver or audit) | 0/60 = 0.0% (0.0%–6.0%) | ✅ ships once you run the import; unverified outline | $0 API (Claude Code) |
-| `school-english-h2` | 425 | 425 | — | 8 (blind solver or audit) | 0/60 = 0.0% (0.0%–6.0%) | ✅ ships once you run the import; unverified outline | $0 API (Claude Code) |
-| `school-english-h3` | 349 | 349 | — | 1 (blind solver or audit) | first audit 2/60 (explanations); all 349 explanations reviewed, 6 rewritten; re-audit on a fresh sample: 0/60 = 0.0% (0.0%–6.0%) | ✅ ships once you run the import; unverified outline | $0 API (Claude Code) |
-| `school-english-m1` | 298 | 298 | — | 2 (blind solver or audit) | 0/60 = 0.0% (0.0%–6.0%) | ✅ ships once you run the import; unverified outline | $0 API (Claude Code) |
-| `school-english-m2` | 298 | 298 | — | 3 (blind solver or audit) | 1/60 = 1.7% (0.3%–8.9%) | ✅ ships once you run the import; unverified outline | $0 API (Claude Code) |
-| `school-english-m3` | 297 | 297 | — | 3 (blind solver or audit) | 0/60 = 0.0% (0.0%–6.0%) | ✅ ships once you run the import; unverified outline | $0 API (Claude Code) |
-| `school-islamic-h1` | 347 | 347 | — | 3 (blind solver or audit) | 1/60 = 1.7% (0.3%–8.9%) | ✅ ships once you run the import; unverified outline | $0 API (Claude Code) |
-| `school-islamic-m1` | 248 | 248 | — | 2 (blind solver or audit) | 0/60 = 0.0% (0.0%–6.0%) | ✅ ships once you run the import; unverified outline | $0 API (Claude Code) |
-| `school-islamic-m2` | 246 | 246 | — | 4 (blind solver or audit) | 0/60 = 0.0% (0.0%–6.0%) | ✅ ships once you run the import; unverified outline | $0 API (Claude Code) |
-| `school-islamic-m3` | 247 | 247 | — | 3 (blind solver or audit) | 0/60 = 0.0% (0.0%–6.0%) | ✅ ships once you run the import; unverified outline | $0 API (Claude Code) |
-| `school-math-h1` | 346 | 346 | — | 4 (blind solver or audit) | 0/60 = 0.0% (0.0%–6.0%) | ✅ ships once you run the import; unverified outline | $0 API (Claude Code) |
-| `school-math-h2` | 348 | 348 | — | 3 (blind solver or audit) | 1/60 = 1.7% (0.3%–8.9%) | ✅ ships once you run the import; unverified outline | $0 API (Claude Code) |
-| `school-math-h3` | 350 | 350 | — | 0 (blind solver or audit) | 0/60 = 0.0% (0.0%–6.0%) | ✅ ships once you run the import; unverified outline | $0 API (Claude Code) |
-| `school-math-m1` | 299 | 299 | — | 1 (blind solver or audit) | 0/60 = 0.0% (0.0%–6.0%) | ✅ ships once you run the import; unverified outline | $0 API (Claude Code) |
-| `school-math-m2` | 299 | 299 | — | 1 (blind solver or audit) | 0/60 = 0.0% (0.0%–6.0%) | ✅ ships once you run the import; unverified outline | $0 API (Claude Code) |
-| `school-math-m3` | 298 | 298 | — | 2 (blind solver or audit) | 0/60 = 0.0% (0.0%–6.0%) | ✅ ships once you run the import; unverified outline | $0 API (Claude Code) |
-| `school-physics-h1` | 345 | 345 | — | 6 (blind solver or audit) | 1/60 = 1.7% (0.3%–8.9%) | ✅ ships once you run the import; unverified outline | $0 API (Claude Code) |
-| `school-physics-h2` | 349 | 349 | — | 1 (blind solver or audit) | 0/60 = 0.0% (0.0%–6.0%) | ✅ ships once you run the import; unverified outline | $0 API (Claude Code) |
-| `school-physics-h3` | 347 | 347 | — | 3 (blind solver or audit) | 0/60 = 0.0% (0.0%–6.0%) | ✅ ships once you run the import; unverified outline | $0 API (Claude Code) |
-| `school-science-m1` | 300 | 300 | — | 0 (blind solver or audit) | 0/60 = 0.0% (0.0%–6.0%) | ✅ ships once you run the import; unverified outline | $0 API (Claude Code) |
-| `school-science-m2` | 299 | 299 | — | 1 (blind solver or audit) | 0/60 = 0.0% (0.0%–6.0%) | ✅ ships once you run the import; unverified outline | $0 API (Claude Code) |
-| `school-science-m3` | 300 | 300 | — | 0 (blind solver or audit) | 0/60 = 0.0% (0.0%–6.0%) | ✅ ships once you run the import; unverified outline | $0 API (Claude Code) |
-| `school-social-h1` | 346 | 346 | — | 4 (blind solver or audit) | 0/60 = 0.0% (0.0%–6.0%) | ✅ ships once you run the import; unverified outline | $0 API (Claude Code) |
-| `school-social-m1` | 249 | 249 | — | 1 (blind solver or audit) | 0/60 = 0.0% (0.0%–6.0%) | ✅ ships once you run the import; unverified outline | $0 API (Claude Code) |
-| `school-social-m2` | 247 | 247 | — | 3 (blind solver or audit) | 0/60 = 0.0% (0.0%–6.0%) | ✅ ships once you run the import; unverified outline | $0 API (Claude Code) |
-| `school-social-m3` | 248 | 248 | — | 2 (blind solver or audit) | 0/60 = 0.0% (0.0%–6.0%) | ✅ ships once you run the import; unverified outline | $0 API (Claude Code) |
-| `tahsili-biology` | 696 | 696 | — | 4 (3 blind solver, 1 audit) | 1/60 = 1.7% (0.3–8.9%) | ✅ ships once you run the import; unverified outline | $0 API (Claude Code) |
-| `tahsili-chemistry` | 697 | 697 | — | 3 (blind solver disagreed or flagged) | 0/60 = 0% (0–6.0%) | ✅ ships once you run the import; unverified outline | $0 API (Claude Code) |
-| `tahsili-math` | 699 | 699 | — | 1 (blind solver disagreed) | 0/60 = 0% (0–6.0%) | ✅ ships once you run the import; unverified outline | $0 API (Claude Code) |
-| `tahsili-physics` | 699 | 699 | — | 1 (blind solver: arguable) | 0/60 = 0% (0–6.0%) | ✅ ships once you run the import; unverified outline | $0 API (Claude Code) |
+| pack | live items | audited error rate (95% CI) | wrong keys | what the errors were | ships (≤ 2%) |
+|---|---|---|---|---|---|
+| `qudurat-quant` | 4,408 | 0/60 = 0.0% (0.0–6.0%) | 0 | none | ✅ |
+| `qudurat-verbal` | 2,305 | 7/60 = 11.7% (5.8–22.2%) | 0 | 4 broken questions (an error-spotting item whose sentence has no error, the answer already filled in, three pasted text versions), 2 typos in options, 1 stray letter prefixes | ❌ **blocked for you** |
+| `tahsili-biology` | 1,845 | 4/60 = 6.7% (2.6–15.9%) | 0 | 4 spelling slips (حاث، الحنشار، ينتجا، كليفنتر) | ❌ **blocked for you** |
+| `tahsili-chemistry` | 1,612 | 3/60 = 5.0% (1.7–13.7%) | 0 | 1 leftover «سؤال تحصيلي 47» label, 1 wrong explanation, 1 wrong hint | ❌ **blocked for you** |
+| `tahsili-math` | 462 | 4/60 = 6.7% (2.6–15.9%) | 0 | 2 leftover post fragments at the start, 1 missing ∫, 1 explanation naming the wrong statement | ❌ **blocked for you** |
+| `tahsili-physics` | 1,051 | 1/60 = 1.7% (0.3–8.9%) | 0 | 1 explanation with a wrong sum | ✅ |
+| `school-*` (41 packs) | 0 | — | — | the written items were deleted 2026-10-19 (real questions only) | ❌ **blocked for you**: no real school material |
 
-Status 2026-10-18: all 48 packs are authored, blind-solved, checked and audited (22,183 items), each at or under the
-2% ship line. Imported into the live DB: **live since 2026-10-18: 48 packs, 21,404 verified items** (matches the dry run; quant has one extra near-repeat). All 48 built v1 with the live `DARB_PACK_KEK` and decrypted back (48/48, 0 mismatches), files in `/opt/darb/packs-out`, unpublished. Upload to R2, then `packs publish`, waits for R2 (NEEDS-ME 3).
-Items were written and solved in Claude Code, not through the API pipeline (which is built and tested; Phases 3-4 report).
+No audited answer key was wrong: the faults are in the text around the answer (OCR and post leftovers, typos,
+explanations). 👤 Your call for the four blocked packs: (a) ship anyway, since the keys are right, (b) I add code
+checks for leftover post labels and run a typo/explanation review pass over every item, then re-audit, or (c) hold them.
 
 Blueprints ready: `qudurat-verbal` (5 topics, 1,200 items) and `qudurat-quant` (9 topics, 1,200 items), both from
 ETEC's official GAT guide.
