@@ -233,9 +233,10 @@ class ApiTests(TestCase):
         (release / "latest.json").write_text('{"version_code": 3, "version_name": "1.2.0", "sha256": "ab"}')
         (release / "certdeck.apk").write_bytes(b"PK apk")
         with override_settings(CERTDECK_RELEASE_DIR=release):
-            self.assertEqual(self.client.get("/api/app/latest").status_code, 401)
             self.assertEqual(self.client.get("/api/app/latest", **AUTH).json()["version_code"], 3)
-            r = self.client.get("/api/app/apk", **AUTH)
+            signed_out = {"HTTP_AUTHORIZATION": "Bearer replaced-token"}  # still updates
+            self.assertEqual(self.client.get("/api/app/latest", **signed_out).json()["version_code"], 3)
+            r = self.client.get("/api/app/apk", **signed_out)
             self.assertEqual((r["Content-Type"], b"".join(r.streaming_content)),
                              ("application/vnd.android.package-archive", b"PK apk"))
 

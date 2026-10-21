@@ -162,6 +162,7 @@ def media(request, name):
 
 
 @api_view(["GET"])
+@permission_classes([AllowAny])  # a signed-out phone must still update; the APK is public at /dl/ anyway
 def app_latest(request):
     """The newest published Android build: {version_code, version_name, sha256}. The app updates itself to it."""
     path = settings.CERTDECK_RELEASE_DIR / "latest.json"
@@ -171,6 +172,7 @@ def app_latest(request):
 
 
 @api_view(["GET"])
+@permission_classes([AllowAny])
 def app_apk(request):
     path = settings.CERTDECK_RELEASE_DIR / "certdeck.apk"
     if not path.exists():
