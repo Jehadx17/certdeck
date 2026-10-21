@@ -88,7 +88,9 @@ class _ShellState extends State<Shell> with WidgetsBindingObserver {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) => ValueListenableBuilder<int>(valueListenable: changes, builder: (context, _, __) => _body(context)); // sign-in and role changes rebuild the home
+
+  Widget _body(BuildContext context) {
     if (!Api.configured) return const WelcomeScreen(); // a new phone: sign in with a short code
     if (!App.isOwner) return const EasyHome(); // students: the easy app; their setup screens are under "My courses" (EASY.md)
     // The owner keeps the cert tabs.

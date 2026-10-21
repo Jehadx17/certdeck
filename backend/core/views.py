@@ -63,8 +63,8 @@ def _credentials(request):
 
 
 def _signed_in(account):
-    token = account.new_token()  # one token per account: signing in on another phone replaces it
     account.save()
+    token = account.new_token()  # one per device: signing in on another phone keeps this one signed in
     return Response({"token": token, "name": account.name, "role": account.role})
 
 

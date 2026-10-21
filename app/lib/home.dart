@@ -60,7 +60,7 @@ class TodayScreen extends StatelessWidget {
                     child: ListTile(
                         leading: Icon(Icons.cloud_off),
                         title: Text('Not connected'),
-                        subtitle: Text('Add your server token in Settings to back up, restore and use AI.'))),
+                        subtitle: Text('Sign in from Settings to back up, restore and use AI.'))),
               Text(cert['name'], style: Theme.of(context).textTheme.titleLarge),
               Text(
                   days == null

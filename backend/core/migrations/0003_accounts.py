@@ -15,7 +15,7 @@ MEDIA_NAME = re.compile(r"[0-9a-f]{64}\.(png|jpg|jpeg|webp|gif)")
 
 def create_owner(apps, schema_editor):
     Account = apps.get_model("core", "Account")
-    token = settings.CERTDECK_API_TOKEN
+    token = getattr(settings, "CERTDECK_API_TOKEN", "")  # setting removed since; fresh databases get no token
     owner = Account.objects.create(name="owner", role="owner",
                                    token_hash=hashlib.sha256(token.encode()).hexdigest() if token else None)
     apps.get_model("core", "AiCall").objects.update(user=owner)

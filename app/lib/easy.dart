@@ -446,7 +446,10 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
     });
     final err = await Api.signIn(email.text.trim(), password.text, register: register);
     if (!mounted) return;
-    if (err == null) return Navigator.of(context).popUntil((r) => r.isFirst); // opened from Settings or the PIN: back to the new home
+    if (err == null) {
+      changes.value++; // on a new phone this screen is the home: make the Shell rebuild into the app
+      return Navigator.of(context).popUntil((r) => r.isFirst); // opened from Settings or the PIN: back to the new home
+    }
     setState(() {
       working = false;
       error = t(err);
@@ -492,10 +495,6 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                         error = null;
                       }),
                   child: Text(register ? t('I already have an account') : t('Create an account'))),
-              const SizedBox(height: 40),
-              TextButton(
-                  onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const SettingsScreen())),
-                  child: Text(t('I have a server token'), style: const TextStyle(color: Colors.white54))),
             ]),
           ),
         ),

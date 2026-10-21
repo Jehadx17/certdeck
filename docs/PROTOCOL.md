@@ -51,12 +51,13 @@ Card FSRS state lives inside the card doc (`fsrs` object, times in ms).
 
 ## HTTP API
 
-Base: `https://certdeck.mithaqstay.com/api/`. All endpoints except `health` need
-`Authorization: Bearer <token>`. JSON in and out. Errors: `{"error": "message"}` with 4xx/5xx.
+Base: `https://certdeck.mithaqstay.com/api/`. All endpoints except `health`, `login` and
+`signup` need `Authorization: Bearer <token>`, the token `login` / `signup` returned to this device. JSON in and out. Errors: `{"error": "message"}` with 4xx/5xx.
 
 ### Accounts
-Every token belongs to one **account** (`owner` = me: certs + college; `student` = college only), created with
-`manage.py users` (no sign-up, no admin UI). **Everything below is per account**: sync, media, import/export, AI and
+Every token belongs to one **account** (`owner` = me: certs + college; `student` = college only). People sign in
+with email and password; each sign-in gives that device its own token, so one account works on several devices at
+once (`manage.py users signout <name>` revokes them all). **Everything below is per account**: sync, media, import/export, AI and
 jobs only ever see the caller's own documents and files. Doc ids are unique per account, so fixed ids such as
 `settings` or `DVA-C02` repeat across accounts without colliding. AI work is refused with **402** once the account's
 monthly budget (`cap_usd`, default $10 for students, none for the owner) is used up; studying never needs budget.
@@ -64,9 +65,14 @@ monthly budget (`cap_usd`, default $10 for students, none for the owner) is used
 ### `GET health`
 `{"ok": true}`.
 
+### `POST login`, `POST signup`
+`{email, password}` (8+ characters) → `{token, name, role}`. `signup` creates a student with the default cap.
+400 with a message for the person on a bad email, wrong password or taken email; 429 after 10 wrong passwords per
+email in 10 minutes.
+
 ### `GET me`
-`{name, role: "owner"|"student", month: "YYYY-MM", usd, cap_usd|null, remaining_usd|null}`: who the token
-belongs to (the app shows the cert screens only to the owner) and this month's AI spend against the cap.
+`{name, role: "owner"|"student", month: "YYYY-MM", usd, cap_usd|null, remaining_usd|null}`: who is signed
+in (the app shows the cert screens only to the owner) and this month's AI spend against the cap.
 
 ### `POST sync`
 Request: `{"cursor": int, "docs": [doc, ...]}` (the docs the app changed, possibly empty).

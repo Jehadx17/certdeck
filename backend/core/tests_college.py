@@ -15,7 +15,7 @@ from django.core.management import call_command
 from django.test import TestCase, override_settings
 
 from core import college, ingest
-from core.models import Account, AiCall, Doc, now_ms, save_docs, token_hash
+from core.models import Account, AiCall, Doc, Token, now_ms, save_docs, token_hash
 from core.tests import message
 
 TOKEN = "owner-token"
@@ -96,8 +96,7 @@ class CollegeTests(TestCase):
     def setUp(self):
         college.WORKERS = 1
         self.owner = Account.objects.get(role="owner")
-        self.owner.token_hash = token_hash(TOKEN)
-        self.owner.save()
+        Token.objects.create(account=self.owner, hash=token_hash(TOKEN))
         self.auth = {"HTTP_AUTHORIZATION": f"Bearer {TOKEN}"}
         tmp = Path(tempfile.mkdtemp())
         self.addCleanup(shutil.rmtree, tmp)
@@ -246,9 +245,7 @@ class CollegeTests(TestCase):
         self.assertNotIn("fallbacks", json.dumps(batches.create.call_args.kwargs))
 
         # Another account sees none of it: not the docs, not the files, not the pages.
-        out = StringIO()
-        call_command("users", "create", "sara", stdout=out)
-        sara = {"HTTP_AUTHORIZATION": "Bearer " + out.getvalue().split("Token: ")[1].strip()}
+        sara = {"HTTP_AUTHORIZATION": "Bearer " + Account.objects.create(name="sara").new_token()}
         self.assertEqual(self.client.get(f"/api/upload/{mid}/0", **sara).json(), {"size": 0, "done": False})
         self.assertEqual(self.post("/api/college/process", {"material_id": mid}, sara).status_code, 404)
         self.assertEqual(self.post("/api/college/prepare", {"assessment_id": aid}, sara).status_code, 404)

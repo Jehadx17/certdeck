@@ -25,12 +25,12 @@ def _cap(value):
 
 class Command(BaseCommand):
     help = """Manage accounts. Examples:
-  users create sara                 student with the default $10/month cap; prints the token
-  users create sara --cap 20        another cap ('none' = no cap)
+  users create sara a@b.com         student with the default $10/month cap; asks for the password
+  users create sara a@b.com --cap 20  another cap ('none' = no cap)
   users list                        everyone, with this month's AI spend
   users cap sara 15                 change a cap ('none' = no cap)
-  users rotate sara                 new token (the old one stops working); prints it
-  users login sara a@b.com          set the email + password (asked for) a person signs in with
+  users login sara a@b.com          change the email + password (asked for) a person signs in with
+  users signout sara                sign out every device (they sign in again with email + password)
   users disable sara / enable sara  block or restore access (data is kept)
   users delete sara --yes           delete the account and ALL its data"""
 
@@ -40,9 +40,9 @@ class Command(BaseCommand):
         return parser
 
     def add_arguments(self, parser):
-        parser.add_argument("action", choices=["create", "list", "cap", "rotate", "login", "disable", "enable", "delete"])
+        parser.add_argument("action", choices=["create", "list", "cap", "login", "signout", "disable", "enable", "delete"])
         parser.add_argument("name", nargs="?")
-        parser.add_argument("value", nargs="?", help="cap in dollars or 'none' (`cap`); the email (`login`)")
+        parser.add_argument("value", nargs="?", help="cap in dollars or 'none' (`cap`); the email (`create`, `login`)")
         parser.add_argument("--cap", default=None, help="monthly AI budget in dollars, or 'none' (create)")
         parser.add_argument("--role", default="student", choices=["student", "owner"])
         parser.add_argument("--yes", action="store_true", help="confirm delete")
@@ -65,27 +65,25 @@ class Command(BaseCommand):
                 self.stdout.write(f"{a.name:20} {a.role:8} {str(a.active):6} {c:>8} ${float(spend.get(a.id) or 0):>9.2f}")
             return
         if action == "create":
-            if not name:
-                raise CommandError("name required")
+            if not name or not value:
+                raise CommandError("usage: users create <name> <email>")
             if Account.objects.filter(name=name).exists():
                 raise CommandError(f"{name!r} already exists")
             account = Account(name=name, role=role,
                               cap_usd=_cap(cap) if cap is not None else (None if role == "owner" else DEFAULT_CAP))
-            token = account.new_token()
-            account.save()
-            self.stdout.write(f"Created {role} {name!r} (cap: {account.cap_usd or 'none'}).\nToken: {token}")
-            return
-        account = self._get(name)
+            self.stdout.write(f"Creating {role} {name!r} (cap: {account.cap_usd or 'none'}).")
+            action = "login"  # asks for the password, then saves
+        else:
+            account = self._get(name)
         if action == "cap":
             if value is None:
                 raise CommandError("usage: users cap <name> <dollars|none>")
             account.cap_usd = _cap(value)
             account.save(update_fields=["cap_usd"])
             self.stdout.write(f"{name}: cap {account.cap_usd or 'none'}")
-        elif action == "rotate":
-            token = account.new_token()
-            account.save(update_fields=["token_hash"])
-            self.stdout.write(f"New token for {name}: {token}")
+        elif action == "signout":
+            n, _ = account.tokens.all().delete()
+            self.stdout.write(f"{name}: signed out of {n} device(s)")
         elif action == "login":
             if not value:
                 raise CommandError("usage: users login <name> <email>")
@@ -94,7 +92,7 @@ class Command(BaseCommand):
                 raise CommandError("the password needs at least 8 characters")
             account.email = value.strip().lower()
             account.set_password(password)
-            account.save(update_fields=["email", "password"])
+            account.save()
             self.stdout.write(f"{name} signs in with {account.email}")
         elif action in ("disable", "enable"):
             account.active = action == "enable"

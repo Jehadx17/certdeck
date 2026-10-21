@@ -50,19 +50,10 @@ class Api {
     await _store.write(key: 'token', value: token);
   }
 
-  /// Saves the server and token. Another account on this phone: push this one's unsynced changes, then start
-  /// from an empty local database so the new account restores cleanly (never mix two people's data).
+  /// Saves the server and the token a sign-in returned. Another account on this phone: push this one's unsynced
+  /// changes, then start from an empty local database so the new account restores cleanly (never mix two people's data).
   /// Returns null on success, else why it didn't switch.
   static Future<String?> connect(String newUrl, String newToken) async {
-    newUrl = newUrl.trim().replaceAll(RegExp(r'/+$'), '');
-    // Check the new token with the server before touching anything: a typo must never cost local data.
-    try {
-      final r = await http.get(Uri.parse('$newUrl/api/me'), headers: {'Authorization': 'Bearer ${newToken.trim()}'}).timeout(const Duration(seconds: 30));
-      if (r.statusCode == 401) return 'The server doesn\'t recognise this token. Nothing was changed.';
-      if (r.statusCode >= 400) return 'Server error (HTTP ${r.statusCode}). Nothing was changed.';
-    } on Exception {
-      return 'Needs connection to check the token. Nothing was changed.';
-    }
     final switching = configured && newToken.trim() != token;
     if (switching) {
       if ((await Db.meta('uploads') ?? '{}') != '{}') return 'Finish the uploads in progress first (or wait until they are done).';
@@ -103,7 +94,7 @@ class Api {
   }
 
   static Future<dynamic> call(String method, String path, {Object? body, List<int>? bytes, Duration timeout = const Duration(seconds: 60)}) async {
-    if (!configured) throw ApiError('Needs connection: add your server token in Settings', offline: true);
+    if (!configured) throw ApiError('Needs connection: sign in from Settings', offline: true);
     final uri = Uri.parse('$url/api/$path');
     final headers = {'Authorization': 'Bearer $token', if (body != null) 'Content-Type': 'application/json'};
     final http.Response r;
@@ -142,7 +133,7 @@ class Api {
   static Future<Json> ai(String path, Json body) async =>
       Map<String, dynamic>.from(await call('POST', path, body: body, timeout: const Duration(minutes: 6)));
 
-  /// Who this token belongs to and their AI budget this month ({name, role, usd, cap_usd, remaining_usd}).
+  /// Who is signed in and their AI budget this month ({name, role, usd, cap_usd, remaining_usd}).
   static final me = ValueNotifier<Json?>(null);
 
   static Future<void> refreshMe() async {
@@ -161,7 +152,7 @@ class Api {
   /// Returns null on success, else an error message. Called while a sync runs, it waits for one more run after
   /// that one (whose push may have missed the caller's change); concurrent callers share that run.
   static Future<String?> sync() {
-    if (!configured) return Future.value('Add your server token in Settings to sync.');
+    if (!configured) return Future.value('Sign in from Settings to sync.');
     if (_syncRun != null) {
       return _syncNext ??= _syncRun!.then((_) {
         _syncNext = null;

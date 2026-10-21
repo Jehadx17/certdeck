@@ -108,9 +108,6 @@ void main() {
     final mine = await Db.put('card', {'type': 'basic', 'question': 'Owner only', 'answer': 'x', 'certs': {'DVA-C02': '1'}, 'created_at': nowMs()});
     expect(App.role, 'owner');
 
-    expect(await Api.connect(url, 'not-a-real-token'), contains('recognise')); // a typo changes nothing
-    expect((await Db.get(mine['id']))?['question'], 'Owner only');
-
     expect(await Api.connect(url, token2!), isNull); // the owner's new card is pushed first, then the phone is wiped
     expect(App.role, 'student');
     expect(await Db.get(mine['id']), isNull);

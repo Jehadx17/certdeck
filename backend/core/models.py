@@ -14,11 +14,10 @@ def token_hash(token):
 
 
 class Account(models.Model):
-    """A person with their own token and data. owner = me (certs + college); student = college only."""
+    """A person with their own data, signed in by email and password. owner = me (certs + college); student = college only."""
 
     name = models.CharField(max_length=64, unique=True)
     role = models.CharField(max_length=16, default="student")
-    token_hash = models.CharField(max_length=64, unique=True, null=True)  # sha256 hex of the bearer token
     cap_usd = models.DecimalField(max_digits=8, decimal_places=2, null=True, blank=True)  # monthly AI budget; null = none
     active = models.BooleanField(default=True)
     created = models.DateTimeField(auto_now_add=True)
@@ -26,9 +25,9 @@ class Account(models.Model):
     password = models.CharField(max_length=128, blank=True)  # django make_password hash
 
     def new_token(self):
-        """Sets and returns a fresh token (only its hash is stored)."""
+        """Returns a fresh token for one more signed-in device (only its hash is stored)."""
         token = secrets.token_urlsafe(32)
-        self.token_hash = token_hash(token)
+        Token.objects.create(account=self, hash=token_hash(token))
         return token
 
     def set_password(self, raw):
@@ -43,6 +42,14 @@ class Account(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Token(models.Model):
+    """One signed-in device. An account can have several; signing in elsewhere keeps the others."""
+
+    account = models.ForeignKey(Account, on_delete=models.CASCADE, related_name="tokens")
+    hash = models.CharField(max_length=64, unique=True)  # sha256 hex of the bearer token
+    created = models.DateTimeField(auto_now_add=True)
 
 
 class Counter(models.Model):

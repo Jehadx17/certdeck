@@ -18,7 +18,6 @@ SECRET_KEY = env("DJANGO_SECRET_KEY", "dev-only-insecure-key")  # nothing is sig
 DEBUG = env("DJANGO_DEBUG", "false").lower() in ("1", "true", "yes")
 ALLOWED_HOSTS = [h.strip() for h in env("DJANGO_ALLOWED_HOSTS", "localhost,127.0.0.1").split(",") if h.strip()]
 
-CERTDECK_API_TOKEN = env("CERTDECK_API_TOKEN", "")
 ANTHROPIC_API_KEY = env("ANTHROPIC_API_KEY", "")
 CERTDECK_MODEL = env("CERTDECK_MODEL", "claude-opus-5-5")
 # College: a cheaper model reads uploads (structure, extraction, priorities); CERTDECK_MODEL writes cards, questions,

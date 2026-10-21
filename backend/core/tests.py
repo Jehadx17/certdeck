@@ -20,7 +20,7 @@ from django.test import TestCase, override_settings
 from django.utils import timezone
 from datetime import timedelta
 
-from core.models import Account, AiCall, Doc, Media, now_ms, save_docs, token_hash
+from core.models import Account, AiCall, Doc, Media, Token, now_ms, save_docs, token_hash
 from core.stats import MIN_REVIEWS
 
 TOKEN = "test-token"
@@ -47,12 +47,11 @@ def doc(id, data, kind="card", updated_at=1, deleted=False):
     return {"id": id, "kind": kind, "data": data, "updated_at": updated_at, "deleted": deleted}
 
 
-@override_settings(CERTDECK_API_TOKEN=TOKEN, ANTHROPIC_API_KEY="")
+@override_settings(ANTHROPIC_API_KEY="")
 class ApiTests(TestCase):
     def setUp(self):
-        self.owner = Account.objects.get(role="owner")  # created by migration 0003 from CERTDECK_API_TOKEN
-        self.owner.token_hash = token_hash(TOKEN)
-        self.owner.save()
+        self.owner = Account.objects.get(role="owner")  # created by migration 0003
+        Token.objects.create(account=self.owner, hash=token_hash(TOKEN))
         media_dir = Path(tempfile.mkdtemp())
         self.addCleanup(shutil.rmtree, media_dir)
         patcher = override_settings(CERTDECK_MEDIA_DIR=media_dir)
@@ -107,23 +106,24 @@ class ApiTests(TestCase):
     # ---------- accounts & isolation ----------
 
     def student(self, name="sara", cap="10"):
-        out = StringIO()
-        call_command("users", "create", name, "--cap", cap, stdout=out)
-        token = out.getvalue().split("Token: ")[1].strip()
-        return Account.objects.get(name=name), {"HTTP_AUTHORIZATION": f"Bearer {token}"}
+        with mock.patch("getpass.getpass", return_value="longenough"):
+            call_command("users", "create", name, f"{name}@x.com", "--cap", cap, stdout=StringIO())
+        r = self.client.post("/api/login", {"email": f"{name}@x.com", "password": "longenough"}, content_type="application/json")
+        return Account.objects.get(name=name), {"HTTP_AUTHORIZATION": "Bearer " + r.json()["token"]}
 
     def test_me_and_users_command(self):
         self.assertEqual(self.client.get("/api/me", **AUTH).json()["role"], "owner")
         sara, auth = self.student()
         me = self.client.get("/api/me", **auth).json()
         self.assertEqual((me["name"], me["role"], me["cap_usd"], me["remaining_usd"]), ("sara", "student", 10.0, 10.0))
-        out = StringIO()
-        call_command("users", "rotate", "sara", stdout=out)
-        self.assertEqual(self.client.get("/api/me", **auth).status_code, 401)  # old token revoked
-        new_auth = {"HTTP_AUTHORIZATION": "Bearer " + out.getvalue().split(": ")[1].strip()}
-        self.assertEqual(self.client.get("/api/me", **new_auth).status_code, 200)
+        r = self.client.post("/api/login", {"email": "sara@x.com", "password": "longenough"}, content_type="application/json")
+        phone2 = {"HTTP_AUTHORIZATION": "Bearer " + r.json()["token"]}  # a second device: both stay signed in
+        self.assertEqual([self.client.get("/api/me", **a).status_code for a in (auth, phone2)], [200, 200])
         call_command("users", "disable", "sara", stdout=StringIO())
-        self.assertEqual(self.client.get("/api/me", **new_auth).status_code, 401)
+        self.assertEqual(self.client.get("/api/me", **phone2).status_code, 401)
+        call_command("users", "enable", "sara", stdout=StringIO())
+        call_command("users", "signout", "sara", stdout=StringIO())
+        self.assertEqual([self.client.get("/api/me", **a).status_code for a in (auth, phone2)], [401, 401])
         call_command("users", "cap", "sara", "none", stdout=StringIO())
         self.assertIsNone(Account.objects.get(name="sara").cap_usd)
         with self.assertRaises(Exception):
@@ -147,7 +147,7 @@ class ApiTests(TestCase):
         self.assertEqual(post("/api/login", "nobody@x.com", "longenough").status_code, 400)
         r2 = post("/api/login", "NEW@x.com", "longenough")
         self.assertEqual(r2.status_code, 200)
-        self.assertEqual(self.client.get("/api/me", HTTP_AUTHORIZATION="Bearer " + r.json()["token"]).status_code, 401)  # replaced
+        self.assertEqual(self.client.get("/api/me", HTTP_AUTHORIZATION="Bearer " + r.json()["token"]).status_code, 200)  # still signed in
         with mock.patch("getpass.getpass", return_value="longenough"):
             call_command("users", "login", "sara", "Sara@x.com", stdout=StringIO())
         self.assertEqual(post("/api/login", "sara@x.com", "longenough").json()["name"], "sara")
@@ -571,7 +571,8 @@ class ApiTests(TestCase):
         self.assertEqual((m["session_completion_pct"], m["sessions_logged_last_28"]), (75.0, 4))
         self.assertEqual(m["calibration"]["unsure"]["reviews"], 1)  # the study-first review is not counted
 
-        student = Account.objects.create(name="stu", role="student", token_hash=token_hash("stu-token"))
+        student = Account.objects.create(name="stu", role="student")
+        Token.objects.create(account=student, hash=token_hash("stu-token"))
         stu = {"HTTP_AUTHORIZATION": "Bearer stu-token"}
         self.assertEqual(self.client.get("/api/metrics", **stu).json()["reviews"], 0)
         self.assertEqual(self.client.get("/api/metrics?user=" + self.owner.name, **stu).status_code, 403)
@@ -631,7 +632,7 @@ class ApiTests(TestCase):
         self.assertFalse(Doc.objects.filter(doc_id="fsrs_params").exists())
 
 
-@override_settings(CERTDECK_API_TOKEN=TOKEN, ANTHROPIC_API_KEY="")
+@override_settings(ANTHROPIC_API_KEY="")
 class AutopilotTests(TestCase):
     def setUp(self):
         from core import autopilot

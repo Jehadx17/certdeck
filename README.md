@@ -72,7 +72,8 @@ cd backend
 ~/.local/bin/uv pip install --python .venv/bin/python --index-strategy unsafe-best-match -r requirements.txt
 .venv/bin/python manage.py migrate
 .venv/bin/python manage.py test                  # 24 tests (accounts, isolation, caps, college pipeline), Anthropic mocked
-CERTDECK_API_TOKEN=devtoken .venv/bin/python manage.py runserver 127.0.0.1:8765
+.venv/bin/python manage.py users login owner me@example.com    # once: the owner's sign-in (asks for a password)
+.venv/bin/python manage.py runserver 127.0.0.1:8765
 ```
 Without `POSTGRES_DB` it uses SQLite. Env vars: see [backend/.env.example](backend/.env.example).
 
@@ -158,22 +159,23 @@ dc exec certdeck-api python manage.py optimize_fsrs
 curl -s 127.0.0.1:18765/api/health
 ```
 
-### Accounts and tokens
-Every phone uses a token that belongs to an **account**: `owner` (me: certs + college) or `student` (college only).
-The owner account was created from the old single `CERTDECK_API_TOKEN` (migration 0003), so that token keeps
-working; `CERTDECK_API_TOKEN` in `.env` is not read after that. Manage accounts on the server:
+### Accounts and sign-in
+Everyone signs in with **email and password**, on as many phones as they like (each device gets its own token
+behind the scenes; signing in on one never signs out another). An account is `owner` (me: certs + college) or
+`student` (college only); students can also register themselves in the app. Manage accounts on the server:
 ```bash
 ssh root@169.58.7.222
 cd /opt/certdeck/src/deploy && alias users='docker compose --env-file /opt/certdeck/.env exec certdeck-api python manage.py users'
-users create sara              # a student with the default $10/month AI cap; prints her token (shown once)
-users create sara --cap 20     # another cap; --cap none = no cap
+users create sara a@b.com      # a student with the default $10/month AI cap; asks for her password
+users create sara a@b.com --cap 20  # another cap; --cap none = no cap
 users list                     # everyone, with this month's AI spend
 users cap sara 15              # change a cap
-users rotate sara              # new token; the old one stops working (use `users rotate owner` for mine)
+users login sara a@b.com       # change her email + password (`users login owner ...` for mine)
+users signout sara             # sign out all her devices (lost phone)
 users disable sara             # block access, keep data (`enable` restores)
 users delete sara --yes        # delete the account and all its data
 ```
-The student enters the server URL and token once in Settings → Backend & sync. Change the Anthropic key
+The student signs in on the app's first screen (or Settings → Sign in). Change the Anthropic key
 (`ANTHROPIC_API_KEY` in `/opt/certdeck/.env`) and restart with `docker compose --env-file /opt/certdeck/.env up -d`.
 
 ### Remove CertDeck from the server

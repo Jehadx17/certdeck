@@ -88,9 +88,6 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
-  late final url = TextEditingController(text: Api.url);
-  late final token = TextEditingController(text: Api.token);
-  bool showToken = false;
   Future<dynamic>? usage = Api.configured ? Api.call('GET', 'usage') : null;
 
   String get stamp => DateTime.now().toIso8601String().substring(0, 10);
@@ -128,15 +125,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
           ),
         ),
       );
-
-  Future<void> _connect() async {
-    final err = await busy(context, t('Connecting & restoring…'), () => Api.connect(url.text, token.text));
-    if (mounted) toast(context, err == null ? t('Connected. Everything is synced.') : t(err));
-    // Opened from a student's "My courses": back to the (new) account's home.
-    if (err == null && mounted && Navigator.of(context).canPop()) Navigator.of(context).popUntil((r) => r.isFirst);
-    Reminders.reschedule().ignore();
-    if (mounted) setState(() => usage = Api.configured ? Api.call('GET', 'usage') : null); // gone when a role/language change rebuilt it
-  }
 
   Future<void> _run(String label, Future<String> Function() f) async {
     try {
@@ -247,27 +235,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
           ],
           _num('leech_threshold', t('Leech after N lapses')),
           header(t('Backend & sync')),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Column(children: [
-              TextField(controller: url, keyboardType: TextInputType.url, decoration: InputDecoration(labelText: t('Server URL'))),
-              TextField(
-                controller: token,
-                obscureText: !showToken,
-                decoration: InputDecoration(
-                    labelText: t('API token'),
-                    suffixIcon: IconButton(
-                        icon: Icon(showToken ? Icons.visibility_off : Icons.visibility), onPressed: () => setState(() => showToken = !showToken))),
-              ),
-              const SizedBox(height: 8),
-              Row(children: [
-                Expanded(child: FilledButton(onPressed: _connect, child: Text(t('Save & sync')))),
-                const SizedBox(width: 8),
-                // Email and password instead of a token (switches this phone to that account).
-                OutlinedButton(
-                    onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const WelcomeScreen())), child: Text(t('Sign in'))),
-              ]),
-            ]),
+          // Email and password (another account switches this phone to it).
+          ListTile(
+            leading: const Icon(Icons.login),
+            title: Text(t('Sign in')),
+            subtitle: Api.me.value?['name'] == null ? null : Text(Api.me.value!['name'].toString()),
+            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const WelcomeScreen())),
           ),
           ValueListenableBuilder(
             valueListenable: Api.lastSync,

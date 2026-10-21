@@ -75,7 +75,7 @@ class CollegeScreen extends StatelessWidget {
               child: ListView(padding: const EdgeInsets.fromLTRB(12, 0, 12, 96), children: [
                 const OnlineBanner(),
                 if (!Api.configured)
-                  Card(child: ListTile(leading: const Icon(Icons.cloud_off), title: Text(t('Not connected')), subtitle: Text(t('Add your server token in Settings.')))),
+                  Card(child: ListTile(leading: const Icon(Icons.cloud_off), title: Text(t('Not connected')), subtitle: Text(t('Sign in from Settings.')))),
                 const BudgetLine(),
                 header(context, t('Today')),
                 if (plan.isEmpty)
