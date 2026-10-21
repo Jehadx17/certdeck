@@ -104,20 +104,29 @@ void main() {
     await App.init();
     Api.url = url!;
     Api.token = null;
-    expect(await Api.connect(url, Platform.environment['CERTDECK_TEST_TOKEN']!), isNull);
+    expect(await Api.connect(url, Platform.environment['CERTDECK_TEST_TOKEN']!, 'owner'), isNull);
     final mine = await Db.put('card', {'type': 'basic', 'question': 'Owner only', 'answer': 'x', 'certs': {'DVA-C02': '1'}, 'created_at': nowMs()});
     expect(App.role, 'owner');
 
-    expect(await Api.connect(url, token2!), isNull); // the owner's new card is pushed first, then the phone is wiped
+    expect(await Api.connect(url, token2!, 'student'), isNull); // the owner's new card is pushed first, then the phone is wiped
     expect(App.role, 'student');
     expect(await Db.get(mine['id']), isNull);
     expect((await Db.query('card')).where((c) => c['question'] == 'Owner only'), isEmpty);
     final hers = await Db.put('course', {'name': 'Calculus II', 'created_at': nowMs()});
     expect(await Api.sync(), isNull);
 
-    expect(await Api.connect(url, Platform.environment['CERTDECK_TEST_TOKEN']!), isNull);
+    expect(await Api.connect(url, Platform.environment['CERTDECK_TEST_TOKEN']!, 'owner'), isNull);
     expect(App.role, 'owner');
     expect((await Db.get(mine['id']))?['question'], 'Owner only'); // restored from the server
     expect(await Db.get(hers['id']), isNull);
+
+    // Signed out (the old token is dead) with unsynced changes: signing back into the same account keeps and uploads
+    // them; another account is refused until they are uploaded.
+    Api.token = 'signed-out-token';
+    final offline = await Db.put('card', {'type': 'basic', 'question': 'Made while signed out', 'answer': 'x', 'created_at': nowMs()});
+    expect(await Api.connect(url, token2, 'student'), contains('Sign in as owner'));
+    expect(await Api.connect(url, Platform.environment['CERTDECK_TEST_TOKEN']!, 'owner'), isNull);
+    expect(await Db.dirtyCount(), 0);
+    expect((await Db.get(offline['id']))?['question'], 'Made while signed out');
   }, skip: url == null || token2 == null ? 'set CERTDECK_TEST_URL and CERTDECK_TEST_TOKEN2 to run' : false);
 }

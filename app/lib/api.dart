@@ -50,21 +50,31 @@ class Api {
     await _store.write(key: 'token', value: token);
   }
 
-  /// Saves the server and the token a sign-in returned. Another account on this phone: push this one's unsynced
-  /// changes, then start from an empty local database so the new account restores cleanly (never mix two people's data).
+  /// Returned by [connect] when changes the old sign-in couldn't upload may or may not be this account's.
+  static const unsureWhose = 'unsure-whose';
+
+  /// Saves the server and the token a sign-in into [account] returned. The same account again keeps everything
+  /// (unsynced changes upload with the new token). Another account: push this one's unsynced changes, then start
+  /// from an empty local database so the new account restores cleanly (never mix two people's data).
+  /// [sameAccount] is the person's answer to [unsureWhose]: true keeps the changes, false deletes them.
   /// Returns null on success, else why it didn't switch.
-  static Future<String?> connect(String newUrl, String newToken) async {
-    final switching = configured && newToken.trim() != token;
+  static Future<String?> connect(String newUrl, String newToken, String account, {bool? sameAccount}) async {
+    final was = await Db.meta('account'); // unknown on phones signed in before 1.5.5
+    final switching = configured && !(sameAccount ?? was == account);
     if (switching) {
       if ((await Db.meta('uploads') ?? '{}') != '{}') return 'Finish the uploads in progress first (or wait until they are done).';
       final err = await sync();
-      if (await Db.dirtyCount() > 0) return 'Couldn\'t upload this account\'s unsynced changes (${err ?? 'try again'}). Connect to the internet first.';
+      if (await Db.dirtyCount() > 0 && sameAccount == null) {
+        if (was == null) return unsureWhose;
+        return 'Couldn\'t upload the changes of $was on this phone (${err ?? 'try again'}). Sign in as $was first to upload them.';
+      }
       await Db.wipe();
       me.value = null;
       App.role = 'owner';
       await App.init();
     }
     await configure(newUrl, newToken);
+    await Db.setMeta('account', account);
     final err = await sync();
     if (switching && err == null) await App.reload();
     return err;
@@ -72,7 +82,7 @@ class Api {
 
   /// Signs in (or registers a new account) with email and password and connects this phone.
   /// Returns null on success, else a message for the person typing it.
-  static Future<String?> signIn(String email, String password, {bool register = false}) async {
+  static Future<String?> signIn(String email, String password, {bool register = false, bool? sameAccount}) async {
     final http.Response r;
     try {
       r = await http
@@ -85,7 +95,7 @@ class Api {
     String? msg;
     try {
       final body = jsonDecode(utf8.decode(r.bodyBytes));
-      if (r.statusCode == 200) return await connect(defaultUrl, body['token'] as String);
+      if (r.statusCode == 200) return await connect(defaultUrl, body['token'] as String, body['name'] as String, sameAccount: sameAccount);
       msg = body['error']?.toString();
     } on FormatException {
       msg = null;
@@ -139,6 +149,7 @@ class Api {
   static Future<void> refreshMe() async {
     final m = Map<String, dynamic>.from(await call('GET', 'me'));
     me.value = m;
+    if (m['name'] is String) await Db.setMeta('account', m['name']);
     if (m['role'] is String && m['role'] != App.role) {
       App.role = m['role'];
       await Db.setMeta('role', App.role);

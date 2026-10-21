@@ -439,13 +439,29 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   bool working = false;
   bool register = false;
 
-  Future<void> _go() async {
+  Future<void> _go({bool? sameAccount}) async {
     setState(() {
       working = true;
       error = null;
     });
-    final err = await Api.signIn(email.text.trim(), password.text, register: register);
+    final err = await Api.signIn(email.text.trim(), password.text, register: register, sameAccount: sameAccount);
     if (!mounted) return;
+    if (err == Api.unsureWhose) {
+      setState(() => working = false);
+      final keep = await showDialog<bool>(
+          context: context,
+          builder: (context) => AlertDialog(
+                content: Text(t('This phone has changes that were never uploaded, and its old sign-in has ended. Are they from {email}?',
+                    {'email': email.text.trim()})),
+                actions: [
+                  TextButton(onPressed: () => Navigator.pop(context), child: Text(t('Cancel'))),
+                  TextButton(onPressed: () => Navigator.pop(context, false), child: Text(t('No, delete them'))),
+                  FilledButton(onPressed: () => Navigator.pop(context, true), child: Text(t('Yes, keep them'))),
+                ],
+              ));
+      if (keep != null) _go(sameAccount: keep);
+      return;
+    }
     if (err == null) {
       changes.value++; // on a new phone this screen is the home: make the Shell rebuild into the app
       return Navigator.of(context).popUntil((r) => r.isFirst); // opened from Settings or the PIN: back to the new home
