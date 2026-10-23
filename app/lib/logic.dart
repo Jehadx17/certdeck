@@ -137,8 +137,12 @@ bool isNew(Json c) => c['fsrs'] == null;
 (int, Json) pickVersion(Json card, List versions) {
   if (versions.isEmpty) return (0, card);
   final i = (((card['ver'] as int?) ?? -1) + 1) % (versions.length + 1);
-  return (i, i == 0 ? card : {...card, ...Map<String, dynamic>.from(versions[i - 1] as Map)});
+  if (i == 0) return (0, card);
+  // Only the original's scheduling/meta carries over; its notes, images, accepted answers etc. belong to its own wording.
+  final keep = {for (final k in _versionKeeps) if (card.containsKey(k)) k: card[k]};
+  return (i, {...keep, ...Map<String, dynamic>.from(versions[i - 1] as Map)});
 }
+const _versionKeeps = ['id', 'fsrs', 'certs', 'tags', 'new', 'sure_streak', 'misconception', 'lapses', 'suspended', 'ver', 'created_at', 'updated_at', 'source', 'variant_of'];
 bool isSuspended(Json c) => c['suspended'] == true;
 int dueOf(Json c) => (c['fsrs']?['due'] as int?) ?? 0;
 

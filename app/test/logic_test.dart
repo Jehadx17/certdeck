@@ -142,7 +142,7 @@ void main() {
   });
 
   test('card versions take turns, scheduling fields stay on the original', () {
-    final card = {'id': 'c1', 'type': 'cloze', 'question': 'orig', 'fsrs': {'due': 5}};
+    final card = {'id': 'c1', 'type': 'cloze', 'question': 'orig', 'fsrs': {'due': 5}, 'option_explanations': ['x'], 'answer_images': ['i']};
     final vs = [{'type': 'mcq', 'question': 'v2', 'options': ['a', 'b'], 'correct': [1]}, {'type': 'mcq', 'question': 'v3'}];
     final seen = <String>[];
     for (var n = 0; n < 4; n++) {
@@ -150,6 +150,7 @@ void main() {
       seen.add(shown['question'] as String);
       expect(shown['id'], 'c1');
       expect(shown['fsrs'], {'due': 5});
+      if (i > 0) expect([shown['option_explanations'], shown['answer_images']], [null, null]);
       card['ver'] = i;
     }
     expect(seen, ['orig', 'v2', 'v3', 'orig']);
