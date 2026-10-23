@@ -203,7 +203,6 @@ class _StudyScreenState extends State<StudyScreen> {
       );
     }
     final c = card!;
-    final cert = App.cert;
     return Scaffold(
       appBar: AppBar(
         title: Text('${widget.title} · ${t('{n} left', {'n': session.remaining + 1})}', style: const TextStyle(fontSize: 18)),
@@ -239,15 +238,6 @@ class _StudyScreenState extends State<StudyScreen> {
           const OnlineBanner(),
           Expanded(
             child: ListView(padding: const EdgeInsets.all(16), children: [
-              Wrap(spacing: 6, children: [
-                _chip(t(typeLabels[ans!.type] ?? ans!.type)),
-                if (domainOf(c, cert).isNotEmpty) _chip(domainName(cert, domainOf(c, cert))),
-                if (isNew(c)) _chip(t('New'), color: cs.primary),
-                if (c['worked'] == true) _chip(t('Worked example'), color: Colors.lightBlueAccent),
-                if (c['misconception'] == true) _chip(t('Misconception'), color: cs.error),
-                if (c['leech'] == true) _chip(t('Leech'), color: Colors.orange),
-              ]),
-              const SizedBox(height: 12),
               CardView(ans!, key: ObjectKey(ans), revealed: revealed, misconception: misconception, onChanged: () => setState(() {})),
               const SizedBox(height: 80),
             ]),
@@ -257,12 +247,6 @@ class _StudyScreenState extends State<StudyScreen> {
       ),
     );
   }
-
-  Widget _chip(String text, {Color? color}) => Chip(
-      label: Text(text, style: TextStyle(fontSize: 12, color: color)),
-      visualDensity: VisualDensity.compact,
-      padding: EdgeInsets.zero,
-      side: BorderSide(color: color ?? Colors.white24));
 
   Widget _bottom(ColorScheme cs) {
     Widget bar(List<Widget> children) => Container(
