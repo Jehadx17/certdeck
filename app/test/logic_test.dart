@@ -10,9 +10,10 @@ void main() {
   test('unseen cards keep a share of the session even with a long backlog', () {
     final due = [for (var i = 0; i < 100; i++) {'id': 'd$i', 'fsrs': {'state': 2}}];
     final fresh = [for (var i = 0; i < 20; i++) {'id': 'n$i'}];
-    final q = mixByTime(due, fresh, 10, 30); // 600 s: 30% = 180 s -> 3 new cards (60 s each), 14 reviews
-    expect(q.where(isNew).length, 3);
-    expect(q.length, 3 + 14);
+    final q = mixByTime(due, fresh, 10, 30); // 600 s: 80% = 480 s -> 8 new cards (60 s each), then 4 reviews
+    expect(q.where(isNew).length, 8);
+    expect(q.length, 8 + 4);
+    expect(q.take(8).every(isNew), true); // new cards come first
     expect(mixByTime(due.take(2).toList(), fresh, 10, 30).where(isNew).length, 9); // few reviews: the time goes to new cards
     expect(mixByTime(due, [], 10, 30).length, 20);
   });
@@ -122,11 +123,9 @@ void main() {
   });
 
   test('cloze blanks inside inline code', () {
-    expect(clozeBack('set `{{WaitTimeSeconds}}` to {{20}}'), 'set ‹**`WaitTimeSeconds`**› to ‹**20**›');
-    expect(clozeFront('set `{{WaitTimeSeconds::param}}`'), 'set [**param**]');
-    // Bold right after an Arabic letter: the markers must sit inside the brackets.
-    final html = md.markdownToHtml(clozeFront('يُعتنى بـ{{الفكرة العامة}}'));
-    expect(html, contains('<strong>…</strong>'));
+    expect(clozeBack('set `{{WaitTimeSeconds}}` to {{20}}'), 'set ‹`WaitTimeSeconds`› to ‹20›');
+    expect(clozeFront('set `{{WaitTimeSeconds::param}}`'), 'set ‹param›');
+    expect(clozeFront('from {{0}} up'), matches(RegExp('^from ‹\u2007+› up\$')));
   });
 
   test('the budget refusal reads in Arabic with its amounts', () {

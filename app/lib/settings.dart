@@ -297,9 +297,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
               await Api.sync();
               final r = await Api.call('POST', 'fsrs/optimize', body: {}, timeout: const Duration(minutes: 5));
               await Api.sync();
-              return r?['optimized_at'] == null
-                  ? 'Not enough history yet (${r?['review_count']} reviews, needs 512); keeping FSRS defaults'
-                  : 'Optimized from ${r?['review_count']} reviews';
+              final n = r?['review_count'];
+              return switch (r?['kept']) {
+                'few_reviews' => 'Not enough history yet ($n reviews, needs 512); keeping current parameters',
+                'few_days' => 'Not enough spread-out history yet ($n reviews, but under 512 on separate days); keeping current parameters',
+                'no_gain' => 'A fit on your $n reviews didn\'t predict recall better; keeping current parameters',
+                _ => 'Optimized from $n reviews',
+              };
             }),
           ),
           if (App.isOwner) header('Import / export'),

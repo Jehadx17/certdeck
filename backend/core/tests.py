@@ -611,6 +611,7 @@ class ApiTests(TestCase):
         out = StringIO()
         call_command("optimize_fsrs", stdout=out)
         self.assertIsNone(json.loads(out.getvalue().split(": ", 1)[1])["optimized_at"])  # too few reviews: defaults, nothing written
+        self.assertEqual(json.loads(out.getvalue().split(": ", 1)[1])["kept"], "few_reviews")
         self.assertFalse(Doc.objects.filter(doc_id="fsrs_params").exists())
 
         save_docs(self.owner, reviews)
@@ -630,6 +631,7 @@ class ApiTests(TestCase):
             body = self.post("/api/fsrs/optimize", {}).json()
         self.assertIsNone(body["optimized_at"])
         self.assertEqual(body["parameters"], list(DEFAULT_PARAMETERS))
+        self.assertEqual(body["kept"], "no_gain")
         self.assertFalse(Doc.objects.filter(doc_id="fsrs_params").exists())
 
 

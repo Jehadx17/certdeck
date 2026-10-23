@@ -88,6 +88,34 @@ class _MathSyntax extends md.InlineSyntax {
   }
 }
 
+class _BlankSyntax extends md.InlineSyntax {
+  _BlankSyntax() : super('‹([^›]+)›', startCharacter: 0x2039);
+
+  @override
+  bool onMatch(md.InlineParser parser, Match m) {
+    final text = m[1]!, bare = text.replaceAll(RegExp('[$_lri$_rli$_pdi]'), '');
+    final code = bare.length > 1 && bare.startsWith('`') && bare.endsWith('`');
+    parser.addNode(md.Element.text(code ? 'blankcode' : 'blank', code ? text.replaceAll('`', '') : text));
+    return true;
+  }
+}
+
+class _BlankBuilder extends MarkdownElementBuilder {
+  @override
+  Widget? visitElementAfterWithContext(BuildContext context, md.Element element, TextStyle? preferredStyle, TextStyle? parentStyle) {
+    final accent = Theme.of(context).colorScheme.primary;
+    return Text.rich(TextSpan(
+        text: element.textContent,
+        style: (parentStyle ?? DefaultTextStyle.of(context).style).copyWith(
+            color: accent,
+            fontWeight: FontWeight.bold,
+            fontFamily: element.tag == 'blankcode' ? 'monospace' : null,
+            decoration: TextDecoration.underline,
+            decorationColor: accent,
+            decorationThickness: 2)));
+  }
+}
+
 class _MathBuilder extends MarkdownElementBuilder {
   final bool display;
   _MathBuilder(this.display);
@@ -189,8 +217,11 @@ class Md extends StatelessWidget {
       textDirection: rtl ? TextDirection.rtl : TextDirection.ltr,
       child: MarkdownBody(
         data: isolateRuns(text, rtl: rtl),
-        inlineSyntaxes: [_MathSyntax()],
-        builders: {'code': _CodeBuilder(), 'math': _MathBuilder(false), 'mathblock': _MathBuilder(true)},
+        inlineSyntaxes: [_MathSyntax(), _BlankSyntax()],
+        builders: {
+          'code': _CodeBuilder(), 'math': _MathBuilder(false), 'mathblock': _MathBuilder(true),
+          'blank': _BlankBuilder(), 'blankcode': _BlankBuilder(),
+        },
         onTapLink: (_, href, __) => href == null ? null : openUrl(href),
         styleSheet: MarkdownStyleSheet.fromTheme(theme).copyWith(
           p: style ?? theme.textTheme.bodyLarge,
@@ -309,9 +340,10 @@ class MaskPainter extends CustomPainter {
 final _cloze = RegExp(r'\{\{(.+?)(?:::(.+?))?\}\}');
 // `{{x}}` → {{`x`}} so the blank's bold markers aren't trapped inside an inline code span.
 String _unwrapCode(String s) => s.replaceAllMapped(RegExp(r'`\{\{(.+?)(?:::(.+?))?\}\}`'), (m) => '{{`${m[1]}`${m[2] == null ? '' : '::${m[2]}'}}}');
-// Brackets go outside the bold markers: `**[` right after a letter (Arabic "بـ**[…]**") isn't bold in Markdown.
-String clozeFront(String s) => _unwrapCode(s).replaceAllMapped(_cloze, (m) => '[**${m[2] ?? '…'}**]');
-String clozeBack(String s) => _unwrapCode(s).replaceAllMapped(_cloze, (m) => '‹**${m[1]}**›');
+// Blanks become ‹…›, which Md draws as an underlined accent-colored gap (front) or answer (back).
+const _gap = '\u2007\u2007\u2007\u2007\u2007\u2007\u2007\u2007'; // figure spaces: don't collapse or wrap
+String clozeFront(String s) => _unwrapCode(s).replaceAllMapped(_cloze, (m) => '‹${m[2] ?? _gap}›');
+String clozeBack(String s) => _unwrapCode(s).replaceAllMapped(_cloze, (m) => '‹${m[1]}›');
 
 /// What the user has answered for one card, plus grading. Shared by study and exam.
 class AnswerState {

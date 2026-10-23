@@ -291,7 +291,6 @@ class _CardDetailState extends State<CardDetail> {
             const Divider(height: 32),
             Wrap(spacing: 6, runSpacing: 6, children: [
               for (final e in ((c['certs'] as Map?) ?? {}).entries) Chip(label: Text('${e.key} · D${e.value}')),
-              for (final tag in ((c['tags'] as List?) ?? [])) Chip(label: autoText('#$tag')),
               if (isSuspended(c)) Chip(label: Text(t('Suspended'))),
               if (c['leech'] == true) Chip(label: Text(t('Leech')), avatar: const Icon(Icons.bug_report_outlined, color: Colors.orange)),
               if (c['misconception'] == true) Chip(label: Text(t('Misconception')), avatar: const Icon(Icons.warning_amber, color: Colors.redAccent)),

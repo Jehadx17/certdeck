@@ -364,9 +364,8 @@ Future<(List<Json>, TodayStats)> buildQueue(Json cert, {int? minutes}) async {
 }
 
 /// A session of [minutes] where unseen cards get at least [newShare] of the time (they hold what the student does not
-/// know yet, so a long review backlog must not push them out), the rest going to [reviews] in their order. New cards are
-/// spread evenly through the reviews. A new card takes about twice as long as a review.
-List<Json> mixByTime(List<Json> reviews, List<Json> news, int minutes, double secondsPerCard, {double newShare = .3}) {
+/// know yet, so known cards must not push them out), the rest going to [reviews] in their order. New cards come first. A new card takes about twice as long as a review.
+List<Json> mixByTime(List<Json> reviews, List<Json> news, int minutes, double secondsPerCard, {double newShare = .8}) {
   final budget = minutes * 60.0, newCost = secondsPerCard * 2;
   final takeNew = <Json>[];
   var used = 0.0;
@@ -387,15 +386,7 @@ List<Json> mixByTime(List<Json> reviews, List<Json> news, int minutes, double se
     takeNew.add(c);
     used += newCost;
   }
-  final queue = <Json>[];
-  final gap = takeNew.isEmpty ? 0 : (takeRev.length / takeNew.length).ceil();
-  var ni = 0;
-  for (var i = 0; i < takeRev.length; i++) {
-    queue.add(takeRev[i]);
-    if (gap > 0 && (i + 1) % gap == 0 && ni < takeNew.length) queue.add(takeNew[ni++]);
-  }
-  queue.addAll(takeNew.skip(ni));
-  return queue;
+  return [...takeNew, ...takeRev];
 }
 
 /// Studying more than today's plan: the daily new-card limit is ignored and cards that are not due yet come in, the most

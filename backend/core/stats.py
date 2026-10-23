@@ -255,7 +255,7 @@ def optimize(user):
             "review_count": len(rows)}
     if len(rows) < MIN_REVIEWS:
         log.info("fsrs optimize %s skipped: %d reviews < %d", user, len(rows), MIN_REVIEWS)
-        return keep
+        return keep | {"kept": "few_reviews"}
 
     from fsrs import Optimizer  # imports torch; keep it off the request path of other endpoints
 
@@ -265,7 +265,8 @@ def optimize(user):
     new_loss, old_loss = _loss(trial, plain), _loss(keep["parameters"], plain)
     if trial == list(DEFAULT_PARAMETERS) or new_loss is None or new_loss >= old_loss:
         log.info("fsrs optimize %s kept current params (holdout loss new=%s old=%s)", user, new_loss, old_loss)
-        return keep
+        # py-fsrs hands back its defaults when it sees < 512 cross-day reviews (same-day repeats don't count)
+        return keep | {"kept": "few_days" if trial == list(DEFAULT_PARAMETERS) else "no_gain"}
     params = [float(p) for p in Optimizer(logs_of(rows)).compute_optimal_parameters()]  # accepted: refit on everything
     now = now_ms()
     data = {"parameters": params, "optimized_at": now, "review_count": len(rows)}
