@@ -1,0 +1,864 @@
+[
+ {
+  "type": "code",
+  "question": "Fetch only the first 1 MB of an object with the CLI.",
+  "explanation": "`--range` sends an HTTP Range header. Several ranges can be fetched in parallel and joined back together.",
+  "language": "bash",
+  "certs": {
+   "DVA-C02": "4",
+   "SAA-C03": "3"
+  },
+  "id": "ac268016-a619-4002-9a5d-d37abe726601"
+ },
+ {
+  "type": "mcq",
+  "question": "Before VPC origins existed, how did you restrict a **public** ALB so only CloudFront could reach it?",
+  "options": [
+   "Allow CloudFront's IP ranges in the ALB security group",
+   "A NACL that denies every IP except the ALB's own",
+   "Move the ALB into a private subnet behind a NAT",
+   "Route 53 geolocation records for CloudFront only"
+  ],
+  "correct": [
+   0
+  ],
+  "explanation": "That's why **VPC origins** are now preferred.",
+  "certs": {
+   "DVA-C02": "2",
+   "SAA-C03": "1"
+  },
+  "id": "ac79cf19-acb4-4191-9688-30c6b477d3a8"
+ },
+ {
+  "type": "mcq",
+  "question": "A site's static `style.css` is cached in CloudFront with a 24-hour TTL. After a deploy, users still get the old file. The team wants the new version visible immediately, and wants the approach that needs no per-deploy invalidation charges as deploys become frequent. Which is the best long-term fix?",
+  "options": [
+   "Reduce the S3 object's storage class to Standard-IA so it refreshes",
+   "Create an invalidation for `/*` after every deploy",
+   "Publish the file under a unique versioned name and update the HTML to reference it",
+   "Enable S3 Transfer Acceleration on the origin bucket"
+  ],
+  "correct": [
+   2
+  ],
+  "explanation": "**Invalidation** removes cached objects under the same URL, which is quick but billed beyond the free allowance, and a wildcard path counts as one path. **Versioned names** avoid the need to remove anything, because the URL changes.\n\nThe other options address the wrong layer (storage class, upload speed).\n\n**Memory aid:** invalidation means recalling the old copy. Versioning means printing a new label, so nothing needs recalling.",
+  "certs": {
+   "DVA-C02": "4",
+   "SAA-C03": "4"
+  },
+  "id": "ae96aa4c-1f60-4a4e-8cc3-fafee3b4a1c1"
+ },
+ {
+  "type": "mcq",
+  "question": "What are the downsides of lazy loading? (Choose 2)",
+  "options": [
+   "A cache miss costs 3 round trips (cache, database, write back to cache)",
+   "Cached data can be stale after the database is updated",
+   "Every write takes two calls (to the cache and to the database)",
+   "The cache fills with data that's never read, causing churn"
+  ],
+  "correct": [
+   0,
+   1
+  ],
+  "explanation": "Upside: a node failure isn't fatal; the cache just warms up again. Simple and works well for read-heavy apps.",
+  "certs": {
+   "DVA-C02": "1",
+   "SAA-C03": "3"
+  },
+  "id": "afc62b77-33dd-44eb-a9a1-7360a24d24c8"
+ },
+ {
+  "type": "mcq",
+  "question": "A team wants one parent health check that's healthy only if at least 2 of 3 web servers are healthy. Which feature?",
+  "options": [
+   "A calculated health check",
+   "A multi-value answer record with child IPs",
+   "Three failover records in a chain",
+   "A latency record"
+  ],
+  "correct": [
+   0
+  ],
+  "explanation": "Calculated health checks can monitor up to **256** child checks (per AWS docs) and set how many must pass. Use case: doing maintenance without all checks failing.",
+  "certs": {
+   "DVA-C02": "4",
+   "SAA-C03": "2"
+  },
+  "id": "b1394f70-5c65-4113-8bb9-52f176d3ad30"
+ },
+ {
+  "type": "mcq",
+  "question": "A team plans to move `app.example.com` to a new IP tomorrow. The record's TTL is 24 hours. What's the best approach?",
+  "options": [
+   "Lower TTL to 60 s, wait for the old TTL to pass, switch the IP, then restore TTL",
+   "Change the record immediately and ask every user to flush their local DNS cache",
+   "Set the TTL to 0 permanently so every query always reaches Route 53 directly",
+   "Create an Alias record that points at the new EC2 public IP address tomorrow"
+  ],
+  "correct": [
+   0
+  ],
+  "explanation": "**High TTL** = fewer queries (cheaper), but stale records for longer. **Low TTL** = more queries (more cost), faster changes. TTL is required on every record **except Alias**.",
+  "certs": {
+   "DVA-C02": "3",
+   "SAA-C03": "4"
+  },
+  "id": "b149fd1b-4d82-4858-b55f-a7571c9fe369"
+ },
+ {
+  "type": "mcq",
+  "question": "On a new Amazon Linux 2023 instance, `curl http://169.254.169.254/latest/meta-data/` returns **401 Unauthorized**. Why?",
+  "options": [
+   "IMDSv2 is required, so a session token must be fetched first",
+   "The instance has no IAM role attached to its instance profile",
+   "The security group blocks outbound port 80 to the metadata address",
+   "IMDS only works on Amazon Linux 2, not on AL2023"
+  ],
+  "correct": [
+   0
+  ],
+  "explanation": "Fix: request a token with PUT, then pass it in the `X-aws-ec2-metadata-token` header.",
+  "certs": {
+   "DVA-C02": "4"
+  },
+  "id": "b272c7fc-713a-4dbf-93f3-484b40fff87c"
+ },
+ {
+  "type": "mcq",
+  "question": "Which S3 encryption method is applied **by default** to new buckets and objects?",
+  "options": [
+   "SSE-S3 (keys owned by S3)",
+   "SSE-KMS (AWS managed key aws/s3)",
+   "SSE-C (customer-provided keys)",
+   "Client-side encryption (AWS SDK)"
+  ],
+  "correct": [
+   0
+  ],
+  "explanation": "SSE-S3: AWS owns and manages the key; you never see it. Header: `x-amz-server-side-encryption: AES256`.",
+  "certs": {
+   "DVA-C02": "2",
+   "SAA-C03": "1"
+  },
+  "id": "b3ec2b08-8d6c-415a-b8a0-d46e93a3faf1"
+ },
+ {
+  "type": "basic",
+  "question": "How do you speed up S3 uploads vs downloads?",
+  "answer": "**Uploads:** multipart upload (parallel parts; required over 5 GB) and Transfer Acceleration (edge location + AWS network).\n\n**Downloads:** byte-range fetches (parallel ranged GETs) and Transfer Acceleration.\n\n**Request rate:** spread keys across more prefixes.",
+  "explanation": "Pick the tool that matches the direction of the transfer.",
+  "certs": {
+   "DVA-C02": "4",
+   "SAA-C03": "3"
+  },
+  "id": "b456ecb6-e00a-4b80-b0e9-048e3b5b2a65"
+ },
+ {
+  "type": "mcq",
+  "question": "An EC2 instance has two security groups attached: one allows port 22 from the office IP, the other allows port 80 from anywhere. What traffic is allowed in?",
+  "options": [
+   "Both: SSH from the office IP and HTTP from anywhere",
+   "Only the first group's rules, since it was attached first",
+   "Only the traffic that both groups allow (their intersection)",
+   "Nothing, because the two groups' rules conflict"
+  ],
+  "correct": [
+   0
+  ],
+  "explanation": "Security group rules are **additive**: an instance gets the union of all its groups' rules.",
+  "certs": {
+   "DVA-C02": "2",
+   "SAA-C03": "1"
+  },
+  "id": "b45b73fa-b7c1-470c-818f-cc63ab490b76"
+ },
+ {
+  "type": "mcq",
+  "question": "What happens to data on an EC2 Instance Store when the instance is **stopped**?",
+  "options": [
+   "It is lost",
+   "It is kept until the instance is terminated",
+   "It is copied to EBS automatically",
+   "It is moved to S3"
+  ],
+  "correct": [
+   0
+  ],
+  "explanation": "Instance store is **ephemeral**. Also, if the underlying hardware fails you lose data. You are responsible for backups and replication.",
+  "certs": {
+   "DVA-C02": "1",
+   "SAA-C03": "2"
+  },
+  "id": "b61b52a7-655a-438a-b97f-e83848f1e611"
+ },
+ {
+  "type": "mcq",
+  "question": "A team's instances take 10 minutes to boot because user data installs many packages. How can they make launches much faster?",
+  "options": [
+   "Build a custom AMI with the software pre-installed",
+   "Use a bigger user data script with more install commands",
+   "Switch to an instance store root volume for faster disk",
+   "Enable Multi-Attach"
+  ],
+  "correct": [
+   0
+  ],
+  "explanation": "A custom **AMI** bakes in the OS config, software and monitoring tools so instances are ready faster. A small user data script can still do final tweaks.",
+  "certs": {
+   "DVA-C02": "3",
+   "SAA-C03": "3"
+  },
+  "id": "b62f0b9c-5117-49d3-91c6-72472fc1be9c"
+ },
+ {
+  "type": "mcq",
+  "question": "An RDS database's usage is unpredictable and it keeps running low on disk space. The team doesn't want to resize storage by hand. What should they enable?",
+  "options": [
+   "RDS Storage Auto Scaling with a maximum threshold",
+   "Multi-AZ with a synchronous standby in another Availability Zone",
+   "A read replica in another Region for the reporting workload",
+   "An ElastiCache cluster in front of the database"
+  ],
+  "correct": [
+   0
+  ],
+  "explanation": "Storage Auto Scaling triggers roughly when **free space < 10%**, low storage has lasted **5+ minutes**, and **6+ hours** have passed since the last change. Set a **maximum storage threshold**. Works with all RDS engines.",
+  "certs": {
+   "DVA-C02": "4",
+   "SAA-C03": "3"
+  },
+  "id": "b75eeba9-b1c1-4779-be74-06406bc1c139"
+ },
+ {
+  "type": "typed",
+  "question": "Which port must the EFS security group allow for NFS traffic from EC2 instances?",
+  "answer": "2049",
+  "explanation": "NFS uses **2049**. Best practice: allow 2049 from the EC2 instances' security group, not from an IP range.",
+  "certs": {
+   "DVA-C02": "2",
+   "SAA-C03": "1"
+  },
+  "id": "b89f56de-25ff-4acb-839e-ae4d2e17c3a4"
+ },
+ {
+  "type": "mcq",
+  "question": "A company runs an in-memory cache that needs lots of RAM and fast processing of large datasets in memory. Which instance family fits best?",
+  "options": [
+   "Compute optimized (C)",
+   "Memory optimized (R)",
+   "Storage optimized (I)",
+   "General purpose (T)"
+  ],
+  "correct": [
+   1
+  ],
+  "explanation": "Memory optimized: **R, X, High Memory** for in-memory DBs, caches, BI. Compute: **C**. Storage: **I, D, H**. General: **T, M**.",
+  "certs": {
+   "DVA-C02": "1",
+   "SAA-C03": "3"
+  },
+  "id": "b89f6350-e2c0-45d5-9c29-5019b382eb0e"
+ },
+ {
+  "type": "mcq",
+  "question": "A subnet must block traffic from a specific malicious IP address, and return traffic for allowed connections must not need separate rules. Which statement correctly distinguishes the controls available? (Choose 2)",
+  "options": [
+   "Network ACLs are stateless and support explicit Deny rules",
+   "Security groups support explicit Deny rules for individual IPs",
+   "Security groups operate at the instance (ENI) level and are stateful",
+   "Network ACLs are stateful and attach to individual instances",
+   "Security groups apply to the subnet boundary and evaluate rules in number order"
+  ],
+  "correct": [
+   0,
+   2
+  ],
+  "explanation": "**Security group:** instance/ENI level, stateful, Allow rules only, all rules evaluated.\n**Network ACL:** subnet level, stateless, Allow and Deny, rules evaluated in number order.\n\nTo block one IP, you need a NACL Deny because security groups cannot deny.\n\n**Memory aid:** SG = bodyguard at the Server's door who remembers faces (Stateful, Guest list only). NACL = border checkpoint at the subnet: checks both directions and can turn people away.",
+  "certs": {
+   "DVA-C02": "2",
+   "SAA-C03": "1"
+  },
+  "id": "b99579e9-f759-4c41-ad2c-3d96860c0927"
+ },
+ {
+  "type": "cloze",
+  "question": "In the instance type `m5.2xlarge`: `m` is the instance {{family}}, `5` is the {{generation}}, and `2xlarge` is the {{size}} within the class.",
+  "explanation": "AWS docs call `m` the instance family (some courses say class). Higher generations are newer hardware; larger sizes give more vCPU, memory and network.",
+  "certs": {
+   "DVA-C02": "1",
+   "SAA-C03": "3"
+  },
+  "id": "ba79ddb9-8524-4ab6-9d81-2faf0a848539"
+ },
+ {
+  "type": "mcq",
+  "question": "The origin needs a `User-Agent` header and a session ID cookie to process requests, but they should **not** affect caching. What do you configure?",
+  "options": [
+   "An origin request policy that forwards them",
+   "Add both to the cache policy's cache key",
+   "A cache invalidation for those paths",
+   "A Lambda@Edge function that redirects"
+  ],
+  "correct": [
+   0
+  ],
+  "explanation": "**Cache policy** = what goes in the key (and is forwarded). **Origin request policy** = extra values forwarded only.",
+  "certs": {
+   "DVA-C02": "1",
+   "SAA-C03": "3"
+  },
+  "id": "bad76b45-5786-4b47-99b9-156ee2ca16f6"
+ },
+ {
+  "type": "mcq",
+  "question": "Which bucket names are INVALID? (Choose 3)",
+  "options": [
+   "My_Bucket",
+   "192.168.1.10",
+   "xn--photos",
+   "app-logs-2026",
+   "media.assets.example"
+  ],
+  "correct": [
+   0,
+   1,
+   2
+  ],
+  "explanation": "Rules: 3-63 characters, lowercase letters/numbers/hyphens/dots, start with a letter or number, not an IP, no `xn--` prefix, no `-s3alias` suffix. Keep names simple.",
+  "certs": {
+   "DVA-C02": "1",
+   "SAA-C03": "3"
+  },
+  "id": "bae2fa9d-73f7-48ce-ad8b-68ba3602f4ac"
+ },
+ {
+  "type": "mcq",
+  "question": "A very high-throughput app uploads and downloads millions of SSE-KMS objects and starts getting throttling errors. Why?",
+  "options": [
+   "Every request calls KMS, hitting the KMS request quota",
+   "S3 caps each bucket at 3,500 requests per second",
+   "SSE-KMS allows only 100 encrypted objects per bucket",
+   "The bucket policy exceeds its maximum size"
+  ],
+  "correct": [
+   0
+  ],
+  "explanation": "Fixes: request a KMS quota increase, use **S3 Bucket Keys** (fewer KMS calls), or use SSE-S3 if KMS control isn't required. *(Goes slightly beyond the lecture.)*",
+  "certs": {
+   "DVA-C02": "4",
+   "SAA-C03": "1"
+  },
+  "id": "bb1546dd-70e8-4b44-a902-22a995e4a794"
+ },
+ {
+  "type": "ordering",
+  "question": "Order the flow for serving private content with CloudFront signed URLs.",
+  "explanation": "The S3 bucket stays private behind OAC.",
+  "items": [
+   "Client signs in to your application",
+   "App checks the user is allowed",
+   "App uses the SDK and its private key to create a signed URL",
+   "App returns the signed URL to the client",
+   "Client requests the file from CloudFront with the signed URL; CloudFront checks the signature with the public key"
+  ],
+  "certs": {
+   "DVA-C02": "2",
+   "SAA-C03": "1"
+  },
+  "id": "bb481664-0f00-4c8d-9757-799c0b1b3c26"
+ },
+ {
+  "type": "mcq",
+  "question": "A security team wants to force all database connections to use IAM authentication and keep database credentials out of the app. What should they use?",
+  "options": [
+   "RDS Proxy requiring IAM authentication, with database credentials in Secrets Manager",
+   "Security groups limiting the database port to the app tier's security group only",
+   "Read replicas that offload read traffic from the primary in another AZ",
+   "ElastiCache in front of the database to cache frequent query results"
+  ],
+  "correct": [
+   0
+  ],
+  "explanation": "RDS Proxy can **require IAM authentication** from clients (set per proxy) and fetches the database credentials from **Secrets Manager**, so the app never holds them.",
+  "certs": {
+   "DVA-C02": "2",
+   "SAA-C03": "1"
+  },
+  "id": "bbec4d72-9d9a-416f-8e57-122577011b73"
+ },
+ {
+  "type": "mcq",
+  "question": "Multi-Attach is enabled on an io2 volume, but data gets corrupted when two instances write at once. What's the likely issue?",
+  "options": [
+   "The file system isn't cluster-aware",
+   "The volume must be gp3 instead of io2",
+   "The instances are in different Regions",
+   "Snapshots are running at the same time"
+  ],
+  "correct": [
+   0
+  ],
+  "explanation": "Multi-Attach gives shared block access, but the **file system must coordinate writes**.",
+  "certs": {
+   "DVA-C02": "4",
+   "SAA-C03": "3"
+  },
+  "id": "bc27258a-5678-429b-b5cc-3462dc25045a"
+ },
+ {
+  "type": "mcq",
+  "question": "Which are good uses of S3 pre-signed URLs? (Choose 3)",
+  "options": [
+   "Temporary download of a private file",
+   "A user uploading to one exact key in a private bucket",
+   "On-the-fly download links for a changing user list",
+   "Granting permanent public access to selected objects",
+   "Replacing the bucket policy for every user"
+  ],
+  "correct": [
+   0,
+   1,
+   2
+  ],
+  "explanation": "If the URL's creator loses permission, or their temporary credentials expire, the URL stops working too. *(Goes slightly beyond the lecture.)*",
+  "certs": {
+   "DVA-C02": "2",
+   "SAA-C03": "1"
+  },
+  "id": "be3e5c13-c13d-4afc-ba3c-235dc7836c15"
+ },
+ {
+  "type": "mcq",
+  "question": "Which statement about headers, cookies and query strings in the **cache key** is TRUE?",
+  "options": [
+   "Values in the cache key are forwarded to the origin",
+   "Cache key values are stripped before reaching the origin",
+   "Only cookies in the cache key are passed to the origin",
+   "They also need an origin request policy to be forwarded"
+  ],
+  "correct": [
+   0
+  ],
+  "explanation": "Cache key values are always forwarded to the origin.",
+  "certs": {
+   "DVA-C02": "1",
+   "SAA-C03": "3"
+  },
+  "id": "be5d22dc-bf01-4c46-b01c-b13687af3374"
+ },
+ {
+  "type": "mcq",
+  "question": "What can a CloudFront **cache policy** include in the cache key? (Choose 3)",
+  "options": [
+   "HTTP headers (none or a whitelist)",
+   "Cookies (none, whitelist, all-except, all)",
+   "Query strings (none, whitelist, all-except, all)",
+   "The origin's IAM role (none or a list of roles)",
+   "The bucket's Region (always included)"
+  ],
+  "correct": [
+   0,
+   1,
+   2
+  ],
+  "explanation": "A cache policy also sets the **TTL** (0 seconds to 1 year), which origins can influence with **Cache-Control** / **Expires** headers. You can use AWS-managed or custom policies.",
+  "certs": {
+   "DVA-C02": "1",
+   "SAA-C03": "3"
+  },
+  "id": "bf5f33be-e3e0-4b63-9163-33632932baaa"
+ },
+ {
+  "type": "mcq",
+  "question": "Can an RDS read replica be set up as Multi-AZ for disaster recovery?",
+  "options": [
+   "Yes",
+   "No, replicas are always single-AZ",
+   "Only for Aurora",
+   "Only cross-Region replicas"
+  ],
+  "correct": [
+   0
+  ],
+  "explanation": "Yes: a read replica can itself be **Multi-AZ**.",
+  "certs": {
+   "DVA-C02": "1",
+   "SAA-C03": "2"
+  },
+  "id": "bfc474f2-7d32-434f-8f53-738266a86017"
+ },
+ {
+  "type": "mcq",
+  "question": "An OLTP database and a data warehouse need very high sequential read/write throughput to local storage. Which family fits?",
+  "options": [
+   "Storage optimized",
+   "Compute optimized",
+   "General purpose",
+   "Memory optimized"
+  ],
+  "correct": [
+   0
+  ],
+  "explanation": "Heavy local storage I/O → **storage optimized**.",
+  "certs": {
+   "DVA-C02": "1",
+   "SAA-C03": "3"
+  },
+  "id": "bfef2f24-dac9-4923-9023-a79cfeec83c8"
+ },
+ {
+  "type": "cloze",
+  "question": "On-Demand Linux and Windows instances are billed per {{second}}, with a minimum of one {{minute}}. A few other operating systems (e.g. SUSE) are still billed per {{hour}}.",
+  "explanation": "On-Demand has no upfront payment or commitment and is best for short-term, uninterrupted, unpredictable workloads.",
+  "certs": {
+   "DVA-C02": "4",
+   "SAA-C03": "4"
+  },
+  "id": "c07a5f4b-bbaa-4173-a390-471bdd668ca2"
+ },
+ {
+  "type": "mcq",
+  "question": "An image-processing batch job can be stopped and restarted at any time. The team wants the lowest cost. What should they use?",
+  "options": [
+   "Reserved Instances",
+   "Spot Instances",
+   "Dedicated Hosts",
+   "On-Demand"
+  ],
+  "correct": [
+   1
+  ],
+  "explanation": "**Spot**: cheapest, but instances can be reclaimed. Good for batch, data analysis, image processing, distributed jobs. Not for databases or critical jobs.",
+  "certs": {
+   "DVA-C02": "4",
+   "SAA-C03": "4"
+  },
+  "id": "c443f07f-47cb-4c4b-9092-5f692a54149e"
+ },
+ {
+  "type": "mcq",
+  "question": "Is it required to detach an EBS volume before taking a snapshot of it?",
+  "options": [
+   "No, but it's recommended for consistency",
+   "Yes, snapshots fail on volumes that are still attached",
+   "Yes, but only for gp3 volumes",
+   "No, and detaching makes no difference to consistency"
+  ],
+  "correct": [
+   0
+  ],
+  "explanation": "Snapshots are **point-in-time backups**. Detaching isn't required but helps consistency. Snapshots also use I/O, so avoid running them during heavy traffic.",
+  "certs": {
+   "DVA-C02": "1",
+   "SAA-C03": "2"
+  },
+  "id": "c475da16-5d08-40d3-82c5-932da9e182b7"
+ },
+ {
+  "type": "mcq",
+  "question": "VPC A is peered with VPC B, and VPC A is peered with VPC C. Can B and C communicate?",
+  "options": [
+   "No. Peering isn't transitive; B and C need their own direct peering",
+   "Yes, traffic is routed through A automatically via the peering",
+   "Yes, if all three VPCs are in the same Region and account",
+   "Only over IPv6, which bypasses the peering restriction"
+  ],
+  "correct": [
+   0
+  ],
+  "explanation": "Each pair of VPCs that must talk needs its **own** peering connection.\n\n```\nB ◄──peering──► A ◄──peering──► C\nB ◄────── ✗ no path ──────────► C\n(B–C needs its own peering connection)\n```",
+  "certs": {
+   "DVA-C02": "1",
+   "SAA-C03": "1"
+  },
+  "id": "c5339872-6101-441e-9b75-9cb5410c716c"
+ },
+ {
+  "type": "ordering",
+  "question": "Order the steps to use the CLI with MFA.",
+  "explanation": "When the session expires, repeat step 2.\n\n```\nIAM user + MFA device\n   │ sts get-session-token (serial + 6-digit code)\n   ▼\nAccessKeyId + SecretAccessKey + SessionToken  (expire)\n   │ saved in a profile\n   ▼\naws <command> --profile <profile>\n```",
+  "items": [
+   "Assign an MFA device to your IAM user",
+   "Call aws sts get-session-token with the device serial and current code",
+   "Save AccessKeyId, SecretAccessKey and SessionToken in a profile",
+   "Run commands with --profile <that profile> until the credentials expire"
+  ],
+  "certs": {
+   "DVA-C02": "2",
+   "SAA-C03": "1"
+  },
+  "id": "c5c3d8e8-afb5-46c2-9572-3f3717f67a25"
+ },
+ {
+  "type": "mcq",
+  "question": "Which statements about Amazon Aurora are TRUE? (Choose 3)",
+  "options": [
+   "It's compatible with MySQL and PostgreSQL drivers",
+   "Storage grows automatically in 10 GB increments as needed",
+   "It keeps 6 copies of data across 3 AZs",
+   "It is fully open source and free to self-host",
+   "It supports Oracle and SQL Server engines natively"
+  ],
+  "correct": [
+   0,
+   1,
+   2
+  ],
+  "explanation": "Aurora: cloud-optimized (about **5x MySQL / 3x PostgreSQL** on RDS), **auto-growing storage** (in 10 GB steps, up to 128 TiB or more depending on engine version), **6 copies across 3 AZs**, up to **15 replicas** with typically **<10 ms lag**, costs about **20% more** than RDS but is more efficient.",
+  "certs": {
+   "DVA-C02": "1",
+   "SAA-C03": "3"
+  },
+  "id": "c694a0e5-a5d6-4478-9e4b-3e5ed54cd5db"
+ },
+ {
+  "type": "mcq",
+  "question": "A company wants to **reduce CloudFront costs** and its users are mainly in North America and Europe. What can it change?",
+  "options": [
+   "Price Class 100 (cheapest edge locations)",
+   "Price Class All (every edge location)",
+   "Turn off caching to cut edge storage costs",
+   "Geo restriction blocking other countries"
+  ],
+  "correct": [
+   0
+  ],
+  "explanation": "Price classes: **All** (best performance), **200** (excludes the most expensive regions), **100** (cheapest regions: North America and Europe). Data-out pricing varies by location and falls with volume.",
+  "certs": {
+   "DVA-C02": "4",
+   "SAA-C03": "4"
+  },
+  "id": "c81b5071-df7b-43a6-a639-17f571f2804d"
+ },
+ {
+  "type": "mcq",
+  "question": "Traffic always spikes at 5 PM every Friday. Which ASG policy fits best?",
+  "options": [
+   "Scheduled scaling",
+   "Target tracking on average CPU",
+   "Simple scaling with a CloudWatch alarm",
+   "Instance refresh"
+  ],
+  "correct": [
+   0
+  ],
+  "explanation": "**Scheduled** = known schedule. **Predictive** = the ASG forecasts from history and schedules for you (cyclical load).",
+  "certs": {
+   "DVA-C02": "3",
+   "SAA-C03": "2"
+  },
+  "id": "c86dd58d-c5ec-4f70-912c-9d1f9237a72c"
+ },
+ {
+  "type": "mcq",
+  "question": "A developer updated `index.html` in S3, but CloudFront still serves the old version for hours. What forces the new file to be served immediately?",
+  "options": [
+   "Invalidate /index.html in CloudFront",
+   "Delete and recreate the distribution",
+   "Enable versioning on the S3 bucket",
+   "Change the distribution's price class"
+  ],
+  "correct": [
+   0
+  ],
+  "explanation": "Without an invalidation, edges only refresh when the **TTL expires**.",
+  "certs": {
+   "DVA-C02": "3",
+   "SAA-C03": "3"
+  },
+  "id": "c880c94f-55b4-406d-9fd2-7b4424526931"
+ },
+ {
+  "type": "mcq",
+  "question": "A company keeps old EBS snapshots for compliance and rarely restores them. They want to cut storage cost by up to 75%. Which feature fits, and what's the trade-off?",
+  "options": [
+   "EBS Snapshot Archive; restores take 24-72 hours",
+   "Fast Snapshot Restore; it costs more per AZ",
+   "Recycle Bin; snapshots are deleted after a retention period of one year",
+   "EBS Multi-Attach; only works with io2"
+  ],
+  "correct": [
+   0
+  ],
+  "explanation": "**Snapshot Archive**: up to **75% cheaper**, restore in **24 to 72 hours**.",
+  "certs": {
+   "DVA-C02": "4",
+   "SAA-C03": "4"
+  },
+  "id": "c88609d2-ebc0-44b0-923f-262939830e36"
+ },
+ {
+  "type": "cloze",
+  "question": "S3 baseline performance: {{3,500}} PUT/COPY/POST/DELETE and {{5,500}} GET/HEAD requests per second **per prefix**, with first-byte latency of about {{100-200}} ms.",
+  "explanation": "There's no limit on the number of prefixes, so you can scale by spreading keys across prefixes.",
+  "certs": {
+   "DVA-C02": "4",
+   "SAA-C03": "3"
+  },
+  "id": "c9569300-fc16-4f2c-ab16-66ab4646a8e4"
+ },
+ {
+  "type": "mcq",
+  "question": "What two kinds of actions can an S3 Lifecycle rule perform? (Choose 2)",
+  "options": [
+   "Transition objects to another storage class after N days",
+   "Expire (delete) objects after a number of days",
+   "Re-encrypt existing objects with a new KMS key",
+   "Replicate objects to a bucket in another Region"
+  ],
+  "correct": [
+   0,
+   1
+  ],
+  "explanation": "Lifecycle rules automate moving and deleting objects so you don't do it by hand.\n\n```\nday 0     Standard\nday 30    ──► Standard-IA            (transition)\nday 90    ──► Glacier Flexible       (transition)\nday 365   ✕ deleted                  (expiration)\nFilter by prefix or tag; also works on non-current versions.\n```",
+  "certs": {
+   "DVA-C02": "4",
+   "SAA-C03": "4"
+  },
+  "id": "c9dad150-c8a4-42ca-8e8d-921c6a4b5616"
+ },
+ {
+  "type": "code",
+  "question": "Complete this policy so uploads without SSE-KMS are denied.",
+  "explanation": "`s3:x-amz-server-side-encryption` holds the encryption header the client sent. If it isn't `aws:kms`, the request is denied.",
+  "code": "{\n  \"Effect\": \"Deny\",\n  \"Principal\": \"*\",\n  \"Action\": \"s3:PutObject\",\n  \"Resource\": \"arn:aws:s3:::finance-bucket/*\",\n  \"Condition\": {\"____\": {\"s3:x-amz-server-side-encryption\": \"aws:kms\"}}\n}",
+  "language": "json",
+  "certs": {
+   "DVA-C02": "2",
+   "SAA-C03": "1"
+  },
+  "id": "cb15b81e-a54f-40de-944c-ae5d441ac1b8"
+ },
+ {
+  "type": "mcq",
+  "question": "A bucket's default encryption is SSE-S3, but the team wants every new object to use SSE-KMS **and** wants to reject uploads that ask for anything else. What should they do? (Choose 2)",
+  "options": [
+   "Set the bucket's default encryption to SSE-KMS",
+   "Deny PutObject in the bucket policy unless the header is aws:kms",
+   "Enable MFA Delete so uploads must be authorized with MFA",
+   "Add a CORS rule that allows only aws:kms uploads"
+  ],
+  "correct": [
+   0,
+   1
+  ],
+  "explanation": "Bucket policies are evaluated **before** default encryption settings.",
+  "certs": {
+   "DVA-C02": "2",
+   "SAA-C03": "1"
+  },
+  "id": "cba1f28d-79b5-4a57-94a6-6dac068e8dcf"
+ },
+ {
+  "type": "mcq",
+  "question": "Which are valid sources of an AMI to launch an EC2 instance? (Choose 3)",
+  "options": [
+   "A public AMI provided by AWS",
+   "Your own custom AMI",
+   "An AWS Marketplace AMI",
+   "An EBS volume in another AZ",
+   "An IAM role with EC2 permissions"
+  ],
+  "correct": [
+   0,
+   1,
+   2
+  ],
+  "explanation": "AMI sources: **AWS public**, **your own**, **Marketplace** (vendors can sell AMIs, and so can you).",
+  "certs": {
+   "DVA-C02": "3",
+   "SAA-C03": "3"
+  },
+  "id": "cc687f84-d6ca-4822-b879-74445319d9f2"
+ },
+ {
+  "type": "mcq",
+  "question": "A company needs an **encrypted** connection from its office network to its VPC **within a day**. Which option fits?",
+  "options": [
+   "Site-to-Site VPN",
+   "AWS Direct Connect",
+   "VPC peering",
+   "An Internet Gateway"
+  ],
+  "correct": [
+   0
+  ],
+  "explanation": "**VPN**: fast setup (minutes), encrypted, over the **public internet**.",
+  "certs": {
+   "DVA-C02": "1",
+   "SAA-C03": "1"
+  },
+  "id": "cc6bffde-2f2a-414f-bad3-9310ace0c587"
+ },
+ {
+  "type": "mcq",
+  "question": "Which lifecycle transition is NOT allowed?",
+  "options": [
+   "From Glacier Deep Archive back to S3 Standard storage",
+   "From S3 Standard to S3 Standard-IA after 30 days",
+   "From Standard-IA to Glacier Flexible Retrieval",
+   "From One Zone-IA to Glacier Deep Archive"
+  ],
+  "correct": [
+   0
+  ],
+  "explanation": "Transitions go \"downhill\" toward cheaper/colder classes.",
+  "certs": {
+   "DVA-C02": "4",
+   "SAA-C03": "4"
+  },
+  "id": "cc8061dd-b4bf-463a-bd49-8bdd6433d943"
+ },
+ {
+  "type": "typed",
+  "question": "What is the default SSH username for an Amazon Linux EC2 instance?",
+  "answer": "ec2-user",
+  "explanation": "Amazon Linux uses `ec2-user`. Ubuntu AMIs use `ubuntu`. Using the wrong user gives 'Permission denied (publickey)'.",
+  "certs": {
+   "DVA-C02": "4"
+  },
+  "id": "cca31fe5-55f0-4d07-b7f3-3555cfa0d595"
+ },
+ {
+  "type": "mcq",
+  "question": "Which AWS infrastructure component is used mainly to deliver content to end users with the lowest latency?",
+  "options": [
+   "Availability Zones (isolated data centers in a Region)",
+   "Regions (geographic areas with multiple AZs)",
+   "Edge locations (points of presence)",
+   "VPC subnets"
+  ],
+  "correct": [
+   2
+  ],
+  "explanation": "Edge locations / points of presence sit in many cities worldwide and serve cached content close to users.",
+  "certs": {
+   "DVA-C02": "1",
+   "SAA-C03": "2"
+  },
+  "id": "ccbb0e35-865a-4cea-a645-f1c40d15075d"
+ },
+ {
+  "type": "mcq",
+  "question": "Which can be targets of an **Application Load Balancer** target group? (Choose 3)",
+  "options": [
+   "EC2 instances (incl. managed by an ASG)",
+   "Lambda functions",
+   "Private IP addresses (e.g. on-premises servers)",
+   "Public IP addresses on the internet",
+   "S3 buckets holding static website files"
+  ],
+  "correct": [
+   0,
+   1,
+   2
+  ],
+  "explanation": "ALB targets: **EC2**, **ECS tasks**, **Lambda**, **private IPs**. Health checks are configured **per target group**.",
+  "certs": {
+   "DVA-C02": "1",
+   "SAA-C03": "2"
+  },
+  "id": "cdcbec6c-99ec-4c72-b6c0-c06d8a8dde1a"
+ }
+]

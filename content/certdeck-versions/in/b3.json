@@ -1,0 +1,857 @@
+[
+ {
+  "type": "basic",
+  "question": "Under the shared responsibility model, what are YOU (the customer) responsible for with IAM?",
+  "answer": "Managing users, groups, roles and policies; enabling MFA; rotating keys; using IAM tools to review permissions; analysing access patterns.",
+  "explanation": "AWS secures the global infrastructure and the IAM service itself. Customers own how identities and permissions are configured.",
+  "certs": {
+   "DVA-C02": "2",
+   "SAA-C03": "1"
+  },
+  "id": "38917418-8f6b-459e-b5be-49b3308c31a1"
+ },
+ {
+  "type": "mcq",
+  "question": "Which statement about IAM groups is TRUE?",
+  "options": [
+   "A group can contain other groups",
+   "A user can belong to multiple groups",
+   "Every user must belong to exactly one group",
+   "Groups can contain IAM roles"
+  ],
+  "correct": [
+   1
+  ],
+  "explanation": "Groups hold **users only**. A user can be in zero, one or many groups.",
+  "certs": {
+   "DVA-C02": "2",
+   "SAA-C03": "1"
+  },
+  "id": "39a263d6-fa93-4e0e-a7db-a7faf2030890"
+ },
+ {
+  "type": "basic",
+  "question": "What is the **only service** that CloudFront **real-time logs** are delivered to directly?",
+  "answer": "**Amazon Kinesis Data Streams** (from there, consume with Lambda, Kinesis Data Firehose, or other consumers).",
+  "explanation": "CloudFront real-time logs have exactly one direct destination: a **Kinesis data stream**. S3, OpenSearch, RDS or CloudWatch are not direct targets. To reach S3 or OpenSearch, put **Firehose** after the stream.\n\n**Analogy:** Kinesis Data Streams is the loading dock at the CloudFront warehouse. Every package (log record) leaves through that one dock, and only then can trucks (Firehose, Lambda) carry it elsewhere.\n\nA common mistake is to think Firehose is the direct target. It is not; it sits after the stream.",
+  "certs": {
+   "DVA-C02": "4",
+   "SAA-C03": "3"
+  },
+  "id": "39d61f7f-b10e-4fa6-a2ed-01f20c886ded"
+ },
+ {
+  "type": "mcq",
+  "question": "An EFS workload has very **unpredictable** throughput, jumping from near zero to high bursts. Which throughput mode does AWS recommend?",
+  "options": [
+   "Elastic",
+   "Provisioned",
+   "Bursting",
+   "Max I/O"
+  ],
+  "correct": [
+   0
+  ],
+  "explanation": "Throughput modes: **Bursting** (scales with storage size), **Provisioned** (fixed throughput regardless of size, paid in advance), **Elastic** (automatic, recommended for unpredictable loads).",
+  "certs": {
+   "DVA-C02": "1",
+   "SAA-C03": "3"
+  },
+  "id": "3aea6682-ef05-4fd6-a379-589e0ef1d5f0"
+ },
+ {
+  "type": "mcq",
+  "question": "A shared bucket holds finance, sales and analytics data for many teams, and the bucket policy is getting unmanageable. What simplifies access control?",
+  "options": [
+   "S3 Access Points with per-team policies",
+   "One IAM user per team, inline policies",
+   "A separate bucket for every object",
+   "S3 Object Lambda functions per team"
+  ],
+  "correct": [
+   0
+  ],
+  "explanation": "Each access point has its **own DNS name** and its **own policy**, which looks like a bucket policy.",
+  "certs": {
+   "DVA-C02": "2",
+   "SAA-C03": "1"
+  },
+  "id": "3babd413-5533-49b8-9cac-497f3de45336"
+ },
+ {
+  "type": "mcq",
+  "question": "Instances in a **private** subnet must download OS updates from the internet but must not be reachable from the internet. What should you use?",
+  "options": [
+   "A NAT Gateway in a public subnet, routed to from the private subnet",
+   "An Internet Gateway route added to the private subnet's route table",
+   "A VPC peering connection to a second VPC with internet access",
+   "A security group rule allowing 0.0.0.0/0 inbound on all ports"
+  ],
+  "correct": [
+   0
+  ],
+  "explanation": "Traffic path: **private instance → NAT Gateway (public subnet) → IGW → internet**.\n\n```\nPrivate EC2 ─► NAT GW ─► IGW ─► Internet\n (private)    (public)\n     ◄── replies only ──────────┘\nInternet cannot start a connection in.\n```",
+  "certs": {
+   "DVA-C02": "2",
+   "SAA-C03": "1"
+  },
+  "id": "3df12104-c5da-46bc-a5bc-951ba1c7d25e"
+ },
+ {
+  "type": "mcq",
+  "question": "A company must **control its own keys** and **audit every key use** in CloudTrail, while S3 still encrypts server-side. Which option?",
+  "options": [
+   "SSE-KMS with a customer managed key",
+   "SSE-S3 with S3-managed keys",
+   "SSE-C with keys sent per request",
+   "A bucket policy, no encryption"
+  ],
+  "correct": [
+   0
+  ],
+  "explanation": "SSE-KMS header: `x-amz-server-side-encryption: aws:kms` (optionally with the key ID). Reading the object needs permission on the object **and** on the KMS key.",
+  "certs": {
+   "DVA-C02": "2",
+   "SAA-C03": "1"
+  },
+  "id": "3f3f7c66-9aa0-40f7-b5c9-69688ada08df"
+ },
+ {
+  "type": "mcq",
+  "question": "Which invalidation paths are valid? (Choose 2)",
+  "options": [
+   "/*",
+   "/images/*",
+   "s3://bucket/images",
+   "https://origin/*.jpg?all"
+  ],
+  "correct": [
+   0,
+   1
+  ],
+  "explanation": "You can invalidate everything or specific paths and prefixes.",
+  "certs": {
+   "DVA-C02": "3",
+   "SAA-C03": "3"
+  },
+  "id": "3fc41bfc-f609-4f19-96f0-583f9fec2299"
+ },
+ {
+  "type": "mcq",
+  "question": "What does it mean that Route 53 is an **authoritative** DNS?",
+  "options": [
+   "You (the customer) can create and update the DNS records",
+   "It's authorized by ICANN to manage the .com domain",
+   "It's authorized by ICANN to manage .com",
+   "It automatically routes traffic like a load balancer"
+  ],
+  "correct": [
+   0
+  ],
+  "explanation": "Route 53: highly available, scalable, fully managed, authoritative DNS. Also a **domain registrar** and has **health checks**. It's the only AWS service with a **100% availability SLA**. The name comes from DNS **port 53**.",
+  "certs": {
+   "DVA-C02": "1",
+   "SAA-C03": "2"
+  },
+  "id": "4182060c-eed5-4622-9eb9-3612dcafccb6"
+ },
+ {
+  "type": "mcq",
+  "question": "CloudFront signed URL vs S3 pre-signed URL: which statements are TRUE? (Choose 2)",
+  "options": [
+   "A CloudFront signed URL works for any origin (S3 or HTTP) and uses CloudFront caching",
+   "An S3 pre-signed URL acts with the permissions of the IAM principal who signed it",
+   "S3 pre-signed URLs work through CloudFront even when the bucket only allows OAC",
+   "CloudFront signed URLs require the viewer to have IAM credentials"
+  ],
+  "correct": [
+   0,
+   1
+  ],
+  "explanation": "Distributing **through CloudFront** → CloudFront signed URL/cookie. Distributing **directly from S3** → S3 pre-signed URL.",
+  "certs": {
+   "DVA-C02": "2",
+   "SAA-C03": "1"
+  },
+  "id": "41bd28f0-92d3-41cd-a24c-189ff74537b4"
+ },
+ {
+  "type": "mcq",
+  "question": "An Aurora cluster has Auto Scaling replicas that come and go. How should the app send read traffic to them?",
+  "options": [
+   "Use the reader endpoint",
+   "List each replica's endpoint in the app",
+   "Use the writer endpoint",
+   "Put an ALB in front of the replicas"
+  ],
+  "correct": [
+   0
+  ],
+  "explanation": "Note: the reader endpoint balances at the **connection** level, not per SQL statement.",
+  "certs": {
+   "DVA-C02": "1",
+   "SAA-C03": "3"
+  },
+  "id": "41c0820f-eb7b-4589-94e6-9626ae0cd436"
+ },
+ {
+  "type": "mcq",
+  "question": "An IAM user in **another AWS account** must read objects from your bucket. What do you need on your side?",
+  "options": [
+   "A bucket policy that allows that user/account",
+   "Nothing on your side: an IAM policy in the other account is enough",
+   "Turn off Block Public Access on the whole account",
+   "Make the bucket public using a public-read ACL for everyone"
+  ],
+  "correct": [
+   0
+  ],
+  "explanation": "Cross-account → **bucket policy** naming the other account's principal.",
+  "certs": {
+   "DVA-C02": "2",
+   "SAA-C03": "1"
+  },
+  "id": "41fe824a-afe2-4a0e-9166-68b837d4300d"
+ },
+ {
+  "type": "cloze",
+  "question": "AWS Regions usually have {{3}} Availability Zones, and some have up to {{6}}. Each AZ is one or more discrete data centers with {{redundant}} power, networking and connectivity.",
+  "explanation": "New Regions launch with at least 3 AZs; the largest (us-east-1) has 6. AZs within a Region are physically separate (isolated from disasters) but linked by high-bandwidth, low-latency networking, which is what makes multi-AZ designs possible.",
+  "certs": {
+   "DVA-C02": "1",
+   "SAA-C03": "2"
+  },
+  "id": "42f3252e-549e-42fe-81e1-64d789cb17a5"
+ },
+ {
+  "type": "mcq",
+  "question": "A company runs a primary site and a standby disaster-recovery site. DNS should send users to the standby only when the primary is unhealthy. Which policy?",
+  "options": [
+   "Failover routing with a health check on the primary record",
+   "Weighted routing with 100/0 weights and no health check",
+   "Multi-value answer routing returning up to eight healthy records",
+   "Latency routing to the Region closest to the user"
+  ],
+  "correct": [
+   0
+  ],
+  "explanation": "Failover: exactly **one primary** and **one secondary**. Route 53 answers with the secondary when the primary's health check fails.",
+  "certs": {
+   "DVA-C02": "1",
+   "SAA-C03": "2"
+  },
+  "id": "43c86bb3-76f1-4e1e-9dcf-866df7dbe653"
+ },
+ {
+  "type": "mcq",
+  "question": "Backups are rarely accessed but must be available **immediately** when needed, and must survive an AZ failure. Which class?",
+  "options": [
+   "S3 Standard-IA",
+   "S3 One Zone-IA",
+   "S3 Glacier Deep Archive",
+   "S3 Glacier Flexible Retrieval"
+  ],
+  "correct": [
+   0
+  ],
+  "explanation": "**Standard-IA**: infrequent but rapid access.",
+  "certs": {
+   "DVA-C02": "4",
+   "SAA-C03": "4"
+  },
+  "id": "43f9d620-c3da-4cb5-ab93-1c907f7ec872"
+ },
+ {
+  "type": "mcq",
+  "question": "A geolocation setup has records for Asia and the United States only. A user in Mexico gets no answer. What's missing?",
+  "options": [
+   "A Default record",
+   "A health check",
+   "A lower TTL",
+   "A latency record"
+  ],
+  "correct": [
+   0
+  ],
+  "explanation": "Always add a **Default** location to geolocation record sets.",
+  "certs": {
+   "DVA-C02": "4",
+   "SAA-C03": "2"
+  },
+  "id": "446f1505-9ca9-4921-9357-30f2123bd9d4"
+ },
+ {
+  "type": "code",
+  "question": "What does this lifecycle rule do?",
+  "answer": "Tier `logs/` objects to IA at 30 days, Glacier at 90, delete at 365, and clean up unfinished uploads after 7 days.",
+  "explanation": "For objects under `logs/`: move to **Standard-IA after 30 days**, to **Glacier Flexible Retrieval after 90 days**, and **delete after 365 days**. It also aborts multipart uploads left unfinished for 7 days.",
+  "code": "{\n  \"Rules\": [{\n    \"ID\": \"logs-tiering\",\n    \"Filter\": {\"Prefix\": \"logs/\"},\n    \"Status\": \"Enabled\",\n    \"Transitions\": [\n      {\"Days\": 30, \"StorageClass\": \"STANDARD_IA\"},\n      {\"Days\": 90, \"StorageClass\": \"GLACIER\"}\n    ],\n    \"Expiration\": {\"Days\": 365},\n    \"AbortIncompleteMultipartUpload\": {\"DaysAfterInitiation\": 7}\n  }]\n}",
+  "language": "json",
+  "certs": {
+   "DVA-C02": "4",
+   "SAA-C03": "4"
+  },
+  "id": "44f3c664-6f4e-4a1b-9e49-e2e6f0e48860"
+ },
+ {
+  "type": "mcq",
+  "question": "Users lose their login session because each request lands on a different instance that stores the session in memory. What quick fix keeps a user on the same instance?",
+  "options": [
+   "Enable sticky sessions on the target group",
+   "Enable cross-zone load balancing on the load balancer",
+   "Increase the deregistration delay on the target group",
+   "Switch to a Gateway Load Balancer in front of the app"
+  ],
+  "correct": [
+   0
+  ],
+  "explanation": "Stickiness works with **CLB, ALB and NLB**. Downside: it can **unbalance** load. Better long-term: store sessions outside the instance (e.g. ElastiCache or DynamoDB).",
+  "certs": {
+   "DVA-C02": "1",
+   "SAA-C03": "2"
+  },
+  "id": "455cea93-a154-4844-b3a1-36665de057ef"
+ },
+ {
+  "type": "cloze",
+  "question": "Aurora stores {{6}} copies of data across {{3}} AZs. It needs {{4}} of 6 copies for writes and {{3}} of 6 copies for reads.",
+  "explanation": "That's why Aurora keeps working if an entire AZ is lost. Storage is self-healing (peer-to-peer repair) and striped across hundreds of volumes.",
+  "certs": {
+   "DVA-C02": "1",
+   "SAA-C03": "2"
+  },
+  "id": "455e3349-095d-4d1e-9098-179cde5317b0"
+ },
+ {
+  "type": "mcq",
+  "question": "Objects are spread evenly across 4 prefixes in one bucket. What's the maximum GET/HEAD rate you can reach in theory?",
+  "options": [
+   "22,000 GET requests per second",
+   "5,500 requests per second",
+   "14,000 requests per second",
+   "Unlimited from one prefix"
+  ],
+  "correct": [
+   0
+  ],
+  "explanation": "Prefix = everything between the bucket name and the object name, e.g. `/folder1/sub1/`.\n\n```\nbucket\n├─ /a/   5,500 GET/s\n├─ /b/   5,500 GET/s\n├─ /c/   5,500 GET/s\n└─ /d/   5,500 GET/s     → 22,000 GET/s in total\n```",
+  "certs": {
+   "DVA-C02": "4",
+   "SAA-C03": "3"
+  },
+  "id": "4642e68a-165e-4468-a601-11d9c2987dce"
+ },
+ {
+  "type": "code",
+  "question": "Which command sets up the AWS CLI with your access keys, default Region and output format?",
+  "answer": "`aws configure`",
+  "explanation": "`aws configure` prompts for Access Key ID, Secret Access Key, default Region and output format, and stores them in `~/.aws/credentials` and `~/.aws/config`. Run it on your own machine, **not** on an EC2 instance (use an IAM role there).",
+  "language": "bash",
+  "certs": {
+   "DVA-C02": "1"
+  },
+  "id": "47b9c77d-5e1c-4bdd-b04b-3b641551c66f"
+ },
+ {
+  "type": "mcq",
+  "question": "You open a private S3 object from the console and the URL contains `X-Amz-Signature=...` and `X-Amz-Expires=...`. What is this?",
+  "options": [
+   "A SigV4-signed (pre-signed) URL that expires",
+   "A public object URL open to anyone",
+   "An S3 website endpoint URL for static hosting",
+   "A CloudFront signed cookie sent with the request"
+  ],
+  "correct": [
+   0
+  ],
+  "explanation": "A pre-signed URL carries a SigV4 signature in its query string and stops working when it expires.",
+  "certs": {
+   "DVA-C02": "2",
+   "SAA-C03": "1"
+  },
+  "id": "49ea36f2-b12a-4222-87ee-c7f3b9cac6ac"
+ },
+ {
+  "type": "mcq",
+  "question": "A team created a new launch template with an updated AMI and wants to replace all running ASG instances gradually without downtime. What should they use?",
+  "options": [
+   "Instance Refresh with a minimum healthy percentage",
+   "Terminate all instances at once and let the ASG relaunch them",
+   "Increase the default cooldown period on the scaling policy",
+   "Enable cross-zone load balancing on the load balancer"
+  ],
+  "correct": [
+   0
+  ],
+  "explanation": "**Instance Refresh**: set **minimum healthy %** and **warm-up time**. Old-template instances are replaced over time.",
+  "certs": {
+   "DVA-C02": "3",
+   "SAA-C03": "2"
+  },
+  "id": "4a0d24d2-8d42-43e8-96ae-065466602e92"
+ },
+ {
+  "type": "mcq",
+  "question": "By default, what makes up CloudFront's **cache key**?",
+  "options": [
+   "The hostname plus the resource path",
+   "All request headers and cookies",
+   "The viewer's IP address and path",
+   "Query strings only, without the path"
+  ],
+  "correct": [
+   0
+  ],
+  "explanation": "The cache key uniquely identifies an object in each edge's cache.",
+  "certs": {
+   "DVA-C02": "1",
+   "SAA-C03": "3"
+  },
+  "id": "4b5a97a5-b3a9-4efe-803f-b537ba58486d"
+ },
+ {
+  "type": "mcq",
+  "question": "How does Route 53 decide that an endpoint is **healthy**?",
+  "options": [
+   "More than 18% of the ~15 global checkers report it healthy",
+   "All of the global health checkers must report it healthy",
+   "One health checker in the same Region reports healthy",
+   "The endpoint returns any HTTP response"
+  ],
+  "correct": [
+   0
+  ],
+  "explanation": "Interval: **30 s** standard or **10 s** fast (costs more). Protocols: HTTP, HTTPS, TCP. Pass = **2xx/3xx**. Can match text in the first **5,120 bytes** of the response. You can choose checker locations.",
+  "certs": {
+   "DVA-C02": "4",
+   "SAA-C03": "2"
+  },
+  "id": "4c1c2a5d-86dc-4bbd-a4bd-4b6ba93c11c7"
+ },
+ {
+  "type": "mcq",
+  "question": "A bucket must stay **private**, but its files should be served through CloudFront. How?",
+  "options": [
+   "OAC, with a bucket policy allowing only the distribution",
+   "Make the bucket public, then put CloudFront in front of it",
+   "Store an IAM user's access keys in the distribution settings",
+   "Serve it from the S3 static website endpoint as the origin"
+  ],
+  "correct": [
+   0
+  ],
+  "explanation": "With OAC, direct S3 URLs return **Access Denied**, but the same files work through the CloudFront domain.",
+  "certs": {
+   "DVA-C02": "2",
+   "SAA-C03": "1"
+  },
+  "id": "4c5331c0-7a73-4fd1-92f1-4e09cb9d39ef"
+ },
+ {
+  "type": "mcq",
+  "question": "A company keeps a **secondary copy** of on-premises backups and could recreate the data if lost. They want the cheapest infrequent-access option with immediate retrieval. Which class?",
+  "options": [
+   "S3 One Zone-IA",
+   "S3 Standard",
+   "S3 Standard-IA",
+   "S3 Intelligent-Tiering"
+  ],
+  "correct": [
+   0
+  ],
+  "explanation": "**One Zone-IA**: secondary backup copies or data you can recreate.",
+  "certs": {
+   "DVA-C02": "4",
+   "SAA-C03": "4"
+  },
+  "id": "4cb50ecb-6d94-42c1-a68b-ae285eab6d0f"
+ },
+ {
+  "type": "mcq",
+  "question": "Which types of Route 53 health checks exist? (Choose 3)",
+  "options": [
+   "Endpoint health checks (app, server, AWS resource)",
+   "Calculated health checks (combine other health checks)",
+   "Health checks that monitor a CloudWatch alarm",
+   "Health checks that SSH into instances",
+   "Health checks that read EBS volumes"
+  ],
+  "correct": [
+   0,
+   1,
+   2
+  ],
+  "explanation": "Health checks give **automated DNS failover** and publish metrics to CloudWatch.",
+  "certs": {
+   "DVA-C02": "4",
+   "SAA-C03": "2"
+  },
+  "id": "4cd095d7-f347-4d6d-9732-d808ce81214c"
+ },
+ {
+  "type": "mcq",
+  "question": "An S3 event notification to an SQS queue fails to set up with a permissions error. What's needed?",
+  "options": [
+   "An SQS access policy on the queue allowing S3 to send messages",
+   "An IAM role that S3 assumes to send messages to the queue",
+   "A bucket policy on the S3 bucket allowing SQS to read from it",
+   "A VPC endpoint for SQS so S3 can reach the queue privately"
+  ],
+  "correct": [
+   0
+  ],
+  "explanation": "Each target needs a **resource policy** that allows S3: **SNS access policy**, **SQS access policy**, **Lambda resource-based policy**.",
+  "certs": {
+   "DVA-C02": "2",
+   "SAA-C03": "1"
+  },
+  "id": "4cf50f69-dcbe-40d0-b2a0-64737f44fce9"
+ },
+ {
+  "type": "mcq",
+  "question": "A team wants CloudFront in front of an S3 **static website** endpoint (not the REST endpoint). What kind of origin is it?",
+  "options": [
+   "A custom origin (website hosting enabled)",
+   "An S3 origin secured with Origin Access Control",
+   "A VPC origin pointing at the bucket",
+   "An origin group with the website as primary"
+  ],
+  "correct": [
+   0
+  ],
+  "explanation": "S3 website endpoints are HTTP servers, so CloudFront treats them as custom origins.",
+  "certs": {
+   "DVA-C02": "1",
+   "SAA-C03": "3"
+  },
+  "id": "4d1ba9e6-5ffa-4a34-8085-9050bc571a20"
+ },
+ {
+  "type": "mcq",
+  "question": "Who normally reads the role credentials from IMDS on an EC2 instance?",
+  "options": [
+   "The AWS SDK and CLI do it automatically",
+   "You must copy them into ~/.aws/credentials",
+   "CloudFormation, when the stack launches the instance",
+   "The security group attached to the instance"
+  ],
+  "correct": [
+   0
+  ],
+  "explanation": "That's why attaching a role is enough for code on EC2 to call AWS APIs.",
+  "certs": {
+   "DVA-C02": "1"
+  },
+  "id": "4e389960-493d-4906-b14f-a1b0473700b2"
+ },
+ {
+  "type": "mcq",
+  "question": "A company wants each engineer to have only the permissions needed for their job and to manage permissions efficiently for teams. Which approach follows AWS best practice? (Choose 2)",
+  "options": [
+   "Share the root user credentials with the team lead",
+   "Create IAM groups per team and attach policies to the groups",
+   "Grant AdministratorAccess to everyone and remove it later",
+   "Apply the principle of least privilege",
+   "Create one IAM user shared by the whole team"
+  ],
+  "correct": [
+   1,
+   3
+  ],
+  "explanation": "Best practice: one IAM user per person, permissions assigned through **groups**, and **least privilege**. Keep the root user locked away with MFA.",
+  "certs": {
+   "DVA-C02": "2",
+   "SAA-C03": "1"
+  },
+  "id": "4f0058da-f9ca-4cdf-8d19-f664e9c379d8"
+ },
+ {
+  "type": "mcq",
+  "question": "A bucket policy grants public read, but visitors still get **Access Denied**. What's the most likely cause?",
+  "options": [
+   "S3 Block Public Access is still enabled",
+   "The bucket isn't versioned",
+   "The objects are in Glacier Instant Retrieval",
+   "The bucket is in a different Region than the user"
+  ],
+  "correct": [
+   0
+  ],
+  "explanation": "Block Public Access is an extra safety layer against data leaks. It can be set per bucket or for the **whole account**.",
+  "certs": {
+   "DVA-C02": "4",
+   "SAA-C03": "1"
+  },
+  "id": "4f1da420-4ecc-46f6-9f01-35c28522e644"
+ },
+ {
+  "type": "mcq",
+  "question": "An app gets **intermittent** ThrottlingException errors when calling an AWS API. What should it do?",
+  "options": [
+   "Retry with exponential backoff",
+   "Request a quota increase immediately",
+   "Switch Regions on every error",
+   "Stop calling the API"
+  ],
+  "correct": [
+   0
+  ],
+  "explanation": "**Intermittent** throttling → **exponential backoff**. **Consistent** throttling because of heavy usage → request a limit increase.",
+  "certs": {
+   "DVA-C02": "4"
+  },
+  "id": "4f7e46f9-f63b-4228-9349-d9277b1d5493"
+ },
+ {
+  "type": "mcq",
+  "question": "Internal services in a VPC must resolve names like `api.company.internal` that nobody on the internet should see. What should you create?",
+  "options": [
+   "A private hosted zone for the VPC",
+   "A public hosted zone for company.internal",
+   "A CNAME in a public zone",
+   "A geolocation record"
+  ],
+  "correct": [
+   0
+  ],
+  "explanation": "**Public hosted zone** = internet records. **Private hosted zone** = names only resolvable inside your VPC(s). Each hosted zone costs about **$0.50 per month**.",
+  "certs": {
+   "DVA-C02": "1",
+   "SAA-C03": "1"
+  },
+  "id": "510a4262-aea6-460d-bb2d-1e4e01a93bbd"
+ },
+ {
+  "type": "mcq",
+  "question": "Which AWS services use a **Gateway** VPC endpoint? (Choose 2)",
+  "options": [
+   "Amazon S3",
+   "Amazon DynamoDB",
+   "Amazon CloudWatch",
+   "AWS Systems Manager",
+   "Amazon SQS"
+  ],
+  "correct": [
+   0,
+   1
+  ],
+  "explanation": "**Gateway endpoint**: only **S3 and DynamoDB**, added as a route target, free. **Interface endpoint**: most other services, creates an **ENI** with a private IP in your subnet, billed hourly + per GB.\n\n```\nGateway endpoint   S3, DynamoDB\n                   route-table target · free\nInterface endpoint most other services\n                   ENI + private IP · hourly + per GB\n```",
+  "certs": {
+   "DVA-C02": "1",
+   "SAA-C03": "1"
+  },
+  "id": "512fe7e5-bc70-4da5-b6f1-82e45be74a8f"
+ },
+ {
+  "type": "mcq",
+  "question": "A user data script runs `yum install -y httpd` without `sudo`. Will it work?",
+  "options": [
+   "Yes, because user data runs as the root user",
+   "No, because user data runs as the unprivileged ec2-user account",
+   "No, because user data scripts are not allowed to install packages",
+   "Only if the instance has an IAM role"
+  ],
+  "correct": [
+   0
+  ],
+  "explanation": "User data runs **once, at first boot, as root**. The more you put in it, the longer the instance takes to be ready.",
+  "certs": {
+   "DVA-C02": "3",
+   "SAA-C03": "3"
+  },
+  "id": "514216cc-31fe-47ba-bf15-dfb72e385fe1"
+ },
+ {
+  "type": "mcq",
+  "question": "Which of these are valid MFA device options for AWS IAM users? (Choose 2)",
+  "options": [
+   "A virtual authenticator app on a phone",
+   "An SMS code to the root email address",
+   "A FIDO security key",
+   "An IAM access key pair"
+  ],
+  "correct": [
+   0,
+   2
+  ],
+  "explanation": "Supported MFA: **virtual MFA apps**, **FIDO security keys**, **hardware TOTP tokens**, and special key fobs for GovCloud.",
+  "certs": {
+   "DVA-C02": "2",
+   "SAA-C03": "1"
+  },
+  "id": "523e15fb-8a0e-4484-9b81-3509c5f4aabb"
+ },
+ {
+  "type": "basic",
+  "question": "Why does renaming a file on each deploy (app.v42.js instead of app.js) make CloudFront serve the new content without an invalidation?",
+  "answer": "CloudFront caches by URL (cache key). A new file name is a new key, so it is a cache miss and CloudFront fetches the new object from the origin. The old URL is simply never requested again.",
+  "explanation": "The cache key is the URL path (plus any configured headers, cookies and query strings), not the file's contents. A new name means CloudFront has nothing cached for it, so it goes to the origin.\n\nCommon misconception: thinking CloudFront checks whether the file changed. It does not until the TTL expires, so reusing `app.js` keeps serving the stale copy.\n\n**Memory aid:** it is like a library catalogue. If you keep the same call number, people get the old book on the shelf. Give the new edition a new call number and nobody can get the old one by mistake.\n\nWorked example: `app.v41.js` is cached. The HTML now references `app.v42.js`, which is not in the cache, so it is fetched from the origin and cached. No invalidation is needed.",
+  "certs": {
+   "DVA-C02": "4",
+   "SAA-C03": "4"
+  },
+  "id": "5282ddae-ed6a-4bca-b2ef-994f7cf3777c"
+ },
+ {
+  "type": "mcq",
+  "question": "An application behind an ALB logs the **load balancer's private IP** instead of the user's IP. How can it get the real client IP?",
+  "options": [
+   "Read the X-Forwarded-For request header",
+   "Enable sticky sessions on the target group",
+   "Use an NLB health check on the target group",
+   "Read the Host header of each request"
+  ],
+  "correct": [
+   0
+  ],
+  "explanation": "ALB adds **X-Forwarded-For** (client IP), **X-Forwarded-Port** and **X-Forwarded-Proto**.",
+  "certs": {
+   "DVA-C02": "1",
+   "SAA-C03": "3"
+  },
+  "id": "52eb421c-5ab4-44bc-84a7-27119ce11d66"
+ },
+ {
+  "type": "basic",
+  "question": "Match each VPC component to its job: IGW, NAT Gateway, NACL, Security group, VPC Peering, VPC Endpoint, Flow Logs, VPN, Direct Connect.",
+  "answer": "- **IGW:** internet access for public subnets\n- **NAT Gateway:** outbound-only internet for private subnets\n- **NACL:** stateless subnet firewall (allow/deny)\n- **Security group:** stateful instance/ENI firewall (allow only)\n- **Peering:** connect two VPCs privately (non-overlapping, non-transitive)\n- **Endpoint:** private access to AWS services\n- **Flow Logs:** network traffic logs for troubleshooting\n- **VPN:** encrypted on-prem link over the internet\n- **Direct Connect:** private physical on-prem link",
+  "explanation": "This is the whole section in one card; review it often.",
+  "certs": {
+   "DVA-C02": "1",
+   "SAA-C03": "1"
+  },
+  "id": "531a272e-50c4-47e0-96dd-d25d46b848a6"
+ },
+ {
+  "type": "mcq",
+  "question": "Archive data on EBS is accessed a few times a year and must cost as little as possible. Which type?",
+  "options": [
+   "sc1 (Cold HDD)",
+   "st1 (Throughput Optimized HDD)",
+   "gp3 (SSD)",
+   "io1 (Provisioned IOPS SSD)"
+  ],
+  "correct": [
+   0
+  ],
+  "explanation": "**sc1** = lowest cost, infrequent access.",
+  "certs": {
+   "DVA-C02": "4",
+   "SAA-C03": "4"
+  },
+  "id": "5356e130-0c11-45fb-b144-9c86339ebb7d"
+ },
+ {
+  "type": "ordering",
+  "question": "Order what happens when a user requests a file through CloudFront for the **first** time at that edge.",
+  "explanation": "The next user at the same edge gets a **cache hit** and the origin isn't contacted.",
+  "items": [
+   "User's request reaches the nearest edge location",
+   "Edge checks its cache: miss",
+   "Edge forwards the request to the origin",
+   "Origin returns the file",
+   "Edge caches the file (for the TTL) and returns it to the user"
+  ],
+  "certs": {
+   "DVA-C02": "1",
+   "SAA-C03": "3"
+  },
+  "id": "53ed2337-17e1-4a17-932f-046a1c35f33a"
+ },
+ {
+  "type": "mcq",
+  "question": "How long should a CloudFront signed URL be valid?",
+  "options": [
+   "Minutes for shared content, longer for one user's files",
+   "Always exactly 1 hour, the fixed CloudFront default",
+   "Always 7 days, which is the most CloudFront allows",
+   "Indefinitely; signed URLs don't expire on their own"
+  ],
+  "correct": [
+   0
+  ],
+  "explanation": "Choose the lifetime based on how the content is used.",
+  "certs": {
+   "DVA-C02": "2",
+   "SAA-C03": "1"
+  },
+  "id": "5562084f-9d20-4817-89fb-11a8f9c05941"
+ },
+ {
+  "type": "mcq",
+  "question": "A developer creates IAM users in `us-east-1`. A teammate working in `eu-west-1` cannot find the IAM console for their Region. What explains this?",
+  "options": [
+   "IAM users must be copied by an administrator into every Region the team works in",
+   "IAM is a global service; the same users exist in all Regions",
+   "The teammate needs a separate AWS account per Region",
+   "IAM is only available in us-east-1"
+  ],
+  "correct": [
+   1
+  ],
+  "explanation": "IAM is a **global** service. Users, groups, roles and policies apply across all Regions.",
+  "certs": {
+   "DVA-C02": "2",
+   "SAA-C03": "1"
+  },
+  "id": "55ea3d3f-4c0b-45a5-877b-f261fa85f50c"
+ },
+ {
+  "type": "mcq",
+  "question": "A company needs a disaster-recovery copy of an EBS volume's data in another **Region**. What should they do?",
+  "options": [
+   "Copy the EBS snapshot to the other Region",
+   "Enable Multi-Attach across Regions",
+   "Attach the volume to an instance in the other Region",
+   "Use EFS One Zone for the volume's data"
+  ],
+  "correct": [
+   0
+  ],
+  "explanation": "Snapshot copy across Regions is a common DR building block.",
+  "certs": {
+   "DVA-C02": "1",
+   "SAA-C03": "2"
+  },
+  "id": "56fb3788-860b-4145-abab-be55c365cbbd"
+ },
+ {
+  "type": "mcq",
+  "question": "A developer uploads a 20 GB video to S3 with a single PUT request and it fails. What should they use?",
+  "options": [
+   "Multipart upload",
+   "S3 Transfer Acceleration only",
+   "A bigger EC2 instance",
+   "An S3 Gateway endpoint"
+  ],
+  "correct": [
+   0
+  ],
+  "explanation": "A single PUT is limited to **5 GB**. Multipart upload is recommended above 100 MB and required above 5 GB; parts upload in parallel.",
+  "certs": {
+   "DVA-C02": "1",
+   "SAA-C03": "3"
+  },
+  "id": "576bb73f-bdb0-4d28-a09f-3e77a68635f4"
+ },
+ {
+  "type": "mcq",
+  "question": "Which statements about S3 replication and deletes are TRUE? (Choose 2)",
+  "options": [
+   "Delete markers can optionally be replicated",
+   "Deletes of a specific version ID are not replicated",
+   "Permanent deletes of versions always replicate",
+   "Delete markers can never be replicated to the destination"
+  ],
+  "correct": [
+   0,
+   1
+  ],
+  "explanation": "Protects the destination bucket from deletes made in the source.",
+  "certs": {
+   "DVA-C02": "1",
+   "SAA-C03": "2"
+  },
+  "id": "577f92bb-3bd2-4d3d-bc04-a90ca1526604"
+ }
+]

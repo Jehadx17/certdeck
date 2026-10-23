@@ -1,0 +1,855 @@
+[
+ {
+  "type": "basic",
+  "question": "Compare SSE-S3, SSE-KMS, DSSE-KMS, SSE-C and client-side encryption.",
+  "answer": "| Method | Who manages the key | Notes |\n|---|---|---|\n| SSE-S3 | AWS (S3-owned) | Default; header `AES256` |\n| SSE-KMS | You, in AWS KMS | CloudTrail audit; KMS quotas; header `aws:kms` |\n| DSSE-KMS | You, in KMS | Two layers; header `aws:kms:dsse` |\n| SSE-C | You, outside AWS | HTTPS required; key sent every request; never stored |\n| Client-side | You | Encrypt before upload |",
+  "explanation": "Exam questions usually hinge on *who controls the key* and *whether usage must be audited*.",
+  "certs": {
+   "DVA-C02": "2",
+   "SAA-C03": "1"
+  },
+  "id": "8ff5df4f-f7c1-45cb-a445-1ee8e42b3207"
+ },
+ {
+  "type": "mcq",
+  "question": "How quickly are S3 Event Notifications usually delivered?",
+  "options": [
+   "Usually within seconds, occasionally longer",
+   "Exactly once per hour, in one batch per bucket",
+   "Instantly, with guaranteed ordering of events",
+   "Only at midnight UTC"
+  ],
+  "correct": [
+   0
+  ],
+  "explanation": "Design consumers to cope with small delays.",
+  "certs": {
+   "DVA-C02": "1",
+   "SAA-C03": "3"
+  },
+  "id": "908d13fa-1675-4c6b-a37c-28b213994b51"
+ },
+ {
+  "type": "mcq",
+  "question": "Copyright licensing means a video service may not serve content in certain countries. What CloudFront feature fits?",
+  "options": [
+   "CloudFront geo restriction with a block list",
+   "Route 53 geolocation records for those countries",
+   "Price Class 100 to skip edges in those countries",
+   "Field-level encryption on the video requests"
+  ],
+  "correct": [
+   0
+  ],
+  "explanation": "Country is determined with a third-party **GeoIP** database. In the current console, this may depend on the CloudFront plan you're on.",
+  "certs": {
+   "DVA-C02": "2",
+   "SAA-C03": "1"
+  },
+  "id": "90a929b5-9077-4e97-b154-f0fc46f4ca81"
+ },
+ {
+  "type": "mcq",
+  "question": "An application writes data to an EBS volume. The EC2 instance is terminated and a new one is launched. How can the new instance get the old data back?",
+  "options": [
+   "Re-attach the same EBS volume to the new instance (same AZ)",
+   "The data is lost, since EBS storage is ephemeral",
+   "Restore it from the old instance's instance store",
+   "Copy it from the AMI's user data on the new instance"
+  ],
+  "correct": [
+   0
+  ],
+  "explanation": "EBS volumes **persist after the instance is gone** (as long as Delete on Termination didn't remove them) and can be attached to a new instance, like moving a network-attached USB stick.",
+  "certs": {
+   "DVA-C02": "1",
+   "SAA-C03": "2"
+  },
+  "id": "915b67c0-a4ed-45c1-99c9-b92408dd74d4"
+ },
+ {
+  "type": "mcq",
+  "question": "Which cookie names are reserved by the ELB and can't be used for a custom application cookie? (Choose 3)",
+  "options": [
+   "AWSALB",
+   "AWSALBAPP",
+   "AWSALBTG",
+   "MYAPPCOOKIE",
+   "SESSIONID"
+  ],
+  "correct": [
+   0,
+   1,
+   2
+  ],
+  "explanation": "Two kinds: **application-based** (custom cookie from your app, or AWSALBAPP from the ALB) and **duration-based** (AWSALB on ALB, AWSELB on CLB; 1 second to 7 days).",
+  "certs": {
+   "DVA-C02": "1",
+   "SAA-C03": "2"
+  },
+  "id": "9164895a-9b55-45cc-9e4b-ff4f4176df7b"
+ },
+ {
+  "type": "mcq",
+  "question": "Who can enable or disable MFA Delete, and what must be on first?",
+  "options": [
+   "The root account, with versioning enabled first",
+   "Any IAM admin, with no prerequisites at all",
+   "Any IAM user with s3:*, after replication is on",
+   "Only AWS Support, through a support case"
+  ],
+  "correct": [
+   0
+  ],
+  "explanation": "It's done with the **CLI using root credentials** and the root MFA device, not the console. *(Goes slightly beyond the lecture.)*",
+  "certs": {
+   "DVA-C02": "2",
+   "SAA-C03": "1"
+  },
+  "id": "9206bb46-0d59-410a-81e8-f71c3a32bd23"
+ },
+ {
+  "type": "mcq",
+  "question": "A team wants an email alert when **forecasted** monthly spend goes above $50. Which service should they use?",
+  "options": [
+   "AWS Budgets",
+   "IAM Access Advisor",
+   "EC2 Instance Connect",
+   "AWS CloudShell"
+  ],
+  "correct": [
+   0
+  ],
+  "explanation": "**AWS Budgets** sends alerts when actual or forecasted cost/usage crosses a threshold. Zero-spend and monthly templates make setup quick.",
+  "certs": {
+   "DVA-C02": "4",
+   "SAA-C03": "4"
+  },
+  "id": "92085b0f-a356-46db-97df-4f54d1604085"
+ },
+ {
+  "type": "mcq",
+  "question": "An analytics app needs the same S3 objects as the e-commerce app, but with **personal data removed**, without storing a second copy. What fits?",
+  "options": [
+   "S3 Object Lambda with a redaction function",
+   "A second bucket, redacted by a nightly cron job",
+   "Pre-signed URLs that strip the PII fields",
+   "S3 Select queries over the original objects"
+  ],
+  "correct": [
+   0
+  ],
+  "explanation": "Use cases: **redact PII**, **convert XML to JSON**, **resize or watermark images per requester**, enrich data from a database.",
+  "certs": {
+   "DVA-C02": "1",
+   "SAA-C03": "3"
+  },
+  "id": "93d05910-6a15-4b88-bd37-c8a9fc7d3e19"
+ },
+ {
+  "type": "mcq",
+  "question": "Thousands of Lambda functions open and close connections to RDS, causing 'too many connections' errors and timeouts. What fixes this with no code changes?",
+  "options": [
+   "Put RDS Proxy in front of the database",
+   "Add read replicas to spread the connections",
+   "Enable Multi-AZ for a standby",
+   "Increase the instance's allocated storage"
+  ],
+  "correct": [
+   0
+  ],
+  "explanation": "RDS Proxy: **connection pooling**, serverless and auto-scaling, **multi-AZ**, apps just point to the proxy endpoint.",
+  "certs": {
+   "DVA-C02": "4",
+   "SAA-C03": "3"
+  },
+  "id": "93ea49c9-4c3e-4e0d-bc45-9fae3e0e6421"
+ },
+ {
+  "type": "mcq",
+  "question": "An app downloads very large S3 objects and wants faster downloads plus the ability to retry only the part that failed. What should it use?",
+  "options": [
+   "S3 Byte-Range Fetches (parallel GETs)",
+   "Multipart upload with parallel part uploads to S3",
+   "S3 Transfer Acceleration on its own",
+   "S3 Select with SQL expressions to filter rows"
+  ],
+  "correct": [
+   0
+  ],
+  "explanation": "Ranged GETs use the HTTP `Range` header.\n\n```\nLarge object (1 GB)\n  GET Range: bytes=0-249999999        ─┐\n  GET Range: bytes=250000000-499999999 ├─ in parallel → join\n  GET Range: bytes=500000000-…        ─┘\nFailed part? Retry only that range.\n```",
+  "certs": {
+   "DVA-C02": "4",
+   "SAA-C03": "3"
+  },
+  "id": "95bc93b1-bdf9-4a33-b60e-007c734c8ff5"
+ },
+ {
+  "type": "mcq",
+  "question": "With SSL termination at the ALB, how is traffic typically handled?",
+  "options": [
+   "Clients use HTTPS to the ALB, which decrypts and forwards HTTP inside the VPC",
+   "Instances decrypt all HTTPS themselves, with the ALB just forwarding raw TCP traffic",
+   "Traffic is never encrypted between the client and the load balancer",
+   "The ALB re-encrypts using the client's private key before forwarding"
+  ],
+  "correct": [
+   0
+  ],
+  "explanation": "SSL/TLS provides **in-flight encryption**. TLS is the newer version of SSL, though people still say 'SSL'.",
+  "certs": {
+   "DVA-C02": "2",
+   "SAA-C03": "1"
+  },
+  "id": "95de57f0-3450-43e5-923d-1d4f3ba50fa5"
+ },
+ {
+  "type": "mcq",
+  "question": "What is the scope of an Amazon VPC?",
+  "options": [
+   "Regional: it spans all AZs in one Region",
+   "Global: one VPC covers every Region",
+   "Availability Zone: it lives in a single AZ only",
+   "Single instance: it is tied to one EC2 host"
+  ],
+  "correct": [
+   0
+  ],
+  "explanation": "VPC = your private network in AWS, defined by a **CIDR range** (a block of IP addresses).\n\n```\nRegion\n└─ VPC 10.0.0.0/16     (one Region)\n   ├─ AZ-a: subnet 10.0.1.0/24\n   └─ AZ-b: subnet 10.0.2.0/24\n```",
+  "certs": {
+   "DVA-C02": "1",
+   "SAA-C03": "1"
+  },
+  "id": "96b8ed93-16a6-4745-ab49-f4415f6dcabc"
+ },
+ {
+  "type": "mcq",
+  "question": "A custom NACL allows inbound port 443 from anywhere, but HTTPS clients still time out. The security group allows 443. What's the likely cause?",
+  "options": [
+   "The NACL lacks an outbound rule for the return traffic on ephemeral ports",
+   "The security group needs an extra outbound rule allowing port 443 to the client",
+   "An Internet Gateway must be attached to each instance in the subnet",
+   "HTTPS also needs port 80 open on the NACL for the TLS handshake"
+  ],
+  "correct": [
+   0
+  ],
+  "explanation": "Stateless means you need rules **both ways**. Responses go back to the client's ephemeral port.\n\n```\nClient ──443──► NACL in : allow ✔\n                  │\n                  ▼ EC2 replies\nClient ◄─1024-65535─ NACL out : needed!\n(stateless: no rule = reply dropped → timeout)\n```",
+  "certs": {
+   "DVA-C02": "4",
+   "SAA-C03": "1"
+  },
+  "id": "96d0d730-ca75-4400-a383-6380d89bd910"
+ },
+ {
+  "type": "mcq",
+  "question": "A developer put the temporary AccessKeyId and SecretAccessKey from GetSessionToken into a profile, but calls fail with an invalid token error. What's missing?",
+  "options": [
+   "aws_session_token in that profile",
+   "The MFA device ARN in the config file",
+   "A default Region in the profile",
+   "An IAM role on the laptop"
+  ],
+  "correct": [
+   0
+  ],
+  "explanation": "Temporary credentials = **access key + secret key + session token**, and they expire.",
+  "certs": {
+   "DVA-C02": "4"
+  },
+  "id": "9774c388-fe04-4d6d-b1f5-c96cdf9d1768"
+ },
+ {
+  "type": "code",
+  "question": "Complete this EC2 user data script so it installs and starts Apache on Amazon Linux 2023.",
+  "explanation": "User data starts with a shebang and runs as root, so `sudo` isn't needed. `dnf` is the package manager on Amazon Linux 2023 (`yum` on Amazon Linux 2). `systemctl enable` makes the service start on later boots.",
+  "code": "#!/bin/bash\n# install and start a web server\n____",
+  "language": "bash",
+  "certs": {
+   "DVA-C02": "3",
+   "SAA-C03": "3"
+  },
+  "id": "97b39b16-276d-4b13-a834-a622c7fbf995"
+ },
+ {
+  "type": "mcq",
+  "question": "A web tier of 50 Linux instances in 3 AZs uploads user images that every instance must see. Instance root disks hold only the OS. Which storage design fits?",
+  "options": [
+   "EBS root volumes + one shared EFS file system for uploads",
+   "Instance store on every instance, copied between hosts by cron",
+   "One gp3 volume attached to all 50 instances across the 3 AZs",
+   "sc1 volumes with Multi-Attach enabled on each instance"
+  ],
+  "correct": [
+   0
+  ],
+  "explanation": "Pick storage by sharing needs: **per-instance → EBS**, **shared across AZs → EFS**.",
+  "certs": {
+   "DVA-C02": "1",
+   "SAA-C03": "2"
+  },
+  "id": "98338471-befe-4e37-8021-8a518aae2d9e"
+ },
+ {
+  "type": "typed",
+  "question": "Which protocol and port does a Gateway Load Balancer use with its appliances?",
+  "answer": "GENEVE 6081",
+  "explanation": "If you see **GENEVE / 6081** on the exam, think **Gateway Load Balancer**.",
+  "certs": {
+   "DVA-C02": "2",
+   "SAA-C03": "1"
+  },
+  "id": "98aa94e5-4a45-4aad-abf1-ff893fc49fc6"
+ },
+ {
+  "type": "basic",
+  "question": "Name the Route 53 routing policy for each need: (1) % split, (2) closest by latency, (3) DR primary/secondary, (4) by user's country, (5) shift traffic with bias, (6) by client CIDR, (7) several healthy IPs, (8) one resource, no health check.",
+  "answer": "1 **Weighted** · 2 **Latency** · 3 **Failover** · 4 **Geolocation** · 5 **Geoproximity** · 6 **IP-based** · 7 **Multi-value** · 8 **Simple**",
+  "explanation": "Health checks work with every policy except **simple**. Failover **requires** one on the primary.",
+  "certs": {
+   "DVA-C02": "1",
+   "SAA-C03": "2"
+  },
+  "id": "98e6db4a-9792-4343-abcd-61e093238ff2"
+ },
+ {
+  "type": "mcq",
+  "question": "A team creates large volumes from snapshots and needs **no latency on first access** to the data. Which feature helps, and what's the downside?",
+  "options": [
+   "Fast Snapshot Restore; it's expensive",
+   "Snapshot Archive; restores become much slower",
+   "Recycle Bin; retention rules limit how long data is kept",
+   "gp2 burst credits; the credits eventually run out"
+  ],
+  "correct": [
+   0
+  ],
+  "explanation": "Volumes restored from snapshots normally load blocks lazily. **Fast Snapshot Restore** removes that first-use latency for a lot of money.",
+  "certs": {
+   "DVA-C02": "1",
+   "SAA-C03": "3"
+  },
+  "id": "99587505-e73e-4db8-8caf-affaf991e5ff"
+ },
+ {
+  "type": "mcq",
+  "question": "What are the two ways to send a SigV4 signature to AWS? (Choose 2)",
+  "options": [
+   "In the HTTP Authorization header",
+   "In the query string (X-Amz-Signature)",
+   "In the request body as a JSON field",
+   "In a cookie sent with the request"
+  ],
+  "correct": [
+   0,
+   1
+  ],
+  "explanation": "Query-string signing also includes parameters like `X-Amz-Algorithm=AWS4-HMAC-SHA256`, `X-Amz-Credential`, `X-Amz-Date`, `X-Amz-Expires` and `X-Amz-Security-Token`.",
+  "certs": {
+   "DVA-C02": "2",
+   "SAA-C03": "1"
+  },
+  "id": "99955254-5244-4ea7-ac8f-95c412cc1509"
+ },
+ {
+  "type": "mcq",
+  "question": "Which statement about cross-zone load balancing defaults is correct? (Choose 2)",
+  "options": [
+   "ALB: enabled by default, no charge for inter-AZ data",
+   "NLB and GWLB: disabled by default, inter-AZ data charges apply if enabled",
+   "ALB: disabled by default, inter-AZ data charges apply",
+   "NLB: enabled by default, no charge for inter-AZ data"
+  ],
+  "correct": [
+   0,
+   1
+  ],
+  "explanation": "ALB = on and free. NLB/GWLB = off, and you pay inter-AZ data if you enable it. CLB = off, free if enabled.",
+  "certs": {
+   "DVA-C02": "4",
+   "SAA-C03": "4"
+  },
+  "id": "9a373b98-0cb9-420f-adff-2a850299cb48"
+ },
+ {
+  "type": "mcq",
+  "question": "An app connects to an Aurora cluster. Which endpoint should it use for **writes** so it keeps working after failover?",
+  "options": [
+   "The writer (cluster) endpoint",
+   "The reader endpoint",
+   "A specific replica's instance endpoint",
+   "The primary instance's IP address"
+  ],
+  "correct": [
+   0
+  ],
+  "explanation": "**Writer endpoint** → always the primary. **Reader endpoint** → load-balances connections across replicas.",
+  "certs": {
+   "DVA-C02": "1",
+   "SAA-C03": "3"
+  },
+  "id": "9b5e8252-b7eb-4e51-8554-5b2904aab9e9"
+ },
+ {
+  "type": "mcq",
+  "question": "What does S3 Object Lambda need to work? (Choose 2)",
+  "options": [
+   "A standard S3 Access Point on the bucket",
+   "A Lambda function to transform the data",
+   "Cross-Region Replication to a staging bucket",
+   "MFA Delete enabled on the source bucket"
+  ],
+  "correct": [
+   0,
+   1
+  ],
+  "explanation": "Callers use the **Object Lambda Access Point**, which invokes your function, which reads from the bucket.",
+  "certs": {
+   "DVA-C02": "1",
+   "SAA-C03": "3"
+  },
+  "id": "9bfa93b7-bbdd-4a77-8d0a-684f262d8fb7"
+ },
+ {
+  "type": "mcq",
+  "question": "A load balancer health check is `HTTP:4567/health`. When is an instance marked **unhealthy**?",
+  "options": [
+   "When /health on port 4567 doesn't return a 200 OK",
+   "When CPU goes above 80% for five consecutive minutes",
+   "When the instance has no IAM role attached at launch",
+   "When the security group allows port 22"
+  ],
+  "correct": [
+   0
+  ],
+  "explanation": "Health checks use **protocol + port + route**. Unhealthy targets stop receiving traffic.",
+  "certs": {
+   "DVA-C02": "4",
+   "SAA-C03": "2"
+  },
+  "id": "9cddbf09-947d-4e35-aa0e-312e94152430"
+ },
+ {
+  "type": "mcq",
+  "question": "A private bucket holds a premium video. Only logged-in users should download it, for a limited time, without making the bucket public. What's the best approach?",
+  "options": [
+   "Generate a pre-signed URL that expires",
+   "Make the object public for an hour, then private",
+   "Create IAM users so each customer can sign in",
+   "Enable CORS on the bucket for the site's domain"
+  ],
+  "correct": [
+   0
+  ],
+  "explanation": "The URL carries the **permissions of whoever generated it**, for GET or PUT.",
+  "certs": {
+   "DVA-C02": "2",
+   "SAA-C03": "1"
+  },
+  "id": "9f02741a-0dbf-43f7-9fd1-b221516e7261"
+ },
+ {
+  "type": "mcq",
+  "question": "EC2 instances in a private subnet with no NAT must read objects from S3. How can they do this **privately**, without the internet?",
+  "options": [
+   "Create a Gateway Endpoint for S3 and add it to the route table",
+   "Attach an Internet Gateway to the private subnet and add a default route",
+   "Use VPC peering between the VPC and the S3 service",
+   "Make the S3 bucket public and read it through its public endpoint"
+  ],
+  "correct": [
+   0
+  ],
+  "explanation": "AWS services have public endpoints. **VPC endpoints** let you reach them privately: better security and lower latency.\n\n```\nPrivate subnet\n EC2 ─► route table: pl-s3 → vpce-xxxx\n                            │\n                      Gateway endpoint\n                            │\n                           S3  (no internet, no NAT)\n```",
+  "certs": {
+   "DVA-C02": "2",
+   "SAA-C03": "1"
+  },
+  "id": "9f2990ea-023e-4c10-8f16-22a8f2968e3e"
+ },
+ {
+  "type": "code",
+  "question": "Get MFA-backed temporary credentials with the CLI.",
+  "explanation": "`--serial-number` is the MFA device ARN (from IAM, under your user's security credentials). `--token-code` is the current 6-digit code. The response has AccessKeyId, SecretAccessKey, SessionToken and Expiration.",
+  "code": "aws sts get-session-token \\\n  --serial-number ____ \\\n  --token-code ____",
+  "language": "bash",
+  "certs": {
+   "DVA-C02": "2",
+   "SAA-C03": "1"
+  },
+  "id": "a0e06b95-4559-4dac-9953-4099064cf57f"
+ },
+ {
+  "type": "mcq",
+  "question": "An admin manages the root user and three IAM users and wants to protect all of them with MFA using **one physical device**. Which option works?",
+  "options": [
+   "A single FIDO security key registered to every user",
+   "A separate hardware key fob for each user",
+   "SMS codes sent to each user's registered phone",
+   "A GovCloud hardware key fob shared across all accounts"
+  ],
+  "correct": [
+   0
+  ],
+  "explanation": "A single **security key** or a **virtual MFA app** can hold MFA for many users and accounts, so you don't need one device per identity.",
+  "certs": {
+   "DVA-C02": "2",
+   "SAA-C03": "1"
+  },
+  "id": "a1a33afb-2b65-4552-b81f-95905aea58bc"
+ },
+ {
+  "type": "mcq",
+  "question": "Which is TRUE about S3 encryption in transit?",
+  "options": [
+   "Both HTTP and HTTPS work; SSE-C requires HTTPS",
+   "S3 endpoints only accept plain HTTP requests",
+   "In-transit encryption is enabled by turning on SSE-S3",
+   "HTTPS to S3 only works when it goes through CloudFront"
+  ],
+  "correct": [
+   0
+  ],
+  "explanation": "Encryption in transit = SSL/TLS. Force it with an `aws:SecureTransport` deny.",
+  "certs": {
+   "DVA-C02": "2",
+   "SAA-C03": "1"
+  },
+  "id": "a2d6093a-6877-4203-b638-9bd6ca8c8674"
+ },
+ {
+  "type": "mcq",
+  "question": "Which statements about **Network ACLs** are TRUE? (Choose 3)",
+  "options": [
+   "They apply at the subnet level",
+   "They support both Allow and Deny rules",
+   "They're stateless: return traffic must be explicitly allowed",
+   "They can reference other security groups as a source or destination",
+   "They are attached to individual ENIs and evaluate per instance"
+  ],
+  "correct": [
+   0,
+   1,
+   2
+  ],
+  "explanation": "NACL = **first line of defense** at the subnet edge. Security group = second line at the instance/ENI.\n\n```\nInternet\n   │\n[ IGW ]\n   │\n[ NACL ]  subnet · stateless · allow+deny\n   │\n[ Security group ]  ENI · stateful · allow\n   │\n EC2\n```",
+  "certs": {
+   "DVA-C02": "2",
+   "SAA-C03": "1"
+  },
+  "id": "a2eb618f-d649-41bd-8508-19748a0031a3"
+ },
+ {
+  "type": "mcq",
+  "question": "When you open a brand-new AWS account, what VPC setup already exists in each Region?",
+  "options": [
+   "A default VPC with one public subnet per AZ",
+   "No VPC until you create one in the console",
+   "A default VPC containing only private subnets per AZ",
+   "One VPC shared across all Regions"
+  ],
+  "correct": [
+   0
+  ],
+  "explanation": "Default VPC: one per Region, public subnets in every AZ, an IGW attached, and a default NACL that allows all traffic.",
+  "certs": {
+   "DVA-C02": "1",
+   "SAA-C03": "1"
+  },
+  "id": "a4f22650-5aae-4733-9bf5-3da134c174b8"
+ },
+ {
+  "type": "mcq",
+  "question": "What are the trade-offs of the **write-through** strategy? (Choose 2)",
+  "options": [
+   "Cache data is never stale, but every write needs two calls (write penalty)",
+   "Data is missing from the cache until it's written to the database",
+   "Every cache miss needs three network calls (read penalty on each lookup)",
+   "It can't be combined with lazy loading to fill cache gaps on reads"
+  ],
+  "correct": [
+   0,
+   1
+  ],
+  "explanation": "Write-through can also cause **cache churn**: lots of data that may never be read. Users accept slower writes more than slower reads.",
+  "certs": {
+   "DVA-C02": "1",
+   "SAA-C03": "3"
+  },
+  "id": "a504612e-6865-415b-b7c2-175f78ebb7c7"
+ },
+ {
+  "type": "mcq",
+  "question": "Which statements about **security groups** are TRUE? (Choose 3)",
+  "options": [
+   "They attach to an instance's ENI",
+   "They're stateful",
+   "They can reference other security groups",
+   "They can Deny a specific IP",
+   "They're evaluated before NACLs for inbound traffic"
+  ],
+  "correct": [
+   0,
+   1,
+   2
+  ],
+  "explanation": "Compare: SG = instance level, allow-only, stateful, can reference SGs. NACL = subnet level, allow + deny, stateless, IPs only.",
+  "certs": {
+   "DVA-C02": "2",
+   "SAA-C03": "1"
+  },
+  "id": "a51ea63d-1998-43ab-906d-5e9227276e81"
+ },
+ {
+  "type": "mcq",
+  "question": "Which EBS volume types can be used as **boot (root) volumes**? (Choose 2)",
+  "options": [
+   "gp2 / gp3 (SSD)",
+   "io1 / io2 (SSD)",
+   "st1 (HDD)",
+   "sc1 (HDD)"
+  ],
+  "correct": [
+   0,
+   1
+  ],
+  "explanation": "Only the **SSD** families (gp2/gp3, io1/io2) can be boot volumes. st1 and sc1 are HDD.",
+  "certs": {
+   "DVA-C02": "1",
+   "SAA-C03": "3"
+  },
+  "id": "a589c8bd-a3bd-4e7f-9879-1fadeb42fd14"
+ },
+ {
+  "type": "mcq",
+  "question": "Using only the core S3 object APIs, which statement about S3 metadata and tags is TRUE?",
+  "options": [
+   "Neither is searchable directly; use an external index or query layer",
+   "Tags are searchable through the core object APIs, but metadata isn't",
+   "Metadata is searchable through the core object APIs, but tags aren't",
+   "Both can be filtered server-side with the ListObjectsV2 API"
+  ],
+  "correct": [
+   0
+  ],
+  "explanation": "Classic exam answer: the object APIs can't search by metadata or tags, so you build your own index (e.g. in DynamoDB). Newer options such as S3 Metadata tables or S3 Inventory queried with Athena exist, but they are separate features.",
+  "certs": {
+   "DVA-C02": "1",
+   "SAA-C03": "3"
+  },
+  "id": "a5e43dba-12ec-4fe0-949b-93204d4c96d7"
+ },
+ {
+  "type": "mcq",
+  "question": "Which pair of URLs has the **same origin**?",
+  "options": [
+   "https://app.example.com/a and https://app.example.com/b",
+   "https://app.example.com and http://app.example.com",
+   "https://app.example.com and https://api.example.com",
+   "https://app.example.com and https://app.example.com:8443"
+  ],
+  "correct": [
+   0
+  ],
+  "explanation": "Origin = **scheme + host + port**.",
+  "certs": {
+   "DVA-C02": "1",
+   "SAA-C03": "3"
+  },
+  "id": "a648bddb-0e3b-4544-89cf-bcc22959c89a"
+ },
+ {
+  "type": "basic",
+  "question": "S3 Event Notifications vs the EventBridge integration — when to use which?",
+  "answer": "**Event Notifications:** simple; destinations **SNS, SQS, Lambda**; filter by prefix/suffix.\n\n**EventBridge:** all S3 events go to EventBridge; rules with **advanced filters** (metadata, size, name) route to **18+ services**; **archive and replay**; more reliable delivery.",
+  "explanation": "Exam tip: Step Functions, Kinesis or several targets at once → EventBridge.",
+  "certs": {
+   "DVA-C02": "1",
+   "SAA-C03": "3"
+  },
+  "id": "a68fdb6a-06c9-4dae-93b8-e0291d70dba6"
+ },
+ {
+  "type": "mcq",
+  "question": "A company stores secondary copies of backups that can be re-created if lost. They are rarely read, but must be available immediately when needed. The company wants the **lowest cost** and accepts that an AZ loss could lose the data. Which class fits, and how does it differ from the class needed if the backups were the ONLY copy?",
+  "options": [
+   "S3 One Zone-IA; use S3 Standard-IA if the backups were the only copy because it stores data in multiple AZs",
+   "S3 Standard-IA; use S3 One Zone-IA if the backups were the only copy because it is more durable",
+   "S3 Glacier Flexible Retrieval; use S3 Standard-IA if the backups were the only copy because retrieval is faster",
+   "S3 Glacier Deep Archive; use S3 One Zone-IA if the backups were the only copy because it is multi-AZ"
+  ],
+  "correct": [
+   0
+  ],
+  "explanation": "**Standard-IA vs One Zone-IA**: both give millisecond access and have retrieval fees. The only difference is the number of AZs: Standard-IA stores data in 3+ AZs, One Zone-IA in one. Use One Zone-IA only for re-creatable data; use Standard-IA when the data must survive an AZ failure.\n\nThe Glacier options fail the \"immediately\" requirement.\n\nMemory aid: **One Zone = one building**. Cheaper rent, but a fire loses everything.",
+  "certs": {
+   "DVA-C02": "4",
+   "SAA-C03": "4"
+  },
+  "id": "a6accb4c-aa00-42e7-bf50-8a705625b685"
+ },
+ {
+  "type": "mcq",
+  "question": "A dev team wants the cheapest EFS option and accepts that data is in one AZ only. Which should they choose?",
+  "options": [
+   "EFS One Zone (optionally One Zone-IA)",
+   "EFS Regional (Standard) with Elastic throughput",
+   "EBS io2 volume with Multi-Attach",
+   "EFS Max I/O performance mode"
+  ],
+  "correct": [
+   0
+  ],
+  "explanation": "**Regional/Standard = multi-AZ for production.** **One Zone = one AZ, cheaper, for dev.**",
+  "certs": {
+   "DVA-C02": "4",
+   "SAA-C03": "4"
+  },
+  "id": "a713b724-0c66-4ae6-b4b8-9e6d9960a3a9"
+ },
+ {
+  "type": "mcq",
+  "question": "Which protocols can an NLB target group use for **health checks**? (Choose 3)",
+  "options": [
+   "TCP",
+   "HTTP",
+   "HTTPS",
+   "UDP",
+   "ICMP"
+  ],
+  "correct": [
+   0,
+   1,
+   2
+  ],
+  "explanation": "NLB targets: EC2 instances, private IPs, or an ALB. Health checks: **TCP, HTTP, HTTPS**.",
+  "certs": {
+   "DVA-C02": "4",
+   "SAA-C03": "2"
+  },
+  "id": "a7b6b373-5702-407d-8a78-b319746b0a46"
+ },
+ {
+  "type": "basic",
+  "question": "When you mount EFS on instances in different AZs, what does EFS use in each AZ?",
+  "answer": "A **mount target** in each AZ (in a subnet, with an IP and a security group). Instances connect to the mount target in their own AZ.",
+  "explanation": "The EC2 console can create the mount, the security groups (NFS 2049) and the user data for you when you add a shared file system at launch.",
+  "certs": {
+   "DVA-C02": "1",
+   "SAA-C03": "2"
+  },
+  "id": "a85fb0d6-069b-4f04-9346-02eefbeb5f7c"
+ },
+ {
+  "type": "mcq",
+  "question": "An app behind a load balancer loses user logins when requests go to different instances. How can ElastiCache help?",
+  "options": [
+   "Store session data in ElastiCache so any instance can read it",
+   "Cache static images and other assets to speed up page loads",
+   "Replace the load balancer with an ElastiCache cluster",
+   "Encrypt the session cookies stored in each user's browser"
+  ],
+  "correct": [
+   0
+  ],
+  "explanation": "Putting session state in ElastiCache makes the app **stateless**, a better fix than sticky sessions.",
+  "certs": {
+   "DVA-C02": "1",
+   "SAA-C03": "3"
+  },
+  "id": "a9222b22-28f7-4528-b594-b59d7122cc43"
+ },
+ {
+  "type": "code",
+  "question": "Which pattern does this retry loop implement, and what's missing to make it best practice?",
+  "answer": "**Exponential backoff.** Missing: **jitter**, plus limiting retries to retryable errors.",
+  "explanation": "It doubles the wait each time: **exponential backoff**. Best practice also adds random **jitter** (e.g. `time.sleep(delay * random.uniform(0.5, 1.5))`) and only retries throttling/5xx errors.",
+  "code": "delay = 1\nfor attempt in range(5):\n    try:\n        return call_api()\n    except ThrottlingError:\n        time.sleep(delay)\n        delay *= 2\nraise RuntimeError(\"gave up\")",
+  "language": "python",
+  "certs": {
+   "DVA-C02": "4"
+  },
+  "id": "a9247453-1a06-4174-954f-09c229ca78ff"
+ },
+ {
+  "type": "mcq",
+  "question": "Which statements about standard EBS volumes are TRUE? (Choose 2)",
+  "options": [
+   "You provision size and IOPS in advance and pay for what you provision",
+   "One instance can have several EBS volumes attached at the same time",
+   "An EBS volume grows automatically as data is added, like EFS does",
+   "A single EBS volume can be attached from instances in any AZ"
+  ],
+  "correct": [
+   0,
+   1
+  ],
+  "explanation": "EBS: **provisioned capacity**, billed for what you provision, **one AZ**, several volumes per instance, and volumes may also sit unattached until needed. Network-attached, so there's a little latency.",
+  "certs": {
+   "DVA-C02": "1",
+   "SAA-C03": "3"
+  },
+  "id": "a9d22178-285f-427b-b360-5b78f17ac080"
+ },
+ {
+  "type": "mcq",
+  "question": "A company must guarantee EC2 capacity in one Availability Zone for a launch event, and also wants to lower the cost of that steady usage. Which statement correctly distinguishes the two needs?",
+  "options": [
+   "A Savings Plan lowers the price, while a Capacity Reservation (or zonal RI) guarantees capacity in the AZ",
+   "A Savings Plan guarantees capacity in the AZ, and a Capacity Reservation lowers the hourly price",
+   "A Regional Reserved Instance guarantees capacity and a Spot Instance lowers the price",
+   "Both a Capacity Reservation and a Savings Plan guarantee capacity and lower the price"
+  ],
+  "correct": [
+   0
+  ],
+  "explanation": "**Capacity Reservation** = a seat is held for you (billed at On-Demand rate). **Savings Plan / Regional RI** = a lower rate, with no seat held. A **zonal RI** is the exception: it gives both a discount and capacity in one AZ.\n\n**Memory aid:** Reservation = Room held. Plan = Price cut.",
+  "certs": {
+   "DVA-C02": "4",
+   "SAA-C03": "4"
+  },
+  "id": "aa391c3a-5dc9-4e60-abe7-2897bb64eab8"
+ },
+ {
+  "type": "mcq",
+  "question": "A user data script installs packages. After the instance is stopped and started again, the developer notices the script did not run. Why?",
+  "options": [
+   "User data scripts only run on Windows instances",
+   "User data runs only on the first boot by default",
+   "The instance's IAM role was removed while it was stopped",
+   "The security group blocked the script from running"
+  ],
+  "correct": [
+   1
+  ],
+  "explanation": "User data runs **once, at first boot, as root** by default. Plan for idempotent setup or bake an AMI for repeated use.",
+  "certs": {
+   "DVA-C02": "4",
+   "SAA-C03": "3"
+  },
+  "id": "aa490f79-c160-4f18-b028-f07479f22619"
+ },
+ {
+  "type": "basic",
+  "question": "Site-to-Site VPN vs Direct Connect — compare path, setup time and encryption.",
+  "answer": "**VPN:** over the public internet, set up in minutes, encrypted (IPsec).\n\n**Direct Connect:** dedicated private physical line, takes about a month or more, consistent performance, not encrypted by default.",
+  "explanation": "Both connect an **on-premises** network to a VPC.\n\n```\nVPN:             Office ═ IPsec over internet ═ VPC\n                 minutes · encrypted\n\nDirect Connect:  Office ═ dedicated line ═ AWS ═ VPC\n                 ≥ 1 month · private · not encrypted\n```",
+  "certs": {
+   "DVA-C02": "1",
+   "SAA-C03": "1"
+  },
+  "id": "aa905b14-dea7-4864-9c36-40810444fd64"
+ },
+ {
+  "type": "code",
+  "question": "A bucket policy should allow **listing** the bucket. Fix the Resource ARN.",
+  "explanation": "`s3:ListBucket` applies to the **bucket ARN** (no `/*`). Object actions like `s3:GetObject` apply to **object ARNs** (`bucket/*`). Mixing them up is a very common policy mistake.",
+  "code": "{\n  \"Effect\": \"Allow\",\n  \"Principal\": {\"AWS\": \"arn:aws:iam::111122223333:role/Reader\"},\n  \"Action\": \"s3:ListBucket\",\n  \"Resource\": \"arn:aws:s3:::data-bucket/*\"\n}",
+  "language": "json",
+  "certs": {
+   "DVA-C02": "2",
+   "SAA-C03": "1"
+  },
+  "id": "ab286a8d-e638-4355-b55b-6d23fed59322"
+ }
+]

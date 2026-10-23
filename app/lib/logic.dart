@@ -131,6 +131,14 @@ String domainOf(Json card, Json cert) => ((card['certs'] as Map?) ?? {})[cert['i
 String domainName(Json cert, String id) =>
     ((cert['domains'] as List).cast<Map>().firstWhere((d) => d['id'] == id, orElse: () => {'name': 'Untagged'}))['name'];
 bool isNew(Json c) => c['fsrs'] == null;
+
+/// "Rotate card versions": the original and its rewritten versions take turns, one per review
+/// (card['ver'] = the one shown last; a missed card's retry gets the next). Scheduling stays on the original.
+(int, Json) pickVersion(Json card, List versions) {
+  if (versions.isEmpty) return (0, card);
+  final i = (((card['ver'] as int?) ?? -1) + 1) % (versions.length + 1);
+  return (i, i == 0 ? card : {...card, ...Map<String, dynamic>.from(versions[i - 1] as Map)});
+}
 bool isSuspended(Json c) => c['suspended'] == true;
 int dueOf(Json c) => (c['fsrs']?['due'] as int?) ?? 0;
 

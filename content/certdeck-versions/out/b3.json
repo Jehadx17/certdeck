@@ -1,0 +1,1600 @@
+[
+ {
+  "card_id": "38917418-8f6b-459e-b5be-49b3308c31a1",
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "In the AWS shared responsibility model, which task is the customer's job for IAM rather than AWS's?",
+    "options": [
+     "Patching the servers that run the IAM service",
+     "Setting role permissions and enabling MFA for users",
+     "Securing the data centers that host IAM's backend",
+     "Operating the global network that IAM requests travel over"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "AWS runs the IAM service and the infrastructure under it. The customer configures identities, permissions, MFA and key hygiene."
+   },
+   {
+    "type": "mcq",
+    "question": "Your auditor asks who must rotate IAM access keys and review overly broad policies. What is the answer?",
+    "options": [
+     "AWS, because IAM is a fully managed service it operates end to end",
+     "The customer, since they configure and secure their own IAM setup",
+     "AWS Support, whenever a customer opens a case about their keys",
+     "The staff running the Region's data centers, as part of facility security"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Security *in* the cloud, including IAM users, policies, MFA and key rotation, belongs to the customer; AWS secures the service itself."
+   }
+  ]
+ },
+ {
+  "card_id": "39a263d6-fa93-4e0e-a7db-a7faf2030890",
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Which of these is a valid way to organise IAM users with groups?",
+    "options": [
+     "Nest a Developers group inside an Everyone group",
+     "Add the same user to both a Developers and a Billing group",
+     "Add an IAM role as a member of a group",
+     "Require each user to be placed in a single group before sign-in"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "A user may be in several groups (or none). Groups contain users only, not other groups or roles."
+   },
+   {
+    "type": "mcq",
+    "question": "Alice needs permissions from both the Auditors and the Developers policies. What is true about groups here?",
+    "options": [
+     "She must be in just one group, so a merged group is needed",
+     "Groups cannot hold users, only roles",
+     "She can be a member of both groups at once",
+     "Group membership is limited to one group per Region"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "IAM users can belong to multiple groups and receive the union of permissions. Groups hold users only and cannot be nested."
+   }
+  ]
+ },
+ {
+  "card_id": "39d61f7f-b10e-4fa6-a2ed-01f20c886ded",
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "You need near-real-time access logs for a CloudFront distribution. Where does CloudFront send the records directly?",
+    "options": [
+     "An Amazon Kinesis data stream",
+     "An Amazon OpenSearch Service domain",
+     "A CloudWatch Logs log group",
+     "An S3 bucket you pick as the destination"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Real-time logs go only to a Kinesis data stream. Firehose or Lambda can then forward them to S3, OpenSearch and so on."
+   },
+   {
+    "type": "mcq",
+    "question": "A team wants CloudFront real-time logs in S3. Which design is correct?",
+    "options": [
+     "Point the real-time log configuration straight at the bucket",
+     "Deliver to a Kinesis data stream, then add Firehose to S3",
+     "Enable CloudWatch Logs delivery, then run Athena on it",
+     "Send logs to an RDS database and export a nightly dump to S3"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "The only direct target is a Kinesis data stream; Firehose sits after the stream to reach S3."
+   }
+  ]
+ },
+ {
+  "card_id": "3aea6682-ef05-4fd6-a379-589e0ef1d5f0",
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "A file system's I/O is spiky: idle for hours, then sudden heavy demand. Which EFS throughput mode fits best without capacity planning?",
+    "options": [
+     "Elastic throughput, which scales up and down automatically",
+     "Provisioned throughput at your estimated peak, billed continuously",
+     "Bursting throughput, tied to the amount of data stored",
+     "General Purpose, which is a performance mode that sets IOPS limits"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Elastic mode adapts automatically and is recommended for unpredictable workloads."
+   },
+   {
+    "type": "mcq",
+    "question": "With which EFS throughput mode does throughput scale with the data stored, so a small file system gets little baseline?",
+    "options": [
+     "Elastic throughput, adjusting up and down on demand",
+     "Bursting, with a baseline tied to stored data size",
+     "Provisioned throughput, a fixed rate you buy in advance"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Bursting throughput grows with storage size. Provisioned is fixed and paid for; Elastic scales automatically."
+   }
+  ]
+ },
+ {
+  "card_id": "3babd413-5533-49b8-9cac-497f3de45336",
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Dozens of applications share one S3 bucket and each needs its own narrow permissions. What reduces the policy complexity?",
+    "options": [
+     "Create S3 Access Points, each with its own policy and hostname",
+     "Add one huge statement list to the single bucket policy",
+     "Replicate the bucket into a copy for every application",
+     "Use S3 Select to filter what each team can see"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Access points give every application a dedicated endpoint and policy, keeping the bucket policy short."
+   },
+   {
+    "type": "mcq",
+    "question": "Which S3 feature provides a unique DNS name with its own access policy for a team working on a shared dataset?",
+    "options": [
+     "S3 Inventory reports listing objects and their metadata daily",
+     "S3 Access Points, each with a DNS name and its own policy",
+     "S3 Batch Operations jobs that run bulk actions on objects",
+     "S3 Storage Lens dashboards summarising usage across accounts"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Each access point has its own DNS name and a policy that resembles a bucket policy."
+   }
+  ]
+ },
+ {
+  "card_id": "3df12104-c5da-46bc-a5bc-951ba1c7d25e",
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "A fleet in private subnets needs outbound HTTPS to download packages, yet no inbound connection from the internet may be possible. Which setup works?",
+    "options": [
+     "Place an Elastic IP on every instance and open all inbound ports",
+     "Add a NAT gateway in a public subnet and route private traffic to it",
+     "Create a VPC peering link to a partner VPC and use its internet gateway",
+     "Attach an internet gateway and route 0.0.0.0/0 from the private subnets straight to it"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "A NAT gateway in a public subnet forwards outbound traffic via the IGW and only lets replies back."
+   },
+   {
+    "type": "mcq",
+    "question": "What is the role of a NAT gateway in a VPC?",
+    "options": [
+     "It lets internet users open connections to private instances",
+     "It encrypts traffic between an office and the VPC",
+     "It gives private subnets outbound-only internet access",
+     "It filters traffic at the subnet boundary using stateless rules"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Private instances reach the internet through the NAT gateway in a public subnet; the internet cannot initiate connections inward."
+   }
+  ]
+ },
+ {
+  "card_id": "3f3f7c66-9aa0-40f7-b5c9-69688ada08df",
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Compliance wants customer-controlled encryption keys for S3 objects, with every use of the key recorded in CloudTrail. Which encryption fits?",
+    "options": [
+     "SSE-KMS with a key you manage in AWS KMS",
+     "Encryption using keys that S3 creates and owns itself",
+     "Encryption with a key the client uploads for each call",
+     "Relying on a private bucket ACL alone for protection"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "SSE-KMS lets you manage the key, and KMS usage is logged in CloudTrail."
+   },
+   {
+    "type": "mcq",
+    "question": "Which S3 server-side encryption option requires the reader to have permission on both the object and a KMS key?",
+    "options": [
+     "SSE-S3, where S3 owns and rotates the encryption keys itself",
+     "SSE-C, where the caller supplies the key with every request",
+     "SSE-KMS, which also checks permissions on a KMS key",
+     "Client-side encryption performed before the upload"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "With SSE-KMS (header `aws:kms`) decryption goes through KMS, so key permissions are checked too."
+   }
+  ]
+ },
+ {
+  "card_id": "3fc41bfc-f609-4f19-96f0-583f9fec2299",
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Which are valid CloudFront invalidation path specifications? (Choose two)",
+    "options": [
+     "/index.html",
+     "bucket-name/images/",
+     "arn:aws:s3:::site/*",
+     "/css/*"
+    ],
+    "correct": [
+     0,
+     3
+    ],
+    "explanation": "Invalidations take URL paths starting with `/`, for single objects or with a wildcard for a prefix."
+   },
+   {
+    "type": "mcq",
+    "question": "Which are valid CloudFront invalidation paths for removing specific cached content? (Choose two)",
+    "options": [
+     "/assets/*",
+     "/downloads/report.pdf",
+     "s3://site-bucket/assets",
+     "https://example.com/*.png?x"
+    ],
+    "correct": [
+     0,
+     1
+    ],
+    "explanation": "Invalidation paths start with `/` and may name a single object or end in a wildcard; URIs and full URLs are not accepted."
+   }
+  ]
+ },
+ {
+  "card_id": "4182060c-eed5-4622-9eb9-3612dcafccb6",
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Which statement describes Route 53 acting as an authoritative DNS service?",
+    "options": [
+     "It caches answers to speed up lookups for end users",
+     "It holds the real records for your zones, which you manage",
+     "It forwards each query to the root servers",
+     "It balances connections across servers using health-aware proxies"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Authoritative means customers control the records; Route 53 returns the definitive answer."
+   },
+   {
+    "type": "mcq",
+    "question": "A teammate says Route 53 is 'authoritative'. What does that give you?",
+    "options": [
+     "Control over the DNS records for your zones",
+     "Ownership of the top-level domain registry",
+     "A recursive resolver for your office network",
+     "Automatic TCP load balancing across instances"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "An authoritative DNS server answers with records the customer manages."
+   }
+  ]
+ },
+ {
+  "card_id": "41bd28f0-92d3-41cd-a24c-189ff74537b4",
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Which two statements about CloudFront signed URLs and S3 pre-signed URLs are correct? (Choose two)",
+    "options": [
+     "CloudFront signed URLs can protect content from any origin and benefit from edge caching",
+     "A pre-signed S3 URL carries the access rights of whoever created the signature",
+     "Pre-signed S3 URLs are validated by CloudFront before reaching an OAC-protected bucket",
+     "Viewers of a CloudFront signed URL must hold IAM users"
+    ],
+    "correct": [
+     0,
+     1
+    ],
+    "explanation": "Use CloudFront signed URLs when distributing via CloudFront; pre-signed URLs go directly to S3 and inherit the signer's permissions."
+   },
+   {
+    "type": "mcq",
+    "question": "Pick the two true statements. (Choose two)",
+    "options": [
+     "Viewers need AWS credentials to use a CloudFront signed URL",
+     "A CloudFront signed URL is usable with S3 or custom HTTP origins and keeps edge caching",
+     "S3 pre-signed URLs let the holder act with the signing identity's permissions for a limited time",
+     "S3 pre-signed URLs are cached at edge locations by default"
+    ],
+    "correct": [
+     1,
+     2
+    ],
+    "explanation": "CloudFront signed URLs are origin-agnostic and cached; pre-signed URLs delegate the signer's permissions."
+   }
+  ]
+ },
+ {
+  "card_id": "41c0820f-eb7b-4589-94e6-9626ae0cd436",
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Aurora replicas are added and removed by Auto Scaling. Which connection target should read-only clients use?",
+    "options": [
+     "Point clients at the cluster's reader endpoint",
+     "A hard-coded list of instance endpoints",
+     "The cluster writer endpoint",
+     "A Route 53 weighted record per replica, updated by hand"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "The reader endpoint tracks the current replicas and spreads connections among them."
+   },
+   {
+    "type": "mcq",
+    "question": "What does the Aurora reader endpoint do?",
+    "options": [
+     "Sends every statement to the primary instance",
+     "Spreads connections over the current replicas",
+     "Splits each SQL statement across replicas",
+     "Replicates storage to a second AWS Region continuously"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "It balances at connection level across the replicas, even as they come and go."
+   }
+  ]
+ },
+ {
+  "card_id": "41fe824a-afe2-4a0e-9166-68b837d4300d",
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "A principal from a different AWS account needs GetObject on your bucket. Which configuration is required in your account?",
+    "options": [
+     "A bucket policy naming the external account or principal",
+     "A new IAM role for S3 to assume in the other account",
+     "Cross-Region replication to the other account",
+     "A VPC endpoint policy on the bucket"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Cross-account access needs a resource-based policy on the bucket allowing the other account (plus identity permission there)."
+   },
+   {
+    "type": "mcq",
+    "question": "Which is the standard way to let another account's role read objects in your S3 bucket?",
+    "options": [
+     "Share your root credentials with them",
+     "Add a bucket policy allowing their role",
+     "Enable S3 Transfer Acceleration on the bucket",
+     "Tag the objects with their account ID"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "The bucket policy is the resource policy granting cross-account access."
+   }
+  ]
+ },
+ {
+  "card_id": "42f3252e-549e-42fe-81e1-64d789cb17a5",
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "How many Availability Zones does a typical new AWS Region have?",
+    "options": [
+     "Usually three, sometimes more",
+     "Always exactly two",
+     "One for each country served",
+     "Exactly one, plus edge locations"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Regions generally have at least 3 AZs, and some have up to 6."
+   },
+   {
+    "type": "mcq",
+    "question": "Which description of an Availability Zone is accurate?",
+    "options": [
+     "A single rack inside a shared data hall",
+     "Isolated data centers with their own power and networking",
+     "A CloudFront edge location that caches content near viewers",
+     "A logical grouping of accounts within an organisation"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "AZs are isolated from each other for fault tolerance yet connected with fast networking, which enables multi-AZ designs."
+   }
+  ]
+ },
+ {
+  "card_id": "43c86bb3-76f1-4e1e-9dcf-866df7dbe653",
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "You run a live site and a warm standby elsewhere. Route 53 should answer with the standby only when the live endpoint fails its checks. Which routing policy?",
+    "options": [
+     "Failover routing with a secondary standby record",
+     "Geoproximity routing with a bias toward the standby",
+     "Simple routing returning both endpoint addresses",
+     "Latency-based routing to the lowest-latency Region"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Failover routing has a primary and a secondary and uses health checks to switch."
+   },
+   {
+    "type": "mcq",
+    "question": "In Route 53 failover routing, what triggers an answer pointing to the secondary record?",
+    "options": [
+     "The primary's health check fails",
+     "The secondary has lower latency",
+     "A user in a different continent queries",
+     "The primary record's weight reaches zero"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Route 53 returns the secondary only when the primary is deemed unhealthy."
+   }
+  ]
+ },
+ {
+  "card_id": "43f9d620-c3da-4cb5-ab93-1c907f7ec872",
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Database backups are read once or twice a year, need millisecond access when requested, and must tolerate losing an entire AZ. Which storage class?",
+    "options": [
+     "Flexible Retrieval archive, restoring in minutes to hours",
+     "Standard-IA, spread over several AZs with rapid access",
+     "One Zone-IA, keeping the single copy in one AZ",
+     "Deep Archive, restoring within twelve hours or more"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Standard-IA stores across multiple AZs with rapid access at a lower storage price."
+   },
+   {
+    "type": "mcq",
+    "question": "Which class suits data that is infrequently accessed, needs rapid retrieval, and must be resilient to an AZ outage?",
+    "options": [
+     "Infrequent Access spread over multiple AZs",
+     "Infrequent Access held in a single AZ",
+     "Archive class with hours-long restores",
+     "Express One Zone for single-digit millisecond compute-adjacent access"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Standard-IA keeps data in at least three AZs and retrieves immediately."
+   }
+  ]
+ },
+ {
+  "card_id": "446f1505-9ca9-4921-9357-30f2123bd9d4",
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Geolocation records exist for Europe and Canada. A visitor from Brazil receives no DNS answer. What should be added?",
+    "options": [
+     "A default location record",
+     "A longer TTL on the Europe record",
+     "An alias to CloudFront",
+     "A failover secondary record"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "A Default geolocation record handles locations that match no other record."
+   },
+   {
+    "type": "mcq",
+    "question": "Which Route 53 record covers users whose location doesn't match any geolocation rule you created?",
+    "options": [
+     "Geoproximity bias of 0",
+     "A Default location record",
+     "Weighted record with weight 255",
+     "Multi-value answer"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Without a Default record, unmatched locations get no answer."
+   }
+  ]
+ },
+ {
+  "card_id": "44f3c664-6f4e-4a1b-9e49-e2e6f0e48860",
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Given this lifecycle configuration, what happens to a `logs/` object that is 120 days old?\n\n```json\n{\"Rules\":[{\"ID\":\"logs-tiering\",\"Filter\":{\"Prefix\":\"logs/\"},\"Status\":\"Enabled\",\"Transitions\":[{\"Days\":30,\"StorageClass\":\"STANDARD_IA\"},{\"Days\":90,\"StorageClass\":\"GLACIER\"}],\"Expiration\":{\"Days\":365},\"AbortIncompleteMultipartUpload\":{\"DaysAfterInitiation\":7}}]}\n```",
+    "options": [
+     "It was deleted at day 90 when the Glacier transition ran",
+     "It moved to Glacier at day 90 after Standard-IA at day 30",
+     "It is still in S3 Standard and untouched by any rule",
+     "It moved to Deep Archive at day 120 as the last tier"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Transitions: Standard-IA at 30 days, Glacier at 90 days, and expiry only at 365 days."
+   },
+   {
+    "type": "mcq",
+    "question": "Which statement about this lifecycle rule is correct?\n\n```json\n{\"Rules\":[{\"ID\":\"logs-tiering\",\"Filter\":{\"Prefix\":\"logs/\"},\"Status\":\"Enabled\",\"Transitions\":[{\"Days\":30,\"StorageClass\":\"STANDARD_IA\"},{\"Days\":90,\"StorageClass\":\"GLACIER\"}],\"Expiration\":{\"Days\":365},\"AbortIncompleteMultipartUpload\":{\"DaysAfterInitiation\":7}}]}\n```",
+    "options": [
+     "Every object in the bucket is deleted after one year, whatever its prefix",
+     "Matching objects expire at 365 days and stale uploads end after 7",
+     "Only multipart parts older than 365 days are removed from the bucket",
+     "Objects go to Glacier at day 30 and to Standard-IA at day 90"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Scope is the `logs/` prefix: expiration at 365 days, plus aborting incomplete multipart uploads 7 days after initiation. Tiering is IA at 30 and Glacier at 90."
+   }
+  ]
+ },
+ {
+  "card_id": "455cea93-a154-4844-b3a1-36665de057ef",
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "A web tier keeps login state in each instance's memory, and users are logged out whenever the load balancer picks another target. What is the quickest fix?",
+    "options": [
+     "Turn on stickiness for the target group",
+     "Add more instances to the group",
+     "Lower the health-check interval",
+     "Move the instances to a single larger type"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Stickiness routes a client's requests to the same target. Externalising sessions to ElastiCache or DynamoDB is the better long-term fix."
+   },
+   {
+    "type": "mcq",
+    "question": "What is a downside of using sticky sessions with a load balancer?",
+    "options": [
+     "It disables health checks on the target group",
+     "It can leave load uneven across targets",
+     "It breaks HTTPS listeners",
+     "It limits the group to a single Availability Zone only"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Because clients stay on one target, traffic may become unbalanced."
+   }
+  ]
+ },
+ {
+  "card_id": "455e3349-095d-4d1e-9098-179cde5317b0",
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Aurora's quorum model keeps six copies across three AZs. How many copies must acknowledge a write?",
+    "options": [
+     "Four of six",
+     "Two of six",
+     "Six of six",
+     "Three of six"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Writes need 4 of 6 and reads need 3 of 6, so Aurora survives an AZ loss."
+   },
+   {
+    "type": "mcq",
+    "question": "How many of Aurora's six storage copies are needed to serve a read quorum?",
+    "options": [
+     "Four of the six copies",
+     "Three of six copies",
+     "Two of the six copies",
+     "Five of the six copies"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Read quorum is 3 of 6; write quorum is 4 of 6."
+   }
+  ]
+ },
+ {
+  "card_id": "4642e68a-165e-4468-a601-11d9c2987dce",
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Data is spread evenly over 10 prefixes in a bucket. What GET/HEAD throughput can the bucket support in theory?",
+    "options": [
+     "About 55,000 requests per second",
+     "5,500 requests per second in total",
+     "Roughly 30,000 requests per second",
+     "A limit of 3,500 for the whole bucket"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Each prefix supports 5,500 GET/HEAD per second, so 10 prefixes give 55,000."
+   },
+   {
+    "type": "mcq",
+    "question": "Per prefix, what is the baseline S3 read request rate?",
+    "options": [
+     "5,500 GET/HEAD requests per second",
+     "3,500 GET/HEAD requests per second, as for writes",
+     "A few hundred requests per second",
+     "Unlimited, with no per-prefix baseline"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "S3 scales to at least 5,500 GET/HEAD per second per prefix (and 3,500 PUT/POST/DELETE)."
+   }
+  ]
+ },
+ {
+  "card_id": "47b9c77d-5e1c-4bdd-b04b-3b641551c66f",
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "What does running `aws configure` do?",
+    "options": [
+     "Prompts for credentials, Region and format, saving them in ~/.aws",
+     "Creates a new IAM user and prints its secret access key afterwards",
+     "Attaches an instance profile to the instance you are logged in to",
+     "Validates the CLI installation by listing your S3 buckets"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "`aws configure` asks for the access key ID, secret key, default Region and output format and writes them to `~/.aws/credentials` and `~/.aws/config`. On EC2 use an IAM role instead."
+   },
+   {
+    "type": "mcq",
+    "question": "After you answer the `aws configure` prompts, which files hold your settings?",
+    "options": [
+     "~/.aws/credentials and ~/.aws/config",
+     "/etc/aws/keys.json and /etc/aws/region",
+     "~/.ssh/id_rsa and ~/.ssh/config",
+     "~/.kube/config and ~/.docker/config.json"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "The CLI stores keys in `~/.aws/credentials` and Region/output in `~/.aws/config`."
+   }
+  ]
+ },
+ {
+  "card_id": "49ea36f2-b12a-4222-87ee-c7f3b9cac6ac",
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "A URL to a private S3 object contains `X-Amz-Algorithm`, `X-Amz-Credential`, `X-Amz-Signature` and `X-Amz-Expires`. What kind of link is it?",
+    "options": [
+     "A time-limited pre-signed URL",
+     "A CloudFront origin URL",
+     "A permanent public link",
+     "A Transfer Acceleration endpoint"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "These query parameters belong to a SigV4 pre-signed URL that stops working after expiry."
+   },
+   {
+    "type": "mcq",
+    "question": "What does `X-Amz-Expires` in an S3 URL indicate?",
+    "options": [
+     "The date the object will be deleted by lifecycle",
+     "How long the signed link stays valid",
+     "The CloudFront cache TTL",
+     "The age of the signing key before rotation"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "It is the validity period of a pre-signed URL."
+   }
+  ]
+ },
+ {
+  "card_id": "4a0d24d2-8d42-43e8-96ae-065466602e92",
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "An Auto Scaling group's launch template now references a patched AMI. How can the running instances be swapped in a rolling manner while keeping capacity?",
+    "options": [
+     "Start an instance refresh and set a minimum healthy percentage",
+     "Detach every instance manually and re-attach",
+     "Switch the termination policy to OldestInstance and wait",
+     "Raise the maximum size and delete the old ones"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Instance refresh replaces instances in batches, respecting the minimum healthy percentage and warm-up."
+   },
+   {
+    "type": "mcq",
+    "question": "Which Auto Scaling feature gradually replaces instances after a launch template change?",
+    "options": [
+     "Scheduled actions",
+     "Instance refresh",
+     "Lifecycle hooks on launch",
+     "Predictive scaling"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Instance refresh does a rolling replacement controlled by minimum healthy % and warm-up time."
+   }
+  ]
+ },
+ {
+  "card_id": "4b5a97a5-b3a9-4efe-803f-b537ba58486d",
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Two viewers request `https://d111.cloudfront.net/logo.png`. With the default cache settings, what identifies the cached object?",
+    "options": [
+     "The domain name and the URL path",
+     "Domain, path and every cookie sent by the viewer",
+     "The viewer's User-Agent header",
+     "The file's ETag from the origin"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "By default the cache key is hostname plus path; headers, cookies and query strings are added only if configured."
+   },
+   {
+    "type": "mcq",
+    "question": "Which of these is included in a CloudFront cache key only if you add it to the cache policy?",
+    "options": [
+     "The distribution's domain name",
+     "The object's URL path",
+     "A cookie sent by the viewer"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "The default cache key is hostname plus path. Cookies, headers and query strings are added only when configured."
+   }
+  ]
+ },
+ {
+  "card_id": "4c1c2a5d-86dc-4bbd-a4bd-4b6ba93c11c7",
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Route 53 uses about 15 global checkers to monitor an endpoint. When does it mark the endpoint healthy?",
+    "options": [
+     "When more than 18% of checkers report success",
+     "Only if every checker sees a response",
+     "When a single checker passes",
+     "When DNS resolves the endpoint's name"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "An endpoint is healthy if more than 18% of the checkers say it is."
+   },
+   {
+    "type": "mcq",
+    "question": "Which statement about Route 53 health checks is correct?",
+    "options": [
+     "Checks pass only when the endpoint answers with exactly HTTP 200",
+     "HTTP, HTTPS and TCP checks are possible; 2xx/3xx passes",
+     "They cannot inspect the response body at all, only status codes",
+     "Checkers always run from the endpoint's own Region only"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Pass means 2xx/3xx; you can also match text in the first 5,120 bytes and choose checker locations."
+   }
+  ]
+ },
+ {
+  "card_id": "4c5331c0-7a73-4fd1-92f1-4e09cb9d39ef",
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Your assets bucket must not be publicly readable, but users should fetch them via a CloudFront distribution. What is the recommended configuration?",
+    "options": [
+     "Use OAC and trust the distribution in the bucket policy",
+     "An S3 bucket ACL granting AllUsers read access to every object",
+     "The bucket's website endpoint with public read permissions",
+     "An IAM user's long-term keys embedded in the distribution origin"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "OAC lets only CloudFront sign requests to S3; direct S3 URLs are denied."
+   },
+   {
+    "type": "mcq",
+    "question": "What is the effect of using OAC for an S3 origin?",
+    "options": [
+     "Direct S3 URLs are denied; the CloudFront URL still works",
+     "The bucket must be made public before CloudFront can read it",
+     "CloudFront caching is switched off for that origin entirely",
+     "Every request is tunnelled through a Site-to-Site VPN"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "The bucket policy trusts the CloudFront service principal for that distribution only."
+   }
+  ]
+ },
+ {
+  "card_id": "4cb50ecb-6d94-42c1-a68b-ae285eab6d0f",
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Replica copies of data that can be regenerated need cheap infrequent-access storage with millisecond retrieval, and AZ loss is acceptable. Which class?",
+    "options": [
+     "Standard-IA, with copies in three or more AZs",
+     "One Zone-IA, a single-AZ copy at a lower price",
+     "Glacier Flexible Retrieval, with restores taking minutes to hours",
+     "Intelligent-Tiering, with automatic access tiers and a monitoring fee"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "One Zone-IA is cheaper because it stores in a single AZ; it suits recreatable data or secondary copies."
+   },
+   {
+    "type": "mcq",
+    "question": "What is the main trade-off of S3 One Zone-IA compared with Standard-IA?",
+    "options": [
+     "Objects must be restored before they can be read",
+     "Cheaper, because data lives in only one AZ",
+     "A 5 TB minimum object size for every object stored",
+     "Server-side encryption cannot be enabled on the bucket"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Data is stored in a single AZ, which lowers cost but loses AZ resilience."
+   }
+  ]
+ },
+ {
+  "card_id": "4cd095d7-f347-4d6d-9732-d808ce81214c",
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Which are Route 53 health check types? (Choose three)",
+    "options": [
+     "A check that reads an SQS queue depth directly",
+     "A check of a public endpoint by IP or domain",
+     "A check that aggregates results of other checks with AND/OR logic",
+     "A check driven by the state of a CloudWatch alarm",
+     "A check that logs in to each host over RDP"
+    ],
+    "correct": [
+     1,
+     2,
+     3
+    ],
+    "explanation": "Types are endpoint, calculated and CloudWatch alarm health checks."
+   },
+   {
+    "type": "mcq",
+    "question": "Which three describe valid Route 53 health checks? (Choose three)",
+    "options": [
+     "Monitoring an AWS resource or server endpoint",
+     "Combining other checks into a parent check",
+     "Following the status of a CloudWatch alarm",
+     "Scanning an EBS volume for bad blocks",
+     "Running a Lambda function every hour on a schedule"
+    ],
+    "correct": [
+     0,
+     1,
+     2
+    ],
+    "explanation": "Endpoint, calculated and CloudWatch alarm checks are the supported kinds."
+   }
+  ]
+ },
+ {
+  "card_id": "4cf50f69-dcbe-40d0-b2a0-64737f44fce9",
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Configuring S3 event notifications to deliver to an SQS queue fails with an access error. What fixes it?",
+    "options": [
+     "Add a resource policy on the queue letting S3 send messages",
+     "Create an IAM user for the bucket and place its keys in the queue settings",
+     "Enable versioning on the bucket so events can be queued",
+     "Allow the queue's ARN in the bucket's CORS configuration"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "SQS needs an access policy trusting S3; SNS and Lambda need analogous resource policies."
+   },
+   {
+    "type": "mcq",
+    "question": "Which resource-based policy do S3 event notifications to Lambda require?",
+    "options": [
+     "A bucket ACL granting the Lambda execution role access",
+     "A Lambda resource-based policy letting S3 invoke it",
+     "A KMS grant naming the S3 bucket as grantee principal",
+     "A security group rule on the function's network interface"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Each event destination needs a resource policy allowing the S3 service to deliver events."
+   }
+  ]
+ },
+ {
+  "card_id": "4d1ba9e6-5ffa-4a34-8085-9050bc571a20",
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "When an S3 bucket's website endpoint is used as a CloudFront origin, how does CloudFront classify it?",
+    "options": [
+     "As a custom (HTTP) origin",
+     "As an S3 origin using OAC",
+     "As a MediaStore origin",
+     "As a Lambda function URL origin"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "The website endpoint is an HTTP server, so it is a custom origin and cannot use OAC."
+   },
+   {
+    "type": "mcq",
+    "question": "Which limitation applies to an S3 static website endpoint behind CloudFront?",
+    "options": [
+     "It must be configured as an S3 origin with OAC enabled",
+     "It's a custom origin, so OAC cannot be applied",
+     "It has to live in us-east-1 to work with CloudFront",
+     "It cannot serve index documents through CloudFront"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Website endpoints are custom origins; OAC works with the S3 REST API endpoint."
+   }
+  ]
+ },
+ {
+  "card_id": "4e389960-493d-4906-b14f-a1b0473700b2",
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "An instance has a role attached. What gets the temporary credentials from the instance metadata service?",
+    "options": [
+     "The SDK's default credential chain and the CLI",
+     "The EC2 console, which pastes them to you",
+     "The VPC route table",
+     "An access key you create and bake into the AMI"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "SDKs and the CLI fetch role credentials from IMDS automatically."
+   },
+   {
+    "type": "mcq",
+    "question": "Why do you not need to store keys on an EC2 instance that has an IAM role?",
+    "options": [
+     "Instances are exempt from IAM authorisation checks",
+     "The SDK pulls rotating keys from the metadata service",
+     "Security groups sign API calls on the instance's behalf",
+     "Roles turn off the need for any authentication"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "The SDK retrieves and refreshes role credentials from IMDS."
+   }
+  ]
+ },
+ {
+  "card_id": "4f0058da-f9ca-4cdf-8d19-f664e9c379d8",
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Which two practices follow IAM best practice for a new team? (Choose two)",
+    "options": [
+     "Give every user AdministratorAccess to avoid support tickets",
+     "Grant only the permissions a person's tasks require",
+     "Attach permissions to groups that mirror job functions",
+     "Use the root account for day-to-day work"
+    ],
+    "correct": [
+     1,
+     2
+    ],
+    "explanation": "Least privilege and group-based management are core IAM guidelines."
+   },
+   {
+    "type": "mcq",
+    "question": "Which two actions are recommended when managing human access in AWS? (Choose two)",
+    "options": [
+     "Give each person an individual identity rather than shared credentials",
+     "Put users in groups and attach policies to the groups",
+     "Share one access key pair across the team for simplicity",
+     "Use root credentials for daily admin tasks"
+    ],
+    "correct": [
+     0,
+     1
+    ],
+    "explanation": "One identity per person and group-based permissions are best practice, alongside least privilege and a locked-down root user."
+   }
+  ]
+ },
+ {
+  "card_id": "4f1da420-4ecc-46f6-9f01-35c28522e644",
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "A bucket policy allows `s3:GetObject` to `*`, yet anonymous requests are refused. What should you check first?",
+    "options": [
+     "Block Public Access is on for the bucket or account",
+     "Object Lock is set in compliance mode on the bucket",
+     "Transfer Acceleration is switched on for the bucket",
+     "A lifecycle rule has expired the newest object versions"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Block Public Access overrides public policies and ACLs."
+   },
+   {
+    "type": "mcq",
+    "question": "Which S3 setting can override a public-read bucket policy and, if enabled at account level, affects all buckets?",
+    "options": [
+     "Object Lock",
+     "Block Public Access",
+     "Requester Pays",
+     "Intelligent-Tiering archive access"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Block Public Access is a safety net against accidental exposure."
+   }
+  ]
+ },
+ {
+  "card_id": "4f7e46f9-f63b-4228-9349-d9277b1d5493",
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Occasional ThrottlingException responses occur from an AWS API in your code. Which strategy is recommended?",
+    "options": [
+     "Retry with exponentially growing waits",
+     "Immediately file a quota increase request",
+     "Switch to another Region on every error",
+     "Stop calling the API until support responds"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Exponential backoff handles intermittent throttling; sustained throttling calls for a quota increase."
+   },
+   {
+    "type": "mcq",
+    "question": "When should you request a service quota increase rather than rely on backoff?",
+    "options": [
+     "When one throttled call happens after a burst",
+     "When normal workload keeps exceeding the quota",
+     "When one call times out on a flaky network",
+     "When the SDK version is a few releases old"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Constant throttling reflects a real shortage of quota; occasional bursts are handled by exponential backoff."
+   }
+  ]
+ },
+ {
+  "card_id": "510a4262-aea6-460d-bb2d-1e4e01a93bbd",
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Name resolution for `db.corp.internal` should work only for resources inside certain VPCs. Which Route 53 resource do you set up?",
+    "options": [
+     "Private hosted zone associated with those VPCs",
+     "Public hosted zone with restricted ACLs",
+     "Resolver inbound endpoint alone for the internet",
+     "Traffic policy with geolocation rules"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Private hosted zones answer only inside associated VPCs."
+   },
+   {
+    "type": "mcq",
+    "question": "What is the difference between public and private Route 53 hosted zones?",
+    "options": [
+     "Private zones answer only within associated VPCs",
+     "Public zones can only hold alias records, never A records",
+     "Private zones are free of charge while public ones cost money",
+     "Public zones are limited to one Region of your choice"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Private hosted zones are not visible from the internet."
+   }
+  ]
+ },
+ {
+  "card_id": "512fe7e5-bc70-4da5-b6f1-82e45be74a8f",
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Which two services are reachable through a Gateway VPC endpoint? (Choose two)",
+    "options": [
+     "Amazon DynamoDB tables",
+     "Amazon SNS topics",
+     "Amazon S3 buckets",
+     "AWS Secrets Manager secrets"
+    ],
+    "correct": [
+     0,
+     2
+    ],
+    "explanation": "Only S3 and DynamoDB use gateway endpoints, implemented as route table targets."
+   },
+   {
+    "type": "mcq",
+    "question": "Which two statements describe a Gateway VPC endpoint? (Choose two)",
+    "options": [
+     "It is added as a target in route tables",
+     "It creates an ENI with a private IP in your subnet",
+     "It is supported for S3 and DynamoDB",
+     "It is billed per hour and per GB"
+    ],
+    "correct": [
+     0,
+     2
+    ],
+    "explanation": "Gateway endpoints are free route-table targets for S3 and DynamoDB; interface endpoints use ENIs and are billed."
+   }
+  ]
+ },
+ {
+  "card_id": "514216cc-31fe-47ba-bf15-dfb72e385fe1",
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "An engineer wonders if the `yum install` in an EC2 user data script needs `sudo`. What is the correct answer?",
+    "options": [
+     "Yes, because commands run under an unprivileged login shell",
+     "Only if an instance profile is attached to the instance",
+     "No, the script already runs as root at first boot",
+     "Yes, because it runs as the ec2-user account"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "User data runs once at first launch with root privileges."
+   },
+   {
+    "type": "mcq",
+    "question": "Which statement about EC2 user data scripts is true?",
+    "options": [
+     "They run on every reboot as ec2-user by default",
+     "They run as root during the first boot",
+     "They need an IAM role to execute",
+     "They can only run Python"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "By default user data runs once at first boot as root."
+   }
+  ]
+ },
+ {
+  "card_id": "523e15fb-8a0e-4484-9b81-3509c5f4aabb",
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Which two can be registered as MFA for an IAM user? (Choose two)",
+    "options": [
+     "A hardware TOTP token",
+     "An email link",
+     "A passkey or FIDO security key",
+     "The account's access key ID"
+    ],
+    "correct": [
+     0,
+     2
+    ],
+    "explanation": "Supported options include virtual apps, FIDO keys and hardware TOTP tokens."
+   },
+   {
+    "type": "mcq",
+    "question": "Which two options are supported AWS MFA types? (Choose two)",
+    "options": [
+     "Authenticator app generating TOTP codes",
+     "Security question",
+     "A hardware security key that supports FIDO2 (WebAuthn)",
+     "A CAPTCHA on the sign-in page"
+    ],
+    "correct": [
+     0,
+     2
+    ],
+    "explanation": "Virtual authenticator apps and FIDO security keys are supported MFA devices."
+   }
+  ]
+ },
+ {
+  "card_id": "5282ddae-ed6a-4bca-b2ef-994f7cf3777c",
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "A site team ships `app.v43.js` instead of overwriting `app.js` so users get new code immediately. Why does this work with CloudFront?",
+    "options": [
+     "CloudFront compares the file's checksum with the origin on every request",
+     "A new name is a new cache key, forcing a fetch from the origin",
+     "Browsers always bypass CloudFront for URLs containing a version",
+     "CloudFront automatically invalidates file names that contain a version"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Objects are cached by key (URL), not content. A new name was never cached."
+   },
+   {
+    "type": "mcq",
+    "question": "Why does reusing the same file name after an update risk stale content at the edge?",
+    "options": [
+     "CloudFront refuses to cache objects that were overwritten at the origin",
+     "An unchanged key means the cached copy is served until its TTL ends",
+     "S3 locks an object against replacement after the first upload",
+     "The edge compares ETags with the origin on every viewer request"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "With an unchanged URL the cache key matches the cached object, which is served until it expires."
+   }
+  ]
+ },
+ {
+  "card_id": "52eb421c-5ab4-44bc-84a7-27119ce11d66",
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Behind an ALB, your web server's logs show the balancer's address for every request. Which header holds the original client address?",
+    "options": [
+     "X-Forwarded-For",
+     "X-Amz-Cf-Id",
+     "Via-Client",
+     "X-Forwarded-Proto"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "ALB adds X-Forwarded-For with the client's IP."
+   },
+   {
+    "type": "mcq",
+    "question": "How can a target behind an Application Load Balancer determine the originating IP of the caller?",
+    "options": [
+     "It reads the TCP source address of the connection",
+     "It reads the X-Forwarded-For header the ALB adds",
+     "It queries the ALB's access log API per request",
+     "It relies on the target group's stickiness cookie"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "The connection comes from the ALB, so the client IP is in the X-Forwarded-For header."
+   }
+  ]
+ },
+ {
+  "card_id": "531a272e-50c4-47e0-96dd-d25d46b848a6",
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Which VPC component is a stateless firewall applied at the subnet level, supporting both allow and deny rules?",
+    "options": [
+     "Security group",
+     "Network ACL",
+     "VPC endpoint",
+     "Flow Logs"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "NACLs are stateless, evaluated at the subnet, and have allow and deny rules; security groups are stateful and allow-only."
+   },
+   {
+    "type": "mcq",
+    "question": "You need to privately connect two VPCs with non-overlapping CIDR ranges, understanding that traffic does not pass through a third VPC. Which component?",
+    "options": [
+     "VPC peering",
+     "NAT gateway",
+     "Site-to-Site VPN",
+     "Gateway endpoint"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Peering links two VPCs privately; it is non-transitive and needs non-overlapping CIDRs."
+   }
+  ]
+ },
+ {
+  "card_id": "5356e130-0c11-45fb-b144-9c86339ebb7d",
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "A volume holds archive data touched a few times each year, and the lowest cost per GB matters most. Which EBS volume type?",
+    "options": [
+     "Cold HDD (sc1), the cheapest per GB",
+     "General Purpose SSD (gp3) with baseline IOPS",
+     "Provisioned IOPS SSD (io2) for databases",
+     "Throughput Optimized HDD (st1) for big data"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "sc1 is the cheapest EBS type, for infrequently accessed data."
+   },
+   {
+    "type": "mcq",
+    "question": "Which EBS type has the lowest cost per GB for infrequently accessed workloads?",
+    "options": [
+     "gp3, general purpose SSD with tunable IOPS",
+     "sc1, cold HDD aimed at archival access",
+     "io2, provisioned IOPS SSD for databases",
+     "st1, throughput optimised HDD for streaming"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Cold HDD (sc1) is the lowest-cost option."
+   }
+  ]
+ },
+ {
+  "card_id": "53ed2337-17e1-4a17-932f-046a1c35f33a",
+  "versions": [
+   {
+    "type": "ordering",
+    "question": "Put the steps in order for a first-time request of an object at a CloudFront edge location that does not have it yet.",
+    "items": [
+     "Viewer's request is routed to a nearby edge location",
+     "The edge looks in its cache and finds nothing",
+     "The edge sends a request to the configured origin",
+     "The origin responds with the object",
+     "The edge stores a copy for its TTL and delivers it to the viewer"
+    ],
+    "explanation": "On a cache miss the edge fetches from the origin and caches the result; later viewers get a cache hit."
+   },
+   {
+    "type": "mcq",
+    "question": "What happens on a CloudFront cache miss at an edge location?",
+    "options": [
+     "It fetches from the origin, caches and returns it",
+     "The edge returns a 404 to the viewer straight away",
+     "The edge asks a neighbouring edge to answer for it",
+     "The request waits until the object's TTL has expired"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "A miss makes the edge fetch from the origin; the object is then cached for its TTL."
+   }
+  ]
+ },
+ {
+  "card_id": "5562084f-9d20-4817-89fb-11a8f9c05941",
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "What guidance applies to choosing an expiry time for CloudFront signed URLs?",
+    "options": [
+     "Minutes for widely shared links, longer for personal downloads",
+     "Set the lifetime to 365 days for every URL, regardless of use",
+     "Signed URLs cannot carry an expiry; use cache TTL instead",
+     "Always match the lifetime to the object's cache TTL value"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Expiry should reflect how the content is used."
+   },
+   {
+    "type": "mcq",
+    "question": "A live-event stream link is shared widely. How should its signed URL lifetime be set?",
+    "options": [
+     "Very short, a few minutes at most",
+     "Very long, such as several years",
+     "No expiry so viewers can return later",
+     "Equal to the TTL of the cached object"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Shared content should expire quickly to limit abuse; personal downloads can be valid longer."
+   }
+  ]
+ },
+ {
+  "card_id": "55ea3d3f-4c0b-45a5-877b-f261fa85f50c",
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "A new engineer in the Frankfurt Region cannot find a separate list of IAM users there. Why?",
+    "options": [
+     "IAM is global, so identities apply in every Region",
+     "IAM data must be replicated to each Region every night",
+     "IAM can only be used from the N. Virginia Region",
+     "Each Region requires its own separate AWS account"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "IAM is a global service; identities apply across Regions."
+   },
+   {
+    "type": "mcq",
+    "question": "Which statement about IAM and Regions is accurate?",
+    "options": [
+     "Users created in one Region are invisible elsewhere",
+     "IAM policies must be duplicated per Region",
+     "IAM resources are not tied to a single Region",
+     "IAM roles work only in us-east-1"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "IAM is global: users, groups, roles and policies apply everywhere."
+   }
+  ]
+ },
+ {
+  "card_id": "56fb3788-860b-4145-abab-be55c365cbbd",
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "For disaster recovery, a volume's data must be restorable in a different Region. What is the usual approach?",
+    "options": [
+     "Copy a snapshot to the target Region and restore from it",
+     "Attach the source volume directly to a remote-Region instance",
+     "Mount the volume over NFS from an instance in the original Region",
+     "Create a cluster placement group spanning two Regions"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Snapshots can be copied across Regions and restored into new volumes."
+   },
+   {
+    "type": "mcq",
+    "question": "Which EBS capability supports moving volume data to another Region?",
+    "options": [
+     "Copying snapshots to a different Region",
+     "Multi-Attach, sharing a volume among instances",
+     "Elastic Volumes, resizing a volume while in use",
+     "Fast Snapshot Restore for faster volume creation in an AZ"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Copy the snapshot to the destination Region to recreate the volume there."
+   }
+  ]
+ },
+ {
+  "card_id": "576bb73f-bdb0-4d28-a09f-3e77a68635f4",
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "A 12 GB backup must be uploaded to S3, but a single PUT cannot handle it. Which feature is required?",
+    "options": [
+     "Break it up using multipart upload",
+     "Byte-range fetches against the object",
+     "S3 Select to read part of the object",
+     "Cross-Region replication of the bucket"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Single PUT maxes out at 5 GB; multipart is required above that and recommended above 100 MB."
+   },
+   {
+    "type": "mcq",
+    "question": "Which advantage does S3 multipart upload provide?",
+    "options": [
+     "Parts upload in parallel; failed parts retry alone",
+     "It lifts the 5 TB maximum object size limit",
+     "It encrypts the object automatically with SSE-C",
+     "It stores each part in a different Region"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Multipart splits objects into parts uploaded in parallel and is needed above 5 GB per object upload."
+   }
+  ]
+ },
+ {
+  "card_id": "577f92bb-3bd2-4d3d-bc04-a90ca1526604",
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "What is true when S3 replication meets deletions in the source bucket? (Choose two)",
+    "options": [
+     "Delete markers may be replicated if you enable that option",
+     "Version-specific deletes in the source are not replicated",
+     "Every permanent version deletion is copied to the destination",
+     "Delete markers are always replicated and cannot be disabled"
+    ],
+    "correct": [
+     0,
+     1
+    ],
+    "explanation": "Delete marker replication is optional, and deleting a specific version ID is not propagated, protecting the destination."
+   },
+   {
+    "type": "mcq",
+    "question": "Choose two correct facts about S3 replication behaviour. (Choose two)",
+    "options": [
+     "Delete marker replication can be turned on",
+     "Deleting a particular object version in the source does not delete it at the destination",
+     "Replication copies deletes of specific versions to avoid drift",
+     "Delete markers are never allowed in a replicated bucket"
+    ],
+    "correct": [
+     0,
+     1
+    ],
+    "explanation": "Version-ID deletes are not replicated; delete markers replicate only when enabled."
+   }
+  ]
+ }
+]

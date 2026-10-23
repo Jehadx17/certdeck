@@ -70,11 +70,19 @@ class _StudyScreenState extends State<StudyScreen> {
   final started = DateTime.now();
   late final int planned = widget.custom?.remaining ?? widget.queue.length;
   bool completed = false, studying = false; // studying: a new card shown first, for a student new to the subject
+  Map<String, List> versions = {}; // card id -> its rewritten versions ("Rotate card versions" on)
+  bool loading = App.settings['rotate_versions'] == true;
+  int shownVer = 0;
 
   @override
   void initState() {
     super.initState();
-    _next();
+    if (!loading) return _next();
+    Db.query('versions').then((vs) {
+      versions = {for (final v in vs) v['card_id'] as String: (v['versions'] as List?) ?? []};
+      loading = false;
+      if (mounted) _next();
+    });
   }
 
   @override
@@ -106,7 +114,12 @@ class _StudyScreenState extends State<StudyScreen> {
 
   void _next() => setState(() {
         card = session.next();
-        ans = card == null ? null : AnswerState(card!);
+        ans = null;
+        if (card != null) {
+          final (i, shown) = pickVersion(card!, versions[card!['id']] ?? const []);
+          shownVer = i;
+          ans = AnswerState(shown);
+        }
         conf = null;
         revealed = false;
         studying = widget.easy && card != null && studyFirst(card!);
@@ -128,6 +141,7 @@ class _StudyScreenState extends State<StudyScreen> {
 
   Future<void> _commit() async {
     final a = ans!;
+    if (versions.containsKey(card!['id'])) card!['ver'] = shownVer;
     final updated = await recordAnswer(card!,
         conf: conf!,
         correct: a.correct,
@@ -159,6 +173,7 @@ class _StudyScreenState extends State<StudyScreen> {
   @override
   Widget build(BuildContext context) {
     final cs = Theme.of(context).colorScheme;
+    if (loading) return const Scaffold(body: Center(child: CircularProgressIndicator()));
     if (widget.easy) return easyScale(context, card == null ? _easyEnd(context) : _easyCard(cs));
     if (card == null) {
       return Scaffold(
@@ -225,7 +240,7 @@ class _StudyScreenState extends State<StudyScreen> {
           Expanded(
             child: ListView(padding: const EdgeInsets.all(16), children: [
               Wrap(spacing: 6, children: [
-                _chip(t(typeLabels[c['type']] ?? c['type'])),
+                _chip(t(typeLabels[ans!.type] ?? ans!.type)),
                 if (domainOf(c, cert).isNotEmpty) _chip(domainName(cert, domainOf(c, cert))),
                 if (isNew(c)) _chip(t('New'), color: cs.primary),
                 if (c['worked'] == true) _chip(t('Worked example'), color: Colors.lightBlueAccent),

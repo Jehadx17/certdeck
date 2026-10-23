@@ -141,4 +141,19 @@ void main() {
     expect(budgetMessage(server), 'Monthly AI budget reached: \$\u20680.12\u2069 of \$\u20688.55\u2069 left. This needs about \$\u20680.25\u2069. Studying still works.');
     expect(budgetMessage('something else'), 'something else');
   });
+
+  test('card versions take turns, scheduling fields stay on the original', () {
+    final card = {'id': 'c1', 'type': 'cloze', 'question': 'orig', 'fsrs': {'due': 5}};
+    final vs = [{'type': 'mcq', 'question': 'v2', 'options': ['a', 'b'], 'correct': [1]}, {'type': 'mcq', 'question': 'v3'}];
+    final seen = <String>[];
+    for (var n = 0; n < 4; n++) {
+      final (i, shown) = pickVersion(card, vs);
+      seen.add(shown['question'] as String);
+      expect(shown['id'], 'c1');
+      expect(shown['fsrs'], {'due': 5});
+      card['ver'] = i;
+    }
+    expect(seen, ['orig', 'v2', 'v3', 'orig']);
+    expect(pickVersion({'id': 'x', 'ver': 2}, []).$2['id'], 'x');
+  });
 }

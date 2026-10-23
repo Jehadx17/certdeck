@@ -180,6 +180,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 setState(() {});
               },
             ),
+          if (App.isOwner)
+            SwitchListTile(
+              title: const Text('Rotate card versions'),
+              subtitle: const Text('Each review shows the next rewritten version, so you answer the question, not a remembered option'),
+              value: App.settings['rotate_versions'] == true,
+              onChanged: (v) async {
+                App.settings['rotate_versions'] = v;
+                await App.saveSettings();
+                setState(() {});
+              },
+            ),
           header(t('Reminders')),
           SwitchListTile(
             title: Text(t('Daily study reminder')),
