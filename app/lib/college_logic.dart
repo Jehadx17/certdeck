@@ -361,5 +361,5 @@ Future<List<PlanItem>> todayPlan({DateTime? at}) async {
 }
 
 /// The review log's score for a graded answer: 1 right, 0..1 partial, 0 wrong.
-fsrs.Rating ratingForScore(Conf conf, double score, int sureStreak) =>
-    score >= .85 ? ratingFor(conf, true, sureStreak) : (score >= .4 ? fsrs.Rating.hard : fsrs.Rating.again);
+fsrs.Rating ratingForScore(Conf conf, double score, {bool learning = false}) =>
+    score >= .85 ? ratingFor(conf, true, learning: learning) : (score >= .4 ? fsrs.Rating.hard : fsrs.Rating.again);

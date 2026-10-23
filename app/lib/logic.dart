@@ -195,11 +195,11 @@ double retrievability(fsrs.Scheduler s, Json c, [DateTime? at]) =>
     isNew(c) ? 0 : s.getCardRetrievability(toFsrs(c), currentDateTime: (at ?? DateTime.now()).toUtc());
 
 /// Confidence + correctness → FSRS rating (SPEC "Study session").
-/// Sure+correct is Good, or Easy when the previous answer was also Sure+correct.
-fsrs.Rating ratingFor(Conf conf, bool correct, int sureStreak) {
+/// Never Easy: two Sure answers in a row used to jump a new card to 8 days, then 76.
+/// [learning]: the card is on a (re)learning step, where Hard repeats the step forever, so a right answer is Good.
+fsrs.Rating ratingFor(Conf conf, bool correct, {bool learning = false}) {
   if (!correct) return fsrs.Rating.again;
-  if (conf != Conf.sure) return fsrs.Rating.hard;
-  return sureStreak >= 1 ? fsrs.Rating.easy : fsrs.Rating.good;
+  return conf == Conf.sure || learning ? fsrs.Rating.good : fsrs.Rating.hard;
 }
 
 /// A new card for a student who said they are new to the subject (setup): read it first, then it comes back as a
@@ -219,9 +219,10 @@ Future<Json> recordAnswer(Json card,
     {required Conf conf, required bool correct, required String source, int? durationMs, Object? answer, double? score, fsrs.Scheduler? scheduler, bool studyFirst = false, String? errorType}) async {
   final now = DateTime.now().toUtc();
   final streak = (card['sure_streak'] as int?) ?? 0;
-  final rating = score == null ? ratingFor(conf, correct, streak) : ratingForScore(conf, score, streak);
-  correct = score == null ? correct : score >= .85;
   final before = toFsrs(card);
+  final learning = before.state != fsrs.State.review;
+  final rating = score == null ? ratingFor(conf, correct, learning: learning) : ratingForScore(conf, score, learning: learning);
+  correct = score == null ? correct : score >= .85;
   final wasNew = isNew(card);
   final misconception = conf == Conf.sure && (score == null ? !correct : score < .4);
   scheduler ??= card['course'] != null ? schedulerForDate((await assessmentForCard(card))?['date']) : schedulerFor(App.cert);

@@ -60,11 +60,13 @@ void main() {
   });
 
   test('confidence → FSRS rating', () {
-    expect(ratingFor(Conf.sure, false, 3), fsrs.Rating.again);
-    expect(ratingFor(Conf.guess, true, 0), fsrs.Rating.hard);
-    expect(ratingFor(Conf.unsure, true, 5), fsrs.Rating.hard);
-    expect(ratingFor(Conf.sure, true, 0), fsrs.Rating.good);
-    expect(ratingFor(Conf.sure, true, 1), fsrs.Rating.easy);
+    expect(ratingFor(Conf.sure, false), fsrs.Rating.again);
+    expect(ratingFor(Conf.guess, true), fsrs.Rating.hard);
+    expect(ratingFor(Conf.unsure, true), fsrs.Rating.hard);
+    expect(ratingFor(Conf.sure, true), fsrs.Rating.good);
+    expect(ratingFor(Conf.sure, true), fsrs.Rating.good);
+    expect(ratingFor(Conf.unsure, true, learning: true), fsrs.Rating.good);
+    expect(ratingFor(Conf.guess, false, learning: true), fsrs.Rating.again);
   });
 
   test('lenient typed matching', () {

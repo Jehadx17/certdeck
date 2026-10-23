@@ -59,9 +59,9 @@ Images can be attached to any card's question or answer (gallery, camera, or URL
 ## Study session and confidence rating
 - Before revealing the answer, I pick a confidence level: **Guessing / Unsure / Sure**.
 - Map confidence plus correctness to an FSRS rating:
-  - **Sure + correct** → Easy/Good, pushed out further
-  - **Unsure + correct** → Hard
-  - **Guessing + correct** → Hard
+  - **Sure + correct** → Good, pushed out further (never Easy)
+  - **Unsure + correct** → Hard (Good while the card is still learning, so it graduates)
+  - **Guessing + correct** → Hard (Good while learning, same reason)
   - **Any wrong** → Again
 - **Sure + wrong** is a "misconception": flag the card, show the AI explanation prominently, bring it back sooner, and weight it heavily in weakness analysis.
 - After every answer, show the explanation, including why my chosen wrong option is wrong.

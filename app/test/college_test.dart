@@ -112,9 +112,9 @@ void main() {
   });
 
   test('graded answers: partial credit rates Hard, wrong Again', () {
-    expect(ratingForScore(Conf.sure, 1, 0), fsrs.Rating.good);
-    expect(ratingForScore(Conf.sure, .6, 0), fsrs.Rating.hard);
-    expect(ratingForScore(Conf.unsure, .2, 0), fsrs.Rating.again);
+    expect(ratingForScore(Conf.sure, 1), fsrs.Rating.good);
+    expect(ratingForScore(Conf.sure, .6), fsrs.Rating.hard);
+    expect(ratingForScore(Conf.unsure, .2), fsrs.Rating.again);
   });
 
   test('written answers: rubric ticks, verified numeric answers, self verdicts', () {
