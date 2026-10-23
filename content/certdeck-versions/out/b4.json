@@ -14,7 +14,13 @@
     "correct": [
      0
     ],
-    "explanation": "Traffic gets more private at each hop: Route 53, public ALB, private EC2 Auto Scaling group, then data subnets."
+    "explanation": "Traffic gets more private at each hop: Route 53, public ALB, private EC2 Auto Scaling group, then data subnets.",
+    "option_explanations": [
+     "Correct. Traffic gets more private at each hop, starting with DNS.",
+     "Wrong order: the app servers sit behind the load balancer, not in front of it.",
+     "This is reversed; the database is the last tier, never the first.",
+     "DNS resolves first, and the database is reached only via the app tier."
+    ]
    },
    {
     "type": "mcq",
@@ -28,7 +34,13 @@
     "correct": [
      1
     ],
-    "explanation": "The ALB only forwards to the app tier; the app tier in private subnets reads and writes the data tier."
+    "explanation": "The ALB only forwards to the app tier; the app tier in private subnets reads and writes the data tier.",
+    "option_explanations": [
+     "Wrong: an ALB forwards to targets and never queries the database.",
+     "Correct. The app tier in private subnets reads and writes the data tier.",
+     "Route 53 answers DNS queries; it doesn't read from a cache.",
+     "Browsers don't connect to a database directly; it sits in private subnets."
+    ]
    }
   ]
  },
@@ -47,7 +59,13 @@
     "correct": [
      2
     ],
-    "explanation": "Read replicas use asynchronous replication, so lag is normal. Use the primary when you need read-after-write consistency."
+    "explanation": "Read replicas use asynchronous replication, so lag is normal. Use the primary when you need read-after-write consistency.",
+    "option_explanations": [
+     "Replicas are updated continuously, not once a day.",
+     "A Multi-AZ standby isn't readable and isn't a read replica.",
+     "Correct. Replicas are asynchronous, so they can lag slightly.",
+     "The primary doesn't wait for replicas; that would be synchronous replication."
+    ]
    },
    {
     "type": "mcq",
@@ -61,7 +79,13 @@
     "correct": [
      3
     ],
-    "explanation": "Replicas are asynchronous and can lag; the primary always has the latest committed write. A Multi-AZ standby is not readable."
+    "explanation": "Replicas are asynchronous and can lag; the primary always has the latest committed write. A Multi-AZ standby is not readable.",
+    "option_explanations": [
+     "Replicas are asynchronous, so they can return stale data.",
+     "A same-AZ replica gets writes asynchronously, like any replica.",
+     "A Multi-AZ standby can't serve reads at all.",
+     "Correct. The primary always has the latest committed write."
+    ]
    }
   ]
  },
@@ -83,7 +107,14 @@
      3,
      4
     ],
-    "explanation": "Flow logs attach to a VPC, subnet or ENI; narrower scopes limit the volume of records."
+    "explanation": "Flow logs attach to a VPC, subnet or ENI; narrower scopes limit the volume of records.",
+    "option_explanations": [
+     "Correct: flow logs can be attached to a single ENI.",
+     "Flow logs attach to VPCs, subnets or ENIs, not to NACL rules.",
+     "Route 53 records are DNS entries, not a flow log scope.",
+     "Correct: a flow log can cover the whole VPC.",
+     "Correct: a flow log can cover a single subnet."
+    ]
    },
    {
     "type": "mcq",
@@ -99,7 +130,14 @@
      1,
      4
     ],
-    "explanation": "A flow log may be created on an ENI, its subnet or the whole VPC, never on IAM roles, AMIs or security groups."
+    "explanation": "A flow log may be created on an ENI, its subnet or the whole VPC, never on IAM roles, AMIs or security groups.",
+    "option_explanations": [
+     "An IAM role isn't a network resource, so no flow log can attach.",
+     "Correct: a subnet flow log includes the instance's ENI, though also its neighbors.",
+     "An AMI is an image template, not a flow log scope.",
+     "Security groups aren't flow log targets; they filter traffic.",
+     "Correct: the ENI is the narrowest scope for one instance's card."
+    ]
    }
   ]
  },
@@ -121,7 +159,14 @@
      1,
      4
     ],
-    "explanation": "IMDS exposes the role name and temporary credentials, but not the role's policy documents."
+    "explanation": "IMDS exposes the role name and temporary credentials, but not the role's policy documents.",
+    "option_explanations": [
+     "Correct: availability zone is available under meta-data/placement.",
+     "Correct: IMDS shows the instance profile's role name.",
+     "IMDS doesn't return policy documents; those come from IAM.",
+     "Root access keys are never exposed through instance metadata.",
+     "Correct: IMDS serves temporary credentials for the attached role."
+    ]
    },
    {
     "type": "mcq",
@@ -137,7 +182,14 @@
      2,
      4
     ],
-    "explanation": "Metadata includes instance details and role credentials. Policy contents must be fetched through IAM instead."
+    "explanation": "Metadata includes instance details and role credentials. Policy contents must be fetched through IAM instead.",
+    "option_explanations": [
+     "IMDS only describes the instance itself, not other instances.",
+     "Account passwords are never exposed through metadata.",
+     "Correct: instance ID and hostname are in the metadata.",
+     "Policy statements aren't exposed; use IAM APIs for those.",
+     "Correct: it returns the role name and rotating temporary credentials."
+    ]
    }
   ]
  },
@@ -156,7 +208,13 @@
     "correct": [
      0
     ],
-    "explanation": "Multi-AZ is for HA with synchronous replication and automatic failover; replicas scale reads with asynchronous replication."
+    "explanation": "Multi-AZ is for HA with synchronous replication and automatic failover; replicas scale reads with asynchronous replication.",
+    "option_explanations": [
+     "Correct: the standby is synchronous and unreadable; the replica is asynchronous and readable.",
+     "This is reversed; the standby is synchronous and can't serve reads.",
+     "Replicas are asynchronous, and the standby has no read endpoint.",
+     "The standby fails over automatically; replicas must be promoted manually."
+    ]
    },
    {
     "type": "mcq",
@@ -170,7 +228,13 @@
     "correct": [
      1
     ],
-    "explanation": "Replicas offload reads but are asynchronous; the Multi-AZ standby is not readable but gives synchronous automatic failover."
+    "explanation": "Replicas offload reads but are asynchronous; the Multi-AZ standby is not readable but gives synchronous automatic failover.",
+    "option_explanations": [
+     "Multi-AZ doesn't offload reads, and replicas don't provide HA failover.",
+     "Correct: replicas take the reads, Multi-AZ gives AZ failover.",
+     "The Multi-AZ standby can't serve queries.",
+     "Replicas don't fail over automatically; they need manual promotion."
+    ]
    }
   ]
  },
@@ -189,7 +253,13 @@
     "correct": [
      2
     ],
-    "explanation": "Instance metadata is served locally by IMDS at 169.254.169.254, including AZ, IDs and IPs, and needs no IAM permissions."
+    "explanation": "Instance metadata is served locally by IMDS at 169.254.169.254, including AZ, IDs and IPs, and needs no IAM permissions.",
+    "option_explanations": [
+     "The Tagging API doesn't report an instance's AZ and needs IAM permissions.",
+     "The CloudWatch agent config doesn't contain the AZ.",
+     "Correct. IMDS at 169.254.169.254 gives the AZ with no IAM permissions.",
+     "The hypervisor doesn't publish to SQS."
+    ]
    },
    {
     "type": "mcq",
@@ -203,7 +273,13 @@
     "correct": [
      3
     ],
-    "explanation": "IMDS is local to the host and unauthenticated by IAM, which is why IMDSv2 adds session tokens."
+    "explanation": "IMDS is local to the host and unauthenticated by IAM, which is why IMDSv2 adds session tokens.",
+    "option_explanations": [
+     "IMDS isn't public and doesn't use SigV4 signing.",
+     "IMDS isn't a VPC endpoint, and bucket policies don't apply.",
+     "It isn't a regional API, and ec2:DescribeInstances isn't needed.",
+     "Correct. IMDS is link-local, instance-only, and needs no IAM permissions."
+    ]
    }
   ]
  },
@@ -222,7 +298,13 @@
     "correct": [
      0
     ],
-    "explanation": "A delete without a version ID adds a delete marker. Removing the marker restores the object."
+    "explanation": "A delete without a version ID adds a delete marker. Removing the marker restores the object.",
+    "option_explanations": [
+     "Correct. A plain DELETE adds a delete marker; older versions stay.",
+     "A plain DELETE removes no version; it only adds a marker.",
+     "A plain DELETE isn't refused; MFA applies only if MFA Delete is configured.",
+     "Nothing is erased, so storage billing continues."
+    ]
    },
    {
     "type": "mcq",
@@ -236,7 +318,13 @@
     "correct": [
      1
     ],
-    "explanation": "Only a delete that specifies the version ID is permanent; a plain delete merely hides the object behind a marker."
+    "explanation": "Only a delete that specifies the version ID is permanent; a plain delete merely hides the object behind a marker.",
+    "option_explanations": [
+     "A plain DELETE only adds a delete marker; the version stays.",
+     "Correct. Only a DELETE naming the version ID is permanent.",
+     "Lifecycle delete markers don't permanently remove a specific version.",
+     "Suspending versioning doesn't remove existing versions."
+    ]
    }
   ]
  },
@@ -255,7 +343,13 @@
     "correct": [
      2
     ],
-    "explanation": "IMDSv2 requires a PUT with `X-aws-ec2-metadata-token-ttl-seconds`, then each GET includes the token header."
+    "explanation": "IMDSv2 requires a PUT with `X-aws-ec2-metadata-token-ttl-seconds`, then each GET includes the token header.",
+    "option_explanations": [
+     "The token endpoint is /latest/api/token and uses PUT, not GET.",
+     "sts:GetSessionToken is unrelated to the IMDSv2 token.",
+     "Correct. IMDSv2 uses a PUT with a TTL header to get a token.",
+     "/latest/user-data holds launch scripts and isn't a token endpoint."
+    ]
    },
    {
     "type": "mcq",
@@ -269,7 +363,13 @@
     "correct": [
      3
     ],
-    "explanation": "After the PUT returns a token, each GET passes it in `X-aws-ec2-metadata-token`. The TTL header is only used on the PUT."
+    "explanation": "After the PUT returns a token, each GET passes it in `X-aws-ec2-metadata-token`. The TTL header is only used on the PUT.",
+    "option_explanations": [
+     "IMDS doesn't use SigV4 or Bearer authorization.",
+     "That's the STS credential header, not the IMDS token.",
+     "That TTL header is only sent on the PUT that requests the token.",
+     "Correct. Each GET passes the token in this header."
+    ]
    }
   ]
  },
@@ -288,7 +388,13 @@
     "correct": [
      0
     ],
-    "explanation": "Geolocation routes by user location (most specific match), and a Default record covers everything else."
+    "explanation": "Geolocation routes by user location (most specific match), and a Default record covers everything else.",
+    "option_explanations": [
+     "Correct. Geolocation routes by user location; Default catches the rest.",
+     "Latency routing picks the lowest-latency Region, not language or country.",
+     "Weighted routing splits traffic by proportion, ignoring location.",
+     "Failover is for primary/backup availability, not location."
+    ]
    },
    {
     "type": "mcq",
@@ -302,7 +408,13 @@
     "correct": [
      1
     ],
-    "explanation": "Geolocation doesn't fall back to nearest; unmatched users need a Default record."
+    "explanation": "Geolocation doesn't fall back to nearest; unmatched users need a Default record.",
+    "option_explanations": [
+     "Geolocation doesn't use latency; unmatched users need a Default record.",
+     "Correct. Unmatched users get the Default record, if it exists.",
+     "Geolocation has no nearest-match fallback.",
+     "There is no random selection; an unmatched user gets no answer without a Default."
+    ]
    }
   ]
  },
@@ -321,7 +433,13 @@
     "correct": [
      2
     ],
-    "explanation": "Compliance is a hard constraint: Regions that don't satisfy it are discarded before comparing latency, services or price."
+    "explanation": "Compliance is a hard constraint: Regions that don't satisfy it are discarded before comparing latency, services or price.",
+    "option_explanations": [
+     "More AZs help availability but don't decide legal compliance.",
+     "Price is a later trade-off, not a hard constraint.",
+     "Correct. Compliance is a hard constraint that eliminates Regions first.",
+     "Engineer location doesn't matter for where data must reside."
+    ]
    },
    {
     "type": "mcq",
@@ -335,7 +453,13 @@
     "correct": [
      3
     ],
-    "explanation": "Compliance is binary; latency, price and service availability are trade-offs to optimize afterwards."
+    "explanation": "Compliance is binary; latency, price and service availability are trade-offs to optimize afterwards.",
+    "option_explanations": [
+     "A small price gap only ranks Regions; it doesn't exclude any.",
+     "A few ms of latency is a trade-off, not an elimination criterion.",
+     "A missing service is a ranking factor, since you can often use another Region.",
+     "Correct. A legal data-location rule rules Regions out outright."
+    ]
    }
   ]
  },
@@ -354,7 +478,13 @@
     "correct": [
      0
     ],
-    "explanation": "Byte-range fetches return only the requested part, saving time and data transfer."
+    "explanation": "Byte-range fetches return only the requested part, saving time and data transfer.",
+    "option_explanations": [
+     "Correct. A Range GET fetches only bytes 0-99.",
+     "Transfer Acceleration speeds up transfers but still downloads whole objects.",
+     "S3 Select queries content, and has no multipart upload mode.",
+     "Copying first adds cost and time and doesn't help read a header."
+    ]
    },
    {
     "type": "mcq",
@@ -368,7 +498,13 @@
     "correct": [
      1
     ],
-    "explanation": "Range GETs can parallelize big downloads, and also fetch just a slice of an object."
+    "explanation": "Range GETs can parallelize big downloads, and also fetch just a slice of an object.",
+    "option_explanations": [
+     "Encryption keys apply to whole objects, not byte ranges.",
+     "Correct. A Range GET retrieves just a slice such as a header.",
+     "Lifecycle transitions move whole objects, not parts.",
+     "Versioning applies to whole objects, not parts."
+    ]
    }
   ]
  },
@@ -389,7 +525,14 @@
      0,
      1
     ],
-    "explanation": "MFA Delete only guards destructive operations: permanent version deletion and suspending versioning."
+    "explanation": "MFA Delete only guards destructive operations: permanent version deletion and suspending versioning.",
+    "option_explanations": [
+     "Correct. Suspending versioning requires MFA when MFA Delete is on.",
+     "Correct. Permanently deleting a version needs an MFA code.",
+     "Reads aren't destructive, so no MFA is needed.",
+     "Uploads aren't guarded by MFA Delete.",
+     "Tagging isn't a destructive action requiring MFA."
+    ]
    },
    {
     "type": "mcq",
@@ -405,7 +548,14 @@
      2,
      3
     ],
-    "explanation": "A plain delete just adds a marker, so it doesn't need MFA; permanent deletes and suspending versioning do."
+    "explanation": "A plain delete just adds a marker, so it doesn't need MFA; permanent deletes and suspending versioning do.",
+    "option_explanations": [
+     "Listing is a read and needs no MFA.",
+     "Uploads don't require MFA.",
+     "Correct. Changing versioning state requires MFA.",
+     "Correct. Permanently deleting a version ID requires MFA.",
+     "A plain DELETE only adds a marker and needs no MFA."
+    ]
    }
   ]
  },
@@ -424,7 +574,13 @@
     "correct": [
      2
     ],
-    "explanation": "Geoproximity shifts traffic by distance, with bias values that expand or shrink a Region's reach."
+    "explanation": "Geoproximity shifts traffic by distance, with bias values that expand or shrink a Region's reach.",
+    "option_explanations": [
+     "Equal weights split traffic evenly by proportion, not by distance.",
+     "Multivalue returns several healthy records; it doesn't shift by geography.",
+     "Correct. Bias grows or shrinks a resource's geographic reach.",
+     "Failover sends traffic to the secondary only when the primary is unhealthy."
+    ]
    },
    {
     "type": "mcq",
@@ -438,7 +594,13 @@
     "correct": [
      3
     ],
-    "explanation": "Positive bias (1 to 99) expands a resource's area; negative bias (-1 to -99) shrinks it."
+    "explanation": "Positive bias (1 to 99) expands a resource's area; negative bias (-1 to -99) shrinks it.",
+    "option_explanations": [
+     "Bias doesn't block traffic; it adjusts the area served.",
+     "Bias has no effect on TTL.",
+     "Bias doesn't create failover behavior.",
+     "Correct. Negative bias shrinks the area routed to that resource."
+    ]
    }
   ]
  },
@@ -457,7 +619,13 @@
     "correct": [
      0
     ],
-    "explanation": "Accelerated computing instances use GPUs or other hardware accelerators for ML and graphics."
+    "explanation": "Accelerated computing instances use GPUs or other hardware accelerators for ML and graphics.",
+    "option_explanations": [
+     "Correct. P and G families have GPUs for ML training.",
+     "Compute optimized targets CPU-bound work, not GPUs.",
+     "Storage optimized targets high local disk throughput and IOPS.",
+     "Memory optimized targets large in-memory workloads, not GPUs."
+    ]
    },
    {
     "type": "mcq",
@@ -471,7 +639,13 @@
     "correct": [
      1
     ],
-    "explanation": "G and P families carry GPUs and belong to accelerated computing."
+    "explanation": "G and P families carry GPUs and belong to accelerated computing.",
+    "option_explanations": [
+     "General purpose has no GPUs; it balances CPU and memory.",
+     "Correct. G and P families have GPUs and are accelerated computing.",
+     "Storage optimized targets high local IOPS, not GPUs.",
+     "Memory optimized targets high RAM per vCPU, not GPUs."
+    ]
    }
   ]
  },
@@ -492,7 +666,14 @@
      1,
      3
     ],
-    "explanation": "Route 53 charges for hosted zones and domain registration, plus queries (Alias queries to AWS resources are free)."
+    "explanation": "Route 53 charges for hosted zones and domain registration, plus queries (Alias queries to AWS resources are free).",
+    "option_explanations": [
+     "Alias queries and records to AWS resources are free.",
+     "Correct. Each hosted zone has a monthly charge.",
+     "Health checks are billed monthly, not per deletion.",
+     "Correct. Registering a domain carries an annual fee.",
+     "There is no per-record setup fee."
+    ]
    },
    {
     "type": "mcq",
@@ -508,7 +689,14 @@
      1,
      4
     ],
-    "explanation": "Zones and registration are billed; Alias queries to AWS resources are not."
+    "explanation": "Zones and registration are billed; Alias queries to AWS resources are not.",
+    "option_explanations": [
+     "Alias queries to AWS resources like ELB are free.",
+     "Correct. A registered domain is renewed yearly at a charge.",
+     "Hosted zones aren't billed per Region of replication.",
+     "Creating records is free.",
+     "Correct. Each hosted zone is billed monthly."
+    ]
    }
   ]
  },
@@ -527,7 +715,13 @@
     "correct": [
      2
     ],
-    "explanation": "`ex` sets a time-to-live in seconds, limiting how stale lazy-loaded data can get."
+    "explanation": "`ex` sets a time-to-live in seconds, limiting how stale lazy-loaded data can get.",
+    "option_explanations": [
+     "nx isn't a TTL option; it only sets the key if absent.",
+     "persist removes a TTL; it doesn't set one and takes no value.",
+     "Correct. ex sets expiry in seconds, so it lasts 10 minutes.",
+     "rename changes a key name and has nothing to do with TTL."
+    ]
    },
    {
     "type": "mcq",
@@ -541,7 +735,13 @@
     "correct": [
      3
     ],
-    "explanation": "Lazy loading can serve stale values; expiry caps the staleness."
+    "explanation": "Lazy loading can serve stale values; expiry caps the staleness.",
+    "option_explanations": [
+     "A TTL doesn't affect write synchronization.",
+     "TTL is about expiry, not encryption.",
+     "TTL doesn't involve database replication.",
+     "Correct. Expiry caps how long stale data can persist."
+    ]
    }
   ]
  },
@@ -560,7 +760,13 @@
     "correct": [
      0
     ],
-    "explanation": "Every statement needs `Effect`. `Principal` is only for resource-based and trust policies; Condition and Sid are optional."
+    "explanation": "Every statement needs `Effect`. `Principal` is only for resource-based and trust policies; Condition and Sid are optional.",
+    "option_explanations": [
+     "Correct. Effect (Allow or Deny) is mandatory in every statement.",
+     "Principal isn't used in identity-based policies.",
+     "Condition is optional.",
+     "Version is a top-level policy element, not per statement."
+    ]
    },
    {
     "type": "mcq",
@@ -574,7 +780,13 @@
     "correct": [
      1
     ],
-    "explanation": "`Effect` is Allow or Deny and is mandatory in every statement."
+    "explanation": "`Effect` is Allow or Deny and is mandatory in every statement.",
+    "option_explanations": [
+     "Sid is an optional identifier.",
+     "Correct. Effect is Allow or Deny and decides the outcome.",
+     "Condition adds optional restrictions; it doesn't decide the outcome.",
+     "Resource says which objects the statement applies to, not Allow or Deny."
+    ]
    }
   ]
  },
@@ -593,7 +805,13 @@
     "correct": [
      2
     ],
-    "explanation": "CLI/SDK allow up to 168 hours (7 days); the console limits you to 12 hours."
+    "explanation": "CLI/SDK allow up to 168 hours (7 days); the console limits you to 12 hours.",
+    "option_explanations": [
+     "That's too short; the CLI/SDK limit is 7 days.",
+     "3 days is below the CLI/SDK maximum.",
+     "Correct. CLI and SDK allow up to 168 hours.",
+     "30 days exceeds the 7-day maximum."
+    ]
    },
    {
     "type": "mcq",
@@ -607,7 +825,13 @@
     "correct": [
      3
     ],
-    "explanation": "Console: up to 12 hours. CLI/SDK: up to 168 hours."
+    "explanation": "Console: up to 12 hours. CLI/SDK: up to 168 hours.",
+    "option_explanations": [
+     "7 days is the CLI/SDK limit; the console allows less.",
+     "The console allows more than 1 hour.",
+     "The console allows more than 30 minutes.",
+     "Correct. The console caps pre-signed URLs at 12 hours."
+    ]
    }
   ]
  },
@@ -626,7 +850,13 @@
     "correct": [
      0
     ],
-    "explanation": "Flow logs record accepted and rejected traffic at the VPC, subnet or ENI level."
+    "explanation": "Flow logs record accepted and rejected traffic at the VPC, subnet or ENI level.",
+    "option_explanations": [
+     "Correct. Flow logs record ACCEPT or REJECT per connection.",
+     "Config tracks resource configuration, not per-connection outcomes.",
+     "CloudTrail data events log API activity on resources, not network traffic.",
+     "Trusted Advisor gives account checks, not connection records."
+    ]
    },
    {
     "type": "mcq",
@@ -640,7 +870,13 @@
     "correct": [
      1
     ],
-    "explanation": "CloudTrail records API calls, not packets. Flow logs include an action field of ACCEPT or REJECT."
+    "explanation": "CloudTrail records API calls, not packets. Flow logs include an action field of ACCEPT or REJECT.",
+    "option_explanations": [
+     "CloudTrail records API calls, not packet accept/reject.",
+     "Correct. Flow logs include an ACCEPT or REJECT action field.",
+     "Config records configuration history, not packet decisions.",
+     "CloudWatch agent memory metrics have nothing to do with network rejects."
+    ]
    }
   ]
  },
@@ -659,7 +895,13 @@
     "correct": [
      2
     ],
-    "explanation": "Only the ALB needs to face the internet; app and data tiers stay private."
+    "explanation": "Only the ALB needs to face the internet; app and data tiers stay private.",
+    "option_explanations": [
+     "The database shouldn't be public, and the ALB needs to be.",
+     "Public app and database tiers expand the attack surface.",
+     "Correct. Only the ALB faces the internet; the rest stays private.",
+     "The ALB must be public to receive internet traffic."
+    ]
    },
    {
     "type": "mcq",
@@ -673,7 +915,13 @@
     "correct": [
      3
     ],
-    "explanation": "Least exposure: the DB accepts traffic only from the app tier, never the internet."
+    "explanation": "Least exposure: the DB accepts traffic only from the app tier, never the internet.",
+    "option_explanations": [
+     "RDS can be launched in public subnets; it just shouldn't be.",
+     "Load balancers talk to the app tier, not to the database.",
+     "Multi-AZ works regardless of subnet type.",
+     "Correct. Only the app tier needs to reach the database."
+    ]
    }
   ]
  },
@@ -692,7 +940,13 @@
     "correct": [
      0
     ],
-    "explanation": "The private route table sends 0.0.0.0/0 to the NAT gateway, which sits in a public subnet whose route table points at the IGW."
+    "explanation": "The private route table sends 0.0.0.0/0 to the NAT gateway, which sits in a public subnet whose route table points at the IGW.",
+    "option_explanations": [
+     "Correct. The NAT gateway sits in a public subnet routed to the IGW.",
+     "The NAT gateway must be in a public subnet, and it sits before the IGW.",
+     "VPC peering isn't used for internet access.",
+     "Instances use only their own private route table."
+    ]
    },
    {
     "type": "mcq",
@@ -706,7 +960,13 @@
     "correct": [
      1
     ],
-    "explanation": "The NAT gateway itself needs internet access via an IGW, so it lives in a public subnet."
+    "explanation": "The NAT gateway itself needs internet access via an IGW, so it lives in a public subnet.",
+    "option_explanations": [
+     "A NAT in a private subnet has no route to the internet.",
+     "Correct. The NAT needs an IGW route, so it lives in a public subnet.",
+     "The NAT gateway needs routes to the IGW.",
+     "NACLs filter traffic and don't host NAT gateways."
+    ]
    }
   ]
  },
@@ -725,7 +985,13 @@
     "correct": [
      2
     ],
-    "explanation": "Health checkers come from published IP ranges that must be allowed by the security group or firewall."
+    "explanation": "Health checkers come from published IP ranges that must be allowed by the security group or firewall.",
+    "option_explanations": [
+     "Record count doesn't stop health checks.",
+     "DNS name length isn't a limit for health checks.",
+     "Correct. The security group must allow Route 53 health checker IPs.",
+     "Record TTL doesn't affect health checks."
+    ]
    },
    {
     "type": "mcq",
@@ -739,7 +1005,13 @@
     "correct": [
      3
     ],
-    "explanation": "Health checks originate from AWS-published IPs and need inbound access to the endpoint."
+    "explanation": "Health checks originate from AWS-published IPs and need inbound access to the endpoint.",
+    "option_explanations": [
+     "Outbound rules and a zone ID don't let checkers in.",
+     "Health checks don't use Elastic IPs.",
+     "Weight has no effect on whether probes succeed.",
+     "Correct. Allow inbound traffic from the Route 53 checker IP ranges."
+    ]
    }
   ]
  },
@@ -758,7 +1030,13 @@
     "correct": [
      0
     ],
-    "explanation": "Backtrack rewinds the existing cluster to an earlier time without restoring from a backup."
+    "explanation": "Backtrack rewinds the existing cluster to an earlier time without restoring from a backup.",
+    "option_explanations": [
+     "Correct. Backtrack rewinds the cluster in place.",
+     "That describes cross-Region snapshot copying, not Backtrack.",
+     "That describes read replicas, not Backtrack.",
+     "That describes Multi-AZ failover, not Backtrack."
+    ]
    },
    {
     "type": "mcq",
@@ -772,7 +1050,13 @@
     "correct": [
      1
     ],
-    "explanation": "PITR creates a new cluster; Backtrack rewinds in place and can move back and forth."
+    "explanation": "PITR creates a new cluster; Backtrack rewinds in place and can move back and forth.",
+    "option_explanations": [
+     "Backtrack doesn't copy to other Regions.",
+     "Correct. Backtrack rewinds in place; PITR creates a new cluster.",
+     "Backtrack works on the cluster's writer, not on replicas only.",
+     "Backtrack doesn't replay binary logs or use a standby."
+    ]
    }
   ]
  },
@@ -792,7 +1076,13 @@
      0,
      1
     ],
-    "explanation": "EBS is AZ-bound and cheaper; EFS is a multi-AZ shared Linux file system billed per use."
+    "explanation": "EBS is AZ-bound and cheaper; EFS is a multi-AZ shared Linux file system billed per use.",
+    "option_explanations": [
+     "Correct. EBS is single-AZ; EFS spans multiple AZs.",
+     "Correct. EFS costs more per GB than gp EBS.",
+     "EFS is for Linux (NFS), not mainly Windows.",
+     "EBS volumes are single-AZ, not regionally replicated."
+    ]
    },
    {
     "type": "mcq",
@@ -807,7 +1097,13 @@
      2,
      3
     ],
-    "explanation": "EFS is shared, multi-AZ, Linux-only, pay-per-use; EBS is provisioned and per-AZ."
+    "explanation": "EFS is shared, multi-AZ, Linux-only, pay-per-use; EBS is provisioned and per-AZ.",
+    "option_explanations": [
+     "EFS grows automatically; you don't provision its size.",
+     "EBS is billed for provisioned size, not data stored.",
+     "Correct. EFS is Linux-only and costs more than EBS.",
+     "Correct. Many instances across AZs can mount one EFS."
+    ]
    }
   ]
  },
@@ -826,7 +1122,13 @@
     "correct": [
      2
     ],
-    "explanation": "Subnets are AZ-scoped; use multiple subnets in different AZs for high availability."
+    "explanation": "Subnets are AZ-scoped; use multiple subnets in different AZs for high availability.",
+    "option_explanations": [
+     "A subnet doesn't span multiple AZs.",
+     "A subnet is tied to an AZ, not just a Region.",
+     "Correct. Each subnet lives in exactly one AZ.",
+     "Subnets belong to one VPC, not across VPCs."
+    ]
    },
    {
     "type": "mcq",
@@ -840,7 +1142,13 @@
     "correct": [
      3
     ],
-    "explanation": "Since a subnet exists in just one AZ, multi-AZ designs need multiple subnets."
+    "explanation": "Since a subnet exists in just one AZ, multi-AZ designs need multiple subnets.",
+    "option_explanations": [
+     "A subnet can't span AZs.",
+     "Subnets are AZ-bound; no cross-zone routing option fixes that.",
+     "A subnet in another Region wouldn't be in the same VPC.",
+     "Correct. Use subnets in several AZs for resilience."
+    ]
    }
   ]
  },
@@ -859,7 +1167,13 @@
     "correct": [
      0
     ],
-    "explanation": "Capacity Reservations hold capacity in an AZ for any period; Regional RIs/Savings Plans don't guarantee capacity in an AZ."
+    "explanation": "Capacity Reservations hold capacity in an AZ for any period; Regional RIs/Savings Plans don't guarantee capacity in an AZ.",
+    "option_explanations": [
+     "Correct. A Capacity Reservation guarantees AZ capacity for any period.",
+     "A 3-year RI is a long commitment and regional RIs don't guarantee AZ capacity.",
+     "Spot capacity isn't guaranteed and can be interrupted.",
+     "Savings Plans give a discount but don't reserve capacity."
+    ]
    },
    {
     "type": "mcq",
@@ -873,7 +1187,13 @@
     "correct": [
      1
     ],
-    "explanation": "Capacity Reservations: any duration, specific AZ, charged even when idle."
+    "explanation": "Capacity Reservations: any duration, specific AZ, charged even when idle.",
+    "option_explanations": [
+     "Spot blocks don't reserve capacity at On-Demand rates.",
+     "Correct. They reserve capacity with no term, billed even when unused.",
+     "Convertible RIs involve a 1 or 3-year commitment.",
+     "Dedicated Hosts are physical servers, not a flexible capacity reservation."
+    ]
    }
   ]
  },
@@ -892,7 +1212,13 @@
     "correct": [
      2
     ],
-    "explanation": "Cache data that is read often, changes rarely and tolerates staleness."
+    "explanation": "Cache data that is read often, changes rarely and tolerates staleness.",
+    "option_explanations": [
+     "Images changing monthly are fine to cache.",
+     "Articles read often rarely change, which suits caching.",
+     "Correct. Fast-changing values like balances can't tolerate staleness.",
+     "Rarely edited pages are good cache candidates."
+    ]
    },
    {
     "type": "mcq",
@@ -906,7 +1232,13 @@
     "correct": [
      3
     ],
-    "explanation": "Caching pays off with high read-to-write ratios and stale-tolerant data."
+    "explanation": "Caching pays off with high read-to-write ratios and stale-tolerant data.",
+    "option_explanations": [
+     "Constantly changing exact data is a poor cache fit.",
+     "Data never read again gains nothing from caching.",
+     "Unique-per-request data never gets a cache hit.",
+     "Correct. Read-heavy, rarely changed, stale-tolerant data caches well."
+    ]
    }
   ]
  },
@@ -925,7 +1257,13 @@
     "correct": [
      0
     ],
-    "explanation": "The zone apex can't be a CNAME; Alias records work there and follow the target's IP changes."
+    "explanation": "The zone apex can't be a CNAME; Alias records work there and follow the target's IP changes.",
+    "option_explanations": [
+     "Correct. Alias records are allowed at the zone apex and target the ELB.",
+     "A TXT record doesn't resolve to the ELB.",
+     "A CNAME can't exist at the apex regardless of TTL.",
+     "You can't delegate an apex to an ELB via NS records."
+    ]
    },
    {
     "type": "mcq",
@@ -939,7 +1277,13 @@
     "correct": [
      1
     ],
-    "explanation": "CNAMEs can't exist at the apex; Alias records can, for AWS resources."
+    "explanation": "CNAMEs can't exist at the apex; Alias records can, for AWS resources.",
+    "option_explanations": [
+     "Alias targets are AWS resources, not any third-party target.",
+     "Correct. CNAMEs can't be used at the apex; Alias records can.",
+     "Alias records are free to AWS targets, and TTL isn't their selling point.",
+     "Alias records follow AWS target IP changes automatically."
+    ]
    }
   ]
  },
@@ -958,7 +1302,13 @@
     "correct": [
      2
     ],
-    "explanation": "Recycle Bin retains deleted snapshots (and AMIs) for 1 day to 1 year based on rules."
+    "explanation": "Recycle Bin retains deleted snapshots (and AMIs) for 1 day to 1 year based on rules.",
+    "option_explanations": [
+     "Snapshot lifecycle copying doesn't retain deleted snapshots.",
+     "Multi-Attach lets several instances share a volume.",
+     "Correct. Recycle Bin retains deleted snapshots per retention rule.",
+     "Elastic Volumes resizes live volumes; it doesn't restore deleted snapshots."
+    ]
    },
    {
     "type": "mcq",
@@ -972,7 +1322,13 @@
     "correct": [
      3
     ],
-    "explanation": "Recycle Bin supports snapshots and AMIs with retention from 1 day to 1 year."
+    "explanation": "Recycle Bin supports snapshots and AMIs with retention from 1 day to 1 year.",
+    "option_explanations": [
+     "Recycle Bin doesn't cover instances or security groups.",
+     "S3 is not covered; use versioning instead.",
+     "Recycle Bin doesn't protect Elastic IPs or ENIs.",
+     "Correct. Recycle Bin covers EBS snapshots and AMIs."
+    ]
    }
   ]
  },
@@ -991,7 +1347,13 @@
     "correct": [
      0
     ],
-    "explanation": "A Deny with `aws:SecureTransport` false refuses plain HTTP; Deny overrides any Allow."
+    "explanation": "A Deny with `aws:SecureTransport` false refuses plain HTTP; Deny overrides any Allow.",
+    "option_explanations": [
+     "Correct. A Deny on SecureTransport false blocks HTTP requests.",
+     "An Allow can't refuse requests, so it enforces nothing.",
+     "That condition concerns encryption headers, not TLS transport.",
+     "Denying 0.0.0.0/0 would block everything, not just plain HTTP."
+    ]
    },
    {
     "type": "mcq",
@@ -1005,7 +1367,13 @@
     "correct": [
      1
     ],
-    "explanation": "It is true for HTTPS requests and false for HTTP, which makes it usable in a Deny to enforce TLS."
+    "explanation": "It is true for HTTPS requests and false for HTTP, which makes it usable in a Deny to enforce TLS.",
+    "option_explanations": [
+     "The condition has nothing to do with signature version.",
+     "Correct. SecureTransport is false for plain HTTP requests.",
+     "The condition doesn't check network origin.",
+     "Content-MD5 isn't involved in this condition."
+    ]
    }
   ]
  },
@@ -1024,7 +1392,13 @@
     "correct": [
      2
     ],
-    "explanation": "Flexible Retrieval: Expedited 1-5 minutes, Standard 3-5 hours, Bulk 5-12 hours."
+    "explanation": "Flexible Retrieval: Expedited 1-5 minutes, Standard 3-5 hours, Bulk 5-12 hours.",
+    "option_explanations": [
+     "Standard takes hours, not minutes.",
+     "Bulk is the slowest and cheapest tier.",
+     "Correct. Expedited usually finishes in 1-5 minutes.",
+     "Instant Retrieval is a separate storage class, not a Flexible Retrieval tier."
+    ]
    },
    {
     "type": "mcq",
@@ -1038,7 +1412,13 @@
     "correct": [
      3
     ],
-    "explanation": "Deep Archive has a 180-day minimum; Instant and Flexible Retrieval have 90 days."
+    "explanation": "Deep Archive has a 180-day minimum; Instant and Flexible Retrieval have 90 days.",
+    "option_explanations": [
+     "30 days is the minimum for Standard-IA, not Deep Archive.",
+     "90 days applies to Glacier Instant and Flexible Retrieval.",
+     "365 days isn't an S3 Glacier minimum.",
+     "Correct. Deep Archive has a 180-day minimum."
+    ]
    }
   ]
  },
@@ -1057,7 +1437,13 @@
     "correct": [
      0
     ],
-    "explanation": "SDKs are libraries used inside code, available for many languages."
+    "explanation": "SDKs are libraries used inside code, available for many languages.",
+    "option_explanations": [
+     "Correct. The SDK is a library used in application code.",
+     "The console is a manual web UI, not code-driven.",
+     "A cron CLI script isn't the library meant for application code.",
+     "Cloud9 manual commands aren't part of application logic."
+    ]
    },
    {
     "type": "mcq",
@@ -1071,7 +1457,13 @@
     "correct": [
      1
     ],
-    "explanation": "Console = web UI; CLI = commands; SDK = code library."
+    "explanation": "Console = web UI; CLI = commands; SDK = code library.",
+    "option_explanations": [
+     "The console is a web UI, not for embedding in code.",
+     "Correct. SDKs are libraries embedded in code.",
+     "CloudShell is an interactive browser terminal, not a code library.",
+     "The CLI is for commands in a terminal, not embedded in application code."
+    ]
    }
   ]
  },
@@ -1090,7 +1482,13 @@
     "correct": [
      2
     ],
-    "explanation": "Buckets are created per Region (names are globally unique, but data lives in the chosen Region)."
+    "explanation": "Buckets are created per Region (names are globally unique, but data lives in the chosen Region).",
+    "option_explanations": [
+     "Buckets aren't placed in an AZ.",
+     "S3 doesn't replicate across all Regions automatically.",
+     "Correct. You choose the Region at bucket creation.",
+     "S3 isn't tied to a VPC subnet."
+    ]
    },
    {
     "type": "mcq",
@@ -1104,7 +1502,13 @@
     "correct": [
      3
     ],
-    "explanation": "Buckets are regional; data doesn't leave the Region unless configured (e.g. replication)."
+    "explanation": "Buckets are regional; data doesn't leave the Region unless configured (e.g. replication).",
+    "option_explanations": [
+     "Global tables are a DynamoDB feature.",
+     "Tags don't control where data is stored.",
+     "Buckets are regional, not tied to an AZ.",
+     "Correct. Creating the bucket in eu-central-1 keeps data in Frankfurt."
+    ]
    }
   ]
  },
@@ -1123,7 +1527,13 @@
     "correct": [
      0
     ],
-    "explanation": "EC2 Instance Savings Plans commit to $/hour, locked to a family and Region, flexible on size and OS."
+    "explanation": "EC2 Instance Savings Plans commit to $/hour, locked to a family and Region, flexible on size and OS.",
+    "option_explanations": [
+     "Correct. It commits $/hour for a family and Region with flexible size and OS.",
+     "A Standard RI is tied to a specific instance type and size.",
+     "Scheduled RIs are no longer offered and don't fit this need.",
+     "Spot has no commitment and can be interrupted."
+    ]
    },
    {
     "type": "mcq",
@@ -1137,7 +1547,13 @@
     "correct": [
      1
     ],
-    "explanation": "Savings Plans are a $ per hour commitment, with up to about 72% savings."
+    "explanation": "Savings Plans are a $ per hour commitment, with up to about 72% savings.",
+    "option_explanations": [
+     "Savings Plans aren't measured in instances.",
+     "Correct. Savings Plans commit to a dollar spend per hour.",
+     "They aren't based on vCPU counts.",
+     "They aren't based on memory."
+    ]
    }
   ]
  },
@@ -1156,7 +1572,13 @@
     "correct": [
      2
     ],
-    "explanation": "Dedicated Hosts expose sockets and cores for BYOL and give placement control; Dedicated Instances don't."
+    "explanation": "Dedicated Hosts expose sockets and cores for BYOL and give placement control; Dedicated Instances don't.",
+    "option_explanations": [
+     "Spot doesn't provide a dedicated server.",
+     "Dedicated Instances isolate hardware but don't expose sockets and cores.",
+     "Correct. A Dedicated Host shows sockets and cores for BYOL.",
+     "Shared tenancy isn't dedicated."
+    ]
    },
    {
     "type": "mcq",
@@ -1170,7 +1592,13 @@
     "correct": [
      3
     ],
-    "explanation": "Hosts allow socket/core-based licensing and instance placement control; Dedicated Instances only isolate hardware."
+    "explanation": "Hosts allow socket/core-based licensing and instance placement control; Dedicated Instances only isolate hardware.",
+    "option_explanations": [
+     "A Host is dedicated hardware, not shared.",
+     "Hosts are billed; they have an hourly cost.",
+     "Hosts aren't limited to Windows.",
+     "Correct. Hosts expose sockets and cores for per-core licensing."
+    ]
    }
   ]
  },
@@ -1189,7 +1617,13 @@
     "correct": [
      0
     ],
-    "explanation": "Beyond 32,000 IOPS requires Nitro instances with io1/io2."
+    "explanation": "Beyond 32,000 IOPS requires Nitro instances with io1/io2.",
+    "option_explanations": [
+     "Correct. Beyond 32,000 IOPS needs Nitro instances with io1/io2.",
+     "Burstable T-series instances don't meet this requirement.",
+     "Instance store isn't an EBS volume.",
+     "A Dedicated Host doesn't itself unlock higher IOPS."
+    ]
    },
    {
     "type": "mcq",
@@ -1203,7 +1637,13 @@
     "correct": [
      1
     ],
-    "explanation": "Higher than 32,000 IOPS needs both Nitro and io1/io2."
+    "explanation": "Higher than 32,000 IOPS needs both Nitro and io1/io2.",
+    "option_explanations": [
+     "gp2 maxes at 16,000 IOPS, even on Nitro.",
+     "Correct. Exceeding 32,000 IOPS needs io1/io2 on Nitro.",
+     "st1 is HDD and has low IOPS limits.",
+     "Pre-Nitro instances cap at 32,000 IOPS."
+    ]
    }
   ]
  },
@@ -1222,7 +1662,13 @@
     "correct": [
      2
     ],
-    "explanation": "Provisioned IOPS SSDs are for critical low-latency workloads and support Multi-Attach."
+    "explanation": "Provisioned IOPS SSDs are for critical low-latency workloads and support Multi-Attach.",
+    "option_explanations": [
+     "gp3 doesn't support Multi-Attach.",
+     "st1 is HDD, built for throughput, not low latency.",
+     "Correct. io1/io2 provide high IOPS, low latency and Multi-Attach.",
+     "sc1 is cold HDD for infrequent access."
+    ]
    },
    {
     "type": "mcq",
@@ -1236,7 +1682,13 @@
     "correct": [
      3
     ],
-    "explanation": "sc1 is lowest cost for infrequent access; HDD volumes can't be boot volumes."
+    "explanation": "sc1 is lowest cost for infrequent access; HDD volumes can't be boot volumes.",
+    "option_explanations": [
+     "io2 Block Express is a premium SSD, not the cheapest.",
+     "gp3 costs more than sc1 and is meant for general use.",
+     "st1 costs more than sc1.",
+     "Correct. sc1 is the lowest-cost EBS type for infrequent access."
+    ]
    }
   ]
  },
@@ -1255,7 +1707,13 @@
     "correct": [
      0
     ],
-    "explanation": "Predictable steady use benefits most from long-term commitments (Reserved Instances or Savings Plans)."
+    "explanation": "Predictable steady use benefits most from long-term commitments (Reserved Instances or Savings Plans).",
+    "option_explanations": [
+     "Correct. A 3-year Standard RI gives the deepest discount for steady use.",
+     "On-Demand costs the most for continuous use.",
+     "Spot can be interrupted, which isn't suitable for a steady database.",
+     "Capacity Reservations give no discount."
+    ]
    },
    {
     "type": "mcq",
@@ -1269,7 +1727,13 @@
     "correct": [
      1
     ],
-    "explanation": "RIs reward steady-state usage with bigger discounts for longer terms."
+    "explanation": "RIs reward steady-state usage with bigger discounts for longer terms.",
+    "option_explanations": [
+     "Short interruptible bursts suit Spot or On-Demand.",
+     "Correct. RIs reward constant, predictable usage.",
+     "Unpredictable spikes don't suit a long commitment.",
+     "Fault-tolerant batch jobs suit Spot."
+    ]
    }
   ]
  },
@@ -1288,7 +1752,13 @@
     "correct": [
      2
     ],
-    "explanation": "Security groups are stateful; return traffic for an allowed flow is permitted."
+    "explanation": "Security groups are stateful; return traffic for an allowed flow is permitted.",
+    "option_explanations": [
+     "Outbound rules are evaluated; they simply aren't needed for replies.",
+     "NACLs are stateless and need explicit reply rules.",
+     "Correct. Security groups are stateful, so replies are allowed.",
+     "Replies use the same connection, not a different open port."
+    ]
    },
    {
     "type": "mcq",
@@ -1302,7 +1772,13 @@
     "correct": [
      3
     ],
-    "explanation": "NACLs evaluate each direction separately; security groups are stateful."
+    "explanation": "NACLs evaluate each direction separately; security groups are stateful.",
+    "option_explanations": [
+     "Security groups are stateful.",
+     "Route tables don't filter traffic by direction.",
+     "An IGW doesn't filter traffic.",
+     "Correct. NACLs are stateless and evaluate each direction."
+    ]
    }
   ]
  },
@@ -1321,7 +1797,13 @@
     "correct": [
      0
     ],
-    "explanation": "By default the root volume is deleted at termination; clearing that flag preserves it."
+    "explanation": "By default the root volume is deleted at termination; clearing that flag preserves it.",
+    "option_explanations": [
+     "Correct. Clearing Delete on Termination preserves the root volume.",
+     "An instance store root isn't persistent and would lose data.",
+     "Detailed monitoring doesn't affect volume retention.",
+     "An Elastic IP doesn't keep the volume."
+    ]
    },
    {
     "type": "mcq",
@@ -1335,7 +1817,13 @@
     "correct": [
      1
     ],
-    "explanation": "Root volumes default to Delete on Termination = true."
+    "explanation": "Root volumes default to Delete on Termination = true.",
+    "option_explanations": [
+     "The root volume is deleted by default, not kept.",
+     "Correct. Delete on Termination defaults to true for the root volume.",
+     "It isn't snapshotted to S3 automatically.",
+     "The Recycle Bin doesn't hold volumes."
+    ]
    }
   ]
  },
@@ -1354,7 +1842,13 @@
     "correct": [
      2
     ],
-    "explanation": "The metadata service is at the link-local address 169.254.169.254."
+    "explanation": "The metadata service is at the link-local address 169.254.169.254.",
+    "option_explanations": [
+     "It isn't an address from the VPC CIDR.",
+     "It isn't an Elastic IP.",
+     "Correct. The metadata service is at link-local 169.254.169.254.",
+     "It isn't a DNS name resolved by Route 53."
+    ]
    },
    {
     "type": "mcq",
@@ -1368,7 +1862,13 @@
     "correct": [
      3
     ],
-    "explanation": "User data is at `/latest/user-data/`; instance info is under `/latest/meta-data/`."
+    "explanation": "User data is at `/latest/user-data/`; instance info is under `/latest/meta-data/`.",
+    "option_explanations": [
+     "No script path exists under meta-data.",
+     "That path doesn't exist.",
+     "That path doesn't exist.",
+     "Correct. Launch scripts are served from /latest/user-data/."
+    ]
    }
   ]
  },
@@ -1388,7 +1888,13 @@
      0,
      1
     ],
-    "explanation": "Instance store is ephemeral; use it only for data you can lose."
+    "explanation": "Instance store is ephemeral; use it only for data you can lose.",
+    "option_explanations": [
+     "Correct. Scratch space can be lost, so instance store works.",
+     "Correct. A local cache is rebuildable and benefits from the speed.",
+     "It's ephemeral; losing the only copy of a database would be a disaster.",
+     "Instance store can't be shared across instances."
+    ]
    },
    {
     "type": "mcq",
@@ -1403,7 +1909,13 @@
      0,
      2
     ],
-    "explanation": "Instance store data is lost when the instance stops or fails."
+    "explanation": "Instance store data is lost when the instance stops or fails.",
+    "option_explanations": [
+     "Correct. Intermediate batch results can be regenerated.",
+     "Retention data needs durable storage; instance store is lost on failure.",
+     "Correct. A transient buffer fits ephemeral storage.",
+     "A shared repository needs EFS or S3, not instance store."
+    ]
    }
   ]
  },
@@ -1422,7 +1934,13 @@
     "correct": [
      0
     ],
-    "explanation": "NLB works at layer 4 with TCP/UDP, extreme performance and static IPs."
+    "explanation": "NLB works at layer 4 with TCP/UDP, extreme performance and static IPs.",
+    "option_explanations": [
+     "Correct. NLB is layer 4 with UDP, high throughput and static IPs.",
+     "ALB works at layer 7 and has no UDP or static IPs.",
+     "The Classic Load Balancer doesn't do UDP at this scale or fixed Elastic IPs.",
+     "That's Gateway Load Balancer, which inserts appliances."
+    ]
    },
    {
     "type": "mcq",
@@ -1436,7 +1954,13 @@
     "correct": [
      1
     ],
-    "explanation": "NLB supports one static/Elastic IP per AZ; ALB uses DNS names only."
+    "explanation": "NLB supports one static/Elastic IP per AZ; ALB uses DNS names only.",
+    "option_explanations": [
+     "ALB works at layer 7 and has no Elastic IPs.",
+     "Correct. NLB supports one static or Elastic IP per AZ.",
+     "Gateway Load Balancer doesn't use Elastic IPs this way.",
+     "EC2-Classic is retired and has no load balancer like that."
+    ]
    }
   ]
  },
@@ -1455,7 +1979,13 @@
     "correct": [
      2
     ],
-    "explanation": "SecureTransport in a Deny condition forces HTTPS; default encryption doesn't affect transport."
+    "explanation": "SecureTransport in a Deny condition forces HTTPS; default encryption doesn't affect transport.",
+    "option_explanations": [
+     "Default encryption protects data at rest, not transport.",
+     "Versioning and lifecycle don't affect transport.",
+     "Correct. Deny when aws:SecureTransport is false enforces HTTPS.",
+     "MFA Delete applies to deletions, not transport."
+    ]
    },
    {
     "type": "mcq",
@@ -1469,7 +1999,13 @@
     "correct": [
      3
     ],
-    "explanation": "With SSE-C, AWS doesn't store the key; you supply it on every request over HTTPS."
+    "explanation": "With SSE-C, AWS doesn't store the key; you supply it on every request over HTTPS.",
+    "option_explanations": [
+     "With SSE-S3 AWS manages the keys; you don't send any.",
+     "With SSE-KMS the key stays in KMS; you don't send it.",
+     "DSSE-KMS uses KMS keys, and you don't send them.",
+     "Correct. SSE-C needs your own key with each request."
+    ]
    }
   ]
  },
@@ -1488,7 +2024,13 @@
     "correct": [
      0
     ],
-    "explanation": "SSE-C lets the customer manage keys outside AWS; the key must be provided with each request over HTTPS."
+    "explanation": "SSE-C lets the customer manage keys outside AWS; the key must be provided with each request over HTTPS.",
+    "option_explanations": [
+     "Correct. SSE-C lets you keep your keys and supply them per request.",
+     "SSE-S3 keys are managed by AWS, not yours.",
+     "An AWS managed key is controlled by AWS.",
+     "Default encryption uses AWS-managed keys unless configured."
+    ]
    },
    {
     "type": "mcq",
@@ -1502,7 +2044,13 @@
     "correct": [
      1
     ],
-    "explanation": "S3 doesn't store SSE-C keys, so the same key is needed to read the object."
+    "explanation": "S3 doesn't store SSE-C keys, so the same key is needed to read the object.",
+    "option_explanations": [
+     "S3 doesn't store SSE-C keys, so it can't decrypt automatically.",
+     "Correct. You must send the same key over HTTPS.",
+     "The SSE-C key isn't held in KMS.",
+     "There's no decrypt call; S3 decrypts when given the key."
+    ]
    }
   ]
  },
@@ -1521,7 +2069,13 @@
     "correct": [
      2
     ],
-    "explanation": "Signed cookies cover many files; signed URLs are for single files."
+    "explanation": "Signed cookies cover many files; signed URLs are for single files.",
+    "option_explanations": [
+     "Signed URLs would be needed per file.",
+     "OAC restricts origin access and doesn't authorize viewers.",
+     "Correct. Signed cookies grant access to many files without a URL each.",
+     "Geo restriction blocks countries, not individual users."
+    ]
    },
    {
     "type": "mcq",
@@ -1535,7 +2089,13 @@
     "correct": [
      3
     ],
-    "explanation": "Signed URLs are per-object; cookies grant access to multiple files."
+    "explanation": "Signed URLs are per-object; cookies grant access to multiple files.",
+    "option_explanations": [
+     "Cookies suit many files; URLs aren't the better fit here.",
+     "HTTPS doesn't decide between URLs and cookies.",
+     "Both types can have an expiry.",
+     "Correct. Signed URLs fit a single object or non-cookie clients."
+    ]
    }
   ]
  },
@@ -1554,7 +2114,13 @@
     "correct": [
      0
     ],
-    "explanation": "Timeouts usually mean the security group blocks the new source IP."
+    "explanation": "Timeouts usually mean the security group blocks the new source IP.",
+    "option_explanations": [
+     "Correct. A new IP no longer matches the rule, so SSH times out.",
+     "Security group rules don't expire.",
+     "SSH uses port 22; 3389 is RDP.",
+     "A wrong key gives permission denied, not a timeout."
+    ]
    },
    {
     "type": "mcq",
@@ -1568,7 +2134,13 @@
     "correct": [
      1
     ],
-    "explanation": "A timeout means packets never reached the instance's SSH daemon, pointing to security groups or NACLs."
+    "explanation": "A timeout means packets never reached the instance's SSH daemon, pointing to security groups or NACLs.",
+    "option_explanations": [
+     "A wrong key gives 'Permission denied', not a timeout.",
+     "Correct. Timeouts mean packets are blocked before reaching sshd.",
+     "Missing sudo rights wouldn't cause a connection timeout.",
+     "Missing sshd would give 'Connection refused', not a timeout."
+    ]
    }
   ]
  },
@@ -1587,7 +2159,13 @@
     "correct": [
      2
     ],
-    "explanation": "EBS volumes are tied to an AZ; snapshots allow restoring elsewhere."
+    "explanation": "EBS volumes are tied to an AZ; snapshots allow restoring elsewhere.",
+    "option_explanations": [
+     "Elastic Volumes can't change the AZ.",
+     "Multi-Attach works only within a single AZ.",
+     "Correct. Snapshot it and restore a new volume in the other AZ.",
+     "There's no AZ parameter for reattaching."
+    ]
    },
    {
     "type": "mcq",
@@ -1601,7 +2179,13 @@
     "correct": [
      3
     ],
-    "explanation": "An EBS volume lives in one AZ; snapshot and restore to relocate it."
+    "explanation": "An EBS volume lives in one AZ; snapshot and restore to relocate it.",
+    "option_explanations": [
+     "Volumes aren't tied to an instance type.",
+     "Volumes are tied to an AZ, not a subnet CIDR.",
+     "A Dedicated Host isn't involved.",
+     "Correct. A volume lives only in the AZ where it was created."
+    ]
    }
   ]
  }

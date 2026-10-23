@@ -14,7 +14,13 @@
     "correct": [
      0
     ],
-    "explanation": "S3 can emit ObjectCreated events filtered by prefix/suffix straight to Lambda (or SNS/SQS), so no polling is needed."
+    "explanation": "S3 can emit ObjectCreated events filtered by prefix/suffix straight to Lambda (or SNS/SQS), so no polling is needed.",
+    "option_explanations": [
+     "Correct. S3 event notifications support suffix filters and can invoke Lambda directly.",
+     "CRR copies objects to another bucket; it never resizes or processes them.",
+     "Lifecycle rules transition or expire objects by age; they can't trigger processing on upload.",
+     "Works, but it means running and managing a server and polling, which is not minimal."
+    ]
    },
    {
     "type": "mcq",
@@ -29,7 +35,14 @@
     "correct": [
      1
     ],
-    "explanation": "Event notifications support prefix and suffix filters on object-created events, with Lambda, SNS or SQS as targets."
+    "explanation": "Event notifications support prefix and suffix filters on object-created events, with Lambda, SNS or SQS as targets.",
+    "option_explanations": [
+     "Requester Pays only changes who is billed for downloads.",
+     "Correct. Suffix filters on object-created events can target Lambda.",
+     "Object Lock prevents deletion or overwrite; it triggers nothing.",
+     "Inventory produces scheduled listings, not per-upload invocations.",
+     "Storage Lens gives usage and activity metrics, not event triggers."
+    ]
    }
   ]
  },
@@ -48,7 +61,13 @@
     "correct": [
      3
     ],
-    "explanation": "Security groups only have allow rules, so explicit denies of specific IPs are done in a subnet-level NACL."
+    "explanation": "Security groups only have allow rules, so explicit denies of specific IPs are done in a subnet-level NACL.",
+    "option_explanations": [
+     "Security groups only have allow rules; they can't deny an address, and per-instance is not subnet-wide.",
+     "A route to a NAT gateway doesn't block anything and NAT is for outbound traffic.",
+     "Endpoint policies control access to services through a VPC endpoint, not inbound client IPs.",
+     "Correct. NACLs apply per subnet and support explicit deny rules."
+    ]
    },
    {
     "type": "mcq",
@@ -62,7 +81,13 @@
     "correct": [
      1
     ],
-    "explanation": "NACLs are stateless, subnet-level and support both allow and deny; security groups are allow-only."
+    "explanation": "NACLs are stateless, subnet-level and support both allow and deny; security groups are allow-only.",
+    "option_explanations": [
+     "Route tables can't match on a source IP; blackhole routes only match destinations.",
+     "Correct. Security groups are allow-only, so a subnet NACL deny rule is the tool.",
+     "Peering connections do no IP filtering of their own.",
+     "Wrong: security groups have only allow rules."
+    ]
    }
   ]
  },
@@ -81,7 +106,13 @@
     "correct": [
      0
     ],
-    "explanation": "If a header changes the response, it must be part of the cache key, otherwise one cached variant is served to everyone."
+    "explanation": "If a header changes the response, it must be part of the cache key, otherwise one cached variant is served to everyone.",
+    "option_explanations": [
+     "Correct. Adding the header to the cache key stores separate copies per language.",
+     "HTTPS enforcement has nothing to do with which variant is cached.",
+     "A zero TTL would hurt caching and wouldn't separate variants properly by header.",
+     "WAF blocks requests; it doesn't separate cached language variants."
+    ]
    },
    {
     "type": "mcq",
@@ -95,7 +126,13 @@
     "correct": [
      1
     ],
-    "explanation": "Cache keys decide which requests share a cached object; forward and key on the varying header to get separate copies."
+    "explanation": "Cache keys decide which requests share a cached object; forward and key on the varying header to get separate copies.",
+    "option_explanations": [
+     "Origin Shield is an extra caching layer; it doesn't rewrite language headers.",
+     "Correct. Without the header in the cache key, one cached object serves everyone.",
+     "Edge locations don't detect language; the cache key decides which copy is served.",
+     "Field-level encryption protects specific POST fields, not Accept-Language."
+    ]
    }
   ]
  },
@@ -114,7 +151,13 @@
     "correct": [
      2
     ],
-    "explanation": "High availability means surviving the failure of a data centre/AZ, which requires redundancy across AZs."
+    "explanation": "High availability means surviving the failure of a data centre/AZ, which requires redundancy across AZs.",
+    "option_explanations": [
+     "An ASG adds capacity but a single AZ is still a single point of failure.",
+     "One big instance in one AZ is vertical scaling, not high availability.",
+     "Correct. Multi-AZ redundancy behind a load balancer survives an AZ failure.",
+     "Caching helps performance, but the single-AZ origin is still a single point of failure."
+    ]
    },
    {
     "type": "mcq",
@@ -129,7 +172,14 @@
     "correct": [
      3
     ],
-    "explanation": "Highly available systems run in at least two AZs so one failing AZ does not cause an outage."
+    "explanation": "Highly available systems run in at least two AZs so one failing AZ does not cause an outage.",
+    "option_explanations": [
+     "Edge caching is about latency, not surviving a data centre loss.",
+     "Cost allocation is about tagging and billing.",
+     "Vertical scaling means a bigger instance; it doesn't survive an AZ loss.",
+     "Correct. High availability means surviving the loss of an AZ or data centre.",
+     "Elasticity is scaling with demand, not surviving failures."
+    ]
    }
   ]
  },
@@ -149,7 +199,14 @@
     "correct": [
      0
     ],
-    "explanation": "Snapshot Archive is a cold tier up to ~75% cheaper with 24-72 hour restores."
+    "explanation": "Snapshot Archive is a cold tier up to ~75% cheaper with 24-72 hour restores.",
+    "option_explanations": [
+     "Correct. Archive tier is a cheap cold tier with 24-72 hour restores.",
+     "FSR makes restored volumes fully initialized at once; it costs more, not less.",
+     "Recycle Bin recovers deleted snapshots; it isn't a cheaper tier.",
+     "DLM automates snapshot creation and retention, not cheaper storage.",
+     "Multi-Attach lets one io1/io2 volume attach to several instances."
+    ]
    },
    {
     "type": "mcq",
@@ -164,7 +221,14 @@
     "correct": [
      4
     ],
-    "explanation": "Recycle Bin keeps deleted snapshots (and AMIs) for 1 day to 1 year so they can be recovered."
+    "explanation": "Recycle Bin keeps deleted snapshots (and AMIs) for 1 day to 1 year so they can be recovered.",
+    "option_explanations": [
+     "Archive is a cold tier for cost savings, not for recovering deleted snapshots.",
+     "Cross-Region copy duplicates snapshots elsewhere; it doesn't undelete them.",
+     "Encryption by default doesn't help recover deleted snapshots.",
+     "FSR speeds up volume initialization from snapshots; it doesn't recover deletions.",
+     "Correct. Recycle Bin retains deleted snapshots for 1 day to 1 year."
+    ]
    }
   ]
  },
@@ -183,7 +247,13 @@
     "correct": [
      0
     ],
-    "explanation": "gp3 lets you provision IOPS and throughput separately from capacity; gp2 ties IOPS to size."
+    "explanation": "gp3 lets you provision IOPS and throughput separately from capacity; gp2 ties IOPS to size.",
+    "option_explanations": [
+     "Correct. gp3 lets you provision IOPS and throughput independently of size.",
+     "gp2 gives 3 IOPS per GiB, so 200 GiB gives only about 600 IOPS (burst aside).",
+     "st1 is HDD for sequential throughput, not 12,000 IOPS.",
+     "sc1 is the cheapest HDD for cold data and has low IOPS."
+    ]
    },
    {
     "type": "mcq",
@@ -198,7 +268,14 @@
     "correct": [
      4
     ],
-    "explanation": "gp3 decouples performance from size, which gp2 does not."
+    "explanation": "gp3 decouples performance from size, which gp2 does not.",
+    "option_explanations": [
+     "HDD is magnetic, but gp3 is SSD; it isn't cheaper than every SSD.",
+     "EBS volumes live in one AZ; gp3 doesn't replicate across Regions.",
+     "Multi-Attach is only for io1/io2 and must be enabled explicitly.",
+     "Snapshots are billed for their storage; that's not a gp3 feature.",
+     "Correct. gp3 decouples IOPS and throughput from capacity."
+    ]
    }
   ]
  },
@@ -217,7 +294,13 @@
     "correct": [
      3
     ],
-    "explanation": "Deregistration delay (connection draining) lets the target finish active requests before it is fully removed."
+    "explanation": "Deregistration delay (connection draining) lets the target finish active requests before it is fully removed.",
+    "option_explanations": [
+     "Slow start ramps traffic to new targets; it doesn't help targets being removed.",
+     "Rate-based WAF rules limit request rates per IP, unrelated to deregistration.",
+     "A one-second idle timeout would close connections sooner, making failures worse.",
+     "Correct. Deregistration delay lets in-flight requests finish before removal."
+    ]
    },
    {
     "type": "mcq",
@@ -232,7 +315,14 @@
     "correct": [
      1
     ],
-    "explanation": "While deregistering, the target gets no new requests but existing ones continue until the delay elapses."
+    "explanation": "While deregistering, the target gets no new requests but existing ones continue until the delay elapses.",
+    "option_explanations": [
+     "Stickiness binds clients to a target; it doesn't give time to finish on removal.",
+     "Correct. The target gets no new requests but existing ones may complete.",
+     "Access logs record requests; they don't affect draining.",
+     "Cross-zone balancing spreads traffic across AZs, not draining.",
+     "Health check thresholds decide when a target is healthy or not."
+    ]
    }
   ]
  },
@@ -251,7 +341,13 @@
     "correct": [
      3
     ],
-    "explanation": "DeleteOnTermination is true for the root volume by default and false for additional volumes."
+    "explanation": "DeleteOnTermination is true for the root volume by default and false for additional volumes.",
+    "option_explanations": [
+     "The root volume is deleted by default, but the data volume is kept.",
+     "Reversed: the root is the one deleted by default.",
+     "The root volume's DeleteOnTermination is true by default, so it's removed.",
+     "Correct. Root defaults to delete on termination; additional volumes persist."
+    ]
    },
    {
     "type": "mcq",
@@ -265,7 +361,13 @@
     "correct": [
      0
     ],
-    "explanation": "The root volume defaults to DeleteOnTermination=true; extra volumes default to false."
+    "explanation": "The root volume defaults to DeleteOnTermination=true; extra volumes default to false.",
+    "option_explanations": [
+     "Correct. DeleteOnTermination defaults to true for the root volume.",
+     "Termination protection stops API termination; it doesn't govern volume deletion.",
+     "No such EBS attribute exists.",
+     "Right attribute, but the root default is true, not false."
+    ]
    }
   ]
  },
@@ -284,7 +386,13 @@
     "correct": [
      0
     ],
-    "explanation": "Trusted key groups can be managed through the API and IAM; root-account key pairs are discouraged."
+    "explanation": "Trusted key groups can be managed through the API and IAM; root-account key pairs are discouraged.",
+    "option_explanations": [
+     "Correct. Trusted key groups are the recommended way to sign URLs and cookies.",
+     "CloudFront signing doesn't use IAM user secret keys.",
+     "Root-user CloudFront key pairs still work but AWS discourages them.",
+     "CloudFront signing doesn't use KMS data keys."
+    ]
    },
    {
     "type": "mcq",
@@ -298,7 +406,13 @@
     "correct": [
      2
     ],
-    "explanation": "Trusted key groups avoid using the root account and can be rotated through the API."
+    "explanation": "Trusted key groups avoid using the root account and can be rotated through the API.",
+    "option_explanations": [
+     "Root key pairs can sign both URLs and cookies.",
+     "Signing speed is the same; the signature is still checked.",
+     "Correct. Key groups use IAM and the API, avoiding the root account.",
+     "Neither approach is billed per signed request."
+    ]
    }
   ]
  },
@@ -317,7 +431,13 @@
     "correct": [
      3
     ],
-    "explanation": "Aurora fails over to a replica automatically, typically within about 30 seconds."
+    "explanation": "Aurora fails over to a replica automatically, typically within about 30 seconds.",
+    "option_explanations": [
+     "Aurora doesn't write to all readers while waiting for the old writer.",
+     "Failover is automatic; no manual approval is needed.",
+     "Aurora doesn't restore from a backup; a replica is promoted.",
+     "Correct. A reader is promoted automatically, typically in about 30 seconds."
+    ]
    },
    {
     "type": "mcq",
@@ -331,7 +451,13 @@
     "correct": [
      0
     ],
-    "explanation": "Replica promotion is automatic and typically completes in around 30 seconds."
+    "explanation": "Replica promotion is automatic and typically completes in around 30 seconds.",
+    "option_explanations": [
+     "Correct. Replica promotion typically completes in about 30 seconds.",
+     "Far too slow for Aurora failover.",
+     "Far too slow; automatic failover takes seconds.",
+     "Far too slow; Aurora doesn't need hours to recover."
+    ]
    }
   ]
  },
@@ -350,7 +476,13 @@
     "correct": [
      1
     ],
-    "explanation": "ALB listeners support redirect actions, so HTTP can be redirected to HTTPS without touching instances."
+    "explanation": "ALB listeners support redirect actions, so HTTP can be redirected to HTTPS without touching instances.",
+    "option_explanations": [
+     "NLB UDP listeners can't redirect HTTP to HTTPS and add needless complexity.",
+     "Correct. An ALB listener redirect action sends HTTP to HTTPS without app changes.",
+     "Denying port 80 just makes connections fail; there is no redirect.",
+     "Works but it's application code, not infrastructure, and more work."
+    ]
    },
    {
     "type": "mcq",
@@ -364,7 +496,13 @@
     "correct": [
      0
     ],
-    "explanation": "Only the ALB (layer 7) can issue HTTP redirects through listener rules."
+    "explanation": "Only the ALB (layer 7) can issue HTTP redirects through listener rules.",
+    "option_explanations": [
+     "Correct. ALB listener rules support redirect actions.",
+     "NLB works at layer 4 and can't issue HTTP redirects.",
+     "Idle timeout is about connection lifetime, not redirects.",
+     "GWLB endpoints route traffic to appliances; they don't redirect HTTP."
+    ]
    }
   ]
  },
@@ -383,7 +521,13 @@
     "correct": [
      3
     ],
-    "explanation": "Standard is the most expensive class to store; Deep Archive is the cheapest."
+    "explanation": "Standard is the most expensive class to store; Deep Archive is the cheapest.",
+    "option_explanations": [
+     "Standard-IA costs less per GB than Standard.",
+     "Deep Archive is the cheapest class per GB.",
+     "Glacier Instant Retrieval is cheaper per GB than Standard.",
+     "Correct. S3 Standard has the highest storage price per GB of these."
+    ]
    },
    {
     "type": "mcq",
@@ -397,7 +541,13 @@
     "correct": [
      2
     ],
-    "explanation": "Deep Archive is the lowest-cost class for long-term retention with retrieval in hours."
+    "explanation": "Deep Archive is the lowest-cost class for long-term retention with retrieval in hours.",
+    "option_explanations": [
+     "Standard has millisecond access but the highest price, not suited to rare retrieval.",
+     "One Zone-IA is for infrequent access, not long-term compliance, and has lower resilience.",
+     "Correct. Deep Archive is the cheapest class, with retrieval in hours.",
+     "Intelligent-Tiering suits unknown access patterns and adds a per-object fee."
+    ]
    }
   ]
  },
@@ -416,7 +566,13 @@
     "correct": [
      1
     ],
-    "explanation": "The reader endpoint is DNS-based and distributes connections, not individual statements."
+    "explanation": "The reader endpoint is DNS-based and distributes connections, not individual statements.",
+    "option_explanations": [
+     "The endpoint doesn't balance by elapsed time.",
+     "Correct. It's DNS-based, so it balances connections, not queries.",
+     "Queries on an open connection stay on the same replica.",
+     "Balancing isn't done by partition; storage is shared by all instances."
+    ]
    },
    {
     "type": "mcq",
@@ -430,7 +586,13 @@
     "correct": [
      2
     ],
-    "explanation": "Balancing is connection-level, so a single connection stays on one replica."
+    "explanation": "Balancing is connection-level, so a single connection stays on one replica.",
+    "option_explanations": [
+     "Balancing isn't redone per transaction; the connection sticks to one replica.",
+     "Queries aren't spread individually; balancing is at the connection level.",
+     "Correct. Balancing happens at connection time, so the connection stays on one replica.",
+     "Readers accept long-lived connections; the writer isn't involved."
+    ]
    }
   ]
  },
@@ -449,7 +611,13 @@
     "correct": [
      0
     ],
-    "explanation": "Lifecycle rules handle transitions and expirations, including non-current versions and incomplete multipart uploads."
+    "explanation": "Lifecycle rules handle transitions and expirations, including non-current versions and incomplete multipart uploads.",
+    "option_explanations": [
+     "Correct. Lifecycle rules transition and expire objects, filtered by prefix or tag.",
+     "Transfer Acceleration speeds uploads; it doesn't change storage classes.",
+     "Event notifications trigger on events; they don't move or delete objects.",
+     "Storage Class Analysis only recommends transitions; it doesn't apply them."
+    ]
    },
    {
     "type": "mcq",
@@ -463,7 +631,13 @@
     "correct": [
      2
     ],
-    "explanation": "S3 supports 3,500 PUT/COPY/POST/DELETE and 5,500 GET/HEAD requests per second per prefix."
+    "explanation": "S3 supports 3,500 PUT/COPY/POST/DELETE and 5,500 GET/HEAD requests per second per prefix.",
+    "option_explanations": [
+     "Not S3's figures; limits are per prefix, not per bucket, and much higher.",
+     "Far lower than S3's actual per-prefix rate.",
+     "Correct. S3 supports at least 3,500 write and 5,500 read requests per second per prefix.",
+     "Not unlimited, and it isn't limited to Standard-IA."
+    ]
    }
   ]
  },
@@ -484,7 +658,13 @@
      1,
      3
     ],
-    "explanation": "Entries leave through TTL expiry, explicit deletion, or LRU eviction under memory pressure; database writes do not automatically invalidate the cache."
+    "explanation": "Entries leave through TTL expiry, explicit deletion, or LRU eviction under memory pressure; database writes do not automatically invalidate the cache.",
+    "option_explanations": [
+     "Correct. Explicit deletes remove an entry.",
+     "Correct. LRU eviction removes entries when memory is full.",
+     "Wrong: a database write doesn't evict the cache unless the application does it.",
+     "Correct. Expired TTL removes the entry."
+    ]
    },
    {
     "type": "mcq",
@@ -501,7 +681,14 @@
      1,
      4
     ],
-    "explanation": "TTL expiry, explicit invalidation and eviction policy are the three mechanisms."
+    "explanation": "TTL expiry, explicit invalidation and eviction policy are the three mechanisms.",
+    "option_explanations": [
+     "Correct. LRU eviction removes entries under memory pressure.",
+     "Correct. TTL expiry removes entries.",
+     "Databases don't push invalidations to Redis on their own.",
+     "A browser closing doesn't affect a server-side cache.",
+     "Correct. An explicit delete removes the entry."
+    ]
    }
   ]
  },
@@ -520,7 +707,13 @@
     "correct": [
      3
     ],
-    "explanation": "New object names are treated as new objects, so no invalidation is needed."
+    "explanation": "New object names are treated as new objects, so no invalidation is needed.",
+    "option_explanations": [
+     "Compression reduces size, not invalidation costs.",
+     "Fewer edge locations doesn't avoid invalidation or keep content fresh.",
+     "Disabling caching defeats CloudFront and raises origin load.",
+     "Correct. New file names count as new objects, so no invalidation is needed."
+    ]
    },
    {
     "type": "mcq",
@@ -534,7 +727,13 @@
     "correct": [
      0
     ],
-    "explanation": "File versioning sidesteps invalidation costs and delays."
+    "explanation": "File versioning sidesteps invalidation costs and delays.",
+    "option_explanations": [
+     "Correct. A new URL per release means stale copies never need invalidating.",
+     "Viewers don't choose origins; file names have nothing to do with it.",
+     "File names don't encrypt anything.",
+     "Versioned names make caching work better, not bypass it."
+    ]
    }
   ]
  },
@@ -553,7 +752,13 @@
     "correct": [
      2
     ],
-    "explanation": "NAT gateways are managed, highly available within an AZ and scale automatically; NAT instances are self-managed."
+    "explanation": "NAT gateways are managed, highly available within an AZ and scale automatically; NAT instances are self-managed.",
+    "option_explanations": [
+     "Wrong: a NAT gateway is managed by AWS; patches and source/dest checks apply to NAT instances.",
+     "AWS recommends NAT gateways, not instances, for new designs.",
+     "Correct. NAT gateway is managed; a NAT instance is yours to patch and scale.",
+     "Reversed: NAT gateways scale up to 100 Gbps; instances depend on instance size."
+    ]
    },
    {
     "type": "mcq",
@@ -567,7 +772,13 @@
     "correct": [
      0
     ],
-    "explanation": "A NAT instance needs source/destination check disabled plus ongoing maintenance; a gateway is fully managed."
+    "explanation": "A NAT instance needs source/destination check disabled plus ongoing maintenance; a gateway is fully managed.",
+    "option_explanations": [
+     "Correct. Only a NAT instance requires disabling the source/destination check and patching.",
+     "Routes from private subnets are needed for both options.",
+     "Both belong in a public subnet with an IGW route.",
+     "Both need an Elastic IP."
+    ]
    }
   ]
  },
@@ -586,7 +797,13 @@
     "correct": [
      3
     ],
-    "explanation": "CloudWatch is reached via interface endpoints; gateway endpoints exist only for S3 and DynamoDB."
+    "explanation": "CloudWatch is reached via interface endpoints; gateway endpoints exist only for S3 and DynamoDB.",
+    "option_explanations": [
+     "Gateway endpoints exist only for S3 and DynamoDB, not CloudWatch.",
+     "Direct Connect isn't private access from a subnet with no route and is overkill.",
+     "A public IP needs an internet route, which this subnet doesn't have.",
+     "Correct. CloudWatch uses an interface endpoint (PrivateLink)."
+    ]
    },
    {
     "type": "mcq",
@@ -600,7 +817,13 @@
     "correct": [
      1
     ],
-    "explanation": "All other services use interface endpoints, so CloudWatch needs an interface endpoint."
+    "explanation": "All other services use interface endpoints, so CloudWatch needs an interface endpoint.",
+    "option_explanations": [
+     "CloudWatch and SQS use interface endpoints.",
+     "Correct. Only S3 and DynamoDB have gateway endpoints.",
+     "EC2 and RDS use interface endpoints.",
+     "SNS and Lambda use interface endpoints."
+    ]
    }
   ]
  },
@@ -620,7 +843,13 @@
      0,
      3
     ],
-    "explanation": "RDS/Aurora MySQL and PostgreSQL support password auth and IAM database authentication tokens."
+    "explanation": "RDS/Aurora MySQL and PostgreSQL support password auth and IAM database authentication tokens.",
+    "option_explanations": [
+     "Correct. IAM database authentication uses short-lived tokens.",
+     "An EC2 key pair is for SSH to instances, not database sign-in.",
+     "Bucket policies govern S3, not databases.",
+     "Correct. Native database users with passwords are supported."
+    ]
    },
    {
     "type": "mcq",
@@ -635,7 +864,13 @@
      1,
      2
     ],
-    "explanation": "Password and IAM DB authentication (15-minute tokens) both work for MySQL."
+    "explanation": "Password and IAM DB authentication (15-minute tokens) both work for MySQL.",
+    "option_explanations": [
+     "Cognito tokens aren't accepted directly by RDS.",
+     "Correct. IAM authentication tokens are valid for 15 minutes.",
+     "Correct. Native username and password works.",
+     "RDS doesn't use Kerberos via SSH on the host; you can't access its OS."
+    ]
    }
   ]
  },
@@ -654,7 +889,13 @@
     "correct": [
      1
     ],
-    "explanation": "Cache behaviors with path patterns route different paths to different origins in one distribution."
+    "explanation": "Cache behaviors with path patterns route different paths to different origins in one distribution.",
+    "option_explanations": [
+     "Origins are selected by path pattern, not by separate distributions with one CNAME.",
+     "Correct. Path-pattern behaviors route /api/* to the ALB and the default to S3.",
+     "Lambda@Edge could do it but needlessly; behaviors are built in.",
+     "Origin groups are for failover, not path routing."
+    ]
    },
    {
     "type": "mcq",
@@ -669,7 +910,14 @@
     "correct": [
      3
     ],
-    "explanation": "Each cache behavior has a path pattern and a target origin; the default behavior catches the rest."
+    "explanation": "Each cache behavior has a path pattern and a target origin; the default behavior catches the rest.",
+    "option_explanations": [
+     "Invalidations remove cached objects; they don't route requests.",
+     "Origin Shield is an extra caching layer, not path routing.",
+     "Response headers policies add headers, not select origins.",
+     "Correct. Each cache behavior maps a path pattern to an origin.",
+     "Origin groups provide failover, not path-based routing."
+    ]
    }
   ]
  },
@@ -688,7 +936,13 @@
     "correct": [
      1
     ],
-    "explanation": "Routing policies only influence DNS answers; Route 53 is not in the data path."
+    "explanation": "Routing policies only influence DNS answers; Route 53 is not in the data path.",
+    "option_explanations": [
+     "Route 53 isn't a proxy; it only answers DNS queries.",
+     "Correct. Routing policies decide which values are returned in DNS answers.",
+     "Route 53 doesn't terminate TLS.",
+     "Restricting VPC access to zones is a private hosted zone association, not a routing policy."
+    ]
    },
    {
     "type": "mcq",
@@ -702,7 +956,13 @@
     "correct": [
      0
     ],
-    "explanation": "Route 53 answers DNS queries according to the policy; traffic never flows through it."
+    "explanation": "Route 53 answers DNS queries according to the policy; traffic never flows through it.",
+    "option_explanations": [
+     "Correct. Route 53 returns answers in that ratio and clients connect directly.",
+     "CloudFront isn't involved in weighted DNS.",
+     "Route 53 doesn't forward requests; it isn't in the data path.",
+     "There's no hidden load balancer; the split happens in DNS answers."
+    ]
    }
   ]
  },
@@ -721,7 +981,13 @@
     "correct": [
      2
     ],
-    "explanation": "IMDSv2 is session-oriented, which mitigates SSRF-style attacks."
+    "explanation": "IMDSv2 is session-oriented, which mitigates SSRF-style attacks.",
+    "option_explanations": [
+     "IMDSv2 isn't file-based; it's an HTTP endpoint on the instance.",
+     "IMDS is link-local, not a regional IAM-secured endpoint.",
+     "Correct. IMDSv2 uses a PUT for a session token sent as a header on later GETs.",
+     "IMDS requests aren't SigV4-signed."
+    ]
    },
    {
     "type": "mcq",
@@ -735,7 +1001,13 @@
     "correct": [
      2
     ],
-    "explanation": "The PUT-obtained token requirement blocks simple GET-based forwarding attacks."
+    "explanation": "The PUT-obtained token requirement blocks simple GET-based forwarding attacks.",
+    "option_explanations": [
+     "IMDS is only reachable from the instance, and IMDSv2 doesn't change that.",
+     "Roles are still needed to get credentials from the metadata service.",
+     "Correct. The token requirement mitigates SSRF and open proxy attacks.",
+     "IMDSv2 doesn't encrypt anything on disk."
+    ]
    }
   ]
  },
@@ -754,7 +1026,13 @@
     "correct": [
      2
     ],
-    "explanation": "Replication between AZs in the same Region is free for RDS read replicas; cross-Region replication incurs transfer fees."
+    "explanation": "Replication between AZs in the same Region is free for RDS read replicas; cross-Region replication incurs transfer fees.",
+    "option_explanations": [
+     "Same-Region cross-AZ replication is free for RDS read replicas.",
+     "Cross-Region replication is billed as data transfer.",
+     "Correct. Only the cross-Region replica incurs transfer charges.",
+     "The same-Region replica isn't charged."
+    ]
    },
    {
     "type": "mcq",
@@ -768,7 +1046,13 @@
     "correct": [
      1
     ],
-    "explanation": "Same-Region replication traffic is not charged for RDS."
+    "explanation": "Same-Region replication traffic is not charged for RDS.",
+    "option_explanations": [
+     "Cross-Region replication is billed.",
+     "Correct. Same-Region replication traffic isn't charged for RDS.",
+     "Cross-Region transfer is billed.",
+     "Copying to another Region incurs cross-Region transfer."
+    ]
    }
   ]
  },
@@ -787,7 +1071,13 @@
     "correct": [
      3
     ],
-    "explanation": "Without an Elastic IP, the public IPv4 address changes after a stop/start; use the new address or an EIP."
+    "explanation": "Without an Elastic IP, the public IPv4 address changes after a stop/start; use the new address or an EIP.",
+    "option_explanations": [
+     "Stopping doesn't delete key pairs.",
+     "Security groups aren't reset by a stop/start.",
+     "IAM roles persist across stop/start.",
+     "Correct. Auto-assigned public IPv4 addresses are released on stop."
+    ]
    },
    {
     "type": "mcq",
@@ -801,7 +1091,13 @@
     "correct": [
      1
     ],
-    "explanation": "Elastic IPs persist; auto-assigned public IPs do not."
+    "explanation": "Elastic IPs persist; auto-assigned public IPs do not.",
+    "option_explanations": [
+     "A private hosted zone is for DNS, not a fixed public address.",
+     "Correct. An Elastic IP stays with the account until released.",
+     "A second ENI doesn't give a persistent public IP.",
+     "Placement groups affect placement, not addressing."
+    ]
    }
   ]
  },
@@ -820,7 +1116,13 @@
     "correct": [
      2
     ],
-    "explanation": "Backoff handles occasional spikes; sustained demand needs a quota increase."
+    "explanation": "Backoff handles occasional spikes; sustained demand needs a quota increase.",
+    "option_explanations": [
+     "Backoff only helps with occasional spikes, not permanent growth.",
+     "More roles in the same account don't raise the account's limit.",
+     "Correct. Sustained higher demand needs a quota increase.",
+     "API versions don't change throttling limits."
+    ]
    },
    {
     "type": "mcq",
@@ -834,7 +1136,13 @@
     "correct": [
      1
     ],
-    "explanation": "Backoff with jitter smooths transient throttling; persistent excess needs higher limits."
+    "explanation": "Backoff with jitter smooths transient throttling; persistent excess needs higher limits.",
+    "option_explanations": [
+     "Permanent throttling needs a higher limit.",
+     "Correct. Exponential backoff with jitter handles transient bursts.",
+     "A permanent increase in volume needs a quota increase.",
+     "Planned growth needs a quota increase in advance, not backoff."
+    ]
    }
   ]
  },
@@ -856,7 +1164,14 @@
      2,
      3
     ],
-    "explanation": "S3 uses IAM policies, bucket policies and ACLs; security groups and route tables do not apply to S3."
+    "explanation": "S3 uses IAM policies, bucket policies and ACLs; security groups and route tables do not apply to S3.",
+    "option_explanations": [
+     "Route tables don't control S3 object access.",
+     "Correct. IAM policies can grant S3 access.",
+     "Correct. ACLs can grant access to objects.",
+     "Correct. Bucket policies are resource-based access rules for S3.",
+     "Security groups don't apply to S3."
+    ]
    },
    {
     "type": "mcq",
@@ -873,7 +1188,14 @@
      1,
      2
     ],
-    "explanation": "Access points, bucket policies and IAM policies all control S3 access."
+    "explanation": "Access points, bucket policies and IAM policies all control S3 access.",
+    "option_explanations": [
+     "Correct. Access points have their own policies.",
+     "Correct. IAM user policies can grant S3 access.",
+     "Correct. Bucket policies are resource-based controls.",
+     "Security groups can't be attached to buckets.",
+     "NACLs apply to subnets, not buckets."
+    ]
    }
   ]
  },
@@ -892,7 +1214,13 @@
     "correct": [
      2
     ],
-    "explanation": "Route 53 applies changes within seconds, but resolvers honour the old TTL."
+    "explanation": "Route 53 applies changes within seconds, but resolvers honour the old TTL.",
+    "option_explanations": [
+     "DNSSEC doesn't delay updates.",
+     "Hosted zones aren't read-only after changes.",
+     "Correct. Resolvers cache the old answer until its TTL expires.",
+     "Route 53 applies changes in seconds, not 24-hour batches."
+    ]
    },
    {
     "type": "mcq",
@@ -906,7 +1234,13 @@
     "correct": [
      3
     ],
-    "explanation": "A lower TTL makes resolvers re-query sooner."
+    "explanation": "A lower TTL makes resolvers re-query sooner.",
+    "option_explanations": [
+     "DNSSEC doesn't affect cache duration.",
+     "CNAME at the apex isn't allowed and doesn't shorten delay.",
+     "A second zone doesn't change resolver caching.",
+     "Correct. A lower TTL makes resolvers re-query sooner."
+    ]
    }
   ]
  },
@@ -925,7 +1259,13 @@
     "correct": [
      3
     ],
-    "explanation": "IMDS lives at 169.254.169.254 and serves metadata and role credentials."
+    "explanation": "IMDS lives at 169.254.169.254 and serves metadata and role credentials.",
+    "option_explanations": [
+     "The EC2 API isn't where an instance reads its own metadata.",
+     "STS needs credentials and doesn't return instance metadata.",
+     "The VPC resolver is for DNS only.",
+     "Correct. IMDS is at 169.254.169.254."
+    ]
    },
    {
     "type": "mcq",
@@ -939,7 +1279,13 @@
     "correct": [
      3
     ],
-    "explanation": "STS returns temporary keys and a session token after an MFA check."
+    "explanation": "STS returns temporary keys and a session token after an MFA check.",
+    "option_explanations": [
+     "IMDS gives credentials for the instance role, not for a laptop user with MFA.",
+     "create-access-key makes long-term keys and doesn't take MFA codes.",
+     "aws configure only selects or sets profiles; it doesn't fetch MFA credentials.",
+     "Correct. sts get-session-token with the MFA serial and code returns temporary credentials."
+    ]
    }
   ]
  },
@@ -959,7 +1305,14 @@
     "correct": [
      3
     ],
-    "explanation": "EBS Multi-Attach supports up to 16 Nitro instances in the same AZ."
+    "explanation": "EBS Multi-Attach supports up to 16 Nitro instances in the same AZ.",
+    "option_explanations": [
+     "128 exceeds the Multi-Attach limit.",
+     "64 exceeds the Multi-Attach limit.",
+     "8 is below the limit.",
+     "Correct. Up to 16 Nitro instances in the same AZ.",
+     "32 exceeds the Multi-Attach limit."
+    ]
    },
    {
     "type": "typed",
@@ -984,7 +1337,13 @@
     "correct": [
      0
     ],
-    "explanation": "Convertible RIs let you exchange attributes such as family and OS for equal or higher value."
+    "explanation": "Convertible RIs let you exchange attributes such as family and OS for equal or higher value.",
+    "option_explanations": [
+     "Correct. Convertible RIs can be exchanged for other families or OSes.",
+     "Dedicated Hosts on a fixed family don't allow swapping.",
+     "Spot isn't a long-term discount commitment.",
+     "Standard RIs are locked to family and OS."
+    ]
    },
    {
     "type": "mcq",
@@ -998,7 +1357,13 @@
     "correct": [
      2
     ],
-    "explanation": "Only Convertible RIs can be exchanged for other configurations."
+    "explanation": "Only Convertible RIs can be exchanged for other configurations.",
+    "option_explanations": [
+     "On-Demand Capacity Reservations reserve capacity and have no exchange.",
+     "Scheduled RIs are for recurring windows, not exchange (and discontinued).",
+     "Correct. Convertible RIs can be exchanged during the term.",
+     "Standard RIs can't be exchanged for another family."
+    ]
    }
   ]
  },
@@ -1018,7 +1383,14 @@
     "correct": [
      2
     ],
-    "explanation": "2012-10-17 is the current policy language version; 2008-10-17 is older and lacks features such as policy variables."
+    "explanation": "2012-10-17 is the current policy language version; 2008-10-17 is older and lacks features such as policy variables.",
+    "option_explanations": [
+     "1.0 isn't a valid policy language version.",
+     "2008-10-17 is older and doesn't support policy variables.",
+     "Correct. 2012-10-17 is the current version and supports variables.",
+     "Not a valid policy language version.",
+     "Not a valid version value."
+    ]
    },
    {
     "type": "typed",
@@ -1044,7 +1416,13 @@
      1,
      2
     ],
-    "explanation": "Length, character types, expiration and reuse prevention are password policy settings; IP restrictions use IAM conditions."
+    "explanation": "Length, character types, expiration and reuse prevention are password policy settings; IP restrictions use IAM conditions.",
+    "option_explanations": [
+     "IP range restriction isn't a password policy option; use IAM conditions.",
+     "Correct. Password reuse prevention is a policy setting.",
+     "Correct. Minimum length is a policy setting.",
+     "Password hashes aren't stored in CloudHSM for IAM."
+    ]
    },
    {
     "type": "mcq",
@@ -1059,7 +1437,13 @@
      1,
      3
     ],
-    "explanation": "Complexity rules and self-service change are password policy options; MFA is a separate setting."
+    "explanation": "Complexity rules and self-service change are password policy options; MFA is a separate setting.",
+    "option_explanations": [
+     "Hardware tokens aren't a password policy option.",
+     "Correct. Allowing users to change their own password is a policy setting.",
+     "MFA enforcement is separate, not in the password policy.",
+     "Correct. Requiring at least one number is a complexity setting."
+    ]
    }
   ]
  },
@@ -1078,7 +1462,13 @@
     "correct": [
      0
     ],
-    "explanation": "Role credentials may take seconds to propagate; query `.../security-credentials/` then the role name."
+    "explanation": "Role credentials may take seconds to propagate; query `.../security-credentials/` then the role name.",
+    "option_explanations": [
+     "Correct. Credentials can take a moment to appear and the path needs the trailing slash.",
+     "No restart is needed to pick up a role.",
+     "IMDS is queried from the instance itself.",
+     "Wrong: IMDS does expose role credentials."
+    ]
    },
    {
     "type": "mcq",
@@ -1092,7 +1482,13 @@
     "correct": [
      0
     ],
-    "explanation": "The list call returns the role name; appending it returns the keys and token."
+    "explanation": "The list call returns the role name; appending it returns the keys and token.",
+    "option_explanations": [
+     "Correct. List the role name, then append it to get the credentials.",
+     "User data holds launch scripts, not credentials.",
+     "Instance profiles don't write credential files to disk.",
+     "IMDS is only reachable from the instance, and AssumeRole is unnecessary."
+    ]
    }
   ]
  },
@@ -1111,7 +1507,13 @@
     "correct": [
      1
     ],
-    "explanation": "Every database write also writes the cache, which keeps it current: write-through."
+    "explanation": "Every database write also writes the cache, which keeps it current: write-through.",
+    "option_explanations": [
+     "Lazy loading fills the cache on a read miss, not on every write.",
+     "Correct. Writing to the cache whenever the database is written is write-through.",
+     "Write-around skips the cache on writes; this code writes to it.",
+     "Cache-aside loads after a miss; this code updates on write."
+    ]
    },
    {
     "type": "mcq",
@@ -1125,7 +1527,13 @@
     "correct": [
      0
     ],
-    "explanation": "Populating only on a miss is lazy loading."
+    "explanation": "Populating only on a miss is lazy loading.",
+    "option_explanations": [
+     "Correct. Populating on a miss is lazy loading (cache-aside).",
+     "Write-behind queues writes to the database later.",
+     "Read-through has the cache load data itself; here the application does it.",
+     "Write-through updates the cache on writes, not on a read miss."
+    ]
    }
   ]
  },
@@ -1147,7 +1555,14 @@
      2,
      3
     ],
-    "explanation": "RDS supports MySQL, MariaDB, PostgreSQL, Oracle, SQL Server and Db2; MongoDB and Redis are not RDS engines."
+    "explanation": "RDS supports MySQL, MariaDB, PostgreSQL, Oracle, SQL Server and Db2; MongoDB and Redis are not RDS engines.",
+    "option_explanations": [
+     "Redis isn't an RDS engine (it's ElastiCache).",
+     "Correct. Oracle is an RDS engine.",
+     "Correct. MariaDB is an RDS engine.",
+     "Correct. MySQL is an RDS engine.",
+     "MongoDB isn't an RDS engine (use DocumentDB)."
+    ]
    },
    {
     "type": "mcq",
@@ -1164,7 +1579,14 @@
      1,
      2
     ],
-    "explanation": "PostgreSQL, MySQL and Oracle are RDS engines."
+    "explanation": "PostgreSQL, MySQL and Oracle are RDS engines.",
+    "option_explanations": [
+     "Correct. PostgreSQL is an RDS engine.",
+     "Correct. MySQL is an RDS engine.",
+     "Correct. Oracle is an RDS engine.",
+     "Elasticsearch is OpenSearch, not RDS.",
+     "Neo4j is a graph database, not offered by RDS."
+    ]
    }
   ]
  },
@@ -1183,7 +1605,13 @@
     "correct": [
      0
     ],
-    "explanation": "Always set a Region explicitly; defaults differ per SDK."
+    "explanation": "Always set a Region explicitly; defaults differ per SDK.",
+    "option_explanations": [
+     "Correct. Defaults vary by SDK; some use us-east-1, others error.",
+     "SDKs don't measure latency to choose a Region.",
+     "Account aliases don't contain Regions.",
+     "Calls aren't sent to all Regions."
+    ]
    },
    {
     "type": "mcq",
@@ -1197,7 +1625,13 @@
     "correct": [
      1
     ],
-    "explanation": "Region comes from code, environment variables or shared config."
+    "explanation": "Region comes from code, environment variables or shared config.",
+    "option_explanations": [
+     "Bucket policies don't set the SDK Region.",
+     "Correct. The AWS_REGION variable or shared config sets the default.",
+     "Security groups don't affect SDK configuration.",
+     "IAM user profiles don't hold a default Region."
+    ]
    }
   ]
  },
@@ -1216,7 +1650,13 @@
     "correct": [
      2
     ],
-    "explanation": "Instance roles provide automatically rotated temporary credentials."
+    "explanation": "Instance roles provide automatically rotated temporary credentials.",
+    "option_explanations": [
+     "Embedding keys in an image is insecure and hard to rotate.",
+     "A public bucket exposes data to everyone.",
+     "Correct. An instance role gives temporary credentials with least privilege.",
+     "Keys in user data are visible and long-lived; avoid."
+    ]
    },
    {
     "type": "mcq",
@@ -1230,7 +1670,13 @@
     "correct": [
      0
     ],
-    "explanation": "Roles use short-lived credentials delivered via IMDS."
+    "explanation": "Roles use short-lived credentials delivered via IMDS.",
+    "option_explanations": [
+     "Correct. Role credentials are temporary and rotate automatically.",
+     "Roles do expire and need permissions.",
+     "Roles don't disable CloudTrail.",
+     "Speed is not the reason."
+    ]
    }
   ]
  },
@@ -1249,7 +1695,13 @@
     "correct": [
      2
     ],
-    "explanation": "Simple routing has no health checks; multi-value answer adds them."
+    "explanation": "Simple routing has no health checks; multi-value answer adds them.",
+    "option_explanations": [
+     "Weighted routing returns values by weight, not simple routing.",
+     "Latency routing picks by latency; simple returns all values.",
+     "Correct. Simple routing returns all values and has no health checks.",
+     "Filtering unhealthy values is multivalue answer, not simple."
+    ]
    },
    {
     "type": "mcq",
@@ -1263,7 +1715,13 @@
     "correct": [
      0
     ],
-    "explanation": "Multivalue answer supports health checks and returns up to eight healthy values."
+    "explanation": "Multivalue answer supports health checks and returns up to eight healthy values.",
+    "option_explanations": [
+     "Correct. Multivalue answer returns up to eight healthy records.",
+     "Geoproximity routes by location with a bias.",
+     "Simple routing has no health checks and returns all values.",
+     "Failover routing returns a primary or secondary, not random records."
+    ]
    }
   ]
  },
@@ -1282,7 +1740,13 @@
     "correct": [
      0
     ],
-    "explanation": "Origin group failover uses a replicated bucket in another Region."
+    "explanation": "Origin group failover uses a replicated bucket in another Region.",
+    "option_explanations": [
+     "Correct. An origin group fails over to a replicated bucket in another Region.",
+     "Versioning and MFA Delete protect against deletions, not a Region outage.",
+     "Shield Advanced protects against DDoS, not Region failure.",
+     "A long TTL won't cover uncached objects or expiry."
+    ]
    },
    {
     "type": "mcq",
@@ -1296,7 +1760,13 @@
     "correct": [
      1
     ],
-    "explanation": "Failover criteria are configured status codes and timeouts."
+    "explanation": "Failover criteria are configured status codes and timeouts.",
+    "option_explanations": [
+     "Invalidations don't trigger failover.",
+     "Correct. Configured status codes or connection failures trigger the secondary origin.",
+     "WAF blocks don't trigger failover.",
+     "Origin groups fail over automatically, without DNS changes."
+    ]
    }
   ]
  },
@@ -1315,7 +1785,13 @@
     "correct": [
      0
     ],
-    "explanation": "Capacity Reservations guarantee capacity only; billing discounts come from RIs or Savings Plans."
+    "explanation": "Capacity Reservations guarantee capacity only; billing discounts come from RIs or Savings Plans.",
+    "option_explanations": [
+     "Correct. RIs or Savings Plans discount the reserved usage.",
+     "A bigger reservation doesn't lower the rate.",
+     "Prepaying at the On-Demand rate saves nothing.",
+     "A reservation can't be converted to Spot."
+    ]
    },
    {
     "type": "mcq",
@@ -1329,7 +1805,13 @@
     "correct": [
      2
     ],
-    "explanation": "It reserves capacity; pair it with RIs/Savings Plans for pricing."
+    "explanation": "It reserves capacity; pair it with RIs/Savings Plans for pricing.",
+    "option_explanations": [
+     "Reservations don't include Elastic IPs.",
+     "Spot-like pricing isn't part of a reservation.",
+     "Correct. It guarantees capacity in an AZ with no discount of its own.",
+     "72% discounts come from Savings Plans or RIs, not capacity reservations."
+    ]
    }
   ]
  },
@@ -1348,7 +1830,13 @@
     "correct": [
      1
     ],
-    "explanation": "The NAT gateway needs a public subnet and an IGW; private route tables point to it."
+    "explanation": "The NAT gateway needs a public subnet and an IGW; private route tables point to it.",
+    "option_explanations": [
+     "The NAT gateway isn't part of the IGW.",
+     "Correct. Place it in a public subnet with an IGW route.",
+     "Placed in a private subnet it couldn't reach the internet.",
+     "A subnet with no route to the IGW can't reach the internet."
+    ]
    },
    {
     "type": "mcq",
@@ -1362,7 +1850,13 @@
     "correct": [
      3
     ],
-    "explanation": "An IGW is attached to the VPC; subnets become public via routes."
+    "explanation": "An IGW is attached to the VPC; subnets become public via routes.",
+    "option_explanations": [
+     "Instances aren't what an IGW attaches to.",
+     "AZs don't get gateways attached.",
+     "IGWs attach to VPCs; subnets just route to them.",
+     "Correct. An internet gateway is attached to a VPC."
+    ]
    }
   ]
  },
@@ -1381,7 +1875,13 @@
     "correct": [
      0
     ],
-    "explanation": "Field-level encryption encrypts selected fields at the edge so only the holder of the private key can read them."
+    "explanation": "Field-level encryption encrypts selected fields at the edge so only the holder of the private key can read them.",
+    "option_explanations": [
+     "Correct. Field-level encryption lets only the private key holder read the fields.",
+     "Signed URLs control access, not encrypt fields.",
+     "OAC restricts S3 origin access; it doesn't encrypt fields.",
+     "TLS ends at CloudFront and the origin, so intermediate layers see plaintext."
+    ]
    },
    {
     "type": "mcq",
@@ -1395,7 +1895,13 @@
     "correct": [
      3
     ],
-    "explanation": "Chosen fields are encrypted at the edge with a public key and stay encrypted through the origin chain."
+    "explanation": "Chosen fields are encrypted at the edge with a public key and stay encrypted through the origin chain.",
+    "option_explanations": [
+     "It isn't about slow downloads.",
+     "DDoS protection is from Shield and WAF.",
+     "It has nothing to do with browser CORS errors.",
+     "Correct. Chosen POST fields stay encrypted after the edge."
+    ]
    }
   ]
  },
@@ -1414,7 +1920,13 @@
     "correct": [
      0
     ],
-    "explanation": "IP-based routing maps client CIDR ranges to specific answers."
+    "explanation": "IP-based routing maps client CIDR ranges to specific answers.",
+    "option_explanations": [
+     "Correct. IP-based routing maps client CIDR blocks to chosen answers.",
+     "Geoproximity routes by location with a bias, not by network.",
+     "Failover routing depends on health, not client address.",
+     "Latency routing picks the lowest-latency Region."
+    ]
    },
    {
     "type": "mcq",
@@ -1428,7 +1940,13 @@
     "correct": [
      3
     ],
-    "explanation": "IP-based routing uses CIDR collections."
+    "explanation": "IP-based routing uses CIDR collections.",
+    "option_explanations": [
+     "Weighted routing splits by proportion.",
+     "Geolocation routes by geography, not CIDR.",
+     "Simple routing has no client-based logic.",
+     "Correct. IP-based routing uses client CIDR collections."
+    ]
    }
   ]
  },
@@ -1447,7 +1965,13 @@
     "correct": [
      0
     ],
-    "explanation": "Route tables define destinations for subnet traffic."
+    "explanation": "Route tables define destinations for subnet traffic.",
+    "option_explanations": [
+     "Correct. Route tables direct outbound traffic to targets such as IGW or NAT.",
+     "Port and protocol filtering is by security groups and NACLs.",
+     "Authenticating callers is IAM's role.",
+     "Private DNS names come from VPC DNS, not route tables."
+    ]
    },
    {
     "type": "mcq",
@@ -1461,7 +1985,13 @@
     "correct": [
      3
     ],
-    "explanation": "Routes are entries in the route table."
+    "explanation": "Routes are entries in the route table.",
+    "option_explanations": [
+     "NACLs filter traffic but don't set routes.",
+     "Security groups filter traffic; they don't route.",
+     "IAM policies don't affect network routing.",
+     "Correct. Routes are entries in the subnet's route table."
+    ]
    }
   ]
  },
@@ -1480,7 +2010,13 @@
     "correct": [
      3
     ],
-    "explanation": "Read replicas offload read-only traffic; the Multi-AZ standby cannot serve queries."
+    "explanation": "Read replicas offload read-only traffic; the Multi-AZ standby cannot serve queries.",
+    "option_explanations": [
+     "The Multi-Attach standby doesn't exist; Multi-AZ standby can't serve queries.",
+     "Backup retention doesn't relieve query load.",
+     "Multi-Attach is an EBS feature with no standby for queries.",
+     "Correct. A read replica takes read-only traffic off production."
+    ]
    },
    {
     "type": "mcq",
@@ -1494,7 +2030,13 @@
     "correct": [
      3
     ],
-    "explanation": "Standby in Multi-AZ instance deployments is passive."
+    "explanation": "Standby in Multi-AZ instance deployments is passive.",
+    "option_explanations": [
+     "It's in the same Region, in another AZ, with low latency.",
+     "Encryption doesn't cause query rejections.",
+     "The standby is synchronous, not lagging by days.",
+     "Correct. The standby exists for failover and accepts no connections."
+    ]
    }
   ]
  },
@@ -1516,7 +2058,14 @@
      3,
      4
     ],
-    "explanation": "Bucket policies are resource-based JSON policies for access control; lifecycle is separate."
+    "explanation": "Bucket policies are resource-based JSON policies for access control; lifecycle is separate.",
+    "option_explanations": [
+     "Bucket policies can't launch EC2 instances.",
+     "Lifecycle rules are a separate bucket configuration.",
+     "Correct. A policy can allow public reads.",
+     "Correct. A policy can deny unencrypted uploads.",
+     "Correct. A policy can grant cross-account access."
+    ]
    },
    {
     "type": "mcq",
@@ -1533,7 +2082,14 @@
      2,
      3
     ],
-    "explanation": "Conditions can require aws:SecureTransport or sourceVpce."
+    "explanation": "Conditions can require aws:SecureTransport or sourceVpce.",
+    "option_explanations": [
+     "Volume resizing is an EBS operation.",
+     "Correct. A deny on aws:SecureTransport=false forces HTTPS.",
+     "Correct. The aws:sourceVpce condition restricts to an endpoint.",
+     "Correct. A policy can grant access to CloudFront OAC.",
+     "KMS key rotation is configured on the key."
+    ]
    }
   ]
  },
@@ -1555,7 +2111,14 @@
      2,
      4
     ],
-    "explanation": "ELBs provide a single endpoint, health checks and TLS termination."
+    "explanation": "ELBs provide a single endpoint, health checks and TLS termination.",
+    "option_explanations": [
+     "Correct. An ELB provides a single stable DNS name.",
+     "ELB doesn't patch instances; that's your job.",
+     "Correct. Health checks send traffic only to healthy targets.",
+     "Load balancers don't make data transfer free.",
+     "Correct. ELB can terminate TLS with ACM certificates."
+    ]
    },
    {
     "type": "mcq",
@@ -1572,7 +2135,14 @@
      2,
      3
     ],
-    "explanation": "ALB offers routing, health checks and TLS termination."
+    "explanation": "ALB offers routing, health checks and TLS termination.",
+    "option_explanations": [
+     "ALBs don't update instance operating systems.",
+     "Correct. ALBs route by URL path.",
+     "Correct. ALBs run health checks on targets.",
+     "Correct. ALBs terminate HTTPS.",
+     "Database failover is RDS or Aurora, not ALB."
+    ]
    }
   ]
  },
@@ -1591,7 +2161,13 @@
     "correct": [
      0
     ],
-    "explanation": "S3 sends events to EventBridge, which has advanced filtering, many targets, archive and replay."
+    "explanation": "S3 sends events to EventBridge, which has advanced filtering, many targets, archive and replay.",
+    "option_explanations": [
+     "Correct. EventBridge filters by size and supports archive, replay and many targets.",
+     "Inventory gives scheduled listings, not events.",
+     "Batch Operations runs jobs on objects, not event routing.",
+     "SQS as a direct target has no size filtering or replay."
+    ]
    },
    {
     "type": "mcq",
@@ -1605,7 +2181,13 @@
     "correct": [
      1
     ],
-    "explanation": "EventBridge adds filtering on metadata, multiple destinations and archive/replay."
+    "explanation": "EventBridge adds filtering on metadata, multiple destinations and archive/replay.",
+    "option_explanations": [
+     "Delivery is asynchronous, not before the upload returns.",
+     "Correct. EventBridge offers richer filtering, more targets and replay.",
+     "IAM permissions are still required.",
+     "Cost isn't always lower than SNS."
+    ]
    }
   ]
  }

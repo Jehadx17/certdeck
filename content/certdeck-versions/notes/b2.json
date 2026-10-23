@@ -1,0 +1,814 @@
+[
+ {
+  "card_id": "212d79ea-7c6d-4aab-b2db-3842508f5933",
+  "notes": [
+   [
+    "CRR crosses Regions; us-east-1 would move data out of eu-west-1.",
+    "Intelligent-Tiering changes storage class; it doesn't replicate anywhere.",
+    "Correct: SRR copies objects within one Region, including between accounts.",
+    "Batch Operations is a one-off job, not automatic, and not limited to new objects."
+   ],
+   [
+    "Transfer Acceleration speeds up transfers over the edge network; it doesn't combine buckets.",
+    "Correct: SRR replicates within the Region, so many sources can feed one central bucket.",
+    "CRR is for different Regions; replication can also stay in one Region.",
+    "Lifecycle expiration deletes objects; it doesn't copy them."
+   ]
+  ]
+ },
+ {
+  "card_id": "213c3284-cd12-4412-b85a-79c06f970727",
+  "notes": [
+   [
+    "Correct: tags can be used as conditions in IAM and bucket policies; metadata can't.",
+    "Correct: Lifecycle rules and Analytics filters can target tags.",
+    "LIST returns keys in lexicographic order and can't sort by tag.",
+    "Tags don't select or change encryption keys."
+   ],
+   [
+    "Correct: policies can condition access on object tag values.",
+    "Correct: Lifecycle rules can filter on tags.",
+    "S3 stores data across AZs; tags don't pin objects to one AZ.",
+    "Tags aren't an index for querying object contents."
+   ]
+  ]
+ },
+ {
+  "card_id": "21d71c84-a834-4101-9885-412da3bebb60",
+  "notes": [
+   [
+    "gp3 is SSD and costs more per MB/s than st1 for pure streaming.",
+    "Correct: st1 is throughput-optimized HDD, cheap for large sequential reads.",
+    "io2 Block Express is the costliest option and aimed at IOPS-heavy databases.",
+    "sc1 is for infrequently accessed data and has lower throughput than st1."
+   ],
+   [
+    "sc1 is for rarely accessed data, not frequent throughput-heavy work.",
+    "gp2 is SSD, not HDD.",
+    "io1 is SSD, for latency-sensitive databases.",
+    "Correct: st1 is HDD built for frequent, large sequential I/O such as ETL and logs."
+   ]
+  ]
+ },
+ {
+  "card_id": "22341764-f6e7-43e6-aecc-7440a7713e59",
+  "notes": [
+   [
+    "Correct: Principal * with GetObject on bucket/* makes every object publicly readable.",
+    "Principal * includes everyone, not only the owner.",
+    "Listing needs s3:ListBucket on the bucket itself; this grants only GetObject.",
+    "The policy grants GetObject, not PutObject, so nobody can upload."
+   ],
+   [
+    "ListBucket lists keys, doesn't download objects, and applies to the bucket ARN.",
+    "PutObject allows uploads, not downloads, and the resource lacks /*.",
+    "Correct: GetObject on bucket/* for Principal * allows anyone to download any object.",
+    "That principal is only the one account's root, not the public."
+   ]
+  ]
+ },
+ {
+  "card_id": "22a8a0a3-3c8f-43f3-bd2b-eafe00c0fd81",
+  "notes": [
+   [
+    "The CORS rule belongs to the bucket receiving the request, not the page's bucket.",
+    "IAM roles don't control browser CORS checks.",
+    "Block Public Access isn't CORS configuration.",
+    "Correct: bucket B receives the cross-origin request and must list the requesting origin."
+   ],
+   [
+    "The calling site doesn't hold the rule; the bucket does.",
+    "Correct: CORS is set on the requested bucket and names the allowed origin.",
+    "Versioning has nothing to do with browser same-origin checks.",
+    "CORS applies to cross-origin browser requests regardless of whether the bucket is private."
+   ]
+  ]
+ },
+ {
+  "card_id": "22cd38cd-cf3f-4b94-87a6-6a821969e688",
+  "notes": [
+   [
+    "The endpoint name stays the same, so no new hostname is needed.",
+    "Correct: the DNS name is repointed to the standby; the app only reconnects.",
+    "Failover is automatic; no manual promotion is required.",
+    "A read replica isn't involved in Multi-AZ failover."
+   ],
+   [
+    "Correct: the same endpoint name now resolves to the new primary.",
+    "No new endpoint is published.",
+    "Failover is automatic and needs no administrator approval.",
+    "The standby is kept in sync synchronously; no snapshot restore happens."
+   ]
+  ]
+ },
+ {
+  "card_id": "23afc5d2-c909-4044-aa05-d1e0573dd021",
+  "notes": [
+   [
+    "Correct: Lifecycle rules can filter by key prefix.",
+    "Correct: Lifecycle rules can filter by object tags.",
+    "Lifecycle has no AZ filter; S3 spreads data across AZs.",
+    "Lifecycle can't filter by who modified an object."
+   ],
+   [
+    "Correct: a prefix filter matches keys starting with a path.",
+    "Correct: a tag filter matches a key and value.",
+    "Lifecycle can't filter on source IP address.",
+    "Lifecycle can't filter on the KMS key used."
+   ]
+  ]
+ },
+ {
+  "card_id": "246bb456-dac8-41c7-83fe-55762362f559",
+  "notes": [
+   [
+    "Correct: INI format with [name] sections and aws_access_key_id/aws_secret_access_key.",
+    "The key names are wrong, and [profile dev] belongs in config, not credentials.",
+    "The credentials file is INI, not JSON.",
+    "The credentials file is INI, not YAML."
+   ],
+   [
+    "The prefix is used in config only, not in credentials.",
+    "Reversed: config uses the prefix, credentials doesn't.",
+    "Correct: config uses [profile prod]; credentials uses plain [prod].",
+    "The CLI doesn't strip anything; credentials needs [prod] and config needs [profile prod]."
+   ]
+  ]
+ },
+ {
+  "card_id": "24804658-c801-43f4-b6f8-c5472d83bffa",
+  "notes": [
+   [
+    "Flexible Retrieval takes minutes to hours even with expedited, and costs more per access.",
+    "Correct: Instant Retrieval is cheap archive storage with millisecond reads, ideal for quarterly access.",
+    "Deep Archive takes hours to restore, not instant.",
+    "Standard serves in milliseconds but costs more for rarely read data; Instant Retrieval does too."
+   ],
+   [
+    "Flexible Retrieval needs a restore taking minutes to hours.",
+    "Deep Archive standard retrieval takes about 12 hours.",
+    "Vault Lock is a compliance control, not a storage class.",
+    "Correct: Instant Retrieval reads in milliseconds with no restore."
+   ]
+  ]
+ },
+ {
+  "card_id": "24edf9d5-a0e3-4b28-b5d1-f6be3d24c327",
+  "notes": [
+   [
+    "Granting GetObject to everyone makes the content public, bypassing CloudFront.",
+    "Correct: signed cookies cover many files; the behavior requires them.",
+    "CloudFront can't forward IAM credentials to S3.",
+    "Geo restriction limits by country, not by logged-in user."
+   ],
+   [
+    "Price class limits edge locations used; it isn't access control.",
+    "Field-level encryption protects specific fields, not access to content.",
+    "Correct: a behavior can require signed URLs or cookies verified by a trusted key group.",
+    "A custom header authenticates CloudFront to the origin, not viewers to CloudFront."
+   ]
+  ]
+ },
+ {
+  "card_id": "2518e92a-999e-452a-acb1-67542c3a9eeb",
+  "notes": [
+   [
+    "The credentials report lists users and credential ages, not service usage.",
+    "Config rules check configuration compliance, not service access.",
+    "Inspector scans for vulnerabilities, not IAM access usage.",
+    "Correct: Access Advisor shows when each service was last accessed."
+   ],
+   [
+    "Correct: it lists allowed services and last-accessed times.",
+    "Key rotation is shown in the credentials report, not Access Advisor.",
+    "Cost per service is in Cost Explorer, not Access Advisor.",
+    "Denied API calls are found in CloudTrail, not Access Advisor."
+   ]
+  ]
+ },
+ {
+  "card_id": "25e00578-5af0-4b69-b325-b86f53628099",
+  "notes": [
+   [
+    "CPU at 100 percent leaves no headroom and doesn't match request load.",
+    "NetworkIn on a single instance isn't a predefined group-wide target metric for this goal.",
+    "Correct: RequestCountPerTarget scales on requests per instance behind an ALB.",
+    "StatusCheckFailed is a health signal, not a load metric to track."
+   ],
+   [
+    "Disk write operations aren't a predefined target tracking metric.",
+    "Correct: ALBRequestCountPerTarget is predefined.",
+    "SQS DLQ depth isn't predefined; SQS scaling uses custom metrics.",
+    "Healthy host count isn't a predefined target tracking metric."
+   ]
+  ]
+ },
+ {
+  "card_id": "26eb4d5d-43ec-4bdf-a260-3d55e78f151a",
+  "notes": [
+   null,
+   [
+    "Root servers only point to TLD servers; they don't hold domain records.",
+    "TLD servers refer to the authoritative servers; they don't store A records.",
+    "The stub resolver just asks and caches; it holds no master copy.",
+    "Correct: the authoritative server, such as a Route 53 hosted zone, returns the record."
+   ]
+  ]
+ },
+ {
+  "card_id": "2738efc8-6127-4418-baf7-c3ec85481c88",
+  "notes": [
+   [
+    "Correct: ACM provisions and renews public certificates and attaches them to the listener.",
+    "Certbot on each target doesn't provide the ALB's certificate and adds manual work.",
+    "Parameter Store holds config values, not managed certificates.",
+    "Secrets Manager rotation of SSH keys has nothing to do with TLS certificates."
+   ],
+   [
+    "Correct: a default certificate plus more certificates chosen by SNI per hostname.",
+    "An ALB listener can hold many certificates via SNI.",
+    "Clients get the listener's certificate; targets' own certificates aren't presented.",
+    "Wildcard certificates work, but SNI with multiple certificates is also supported."
+   ]
+  ]
+ },
+ {
+  "card_id": "27e6a85d-bd74-4283-b043-29e2120a0e6f",
+  "notes": [
+   [
+    "AMI IDs are Region-specific, so this fails.",
+    "Correct: AMIs are Region-scoped; copy the AMI to the target Region.",
+    "IAM roles can't make an AMI usable in another Region.",
+    "Manual export and import is unnecessary; copying the AMI is the supported way."
+   ],
+   [
+    "AMIs are Region-scoped, not account-wide global.",
+    "AMIs are scoped to a Region, not an AZ.",
+    "IAM permissions don't change an AMI's Region scope.",
+    "Correct: an AMI lives in one Region and must be copied to use in another."
+   ]
+  ]
+ },
+ {
+  "card_id": "27fda2ca-13ca-41f8-8eff-69af85d81660",
+  "notes": [
+   [
+    "Correct: a signed URL covers one file and works without cookie support.",
+    "Signed cookies suit many files and need cookie-capable clients.",
+    "An S3 pre-signed URL bypasses CloudFront, which the scenario wants.",
+    "Geo restriction limits by country, not per purchase."
+   ],
+   [
+    "A signed URL fits a single file for a short window.",
+    "Clients without cookie support need signed URLs.",
+    "Correct: one signed cookie can cover many files.",
+    "Geo restriction is a different feature from signed cookies."
+   ]
+  ]
+ },
+ {
+  "card_id": "28278185-b300-48a7-955e-242c4ed79edf",
+  "notes": [
+   [
+    "Role credentials are refreshed automatically, not cached until reboot.",
+    "Correct: IAM is eventually consistent; changes take a moment to propagate.",
+    "Policies take effect in seconds, not at billing time.",
+    "Detaching and re-attaching isn't needed; waiting is enough."
+   ],
+   [
+    "Correct: IAM changes propagate with a delay, so retry with backoff.",
+    "Creating a new role each run adds delay and clutter.",
+    "Restarting the instance isn't required for permission changes.",
+    "Long-term keys are less secure and still face propagation delay."
+   ]
+  ]
+ },
+ {
+  "card_id": "28305cdf-3063-4a8a-9292-662ce94d840b",
+  "notes": [
+   [
+    "Instance targets are registered by instance ID, not hostname, and can't be on-premises.",
+    "Correct: IP targets accept private addresses, including on-premises over Direct Connect.",
+    "Public internet addresses aren't valid IP targets.",
+    "Lambda targets invoke functions; they can't point to a data center."
+   ],
+   [
+    "Only private ranges, not any routable address, are accepted.",
+    "Sticky sessions don't affect which addresses are allowed.",
+    "Even an internet-facing ALB can't register public IPs as targets.",
+    "Correct: only private addresses from VPC, peered VPC or on-premises are allowed."
+   ]
+  ]
+ },
+ {
+  "card_id": "290cb282-a816-4a4d-a728-b9837283e987",
+  "notes": [
+   [
+    "--user and --default aren't CLI options.",
+    "-p and --use-default aren't valid options.",
+    "Correct: --profile selects a named profile.",
+    "--switch-role isn't a CLI option; role assumption is configured in profiles."
+   ],
+   [
+    "AWS_DEFAULT_USER isn't an environment variable the CLI reads.",
+    "Correct: AWS_PROFILE sets the profile for all commands in the session.",
+    "aws configure set doesn't take a --global option or change profiles this way.",
+    "AWS_REGION sets the Region, not the profile."
+   ]
+  ]
+ },
+ {
+  "card_id": "29226514-3236-45b6-99f8-5f3e68f77250",
+  "notes": [
+   [
+    "Correct: an AMI references snapshots of the instance's EBS volumes.",
+    "CloudWatch Logs aren't copied into an AMI.",
+    "Network interfaces aren't cloned into an AMI.",
+    "An AMI isn't a CloudFormation template."
+   ],
+   [
+    "Snapshots aren't deleted when an AMI is deregistered.",
+    "Snapshots stay in place; they aren't moved to Glacier automatically.",
+    "Snapshots stay private unless you share them.",
+    "Correct: snapshots persist and incur charges until you delete them."
+   ]
+  ]
+ },
+ {
+  "card_id": "293cde6f-6521-47bb-a143-f7b98d6b3659",
+  "notes": [
+   [
+    "300 seconds is the default, but it makes draining needlessly slow for 200 ms requests.",
+    "Correct: short requests finish fast, so a low delay is enough.",
+    "3600 seconds is the maximum and would slow scale-in for no benefit.",
+    "Zero could cut off requests still in flight."
+   ],
+   [
+    "Five seconds would cut off 20-minute uploads.",
+    "Zero removes targets immediately and breaks in-flight uploads.",
+    "Correct: a higher delay lets long uploads finish before the target is removed.",
+    "Health checks don't control draining."
+   ]
+  ]
+ },
+ {
+  "card_id": "29a2da61-c377-4cc8-ba7c-90a79e0ae084",
+  "notes": [
+   [
+    "Cache key contents aren't a way to authenticate to the origin.",
+    "Geo restriction doesn't send a secret to the origin.",
+    "CloudFront doesn't sign origin requests with a key pair for ALBs.",
+    "Correct: CloudFront adds a custom header and the ALB rule requires it."
+   ],
+   [
+    "A cache policy header whitelist affects the cache key, not a fixed origin header.",
+    "Correct: custom headers on the origin configuration are added to origin requests.",
+    "A response headers policy changes responses to viewers, not requests to the origin.",
+    "Invalidation patterns purge cache; they don't add headers."
+   ]
+  ]
+ },
+ {
+  "card_id": "29e0a708-0b15-4f7f-9aa7-580c1afc59a5",
+  "notes": [
+   [
+    "Correct: Route 53 is a global service.",
+    "Correct: IAM is global.",
+    "S3 buckets are created in a Region and hold data there.",
+    "RDS instances are Regional.",
+    "Lambda functions are Regional."
+   ],
+   [
+    "Correct: WAF for CloudFront is global.",
+    "Correct: CloudFront distributions are global.",
+    "DynamoDB tables are Regional.",
+    "SQS queues are Regional.",
+    "EBS volumes are tied to an AZ."
+   ]
+  ]
+ },
+ {
+  "card_id": "29e4cf80-a91a-4036-902d-65b9e06856c6",
+  "notes": [
+   [
+    "ElastiCache is mainly a cache and isn't designed as a durable primary database.",
+    "Correct: MemoryDB is a durable, Redis-compatible in-memory database with a multi-AZ transaction log.",
+    "DAX is a DynamoDB cache, not a Redis API.",
+    "Aurora isn't an in-memory store with microsecond reads."
+   ],
+   [
+    "Correct: MemoryDB is durable; ElastiCache is mainly a cache.",
+    "MemoryDB is Redis-compatible.",
+    "MemoryDB uses a multi-AZ transaction log, not node-local instance store.",
+    "It's MemoryDB that has the Multi-AZ transaction log."
+   ]
+  ]
+ },
+ {
+  "card_id": "2a285b0a-0598-4509-b07f-c311b4e532f7",
+  "notes": [
+   [
+    "Correct: a replica can be promoted to a standalone database.",
+    "Correct: replication is asynchronous, so reads may lag.",
+    "Correct: replicas can be created in another Region.",
+    "Replication goes from primary to replica only; replicas are read-only.",
+    "Each replica has its own endpoint; reads aren't balanced automatically."
+   ],
+   [
+    "Correct: a source can have up to 15 read replicas (engine-dependent, e.g. Aurora, MySQL, MariaDB, PostgreSQL).",
+    "Correct: asynchronous replication lag makes reads eventually consistent.",
+    "Correct: each replica has its own endpoint.",
+    "Replication is asynchronous; synchronous replication is Multi-AZ.",
+    "Replicas can be in another Region."
+   ]
+  ]
+ },
+ {
+  "card_id": "2a34b3ef-fe12-4352-ae6c-31444de1bea3",
+  "notes": [
+   [
+    "Weighted routing in one Region doesn't bring content closer to users.",
+    "Correct: CloudFront caches content at edge locations near viewers.",
+    "Transfer Acceleration speeds transfers to one bucket; it doesn't cache.",
+    "A load balancer is Regional and doesn't cache at the edge."
+   ],
+   [
+    "Direct Connect is a dedicated link, not a CDN.",
+    "Route 53 is DNS, not a CDN.",
+    "Correct: CloudFront is AWS's CDN.",
+    "PrivateLink exposes services privately, not content caching."
+   ]
+  ]
+ },
+ {
+  "card_id": "2b5b5a4a-d45e-4eac-b1bc-1b465ac7e4e4",
+  "notes": [
+   [
+    "VPN runs over the public internet, so no guaranteed throughput or latency.",
+    "Correct: Direct Connect is a dedicated private link with stable performance, taking weeks to provision.",
+    "A gateway endpoint reaches S3/DynamoDB from a VPC, not a data center.",
+    "An internet gateway uses the public internet."
+   ],
+   [
+    "Correct: DX is private but not encrypted by default; run a VPN over it.",
+    "DX takes weeks, not minutes.",
+    "DX doesn't encrypt by default.",
+    "DX is a private connection, not the public internet."
+   ]
+  ]
+ },
+ {
+  "card_id": "2bfcfb0e-925f-4175-bd51-978c98f63e0c",
+  "notes": [
+   [
+    "Correct: the label next to the root dot is the TLD.",
+    "The second-level domain is example.",
+    "The root zone is the final dot.",
+    "The FQDN is the whole name www.example.com."
+   ],
+   [
+    "example.com is a registered domain, not the full FQDN.",
+    ".com is only the TLD.",
+    "Correct: the FQDN lists every label up to the root.",
+    "That is a URL, which adds protocol and path."
+   ]
+  ]
+ },
+ {
+  "card_id": "2cf369dc-44be-499f-a0e8-52a45baac13e",
+  "notes": [
+   [
+    "Correct: Standard RIs can be sold on the Reserved Instance Marketplace.",
+    "AWS doesn't refund unused RI terms.",
+    "RIs aren't exchanged for Savings Plans automatically.",
+    "Stopping the instance doesn't end RI billing."
+   ],
+   [
+    "Convertible RIs can't be sold on the Marketplace.",
+    "Spot reservations don't exist.",
+    "Capacity Reservations can't be sold on the Marketplace.",
+    "Correct: Standard RIs with remaining term can be listed there."
+   ]
+  ]
+ },
+ {
+  "card_id": "2da4a479-fa5f-4c0d-b65e-56b5b8068449",
+  "notes": [
+   [
+    "The LIST API filters by prefix, not metadata.",
+    "Correct: store keys and attributes in DynamoDB and query that.",
+    "Reading every object is slow and costly.",
+    "S3 Select queries inside one object, not across a bucket by tag."
+   ],
+   [
+    "CloudFront cache isn't a searchable store.",
+    "EBS isn't durable or shared for a Lambda function.",
+    "Correct: DynamoDB can be queried by attributes S3 can't search on.",
+    "A bucket policy isn't a data store."
+   ]
+  ]
+ },
+ {
+  "card_id": "2e16c031-8eae-4a26-9639-0b9f04e9a370",
+  "notes": [
+   [
+    "sshd never sees denied packets.",
+    "Correct: security groups act at the virtual network layer, before the OS.",
+    "Security groups aren't instance firewall rules.",
+    "EBS drivers don't handle network traffic."
+   ],
+   [
+    "Correct: blocked traffic is silently dropped, causing a timeout.",
+    "A reset means the OS refused, which suggests the port is reachable.",
+    "IAM doesn't govern network connections to an instance.",
+    "An old AMI wouldn't cause a hang by itself."
+   ]
+  ]
+ },
+ {
+  "card_id": "2e256e40-ca7a-4489-85e6-8a2fafe7b2e7",
+  "notes": [
+   [
+    "Scaling out adds more nodes.",
+    "Correct: moving to a larger instance class is vertical scaling.",
+    "Multi-AZ is about resilience, not capacity.",
+    "Read replicas scale reads out, not a single node."
+   ],
+   [
+    "That is vertical scaling.",
+    "Growing a volume on one server is vertical scaling.",
+    "Correct: adding more servers behind a load balancer is horizontal.",
+    "Changing instance type on the same host is vertical."
+   ]
+  ]
+ },
+ {
+  "card_id": "2e9e8ba7-c336-49b2-bb12-100eb3d762cd",
+  "notes": [
+   [
+    "Correct: a CloudWatch alarm on the service, checked by a health check.",
+    "Route 53 checkers can't reach private IPs.",
+    "Latency records in a private zone don't give failover.",
+    "Making the subnet public is insecure and unnecessary."
+   ],
+   [
+    "Checkers can't reach private addresses.",
+    "A calculated check only combines other checks, and public ones don't cover private resources.",
+    "10.0.0.5 is private and unreachable by Route 53 checkers.",
+    "Correct: alarm-based health checks monitor private or on-premises resources."
+   ]
+  ]
+ },
+ {
+  "card_id": "2f961cd2-3f3f-468d-aba1-f1769ea35171",
+  "notes": [
+   [
+    "777 would make the file readable by everyone and be rejected.",
+    "Correct: 0400 leaves it readable only by its owner.",
+    "Changing the owner to root and using sudo is unnecessary.",
+    "ssh-keygen -R removes known_hosts entries, not key file problems."
+   ],
+   [
+    "Correct: 0400 is owner read-only.",
+    "World-readable is rejected by ssh.",
+    "Group-writable is rejected by ssh.",
+    "777 is rejected by ssh."
+   ]
+  ]
+ },
+ {
+  "card_id": "2ffd945c-fa1f-49c3-a2d4-2fdf3b2273ba",
+  "notes": [
+   null,
+   [
+    "The instance profile is lower in the credential chain than environment variables.",
+    "The credentials file comes after environment variables in the chain.",
+    "Correct: environment variables take precedence over the instance profile.",
+    "The CLI doesn't compare permissions; it follows a fixed order."
+   ]
+  ]
+ },
+ {
+  "card_id": "30225e99-8534-4c25-86b0-e540245734cd",
+  "notes": [
+   [
+    "Compression has nothing to do with real-time log volume.",
+    "Correct: lowering the sampling rate and fewer fields reduces streamed volume.",
+    "Price class affects edge locations, not log volume.",
+    "More edge locations don't reduce logging volume."
+   ],
+   [
+    "Correct: sampling rate sets the share of requests streamed.",
+    "Fields are chosen separately in the configuration.",
+    "Cache TTL is set by cache behavior, not log sampling.",
+    "Logs aren't compressed according to a sampling rate."
+   ]
+  ]
+ },
+ {
+  "card_id": "3102be8f-22be-45cb-bc8f-b1b11e20d039",
+  "notes": [
+   [
+    "Cache policies affect caching, not origin access.",
+    "Price class limits edge locations, not origin access.",
+    "Correct: OAC lets CloudFront access a private S3 bucket.",
+    "Field-level encryption protects fields, not bucket access."
+   ],
+   [
+    "Correct: origin request policies forward extra values to the origin without adding them to the cache key.",
+    "That describes a cache policy.",
+    "Geo restriction handles country access.",
+    "Signing URLs involves trusted key groups, not origin request policies."
+   ]
+  ]
+ },
+ {
+  "card_id": "315d1d75-8131-47a5-a314-2ee4c9802661",
+  "notes": [
+   [
+    "Correct: versioning lets you recover overwritten or deleted objects.",
+    "Correct: deletes add a delete marker and keep earlier versions.",
+    "Versioning doesn't compress.",
+    "Old versions are billed as stored objects."
+   ],
+   [
+    "Correct: older versions remain under their version IDs.",
+    "Correct: you can restore an earlier version to current.",
+    "S3 doesn't deduplicate versions.",
+    "Versions don't expire without a Lifecycle rule."
+   ]
+  ]
+ },
+ {
+  "card_id": "325b9fc7-e2de-4143-bfbe-8008dddc38af",
+  "notes": [
+   [
+    "Correct: EFS scales storage automatically.",
+    "Correct: security groups protect mount targets.",
+    "Correct: EFS uses NFS.",
+    "EFS doesn't support SMB for Windows.",
+    "You don't provision capacity with EFS."
+   ],
+   [
+    "Correct: you pay for what you store.",
+    "Correct: EFS is an NFS file system for Linux.",
+    "Correct: EFS can be encrypted at rest with KMS.",
+    "EFS has no fixed size.",
+    "EFS doesn't support SMB."
+   ]
+  ]
+ },
+ {
+  "card_id": "3308f41f-542d-41c0-b515-25af08731c2d",
+  "notes": [
+   [
+    "That describes cross-zone disabled behavior with wrong numbers.",
+    "That is the per-AZ split when cross-zone is off.",
+    "Correct: with cross-zone on, traffic is spread across all 10 targets evenly.",
+    "Health check interval doesn't set the traffic split."
+   ],
+   [
+    "Cross-zone on, not off, evens traffic across AZs.",
+    "Correct: each AZ's node routes only to targets in its own AZ.",
+    "Targets stay in rotation; they just get a different share.",
+    "Sticky sessions are a separate setting."
+   ]
+  ]
+ },
+ {
+  "card_id": "34744bd1-66e2-4f17-b5b0-dd3adcfc7def",
+  "notes": [
+   [
+    "Correct: gp2 IOPS scale with size at 3 IOPS per GB.",
+    "Throughput isn't what limits IOPS on gp2.",
+    "Multi-Attach doesn't change IOPS.",
+    "Re-attaching doesn't change baseline."
+   ],
+   [
+    "gp3 is SSD, not HDD.",
+    "Correct: gp3 provisions IOPS independently of size.",
+    "gp2 ties IOPS to size.",
+    "They differ: gp3 decouples IOPS from size."
+   ]
+  ]
+ },
+ {
+  "card_id": "35f919e4-49e0-400a-a507-c1ac18bae607",
+  "notes": [
+   [
+    "Write-through updates the cache on writes.",
+    "Write-behind delays database writes.",
+    "Correct: lazy loading fills the cache on demand.",
+    "Read replica routing is a different pattern."
+   ],
+   [
+    "Correct: a miss adds round trips, and cached data can go stale.",
+    "Write cost isn't the lazy loading drawback; that's write-through.",
+    "Lazy loading only caches requested data.",
+    "No second database is needed."
+   ]
+  ]
+ },
+ {
+  "card_id": "361d900c-2397-48f6-81ef-60ebebeee82c",
+  "notes": [
+   [
+    "Simple routing returns all values, healthy or not, with no health checks.",
+    "Correct: multi-value returns up to 8 healthy records.",
+    "Geolocation routes by location.",
+    "Failover is active-passive."
+   ],
+   [
+    "No ALB is required.",
+    "It returns up to 8 records, not one.",
+    "It uses health checks.",
+    "Correct: it returns healthy records but isn't a replacement for ELB."
+   ]
+  ]
+ },
+ {
+  "card_id": "3621f643-414d-4561-9596-a53b0b86e6b6",
+  "notes": [
+   [
+    "Logs aren't encrypted twice.",
+    "Correct: logs to the same bucket create a loop of new logs.",
+    "Access isn't denied for all principals.",
+    "Logs don't expire automatically."
+   ],
+   [
+    "Correct: use a separate bucket.",
+    "Same-bucket delivery creates an infinite loop.",
+    "CloudFront edge cache doesn't store S3 logs.",
+    "EBS volumes aren't a log destination."
+   ]
+  ]
+ },
+ {
+  "card_id": "363d26a6-7414-489d-874f-baed1499bd7e",
+  "notes": [
+   [
+    "ListBucket isn't what blocks GetObject.",
+    "PutObject isn't needed to read.",
+    "Correct: kms:Decrypt is needed to read SSE-KMS objects.",
+    "CreateGrant on a replication role is unrelated."
+   ],
+   [
+    "S3 doesn't decrypt without KMS permission.",
+    "Correct: both S3 and KMS permissions are needed.",
+    "Bucket permissions are checked too.",
+    "Versioning is unrelated."
+   ]
+  ]
+ },
+ {
+  "card_id": "3763e27b-7cfd-4beb-8cb0-aafd14924c83",
+  "notes": [
+   [
+    "CloudFront can cache URLs with query strings.",
+    "Correct: each distinct parameter combination gets its own cache entry.",
+    "Query strings aren't encrypted.",
+    "Parameter order doesn't reset TTLs."
+   ],
+   [
+    "Correct: include only the parameters that change the response.",
+    "Including everything fragments the cache.",
+    "Forwarding nothing breaks origin variation.",
+    "Order shouldn't be randomized."
+   ]
+  ]
+ },
+ {
+  "card_id": "37da5027-e6d3-4b75-a725-400c7a90955c",
+  "notes": [
+   [
+    "Correct: versioning plus tiering noncurrent versions to IA then Deep Archive.",
+    "CRR keeps everything in Standard, which costs more.",
+    "EBS snapshots don't back up S3 buckets.",
+    "One Zone-IA risks data in one AZ and isn't tiered."
+   ],
+   [
+    "Expiring current versions doesn't move older copies.",
+    "Aborting multipart uploads cleans up incomplete uploads.",
+    "Correct: noncurrent version transitions move previous versions.",
+    "Intelligent-Tiering archive access isn't a Lifecycle action."
+   ]
+  ]
+ },
+ {
+  "card_id": "3868d09b-6438-49fa-a8a6-af4f2fa201ef",
+  "notes": [
+   [
+    "A single EBS volume attaches to one instance.",
+    "Correct: EFS is a shared NFS file system across AZs.",
+    "Instance store is local to each host.",
+    "Glacier Flexible Retrieval isn't a file system."
+   ],
+   [
+    "Correct: EFS has mount targets in each AZ.",
+    "A standard EBS volume attaches to one instance.",
+    "Instance store is local.",
+    "Snapshot restores create separate volumes."
+   ]
+  ]
+ }
+]

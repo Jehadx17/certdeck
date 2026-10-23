@@ -14,7 +14,13 @@
     "correct": [
      1
     ],
-    "explanation": "AWS runs the IAM service and the infrastructure under it. The customer configures identities, permissions, MFA and key hygiene."
+    "explanation": "AWS runs the IAM service and the infrastructure under it. The customer configures identities, permissions, MFA and key hygiene.",
+    "option_explanations": [
+     "AWS patches the servers behind IAM; that is the provider's side.",
+     "Correct: permissions, roles and MFA are configured by the customer.",
+     "AWS secures the data centers, not the customer.",
+     "AWS operates the global network; the customer does not."
+    ]
    },
    {
     "type": "mcq",
@@ -28,7 +34,13 @@
     "correct": [
      1
     ],
-    "explanation": "Security *in* the cloud, including IAM users, policies, MFA and key rotation, belongs to the customer; AWS secures the service itself."
+    "explanation": "Security *in* the cloud, including IAM users, policies, MFA and key rotation, belongs to the customer; AWS secures the service itself.",
+    "option_explanations": [
+     "IAM is managed, but customers still manage their own keys and policies.",
+     "Correct: the customer rotates access keys and reviews policies.",
+     "Support does not rotate keys or review policies for you.",
+     "Facility security is AWS's job and has nothing to do with key rotation."
+    ]
    }
   ]
  },
@@ -47,7 +59,13 @@
     "correct": [
      1
     ],
-    "explanation": "A user may be in several groups (or none). Groups contain users only, not other groups or roles."
+    "explanation": "A user may be in several groups (or none). Groups contain users only, not other groups or roles.",
+    "option_explanations": [
+     "IAM groups cannot be nested.",
+     "Correct: a user can belong to several groups.",
+     "Groups contain users only, not roles.",
+     "Group membership is optional; users can be in several groups or none."
+    ]
    },
    {
     "type": "mcq",
@@ -61,7 +79,13 @@
     "correct": [
      2
     ],
-    "explanation": "IAM users can belong to multiple groups and receive the union of permissions. Groups hold users only and cannot be nested."
+    "explanation": "IAM users can belong to multiple groups and receive the union of permissions. Groups hold users only and cannot be nested.",
+    "option_explanations": [
+     "A user can be in multiple groups, so no merged group is needed.",
+     "Groups hold users, not only roles.",
+     "Correct: group permissions are combined (union).",
+     "There is no per-Region limit; IAM is global."
+    ]
    }
   ]
  },
@@ -80,7 +104,13 @@
     "correct": [
      0
     ],
-    "explanation": "Real-time logs go only to a Kinesis data stream. Firehose or Lambda can then forward them to S3, OpenSearch and so on."
+    "explanation": "Real-time logs go only to a Kinesis data stream. Firehose or Lambda can then forward them to S3, OpenSearch and so on.",
+    "option_explanations": [
+     "Correct: real-time logs go to a Kinesis data stream.",
+     "OpenSearch can be reached only after the stream, e.g. via Firehose.",
+     "Standard logging is not sent to CloudWatch Logs as real-time logs.",
+     "S3 is the target of standard logs; real-time logs need Kinesis first."
+    ]
    },
    {
     "type": "mcq",
@@ -94,7 +124,13 @@
     "correct": [
      1
     ],
-    "explanation": "The only direct target is a Kinesis data stream; Firehose sits after the stream to reach S3."
+    "explanation": "The only direct target is a Kinesis data stream; Firehose sits after the stream to reach S3.",
+    "option_explanations": [
+     "Real-time logs cannot be pointed directly at a bucket.",
+     "Correct: Kinesis Data Streams is the direct target, Firehose then writes to S3.",
+     "CloudWatch Logs is not a real-time log destination.",
+     "RDS is not a log destination and adds needless work."
+    ]
    }
   ]
  },
@@ -113,7 +149,13 @@
     "correct": [
      0
     ],
-    "explanation": "Elastic mode adapts automatically and is recommended for unpredictable workloads."
+    "explanation": "Elastic mode adapts automatically and is recommended for unpredictable workloads.",
+    "option_explanations": [
+     "Correct: Elastic scales automatically, ideal for spiky, unpredictable load.",
+     "Provisioned means paying continuously for a fixed rate, even when idle.",
+     "Bursting depends on stored data size, so a small file system gets little.",
+     "General Purpose is a performance mode, not a throughput mode."
+    ]
    },
    {
     "type": "mcq",
@@ -126,7 +168,12 @@
     "correct": [
      1
     ],
-    "explanation": "Bursting throughput grows with storage size. Provisioned is fixed and paid for; Elastic scales automatically."
+    "explanation": "Bursting throughput grows with storage size. Provisioned is fixed and paid for; Elastic scales automatically.",
+    "option_explanations": [
+     "Elastic adjusts on demand; it does not tie throughput to size.",
+     "Correct: Bursting baseline grows with the stored data.",
+     "Provisioned is a fixed rate you choose, independent of size."
+    ]
    }
   ]
  },
@@ -145,7 +192,13 @@
     "correct": [
      0
     ],
-    "explanation": "Access points give every application a dedicated endpoint and policy, keeping the bucket policy short."
+    "explanation": "Access points give every application a dedicated endpoint and policy, keeping the bucket policy short.",
+    "option_explanations": [
+     "Correct: each access point has its own policy and DNS name.",
+     "One huge policy is exactly the complexity to avoid (and has size limits).",
+     "Copies cost money and drift out of sync.",
+     "S3 Select queries inside objects; it is not access control."
+    ]
    },
    {
     "type": "mcq",
@@ -159,7 +212,13 @@
     "correct": [
      1
     ],
-    "explanation": "Each access point has its own DNS name and a policy that resembles a bucket policy."
+    "explanation": "Each access point has its own DNS name and a policy that resembles a bucket policy.",
+    "option_explanations": [
+     "Inventory lists objects; it gives no per-team endpoint.",
+     "Correct: access points offer a DNS name plus their own policy.",
+     "Batch Operations runs bulk actions, not access control.",
+     "Storage Lens is a usage dashboard, not an access mechanism."
+    ]
    }
   ]
  },
@@ -178,7 +237,13 @@
     "correct": [
      1
     ],
-    "explanation": "A NAT gateway in a public subnet forwards outbound traffic via the IGW and only lets replies back."
+    "explanation": "A NAT gateway in a public subnet forwards outbound traffic via the IGW and only lets replies back.",
+    "option_explanations": [
+     "Public IPs with all ports open permit inbound connections from the internet.",
+     "Correct: NAT in a public subnet gives outbound-only access.",
+     "Peering is not transitive; you cannot use the peer's internet gateway.",
+     "Routing straight to an IGW would make the subnets public and allow inbound."
+    ]
    },
    {
     "type": "mcq",
@@ -192,7 +257,13 @@
     "correct": [
      2
     ],
-    "explanation": "Private instances reach the internet through the NAT gateway in a public subnet; the internet cannot initiate connections inward."
+    "explanation": "Private instances reach the internet through the NAT gateway in a public subnet; the internet cannot initiate connections inward.",
+    "option_explanations": [
+     "That is the opposite: NAT blocks internet-initiated connections.",
+     "Encrypting office traffic is the job of a VPN.",
+     "Correct: outbound-only internet access for private subnets.",
+     "Stateless subnet filtering describes network ACLs."
+    ]
    }
   ]
  },
@@ -211,7 +282,13 @@
     "correct": [
      0
     ],
-    "explanation": "SSE-KMS lets you manage the key, and KMS usage is logged in CloudTrail."
+    "explanation": "SSE-KMS lets you manage the key, and KMS usage is logged in CloudTrail.",
+    "option_explanations": [
+     "Correct: you control the KMS key and each use appears in CloudTrail.",
+     "That is SSE-S3; AWS owns the keys and you don't control them.",
+     "That is SSE-C; no KMS key, so no CloudTrail key-use records.",
+     "ACLs control access, not encryption or key logging."
+    ]
    },
    {
     "type": "mcq",
@@ -225,7 +302,13 @@
     "correct": [
      2
     ],
-    "explanation": "With SSE-KMS (header `aws:kms`) decryption goes through KMS, so key permissions are checked too."
+    "explanation": "With SSE-KMS (header `aws:kms`) decryption goes through KMS, so key permissions are checked too.",
+    "option_explanations": [
+     "SSE-S3 uses S3-managed keys, so no KMS permissions are checked.",
+     "SSE-C uses a key sent per request, not KMS.",
+     "Correct: decryption needs permissions on the KMS key too.",
+     "Client-side encryption happens before upload, not in S3 or KMS."
+    ]
    }
   ]
  },
@@ -245,7 +328,13 @@
      0,
      3
     ],
-    "explanation": "Invalidations take URL paths starting with `/`, for single objects or with a wildcard for a prefix."
+    "explanation": "Invalidations take URL paths starting with `/`, for single objects or with a wildcard for a prefix.",
+    "option_explanations": [
+     "Correct: a path starting with / names a single object.",
+     "A bucket name is not a URL path; paths must start with /.",
+     "An ARN is not a valid invalidation path.",
+     "Correct: a wildcard covers a prefix."
+    ]
    },
    {
     "type": "mcq",
@@ -260,7 +349,13 @@
      0,
      1
     ],
-    "explanation": "Invalidation paths start with `/` and may name a single object or end in a wildcard; URIs and full URLs are not accepted."
+    "explanation": "Invalidation paths start with `/` and may name a single object or end in a wildcard; URIs and full URLs are not accepted.",
+    "option_explanations": [
+     "Correct: wildcard at the end covers all assets.",
+     "Correct: a single object path with leading /.",
+     "An s3:// URI is not a valid path.",
+     "Full URLs and mid-path wildcards are not accepted."
+    ]
    }
   ]
  },
@@ -279,7 +374,13 @@
     "correct": [
      1
     ],
-    "explanation": "Authoritative means customers control the records; Route 53 returns the definitive answer."
+    "explanation": "Authoritative means customers control the records; Route 53 returns the definitive answer.",
+    "option_explanations": [
+     "Caching answers is what a recursive resolver does.",
+     "Correct: authoritative servers hold your zone's records.",
+     "Forwarding to root servers is recursive resolver behavior.",
+     "Route 53 is DNS, not a proxy load balancer."
+    ]
    },
    {
     "type": "mcq",
@@ -293,7 +394,13 @@
     "correct": [
      0
     ],
-    "explanation": "An authoritative DNS server answers with records the customer manages."
+    "explanation": "An authoritative DNS server answers with records the customer manages.",
+    "option_explanations": [
+     "Correct: you manage the records Route 53 answers with.",
+     "Registries own TLDs; Route 53 does not.",
+     "A recursive resolver for offices is Route 53 Resolver, not authoritative DNS.",
+     "DNS does not load balance TCP connections."
+    ]
    }
   ]
  },
@@ -313,7 +420,13 @@
      0,
      1
     ],
-    "explanation": "Use CloudFront signed URLs when distributing via CloudFront; pre-signed URLs go directly to S3 and inherit the signer's permissions."
+    "explanation": "Use CloudFront signed URLs when distributing via CloudFront; pre-signed URLs go directly to S3 and inherit the signer's permissions.",
+    "option_explanations": [
+     "Correct: works with any origin and benefits from edge caching.",
+     "Correct: the URL carries the signer's permissions.",
+     "Pre-signed S3 URLs go directly to S3, not through CloudFront.",
+     "Viewers don't need IAM users for signed URLs."
+    ]
    },
    {
     "type": "mcq",
@@ -328,7 +441,13 @@
      1,
      2
     ],
-    "explanation": "CloudFront signed URLs are origin-agnostic and cached; pre-signed URLs delegate the signer's permissions."
+    "explanation": "CloudFront signed URLs are origin-agnostic and cached; pre-signed URLs delegate the signer's permissions.",
+    "option_explanations": [
+     "Viewers need no AWS credentials, only the signed URL.",
+     "Correct: origin-agnostic and cacheable.",
+     "Correct: the holder acts with the signer's permissions until expiry.",
+     "Pre-signed S3 URLs go to S3 directly, bypassing CloudFront caching."
+    ]
    }
   ]
  },
@@ -347,7 +466,13 @@
     "correct": [
      0
     ],
-    "explanation": "The reader endpoint tracks the current replicas and spreads connections among them."
+    "explanation": "The reader endpoint tracks the current replicas and spreads connections among them.",
+    "option_explanations": [
+     "Correct: the reader endpoint tracks current replicas.",
+     "Hard-coded lists break when replicas scale in or out.",
+     "The writer endpoint points to the primary, not the replicas.",
+     "Manual weighted records are fragile compared with the built-in endpoint."
+    ]
    },
    {
     "type": "mcq",
@@ -361,7 +486,13 @@
     "correct": [
      1
     ],
-    "explanation": "It balances at connection level across the replicas, even as they come and go."
+    "explanation": "It balances at connection level across the replicas, even as they come and go.",
+    "option_explanations": [
+     "That describes the writer endpoint.",
+     "Correct: connection-level load balancing across replicas.",
+     "Aurora does not split individual statements across replicas.",
+     "That is Aurora Global Database, not the reader endpoint."
+    ]
    }
   ]
  },
@@ -380,7 +511,13 @@
     "correct": [
      0
     ],
-    "explanation": "Cross-account access needs a resource-based policy on the bucket allowing the other account (plus identity permission there)."
+    "explanation": "Cross-account access needs a resource-based policy on the bucket allowing the other account (plus identity permission there).",
+    "option_explanations": [
+     "Correct: a resource-based bucket policy grants the external principal access.",
+     "S3 does not assume roles in other accounts for this.",
+     "Replication copies data; it does not grant read access.",
+     "Endpoint policies restrict VPC traffic, not cross-account grants."
+    ]
    },
    {
     "type": "mcq",
@@ -394,7 +531,13 @@
     "correct": [
      1
     ],
-    "explanation": "The bucket policy is the resource policy granting cross-account access."
+    "explanation": "The bucket policy is the resource policy granting cross-account access.",
+    "option_explanations": [
+     "Never share root credentials.",
+     "Correct: the bucket policy is the resource policy for cross-account access.",
+     "Transfer Acceleration speeds transfers; it is not access control.",
+     "Tags don't grant access to another account."
+    ]
    }
   ]
  },
@@ -413,7 +556,13 @@
     "correct": [
      0
     ],
-    "explanation": "Regions generally have at least 3 AZs, and some have up to 6."
+    "explanation": "Regions generally have at least 3 AZs, and some have up to 6.",
+    "option_explanations": [
+     "Correct: typically three or more, up to six.",
+     "Most Regions have at least three.",
+     "AZs have nothing to do with countries served.",
+     "Regions have multiple AZs; edge locations are separate."
+    ]
    },
    {
     "type": "mcq",
@@ -427,7 +576,13 @@
     "correct": [
      1
     ],
-    "explanation": "AZs are isolated from each other for fault tolerance yet connected with fast networking, which enables multi-AZ designs."
+    "explanation": "AZs are isolated from each other for fault tolerance yet connected with fast networking, which enables multi-AZ designs.",
+    "option_explanations": [
+     "An AZ is one or more data centers, not a rack.",
+     "Correct: isolated data centers with independent power and networking.",
+     "That describes an edge location.",
+     "Account grouping is AWS Organizations."
+    ]
    }
   ]
  },
@@ -446,7 +601,13 @@
     "correct": [
      0
     ],
-    "explanation": "Failover routing has a primary and a secondary and uses health checks to switch."
+    "explanation": "Failover routing has a primary and a secondary and uses health checks to switch.",
+    "option_explanations": [
+     "Correct: failover uses health checks to answer with the secondary.",
+     "Geoproximity routes by location, not health.",
+     "Simple routing returns both and ignores health-based failover.",
+     "Latency routing picks the fastest Region, not a standby."
+    ]
    },
    {
     "type": "mcq",
@@ -460,7 +621,13 @@
     "correct": [
      0
     ],
-    "explanation": "Route 53 returns the secondary only when the primary is deemed unhealthy."
+    "explanation": "Route 53 returns the secondary only when the primary is deemed unhealthy.",
+    "option_explanations": [
+     "Correct: the secondary answers when the primary is unhealthy.",
+     "Latency isn't what triggers failover.",
+     "The user's location doesn't affect failover.",
+     "Weights belong to weighted routing, not failover."
+    ]
    }
   ]
  },
@@ -479,7 +646,13 @@
     "correct": [
      1
     ],
-    "explanation": "Standard-IA stores across multiple AZs with rapid access at a lower storage price."
+    "explanation": "Standard-IA stores across multiple AZs with rapid access at a lower storage price.",
+    "option_explanations": [
+     "Flexible Retrieval takes minutes to hours, not milliseconds.",
+     "Correct: multi-AZ, rapid access, cheap for rare reads.",
+     "One Zone-IA would be lost with the AZ.",
+     "Deep Archive restores take 12 hours or more."
+    ]
    },
    {
     "type": "mcq",
@@ -493,7 +666,13 @@
     "correct": [
      0
     ],
-    "explanation": "Standard-IA keeps data in at least three AZs and retrieves immediately."
+    "explanation": "Standard-IA keeps data in at least three AZs and retrieves immediately.",
+    "option_explanations": [
+     "Correct: Standard-IA stores in at least three AZs.",
+     "One Zone-IA is not resilient to an AZ outage.",
+     "Archive classes take hours to restore.",
+     "Express One Zone is a single-AZ class for latency, not resilient or cheap."
+    ]
    }
   ]
  },
@@ -512,7 +691,13 @@
     "correct": [
      0
     ],
-    "explanation": "A Default geolocation record handles locations that match no other record."
+    "explanation": "A Default geolocation record handles locations that match no other record.",
+    "option_explanations": [
+     "Correct: Default matches locations with no other record.",
+     "TTL doesn't change which locations match.",
+     "An alias doesn't cover unmatched locations.",
+     "Failover is for health, not location gaps."
+    ]
    },
    {
     "type": "mcq",
@@ -526,7 +711,13 @@
     "correct": [
      1
     ],
-    "explanation": "Without a Default record, unmatched locations get no answer."
+    "explanation": "Without a Default record, unmatched locations get no answer.",
+    "option_explanations": [
+     "Geoproximity bias is a different routing policy, not geolocation.",
+     "Correct: the Default record answers unmatched locations.",
+     "Weighted records aren't geolocation fallbacks.",
+     "Multi-value answer is a different routing policy."
+    ]
    }
   ]
  },
@@ -545,7 +736,13 @@
     "correct": [
      1
     ],
-    "explanation": "Transitions: Standard-IA at 30 days, Glacier at 90 days, and expiry only at 365 days."
+    "explanation": "Transitions: Standard-IA at 30 days, Glacier at 90 days, and expiry only at 365 days.",
+    "option_explanations": [
+     "Deletion happens only at day 365, not 90.",
+     "Correct: Standard-IA at 30, Glacier at 90, so 120 days is in Glacier.",
+     "The rule matches logs/ and transitions apply.",
+     "No Deep Archive transition is configured."
+    ]
    },
    {
     "type": "mcq",
@@ -559,7 +756,13 @@
     "correct": [
      1
     ],
-    "explanation": "Scope is the `logs/` prefix: expiration at 365 days, plus aborting incomplete multipart uploads 7 days after initiation. Tiering is IA at 30 and Glacier at 90."
+    "explanation": "Scope is the `logs/` prefix: expiration at 365 days, plus aborting incomplete multipart uploads 7 days after initiation. Tiering is IA at 30 and Glacier at 90.",
+    "option_explanations": [
+     "The rule is scoped to the logs/ prefix, not the whole bucket.",
+     "Correct: expiry at 365 days and aborting incomplete uploads after 7.",
+     "The abort rule applies to incomplete uploads, not old parts of completed objects.",
+     "The order is reversed: IA at 30, Glacier at 90."
+    ]
    }
   ]
  },
@@ -578,7 +781,13 @@
     "correct": [
      0
     ],
-    "explanation": "Stickiness routes a client's requests to the same target. Externalising sessions to ElastiCache or DynamoDB is the better long-term fix."
+    "explanation": "Stickiness routes a client's requests to the same target. Externalising sessions to ElastiCache or DynamoDB is the better long-term fix.",
+    "option_explanations": [
+     "Correct: stickiness keeps a client on the same target.",
+     "More instances don't fix state held in memory.",
+     "Health-check interval doesn't affect session routing.",
+     "A bigger instance still loses sessions if the LB picks another target."
+    ]
    },
    {
     "type": "mcq",
@@ -592,7 +801,13 @@
     "correct": [
      1
     ],
-    "explanation": "Because clients stay on one target, traffic may become unbalanced."
+    "explanation": "Because clients stay on one target, traffic may become unbalanced.",
+    "option_explanations": [
+     "Stickiness doesn't disable health checks.",
+     "Correct: clients stick to one target, so load may be uneven.",
+     "Stickiness works with HTTPS listeners.",
+     "It doesn't limit the group to one AZ."
+    ]
    }
   ]
  },
@@ -611,7 +826,13 @@
     "correct": [
      0
     ],
-    "explanation": "Writes need 4 of 6 and reads need 3 of 6, so Aurora survives an AZ loss."
+    "explanation": "Writes need 4 of 6 and reads need 3 of 6, so Aurora survives an AZ loss.",
+    "option_explanations": [
+     "Correct: write quorum is 4 of 6.",
+     "Two is below quorum.",
+     "Aurora doesn't need all six.",
+     "Three is the read quorum, not write."
+    ]
    },
    {
     "type": "mcq",
@@ -625,7 +846,13 @@
     "correct": [
      1
     ],
-    "explanation": "Read quorum is 3 of 6; write quorum is 4 of 6."
+    "explanation": "Read quorum is 3 of 6; write quorum is 4 of 6.",
+    "option_explanations": [
+     "Four is the write quorum.",
+     "Correct: read quorum is 3 of 6.",
+     "Two is too few.",
+     "Five is more than required."
+    ]
    }
   ]
  },
@@ -644,7 +871,13 @@
     "correct": [
      0
     ],
-    "explanation": "Each prefix supports 5,500 GET/HEAD per second, so 10 prefixes give 55,000."
+    "explanation": "Each prefix supports 5,500 GET/HEAD per second, so 10 prefixes give 55,000.",
+    "option_explanations": [
+     "Correct: 10 x 5,500 = 55,000 GET/HEAD per second.",
+     "5,500 is per prefix, not a total.",
+     "30,000 isn't the arithmetic result.",
+     "3,500 is the per-prefix write limit, not a bucket-wide limit."
+    ]
    },
    {
     "type": "mcq",
@@ -658,7 +891,13 @@
     "correct": [
      0
     ],
-    "explanation": "S3 scales to at least 5,500 GET/HEAD per second per prefix (and 3,500 PUT/POST/DELETE)."
+    "explanation": "S3 scales to at least 5,500 GET/HEAD per second per prefix (and 3,500 PUT/POST/DELETE).",
+    "option_explanations": [
+     "Correct: 5,500 GET/HEAD per second per prefix.",
+     "3,500 is the PUT/POST/DELETE rate.",
+     "The baseline is far higher.",
+     "There is a baseline of 5,500 per prefix."
+    ]
    }
   ]
  },
@@ -677,7 +916,13 @@
     "correct": [
      0
     ],
-    "explanation": "`aws configure` asks for the access key ID, secret key, default Region and output format and writes them to `~/.aws/credentials` and `~/.aws/config`. On EC2 use an IAM role instead."
+    "explanation": "`aws configure` asks for the access key ID, secret key, default Region and output format and writes them to `~/.aws/credentials` and `~/.aws/config`. On EC2 use an IAM role instead.",
+    "option_explanations": [
+     "Correct: saves settings in ~/.aws.",
+     "It doesn't create IAM users.",
+     "It doesn't attach instance profiles.",
+     "It doesn't validate by listing buckets."
+    ]
    },
    {
     "type": "mcq",
@@ -691,7 +936,13 @@
     "correct": [
      0
     ],
-    "explanation": "The CLI stores keys in `~/.aws/credentials` and Region/output in `~/.aws/config`."
+    "explanation": "The CLI stores keys in `~/.aws/credentials` and Region/output in `~/.aws/config`.",
+    "option_explanations": [
+     "Correct: ~/.aws/credentials and ~/.aws/config.",
+     "Those are not AWS CLI paths.",
+     "Those are SSH files.",
+     "Those are Kubernetes and Docker configs."
+    ]
    }
   ]
  },
@@ -710,7 +961,13 @@
     "correct": [
      0
     ],
-    "explanation": "These query parameters belong to a SigV4 pre-signed URL that stops working after expiry."
+    "explanation": "These query parameters belong to a SigV4 pre-signed URL that stops working after expiry.",
+    "option_explanations": [
+     "Correct: those SigV4 parameters mean a pre-signed URL that expires.",
+     "CloudFront URLs use different signing parameters.",
+     "It stops working after expiry, so not permanent.",
+     "Acceleration endpoints don't carry signature parameters."
+    ]
    },
    {
     "type": "mcq",
@@ -724,7 +981,13 @@
     "correct": [
      1
     ],
-    "explanation": "It is the validity period of a pre-signed URL."
+    "explanation": "It is the validity period of a pre-signed URL.",
+    "option_explanations": [
+     "Lifecycle expiry isn't in the URL.",
+     "Correct: it sets how long the link is valid.",
+     "CloudFront TTL is unrelated.",
+     "Key rotation isn't encoded in the URL."
+    ]
    }
   ]
  },
@@ -743,7 +1006,13 @@
     "correct": [
      0
     ],
-    "explanation": "Instance refresh replaces instances in batches, respecting the minimum healthy percentage and warm-up."
+    "explanation": "Instance refresh replaces instances in batches, respecting the minimum healthy percentage and warm-up.",
+    "option_explanations": [
+     "Correct: instance refresh replaces in batches keeping healthy capacity.",
+     "Manual detach is slow and error-prone.",
+     "Termination policy affects scale-in, not replacement.",
+     "Raising max size doesn't replace instances in a controlled way."
+    ]
    },
    {
     "type": "mcq",
@@ -757,7 +1026,13 @@
     "correct": [
      1
     ],
-    "explanation": "Instance refresh does a rolling replacement controlled by minimum healthy % and warm-up time."
+    "explanation": "Instance refresh does a rolling replacement controlled by minimum healthy % and warm-up time.",
+    "option_explanations": [
+     "Scheduled actions change capacity on a schedule.",
+     "Correct: rolling replacement after a launch template change.",
+     "Lifecycle hooks pause instances; they don't replace them.",
+     "Predictive scaling forecasts capacity needs."
+    ]
    }
   ]
  },
@@ -776,7 +1051,13 @@
     "correct": [
      0
     ],
-    "explanation": "By default the cache key is hostname plus path; headers, cookies and query strings are added only if configured."
+    "explanation": "By default the cache key is hostname plus path; headers, cookies and query strings are added only if configured.",
+    "option_explanations": [
+     "Correct: default cache key is hostname plus path.",
+     "Cookies are included only if configured.",
+     "User-Agent is not in the default key.",
+     "ETag isn't part of the cache key."
+    ]
    },
    {
     "type": "mcq",
@@ -789,7 +1070,12 @@
     "correct": [
      2
     ],
-    "explanation": "The default cache key is hostname plus path. Cookies, headers and query strings are added only when configured."
+    "explanation": "The default cache key is hostname plus path. Cookies, headers and query strings are added only when configured.",
+    "option_explanations": [
+     "The domain name is always part of the key.",
+     "The path is always part of the key.",
+     "Correct: cookies are added only through the cache policy."
+    ]
    }
   ]
  },
@@ -808,7 +1094,13 @@
     "correct": [
      0
     ],
-    "explanation": "An endpoint is healthy if more than 18% of the checkers say it is."
+    "explanation": "An endpoint is healthy if more than 18% of the checkers say it is.",
+    "option_explanations": [
+     "Correct: healthy if more than 18% of checkers say so.",
+     "Not every checker must pass.",
+     "One checker isn't what defines it, the percentage is.",
+     "DNS resolution is not the health criterion."
+    ]
    },
    {
     "type": "mcq",
@@ -822,7 +1114,13 @@
     "correct": [
      1
     ],
-    "explanation": "Pass means 2xx/3xx; you can also match text in the first 5,120 bytes and choose checker locations."
+    "explanation": "Pass means 2xx/3xx; you can also match text in the first 5,120 bytes and choose checker locations.",
+    "option_explanations": [
+     "2xx and 3xx pass, not only 200.",
+     "Correct: HTTP, HTTPS and TCP checks; 2xx/3xx pass.",
+     "It can match text in the first 5,120 bytes.",
+     "Checkers run from multiple Regions worldwide."
+    ]
    }
   ]
  },
@@ -841,7 +1139,13 @@
     "correct": [
      0
     ],
-    "explanation": "OAC lets only CloudFront sign requests to S3; direct S3 URLs are denied."
+    "explanation": "OAC lets only CloudFront sign requests to S3; direct S3 URLs are denied.",
+    "option_explanations": [
+     "Correct: OAC and a bucket policy trusting the distribution.",
+     "Granting AllUsers makes the bucket public.",
+     "Public website read defeats the goal.",
+     "Long-term keys in an origin are insecure and unsupported."
+    ]
    },
    {
     "type": "mcq",
@@ -855,7 +1159,13 @@
     "correct": [
      0
     ],
-    "explanation": "The bucket policy trusts the CloudFront service principal for that distribution only."
+    "explanation": "The bucket policy trusts the CloudFront service principal for that distribution only.",
+    "option_explanations": [
+     "Correct: only CloudFront can read; direct S3 URLs are denied.",
+     "OAC keeps the bucket private.",
+     "OAC doesn't affect caching.",
+     "OAC has nothing to do with VPN."
+    ]
    }
   ]
  },
@@ -874,7 +1184,13 @@
     "correct": [
      1
     ],
-    "explanation": "One Zone-IA is cheaper because it stores in a single AZ; it suits recreatable data or secondary copies."
+    "explanation": "One Zone-IA is cheaper because it stores in a single AZ; it suits recreatable data or secondary copies.",
+    "option_explanations": [
+     "Three-AZ storage costs more than needed here.",
+     "Correct: One Zone-IA is cheaper and AZ loss is acceptable.",
+     "Glacier takes minutes to hours to restore, not milliseconds.",
+     "Intelligent-Tiering adds a monitoring fee and isn't the cheapest here."
+    ]
    },
    {
     "type": "mcq",
@@ -888,7 +1204,13 @@
     "correct": [
      1
     ],
-    "explanation": "Data is stored in a single AZ, which lowers cost but loses AZ resilience."
+    "explanation": "Data is stored in a single AZ, which lowers cost but loses AZ resilience.",
+    "option_explanations": [
+     "Both classes give immediate access.",
+     "Correct: lower price, single AZ.",
+     "The minimum is 128 KB, not 5 TB.",
+     "One Zone-IA supports server-side encryption."
+    ]
    }
   ]
  },
@@ -910,7 +1232,14 @@
      2,
      3
     ],
-    "explanation": "Types are endpoint, calculated and CloudWatch alarm health checks."
+    "explanation": "Types are endpoint, calculated and CloudWatch alarm health checks.",
+    "option_explanations": [
+     "Route 53 can't read SQS queue depth.",
+     "Correct: endpoint health check.",
+     "Correct: calculated health check.",
+     "Correct: CloudWatch alarm health check.",
+     "Route 53 doesn't log in over RDP."
+    ]
    },
    {
     "type": "mcq",
@@ -927,7 +1256,14 @@
      1,
      2
     ],
-    "explanation": "Endpoint, calculated and CloudWatch alarm checks are the supported kinds."
+    "explanation": "Endpoint, calculated and CloudWatch alarm checks are the supported kinds.",
+    "option_explanations": [
+     "Correct: endpoint health check.",
+     "Correct: calculated health check.",
+     "Correct: CloudWatch alarm health check.",
+     "Not a Route 53 feature.",
+     "Scheduled Lambda runs are EventBridge, not health checks."
+    ]
    }
   ]
  },
@@ -946,7 +1282,13 @@
     "correct": [
      0
     ],
-    "explanation": "SQS needs an access policy trusting S3; SNS and Lambda need analogous resource policies."
+    "explanation": "SQS needs an access policy trusting S3; SNS and Lambda need analogous resource policies.",
+    "option_explanations": [
+     "Correct: queue access policy allowing S3 to send messages.",
+     "IAM users keys don't belong in queue settings.",
+     "Versioning is unrelated to event delivery.",
+     "CORS governs browser access, not events."
+    ]
    },
    {
     "type": "mcq",
@@ -960,7 +1302,13 @@
     "correct": [
      1
     ],
-    "explanation": "Each event destination needs a resource policy allowing the S3 service to deliver events."
+    "explanation": "Each event destination needs a resource policy allowing the S3 service to deliver events.",
+    "option_explanations": [
+     "ACLs don't grant Lambda permission to S3 events.",
+     "Correct: S3 needs permission to invoke the function.",
+     "KMS grants are unrelated to invocation.",
+     "Security groups don't control Lambda invocation."
+    ]
    }
   ]
  },
@@ -979,7 +1327,13 @@
     "correct": [
      0
     ],
-    "explanation": "The website endpoint is an HTTP server, so it is a custom origin and cannot use OAC."
+    "explanation": "The website endpoint is an HTTP server, so it is a custom origin and cannot use OAC.",
+    "option_explanations": [
+     "Correct: website endpoints are HTTP custom origins.",
+     "OAC works only with the S3 REST endpoint.",
+     "MediaStore is a different origin type.",
+     "Lambda function URL is a different origin type."
+    ]
    },
    {
     "type": "mcq",
@@ -993,7 +1347,13 @@
     "correct": [
      1
     ],
-    "explanation": "Website endpoints are custom origins; OAC works with the S3 REST API endpoint."
+    "explanation": "Website endpoints are custom origins; OAC works with the S3 REST API endpoint.",
+    "option_explanations": [
+     "OAC can't be used with the website endpoint.",
+     "Correct: it is a custom origin, so no OAC.",
+     "No such Region requirement exists.",
+     "Index documents are served via the website endpoint."
+    ]
    }
   ]
  },
@@ -1012,7 +1372,13 @@
     "correct": [
      0
     ],
-    "explanation": "SDKs and the CLI fetch role credentials from IMDS automatically."
+    "explanation": "SDKs and the CLI fetch role credentials from IMDS automatically.",
+    "option_explanations": [
+     "Correct: SDKs and the CLI fetch role credentials from IMDS.",
+     "The console doesn't provide them.",
+     "Route tables are for routing.",
+     "Baking keys into an AMI is unsafe and unnecessary."
+    ]
    },
    {
     "type": "mcq",
@@ -1026,7 +1392,13 @@
     "correct": [
      1
     ],
-    "explanation": "The SDK retrieves and refreshes role credentials from IMDS."
+    "explanation": "The SDK retrieves and refreshes role credentials from IMDS.",
+    "option_explanations": [
+     "Instances are subject to IAM checks.",
+     "Correct: the SDK retrieves and refreshes credentials from IMDS.",
+     "Security groups don't sign API calls.",
+     "Roles still authenticate, using temporary credentials."
+    ]
    }
   ]
  },
@@ -1046,7 +1418,13 @@
      1,
      2
     ],
-    "explanation": "Least privilege and group-based management are core IAM guidelines."
+    "explanation": "Least privilege and group-based management are core IAM guidelines.",
+    "option_explanations": [
+     "Violates least privilege.",
+     "Correct: least privilege.",
+     "Correct: use groups for permissions.",
+     "Root should not be used daily."
+    ]
    },
    {
     "type": "mcq",
@@ -1061,7 +1439,13 @@
      0,
      1
     ],
-    "explanation": "One identity per person and group-based permissions are best practice, alongside least privilege and a locked-down root user."
+    "explanation": "One identity per person and group-based permissions are best practice, alongside least privilege and a locked-down root user.",
+    "option_explanations": [
+     "Correct: one identity per person.",
+     "Correct: attach policies to groups.",
+     "Shared keys defeat accountability.",
+     "Root is for rare tasks only."
+    ]
    }
   ]
  },
@@ -1080,7 +1464,13 @@
     "correct": [
      0
     ],
-    "explanation": "Block Public Access overrides public policies and ACLs."
+    "explanation": "Block Public Access overrides public policies and ACLs.",
+    "option_explanations": [
+     "Correct: Block Public Access overrides public policies.",
+     "Object Lock prevents deletion, not reads.",
+     "Transfer Acceleration doesn't block access.",
+     "Lifecycle expiry doesn't cause access denial."
+    ]
    },
    {
     "type": "mcq",
@@ -1094,7 +1484,13 @@
     "correct": [
      1
     ],
-    "explanation": "Block Public Access is a safety net against accidental exposure."
+    "explanation": "Block Public Access is a safety net against accidental exposure.",
+    "option_explanations": [
+     "Object Lock protects against deletion.",
+     "Correct: it can override public policies, including at account level.",
+     "Requester Pays shifts costs.",
+     "Intelligent-Tiering doesn't block access."
+    ]
    }
   ]
  },
@@ -1113,7 +1509,13 @@
     "correct": [
      0
     ],
-    "explanation": "Exponential backoff handles intermittent throttling; sustained throttling calls for a quota increase."
+    "explanation": "Exponential backoff handles intermittent throttling; sustained throttling calls for a quota increase.",
+    "option_explanations": [
+     "Correct: exponential backoff handles occasional throttling.",
+     "Quota increase is for sustained throttling.",
+     "Switching Regions doesn't fix throttling.",
+     "Stopping calls isn't needed."
+    ]
    },
    {
     "type": "mcq",
@@ -1127,7 +1529,13 @@
     "correct": [
      1
     ],
-    "explanation": "Constant throttling reflects a real shortage of quota; occasional bursts are handled by exponential backoff."
+    "explanation": "Constant throttling reflects a real shortage of quota; occasional bursts are handled by exponential backoff.",
+    "option_explanations": [
+     "Occasional throttling is handled by backoff.",
+     "Correct: sustained overages require a higher quota.",
+     "Timeouts call for retries, not quota.",
+     "SDK age doesn't affect quotas."
+    ]
    }
   ]
  },
@@ -1146,7 +1554,13 @@
     "correct": [
      0
     ],
-    "explanation": "Private hosted zones answer only inside associated VPCs."
+    "explanation": "Private hosted zones answer only inside associated VPCs.",
+    "option_explanations": [
+     "Correct: private hosted zones resolve only in associated VPCs.",
+     "Public zones are visible from the internet.",
+     "An inbound endpoint resolves queries from on-premises, not this.",
+     "Traffic policies don't restrict by VPC."
+    ]
    },
    {
     "type": "mcq",
@@ -1160,7 +1574,13 @@
     "correct": [
      0
     ],
-    "explanation": "Private hosted zones are not visible from the internet."
+    "explanation": "Private hosted zones are not visible from the internet.",
+    "option_explanations": [
+     "Correct: private zones answer only inside associated VPCs.",
+     "Public zones can hold A records.",
+     "Both hosted zone types have a monthly fee.",
+     "Public zones are global."
+    ]
    }
   ]
  },
@@ -1180,7 +1600,13 @@
      0,
      2
     ],
-    "explanation": "Only S3 and DynamoDB use gateway endpoints, implemented as route table targets."
+    "explanation": "Only S3 and DynamoDB use gateway endpoints, implemented as route table targets.",
+    "option_explanations": [
+     "Correct: DynamoDB uses gateway endpoints.",
+     "SNS uses interface endpoints.",
+     "Correct: S3 uses gateway endpoints.",
+     "Secrets Manager uses interface endpoints."
+    ]
    },
    {
     "type": "mcq",
@@ -1195,7 +1621,13 @@
      0,
      2
     ],
-    "explanation": "Gateway endpoints are free route-table targets for S3 and DynamoDB; interface endpoints use ENIs and are billed."
+    "explanation": "Gateway endpoints are free route-table targets for S3 and DynamoDB; interface endpoints use ENIs and are billed.",
+    "option_explanations": [
+     "Correct: gateway endpoints are route table targets.",
+     "That describes interface endpoints.",
+     "Correct: supported for S3 and DynamoDB.",
+     "Gateway endpoints are free."
+    ]
    }
   ]
  },
@@ -1214,7 +1646,13 @@
     "correct": [
      2
     ],
-    "explanation": "User data runs once at first launch with root privileges."
+    "explanation": "User data runs once at first launch with root privileges.",
+    "option_explanations": [
+     "User data runs as root, not unprivileged.",
+     "Instance profiles are unrelated to sudo.",
+     "Correct: user data runs as root at first boot.",
+     "It doesn't run as ec2-user."
+    ]
    },
    {
     "type": "mcq",
@@ -1228,7 +1666,13 @@
     "correct": [
      1
     ],
-    "explanation": "By default user data runs once at first boot as root."
+    "explanation": "By default user data runs once at first boot as root.",
+    "option_explanations": [
+     "By default it runs only at first boot.",
+     "Correct: root, during first boot.",
+     "No IAM role is needed to run it.",
+     "It can be shell scripts or cloud-init directives."
+    ]
    }
   ]
  },
@@ -1248,7 +1692,13 @@
      0,
      2
     ],
-    "explanation": "Supported options include virtual apps, FIDO keys and hardware TOTP tokens."
+    "explanation": "Supported options include virtual apps, FIDO keys and hardware TOTP tokens.",
+    "option_explanations": [
+     "Correct: hardware TOTP tokens are supported.",
+     "Email links aren't an AWS MFA type.",
+     "Correct: FIDO keys and passkeys are supported.",
+     "An access key ID is a credential, not MFA."
+    ]
    },
    {
     "type": "mcq",
@@ -1263,7 +1713,13 @@
      0,
      2
     ],
-    "explanation": "Virtual authenticator apps and FIDO security keys are supported MFA devices."
+    "explanation": "Virtual authenticator apps and FIDO security keys are supported MFA devices.",
+    "option_explanations": [
+     "Correct: virtual authenticator apps are supported.",
+     "Security questions aren't MFA in AWS.",
+     "Correct: FIDO2 security keys are supported.",
+     "CAPTCHA isn't MFA."
+    ]
    }
   ]
  },
@@ -1282,7 +1738,13 @@
     "correct": [
      1
     ],
-    "explanation": "Objects are cached by key (URL), not content. A new name was never cached."
+    "explanation": "Objects are cached by key (URL), not content. A new name was never cached.",
+    "option_explanations": [
+     "CloudFront doesn't compare checksums on every request.",
+     "Correct: a new name is a new cache key.",
+     "Browsers don't bypass CloudFront.",
+     "CloudFront doesn't invalidate by name."
+    ]
    },
    {
     "type": "mcq",
@@ -1296,7 +1758,13 @@
     "correct": [
      1
     ],
-    "explanation": "With an unchanged URL the cache key matches the cached object, which is served until it expires."
+    "explanation": "With an unchanged URL the cache key matches the cached object, which is served until it expires.",
+    "option_explanations": [
+     "CloudFront caches overwritten objects too.",
+     "Correct: same key serves the cached copy until TTL ends.",
+     "S3 allows overwrites.",
+     "CloudFront doesn't check ETags on every request."
+    ]
    }
   ]
  },
@@ -1315,7 +1783,13 @@
     "correct": [
      0
     ],
-    "explanation": "ALB adds X-Forwarded-For with the client's IP."
+    "explanation": "ALB adds X-Forwarded-For with the client's IP.",
+    "option_explanations": [
+     "Correct: ALB adds X-Forwarded-For.",
+     "X-Amz-Cf-Id is a CloudFront request ID.",
+     "Via-Client isn't a standard header.",
+     "X-Forwarded-Proto carries the protocol."
+    ]
    },
    {
     "type": "mcq",
@@ -1329,7 +1803,13 @@
     "correct": [
      1
     ],
-    "explanation": "The connection comes from the ALB, so the client IP is in the X-Forwarded-For header."
+    "explanation": "The connection comes from the ALB, so the client IP is in the X-Forwarded-For header.",
+    "option_explanations": [
+     "The TCP source is the ALB.",
+     "Correct: the client IP is in X-Forwarded-For.",
+     "There is no per-request log API.",
+     "Stickiness cookies don't carry IPs."
+    ]
    }
   ]
  },
@@ -1348,7 +1828,13 @@
     "correct": [
      1
     ],
-    "explanation": "NACLs are stateless, evaluated at the subnet, and have allow and deny rules; security groups are stateful and allow-only."
+    "explanation": "NACLs are stateless, evaluated at the subnet, and have allow and deny rules; security groups are stateful and allow-only.",
+    "option_explanations": [
+     "Security groups are stateful and allow-only.",
+     "Correct: NACLs are stateless with allow and deny rules.",
+     "Endpoints provide private service access.",
+     "Flow Logs only record traffic."
+    ]
    },
    {
     "type": "mcq",
@@ -1362,7 +1848,13 @@
     "correct": [
      0
     ],
-    "explanation": "Peering links two VPCs privately; it is non-transitive and needs non-overlapping CIDRs."
+    "explanation": "Peering links two VPCs privately; it is non-transitive and needs non-overlapping CIDRs.",
+    "option_explanations": [
+     "Correct: peering privately links VPCs, non-transitively.",
+     "NAT gives outbound internet access.",
+     "VPN connects networks over the internet.",
+     "Gateway endpoints reach S3 and DynamoDB."
+    ]
    }
   ]
  },
@@ -1381,7 +1873,13 @@
     "correct": [
      0
     ],
-    "explanation": "sc1 is the cheapest EBS type, for infrequently accessed data."
+    "explanation": "sc1 is the cheapest EBS type, for infrequently accessed data.",
+    "option_explanations": [
+     "Correct: sc1 has the lowest cost per GB.",
+     "gp3 costs more per GB.",
+     "io2 is the priciest, for databases.",
+     "st1 costs more than sc1."
+    ]
    },
    {
     "type": "mcq",
@@ -1395,7 +1893,13 @@
     "correct": [
      1
     ],
-    "explanation": "Cold HDD (sc1) is the lowest-cost option."
+    "explanation": "Cold HDD (sc1) is the lowest-cost option.",
+    "option_explanations": [
+     "gp3 costs more than sc1.",
+     "Correct: sc1 is the cheapest EBS type.",
+     "io2 is costly.",
+     "st1 is pricier than sc1."
+    ]
    }
   ]
  },
@@ -1426,7 +1930,13 @@
     "correct": [
      0
     ],
-    "explanation": "A miss makes the edge fetch from the origin; the object is then cached for its TTL."
+    "explanation": "A miss makes the edge fetch from the origin; the object is then cached for its TTL.",
+    "option_explanations": [
+     "Correct: a miss fetches from origin, caches and returns it.",
+     "A miss fetches from the origin, it doesn't return 404.",
+     "Edges don't ask neighbors; they go to origin or regional cache.",
+     "A miss doesn't wait for TTL expiry."
+    ]
    }
   ]
  },
@@ -1445,7 +1955,13 @@
     "correct": [
      0
     ],
-    "explanation": "Expiry should reflect how the content is used."
+    "explanation": "Expiry should reflect how the content is used.",
+    "option_explanations": [
+     "Correct: short for shared links, longer for personal downloads.",
+     "A year for every URL is too long.",
+     "Signed URLs do carry an expiry.",
+     "Expiry is independent of cache TTL."
+    ]
    },
    {
     "type": "mcq",
@@ -1459,7 +1975,13 @@
     "correct": [
      0
     ],
-    "explanation": "Shared content should expire quickly to limit abuse; personal downloads can be valid longer."
+    "explanation": "Shared content should expire quickly to limit abuse; personal downloads can be valid longer.",
+    "option_explanations": [
+     "Correct: widely shared links should expire quickly.",
+     "Years-long links invite abuse.",
+     "No expiry risks leaks.",
+     "Cache TTL doesn't determine expiry."
+    ]
    }
   ]
  },
@@ -1478,7 +2000,13 @@
     "correct": [
      0
     ],
-    "explanation": "IAM is a global service; identities apply across Regions."
+    "explanation": "IAM is a global service; identities apply across Regions.",
+    "option_explanations": [
+     "Correct: IAM is global.",
+     "No replication is needed.",
+     "IAM works from any Region.",
+     "One account serves all Regions."
+    ]
    },
    {
     "type": "mcq",
@@ -1492,7 +2020,13 @@
     "correct": [
      2
     ],
-    "explanation": "IAM is global: users, groups, roles and policies apply everywhere."
+    "explanation": "IAM is global: users, groups, roles and policies apply everywhere.",
+    "option_explanations": [
+     "IAM users are visible everywhere.",
+     "Policies apply everywhere.",
+     "Correct: IAM isn't tied to a Region.",
+     "Roles work in every Region."
+    ]
    }
   ]
  },
@@ -1511,7 +2045,13 @@
     "correct": [
      0
     ],
-    "explanation": "Snapshots can be copied across Regions and restored into new volumes."
+    "explanation": "Snapshots can be copied across Regions and restored into new volumes.",
+    "option_explanations": [
+     "Correct: copy the snapshot and restore.",
+     "Volumes attach only within the same AZ.",
+     "NFS over a volume isn't how EBS works.",
+     "Placement groups don't span Regions."
+    ]
    },
    {
     "type": "mcq",
@@ -1525,7 +2065,13 @@
     "correct": [
      0
     ],
-    "explanation": "Copy the snapshot to the destination Region to recreate the volume there."
+    "explanation": "Copy the snapshot to the destination Region to recreate the volume there.",
+    "option_explanations": [
+     "Correct: snapshot copy moves data across Regions.",
+     "Multi-Attach shares within an AZ.",
+     "Elastic Volumes resize in place.",
+     "FSR speeds creation in an AZ only."
+    ]
    }
   ]
  },
@@ -1544,7 +2090,13 @@
     "correct": [
      0
     ],
-    "explanation": "Single PUT maxes out at 5 GB; multipart is required above that and recommended above 100 MB."
+    "explanation": "Single PUT maxes out at 5 GB; multipart is required above that and recommended above 100 MB.",
+    "option_explanations": [
+     "Correct: multipart upload for large objects.",
+     "Byte-range fetches are for downloads.",
+     "S3 Select is for querying.",
+     "Replication doesn't help uploading."
+    ]
    },
    {
     "type": "mcq",
@@ -1558,7 +2110,13 @@
     "correct": [
      0
     ],
-    "explanation": "Multipart splits objects into parts uploaded in parallel and is needed above 5 GB per object upload."
+    "explanation": "Multipart splits objects into parts uploaded in parallel and is needed above 5 GB per object upload.",
+    "option_explanations": [
+     "Correct: parallel parts and independent retries.",
+     "The maximum is still 5 TB.",
+     "Encryption is separate.",
+     "Parts go to one bucket in one Region."
+    ]
    }
   ]
  },
@@ -1578,7 +2136,13 @@
      0,
      1
     ],
-    "explanation": "Delete marker replication is optional, and deleting a specific version ID is not propagated, protecting the destination."
+    "explanation": "Delete marker replication is optional, and deleting a specific version ID is not propagated, protecting the destination.",
+    "option_explanations": [
+     "Correct: delete marker replication is optional.",
+     "Correct: version-ID deletes aren't replicated.",
+     "Permanent version deletes are not copied.",
+     "Delete marker replication can be disabled."
+    ]
    },
    {
     "type": "mcq",
@@ -1593,7 +2157,13 @@
      0,
      1
     ],
-    "explanation": "Version-ID deletes are not replicated; delete markers replicate only when enabled."
+    "explanation": "Version-ID deletes are not replicated; delete markers replicate only when enabled.",
+    "option_explanations": [
+     "Correct: can be turned on.",
+     "Correct: specific-version deletes aren't propagated.",
+     "They aren't copied, protecting the destination.",
+     "Delete markers are allowed."
+    ]
    }
   ]
  }

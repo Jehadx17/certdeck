@@ -1,0 +1,820 @@
+[
+ {
+  "card_id": "8ff5df4f-f7c1-45cb-a445-1ee8e42b3207",
+  "notes": [
+   [
+    "SSE-S3 keys are owned and managed by S3, so AWS stores them.",
+    "Correct: the client supplies the key on each HTTPS request and S3 does not persist it.",
+    "SSE-KMS keys live in AWS KMS, so AWS stores them.",
+    "DSSE-KMS also uses KMS-held keys, so AWS persists them."
+   ],
+   [
+    "SSE-S3 applies a single AES-256 layer, not two.",
+    "SSE-C is single-layer and the key is not in KMS.",
+    "Correct: DSSE-KMS applies two encryption layers with KMS-managed keys.",
+    "Client-side encryption is not a server-side option and has no KMS dual layer."
+   ]
+  ]
+ },
+ {
+  "card_id": "908d13fa-1675-4c6b-a37c-28b213994b51",
+  "notes": [
+   [
+    "Notifications are not batched hourly; they are sent per event.",
+    "Delivery is not guaranteed instant or in strict key order.",
+    "Notifications are not tied to Inventory reports.",
+    "Correct: usually seconds, but delays can occur, so tolerate lag."
+   ],
+   [
+    "Correct: typically seconds, but some events arrive later.",
+    "S3 does not hold events and release them hourly.",
+    "Delivery does not wait for cross-Region replication.",
+    "Delivery does not wait on lifecycle rule evaluation."
+   ]
+  ]
+ },
+ {
+  "card_id": "90a929b5-9077-4e97-b154-f0fc46f4ca81",
+  "notes": [
+   [
+    "Route 53 policies don't stop viewers from using the CloudFront URL directly.",
+    "Correct: CloudFront geo restriction allows only listed countries at the edge.",
+    "OAC restricts origin access to CloudFront, not viewers by country.",
+    "Deleting cached videos nightly doesn't restrict who can fetch them."
+   ],
+   [
+    "Field-level encryption protects specific form fields, not access by country.",
+    "A zero TTL affects caching, not who may request content.",
+    "Correct: geographic restrictions use allow or block lists of countries.",
+    "Price classes limit edge locations for cost, not viewer access."
+   ]
+  ]
+ },
+ {
+  "card_id": "915b67c0-a4ed-45c1-99c9-b92408dd74d4",
+  "notes": [
+   [
+    "Instance store is tied to the host and lost on termination.",
+    "User data is a launch script, not storage.",
+    "The AMI root device is a template, not the old instance's live data.",
+    "Correct: EBS volumes persist independently and re-attach within the same AZ."
+   ],
+   [
+    "With the flag off, the volume is not deleted.",
+    "EBS volumes don't move into instance store.",
+    "Termination doesn't convert a volume into an AMI.",
+    "Correct: the volume persists as available and can be re-attached in the same AZ."
+   ]
+  ]
+ },
+ {
+  "card_id": "9164895a-9b55-45cc-9e4b-ff4f4176df7b",
+  "notes": [
+   [
+    "Correct: AWSALBAPP is reserved for the ALB's application cookie.",
+    "CARTTOKEN is not a reserved name, so it is allowed.",
+    "JSESSIONID is not reserved and is a common application cookie.",
+    "Correct: AWSALB is reserved for the ALB's duration-based cookie.",
+    "Correct: AWSALBTG is reserved for the ALB's target-group cookie."
+   ],
+   [
+    "Correct: any non-reserved name like ORDERSESSION is allowed.",
+    "AWSALBTG is reserved by the ALB.",
+    "AWSALBAPP is reserved by the ALB.",
+    "AWSALB is reserved by the ALB."
+   ]
+  ]
+ },
+ {
+  "card_id": "9206bb46-0d59-410a-81e8-f71c3a32bd23",
+  "notes": [
+   [
+    "Replication is unrelated to MFA Delete.",
+    "Correct: MFA Delete protects versioned objects, so versioning must be on.",
+    "Object Lock isn't required for MFA Delete.",
+    "Access logging is unrelated to MFA Delete."
+   ],
+   [
+    "Correct, the root user of the bucket owner account must enable it, via CLI or API with its MFA code.",
+    "IAM administrators can't enable MFA Delete, and the console can't either.",
+    "Even AdministratorAccess users can't; only root can, and not via the console.",
+    "SCPs can't enable MFA Delete."
+   ]
+  ]
+ },
+ {
+  "card_id": "92085b0f-a356-46db-97df-4f54d1604085",
+  "notes": [
+   [
+    "Trusted Advisor security checks don't track projected spend.",
+    "Inspector scans for vulnerabilities, not cost.",
+    "Correct: Budgets can alert on forecasted cost crossing a threshold.",
+    "Config checks resource configuration, not cost."
+   ],
+   [
+    "CloudFront usage reports don't track RI utilization.",
+    "Session Manager is for shell access to instances.",
+    "Macie finds sensitive data in S3, not cost issues.",
+    "Correct: Budgets RI utilization budgets alert when utilization drops below target."
+   ]
+  ]
+ },
+ {
+  "card_id": "93d05910-6a15-4b88-bd37-c8a9fc7d3e19",
+  "notes": [
+   [
+    "Batch copies would store extra copies, which the question rules out.",
+    "Storage Lens gives usage metrics, not per-requester views.",
+    "Transfer Acceleration speeds transfers, not transform data.",
+    "Correct: Object Lambda transforms data on GET from a single stored copy."
+   ],
+   [
+    "Correct: an Object Lambda Access Point can convert XML to JSON on retrieval.",
+    "Versioning would still require storing duplicate JSON copies.",
+    "Intelligent-Tiering moves objects between access tiers, not formats.",
+    "SSE-KMS only encrypts; it doesn't convert formats."
+   ]
+  ]
+ },
+ {
+  "card_id": "93ea49c9-4c3e-4e0d-bc45-9fae3e0e6421",
+  "notes": [
+   [
+    "Correct: RDS Proxy pools and shares connections; apps only change the endpoint.",
+    "Global Database is for cross-Region replication, not connection pooling.",
+    "Snapshot sharing is for copying data between accounts.",
+    "Enhanced Monitoring shows OS metrics and doesn't reduce connections."
+   ],
+   [
+    "Performance Insights analyzes load; it doesn't pool connections.",
+    "Correct: RDS Proxy is a multi-AZ managed pooler that preserves connections across failover.",
+    "Read replicas scale reads and don't pool connections.",
+    "DMS migrates data and doesn't pool connections."
+   ]
+  ]
+ },
+ {
+  "card_id": "95bc93b1-bdf9-4a33-b60e-007c734c8ff5",
+  "notes": [
+   [
+    "Multipart upload is for uploading, not downloading.",
+    "S3 Select filters content server-side; it isn't parallel chunked retrieval.",
+    "Correct: ranged GETs fetch byte ranges in parallel and can be retried individually.",
+    "CRR copies objects to another Region; it doesn't chunk a download."
+   ],
+   [
+    "Content-Range appears in responses, not requests.",
+    "x-amz-copy-source-range is for UploadPartCopy, not GET.",
+    "If-Range is a conditional header, not the range specifier.",
+    "Correct: the Range header requests specific bytes."
+   ]
+  ]
+ },
+ {
+  "card_id": "95de57f0-3450-43e5-923d-1d4f3ba50fa5",
+  "notes": [
+   [
+    "With TLS terminated at the ALB, it doesn't pass encrypted bytes through.",
+    "Correct: the ALB terminates TLS and forwards plain HTTP to the targets.",
+    "The ALB doesn't ask clients to downgrade to HTTP.",
+    "The ALB doesn't use the client's private key."
+   ],
+   [
+    "Passthrough makes every instance do the TLS work.",
+    "Clients can't terminate TLS for their own requests to a server.",
+    "Correct: terminating at the load balancer listener offloads TLS from the instances.",
+    "Route tables forward packets and have no role in TLS."
+   ]
+  ]
+ },
+ {
+  "card_id": "96b8ed93-16a6-4745-ab49-f4415f6dcabc",
+  "notes": [
+   [
+    "Correct: a VPC spans all AZs of one Region.",
+    "A VPC is regional, not account-wide across Regions.",
+    "A VPC isn't limited to one AZ; subnets are.",
+    "Route tables are associated with subnets; they don't define VPC scope."
+   ],
+   [
+    "Correct: a VPC is regional and each subnet sits in a single AZ.",
+    "It's reversed: the VPC is regional and subnets are zonal.",
+    "VPCs and subnets don't span all Regions.",
+    "VPCs aren't tied to hosts or instances."
+   ]
+  ]
+ },
+ {
+  "card_id": "96d0d730-ca75-4400-a383-6380d89bd910",
+  "notes": [
+   [
+    "Security groups are stateful, so replies don't need an outbound rule.",
+    "Correct: NACLs are stateless, so the reply to the ephemeral port needs an outbound allow.",
+    "Return traffic doesn't need a second route table.",
+    "SSH doesn't require port 80."
+   ],
+   [
+    "NACLs evaluate both directions, not just outbound.",
+    "Correct: NACLs are stateless; security groups track connections.",
+    "Security groups are stateful, not stateless.",
+    "Security groups bind to ENIs and NACLs to subnets, the reverse of this."
+   ]
+  ]
+ },
+ {
+  "card_id": "9774c388-fe04-4d6d-b1f5-c96cdf9d1768",
+  "notes": [
+   [
+    "The region only selects an endpoint and isn't why requests get rejected.",
+    "AWS_MFA_SERIAL isn't a credential variable the CLI needs here.",
+    "The role session name is not used with get-session-token.",
+    "Correct: temporary credentials need the session token with the key pair."
+   ],
+   [
+    "Usernames, passwords and MFA seeds are not part of STS credentials.",
+    "Role ARN and external ID are inputs to AssumeRole, not credentials.",
+    "Correct: key ID, secret key and session token.",
+    "STS doesn't issue a Region or signing certificate."
+   ]
+  ]
+ },
+ {
+  "card_id": "97b39b16-276d-4b13-a834-a622c7fbf995",
+  "notes": [
+   [
+    "Apache on AL2023 is not installed with apt-get; that's Debian/Ubuntu.",
+    "Correct: AL2023 uses dnf and systemctl, and user data runs as root.",
+    "It starts httpd before it is installed, so it fails.",
+    "It lacks a shebang and isn't a proper script, and it never starts the service."
+   ],
+   [
+    "Sudo isn't the reason; the script runs as root.",
+    "dnf doesn't escalate permissions itself.",
+    "Correct: cloud-init runs user data as root, so sudo isn't needed.",
+    "User data doesn't run under the IAM role's identity."
+   ]
+  ]
+ },
+ {
+  "card_id": "98338471-befe-4e37-8021-8a518aae2d9e",
+  "notes": [
+   [
+    "Instance store isn't shared; cron replication is fragile.",
+    "An EBS volume is AZ-bound and can't attach across AZs.",
+    "Glacier is archival and can't be mounted as a drive.",
+    "Correct: EFS is a shared NFS file system with mount targets in every AZ."
+   ],
+   [
+    "Correct: an EBS volume is bound to one AZ and typically one instance.",
+    "Reading from several hosts doesn't cause data loss.",
+    "EBS volumes can be encrypted regardless of attachment.",
+    "gp3 works with any instance, not just ASGs."
+   ]
+  ]
+ },
+ {
+  "card_id": "98aa94e5-4a45-4aad-abf1-ff893fc49fc6",
+  "notes": [
+   [
+    "ALB doesn't use GENEVE.",
+    "Correct: GWLB uses GENEVE to forward traffic to virtual appliances.",
+    "NLB with TLS handles TLS, not GENEVE appliance traffic.",
+    "Classic Load Balancer is legacy and doesn't use GENEVE."
+   ],
+   [
+    "VXLAN on 4789 isn't what GWLB uses.",
+    "IKE on UDP 500 is VPN negotiation, not GWLB.",
+    "Correct: GWLB sends GENEVE over UDP 6081.",
+    "TLS on 8443 isn't the GWLB appliance protocol."
+   ]
+  ]
+ },
+ {
+  "card_id": "98e6db4a-9792-4343-abcd-61e093238ff2",
+  "notes": [
+   [
+    "Failover is for active-passive disaster recovery.",
+    "Geolocation routes by user location.",
+    "Simple routing has no weights for splitting.",
+    "Correct: weighted records split traffic by proportion."
+   ],
+   [
+    "Latency routing returns the lowest-latency Region.",
+    "IP-based routing routes by client CIDR.",
+    "Correct: multi-value answer returns up to eight healthy records.",
+    "Geoproximity routes by geographic distance and bias."
+   ]
+  ]
+ },
+ {
+  "card_id": "99587505-e73e-4db8-8caf-affaf991e5ff",
+  "notes": [
+   [
+    "FSR doesn't change encryption requirements.",
+    "FSR adds cost; it doesn't reduce storage cost.",
+    "Restored volumes remain in a single AZ.",
+    "Correct: FSR pre-initializes blocks, removing first-access latency."
+   ],
+   [
+    "Correct: FSR is billed per snapshot per AZ-hour.",
+    "FSR doesn't limit IOPS; it improves performance.",
+    "Cross-Region use isn't blocked by FSR.",
+    "FSR doesn't affect incremental snapshots."
+   ]
+  ]
+ },
+ {
+  "card_id": "99955254-5244-4ea7-ac8f-95c412cc1509",
+  "notes": [
+   [
+    "Signatures aren't carried in cookies.",
+    "Correct: SigV4 places the signature in the Authorization header.",
+    "Content-Type doesn't carry the signature.",
+    "X-Forwarded-For lists client IPs."
+   ],
+   [
+    "The signature isn't in the request body.",
+    "Cookies aren't used for pre-signed URLs.",
+    "Correct: the X-Amz-* signature parameters are in the query string.",
+    "The Host header is signed but doesn't carry the signature."
+   ]
+  ]
+ },
+ {
+  "card_id": "9a373b98-0cb9-420f-adff-2a850299cb48",
+  "notes": [
+   [
+    "NLB cross-zone is off by default, and enabling it costs.",
+    "ALB cross-zone is on by default, and it's free.",
+    "Correct: ALB starts on and doesn't charge for inter-AZ traffic.",
+    "Correct: NLB starts off, and enabling it adds inter-AZ charges."
+   ],
+   [
+    "Unlike ALB, NLB cross-zone costs when enabled.",
+    "There's no per-target flat hourly fee for this.",
+    "Correct: inter-AZ data transfer charges apply.",
+    "Cross-zone doesn't double LCU billing."
+   ]
+  ]
+ },
+ {
+  "card_id": "9b5e8252-b7eb-4e51-8554-5b2904aab9e9",
+  "notes": [
+   [
+    "The cluster endpoint targets the writer.",
+    "The primary instance endpoint is the writer, not read-balanced.",
+    "A private zone doesn't balance Aurora reads.",
+    "Correct: the reader endpoint load-balances across replicas."
+   ],
+   [
+    "Correct: it follows the current writer after failover.",
+    "It doesn't spread writes; replicas are read-only.",
+    "It doesn't bypass security groups.",
+    "Instance endpoints also support TLS."
+   ]
+  ]
+ },
+ {
+  "card_id": "9bfa93b7-bbdd-4a77-8d0a-684f262d8fb7",
+  "notes": [
+   [
+    "Correct: a Lambda function does the transformation.",
+    "There's no SQS queue involved in Object Lambda.",
+    "No dedicated KMS key is required.",
+    "Correct: a supporting S3 access point is required."
+   ],
+   [
+    "The website endpoint doesn't invoke a function.",
+    "CloudFront origin groups are for origin failover.",
+    "Correct: requests go through the Object Lambda Access Point.",
+    "Multi-Region Access Points route across buckets, not transform."
+   ]
+  ]
+ },
+ {
+  "card_id": "9cddbf09-947d-4e35-aa0e-312e94152430",
+  "notes": [
+   [
+    "Auto Scaling doesn't restart it immediately from one failed check.",
+    "Correct: a non-success status marks the target unhealthy and removes it from rotation.",
+    "Health checks don't switch to port 22.",
+    "An open port isn't enough; the response must be successful."
+   ],
+   [
+    "Correct: protocol, port and path define the check.",
+    "These are launch settings, not health check settings.",
+    "These are resource metrics, not health check parameters.",
+    "These are networking settings, not health check parameters."
+   ]
+  ]
+ },
+ {
+  "card_id": "9f02741a-0dbf-43f7-9fd1-b221516e7261",
+  "notes": [
+   [
+    "Anonymous writes would expose the bucket.",
+    "Correct: a pre-signed PUT URL gives temporary scoped upload access.",
+    "Sharing IAM user keys would give far too much.",
+    "CORS controls browser access, not authorization."
+   ],
+   [
+    "Access is limited to the signer's permissions and what was signed.",
+    "It expires, so it isn't never-expiring.",
+    "Correct: it carries the signer's permissions until expiry.",
+    "The recipient's identity is irrelevant; the signer's permissions apply."
+   ]
+  ]
+ },
+ {
+  "card_id": "9f2990ea-023e-4c10-8f16-22a8f2968e3e",
+  "notes": [
+   [
+    "Interface endpoints use ENIs and have hourly charges.",
+    "A GWLB endpoint is for appliance traffic.",
+    "A NAT gateway uses internet routes and costs.",
+    "Correct: gateway endpoints use a route and have no hourly charge."
+   ],
+   [
+    "Correct: a gateway endpoint plus a route table entry.",
+    "An IGW needs public IPs and isn't private.",
+    "You can't peer with DynamoDB.",
+    "Public IPs would require internet access."
+   ]
+  ]
+ },
+ {
+  "card_id": "a0e06b95-4559-4dac-9953-4099064cf57f",
+  "notes": [
+   [
+    "create-access-key makes long-term keys, not MFA sessions.",
+    "Correct: get-session-token with serial and code returns temporary credentials.",
+    "get-caller-identity doesn't accept --token-code.",
+    "enable-mfa-device registers a device."
+   ],
+   [
+    "The code goes in --token-code.",
+    "It isn't the root account ID.",
+    "Correct: the serial number is the MFA device ARN.",
+    "It isn't an access key ID."
+   ]
+  ]
+ },
+ {
+  "card_id": "a1a33afb-2b65-4552-b81f-95905aea58bc",
+  "notes": [
+   [
+    "SMS isn't a supported MFA type for this.",
+    "Hardware TOTP tokens aren't shared by email.",
+    "Correct: a FIDO security key can be registered for multiple users.",
+    "IAM Identity Center isn't enabled for root."
+   ],
+   [
+    "Keys can be registered for multiple users.",
+    "They don't require a phone number.",
+    "They aren't limited to root.",
+    "Correct: one key can be registered for several identities."
+   ]
+  ]
+ },
+ {
+  "card_id": "a2d6093a-6877-4203-b638-9bd6ca8c8674",
+  "notes": [
+   [
+    "That condition checks encryption, not transport.",
+    "Correct: aws:SecureTransport is false for HTTP, so denying on it forces TLS.",
+    "MFA presence isn't a transport check.",
+    "Source IP doesn't enforce TLS."
+   ],
+   [
+    "Correct: SSE-C requires HTTPS because the key travels in headers.",
+    "SSE-S3 doesn't require HTTPS.",
+    "SSE-KMS doesn't require HTTPS.",
+    "Default AES256 doesn't require HTTPS."
+   ]
+  ]
+ },
+ {
+  "card_id": "a2eb618f-d649-41bd-8508-19748a0031a3",
+  "notes": [
+   [
+    "Return traffic being tracked describes security groups.",
+    "Correct: one NACL covers every instance in the subnet.",
+    "Referencing another NACL isn't supported; that's security groups.",
+    "Correct: NACLs support explicit deny rules."
+   ],
+   [
+    "Correct: NACL rules are evaluated in ascending order.",
+    "Security groups evaluate all rules together.",
+    "Route tables use longest prefix match.",
+    "An IGW doesn't evaluate rules."
+   ]
+  ]
+ },
+ {
+  "card_id": "a4f22650-5aae-4733-9bf5-3da134c174b8",
+  "notes": [
+   [
+    "Default instances aren't in a private subnet.",
+    "Correct: the default VPC's public subnet is used.",
+    "A default VPC already exists.",
+    "EC2-Classic is retired and wasn't shared across Regions."
+   ],
+   [
+    "There's one default VPC per Region, not shared across Regions.",
+    "Correct: one per Region, with public subnets in each AZ and an IGW.",
+    "The default VPC subnets are public, not private.",
+    "It exists in advance in every AZ."
+   ]
+  ]
+ },
+ {
+  "card_id": "a504612e-6865-415b-b7c2-175f78ebb7c7",
+  "notes": [
+   [
+    "Correct: each write updates cache and database, adding write latency.",
+    "Correct: unread data fills the cache.",
+    "Write-through keeps the cache fresh; staleness is lazy loading.",
+    "Reads use the cache, not bypass."
+   ],
+   [
+    "Lazy loading fills on a miss, so data can be stale.",
+    "TTL-only expiry can leave stale data.",
+    "Correct: write-through updates the cache on each write.",
+    "Cache-aside needs manual invalidation and can be stale."
+   ]
+  ]
+ },
+ {
+  "card_id": "a51ea63d-1998-43ab-906d-5e9227276e81",
+  "notes": [
+   [
+    "Security groups can't deny.",
+    "They attach to instances, not subnets.",
+    "Correct: they're stateful, so replies are permitted automatically.",
+    "Correct: a rule can reference another security group."
+   ],
+   [
+    "Security groups only allow.",
+    "IAM has no route tables.",
+    "Correct: NACLs support deny rules at the subnet level.",
+    "An IGW has no deny attribute."
+   ]
+  ]
+ },
+ {
+  "card_id": "a589c8bd-a3bd-4e7f-9879-1fadeb42fd14",
+  "notes": [
+   [
+    "gp3 can be a root volume.",
+    "io2 can be a root volume.",
+    "gp2 can be a root volume.",
+    "Correct: st1 is HDD and can't be a boot volume."
+   ],
+   [
+    "Throughput Optimized HDD can't boot.",
+    "Cold HDD can't boot.",
+    "Correct: Provisioned IOPS SSD can boot.",
+    "Correct: General Purpose SSD can boot."
+   ]
+  ]
+ },
+ {
+  "card_id": "a5e43dba-12ec-4fe0-949b-93204d4c96d7",
+  "notes": [
+   [
+    "ListObjectsV2 has no metadata filter.",
+    "S3 Select queries object contents, not metadata.",
+    "Bucket policies don't store object metadata.",
+    "Correct: build an external index such as in DynamoDB."
+   ],
+   [
+    "Correct: only prefix, not metadata or tags.",
+    "It can't filter by tags server-side.",
+    "Wildcards on metadata aren't supported.",
+    "It has no modified-date filter."
+   ]
+  ]
+ },
+ {
+  "card_id": "a648bddb-0e3b-4544-89cf-bcc22959c89a",
+  "notes": [
+   [
+    "Different schemes mean different origins.",
+    "Different hosts mean different origins.",
+    "Different ports mean different origins.",
+    "Correct: same scheme, host and port; path, query, fragment are ignored."
+   ],
+   [
+    "Different subdomains are different origins.",
+    "Correct: different hosts mean cross-origin, so CORS is needed.",
+    "CORS applies to HTTPS too.",
+    "Sibling subdomains are still cross-origin."
+   ]
+  ]
+ },
+ {
+  "card_id": "a68fdb6a-06c9-4dae-93b8-e0291d70dba6",
+  "notes": [
+   [
+    "SNS can't filter by object size.",
+    "Suffix filters can't filter by size.",
+    "Correct: EventBridge supports advanced filters and Step Functions targets.",
+    "CloudTrail data events don't forward to Step Functions this way."
+   ],
+   [
+    "SQS doesn't archive or replay events.",
+    "Inventory is a report, not events.",
+    "Access logs are not events.",
+    "Correct: EventBridge supports archive and replay."
+   ]
+  ]
+ },
+ {
+  "card_id": "a6accb4c-aa00-42e7-bf50-8a705625b685",
+  "notes": [
+   [
+    "Standard-IA is more expensive than One Zone-IA.",
+    "Deep Archive has hours-long retrieval.",
+    "Standard costs the most of these.",
+    "Correct: One Zone-IA is the cheapest with millisecond access."
+   ],
+   [
+    "Correct: Standard-IA stores across at least three AZs.",
+    "One Zone-IA lacks AZ resilience.",
+    "Flexible Retrieval isn't millisecond access.",
+    "Express One Zone is single-AZ and for performance."
+   ]
+  ]
+ },
+ {
+  "card_id": "a713b724-0c66-4ae6-b4b8-9e6d9960a3a9",
+  "notes": [
+   [
+    "Standard stores across multiple AZs and costs more.",
+    "Correct: One Zone stores in one AZ, cheaper.",
+    "Elastic throughput is a throughput mode, not a storage class.",
+    "Standard-IA is multi-AZ."
+   ],
+   [
+    "One Zone is cheaper, not pricier, and not cross-Region.",
+    "It has lower resilience, not unlimited.",
+    "Correct: cheaper, but a single AZ.",
+    "NFS is still supported."
+   ]
+  ]
+ },
+ {
+  "card_id": "a7b6b373-5702-407d-8a78-b319746b0a46",
+  "notes": [
+   [
+    "UDP isn't a supported health check protocol.",
+    "Correct: HTTP is supported.",
+    "Correct: TCP is supported.",
+    "Correct: HTTPS is supported.",
+    "ICMP isn't supported."
+   ],
+   [
+    "ICMP isn't supported.",
+    "UDP isn't supported.",
+    "SMTP isn't a health check protocol.",
+    "Correct: TCP works for non-HTTP services."
+   ]
+  ]
+ },
+ {
+  "card_id": "a85fb0d6-069b-4f04-9346-02eefbeb5f7c",
+  "notes": [
+   [
+    "A snapshot isn't what EFS creates in each AZ.",
+    "Correct: a mount target gives instances an endpoint.",
+    "EFS doesn't use EBS volumes.",
+    "A NAT gateway is unrelated."
+   ],
+   [
+    "SSH isn't used by EFS.",
+    "SMB isn't used by EFS.",
+    "Correct: NFS uses TCP 2049.",
+    "iSCSI isn't used by EFS."
+   ]
+  ]
+ },
+ {
+  "card_id": "a9222b22-28f7-4528-b594-b59d7122cc43",
+  "notes": [
+   [
+    "Correct: ElastiCache shares session state.",
+    "In-memory sessions are lost on a different server.",
+    "Larger instances don't fix this.",
+    "Health checks are unrelated."
+   ],
+   [
+    "TLS is unrelated.",
+    "Correct: any instance can serve any user.",
+    "It doesn't raise ALB throughput.",
+    "Cookies are still sent."
+   ]
+  ]
+ },
+ {
+  "card_id": "a9247453-1a06-4174-954f-09c229ca78ff",
+  "notes": [
+   [
+    "A fixed wait would sync clients.",
+    "Correct: jitter spreads out retries.",
+    "Retrying every exception is wrong.",
+    "Retries without delay worsen throttling."
+   ],
+   [
+    "Correct: throttling, timeouts and 5xx errors can succeed on a later attempt.",
+    "Retrying errors that can never succeed just wastes calls and delays the failure.",
+    "A permissions error returns the same result on every retry; fix the policy instead.",
+    "Bad input fails the same way every time; fix the request instead."
+   ]
+  ]
+ },
+ {
+  "card_id": "a9d22178-285f-427b-b360-5b78f17ac080",
+  "notes": [
+   [
+    "Correct: capacity is provisioned and billed in full.",
+    "Correct: multiple volumes can attach.",
+    "EBS is bound to one AZ.",
+    "EBS doesn't grow automatically."
+   ],
+   [
+    "It's reversed: EFS bills stored data.",
+    "Both bill per GB.",
+    "Neither is free.",
+    "Correct: EBS bills provisioned GB, EFS stored data."
+   ]
+  ]
+ },
+ {
+  "card_id": "aa391c3a-5dc9-4e60-abe7-2897bb64eab8",
+  "notes": [
+   [
+    "Correct: Capacity Reservations guarantee capacity at On-Demand rates.",
+    "Savings Plans don't reserve capacity.",
+    "Spot has no capacity guarantee.",
+    "Regional RIs don't reserve capacity."
+   ],
+   [
+    "Capacity Reservations hold capacity but don't discount.",
+    "Zonal RIs reserve capacity.",
+    "Correct: a Savings Plan lowers the rate without reserving capacity.",
+    "Capacity Blocks reserve capacity."
+   ]
+  ]
+ },
+ {
+  "card_id": "aa490f79-c160-4f18-b028-f07479f22619",
+  "notes": [
+   [
+    "Not every start by default.",
+    "Cron isn't used.",
+    "Not when stopped.",
+    "Correct: first launch only by default."
+   ],
+   [
+    "Restarting doesn't rerun it by default.",
+    "Correct: configure cloud-init for every boot.",
+    "Port 22 is unrelated.",
+    "Instance size is unrelated."
+   ]
+  ]
+ },
+ {
+  "card_id": "aa905b14-dea7-4864-9c36-40810444fd64",
+  "notes": [
+   [
+    "Direct Connect takes weeks and isn't encrypted by default.",
+    "Snowball Edge is for data transfer.",
+    "Correct: VPN is IPsec and fast.",
+    "TGW peering alone isn't a site connection."
+   ],
+   [
+    "VPN is quick and encrypted.",
+    "Client VPN is for remote users.",
+    "Correct: Direct Connect is dedicated.",
+    "Peering links VPCs."
+   ]
+  ]
+ },
+ {
+  "card_id": "ab286a8d-e638-4355-b55b-6d23fed59322",
+  "notes": [
+   [
+    "Object ARNs don't match ListBucket.",
+    "The reversed ARN is invalid.",
+    "A sub-path ARN doesn't match the bucket.",
+    "Correct: ListBucket uses the bucket ARN."
+   ],
+   [
+    "Correct: GetObject needs object ARNs with /*.",
+    "The bucket ARN doesn't cover objects.",
+    "Colon-star is not a valid S3 ARN.",
+    "A global wildcard is too broad."
+   ]
+  ]
+ }
+]

@@ -1,0 +1,826 @@
+[
+ {
+  "card_id": "ce6010cd-6843-4f5c-8bda-4a2c6ae72ad8",
+  "notes": [
+   [
+    "Correct. S3 event notifications support suffix filters and can invoke Lambda directly.",
+    "CRR copies objects to another bucket; it never resizes or processes them.",
+    "Lifecycle rules transition or expire objects by age; they can't trigger processing on upload.",
+    "Works, but it means running and managing a server and polling, which is not minimal."
+   ],
+   [
+    "Requester Pays only changes who is billed for downloads.",
+    "Correct. Suffix filters on object-created events can target Lambda.",
+    "Object Lock prevents deletion or overwrite; it triggers nothing.",
+    "Inventory produces scheduled listings, not per-upload invocations.",
+    "Storage Lens gives usage and activity metrics, not event triggers."
+   ]
+  ]
+ },
+ {
+  "card_id": "cf53a565-7eee-4af8-b5aa-12fdc825dcec",
+  "notes": [
+   [
+    "Security groups only have allow rules; they can't deny an address, and per-instance is not subnet-wide.",
+    "A route to a NAT gateway doesn't block anything and NAT is for outbound traffic.",
+    "Endpoint policies control access to services through a VPC endpoint, not inbound client IPs.",
+    "Correct. NACLs apply per subnet and support explicit deny rules."
+   ],
+   [
+    "Route tables can't match on a source IP; blackhole routes only match destinations.",
+    "Correct. Security groups are allow-only, so a subnet NACL deny rule is the tool.",
+    "Peering connections do no IP filtering of their own.",
+    "Wrong: security groups have only allow rules."
+   ]
+  ]
+ },
+ {
+  "card_id": "d004a55a-c7a8-4003-ac91-59bce22aa4c7",
+  "notes": [
+   [
+    "Correct. Adding the header to the cache key stores separate copies per language.",
+    "HTTPS enforcement has nothing to do with which variant is cached.",
+    "A zero TTL would hurt caching and wouldn't separate variants properly by header.",
+    "WAF blocks requests; it doesn't separate cached language variants."
+   ],
+   [
+    "Origin Shield is an extra caching layer; it doesn't rewrite language headers.",
+    "Correct. Without the header in the cache key, one cached object serves everyone.",
+    "Edge locations don't detect language; the cache key decides which copy is served.",
+    "Field-level encryption protects specific POST fields, not Accept-Language."
+   ]
+  ]
+ },
+ {
+  "card_id": "d04de694-2831-452b-9014-eece2ee578e8",
+  "notes": [
+   [
+    "An ASG adds capacity but a single AZ is still a single point of failure.",
+    "One big instance in one AZ is vertical scaling, not high availability.",
+    "Correct. Multi-AZ redundancy behind a load balancer survives an AZ failure.",
+    "Caching helps performance, but the single-AZ origin is still a single point of failure."
+   ],
+   [
+    "Edge caching is about latency, not surviving a data centre loss.",
+    "Cost allocation is about tagging and billing.",
+    "Vertical scaling means a bigger instance; it doesn't survive an AZ loss.",
+    "Correct. High availability means surviving the loss of an AZ or data centre.",
+    "Elasticity is scaling with demand, not surviving failures."
+   ]
+  ]
+ },
+ {
+  "card_id": "d074b0bc-734a-49d9-8bec-a5c5dc3a85c9",
+  "notes": [
+   [
+    "Correct. Archive tier is a cheap cold tier with 24-72 hour restores.",
+    "FSR makes restored volumes fully initialized at once; it costs more, not less.",
+    "Recycle Bin recovers deleted snapshots; it isn't a cheaper tier.",
+    "DLM automates snapshot creation and retention, not cheaper storage.",
+    "Multi-Attach lets one io1/io2 volume attach to several instances."
+   ],
+   [
+    "Archive is a cold tier for cost savings, not for recovering deleted snapshots.",
+    "Cross-Region copy duplicates snapshots elsewhere; it doesn't undelete them.",
+    "Encryption by default doesn't help recover deleted snapshots.",
+    "FSR speeds up volume initialization from snapshots; it doesn't recover deletions.",
+    "Correct. Recycle Bin retains deleted snapshots for 1 day to 1 year."
+   ]
+  ]
+ },
+ {
+  "card_id": "d0f5c4e9-0179-404d-97c4-ead7c7a2ff10",
+  "notes": [
+   [
+    "Correct. gp3 lets you provision IOPS and throughput independently of size.",
+    "gp2 gives 3 IOPS per GiB, so 200 GiB gives only about 600 IOPS (burst aside).",
+    "st1 is HDD for sequential throughput, not 12,000 IOPS.",
+    "sc1 is the cheapest HDD for cold data and has low IOPS."
+   ],
+   [
+    "HDD is magnetic, but gp3 is SSD; it isn't cheaper than every SSD.",
+    "EBS volumes live in one AZ; gp3 doesn't replicate across Regions.",
+    "Multi-Attach is only for io1/io2 and must be enabled explicitly.",
+    "Snapshots are billed for their storage; that's not a gp3 feature.",
+    "Correct. gp3 decouples IOPS and throughput from capacity."
+   ]
+  ]
+ },
+ {
+  "card_id": "d149f300-510f-44c5-9e93-df9407da7e03",
+  "notes": [
+   [
+    "Slow start ramps traffic to new targets; it doesn't help targets being removed.",
+    "Rate-based WAF rules limit request rates per IP, unrelated to deregistration.",
+    "A one-second idle timeout would close connections sooner, making failures worse.",
+    "Correct. Deregistration delay lets in-flight requests finish before removal."
+   ],
+   [
+    "Stickiness binds clients to a target; it doesn't give time to finish on removal.",
+    "Correct. The target gets no new requests but existing ones may complete.",
+    "Access logs record requests; they don't affect draining.",
+    "Cross-zone balancing spreads traffic across AZs, not draining.",
+    "Health check thresholds decide when a target is healthy or not."
+   ]
+  ]
+ },
+ {
+  "card_id": "d15e001f-ca7e-496f-858a-b1dff1c11ee0",
+  "notes": [
+   [
+    "The root volume is deleted by default, but the data volume is kept.",
+    "Reversed: the root is the one deleted by default.",
+    "The root volume's DeleteOnTermination is true by default, so it's removed.",
+    "Correct. Root defaults to delete on termination; additional volumes persist."
+   ],
+   [
+    "Correct. DeleteOnTermination defaults to true for the root volume.",
+    "Termination protection stops API termination; it doesn't govern volume deletion.",
+    "No such EBS attribute exists.",
+    "Right attribute, but the root default is true, not false."
+   ]
+  ]
+ },
+ {
+  "card_id": "d2184ff0-0e80-41d3-9ff5-401e42759e82",
+  "notes": [
+   [
+    "Correct. Trusted key groups are the recommended way to sign URLs and cookies.",
+    "CloudFront signing doesn't use IAM user secret keys.",
+    "Root-user CloudFront key pairs still work but AWS discourages them.",
+    "CloudFront signing doesn't use KMS data keys."
+   ],
+   [
+    "Root key pairs can sign both URLs and cookies.",
+    "Signing speed is the same; the signature is still checked.",
+    "Correct. Key groups use IAM and the API, avoiding the root account.",
+    "Neither approach is billed per signed request."
+   ]
+  ]
+ },
+ {
+  "card_id": "d250339d-0dbf-4c1a-bb01-4b1c8c72b2b1",
+  "notes": [
+   [
+    "Aurora doesn't write to all readers while waiting for the old writer.",
+    "Failover is automatic; no manual approval is needed.",
+    "Aurora doesn't restore from a backup; a replica is promoted.",
+    "Correct. A reader is promoted automatically, typically in about 30 seconds."
+   ],
+   [
+    "Correct. Replica promotion typically completes in about 30 seconds.",
+    "Far too slow for Aurora failover.",
+    "Far too slow; automatic failover takes seconds.",
+    "Far too slow; Aurora doesn't need hours to recover."
+   ]
+  ]
+ },
+ {
+  "card_id": "d2524003-57f6-41b3-8244-40b02681c2c2",
+  "notes": [
+   [
+    "NLB UDP listeners can't redirect HTTP to HTTPS and add needless complexity.",
+    "Correct. An ALB listener redirect action sends HTTP to HTTPS without app changes.",
+    "Denying port 80 just makes connections fail; there is no redirect.",
+    "Works but it's application code, not infrastructure, and more work."
+   ],
+   [
+    "Correct. ALB listener rules support redirect actions.",
+    "NLB works at layer 4 and can't issue HTTP redirects.",
+    "Idle timeout is about connection lifetime, not redirects.",
+    "GWLB endpoints route traffic to appliances; they don't redirect HTTP."
+   ]
+  ]
+ },
+ {
+  "card_id": "d3372492-b3df-4395-9b59-79e647bb3dd9",
+  "notes": [
+   [
+    "Standard-IA costs less per GB than Standard.",
+    "Deep Archive is the cheapest class per GB.",
+    "Glacier Instant Retrieval is cheaper per GB than Standard.",
+    "Correct. S3 Standard has the highest storage price per GB of these."
+   ],
+   [
+    "Standard has millisecond access but the highest price, not suited to rare retrieval.",
+    "One Zone-IA is for infrequent access, not long-term compliance, and has lower resilience.",
+    "Correct. Deep Archive is the cheapest class, with retrieval in hours.",
+    "Intelligent-Tiering suits unknown access patterns and adds a per-object fee."
+   ]
+  ]
+ },
+ {
+  "card_id": "d3652975-7859-4144-a0b3-19e1dd042df6",
+  "notes": [
+   [
+    "The endpoint doesn't balance by elapsed time.",
+    "Correct. It's DNS-based, so it balances connections, not queries.",
+    "Queries on an open connection stay on the same replica.",
+    "Balancing isn't done by partition; storage is shared by all instances."
+   ],
+   [
+    "Balancing isn't redone per transaction; the connection sticks to one replica.",
+    "Queries aren't spread individually; balancing is at the connection level.",
+    "Correct. Balancing happens at connection time, so the connection stays on one replica.",
+    "Readers accept long-lived connections; the writer isn't involved."
+   ]
+  ]
+ },
+ {
+  "card_id": "d451db4e-2466-40db-ad91-1caee28966e8",
+  "notes": [
+   [
+    "Correct. Lifecycle rules transition and expire objects, filtered by prefix or tag.",
+    "Transfer Acceleration speeds uploads; it doesn't change storage classes.",
+    "Event notifications trigger on events; they don't move or delete objects.",
+    "Storage Class Analysis only recommends transitions; it doesn't apply them."
+   ],
+   [
+    "Not S3's figures; limits are per prefix, not per bucket, and much higher.",
+    "Far lower than S3's actual per-prefix rate.",
+    "Correct. S3 supports at least 3,500 write and 5,500 read requests per second per prefix.",
+    "Not unlimited, and it isn't limited to Standard-IA."
+   ]
+  ]
+ },
+ {
+  "card_id": "d57abf39-237d-43dd-925a-fd6f16cf0355",
+  "notes": [
+   [
+    "Correct. Explicit deletes remove an entry.",
+    "Correct. LRU eviction removes entries when memory is full.",
+    "Wrong: a database write doesn't evict the cache unless the application does it.",
+    "Correct. Expired TTL removes the entry."
+   ],
+   [
+    "Correct. LRU eviction removes entries under memory pressure.",
+    "Correct. TTL expiry removes entries.",
+    "Databases don't push invalidations to Redis on their own.",
+    "A browser closing doesn't affect a server-side cache.",
+    "Correct. An explicit delete removes the entry."
+   ]
+  ]
+ },
+ {
+  "card_id": "d58a42b5-2845-43c6-bc64-f66f53c6afa5",
+  "notes": [
+   [
+    "Compression reduces size, not invalidation costs.",
+    "Fewer edge locations doesn't avoid invalidation or keep content fresh.",
+    "Disabling caching defeats CloudFront and raises origin load.",
+    "Correct. New file names count as new objects, so no invalidation is needed."
+   ],
+   [
+    "Correct. A new URL per release means stale copies never need invalidating.",
+    "Viewers don't choose origins; file names have nothing to do with it.",
+    "File names don't encrypt anything.",
+    "Versioned names make caching work better, not bypass it."
+   ]
+  ]
+ },
+ {
+  "card_id": "d5fc49ca-dad0-4549-b6ef-43afdc9d728c",
+  "notes": [
+   [
+    "Wrong: a NAT gateway is managed by AWS; patches and source/dest checks apply to NAT instances.",
+    "AWS recommends NAT gateways, not instances, for new designs.",
+    "Correct. NAT gateway is managed; a NAT instance is yours to patch and scale.",
+    "Reversed: NAT gateways scale up to 100 Gbps; instances depend on instance size."
+   ],
+   [
+    "Correct. Only a NAT instance requires disabling the source/destination check and patching.",
+    "Routes from private subnets are needed for both options.",
+    "Both belong in a public subnet with an IGW route.",
+    "Both need an Elastic IP."
+   ]
+  ]
+ },
+ {
+  "card_id": "d6b5641a-3472-4c52-a1c5-cf711de40459",
+  "notes": [
+   [
+    "Gateway endpoints exist only for S3 and DynamoDB, not CloudWatch.",
+    "Direct Connect isn't private access from a subnet with no route and is overkill.",
+    "A public IP needs an internet route, which this subnet doesn't have.",
+    "Correct. CloudWatch uses an interface endpoint (PrivateLink)."
+   ],
+   [
+    "CloudWatch and SQS use interface endpoints.",
+    "Correct. Only S3 and DynamoDB have gateway endpoints.",
+    "EC2 and RDS use interface endpoints.",
+    "SNS and Lambda use interface endpoints."
+   ]
+  ]
+ },
+ {
+  "card_id": "d79bd282-b315-4ff3-9f53-fc10adc553c5",
+  "notes": [
+   [
+    "Correct. IAM database authentication uses short-lived tokens.",
+    "An EC2 key pair is for SSH to instances, not database sign-in.",
+    "Bucket policies govern S3, not databases.",
+    "Correct. Native database users with passwords are supported."
+   ],
+   [
+    "Cognito tokens aren't accepted directly by RDS.",
+    "Correct. IAM authentication tokens are valid for 15 minutes.",
+    "Correct. Native username and password works.",
+    "RDS doesn't use Kerberos via SSH on the host; you can't access its OS."
+   ]
+  ]
+ },
+ {
+  "card_id": "d8094f66-f3b8-40ee-ad93-349b4a4fc597",
+  "notes": [
+   [
+    "Origins are selected by path pattern, not by separate distributions with one CNAME.",
+    "Correct. Path-pattern behaviors route /api/* to the ALB and the default to S3.",
+    "Lambda@Edge could do it but needlessly; behaviors are built in.",
+    "Origin groups are for failover, not path routing."
+   ],
+   [
+    "Invalidations remove cached objects; they don't route requests.",
+    "Origin Shield is an extra caching layer, not path routing.",
+    "Response headers policies add headers, not select origins.",
+    "Correct. Each cache behavior maps a path pattern to an origin.",
+    "Origin groups provide failover, not path-based routing."
+   ]
+  ]
+ },
+ {
+  "card_id": "da212186-c4ec-4f1d-8468-3bd5c6d4afe0",
+  "notes": [
+   [
+    "Route 53 isn't a proxy; it only answers DNS queries.",
+    "Correct. Routing policies decide which values are returned in DNS answers.",
+    "Route 53 doesn't terminate TLS.",
+    "Restricting VPC access to zones is a private hosted zone association, not a routing policy."
+   ],
+   [
+    "Correct. Route 53 returns answers in that ratio and clients connect directly.",
+    "CloudFront isn't involved in weighted DNS.",
+    "Route 53 doesn't forward requests; it isn't in the data path.",
+    "There's no hidden load balancer; the split happens in DNS answers."
+   ]
+  ]
+ },
+ {
+  "card_id": "db48b502-c64a-417a-a9fb-c4c023d34c16",
+  "notes": [
+   [
+    "IMDSv2 isn't file-based; it's an HTTP endpoint on the instance.",
+    "IMDS is link-local, not a regional IAM-secured endpoint.",
+    "Correct. IMDSv2 uses a PUT for a session token sent as a header on later GETs.",
+    "IMDS requests aren't SigV4-signed."
+   ],
+   [
+    "IMDS is only reachable from the instance, and IMDSv2 doesn't change that.",
+    "Roles are still needed to get credentials from the metadata service.",
+    "Correct. The token requirement mitigates SSRF and open proxy attacks.",
+    "IMDSv2 doesn't encrypt anything on disk."
+   ]
+  ]
+ },
+ {
+  "card_id": "db590033-f071-4225-bba1-9d304b546ece",
+  "notes": [
+   [
+    "Same-Region cross-AZ replication is free for RDS read replicas.",
+    "Cross-Region replication is billed as data transfer.",
+    "Correct. Only the cross-Region replica incurs transfer charges.",
+    "The same-Region replica isn't charged."
+   ],
+   [
+    "Cross-Region replication is billed.",
+    "Correct. Same-Region replication traffic isn't charged for RDS.",
+    "Cross-Region transfer is billed.",
+    "Copying to another Region incurs cross-Region transfer."
+   ]
+  ]
+ },
+ {
+  "card_id": "dba2076f-5689-4da8-b438-7b2f723353c8",
+  "notes": [
+   [
+    "Stopping doesn't delete key pairs.",
+    "Security groups aren't reset by a stop/start.",
+    "IAM roles persist across stop/start.",
+    "Correct. Auto-assigned public IPv4 addresses are released on stop."
+   ],
+   [
+    "A private hosted zone is for DNS, not a fixed public address.",
+    "Correct. An Elastic IP stays with the account until released.",
+    "A second ENI doesn't give a persistent public IP.",
+    "Placement groups affect placement, not addressing."
+   ]
+  ]
+ },
+ {
+  "card_id": "dbf00029-39f6-45fd-ba28-1c4159e08d7d",
+  "notes": [
+   [
+    "Backoff only helps with occasional spikes, not permanent growth.",
+    "More roles in the same account don't raise the account's limit.",
+    "Correct. Sustained higher demand needs a quota increase.",
+    "API versions don't change throttling limits."
+   ],
+   [
+    "Permanent throttling needs a higher limit.",
+    "Correct. Exponential backoff with jitter handles transient bursts.",
+    "A permanent increase in volume needs a quota increase.",
+    "Planned growth needs a quota increase in advance, not backoff."
+   ]
+  ]
+ },
+ {
+  "card_id": "dc172f7b-942e-48f2-885c-14849870337c",
+  "notes": [
+   [
+    "Route tables don't control S3 object access.",
+    "Correct. IAM policies can grant S3 access.",
+    "Correct. ACLs can grant access to objects.",
+    "Correct. Bucket policies are resource-based access rules for S3.",
+    "Security groups don't apply to S3."
+   ],
+   [
+    "Correct. Access points have their own policies.",
+    "Correct. IAM user policies can grant S3 access.",
+    "Correct. Bucket policies are resource-based controls.",
+    "Security groups can't be attached to buckets.",
+    "NACLs apply to subnets, not buckets."
+   ]
+  ]
+ },
+ {
+  "card_id": "dd34051a-f23f-4d65-8d91-abb8250352a5",
+  "notes": [
+   [
+    "DNSSEC doesn't delay updates.",
+    "Hosted zones aren't read-only after changes.",
+    "Correct. Resolvers cache the old answer until its TTL expires.",
+    "Route 53 applies changes in seconds, not 24-hour batches."
+   ],
+   [
+    "DNSSEC doesn't affect cache duration.",
+    "CNAME at the apex isn't allowed and doesn't shorten delay.",
+    "A second zone doesn't change resolver caching.",
+    "Correct. A lower TTL makes resolvers re-query sooner."
+   ]
+  ]
+ },
+ {
+  "card_id": "dd463510-0b05-4697-a120-3fc6854bee9a",
+  "notes": [
+   [
+    "The EC2 API isn't where an instance reads its own metadata.",
+    "STS needs credentials and doesn't return instance metadata.",
+    "The VPC resolver is for DNS only.",
+    "Correct. IMDS is at 169.254.169.254."
+   ],
+   [
+    "IMDS gives credentials for the instance role, not for a laptop user with MFA.",
+    "create-access-key makes long-term keys and doesn't take MFA codes.",
+    "aws configure only selects or sets profiles; it doesn't fetch MFA credentials.",
+    "Correct. sts get-session-token with the MFA serial and code returns temporary credentials."
+   ]
+  ]
+ },
+ {
+  "card_id": "dd8e2431-cc99-40bb-90a4-1899ee05792f",
+  "notes": [
+   [
+    "128 exceeds the Multi-Attach limit.",
+    "64 exceeds the Multi-Attach limit.",
+    "8 is below the limit.",
+    "Correct. Up to 16 Nitro instances in the same AZ.",
+    "32 exceeds the Multi-Attach limit."
+   ],
+   null
+  ]
+ },
+ {
+  "card_id": "de7b26e9-e757-4714-8ea1-ece6d88fd974",
+  "notes": [
+   [
+    "Correct. Convertible RIs can be exchanged for other families or OSes.",
+    "Dedicated Hosts on a fixed family don't allow swapping.",
+    "Spot isn't a long-term discount commitment.",
+    "Standard RIs are locked to family and OS."
+   ],
+   [
+    "On-Demand Capacity Reservations reserve capacity and have no exchange.",
+    "Scheduled RIs are for recurring windows, not exchange (and discontinued).",
+    "Correct. Convertible RIs can be exchanged during the term.",
+    "Standard RIs can't be exchanged for another family."
+   ]
+  ]
+ },
+ {
+  "card_id": "deb2a50e-33a0-43de-bbce-cafb0ae8f152",
+  "notes": [
+   [
+    "1.0 isn't a valid policy language version.",
+    "2008-10-17 is older and doesn't support policy variables.",
+    "Correct. 2012-10-17 is the current version and supports variables.",
+    "Not a valid policy language version.",
+    "Not a valid version value."
+   ],
+   null
+  ]
+ },
+ {
+  "card_id": "df1e99ea-85b1-4ecb-9d42-18544a910a6f",
+  "notes": [
+   [
+    "IP range restriction isn't a password policy option; use IAM conditions.",
+    "Correct. Password reuse prevention is a policy setting.",
+    "Correct. Minimum length is a policy setting.",
+    "Password hashes aren't stored in CloudHSM for IAM."
+   ],
+   [
+    "Hardware tokens aren't a password policy option.",
+    "Correct. Allowing users to change their own password is a policy setting.",
+    "MFA enforcement is separate, not in the password policy.",
+    "Correct. Requiring at least one number is a complexity setting."
+   ]
+  ]
+ },
+ {
+  "card_id": "df55e62f-5b20-4d87-b534-f633cc8e2707",
+  "notes": [
+   [
+    "Correct. Credentials can take a moment to appear and the path needs the trailing slash.",
+    "No restart is needed to pick up a role.",
+    "IMDS is queried from the instance itself.",
+    "Wrong: IMDS does expose role credentials."
+   ],
+   [
+    "Correct. List the role name, then append it to get the credentials.",
+    "User data holds launch scripts, not credentials.",
+    "Instance profiles don't write credential files to disk.",
+    "IMDS is only reachable from the instance, and AssumeRole is unnecessary."
+   ]
+  ]
+ },
+ {
+  "card_id": "df64d108-994f-422c-9abb-5c419a0c425e",
+  "notes": [
+   [
+    "Lazy loading fills the cache on a read miss, not on every write.",
+    "Correct. Writing to the cache whenever the database is written is write-through.",
+    "Write-around skips the cache on writes; this code writes to it.",
+    "Cache-aside loads after a miss; this code updates on write."
+   ],
+   [
+    "Correct. Populating on a miss is lazy loading (cache-aside).",
+    "Write-behind queues writes to the database later.",
+    "Read-through has the cache load data itself; here the application does it.",
+    "Write-through updates the cache on writes, not on a read miss."
+   ]
+  ]
+ },
+ {
+  "card_id": "df8d33b2-6430-4dab-b3b6-5514e3373128",
+  "notes": [
+   [
+    "Redis isn't an RDS engine (it's ElastiCache).",
+    "Correct. Oracle is an RDS engine.",
+    "Correct. MariaDB is an RDS engine.",
+    "Correct. MySQL is an RDS engine.",
+    "MongoDB isn't an RDS engine (use DocumentDB)."
+   ],
+   [
+    "Correct. PostgreSQL is an RDS engine.",
+    "Correct. MySQL is an RDS engine.",
+    "Correct. Oracle is an RDS engine.",
+    "Elasticsearch is OpenSearch, not RDS.",
+    "Neo4j is a graph database, not offered by RDS."
+   ]
+  ]
+ },
+ {
+  "card_id": "e033a7cf-7479-42f1-8efb-9ec2f7ccd086",
+  "notes": [
+   [
+    "Correct. Defaults vary by SDK; some use us-east-1, others error.",
+    "SDKs don't measure latency to choose a Region.",
+    "Account aliases don't contain Regions.",
+    "Calls aren't sent to all Regions."
+   ],
+   [
+    "Bucket policies don't set the SDK Region.",
+    "Correct. The AWS_REGION variable or shared config sets the default.",
+    "Security groups don't affect SDK configuration.",
+    "IAM user profiles don't hold a default Region."
+   ]
+  ]
+ },
+ {
+  "card_id": "e0774cff-6d66-4144-8a2e-ee0279dfbaa1",
+  "notes": [
+   [
+    "Embedding keys in an image is insecure and hard to rotate.",
+    "A public bucket exposes data to everyone.",
+    "Correct. An instance role gives temporary credentials with least privilege.",
+    "Keys in user data are visible and long-lived; avoid."
+   ],
+   [
+    "Correct. Role credentials are temporary and rotate automatically.",
+    "Roles do expire and need permissions.",
+    "Roles don't disable CloudTrail.",
+    "Speed is not the reason."
+   ]
+  ]
+ },
+ {
+  "card_id": "e12584cb-c4ac-4ea4-8b45-fbbdf7ecc8c6",
+  "notes": [
+   [
+    "Weighted routing returns values by weight, not simple routing.",
+    "Latency routing picks by latency; simple returns all values.",
+    "Correct. Simple routing returns all values and has no health checks.",
+    "Filtering unhealthy values is multivalue answer, not simple."
+   ],
+   [
+    "Correct. Multivalue answer returns up to eight healthy records.",
+    "Geoproximity routes by location with a bias.",
+    "Simple routing has no health checks and returns all values.",
+    "Failover routing returns a primary or secondary, not random records."
+   ]
+  ]
+ },
+ {
+  "card_id": "e13f0a0f-8d1b-4ea6-9462-c18486400ba8",
+  "notes": [
+   [
+    "Correct. An origin group fails over to a replicated bucket in another Region.",
+    "Versioning and MFA Delete protect against deletions, not a Region outage.",
+    "Shield Advanced protects against DDoS, not Region failure.",
+    "A long TTL won't cover uncached objects or expiry."
+   ],
+   [
+    "Invalidations don't trigger failover.",
+    "Correct. Configured status codes or connection failures trigger the secondary origin.",
+    "WAF blocks don't trigger failover.",
+    "Origin groups fail over automatically, without DNS changes."
+   ]
+  ]
+ },
+ {
+  "card_id": "e145f218-327f-4624-bd0a-0498f7bbae1d",
+  "notes": [
+   [
+    "Correct. RIs or Savings Plans discount the reserved usage.",
+    "A bigger reservation doesn't lower the rate.",
+    "Prepaying at the On-Demand rate saves nothing.",
+    "A reservation can't be converted to Spot."
+   ],
+   [
+    "Reservations don't include Elastic IPs.",
+    "Spot-like pricing isn't part of a reservation.",
+    "Correct. It guarantees capacity in an AZ with no discount of its own.",
+    "72% discounts come from Savings Plans or RIs, not capacity reservations."
+   ]
+  ]
+ },
+ {
+  "card_id": "e23be9cc-8db8-4622-9a7a-6f47fb024f16",
+  "notes": [
+   [
+    "The NAT gateway isn't part of the IGW.",
+    "Correct. Place it in a public subnet with an IGW route.",
+    "Placed in a private subnet it couldn't reach the internet.",
+    "A subnet with no route to the IGW can't reach the internet."
+   ],
+   [
+    "Instances aren't what an IGW attaches to.",
+    "AZs don't get gateways attached.",
+    "IGWs attach to VPCs; subnets just route to them.",
+    "Correct. An internet gateway is attached to a VPC."
+   ]
+  ]
+ },
+ {
+  "card_id": "e251b925-e66a-463c-b160-3c22ecd64bf3",
+  "notes": [
+   [
+    "Correct. Field-level encryption lets only the private key holder read the fields.",
+    "Signed URLs control access, not encrypt fields.",
+    "OAC restricts S3 origin access; it doesn't encrypt fields.",
+    "TLS ends at CloudFront and the origin, so intermediate layers see plaintext."
+   ],
+   [
+    "It isn't about slow downloads.",
+    "DDoS protection is from Shield and WAF.",
+    "It has nothing to do with browser CORS errors.",
+    "Correct. Chosen POST fields stay encrypted after the edge."
+   ]
+  ]
+ },
+ {
+  "card_id": "e29c759f-0ed6-461b-9535-145717918b6b",
+  "notes": [
+   [
+    "Correct. IP-based routing maps client CIDR blocks to chosen answers.",
+    "Geoproximity routes by location with a bias, not by network.",
+    "Failover routing depends on health, not client address.",
+    "Latency routing picks the lowest-latency Region."
+   ],
+   [
+    "Weighted routing splits by proportion.",
+    "Geolocation routes by geography, not CIDR.",
+    "Simple routing has no client-based logic.",
+    "Correct. IP-based routing uses client CIDR collections."
+   ]
+  ]
+ },
+ {
+  "card_id": "e2cae6a3-f731-4022-ad45-15fdf4bfe215",
+  "notes": [
+   [
+    "Correct. Route tables direct outbound traffic to targets such as IGW or NAT.",
+    "Port and protocol filtering is by security groups and NACLs.",
+    "Authenticating callers is IAM's role.",
+    "Private DNS names come from VPC DNS, not route tables."
+   ],
+   [
+    "NACLs filter traffic but don't set routes.",
+    "Security groups filter traffic; they don't route.",
+    "IAM policies don't affect network routing.",
+    "Correct. Routes are entries in the subnet's route table."
+   ]
+  ]
+ },
+ {
+  "card_id": "e2f653c4-d4fa-4a3f-808b-fc308dc8aa94",
+  "notes": [
+   [
+    "The Multi-Attach standby doesn't exist; Multi-AZ standby can't serve queries.",
+    "Backup retention doesn't relieve query load.",
+    "Multi-Attach is an EBS feature with no standby for queries.",
+    "Correct. A read replica takes read-only traffic off production."
+   ],
+   [
+    "It's in the same Region, in another AZ, with low latency.",
+    "Encryption doesn't cause query rejections.",
+    "The standby is synchronous, not lagging by days.",
+    "Correct. The standby exists for failover and accepts no connections."
+   ]
+  ]
+ },
+ {
+  "card_id": "e3c59540-1e89-48ba-b991-c10a6fcc17c9",
+  "notes": [
+   [
+    "Bucket policies can't launch EC2 instances.",
+    "Lifecycle rules are a separate bucket configuration.",
+    "Correct. A policy can allow public reads.",
+    "Correct. A policy can deny unencrypted uploads.",
+    "Correct. A policy can grant cross-account access."
+   ],
+   [
+    "Volume resizing is an EBS operation.",
+    "Correct. A deny on aws:SecureTransport=false forces HTTPS.",
+    "Correct. The aws:sourceVpce condition restricts to an endpoint.",
+    "Correct. A policy can grant access to CloudFront OAC.",
+    "KMS key rotation is configured on the key."
+   ]
+  ]
+ },
+ {
+  "card_id": "e4abe70d-2919-4498-baf4-1bd8c6358d3b",
+  "notes": [
+   [
+    "Correct. An ELB provides a single stable DNS name.",
+    "ELB doesn't patch instances; that's your job.",
+    "Correct. Health checks send traffic only to healthy targets.",
+    "Load balancers don't make data transfer free.",
+    "Correct. ELB can terminate TLS with ACM certificates."
+   ],
+   [
+    "ALBs don't update instance operating systems.",
+    "Correct. ALBs route by URL path.",
+    "Correct. ALBs run health checks on targets.",
+    "Correct. ALBs terminate HTTPS.",
+    "Database failover is RDS or Aurora, not ALB."
+   ]
+  ]
+ },
+ {
+  "card_id": "e4f7b58f-c41c-4811-9a74-d81bfb6ecdff",
+  "notes": [
+   [
+    "Correct. EventBridge filters by size and supports archive, replay and many targets.",
+    "Inventory gives scheduled listings, not events.",
+    "Batch Operations runs jobs on objects, not event routing.",
+    "SQS as a direct target has no size filtering or replay."
+   ],
+   [
+    "Delivery is asynchronous, not before the upload returns.",
+    "Correct. EventBridge offers richer filtering, more targets and replay.",
+    "IAM permissions are still required.",
+    "Cost isn't always lower than SNS."
+   ]
+  ]
+ }
+]

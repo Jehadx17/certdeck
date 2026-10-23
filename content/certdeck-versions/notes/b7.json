@@ -1,0 +1,820 @@
+[
+ {
+  "card_id": "ac268016-a619-4002-9a5d-d37abe726601",
+  "notes": [
+   [
+    "--max-items paginates list output; it does not limit bytes of an object download.",
+    "get-object has no --content-length option; Content-Length is a response header.",
+    "Correct: --range sends an HTTP Range header so S3 returns only that byte span.",
+    "--part-number fetches one part of a multipart-uploaded object, not the first N bytes."
+   ],
+   [
+    "If-Match is a conditional ETag check, not a byte-range request.",
+    "Accept-Ranges is a response header advertising range support, not what --range sends.",
+    "Correct: --range is sent as the standard Range header.",
+    "Content-Range is a response header describing the span returned, not a request header."
+   ]
+  ]
+ },
+ {
+  "card_id": "ac79cf19-acb4-4191-9688-30c6b477d3a8",
+  "notes": [
+   [
+    "IAM roles attach to principals, not to an ALB; CloudFront is not an IAM principal toward an ALB.",
+    "Correct: the managed CloudFront prefix list in the ALB security group allows only CloudFront edge IPs.",
+    "Access logs are after-the-fact, and user agents are trivially spoofed; this is not a network control.",
+    "An internet-facing ALB's addresses can't be released; that would make it internal and unreachable by CloudFront."
+   ],
+   [
+    "CloudFront does not SigV4-sign origin requests to an ALB, and ALBs do not validate such signatures.",
+    "Correct: a secret custom header plus an ALB listener rule forwarding only matching requests blocks direct hits.",
+    "NACLs filter by IP/CIDR and port; they cannot match a distribution ID.",
+    "DNS records don't enforce access; anyone can still reach the ALB's public IPs directly."
+   ]
+  ]
+ },
+ {
+  "card_id": "ae96aa4c-1f60-4a4e-8cc3-fafee3b4a1c1",
+  "notes": [
+   [
+    "Versioning keeps old object versions; CloudFront still caches the URL for its TTL.",
+    "Correct: a new file name is a new URL and cache key, so no invalidation is needed.",
+    "Origin Shield adds a caching layer to reduce origin load; it doesn't purge or refresh caches.",
+    "Viewer protocol policy controls HTTP/HTTPS access, not cache freshness."
+   ],
+   [
+    "Invalidations aren't priced by path naming; the first 1,000 paths a month are free regardless.",
+    "Renamed objects are cached under the normal cache policy like any other.",
+    "Correct: a different URL is a different cache key, so old copies just age out.",
+    "CloudFront never purges caches automatically on S3 key changes."
+   ]
+  ]
+ },
+ {
+  "card_id": "afc62b77-33dd-44eb-a9a1-7360a24d24c8",
+  "notes": [
+   [
+    "Correct: cache-aside only refreshes on a read miss, so data can go stale after a database update.",
+    "A cache node failure causes misses that fall back to the database; the app keeps working.",
+    "That describes write-through; lazy loading doesn't block writes on the cache.",
+    "Lazy loading caches anything that gets read, regardless of when it was written.",
+    "Correct: a miss costs a cache read, a database read and a cache write."
+   ],
+   [
+    "Correct: a direct database change isn't seen by the cache until expiry or eviction.",
+    "That's write-through's cost, not lazy loading's.",
+    "Correct: the first read of an item is a miss and pays extra latency.",
+    "That's a write-through issue; lazy loading only caches what's requested.",
+    "A replacement node warms up naturally as reads miss and fill it."
+   ]
+  ]
+ },
+ {
+  "card_id": "b1394f70-5c65-4113-8bb9-52f176d3ad30",
+  "notes": [
+   [
+    "A CloudWatch alarm health check watches a metric on one resource; it can't combine three endpoint checks.",
+    "Weighted records split traffic and don't aggregate health or define a pass threshold.",
+    "String matching checks one endpoint's response body, not an aggregate of several.",
+    "Correct: a calculated health check aggregates child checks and lets you set how many must pass."
+   ],
+   [
+    "16 is not the limit for children of a calculated health check.",
+    "There's no 1,024-per-zone limit; the limit is per parent check.",
+    "64 is not the limit; it is higher.",
+    "Correct: a calculated health check can monitor up to 256 child checks."
+   ]
+  ]
+ },
+ {
+  "card_id": "b149fd1b-4d82-4858-b55f-a7571c9fe369",
+  "notes": [
+   [
+    "Deleting the record doesn't clear resolver caches; they keep the old answer until the TTL expires.",
+    "Resolvers don't ignore TTL on latency records; every record type has a TTL.",
+    "Route 53 doesn't push changes to resolvers; they hold cached answers for 24 hours.",
+    "Correct: lower the TTL, wait out the old TTL, switch the IP, then restore the TTL."
+   ],
+   [
+    "Low TTL doesn't change the record type or remove health checks.",
+    "It's the opposite: a low TTL means more billed queries and fresher answers.",
+    "Correct: changes spread fast, but resolvers query Route 53 more often, raising cost.",
+    "Records can be edited any time; TTL has no effect on that."
+   ]
+  ]
+ },
+ {
+  "card_id": "b272c7fc-713a-4dbf-93f3-484b40fff87c",
+  "notes": [
+   [
+    "169.254.169.123 is the Amazon Time Sync Service, not the metadata endpoint.",
+    "The metadata service doesn't route on a Host header; the 401 is about missing IMDSv2 token.",
+    "Correct: IMDSv2 needs a session token from a PUT to /latest/api/token sent in X-aws-ec2-metadata-token.",
+    "SSM permissions don't govern metadata access; IMDS authorisation is token-based, not IAM."
+   ],
+   [
+    "A hop limit of 1 restricts token response reach (e.g. containers); it doesn't cause 401.",
+    "A disabled endpoint makes metadata unreachable altogether, not 401.",
+    "InstanceMetadataTags only exposes instance tags in metadata; it doesn't enforce tokens.",
+    "Correct: HttpTokens=required allows only IMDSv2 token-based calls; others get 401."
+   ]
+  ]
+ },
+ {
+  "card_id": "b3ec2b08-8d6c-415a-b8a0-d46e93a3faf1",
+  "notes": [
+   [
+    "Correct: SSE-S3 (AES-256) is applied to all new objects by default.",
+    "A customer managed KMS key is something you configure; it isn't the default.",
+    "Client-side encryption is done by the client; S3 doesn't apply it by default.",
+    "Since January 2023 S3 encrypts new objects by default; they aren't left plaintext."
+   ],
+   [
+    "dsse is dual-layer KMS encryption and must be requested explicitly.",
+    "SSE-KMS with the aws/s3 key must be chosen; it isn't the default.",
+    "SSE-C needs customer-provided keys in the request headers.",
+    "Correct: default encryption is SSE-S3, reported as AES256."
+   ]
+  ]
+ },
+ {
+  "card_id": "b456ecb6-e00a-4b80-b0e9-048e3b5b2a65",
+  "notes": [
+   [
+    "Correct: Transfer Acceleration routes uploads via the nearest edge location over AWS's backbone.",
+    "Prefix spreading helps request rate, not a single large upload's speed.",
+    "Correct: multipart upload sends parts in parallel, speeding large uploads.",
+    "Standard-IA is a storage class and doesn't affect upload speed.",
+    "Byte-range GETs speed downloads, not uploads."
+   ],
+   [
+    "Storage class doesn't change read throughput.",
+    "Requester Pays shifts who pays; it doesn't prioritise downloads.",
+    "Correct: parallel byte-range GETs fetch parts concurrently and are joined client-side.",
+    "Multipart upload is for uploading, and it isn't a server-side split for downloads."
+   ]
+  ]
+ },
+ {
+  "card_id": "b45b73fa-b7c1-470c-818f-cc63ab490b76",
+  "notes": [
+   [
+    "Correct: the rules of all attached groups are merged, so both ports are allowed.",
+    "Security groups are a union of allows; traffic only needs to match one rule.",
+    "There's no precedence by order; all groups apply together.",
+    "Rules for different ports don't conflict; they simply add up."
+   ],
+   [
+    "There's no attachment order or first-match logic in security groups.",
+    "Correct: all rules are merged and any match allows the traffic.",
+    "Security groups have no deny rules, so nothing overrides an allow.",
+    "Security group rules have no numbers or priority; NACLs do."
+   ]
+  ]
+ },
+ {
+  "card_id": "b61b52a7-655a-438a-b97f-e83848f1e611",
+  "notes": [
+   [
+    "Instance store data isn't backed up to S3.",
+    "Data is lost on stop regardless of AZ; it isn't tied to restarting in the same AZ.",
+    "AWS never snapshots instance store to EBS automatically.",
+    "Correct: instance store is ephemeral and is wiped when the instance stops or terminates."
+   ],
+   [
+    "Correct: data is lost on stop, terminate or host failure, so replication is your job.",
+    "Instance store isn't replicated across AZs; it is local to the host.",
+    "Instance store is included in the instance price, not billed separately.",
+    "Multi-Attach is an EBS io1/io2 feature, not instance store."
+   ]
+  ]
+ },
+ {
+  "card_id": "b62f0b9c-5117-49d3-91c6-72472fc1be9c",
+  "notes": [
+   [
+    "Instance store is ephemeral and doesn't speed installs; the problem is install time at boot.",
+    "Correct: bake packages into a golden AMI so boot only needs light user data.",
+    "User data size limit isn't the issue; more commands still take install time.",
+    "A placement group improves instance-to-instance networking, not package downloads."
+   ],
+   [
+    "Correct: a custom AMI captures the OS, software and agents in the image.",
+    "A placement group only controls placement of instances.",
+    "A launch template with user data still runs installs at boot; it doesn't capture software.",
+    "A snapshot lifecycle policy manages EBS snapshots, not a full launch image."
+   ]
+  ]
+ },
+ {
+  "card_id": "b75eeba9-b1c1-4779-be74-06406bc1c139",
+  "notes": [
+   [
+    "Correct: storage autoscaling grows storage automatically up to the maximum you set.",
+    "Provisioned IOPS affects performance, not storage size.",
+    "A nightly Lambda is still manual-style resizing and misses growth between runs.",
+    "A Multi-AZ DB cluster is for availability and read scaling, not growth."
+   ],
+   [
+    "Correct: free space under 10% for at least 5 minutes is one trigger condition.",
+    "The threshold is 10% and 5 minutes, not 25% and 1 minute.",
+    "CPU utilisation doesn't trigger storage scaling.",
+    "IOPS levels don't trigger storage scaling."
+   ]
+  ]
+ },
+ {
+  "card_id": "b89f56de-25ff-4acb-839e-ae4d2e17c3a4",
+  "notes": [
+   [
+    "3260 is iSCSI, not used by EFS.",
+    "Correct: EFS uses NFS on TCP port 2049.",
+    "873 is rsync, unrelated to EFS mounts.",
+    "445 is SMB; EFS doesn't support SMB."
+   ],
+   [
+    "EFS has no public endpoint but 0.0.0.0/0 is still overly broad; least privilege is better.",
+    "Correct: referencing the instances' security group stays accurate as IPs change.",
+    "A NACL ID can't be a security group source.",
+    "An EFS ARN isn't a valid source for a security group rule."
+   ]
+  ]
+ },
+ {
+  "card_id": "b89f6350-e2c0-45d5-9c29-5019b382eb0e",
+  "notes": [
+   [
+    "Burstable instances are for light, spiky CPU loads, not a large in-memory set.",
+    "GPU instances are for ML and graphics, not RAM capacity.",
+    "Correct: R and X memory optimized instances suit large in-memory working sets.",
+    "Storage optimized is for local disk I/O, not RAM."
+   ],
+   [
+    "C is compute optimized, not memory.",
+    "Correct: R, X and High Memory are the memory-optimized families.",
+    "I, D and H are storage optimized.",
+    "T and M are general purpose."
+   ]
+  ]
+ },
+ {
+  "card_id": "b99579e9-f759-4c41-ad2c-3d96860c0927",
+  "notes": [
+   [
+    "NACLs are stateless, so return traffic does need a rule.",
+    "Security groups sit at the instance (ENI) level, not the subnet boundary, and have no rule order.",
+    "Correct: security groups only allow, so they cannot block a single address.",
+    "Correct: NACLs support explicit Deny, evaluated from the lowest rule number.",
+    "Security groups are stateful, not stateless."
+   ],
+   [
+    "NACLs are stateless; they don't track connections.",
+    "Security groups are per ENI, not per subnet, and are stateful so replies are automatic.",
+    "NACLs attach to subnets, not network interfaces.",
+    "Correct: security groups are stateful and permit replies automatically.",
+    "Correct: NACLs are stateless and need explicit rules for return traffic such as ephemeral ports."
+   ]
+  ]
+ },
+ {
+  "card_id": "ba79ddb9-8524-4ab6-9d81-2faf0a848539",
+  "notes": [
+   [
+    "The 6 isn't the EBS volume count.",
+    "Correct: the number is the hardware generation.",
+    "Network bandwidth is tied to size, not that digit.",
+    "vCPU count depends on the size (4xlarge), not the generation."
+   ],
+   [
+    "7i is generation plus attribute (i for Intel), not the size.",
+    "Correct: the part after the dot, large, is the size.",
+    "r7 is family plus generation, not size.",
+    "r is the family letter, not the size."
+   ]
+  ]
+ },
+ {
+  "card_id": "bad76b45-5786-4b47-99b9-156ee2ca16f6",
+  "notes": [
+   [
+    "The cache key is where values that vary the cached copy go; this would hurt hit ratio.",
+    "Origin Shield is a caching layer, not a place to list forwarded headers.",
+    "Correct: an origin request policy forwards extra values without adding them to the cache key.",
+    "Field-level encryption protects specific POST fields; it doesn't forward headers."
+   ],
+   [
+    "Correct: it forwards extra headers, cookies and query strings without affecting the cache key.",
+    "HTTP-to-HTTPS redirect is set in the viewer protocol policy.",
+    "Signed URLs and cookies restriction is set in behavior's trusted key groups.",
+    "TTLs are defined in the cache policy."
+   ]
+  ]
+ },
+ {
+  "card_id": "bae2fa9d-73f7-48ce-ad8b-68ba3602f4ac",
+  "notes": [
+   [
+    "Correct: Photos_2026 is invalid because it has uppercase and an underscore.",
+    "logs.prod.example is valid with lowercase and dots.",
+    "Correct: -s3alias is a reserved suffix and not allowed.",
+    "team-archive is valid.",
+    "Correct: bucket names can't be formatted like an IP address."
+   ],
+   [
+    "ab is too short; names need at least 3 characters.",
+    "The xn-- prefix is reserved and not allowed.",
+    "Uppercase letters aren't allowed.",
+    "Correct: lowercase letters, digits and dots, 3 to 63 characters.",
+    "Correct: lowercase letters, digits and hyphens are fine."
+   ]
+  ]
+ },
+ {
+  "card_id": "bb1546dd-70e8-4b44-a902-22a995e4a794",
+  "notes": [
+   [
+    "Versioning keeps old versions; it doesn't reduce KMS calls.",
+    "Correct: Bucket Keys let S3 reuse a bucket-level key, cutting KMS requests.",
+    "Prefixes help S3 request rate, not KMS calls.",
+    "Transfer Acceleration speeds transfers but doesn't change KMS usage."
+   ],
+   [
+    "There's no such per-prefix object cap tied to SSE-KMS.",
+    "KMS handles many concurrent requests; the limit is a request quota.",
+    "Correct: each request calls KMS and counts against the KMS quota; SSE-S3 doesn't.",
+    "Bucket policy size doesn't cause rejection of encrypted requests."
+   ]
+  ]
+ },
+ {
+  "card_id": "bb481664-0f00-4c8d-9757-799c0b1b3c26",
+  "notes": [
+   [
+    "The browser doesn't sign; OAC is for CloudFront-to-S3 access.",
+    "Correct: your app signs with a private key and CloudFront verifies with the public key.",
+    "CloudFront verifies signatures and doesn't use the bucket's KMS key for them.",
+    "S3 doesn't produce or evaluate the CloudFront signature."
+   ],
+   null
+  ]
+ },
+ {
+  "card_id": "bbec4d72-9d9a-416f-8e57-122577011b73",
+  "notes": [
+   [
+    "A read replica doesn't solve write traffic and doesn't help with DB credentials.",
+    "A cache in front doesn't provide IAM auth or credentials management for the DB.",
+    "Correct: RDS Proxy enforces IAM auth and retrieves DB credentials from Secrets Manager.",
+    "A security group limits network access but doesn't provide IAM auth or password-free design."
+   ],
+   [
+    "Correct: the client generates an IAM auth token and uses it as the password.",
+    "A security group ID is not a credential.",
+    "The master password isn't sent this way; IAM auth uses tokens.",
+    "Secrets Manager is used by the proxy, not supplied by the client as an ARN."
+   ]
+  ]
+ },
+ {
+  "card_id": "bc27258a-5678-429b-b5cc-3462dc25045a",
+  "notes": [
+   [
+    "Correct: Multi-Attach shares raw blocks, so you need a cluster-aware file system or app coordination.",
+    "Snapshot policies don't coordinate concurrent writers.",
+    "Instance store is local and doesn't help shared-volume consistency.",
+    "Multi-Attach requires the same AZ; separating AZs isn't possible."
+   ],
+   [
+    "Multi-Attach is within one AZ, not across Regions.",
+    "Multi-Attach supports io1/io2, not gp3.",
+    "The limit is up to 16 instances, not two.",
+    "Correct: attached instances must be in the same AZ as the volume."
+   ]
+  ]
+ },
+ {
+  "card_id": "be3e5c13-c13d-4afc-ba3c-235dc7836c15",
+  "notes": [
+   [
+    "Every IAM role in the account is better handled with IAM policies, not pre-signed URLs.",
+    "Correct: a pre-signed PUT lets the app upload one object without AWS credentials.",
+    "A public website should be served publicly or via CloudFront, not pre-signed URLs.",
+    "Correct: pre-signed URLs suit on-demand per-user links.",
+    "Correct: a short-lived pre-signed URL gives temporary access to a private object."
+   ],
+   [
+    "A pre-signed URL expires; it isn't valid forever.",
+    "Correct: it stops at expiry or when the signer's credentials expire.",
+    "Correct: the URL carries the signer's permissions.",
+    "Editing the query string breaks the signature, so expiry can't be extended."
+   ]
+  ]
+ },
+ {
+  "card_id": "be5d22dc-bf01-4c46-b01c-b13687af3374",
+  "notes": [
+   [
+    "The header is forwarded, not stripped.",
+    "Values in the cache key are forwarded regardless of the origin request policy.",
+    "Correct: values in the cache key are always forwarded to the origin on a miss.",
+    "It's sent on every miss, not just revalidation."
+   ],
+   [
+    "Origin request policy values are forwarded only; they aren't part of the cache key.",
+    "Correct: the origin request policy adds values on top of those forwarded via the cache key.",
+    "Cache policy values are forwarded to the origin.",
+    "The two policies are independent and needn't match."
+   ]
+  ]
+ },
+ {
+  "card_id": "bf5f33be-e3e0-4b63-9163-33632932baaa",
+  "notes": [
+   [
+    "Correct: cookies are part of the cache key setting.",
+    "Invalidation permissions are controlled in IAM, not the cache policy.",
+    "Origin failover is configured in the origin group, not the cache policy.",
+    "Correct: min, default and max TTL are cache policy settings.",
+    "Correct: headers can be included in the cache key."
+   ],
+   [
+    "Correct: cache policy sets min, default and max TTL (up to a year).",
+    "TLS ciphers to the origin are origin settings, not cache policy.",
+    "The origin port is set on the origin, not in the cache policy.",
+    "Correct: cache policy chooses query strings in the cache key."
+   ]
+  ]
+ },
+ {
+  "card_id": "bfc474f2-7d32-434f-8f53-738266a86017",
+  "notes": [
+   [
+    "Replicas can be in the same Region; a different Region isn't required.",
+    "Multi-AZ replicas aren't Aurora-only; RDS engines support it.",
+    "Replicas aren't limited to one AZ; they can be Multi-AZ.",
+    "Correct: a read replica can itself be Multi-AZ for failover protection."
+   ],
+   [
+    "Multi-AZ isn't limited to the source.",
+    "Enabling Multi-AZ on a replica doesn't promote it.",
+    "A replica can be Multi-AZ regardless of Region.",
+    "Correct: a replica can use Multi-AZ itself."
+   ]
+  ]
+ },
+ {
+  "card_id": "bfef2f24-dac9-4923-9023-a79cfeec83c8",
+  "notes": [
+   [
+    "Correct: storage optimized families (I, D, H) have local NVMe for high IOPS.",
+    "Memory optimized targets RAM, not local disk IOPS.",
+    "Compute optimized targets CPU.",
+    "Burstable instances don't provide sustained high local IOPS."
+   ],
+   [
+    "Correct: I, D and H are storage optimized.",
+    "R, X and High Memory are memory optimized.",
+    "T and M are general purpose.",
+    "C and HPC are compute optimized."
+   ]
+  ]
+ },
+ {
+  "card_id": "c07a5f4b-bbaa-4173-a390-471bdd668ca2",
+  "notes": [
+   [
+    "Per-hour rounding applies only to a few OSes, not Amazon Linux.",
+    "There's no 10-minute minimum on Linux; it's 60 seconds.",
+    "Correct: Amazon Linux is billed per second with a 60-second minimum.",
+    "There's no per-day billing."
+   ],
+   [
+    "Ubuntu Server is billed per second.",
+    "Windows Server is billed per second.",
+    "Amazon Linux 2023 is billed per second.",
+    "Correct: SUSE (SLES) is billed hourly."
+   ]
+  ]
+ },
+ {
+  "card_id": "c443f07f-47cb-4c4b-9092-5f692a54149e",
+  "notes": [
+   [
+    "Reserved Instances are for steady workloads, and cost more than Spot.",
+    "Dedicated Instances add isolation at extra cost.",
+    "Capacity Reservations are On-Demand rate and not cheapest.",
+    "Correct: Spot is cheapest and suits interruptible work."
+   ],
+   [
+    "Spot instances can run longer than an hour.",
+    "Spot is available across many instance families.",
+    "Correct: AWS can reclaim it with a two-minute warning.",
+    "Spot needs no upfront commitment."
+   ]
+  ]
+ },
+ {
+  "card_id": "c475da16-5d08-40d3-82c5-932da9e182b7",
+  "notes": [
+   [
+    "Neither io2 nor gp3 volumes need detaching for snapshots.",
+    "The API accepts snapshots of attached volumes.",
+    "Correct: not mandatory, though pausing writes gives a more consistent image.",
+    "Encryption doesn't force detaching."
+   ],
+   [
+    "It works on in-use volumes without detaching.",
+    "Correct: it captures written blocks, not data cached in memory.",
+    "RAM contents aren't captured.",
+    "It doesn't wait for the instance to stop."
+   ]
+  ]
+ },
+ {
+  "card_id": "c5339872-6101-441e-9b75-9cb5410c716c",
+  "notes": [
+   [
+    "Correct: peering is non-transitive, so peer the spokes or use Transit Gateway.",
+    "Route table entries can't create transitive routing over peering.",
+    "Region and account sharing don't enable transitive routing.",
+    "A NAT gateway doesn't route between peered VPCs."
+   ],
+   [
+    "An internet gateway connects a VPC to the internet.",
+    "Correct: Transit Gateway is a regional router for many VPCs.",
+    "NAT gateway provides outbound internet for private subnets.",
+    "A gateway endpoint connects to S3 or DynamoDB only."
+   ]
+  ]
+ },
+ {
+  "card_id": "c5c3d8e8-afb5-46c2-9572-3f3717f67a25",
+  "notes": [
+   [
+    "Correct: get-session-token with serial number and token code returns temporary credentials.",
+    "enable-mfa-device registers a device and gives no credentials.",
+    "create-access-key creates long-term keys, not MFA-based temporary ones.",
+    "assume-role-with-web-identity exchanges an OIDC token, not an MFA code."
+   ],
+   null
+  ]
+ },
+ {
+  "card_id": "c694a0e5-a5d6-4478-9e4b-3e5ed54cd5db",
+  "notes": [
+   [
+    "Aurora storage auto-grows without downtime.",
+    "Aurora is MySQL- and PostgreSQL-compatible, not Oracle.",
+    "Correct: six copies across three AZs.",
+    "Correct: up to 15 read replicas.",
+    "Correct: storage grows automatically."
+   ],
+   [
+    "Replicas share the cluster volume rather than keeping own copies.",
+    "Correct: it has MySQL- and PostgreSQL-compatible editions.",
+    "Aurora is a managed service and isn't self-hosted or free.",
+    "Correct: shared storage keeps replica lag low."
+   ]
+  ]
+ },
+ {
+  "card_id": "c81b5071-df7b-43a6-a639-17f571f2804d",
+  "notes": [
+   [
+    "Disabling caching increases cost and origin load.",
+    "Geo restriction blocks viewers rather than reducing price.",
+    "Price Class All is the most expensive.",
+    "Correct: Price Class 100 uses the cheapest edge locations, North America and Europe."
+   ],
+   [
+    "Viewers aren't blocked; they're still served, just from other edges.",
+    "Correct: viewers elsewhere are served from farther away.",
+    "HTTPS remains available.",
+    "Caching is not turned off."
+   ]
+  ]
+ },
+ {
+  "card_id": "c86dd58d-c5ec-4f70-912c-9d1f9237a72c",
+  "notes": [
+   [
+    "Target tracking reacts to load; it doesn't pre-provision for a known time.",
+    "An instance refresh replaces instances; it doesn't scale.",
+    "Correct: a scheduled action raises desired capacity before the known load.",
+    "Alarm-based simple scaling reacts after the spike begins."
+   ],
+   [
+    "Step scaling reacts to alarms rather than forecasts.",
+    "Target tracking reacts to metrics.",
+    "Correct: predictive scaling forecasts cyclical load and pre-provisions capacity.",
+    "Scheduled actions are fixed times you define, not forecasts from history."
+   ]
+  ]
+ },
+ {
+  "card_id": "c880c94f-55b4-406d-9fd2-7b4424526931",
+  "notes": [
+   [
+    "Versioning doesn't clear edge caches.",
+    "A price class doesn't affect caching.",
+    "Recreating the distribution is excessive and slow.",
+    "Correct: invalidating the path removes the cached copy so the next request refetches."
+   ],
+   [
+    "S3 versioning doesn't notify edges.",
+    "CloudFront isn't notified by S3 events.",
+    "Correct: edges revalidate when the TTL expires.",
+    "There's no default five-minute refresh."
+   ]
+  ]
+ },
+ {
+  "card_id": "c88609d2-ebc0-44b0-923f-262939830e36",
+  "notes": [
+   [
+    "Fast Snapshot Restore speeds restores at extra cost.",
+    "The Recycle Bin protects against deletion and doesn't cut cost by 75%.",
+    "Correct: Snapshot Archive is up to 75% cheaper.",
+    "Snapshots can't be turned into Multi-Attach volumes."
+   ],
+   [
+    "Restores take longer than 60 minutes.",
+    "Correct: restores take about 24 to 72 hours.",
+    "Archive restores aren't that fast.",
+    "Fast Snapshot Restore doesn't apply to archived snapshots."
+   ]
+  ]
+ },
+ {
+  "card_id": "c9569300-fc16-4f2c-ab16-66ab4646a8e4",
+  "notes": [
+   [
+    "1,000 is not the baseline.",
+    "Correct: 5,500 GET/HEAD requests per second per prefix.",
+    "10,000 is not the baseline.",
+    "3,500 is the write limit, not GET/HEAD."
+   ],
+   [
+    "Transfer Acceleration doesn't raise the prefix limit.",
+    "Correct: add prefixes, since the number of prefixes is unlimited.",
+    "Object size doesn't change request rate.",
+    "The per-prefix limit isn't raised via support; scale with more prefixes."
+   ]
+  ]
+ },
+ {
+  "card_id": "c9dad150-c8a4-42ca-8e8d-921c6a4b5616",
+  "notes": [
+   [
+    "Correct: expiration deletes objects after a set age.",
+    "Lifecycle can't convert formats.",
+    "Lifecycle can't copy to another account; that's replication.",
+    "Correct: transitions move objects to colder classes."
+   ],
+   [
+    "Replication copies objects, not delete them.",
+    "Transition changes class and doesn't remove the objects.",
+    "Object Lock prevents deletion; it doesn't remove objects.",
+    "Correct: expiration deletes objects after 365 days."
+   ]
+  ]
+ },
+ {
+  "card_id": "cb15b81e-a54f-40de-944c-ae5d441ac1b8",
+  "notes": [
+   [
+    "StringEquals would match when the header is aws:kms; wrong for a Deny.",
+    "ForAllValues is for multi-valued keys, not this check.",
+    "NumericNotEquals is for numbers, and this value is a string.",
+    "Correct: StringNotEquals denies when the value isn't aws:kms."
+   ],
+   [
+    "Correct: s3:x-amz-server-side-encryption holds the SSE header value.",
+    "aws:SecureTransport tests for HTTPS.",
+    "The kms-key-id key holds the key ID, not the method.",
+    "x-amz-storage-class holds the storage class."
+   ]
+  ]
+ },
+ {
+  "card_id": "cba1f28d-79b5-4a57-94a6-6dac068e8dcf",
+  "notes": [
+   [
+    "Correct: making SSE-KMS the default covers uploads without a header.",
+    "Object Lock is about retention, not encryption.",
+    "Transfer Acceleration is about speed, not encryption.",
+    "Correct: a Deny on PutObject rejects requests with other encryption headers."
+   ],
+   [
+    "Default encryption doesn't override a header the client explicitly sends.",
+    "Correct: default encryption applies only when no encryption is specified.",
+    "Correct: a Deny on the header rejects requests specifying another method.",
+    "Bucket policies are evaluated before default encryption, so they can reject."
+   ]
+  ]
+ },
+ {
+  "card_id": "cc687f84-d6ca-4822-b879-74445319d9f2",
+  "notes": [
+   [
+    "A snapshot must be registered as an AMI first.",
+    "Correct: Marketplace AMIs are vendor images you subscribe to.",
+    "Correct: AWS provides public AMIs.",
+    "An ISO file in S3 can't be used to launch an instance.",
+    "Correct: you can launch from AMIs in your own account."
+   ],
+   [
+    "Correct: custom AMIs can be created from instances.",
+    "A snapshot must be registered as an AMI first.",
+    "An Elastic IP is an address, not an image.",
+    "Correct: Marketplace AMIs are valid."
+   ]
+  ]
+ },
+ {
+  "card_id": "cc6bffde-2f2a-414f-bad3-9310ace0c587",
+  "notes": [
+   [
+    "Correct: Site-to-Site VPN uses IPsec via a virtual private gateway and is set up quickly.",
+    "VPC peering connects VPCs, not office networks.",
+    "PrivateLink exposes services to VPCs and isn't a tunnel to an office.",
+    "Direct Connect takes weeks and isn't encrypted by default."
+   ],
+   [
+    "Direct Connect is private; VPN rides the internet.",
+    "Direct Connect needs the physical cross-connect, not VPN.",
+    "Direct Connect is not provisioned in minutes and isn't encrypted by default.",
+    "Correct: VPN is quick and encrypted; Direct Connect is slower and unencrypted by default."
+   ]
+  ]
+ },
+ {
+  "card_id": "cc8061dd-b4bf-463a-bd49-8bdd6433d943",
+  "notes": [
+   [
+    "Standard to Intelligent-Tiering is a valid transition.",
+    "Glacier Flexible Retrieval to Deep Archive is a valid colder transition.",
+    "One Zone-IA to Glacier Flexible Retrieval is valid.",
+    "Correct: Lifecycle can't move objects back up to a warmer class."
+   ],
+   [
+    "Transitions are one-way.",
+    "Transitions don't go up to warmer classes.",
+    "Retrieval fee model doesn't constrain transitions.",
+    "Correct: only toward colder, cheaper classes."
+   ]
+  ]
+ },
+ {
+  "card_id": "cca31fe5-55f0-4d07-b7f3-3555cfa0d595",
+  "notes": [
+   [
+    "Windows instances use Administrator, not ec2-user.",
+    "Debian's default user is admin.",
+    "Correct: Amazon Linux defaults to ec2-user.",
+    "Ubuntu's default user is ubuntu."
+   ],
+   [
+    "Amazon Linux uses ec2-user and Ubuntu uses ubuntu; this is reversed.",
+    "Neither uses root by default and the users are swapped.",
+    "Correct: Amazon Linux uses ec2-user and Ubuntu uses ubuntu.",
+    "They use different default users."
+   ]
+  ]
+ },
+ {
+  "card_id": "ccbb0e35-865a-4cea-a645-f1c40d15075d",
+  "notes": [
+   [
+    "More AZs are data centres within a Region, not near viewers.",
+    "AZs are inside the home Region.",
+    "Additional Regions are few and not city-level edge caching.",
+    "Correct: CloudFront points of presence cache content near viewers."
+   ],
+   [
+    "Correct: edge locations are in many cities worldwide serving cached content.",
+    "You can't launch EC2 in edge locations.",
+    "RDS storage lives in AZs, not edges.",
+    "Edge locations are far more numerous than Regions."
+   ]
+  ]
+ },
+ {
+  "card_id": "cdcbec6c-99ec-4c72-b6c0-c06d8a8dde1a",
+  "notes": [
+   [
+    "Correct: IP targets can be private addresses in a VPC or on premises.",
+    "Correct: instance IDs are valid targets.",
+    "S3 website endpoints can't be ALB targets.",
+    "Correct: Lambda functions can be targets.",
+    "CloudFront isn't a valid ALB target."
+   ],
+   [
+    "S3 buckets can't be targets.",
+    "Correct: Auto Scaling groups can be registered with the target group.",
+    "DynamoDB tables can't be targets.",
+    "Correct: Lambda functions can be targets."
+   ]
+  ]
+ }
+]

@@ -1,0 +1,827 @@
+[
+ {
+  "card_id": "761b93ff-a6fe-4c0c-a217-2b9b9d0c8e86",
+  "notes": [
+   [
+    "Correct: the ALB generates the AWSALB cookie itself.",
+    "That is application-based stickiness, where your targets create the cookie.",
+    "Connection draining finishes in-flight requests on deregistration; it is not stickiness.",
+    "ALBs have no source-IP hashing; that is an NLB flow-hash behavior."
+   ],
+   [
+    "Not the range; ALB stickiness is set in seconds, not whole minutes up to 24 hours.",
+    "The minimum is 1 second, and the range does not depend on custom cookies.",
+    "Correct: stickiness duration ranges from 1 second to 7 days.",
+    "Not the ALB limit, and it has nothing to do with CloudFront TTLs."
+   ]
+  ]
+ },
+ {
+  "card_id": "7692eda4-d1f0-4b12-9ad2-ba69c4b0ce0a",
+  "notes": [
+   [
+    "One Zone-IA stores in one AZ and charges retrieval fees; it does not auto-tier.",
+    "Correct: Intelligent-Tiering moves objects by access pattern with no retrieval fees, only a monitoring fee.",
+    "That describes Standard-IA, which has a retrieval fee and 30-day minimum.",
+    "Deep Archive is cheap but restores take hours and it does not tier automatically."
+   ],
+   [
+    "Too early; no tier change happens at 7 days.",
+    "Too late; 180 days is the Deep Archive Access tier (optional).",
+    "30 days moves objects to Infrequent Access, not Archive Instant Access.",
+    "Correct: 90 days without access moves objects to Archive Instant Access."
+   ]
+  ]
+ },
+ {
+  "card_id": "76b3b957-9673-4336-b296-55fbbded3e7c",
+  "notes": [
+   [
+    "Throttling errors should be retried, not skipped; jitter does not remove retries.",
+    "Correct: random jitter desynchronizes clients so they do not retry together.",
+    "Retries are never guaranteed to succeed; jitter only spreads load.",
+    "Jitter randomizes waits; it does not make backoff linear."
+   ],
+   [
+    "Fixed-interval waits stay constant; these waits grow.",
+    "Linear backoff adds a constant amount; these waits double.",
+    "Correct: each delay doubles (3, 6, 12), which is exponential backoff.",
+    "Immediate retry has no waiting between attempts."
+   ]
+  ]
+ },
+ {
+  "card_id": "7732e2a9-3046-4d02-95f8-ea8f4aeea3d9",
+  "notes": [
+   [
+    "Cheaper than Standard-IA, but Deep Archive is lower still.",
+    "Correct: Deep Archive is the lowest-priced S3 class, with restores in about 12 hours.",
+    "Instant Retrieval costs more per GB than the deep archive classes.",
+    "Standard-IA costs far more per GB than Glacier classes."
+   ],
+   [
+    "Standard is the most expensive of these; retrieval fees do not decide price rank.",
+    "Standard-IA has a minimum duration and is pricier than Glacier classes.",
+    "Correct: Deep Archive is the cheapest class per GB, with retrieval taking hours.",
+    "One Zone-IA is cheaper than Standard-IA but still pricier than Glacier classes."
+   ]
+  ]
+ },
+ {
+  "card_id": "783455a5-3698-4c79-9013-1e669fbd03d2",
+  "notes": [
+   [
+    "One Zone-IA without lifecycle is not cheap archival, and keeping previews forever wastes money.",
+    "Intelligent-Tiering with no rules never deletes previews and has no 12-hour archive path.",
+    "Originals would not be instantly available for the first 30 days from Glacier Flexible.",
+    "Correct: Standard then Deep Archive for originals; cheap single-AZ with expiry for rebuildable previews."
+   ],
+   [
+    "Intelligent-Tiering with no lifecycle keeps thumbnails forever and does not archive receipts.",
+    "Receipts in One Zone-IA never archive, and archiving thumbnails wastes money on disposable data.",
+    "Deep Archive from day one fails the instant-access requirement and thumbnails never expire.",
+    "Correct: Standard then a Glacier tier for receipts; single-AZ with expiry for re-creatable thumbnails."
+   ]
+  ]
+ },
+ {
+  "card_id": "7839e306-39bb-4223-bcef-c63571b1edea",
+  "notes": [
+   [
+    "Correct: target tracking holds a metric near a target and manages the alarms for you.",
+    "Scheduled actions follow the clock, not request count.",
+    "Manual changes need constant attention and are not automatic scaling.",
+    "Simple scaling works but needs manual alarms and cooldown tuning, more effort."
+   ],
+   [
+    "Correct: target tracking takes a target value and creates the alarms itself.",
+    "Manual edits are not a policy and no alarms are involved.",
+    "Scheduled actions use set times, not a metric target.",
+    "Step scaling requires you to define thresholds and steps yourself."
+   ]
+  ]
+ },
+ {
+  "card_id": "78870b0e-848b-45c3-8821-6a703c092b60",
+  "notes": [
+   [
+    "Correct: the instance profile is specified in the launch template.",
+    "Min and max size are ASG settings.",
+    "Scaling policies belong to the ASG, not the launch template.",
+    "Correct: instance type is part of the launch template.",
+    "Correct: block device mappings are defined in the launch template.",
+    "Grace period is an ASG health check setting."
+   ],
+   [
+    "Instance type is in the launch template.",
+    "Correct: desired capacity is an ASG setting, not in the template.",
+    "The AMI ID is part of the launch template.",
+    "Correct: scaling policies are attached to the ASG.",
+    "User data is part of the launch template."
+   ]
+  ]
+ },
+ {
+  "card_id": "7c127d31-d654-450b-96f5-5d6a76f977f4",
+  "notes": [
+   [
+    "Keys go in the credentials file; Region is also settable in config, not only by env var.",
+    "No such profile.json file exists in the CLI.",
+    "Correct: credentials in ~/.aws/credentials; Region and output in ~/.aws/config.",
+    "The CLI does not use /etc/aws/keys, and metadata does not hold Region defaults for a laptop."
+   ],
+   [
+    "Deleting the default profile is destructive and unnecessary.",
+    "Modifying the CLI source is absurd; profiles exist for this.",
+    "A laptop has no instance metadata service to put keys in.",
+    "Correct: AWS_PROFILE selects a named profile for the whole shell session."
+   ]
+  ]
+ },
+ {
+  "card_id": "7c3919ba-9072-4809-a660-f1c5701c943a",
+  "notes": [
+   [
+    "A NAT instance still charges data processing via the instance and adds management work.",
+    "Public IPs do not cut S3 costs and weaken network security.",
+    "Flow Logs only analyze traffic; they do not reduce charges.",
+    "Correct: a gateway endpoint for S3 is free and bypasses the NAT Gateway."
+   ],
+   [
+    "A GWLB endpoint is for inspection appliances, not S3 access.",
+    "Correct: the gateway endpoint is added to route tables and is free.",
+    "An egress-only internet gateway is for outbound IPv6 traffic, not S3 endpoints.",
+    "An interface endpoint bills hourly and per GB, and is not a route table target."
+   ]
+  ]
+ },
+ {
+  "card_id": "7cb9a4bf-e4ed-4180-9753-88c7e8ee674f",
+  "notes": [
+   [
+    "Instant Retrieval returns in milliseconds and has no free bulk retrieval.",
+    "Standard-IA reads are immediate and not billed through bulk retrievals.",
+    "Correct: Flexible Retrieval restores in minutes to hours, with free bulk retrievals.",
+    "Intelligent-Tiering has no bulk retrieval option like this."
+   ],
+   [
+    "Correct: bulk retrievals are free and finish in hours.",
+    "Millisecond reads describe Standard-IA or Instant Retrieval, not Flexible.",
+    "One AZ storage is One Zone-IA; Glacier classes use multiple AZs.",
+    "Retrieval tiers are expedited, standard or bulk, not all expedited."
+   ]
+  ]
+ },
+ {
+  "card_id": "7d1639bc-e051-4308-b9e8-19856f8fb8d5",
+  "notes": [
+   [
+    "Correct: RDP uses TCP 3389.",
+    "Port 22 is SSH for Linux.",
+    "Port 5432 is PostgreSQL.",
+    "Port 443 is HTTPS."
+   ],
+   [
+    "FTP uses ports 20 and 21.",
+    "Correct: 3389 is Remote Desktop Protocol.",
+    "SSH uses port 22.",
+    "SMB uses port 445."
+   ]
+  ]
+ },
+ {
+  "card_id": "7e1bfb1d-afe6-4700-b938-052643564da0",
+  "notes": [
+   [
+    "Correct: peered VPCs communicate privately over private IPs.",
+    "Peering is non-transitive, so A cannot reach C through B.",
+    "Peering traffic stays on the AWS network, not an internet gateway.",
+    "Correct: inter-Region peering is supported."
+   ],
+   [
+    "Correct: overlapping CIDRs cannot be peered.",
+    "Peering needs no NAT Gateway.",
+    "Correct: both VPCs need routes to the peering connection.",
+    "Peering needs no internet gateway."
+   ]
+  ]
+ },
+ {
+  "card_id": "7e49ef93-c531-4b3c-8d64-a04a7c2ad2ec",
+  "notes": [
+   [
+    "Security groups only allow; they cannot deny a specific IP.",
+    "That is NACLs; security groups evaluate all rules together.",
+    "Correct: security groups are stateful, so return traffic is allowed.",
+    "Correct: a rule can use another security group as source."
+   ],
+   [
+    "NACLs are stateless and support deny rules.",
+    "WAF web ACLs filter HTTP requests, not VPC traffic statefully.",
+    "Route tables direct traffic; they are not firewalls.",
+    "Correct: security groups are stateful with allow rules only."
+   ]
+  ]
+ },
+ {
+  "card_id": "7e5c12e1-1596-4bd4-84ce-b4376ab9d388",
+  "notes": [
+   [
+    "Too short; the default is 300 seconds.",
+    "Too short; the default is 300 seconds.",
+    "Correct: the default cooldown is 300 seconds.",
+    "Too long; the default is 300 seconds."
+   ],
+   [
+    "A deregistered AMI would produce launch failures, not a pause after a recent scale-out.",
+    "Correct: the cooldown from the earlier scaling activity is still running.",
+    "Desired below minimum is not allowed and would not block scaling like this.",
+    "Cross-zone setting does not affect scaling launches."
+   ]
+  ]
+ },
+ {
+  "card_id": "804579ff-ad0f-4300-ad28-ebb733964808",
+  "notes": [
+   [
+    "Instance store is not backed up to S3 on stop.",
+    "An Elastic IP has no effect on instance store data.",
+    "Correct: instance store data is lost on stop because it is tied to the host.",
+    "There is no 24-hour grace period; data is lost immediately."
+   ],
+   [
+    "Host failure loses instance store data.",
+    "Correct: a reboot stays on the same host, so data survives.",
+    "Terminating wipes instance store data.",
+    "Stopping wipes instance store data."
+   ]
+  ]
+ },
+ {
+  "card_id": "80c2071d-75ae-4a5b-b621-14ca9e4ee3c0",
+  "notes": [
+   [
+    "Memcached also stores simple key-value strings.",
+    "Multi-threading is a Memcached advantage, not Redis.",
+    "Correct: Redis snapshots restore into a new cluster.",
+    "Correct: Redis can promote a replica on primary failure.",
+    "Correct: Redis supports sorted sets and other rich types.",
+    "Memcached also scales out by adding nodes."
+   ],
+   [
+    "Memcached has no replication or persistence, so it fails the requirement.",
+    "DAX caches DynamoDB only and is not a general cache with snapshots.",
+    "An S3 bucket with acceleration is not a cache engine.",
+    "Correct: Redis offers replica failover and snapshot persistence."
+   ]
+  ]
+ },
+ {
+  "card_id": "80cc0290-7721-447d-b6fc-5830814a3240",
+  "notes": [
+   [
+    "Port 80 is unencrypted HTTP, not a shell.",
+    "Correct: SSH uses TCP 22.",
+    "Port 3389 is RDP for Windows.",
+    "Port 53 is DNS."
+   ],
+   [
+    "HTTPS uses 443.",
+    "HTTP uses 80.",
+    "RDP uses 3389.",
+    "Correct: SSH listens on port 22."
+   ]
+  ]
+ },
+ {
+  "card_id": "816157bb-4eb4-4a6e-99eb-169538edf837",
+  "notes": [
+   [
+    "Batch Operations runs bulk actions on objects, not faster uploads.",
+    "Requester Pays shifts transfer cost to the requester.",
+    "Multi-Region Access Points route to replicated buckets, not via edge acceleration.",
+    "Correct: Transfer Acceleration uses CloudFront edge locations."
+   ],
+   [
+    "A proxy in Frankfurt adds a hop but does not shorten the distant leg.",
+    "An ALB cannot front S3 uploads or speed them.",
+    "Multi-Region buckets with nightly merging is high effort.",
+    "Correct: Transfer Acceleration sends data to the nearest edge first."
+   ]
+  ]
+ },
+ {
+  "card_id": "836485ad-efd1-41e0-85e1-44fc8cb8824e",
+  "notes": [
+   [
+    "Inventory lists objects on a schedule, not request details.",
+    "Object Lock enforces write-once retention.",
+    "Lifecycle expiration deletes objects, no logging.",
+    "Correct: server access logging records request details."
+   ],
+   [
+    "Not required; same Region is the rule, and a separate account is not mandated.",
+    "Correct: the target bucket must be in the same Region.",
+    "The service has no us-east-1 requirement.",
+    "Cross-Region log delivery is not allowed."
+   ]
+  ]
+ },
+ {
+  "card_id": "83ef8d2e-2c08-436b-abf8-f5260db92c1d",
+  "notes": [
+   [
+    "Correct: adding instances as load rises is horizontal scaling.",
+    "Cross-Region failover is disaster recovery, not scaling.",
+    "Rightsizing changes instance size occasionally, not dynamically with load.",
+    "Vertical scaling changes the size of one instance."
+   ],
+   [
+    "Cross-zone balancing distributes load across AZs, not instance size.",
+    "Scaling in removes instances.",
+    "Correct: moving to a larger instance is scaling up (vertical).",
+    "Scaling out adds instances."
+   ]
+  ]
+ },
+ {
+  "card_id": "844c9996-56a5-40f6-8f3e-4b1b34300dc3",
+  "notes": [
+   [
+    "Aurora is a database, not the A in LAMP.",
+    "ALB is a load balancer, not part of LAMP.",
+    "Correct: A is Apache HTTP Server.",
+    "Amplify is an app platform, not LAMP."
+   ],
+   [
+    "A is Apache, not a database.",
+    "L is Linux, not Lambda.",
+    "Correct: M stands for MySQL.",
+    "P is PHP, not PostgreSQL."
+   ]
+  ]
+ },
+ {
+  "card_id": "864e69ca-5e8e-4898-ae6a-ec11fbd1cbeb",
+  "notes": [
+   [
+    "Correct: Capacity Reservations guarantee capacity but bill at On-Demand rates.",
+    "Spot does not guarantee capacity and can be interrupted.",
+    "A Capacity Reservation alone gives no discount.",
+    "Dedicated Host reservations do not work this way and do not guarantee capacity."
+   ],
+   [
+    "Spot cannot guarantee capacity.",
+    "A Zonal RI's discount applies but is not the pairing asked for; without a reservation nothing is guaranteed.",
+    "A reservation alone does not lower the rate.",
+    "Correct: the discount comes from a Savings Plan or Regional RI applied to the reservation."
+   ]
+  ]
+ },
+ {
+  "card_id": "8652ddc5-4d63-48a1-b410-7d000873f78d",
+  "notes": [
+   [
+    "Durability is not 100%, and Regional replication is not the basis.",
+    "Durability is the same in every class.",
+    "Deep Archive durability is also 11 nines.",
+    "Correct: 11 nines in all classes; availability differs."
+   ],
+   [
+    "Correct: it is the durability of objects, the chance of not losing one over a year.",
+    "Region uptime is availability, not durability.",
+    "Response time uptime is availability.",
+    "Latency is not what durability measures."
+   ]
+  ]
+ },
+ {
+  "card_id": "86d34b01-3ffb-4f14-9524-cc33b99cb6ef",
+  "notes": [
+   [
+    "A security group is not part of an object.",
+    "Correct: the key is part of the object.",
+    "Correct: metadata is part of the object.",
+    "AZ is not an object attribute.",
+    "IAM roles are not attached to objects.",
+    "Correct: the version ID identifies object versions."
+   ],
+   [
+    "A prefix is the leading part of the key, not the full path.",
+    "Correct: the key is the object's full name.",
+    "An ARN identifies a resource, not the object key.",
+    "Version ID identifies a version, not the path."
+   ]
+  ]
+ },
+ {
+  "card_id": "871acd14-efc1-4b95-9d3d-2e27a719c351",
+  "notes": [
+   [
+    "Caching everything wastes memory and is not recommended.",
+    "Without expiry data goes stale.",
+    "Write-through adds write cost; start simpler.",
+    "Correct: lazy loading with TTLs is the usual starting point."
+   ],
+   [
+    "Read-once data never benefits from caching.",
+    "Data changing constantly gives no cache hits.",
+    "Exact balances cannot tolerate stale cache.",
+    "Correct: data tolerant of staleness caches well."
+   ]
+  ]
+ },
+ {
+  "card_id": "87dfb10f-abfd-40a4-a9f2-90fd47c3b5f5",
+  "notes": [
+   [
+    "Deep Archive needs hours of restore.",
+    "Correct: Standard-IA gives millisecond access and charges retrieval per GB.",
+    "Correct: Glacier Instant Retrieval is millisecond with retrieval fees.",
+    "Flexible Retrieval needs minutes to hours."
+   ],
+   [
+    "Standard-IA stores across multiple AZs.",
+    "Intelligent-Tiering uses multiple AZs.",
+    "Correct: One Zone-IA stores in a single AZ.",
+    "Instant Retrieval is multi-AZ."
+   ]
+  ]
+ },
+ {
+  "card_id": "88ea3ac3-3dc8-42dc-8489-88cd8e1e958d",
+  "notes": [
+   [
+    "Multi-AZ does not fail over across Regions.",
+    "A snapshot restore is not how Multi-AZ failover works.",
+    "Multi-AZ does not add read replicas.",
+    "Correct: failover goes to the synchronous standby and DNS flips."
+   ],
+   [
+    "Replication is synchronous, not asynchronous.",
+    "Correct: Multi-AZ replicates synchronously.",
+    "Snapshots are not the replication mechanism.",
+    "S3 log copying is not involved."
+   ]
+  ]
+ },
+ {
+  "card_id": "8937cc9b-ecdd-4ee6-a2a2-d5d7b7f5f46f",
+  "notes": [
+   [
+    "IPsec is not used by GWLB.",
+    "GRE is not used by GWLB.",
+    "VXLAN is not used by GWLB.",
+    "Correct: GWLB uses GENEVE on port 6081."
+   ],
+   [
+    "Correct: GWLB is the transparent gateway plus load balancer for appliances.",
+    "The Classic LB is not designed for appliances.",
+    "NLB is not a transparent appliance gateway.",
+    "ALB with WAF handles HTTP filtering, not third-party appliances."
+   ]
+  ]
+ },
+ {
+  "card_id": "89dae12c-3323-46bb-9c4c-1601fcde49f9",
+  "notes": [
+   [
+    "Correct: Cache-Control influences caching.",
+    "Correct: Expires influences caching.",
+    "Content-Type describes media type, not caching.",
+    "ETag is a validator, not a TTL."
+   ],
+   [
+    "Correct: TTLs range from 0 seconds to 1 year.",
+    "The range is wider than this.",
+    "The range is wider than this.",
+    "The range is wider than this."
+   ]
+  ]
+ },
+ {
+  "card_id": "8a07265f-2e2a-4fc1-b4ad-0793578cb06b",
+  "notes": [
+   [
+    "Read-through is cache-managed loading; here the app loads on a miss.",
+    "Write-through updates cache on writes; this code is read-based.",
+    "Write-behind queues writes; this has no writes.",
+    "Correct: the app checks the cache and loads the DB on a miss, i.e. cache-aside."
+   ],
+   [
+    "Correct: lazy loading fills the cache only on a miss.",
+    "LRU is an eviction policy, not a loading strategy.",
+    "Pre-warming loads data ahead of requests.",
+    "Write-through loads on writes, not misses."
+   ]
+  ]
+ },
+ {
+  "card_id": "8a449c35-8694-42f1-a7e5-844cccc1de68",
+  "notes": [
+   [
+    "Correct: HTTPS needs inbound TCP 443 from anywhere.",
+    "RDP is for remote desktop, not visitors.",
+    "SSH is for admins, not visitors.",
+    "FTP is not TLS web."
+   ],
+   [
+    "8080 is a common alternate HTTP port.",
+    "Correct: HTTPS uses 443.",
+    "22 is SSH.",
+    "80 is HTTP."
+   ]
+  ]
+ },
+ {
+  "card_id": "8aa8f049-58a2-46f9-8efe-54899a314a4c",
+  "notes": [
+   [
+    "Correct: application code uses an SDK like boto3.",
+    "Manual console clicks do not scale.",
+    "CloudShell is an interactive shell, not application tooling.",
+    "Running the CLI by hand is not application logic."
+   ],
+   [
+    "The Node.js SDK is separate from the CLI.",
+    "Correct: the CLI is built on the Python SDK.",
+    "The Go SDK is not the CLI base.",
+    "The Java SDK is not the CLI base."
+   ]
+  ]
+ },
+ {
+  "card_id": "8adacc6e-76eb-422e-9748-beda56bc3efa",
+  "notes": [
+   [
+    "Correct: sorted sets rank members by score.",
+    "Lists keep insertion order.",
+    "Hashes store fields, not rankings.",
+    "Pub/Sub delivers messages, no ranking."
+   ],
+   [
+    "SQS queues are not scored.",
+    "DynamoDB streams record changes.",
+    "Correct: Redis sorted sets order by score.",
+    "Memcached slabs are an allocation detail."
+   ]
+  ]
+ },
+ {
+  "card_id": "8b7968c0-9f8d-43bb-b391-ee8616e5a90c",
+  "notes": [
+   [
+    "Replication does not solve access denial.",
+    "Requester Pays has nothing to do with 403.",
+    "Lifecycle storage class moves do not fix access.",
+    "Correct: allow public read via bucket policy and Block Public Access off."
+   ],
+   [
+    "Denying PutObject does not allow reads.",
+    "Correct: allowing GetObject for everyone enables anonymous reads.",
+    "ListAllMyBuckets is not object read.",
+    "Allowing DeleteObject to everyone is dangerous and not reads."
+   ]
+  ]
+ },
+ {
+  "card_id": "8c104e2b-7d01-4aab-804b-c8933b7a1b51",
+  "notes": [
+   [
+    "sc1 cold HDD tops out at a few hundred IOPS.",
+    "Correct: io2 Block Express reaches 256,000 IOPS.",
+    "st1 is throughput HDD with low IOPS.",
+    "gp3 maxes at 16,000 IOPS."
+   ],
+   [
+    "st1 is HDD and cannot reach this.",
+    "gp2 is capped far below 100,000 IOPS.",
+    "Raising gp3 throughput does not raise IOPS beyond 16,000.",
+    "Correct: io2 Block Express supports this IOPS and latency."
+   ]
+  ]
+ },
+ {
+  "card_id": "8d215d48-6405-4950-a116-7b459d478a53",
+  "notes": [
+   [
+    "Peering does not need a shared AZ.",
+    "Cross-account peering is allowed.",
+    "Correct: the CIDR ranges must not overlap.",
+    "Cross-Region peering is allowed."
+   ],
+   [
+    "Overlapping CIDRs cannot peer even across Regions.",
+    "NAT does not fix overlap.",
+    "AWS does not translate addresses for peering.",
+    "Correct: overlapping ranges block peering."
+   ]
+  ]
+ },
+ {
+  "card_id": "8d525125-4da2-495a-9eed-9718cea39ed2",
+  "notes": [
+   [
+    "RDS Proxy does not replace read replicas.",
+    "Correct: pools connections for many Lambda invocations.",
+    "Correct: speeds failover handling.",
+    "Correct: supports IAM auth with Secrets Manager credentials.",
+    "RDS Proxy does not cache query results.",
+    "Proxy endpoints are VPC-only, not public."
+   ],
+   [
+    "A read replica scales reads, not connections.",
+    "ElastiCache is a cache, not a connection pooler.",
+    "Correct: RDS Proxy pools database connections.",
+    "Multi-AZ gives availability, not pooling."
+   ]
+  ]
+ },
+ {
+  "card_id": "8dbabccb-b404-4d9f-b4e4-76a186ae255e",
+  "notes": [
+   [
+    "50 is above the limit.",
+    "100 is above the limit.",
+    "Correct: up to 10 tags per object.",
+    "5 is below the limit."
+   ],
+   [
+    "Correct: tags can be used in IAM policy conditions.",
+    "Tags do not change the 5 GB PUT limit.",
+    "Correct: tags can filter lifecycle rules.",
+    "Tags do not change durability."
+   ]
+  ]
+ },
+ {
+  "card_id": "8dd73318-4643-46db-8a49-20e5ba956133",
+  "notes": [
+   [
+    "Inventory lists objects, no recommendations.",
+    "CloudTrail data events record API calls only.",
+    "Correct: Storage Class Analysis recommends transitions.",
+    "S3 Select queries data inside objects."
+   ],
+   [
+    "Correct: it recommends Standard to Standard-IA.",
+    "It does not cover One Zone-IA.",
+    "It does not cover Glacier.",
+    "It does not cover Deep Archive."
+   ]
+  ]
+ },
+ {
+  "card_id": "8e1fad7b-8cfc-41a9-931a-934a9c610e31",
+  "notes": [
+   [
+    "A private zone is VPC-only and unrelated to the registrar.",
+    "An Alias record is created inside Route 53, not at the registrar.",
+    "Zones do not require domain transfer.",
+    "Correct: point the registrar's name servers to the zone's NS values."
+   ],
+   [
+    "A resolver outbound endpoint forwards queries out of a VPC.",
+    "Correct: a public hosted zone answers internet queries.",
+    "Private zones answer only within VPCs.",
+    "A traffic policy is a routing config, not a zone type."
+   ]
+  ]
+ },
+ {
+  "card_id": "8e54e966-fd03-4412-af31-23800bd57c28",
+  "notes": [
+   [
+    "404 will not succeed on retry.",
+    "403 is a permission problem and retries will not fix it.",
+    "Correct: 503 is transient, retry with backoff.",
+    "Correct: throughput exceeded is throttling, retry with backoff."
+   ],
+   [
+    "503 is transient and worth retrying.",
+    "500 is a server error worth retrying.",
+    "Throttling is retried with backoff.",
+    "Correct: a 400 is a client error; fix the request."
+   ]
+  ]
+ },
+ {
+  "card_id": "8e7e0cbc-139b-432b-ab39-888dbf6b9d63",
+  "notes": [
+   [
+    "A placement group controls instance placement.",
+    "An instance profile supplies an IAM role.",
+    "An Elastic IP is a static address.",
+    "Correct: user data runs scripts at first boot."
+   ],
+   [
+    "Not a guest account.",
+    "Correct: user data runs as root.",
+    "It does not run as the IAM role.",
+    "It does not run as ec2-user."
+   ]
+  ]
+ },
+ {
+  "card_id": "8e92a22e-4423-42e8-be8d-9a0a498b5ae6",
+  "notes": [
+   [
+    "Correct: instance store provides the highest local IOPS.",
+    "EBS gp3 is network-attached and limited in IOPS.",
+    "FSx for Lustre is a network file system.",
+    "EFS is a network file system with lower IOPS."
+   ],
+   [
+    "EFS is network storage.",
+    "Correct: instance store is host-attached and ephemeral.",
+    "EBS persists independently of the host.",
+    "FSx for Lustre is a network service."
+   ]
+  ]
+ },
+ {
+  "card_id": "8ede8186-5892-4544-8ef5-f4ebdcf6856b",
+  "notes": [
+   [
+    "Correct: NLB gives static IPs and forwards to ALB for path routing.",
+    "ALB cannot have static IPs directly.",
+    "Two NLBs give no path-based routing.",
+    "GWLB is for appliances."
+   ],
+   [
+    "Some do: NLB supports static IPs.",
+    "Classic LB has no static IPs.",
+    "Correct: NLB provides one static IP per AZ.",
+    "ALB IPs change; no static IPs."
+   ]
+  ]
+ },
+ {
+  "card_id": "8f28f3b6-34ff-445d-acb9-61239652a46a",
+  "notes": [
+   [
+    "Source IPs do not authenticate API calls.",
+    "Correct: requests are signed with SigV4.",
+    "User-Agent is not authentication.",
+    "Passwords in URLs are not used."
+   ],
+   [
+    "SigV4 is not carried in the body.",
+    "It is not cookie-based.",
+    "Correct: the signature goes in the Authorization header or query string.",
+    "TLS client certificates are not used."
+   ]
+  ]
+ },
+ {
+  "card_id": "8f2a9821-399b-47cc-82f1-d711c4c90fd3",
+  "notes": [
+   [
+    "S3 cannot execute PHP.",
+    "S3 cannot run Node.js.",
+    "S3 cannot run Python.",
+    "Correct: static content only."
+   ],
+   [
+    "No container cluster is needed.",
+    "Correct: no servers to manage.",
+    "No EC2 web server is needed.",
+    "No Lambda is needed."
+   ]
+  ]
+ },
+ {
+  "card_id": "8f91b441-b74a-4301-83e6-284576525762",
+  "notes": [
+   [
+    "Multi-AZ gives availability, not read relief.",
+    "Correct: caching removes repeated reads from the database.",
+    "Growing storage does not reduce reads.",
+    "Backup window does not help load."
+   ],
+   [
+    "The engine does not change.",
+    "Correct: the app must be changed to use the cache.",
+    "It is not transparent.",
+    "The CIDR does not change."
+   ]
+  ]
+ },
+ {
+  "card_id": "8fd18261-8caa-432d-b527-36f138fb2d46",
+  "notes": [
+   [
+    "Correct: io2 Multi-Attach shares one volume across instances.",
+    "Snapshots do not share a live volume.",
+    "st1 does not support Multi-Attach.",
+    "EFS is a file system, not block."
+   ],
+   [
+    "Correct: Multi-Attach supports io1 and io2.",
+    "HDD types do not support it.",
+    "gp2/gp3 do not support it.",
+    "Not all types support it."
+   ]
+  ]
+ }
+]
