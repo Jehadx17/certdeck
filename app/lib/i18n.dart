@@ -19,6 +19,7 @@ const _ar = <String, String>{
   'Course': 'المقرر',
   'All cards': 'كل البطاقات',
   'Certs': 'الشهادات',
+  'Cert': 'الشهادة',
   'See cards': 'عرض البطاقات',
   '{n} cards · {l} leeches': '{n} بطاقة · {l} متعثرة',
   'Search all cards': 'ابحث في كل البطاقات',

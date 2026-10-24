@@ -108,6 +108,7 @@ class _CardsScreenState extends State<CardsScreen> {
   }
 
   bool _match(Json c, {bool certOnly = false}) {
+    if (App.isOwner && c['course'] != null) return false; // owner has no college cards
     if (cert.startsWith('course:')) {
       if (c['course'] != cert.substring(7)) return false;
     } else {
@@ -142,8 +143,8 @@ class _CardsScreenState extends State<CardsScreen> {
         ),
         actions: [
           PopupMenuButton<String>(
-            icon: const Icon(Icons.filter_list),
-            tooltip: t('Course'),
+            icon: Icon(App.isOwner ? Icons.verified_outlined : Icons.filter_list),
+            tooltip: t(App.isOwner ? 'Cert' : 'Course'),
             onSelected: (v) => setState(() => cert = v),
             itemBuilder: (_) => [
               if (App.isOwner) CheckedPopupMenuItem(value: 'active', checked: cert == 'active', child: const Text('Active cert')),
@@ -184,34 +185,34 @@ class _CardsScreenState extends State<CardsScreen> {
             body = Center(child: Text(t('No cards here yet.'), textAlign: TextAlign.center));
           } else {
             body = ListView.separated(
-            keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-            itemCount: list.length + 1,
-            separatorBuilder: (_, __) => const Divider(height: 1),
-            itemBuilder: (_, i) {
-              if (i == 0) {
-                return Padding(padding: const EdgeInsets.all(8), child: Text(t('{n} cards', {'n': list.length}), style: const TextStyle(color: Colors.white54)));
-              }
-              final c = list[i - 1];
-              final certJ = App.cert;
-              return ListTile(
-                title: autoText(plain(c['question']), maxLines: 2, overflow: TextOverflow.ellipsis),
-                subtitle: Text([
-                  t(typeLabels[c['type']] ?? c['type']),
-                  if (domainOf(c, certJ).isNotEmpty) 'D${domainOf(c, certJ)}',
-                  (c['certs'] as Map?)?.keys.join('/') ?? '',
-                  isSuspended(c) ? 'suspended' : dueLabel(c),
-                ].join(' · ')),
-                trailing: Row(mainAxisSize: MainAxisSize.min, children: [
-                  if (c['misconception'] == true) const Icon(Icons.warning_amber, color: Colors.redAccent, size: 18),
-                  if (c['leech'] == true) const Icon(Icons.bug_report_outlined, color: Colors.orange, size: 18),
-                ]),
-                onTap: () {
-                  FocusManager.instance.primaryFocus?.unfocus(); // else the search keyboard pops back on return
-                  Navigator.push(context, MaterialPageRoute(builder: (_) => CardDetail(c['id'])));
-                },
-              );
+              keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+              itemCount: list.length + 1,
+              separatorBuilder: (_, __) => const Divider(height: 1),
+              itemBuilder: (_, i) {
+                if (i == 0) {
+                  return Padding(padding: const EdgeInsets.all(8), child: Text(t('{n} cards', {'n': list.length}), style: const TextStyle(color: Colors.white54)));
+                }
+                final c = list[i - 1];
+                final certJ = App.cert;
+                return ListTile(
+                  title: autoText(plain(c['question']), maxLines: 2, overflow: TextOverflow.ellipsis),
+                  subtitle: Text([
+                    t(typeLabels[c['type']] ?? c['type']),
+                    if (domainOf(c, certJ).isNotEmpty) 'D${domainOf(c, certJ)}',
+                    (c['certs'] as Map?)?.keys.join('/') ?? '',
+                    isSuspended(c) ? 'suspended' : dueLabel(c),
+                  ].join(' · ')),
+                  trailing: Row(mainAxisSize: MainAxisSize.min, children: [
+                    if (c['misconception'] == true) const Icon(Icons.warning_amber, color: Colors.redAccent, size: 18),
+                    if (c['leech'] == true) const Icon(Icons.bug_report_outlined, color: Colors.orange, size: 18),
+                  ]),
+                  onTap: () {
+                    FocusManager.instance.primaryFocus?.unfocus(); // else the search keyboard pops back on return
+                    Navigator.push(context, MaterialPageRoute(builder: (_) => CardDetail(c['id'])));
+                  },
+                );
             },
-          );
+            );
           }
           return App.isOwner ? Column(children: [_chips(all), Expanded(child: body)]) : body;
         },
