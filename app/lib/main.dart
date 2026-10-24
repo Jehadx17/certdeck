@@ -79,9 +79,6 @@ class CertDeck extends StatelessWidget {
   }
 }
 
-/// The owner's selected bottom tab (0 Today, 1 Library, 2 Me); other screens set it to jump.
-final ownerTab = ValueNotifier<int>(0);
-
 class Shell extends StatefulWidget {
   const Shell({super.key});
   @override

@@ -35,6 +35,8 @@ void main() {
     final s = weakSpots([], [], analysis: {'weak_areas': [{'topic': 'IAM conditions', 'domain': '2', 'count': 15}]});
     expect(s.single.kind, WeakKind.ai);
     expect(s.single.title, 'IAM conditions');
+    final r1 = weakSpots([], [], analysis: {'weak_areas': [{'topic': 'A', 'rank': 1}, {'topic': 'B', 'rank': 9}]});
+    expect(r1.map((w) => w.severity), [5, 1]); // rank 1 competes with count-based spots
   });
   test('sorted by severity, empty input is empty', () {
     expect(weakSpots([], []), isEmpty);

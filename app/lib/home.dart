@@ -5,7 +5,6 @@ import 'ai.dart';
 import 'exam.dart';
 import 'focus.dart';
 import 'i18n.dart';
-import 'main.dart' show ownerTab;
 import 'weak.dart';
 import 'db.dart';
 import 'logic.dart';
@@ -134,13 +133,22 @@ class TodayScreen extends StatelessWidget {
                 Expanded(
                     child: Text(finalDays ? t('Final review') : t('Fix these first'),
                         style: TextStyle(color: cs.primary, fontWeight: FontWeight.bold))),
+                if (finalDays)
+                  TextButton(
+                      onPressed: () async {
+                        final q = await buildCramQueue(cert);
+                        if (!context.mounted) return;
+                        if (q.isEmpty) return toast(context, t('Nothing weak to review yet.'));
+                        _push(context, StudyScreen(q, source: 'cram', title: t('Final review')));
+                      },
+                      child: Text(t('Review all'))),
                 TextButton(onPressed: () => _push(context, const WeakSpotsScreen()), child: Text(t('See all'))),
               ]),
               if (weak.isEmpty)
                 Padding(padding: const EdgeInsets.symmetric(vertical: 12), child: Text(t('No weak spots in the last 14 days.'), style: muted))
               else
                 SizedBox(
-                  height: 150,
+                  height: 160,
                   child: ListView(scrollDirection: Axis.horizontal, children: [
                     for (final w in weak.take(5)) SizedBox(width: 220, child: WeakSpotCard(w)),
                   ]),

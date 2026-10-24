@@ -63,8 +63,9 @@ class WeakSpotCard extends StatelessWidget {
           child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             Text(weakTitle(w), maxLines: 2, overflow: TextOverflow.ellipsis, style: const TextStyle(fontWeight: FontWeight.bold)),
             const SizedBox(height: 4),
-            Expanded(child: Text(weakEvidence(w), maxLines: 3, overflow: TextOverflow.ellipsis, style: TextStyle(color: cs.onSurfaceVariant, fontSize: 13))),
-            ActionChip(label: Text(_actionLabel(w)), onPressed: () => drill(context, w)),
+            Text(weakEvidence(w), maxLines: 2, overflow: TextOverflow.ellipsis, style: TextStyle(color: cs.onSurfaceVariant, fontSize: 13)),
+            const Spacer(),
+            ActionChip(label: Text(_actionLabel(w)), materialTapTargetSize: MaterialTapTargetSize.shrinkWrap, onPressed: () => drill(context, w)),
           ]),
         ),
       ),

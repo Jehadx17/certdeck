@@ -467,6 +467,7 @@ const _ar = <String, String>{
   'Generate cards': 'توليد بطاقات',
   'Final review': 'المراجعة النهائية',
   'Fix these first': 'عالج هذه أولًا',
+  'Review all': 'راجع الكل',
   'See all': 'عرض الكل',
   'No weak spots in the last 14 days.': 'لا نقاط ضعف في آخر 14 يومًا.',
   'Nothing weak to review yet.': 'لا يوجد ما يحتاج مراجعة بعد.',

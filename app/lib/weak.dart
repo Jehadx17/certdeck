@@ -13,7 +13,7 @@ class WeakSpot {
 
   double get severity => switch (kind) {
         WeakKind.tag => missed.toDouble(), // missRate * answered
-        WeakKind.ai => 0,
+        WeakKind.ai => (6 - ((ai?['rank'] as num?) ?? 5).toInt()).clamp(1, 5).toDouble(), // rank 1 -> 5, competes with counts
         _ => cardIds.length.toDouble(),
       };
 }
