@@ -37,12 +37,11 @@ ThemeData studentTheme() => ThemeData(
       appBarTheme: AppBarTheme(backgroundColor: _scheme.surface, scrolledUnderElevation: 0),
     );
 
-// Owner-only refinement: rounder, tone-separated surfaces, muted secondary text.
+// Owner-only refinement: rounder, tone-separated surfaces.
 ThemeData ownerTheme() {
   final s = _scheme;
   final btn = RoundedRectangleBorder(borderRadius: BorderRadius.circular(14));
   const pad = EdgeInsets.symmetric(vertical: 14, horizontal: 20);
-  final base = ThemeData(brightness: Brightness.dark, useMaterial3: true).textTheme;
   return ThemeData(
     colorScheme: s,
     useMaterial3: true,
@@ -57,10 +56,6 @@ ThemeData ownerTheme() {
     ),
     listTileTheme: const ListTileThemeData(contentPadding: EdgeInsets.symmetric(horizontal: 16)),
     chipTheme: const ChipThemeData(shape: StadiumBorder(), side: BorderSide.none),
-    textTheme: base.copyWith(
-      bodyMedium: base.bodyMedium?.copyWith(color: s.onSurfaceVariant),
-      bodySmall: base.bodySmall?.copyWith(color: s.onSurfaceVariant),
-    ),
     appBarTheme: AppBarTheme(backgroundColor: s.surface, scrolledUnderElevation: 0, centerTitle: false),
   );
 }
