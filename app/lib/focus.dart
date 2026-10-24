@@ -15,7 +15,7 @@ String weakEvidence(WeakSpot w) => switch (w.kind) {
       WeakKind.memorized => t('{n} cards: right on the original, wrong on rewrites', {'n': w.missed}),
       WeakKind.misconception => t('{n} cards you were sure about and missed', {'n': w.missed}),
       WeakKind.leech => t('{n} cards you keep forgetting', {'n': w.missed}),
-      WeakKind.ai => '${w.ai?['diagnosis'] ?? ''}',
+      WeakKind.ai => '${w.ai?['diagnosis'] ?? ''}'.replaceAll(RegExp(r'[*_#`]'), '').trim(),
     };
 
 String weakTitle(WeakSpot w) => w.kind == WeakKind.tag || w.kind == WeakKind.ai ? w.title : t(w.title);
@@ -27,14 +27,31 @@ String _actionLabel(WeakSpot w) => switch (w.kind) {
     };
 
 /// The weak spot's action: a short drill session, the leech list, or card generation (AI areas).
+bool _drilling = false;
+
 Future<void> drill(BuildContext context, WeakSpot w) async {
+  if (_drilling) return;
+  _drilling = true;
+  try {
+    await _drill(context, w);
+  } finally {
+    _drilling = false;
+  }
+}
+
+Future<void> _drill(BuildContext context, WeakSpot w) async {
   final nav = Navigator.of(context);
   switch (w.kind) {
     case WeakKind.leech:
       await nav.push(MaterialPageRoute(builder: (_) => const CardsScreen(filter: 'leech')));
       return;
     case WeakKind.ai:
-      return generateFor(context, w.ai ?? {});
+      final a = w.ai ?? {};
+      await nav.push(MaterialPageRoute(
+          builder: (_) => Scaffold(
+              appBar: AppBar(title: Text(t('Generate cards'))),
+              body: GenerateTab(domain: a['domain']?.toString(), topic: a['topic']?.toString(), count: (a['count'] as num?)?.toInt() ?? 15))));
+      return;
     default:
   }
   final cert = App.cert;
@@ -43,7 +60,7 @@ Future<void> drill(BuildContext context, WeakSpot w) async {
   final q = w.kind == WeakKind.misconception && finalDays ? await buildCramQueue(cert) : drillQueue(w, await Db.cardsFor(cert['id']));
   if (!context.mounted) return;
   if (q.isEmpty) return toast(context, t('Nothing weak to review yet.'));
-  nav.push(MaterialPageRoute(
+  await nav.push(MaterialPageRoute(
       builder: (_) => StudyScreen(q, source: 'cram', title: weakTitle(w), rewriteOnly: w.kind == WeakKind.memorized)));
 }
 
@@ -64,8 +81,8 @@ class WeakSpotCard extends StatelessWidget {
             Text(weakTitle(w), maxLines: 2, overflow: TextOverflow.ellipsis, style: const TextStyle(fontWeight: FontWeight.bold)),
             const SizedBox(height: 4),
             Text(weakEvidence(w), maxLines: 2, overflow: TextOverflow.ellipsis, style: TextStyle(color: cs.onSurfaceVariant, fontSize: 13)),
-            const Spacer(),
-            ActionChip(label: Text(_actionLabel(w)), materialTapTargetSize: MaterialTapTargetSize.shrinkWrap, onPressed: () => drill(context, w)),
+            const SizedBox(height: 8),
+            Chip(label: Text(_actionLabel(w)), materialTapTargetSize: MaterialTapTargetSize.shrinkWrap, visualDensity: VisualDensity.compact),
           ]),
         ),
       ),
@@ -114,6 +131,11 @@ class _WeakSpotsScreenState extends State<WeakSpotsScreen> {
                 onTap: () => drill(context, w),
               )),
             const SizedBox(height: 8),
+            OutlinedButton.icon(
+                onPressed: () => Navigator.push(
+                    context, MaterialPageRoute(builder: (_) => Scaffold(appBar: AppBar(title: Text(t('Weak areas'))), body: const InsightsTab()))),
+                icon: const Icon(Icons.query_stats),
+                label: Text(t('Full analysis'))),
             FilledButton.icon(onPressed: _run, icon: const Icon(Icons.insights), label: Text(t('Analyze weak areas'))),
             if (error != null) NeedsConnection(error!, onRetry: _run),
           ]),

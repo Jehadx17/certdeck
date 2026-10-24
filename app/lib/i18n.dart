@@ -489,6 +489,8 @@ const _ar = <String, String>{
   'Open': 'فتح',
   'Drill': 'تدريب',
   'Analyze weak areas': 'حلّل نقاط الضعف',
+  'Full analysis': 'التحليل الكامل',
+  'Weak areas': 'نقاط الضعف',
   'Memorized': 'محفوظة',
   '{d} due · {n} new · {u} unseen': '{d} مستحقة · {n} جديدة · {u} لم تُرَ',
   '{m} of {a} missed': 'أخطأت في {m} من {a}',

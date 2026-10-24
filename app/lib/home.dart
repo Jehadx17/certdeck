@@ -31,7 +31,7 @@ class TodayScreen extends StatelessWidget {
   Future<(List<Json>, TodayStats, int, List<WeakSpot>)> _load() async {
     final cert = App.cert;
     final (queue, stats) = await buildQueue(cert);
-    final done = (await Db.reviewsSince(startOfToday())).where((r) => r['source'] == 'study').length;
+    final done = (await Db.reviewsSince(startOfToday())).where((r) => r['source'] == 'study').map((r) => r['card_id']).toSet().length;
     return (queue, stats, done, await loadWeakSpots(cert));
   }
 

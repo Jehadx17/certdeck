@@ -34,21 +34,6 @@ Future<String> queueCards(Json body) async {
 
 bool get backgroundGenerate => App.settings['background_generate'] != false;
 
-class AiScreen extends StatelessWidget {
-  const AiScreen({super.key});
-  @override
-  Widget build(BuildContext context) => DefaultTabController(
-        length: 2,
-        child: Scaffold(
-          appBar: AppBar(title: const Text('AI'), bottom: const TabBar(tabs: [Tab(text: 'Generate cards'), Tab(text: 'Weak areas')])),
-          body: const Column(children: [
-            OnlineBanner(),
-            Expanded(child: TabBarView(children: [GenerateTab(), InsightsTab()]))
-          ]),
-        ),
-      );
-}
-
 /// GenerateTab as its own screen (Today and Library open it this way).
 Widget generateScreen() => Scaffold(appBar: AppBar(title: Text(t('Generate cards'))), body: const GenerateTab());
 

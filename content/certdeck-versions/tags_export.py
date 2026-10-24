@@ -1,4 +1,4 @@
-# Read-only. Run on the server inside certdeck-api: python manage.py shell < tags_export.py > card-tags.json
+# Read-only. Run on the server inside certdeck-api: python manage.py shell < tags_export.py > tags/existing.json
 # Prints {id, tags, certs, course} for every live owner card doc.
 import json
 

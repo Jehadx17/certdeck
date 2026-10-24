@@ -206,18 +206,28 @@ class _StudyScreenState extends State<StudyScreen> {
       );
     }
     final c = card!;
+    final owner = App.isOwner;
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(icon: const Icon(Icons.close), onPressed: () => Navigator.maybePop(context)),
-        bottom: PreferredSize(
-            preferredSize: const Size.fromHeight(3),
-            child: LinearProgressIndicator(minHeight: 3, value: planned == 0 ? 0 : (done / planned).clamp(0.0, 1.0))),
+        leading: owner ? IconButton(icon: const Icon(Icons.close), onPressed: () => Navigator.maybePop(context)) : null,
+        title: owner ? null : Text('${widget.title} · ${t('{n} left', {'n': session.remaining + 1})}', style: const TextStyle(fontSize: 18)),
+        bottom: owner
+            ? PreferredSize(
+                preferredSize: const Size.fromHeight(3),
+                child: LinearProgressIndicator(minHeight: 3, value: planned == 0 ? 0 : (done / planned).clamp(0.0, 1.0)))
+            : null,
         actions: [
-          Center(
-              child: Text(
-                  // The session title (a Drill name) stays, small and muted; the default "Study" is dropped.
-                  '${widget.title == 'Study' ? '' : '${widget.title} · '}${t('{n} left', {'n': session.remaining + 1})}',
-                  style: const TextStyle(fontSize: 12, color: Colors.white54))),
+          if (owner)
+            Center(
+                child: Text(
+                    // The session title (a Drill name) stays, small and muted; the default "Study" is dropped.
+                    '${widget.title == 'Study' ? '' : '${widget.title} · '}${t('{n} left', {'n': session.remaining + 1})}',
+                    style: const TextStyle(fontSize: 12, color: Colors.white54)))
+          else
+            IconButton(
+                tooltip: 'Ask AI',
+                icon: const Icon(Icons.forum_outlined),
+                onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => ChatScreen(c)))),
           PopupMenuButton<String>(
             onSelected: (v) async {
               if (v == 'edit') {
@@ -235,7 +245,7 @@ class _StudyScreenState extends State<StudyScreen> {
               }
             },
             itemBuilder: (_) => [
-              PopupMenuItem(value: 'ask', child: Text(t('Ask AI'))),
+              if (owner) PopupMenuItem(value: 'ask', child: Text(t('Ask AI'))),
               PopupMenuItem(value: 'edit', child: Text(t('Edit card'))),
               PopupMenuItem(value: 'details', child: Text(t('Card details & history'))),
               PopupMenuItem(value: 'suspend', child: Text(t('Suspend card'))),
@@ -249,7 +259,7 @@ class _StudyScreenState extends State<StudyScreen> {
           Expanded(
             child: ListView(padding: const EdgeInsets.all(16), children: [
               CardView(ans!, key: ObjectKey(ans), revealed: revealed, misconception: misconception, onChanged: () => setState(() {})),
-              if (revealed) _afterReveal(c),
+              if (revealed && owner) _afterReveal(c),
               const SizedBox(height: 80),
             ]),
           ),
@@ -280,6 +290,27 @@ class _StudyScreenState extends State<StudyScreen> {
         child: Row(children: [for (final w in children) Expanded(child: Padding(padding: const EdgeInsets.symmetric(horizontal: 4), child: w))]));
     if (!revealed) {
       final ready = ans!.ready;
+      if (!App.isOwner) {
+        Widget btn(Conf c, String label, IconData icon, Color color) => FilledButton.tonal(
+            style: FilledButton.styleFrom(padding: const EdgeInsets.symmetric(vertical: 14), foregroundColor: color),
+            onPressed: ready
+                ? () => setState(() {
+                      conf = c;
+                      revealed = true;
+                    })
+                : null,
+            child: Column(children: [Icon(icon), Text(label)]));
+        return Column(mainAxisSize: MainAxisSize.min, children: [
+          Padding(
+              padding: const EdgeInsets.only(top: 6),
+              child: Text(ready ? t('How confident are you?') : t('Pick an answer first'), style: const TextStyle(color: Colors.white54, fontSize: 12))),
+          bar([
+            btn(Conf.guess, t('Guessing'), Icons.casino_outlined, Colors.orange),
+            btn(Conf.unsure, t('Unsure'), Icons.help_outline, Colors.amber),
+            btn(Conf.sure, t('Sure'), Icons.verified_outlined, Colors.green),
+          ]),
+        ]);
+      }
       ButtonSegment<Conf> seg(Conf c, String label, Color color) => ButtonSegment(value: c, label: Text(label, style: TextStyle(color: ready ? color : null)));
       return Column(mainAxisSize: MainAxisSize.min, children: [
         Padding(
