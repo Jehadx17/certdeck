@@ -59,7 +59,7 @@ Images can be attached to any card's question or answer (gallery, camera, or URL
 ## Study session and confidence rating
 - Before revealing the answer, I pick a confidence level: **Guessing / Unsure / Sure**.
 - Map confidence plus correctness to an FSRS rating:
-  - **Sure + correct** → Good, pushed out further (never Easy)
+  - **Sure + correct** → Good, pushed out further (Easy only on the 3rd Sure+correct in a row of a review card, answered faster than my usual time)
   - **Unsure + correct** → Hard (Good while the card is still learning, so it graduates)
   - **Guessing + correct** → Hard (Good while learning, same reason)
   - **Any wrong** → Again

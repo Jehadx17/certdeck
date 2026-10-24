@@ -195,10 +195,12 @@ double retrievability(fsrs.Scheduler s, Json c, [DateTime? at]) =>
     isNew(c) ? 0 : s.getCardRetrievability(toFsrs(c), currentDateTime: (at ?? DateTime.now()).toUtc());
 
 /// Confidence + correctness → FSRS rating (SPEC "Study session").
-/// Never Easy: two Sure answers in a row used to jump a new card to 8 days, then 76.
+/// Easy only for a [mastered] review card (3rd Sure+correct in a row, faster than usual): two Sure answers in a row
+/// used to jump a new card to 8 days, then 76, so new and learning cards never get it.
 /// [learning]: the card is on a (re)learning step, where Hard repeats the step forever, so a right answer is Good.
-fsrs.Rating ratingFor(Conf conf, bool correct, {bool learning = false}) {
+fsrs.Rating ratingFor(Conf conf, bool correct, {bool learning = false, bool mastered = false}) {
   if (!correct) return fsrs.Rating.again;
+  if (mastered && conf == Conf.sure && !learning) return fsrs.Rating.easy;
   return conf == Conf.sure || learning ? fsrs.Rating.good : fsrs.Rating.hard;
 }
 
@@ -216,12 +218,13 @@ bool studyFirst(Json card) => isNew(card) && App.settings['expertise'] == 'new';
 /// [score] (0..1) is set for graded answers (short answers, problems): partial credit rates Hard.
 /// Course cards are scheduled for the assessment they're studied for (its date caps the intervals).
 Future<Json> recordAnswer(Json card,
-    {required Conf conf, required bool correct, required String source, int? durationMs, Object? answer, double? score, fsrs.Scheduler? scheduler, bool studyFirst = false, String? errorType}) async {
+    {required Conf conf, required bool correct, required String source, int? durationMs, Object? answer, double? score, fsrs.Scheduler? scheduler, bool studyFirst = false, String? errorType, int? shownVer}) async {
   final now = DateTime.now().toUtc();
   final streak = (card['sure_streak'] as int?) ?? 0;
   final before = toFsrs(card);
   final learning = before.state != fsrs.State.review;
-  final rating = score == null ? ratingFor(conf, correct, learning: learning) : ratingForScore(conf, score, learning: learning);
+  final mastered = streak >= 2 && durationMs != null && durationMs < await avgCardSeconds() * 1000;
+  final rating = score == null ? ratingFor(conf, correct, learning: learning, mastered: mastered) : ratingForScore(conf, score, learning: learning);
   correct = score == null ? correct : score >= .85;
   final wasNew = isNew(card);
   final misconception = conf == Conf.sure && (score == null ? !correct : score < .4);
@@ -252,6 +255,7 @@ Future<Json> recordAnswer(Json card,
     'duration_ms': durationMs,
     'source': source,
     'was_new': wasNew,
+    if (shownVer != null) 'ver': shownVer, // 0 = the original, n = rewritten version n
     if (studyFirst) 'study_first': true,
     if (errorType != null && errorType.isNotEmpty) 'error_type': errorType,
     if (answer != null) 'answer': answer,

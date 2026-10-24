@@ -278,3 +278,8 @@ more); nobody sees it; rate every existing card; same rules for students; re-rat
   after 10 other cards (was 3-4), a right-but-not-yet-learned card after 15 (was 6); with fewer cards left it returns
   at the end. Constants `SprintSession.missGap` / `rightGap`.
 
+- **Easy for mastered cards** (2026-10-24, at your request: reviews of known cards ate the course time): a review card's
+  3rd Sure+correct in a row, answered faster than the student's median card time, is rated Easy (`ratingFor(mastered:)`).
+  New and learning cards still never get Easy. Review logs now carry `ver` (0 = original, n = rewritten version n) when
+  versions rotate. The autopilot supervisor no longer sees `session_completion_pct`: stopping a session and starting
+  another later is how you study, not overload.

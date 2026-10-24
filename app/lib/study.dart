@@ -151,6 +151,7 @@ class _StudyScreenState extends State<StudyScreen> {
         score: a.written ? a.score : null,
         scheduler: widget.scheduler,
         studyFirst: studying,
+        shownVer: versions.containsKey(card!['id']) ? shownVer : null,
         errorType: (a.written && !a.correct) ? (a.aiGrade ?? const {})['error_type']?.toString() : null);
     session.answered(updated, a.score);
     done++;

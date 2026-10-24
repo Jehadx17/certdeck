@@ -67,6 +67,10 @@ void main() {
     expect(ratingFor(Conf.sure, true), fsrs.Rating.good);
     expect(ratingFor(Conf.unsure, true, learning: true), fsrs.Rating.good);
     expect(ratingFor(Conf.guess, false, learning: true), fsrs.Rating.again);
+    expect(ratingFor(Conf.sure, true, mastered: true), fsrs.Rating.easy);
+    expect(ratingFor(Conf.sure, true, learning: true, mastered: true), fsrs.Rating.good);
+    expect(ratingFor(Conf.unsure, true, mastered: true), fsrs.Rating.hard);
+    expect(ratingFor(Conf.sure, false, mastered: true), fsrs.Rating.again);
   });
 
   test('lenient typed matching', () {
