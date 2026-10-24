@@ -1,0 +1,114 @@
+import 'package:flutter/material.dart';
+
+import 'ai.dart';
+import 'cards.dart';
+import 'db.dart';
+import 'i18n.dart';
+import 'logic.dart';
+import 'study.dart';
+import 'weak.dart';
+import 'widgets.dart';
+
+/// The one-line evidence under a weak spot's title.
+String weakEvidence(WeakSpot w) => switch (w.kind) {
+      WeakKind.tag => t('{m} of {a} missed', {'m': w.missed, 'a': w.answered}),
+      WeakKind.memorized => t('{n} cards: right on the original, wrong on rewrites', {'n': w.missed}),
+      WeakKind.misconception => t('{n} cards you were sure about and missed', {'n': w.missed}),
+      WeakKind.leech => t('{n} cards you keep forgetting', {'n': w.missed}),
+      WeakKind.ai => '${w.ai?['diagnosis'] ?? ''}',
+    };
+
+String weakTitle(WeakSpot w) => w.kind == WeakKind.tag || w.kind == WeakKind.ai ? w.title : t(w.title);
+
+String _actionLabel(WeakSpot w) => switch (w.kind) {
+      WeakKind.leech => t('Open'),
+      WeakKind.ai => t('Generate'),
+      _ => t('Drill'),
+    };
+
+/// The weak spot's action: a short drill session, the leech list, or card generation (AI areas).
+Future<void> drill(BuildContext context, WeakSpot w) async {
+  final nav = Navigator.of(context);
+  switch (w.kind) {
+    case WeakKind.leech:
+      await nav.push(MaterialPageRoute(builder: (_) => const CardsScreen(filter: 'leech')));
+      return;
+    case WeakKind.ai:
+      return generateFor(context, w.ai ?? {});
+    default:
+  }
+  final cert = App.cert;
+  final days = daysToExam(cert);
+  final finalDays = days != null && days >= 0 && days <= 7;
+  final q = w.kind == WeakKind.misconception && finalDays ? await buildCramQueue(cert) : drillQueue(w, await Db.cardsFor(cert['id']));
+  if (!context.mounted) return;
+  if (q.isEmpty) return toast(context, t('Nothing weak to review yet.'));
+  nav.push(MaterialPageRoute(
+      builder: (_) => StudyScreen(q, source: 'cram', title: weakTitle(w), rewriteOnly: w.kind == WeakKind.memorized)));
+}
+
+class WeakSpotCard extends StatelessWidget {
+  final WeakSpot w;
+  const WeakSpotCard(this.w, {super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final cs = Theme.of(context).colorScheme;
+    return Card(
+      child: InkWell(
+        borderRadius: BorderRadius.circular(16),
+        onTap: () => drill(context, w),
+        child: Padding(
+          padding: const EdgeInsets.all(14),
+          child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Text(weakTitle(w), maxLines: 2, overflow: TextOverflow.ellipsis, style: const TextStyle(fontWeight: FontWeight.bold)),
+            const SizedBox(height: 4),
+            Expanded(child: Text(weakEvidence(w), maxLines: 3, overflow: TextOverflow.ellipsis, style: TextStyle(color: cs.onSurfaceVariant, fontSize: 13))),
+            ActionChip(label: Text(_actionLabel(w)), onPressed: () => drill(context, w)),
+          ]),
+        ),
+      ),
+    );
+  }
+}
+
+/// "See all": every weak spot, plus a button to run a new AI analysis.
+class WeakSpotsScreen extends StatefulWidget {
+  const WeakSpotsScreen({super.key});
+  @override
+  State<WeakSpotsScreen> createState() => _WeakSpotsScreenState();
+}
+
+class _WeakSpotsScreenState extends State<WeakSpotsScreen> {
+  String? error;
+
+  Future<void> _run() async {
+    setState(() => error = null);
+    final err = await runAnalysis(context);
+    if (!mounted) return;
+    setState(() => error = err);
+  }
+
+  @override
+  Widget build(BuildContext context) => Scaffold(
+        appBar: AppBar(title: Text(t('Fix these first'))),
+        body: Live<List<WeakSpot>>(
+          load: () => loadWeakSpots(App.cert),
+          builder: (context, list) => ListView(padding: const EdgeInsets.all(16), children: [
+            if (list.isEmpty)
+              Padding(padding: const EdgeInsets.all(24), child: Text(t('No weak spots in the last 14 days.'), textAlign: TextAlign.center)),
+            for (final w in list)
+              Card(
+                  child: ListTile(
+                title: Text(weakTitle(w)),
+                subtitle: Text(weakEvidence(w)),
+                trailing: ActionChip(label: Text(_actionLabel(w)), onPressed: () => drill(context, w)),
+                onTap: () => drill(context, w),
+              )),
+            const SizedBox(height: 8),
+            FilledButton.icon(onPressed: _run, icon: const Icon(Icons.insights), label: Text(t('Analyze weak areas'))),
+            if (error != null) NeedsConnection(error!, onRetry: _run),
+          ]),
+        ),
+      );
+}

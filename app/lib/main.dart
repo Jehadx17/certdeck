@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
-import 'ai.dart';
 import 'api.dart';
 import 'cards.dart';
-import 'college.dart';
 import 'db.dart';
-import 'exam.dart';
 import 'home.dart';
 import 'i18n.dart';
 import 'easy.dart';
@@ -82,6 +79,9 @@ class CertDeck extends StatelessWidget {
   }
 }
 
+/// The owner's selected bottom tab (0 Today, 1 Library, 2 Me); other screens set it to jump.
+final ownerTab = ValueNotifier<int>(0);
+
 class Shell extends StatefulWidget {
   const Shell({super.key});
   @override
@@ -89,7 +89,8 @@ class Shell extends StatefulWidget {
 }
 
 class _ShellState extends State<Shell> with WidgetsBindingObserver {
-  int tab = 0;
+  int get tab => ownerTab.value;
+  set tab(int v) => ownerTab.value = v;
 
   @override
   void initState() {
@@ -114,26 +115,22 @@ class _ShellState extends State<Shell> with WidgetsBindingObserver {
   }
 
   @override
-  Widget build(BuildContext context) => ValueListenableBuilder<int>(valueListenable: changes, builder: (context, _, __) => _body(context)); // sign-in and role changes rebuild the home
+  Widget build(BuildContext context) => ListenableBuilder(listenable: Listenable.merge([changes, ownerTab]), builder: (context, _) => _body(context)); // sign-in and role changes rebuild the home
 
   Widget _body(BuildContext context) {
     if (!Api.configured) return const WelcomeScreen(); // a new phone: sign in with a short code
     if (!App.isOwner) return const EasyHome(); // students: the easy app; their setup screens are under "My courses" (EASY.md)
-    // The owner keeps the cert tabs.
     final tabs = [
-      if (App.isOwner) (const TodayScreen(), Icons.today_outlined, Icons.today, 'Certs'),
-      (const CollegeScreen(), Icons.school_outlined, Icons.school, t('College')),
-      if (App.isOwner) (const CardsScreen(), Icons.style_outlined, Icons.style, t('Cards')), // students open cards per course
-      if (App.isOwner) (const AiScreen(), Icons.auto_awesome_outlined, Icons.auto_awesome, 'AI'),
-      if (App.isOwner) (const ExamScreen(), Icons.timer_outlined, Icons.timer, 'Exam'),
-      (const SettingsScreen(), Icons.settings_outlined, Icons.settings, t('Settings')),
+      (const TodayScreen(), Icons.home_outlined, Icons.home, t('Today')),
+      (const CardsScreen(), Icons.style_outlined, Icons.style, t('Library')), // Task 5: LibraryScreen
+      (const SettingsScreen(), Icons.person_outline, Icons.person, t('Me')), // Task 6: Me screen
     ];
     final i = tab.clamp(0, tabs.length - 1);
     return Scaffold(
       body: IndexedStack(index: i, children: [for (final t in tabs) t.$1]),
       bottomNavigationBar: NavigationBar(
         selectedIndex: i,
-        labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
+        labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
         onDestinationSelected: (i) {
           FocusManager.instance.primaryFocus?.unfocus(); // a focused field on a hidden tab would keep the keyboard up
           setState(() => tab = i);
