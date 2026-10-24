@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # Publishes the built release APK as the app update: every phone installs it the next time CertDeck opens or
-# resumes online. Bump `version:` in app/pubspec.yaml, `flutter build apk --release`, then run this.
+# resumes online. Bump `version:` in app/pubspec.yaml, `flutter build apk --release --target-platform android-arm64`
+# (arm64 only: ~20 MB instead of ~56 MB; every phone it goes to is 64-bit ARM), then run this.
 # Also prints a browser download link for first installs.
 set -euo pipefail
 HOST=${CERTDECK_HOST:-root@169.58.7.222}

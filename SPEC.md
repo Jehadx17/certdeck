@@ -114,6 +114,8 @@ Use structured output (JSON schema / tool use) for all AI responses and validate
 - Per-domain readiness % for the active certification
 - Predicted exam readiness/score against the exam date
 - Leech list and misconceptions list
+- Stats page (active cert): minutes studied today and per day, each session's answering time and cards, seconds per
+  card by confidence and right/wrong
 
 Nothing else.
 

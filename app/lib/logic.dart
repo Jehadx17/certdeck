@@ -324,13 +324,59 @@ class TodayStats {
   TodayStats(this.due, this.newAvailable, this.newDone, this.reviewsDone, this.plan);
 }
 
+/// A review's answering time, or null when missing or implausible (under 2 s: a slip; over 20 min: walked away).
+int? timedMs(Json r) {
+  final d = r['duration_ms'];
+  return d is int && d > 2000 && d < 20 * 60000 ? d : null;
+}
+
 /// Seconds one card usually takes this student (median of their own answers in the last 60 days), 30 if unknown.
 Future<double> avgCardSeconds() async {
   final ds = [
     for (final r in await Db.reviewsSince(nowMs() - 60 * dayMs))
-      if (r['duration_ms'] is int && r['duration_ms'] > 2000 && r['duration_ms'] < 20 * 60000) r['duration_ms'] as int
+      if (timedMs(r) case final d?) d
   ]..sort();
   return ds.length < 10 ? 30 : ds[ds.length ~/ 2] / 1000;
+}
+
+typedef SessionStat = ({int startedAt, int ms, int cards});
+typedef StudyStatsData = ({int todayMs, int todayCards, List<int> perDayMs, Map<(String, bool), int> avgMsByConf, List<SessionStat> sessions});
+
+/// The Stats page: answering time only (pauses between cards don't count), from one cert's [reviews] and the
+/// [sessions] the study screen logged. A session counts when at least one of [reviews] falls inside it.
+StudyStatsData studyStats(List<Json> reviews, List<Json> sessions, {required int today, int days = 14}) {
+  final todayDay = DateTime.fromMillisecondsSinceEpoch(today);
+  final perDay = List.filled(days, 0);
+  var todayMs = 0, todayCards = 0;
+  final byConf = <(String, bool), List<int>>{};
+  for (final r in reviews) {
+    final d = timedMs(r);
+    if (d == null) continue;
+    final ts = r['ts'] as int;
+    final t = DateTime.fromMillisecondsSinceEpoch(ts);
+    final back = (todayDay.difference(DateTime(t.year, t.month, t.day)).inHours / 24).round(); // round: DST days are 23/25 h
+    if (back >= 0 && back < days) perDay[days - 1 - back] += d;
+    if (ts >= today) {
+      todayMs += d;
+      todayCards++;
+    }
+    (byConf[('${r['confidence']}', r['correct'] == true)] ??= []).add(d);
+  }
+  final out = <SessionStat>[];
+  for (final s in sessions) {
+    final from = s['started_at'] as int, to = s['ended_at'] as int;
+    final inside = reviews.where((r) => (r['ts'] as int) >= from && (r['ts'] as int) <= to).toList();
+    if (inside.isEmpty) continue;
+    out.add((startedAt: from, ms: inside.fold(0, (t, r) => t + (timedMs(r) ?? 0)), cards: inside.length));
+  }
+  out.sort((a, b) => b.startedAt.compareTo(a.startedAt));
+  return (
+    todayMs: todayMs,
+    todayCards: todayCards,
+    perDayMs: perDay,
+    avgMsByConf: {for (final e in byConf.entries) e.key: e.value.reduce((a, b) => a + b) ~/ e.value.length},
+    sessions: out,
+  );
 }
 
 /// The first cards of [queue] that fit in [minutes] (a new card takes about twice as long), order kept; always at least one.

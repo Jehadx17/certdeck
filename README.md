@@ -31,7 +31,7 @@ Requirements on the laptop: Flutter 3.22.2 (`~/FlutterSDK/flutter`), JDK 17 (`~/
 ```bash
 export JAVA_HOME=~/opt/jdk17 ANDROID_HOME=~/Android/Sdk PATH=~/opt/jdk17/bin:$PATH
 cd app
-flutter build apk --release                       # → build/app/outputs/flutter-apk/app-release.apk
+flutter build apk --release --target-platform android-arm64  # → build/app/outputs/flutter-apk/app-release.apk
 ~/Android/Sdk/platform-tools/adb install -r build/app/outputs/flutter-apk/app-release.apk   # phone on USB, USB debugging on
 flutter test                                      # logic checks
 # sync/restore end-to-end check against a running backend:
@@ -39,7 +39,7 @@ CERTDECK_TEST_URL=http://127.0.0.1:8765 CERTDECK_TEST_TOKEN=devtoken flutter tes
 # + CERTDECK_TEST_TOKEN2=<a student's token> to also test switching accounts on one phone
 ```
 
-**Updating the app (forced, from the server):** bump `version:` in `app/pubspec.yaml`, `flutter build apk --release`,
+**Updating the app (forced, from the server):** bump `version:` in `app/pubspec.yaml`, `flutter build apk --release --target-platform android-arm64`,
 then `deploy/release-apk.sh`. It uploads the APK to `/opt/certdeck/release/` (served to the app by `GET /api/app/latest`
 and `/api/app/apk`, token only) and prints a browser link for first installs (`/dl/…`). Every phone checks on open and
 resume: if the server has a newer build, the app locks, downloads it (sha256-checked) and installs it, without a prompt on

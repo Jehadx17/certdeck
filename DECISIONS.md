@@ -283,3 +283,11 @@ more); nobody sees it; rate every existing card; same rules for students; re-rat
   New and learning cards still never get Easy. Review logs now carry `ver` (0 = original, n = rewritten version n) when
   versions rotate. The autopilot supervisor no longer sees `session_completion_pct`: stopping a session and starting
   another later is how you study, not overload.
+
+- **Stats page** (2026-10-24, at your request): chart icon on the home screen. Active cert only. Time is answering time
+  (the per-card `duration_ms`, so pauses between cards don't count; under 2 s or over 20 min gets no time, same rule as
+  `avgCardSeconds` via `timedMs`). A session is one Study / "Do more" press, from the `session` docs the study screen
+  has logged since 1.5.0. Charts are plain Flutter widgets, no chart package. Labels are not translated to Arabic yet.
+- **arm64-only APK** (2026-10-24): releases build with `--target-platform android-arm64`, and the release build type
+  has `abiFilters 'arm64-v8a'` (ML Kit's translator shipped its native library for all four ABIs). 56 MB → 19 MB,
+  small enough to send to the phone; versionCode unchanged, unlike `--split-per-abi`. A 32-bit-only phone can't install it.

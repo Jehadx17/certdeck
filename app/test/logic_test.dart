@@ -162,4 +162,26 @@ void main() {
     expect(seen, ['orig', 'v2', 'v3', 'orig']);
     expect(pickVersion({'id': 'x', 'ver': 2}, []).$2['id'], 'x');
   });
+
+  test('stats count answering time per day, per confidence and per session', () {
+    final today = DateTime(2026, 10, 24).millisecondsSinceEpoch, h = 3600000;
+    Map<String, dynamic> r(int ts, int ms, String conf, bool ok) => {'card_id': 'c', 'ts': ts, 'duration_ms': ms, 'confidence': conf, 'correct': ok};
+    final reviews = [
+      r(today + h, 30000, 'sure', true),
+      r(today + h + 60000, 50000, 'sure', true),
+      r(today + h + 120000, 1000, 'guess', false), // under 2 s: no time, still a card in the session
+      r(today - 20 * h, 60000, 'guess', false), // yesterday
+    ];
+    final sessions = [
+      {'started_at': today + h - 1000, 'ended_at': today + h + 200000},
+      {'started_at': today - 21 * h, 'ended_at': today - 19 * h},
+      {'started_at': today + 5 * h, 'ended_at': today + 6 * h}, // no answers of this cert: dropped
+    ];
+    final s = studyStats(reviews, sessions, today: today, days: 3);
+    expect(s.todayMs, 80000);
+    expect(s.todayCards, 2);
+    expect(s.perDayMs, [0, 60000, 80000]);
+    expect(s.avgMsByConf, {('sure', true): 40000, ('guess', false): 60000});
+    expect([for (final x in s.sessions) (x.ms, x.cards)], [(80000, 3), (60000, 1)]);
+  });
 }

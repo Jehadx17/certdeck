@@ -4,6 +4,7 @@ import 'api.dart';
 import 'cards.dart';
 import 'db.dart';
 import 'logic.dart';
+import 'stats.dart';
 import 'study.dart';
 import 'widgets.dart';
 
@@ -37,7 +38,13 @@ class TodayScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final cs = Theme.of(context).colorScheme;
     return Scaffold(
-      appBar: AppBar(title: const Text('CertDeck'), actions: const [SyncButton()]),
+      appBar: AppBar(title: const Text('CertDeck'), actions: [
+        IconButton(
+            tooltip: 'Stats',
+            icon: const Icon(Icons.insights),
+            onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const StatsScreen()))),
+        const SyncButton(),
+      ]),
       body: Live(
         load: _load,
         builder: (context, data) {

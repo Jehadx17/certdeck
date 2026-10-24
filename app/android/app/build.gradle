@@ -68,6 +68,8 @@ android {
             signingConfig = keystorePropertiesFile.exists() ? signingConfigs.release : signingConfigs.debug
             // flutter_local_notifications stores scheduled reminders with Gson; keep its generic types (R8).
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            // arm64 only: ML Kit's translator otherwise ships a ~15 MB library for every other ABI too.
+            ndk { abiFilters 'arm64-v8a' }
         }
     }
 }
