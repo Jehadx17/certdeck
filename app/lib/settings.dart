@@ -82,7 +82,9 @@ Future<Json?> pickJson() async {
 }
 
 class SettingsScreen extends StatefulWidget {
-  const SettingsScreen({super.key});
+  /// section == 'more' shows only the owner's "More" rows.
+  final String? section;
+  const SettingsScreen({super.key, this.section});
   @override
   State<SettingsScreen> createState() => _SettingsScreenState();
 }
@@ -135,18 +137,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
     }
   }
 
-  @override
-  Widget build(BuildContext context) {
-    final cs = Theme.of(context).colorScheme;
-    Widget header(String t) =>
-        Padding(padding: const EdgeInsets.fromLTRB(16, 20, 16, 4), child: Text(t, style: TextStyle(color: cs.primary, fontWeight: FontWeight.bold)));
-    return Scaffold(
-      appBar: AppBar(title: Text(t('Settings'))),
-      // Rebuild after syncs (a restore can change certs, exam dates and limits).
-      body: ValueListenableBuilder(
-        valueListenable: changes,
-        builder: (context, _, __) => ListView(children: [
-          header(t('Language')),
+  Widget _header(String t) =>
+      Padding(padding: const EdgeInsets.fromLTRB(16, 20, 16, 4), child: Text(t, style: TextStyle(color: Theme.of(context).colorScheme.primary, fontWeight: FontWeight.bold)));
+
+  Widget _owner(String title) => Padding(
+      padding: const EdgeInsets.fromLTRB(16, 20, 16, 4),
+      child: Text(title.toUpperCase(), style: TextStyle(fontSize: 12, letterSpacing: 1, color: Theme.of(context).colorScheme.onSurfaceVariant)));
+
+  List<Widget> _language() => [
+        _header(t('Language')),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: SegmentedButton<String>(
@@ -159,7 +158,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
               },
             ),
           ),
-          header(t('Study')),
+      ];
+
+  List<Widget> _studySetup() => [
           ListTile(
             leading: const Icon(Icons.tune_rounded),
             title: Text(t('Study setup')),
@@ -169,6 +170,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
               if (mounted) setState(() {});
             },
           ),
+      ];
+
+  List<Widget> _autopilot() => [
           if (App.isOwner)
             SwitchListTile(
               title: const Text('Autopilot'),
@@ -191,7 +195,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 setState(() {});
               },
             ),
-          header(t('Reminders')),
+      ];
+
+  List<Widget> _reminders() => [
           SwitchListTile(
             title: Text(t('Daily study reminder')),
             subtitle: Text(t('Your plan for the day, at {time}', {'time': Reminders.timeLabel})),
@@ -215,7 +221,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
               setState(() {});
             },
           ),
-          if (App.isOwner) header('Certifications'),
+      ];
+
+  List<Widget> _certs() => [
           if (App.isOwner)
             for (final c in App.certs)
             ListTile(
@@ -239,21 +247,26 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ]),
               onTap: () => _setCert(c, active: true),
             ),
-          if (App.isOwner) ...[
-            header('Limits'),
+      ];
+
+  List<Widget> _limits() => [
             _num('new_per_day', 'New cards per day'),
             _num('max_reviews_per_day', 'Max reviews per day'),
-          ],
-          _num('leech_threshold', t('Leech after N lapses')),
-          header(t('Backend & sync')),
-          // Email and password (another account switches this phone to it).
-          ListTile(
+      ];
+
+  Widget _leech() =>
+_num('leech_threshold', t('Leech after N lapses'));
+
+  Widget _signIn() =>
+ListTile(
             leading: const Icon(Icons.login),
             title: Text(t('Sign in')),
             subtitle: Api.me.value?['name'] == null ? null : Text(Api.me.value!['name'].toString()),
             onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const WelcomeScreen())),
-          ),
-          ValueListenableBuilder(
+          );
+
+  Widget _sync() =>
+ValueListenableBuilder(
             valueListenable: Api.lastSync,
             builder: (_, v, __) => ListTile(
               leading: const Icon(Icons.sync),
@@ -261,11 +274,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
               subtitle: Text(t('Last sync: {v}', {'v': v})),
               onTap: () async {
                 final err = await Api.sync();
-                if (context.mounted) toast(context, err ?? t('Synced'));
+                if (mounted) toast(context, err ?? t('Synced'));
               },
             ),
-          ),
-          FutureBuilder(
+          );
+
+  Widget _usage() =>
+FutureBuilder(
             future: usage,
             builder: (_, snap) {
               final u = snap.data;
@@ -286,8 +301,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 onTap: () => setState(() => usage = Api.call('GET', 'usage')),
               );
             },
-          ),
-          if (App.isOwner) ListTile(
+          );
+
+  Widget _fsrs() =>
+ListTile(
             leading: const Icon(Icons.tune),
             title: const Text('Re-optimize FSRS parameters'),
             subtitle: Text(App.params == null
@@ -305,9 +322,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 _ => 'Optimized from $n reviews',
               };
             }),
-          ),
-          if (App.isOwner) header('Import / export'),
-          if (App.isOwner) ListTile(
+          );
+
+  List<Widget> _importExport() => [
+          ListTile(
             leading: const Icon(Icons.upload_file),
             title: const Text('Export cards to a file'),
             subtitle: const Text('JSON with images inlined (share or save)'),
@@ -316,7 +334,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               return 'Exported';
             }),
           ),
-          if (App.isOwner) ListTile(
+          ListTile(
             leading: const Icon(Icons.download),
             title: const Text('Import cards from a file'),
             onTap: () async {
@@ -324,7 +342,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               if (data != null && mounted) _run('Importing…', () async => 'Imported ${await importLocal(data)} cards');
             },
           ),
-          if (App.isOwner) ListTile(
+          ListTile(
             leading: const Icon(Icons.cloud_download_outlined),
             title: const Text('Export from server'),
             subtitle: const Text('Downloads the backend\'s full card export'),
@@ -334,7 +352,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               return 'Exported';
             }),
           ),
-          if (App.isOwner) ListTile(
+          ListTile(
             leading: const Icon(Icons.cloud_upload_outlined),
             title: const Text('Import a file through the server'),
             subtitle: const Text('Server validates it against the schema, then it syncs down'),
@@ -348,9 +366,86 @@ class _SettingsScreenState extends State<SettingsScreen> {
               });
             },
           ),
+      ];
+
+  @override
+  Widget build(BuildContext context) {
+    final owner = App.isOwner;
+    final more = owner && widget.section == 'more';
+    return Scaffold(
+      appBar: AppBar(title: Text(t(!owner ? 'Settings' : more ? 'More' : 'Me'))),
+      // Rebuild after syncs (a restore can change certs, exam dates and limits).
+      body: ValueListenableBuilder(
+        valueListenable: changes,
+        builder: (context, _, __) => ListView(children: [
+          if (!owner) ...[
+            ..._language(),
+            _header(t('Study')),
+            ..._studySetup(),
+            _header(t('Reminders')),
+            ..._reminders(),
+            _leech(),
+            _header(t('Backend & sync')),
+            _signIn(),
+            _sync(),
+            _usage(),
+          ] else if (more) ...[
+            _owner(t('Import / export')),
+            ..._importExport(),
+            _owner(t('Study')),
+            ..._limits(),
+            _leech(),
+            _fsrs(),
+            ..._language(),
+            _owner(t('Account')),
+            _signIn(),
+          ] else ...[
+            _status(),
+            _owner(t('Cert')),
+            ..._certs(),
+            _owner(t('Study')),
+            ..._studySetup(),
+            ..._autopilot(),
+            ..._reminders(),
+            _owner(''),
+            ListTile(
+              leading: const Icon(Icons.more_horiz),
+              title: Text(t('More')),
+              subtitle: Text(t('Import and export, FSRS, limits, language, account')),
+              trailing: const Icon(Icons.chevron_right),
+              onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const SettingsScreen(section: 'more'))),
+            ),
+          ],
           const SizedBox(height: 40),
         ]),
       ),
     );
   }
+
+  /// Owner status card: last sync, Sync button, AI spend.
+  Widget _status() => Card(
+        margin: const EdgeInsets.fromLTRB(16, 12, 16, 0),
+        child: Column(children: [
+          ValueListenableBuilder(
+            valueListenable: Api.syncing,
+            builder: (_, busy, __) => ValueListenableBuilder(
+              valueListenable: Api.lastSync,
+              builder: (_, v, __) => ListTile(
+                leading: busy ? const SizedBox(width: 24, height: 24, child: CircularProgressIndicator(strokeWidth: 2.5)) : const Icon(Icons.sync),
+                title: Text(t('Last sync: {v}', {'v': v})),
+                trailing: FilledButton(
+                  onPressed: busy
+                      ? null
+                      : () async {
+                          final err = await Api.sync();
+                          if (mounted) toast(context, err ?? t('Synced'));
+                        },
+                  child: Text(t('Sync now')),
+                ),
+              ),
+            ),
+          ),
+          _usage(),
+        ]),
+      );
 }

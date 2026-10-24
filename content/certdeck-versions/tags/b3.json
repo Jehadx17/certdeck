@@ -1,0 +1,431 @@
+[
+ {
+  "card_id": "38917418-8f6b-459e-b5be-49b3308c31a1",
+  "tags": [
+   "iam",
+   "shared-responsibility",
+   "security"
+  ]
+ },
+ {
+  "card_id": "39a263d6-fa93-4e0e-a7db-a7faf2030890",
+  "tags": [
+   "iam",
+   "groups",
+   "users"
+  ]
+ },
+ {
+  "card_id": "39d61f7f-b10e-4fa6-a2ed-01f20c886ded",
+  "tags": [
+   "cloudfront",
+   "real-time-logs",
+   "kinesis",
+   "s3"
+  ]
+ },
+ {
+  "card_id": "3aea6682-ef05-4fd6-a379-589e0ef1d5f0",
+  "tags": [
+   "efs",
+   "throughput"
+  ]
+ },
+ {
+  "card_id": "3babd413-5533-49b8-9cac-497f3de45336",
+  "tags": [
+   "s3",
+   "access-points",
+   "access-control"
+  ]
+ },
+ {
+  "card_id": "3df12104-c5da-46bc-a5bc-951ba1c7d25e",
+  "tags": [
+   "vpc",
+   "nat",
+   "igw",
+   "security"
+  ]
+ },
+ {
+  "card_id": "3f3f7c66-9aa0-40f7-b5c9-69688ada08df",
+  "tags": [
+   "s3",
+   "encryption",
+   "sse-kms",
+   "audit",
+   "cloudtrail",
+   "encryption-at-rest",
+   "kms"
+  ]
+ },
+ {
+  "card_id": "3fc41bfc-f609-4f19-96f0-583f9fec2299",
+  "tags": [
+   "cloudfront",
+   "invalidation"
+  ]
+ },
+ {
+  "card_id": "4182060c-eed5-4622-9eb9-3612dcafccb6",
+  "tags": [
+   "route53",
+   "records"
+  ]
+ },
+ {
+  "card_id": "41bd28f0-92d3-41cd-a24c-189ff74537b4",
+  "tags": [
+   "cloudfront",
+   "signed-urls",
+   "presigned-url",
+   "access-control",
+   "s3"
+  ]
+ },
+ {
+  "card_id": "41c0820f-eb7b-4589-94e6-9626ae0cd436",
+  "tags": [
+   "aurora",
+   "endpoints",
+   "read-replicas",
+   "auto-scaling"
+  ]
+ },
+ {
+  "card_id": "41fe824a-afe2-4a0e-9166-68b837d4300d",
+  "tags": [
+   "s3",
+   "cross-account",
+   "bucket-policy",
+   "iam"
+  ]
+ },
+ {
+  "card_id": "42f3252e-549e-42fe-81e1-64d789cb17a5",
+  "tags": [
+   "regions",
+   "availability-zones",
+   "global-infra"
+  ]
+ },
+ {
+  "card_id": "43c86bb3-76f1-4e1e-9dcf-866df7dbe653",
+  "tags": [
+   "route53",
+   "failover",
+   "health-checks",
+   "disaster-recovery",
+   "routing-policies"
+  ]
+ },
+ {
+  "card_id": "43f9d620-c3da-4cb5-ab93-1c907f7ec872",
+  "tags": [
+   "s3",
+   "storage-classes",
+   "availability-zones"
+  ]
+ },
+ {
+  "card_id": "446f1505-9ca9-4921-9357-30f2123bd9d4",
+  "tags": [
+   "route53",
+   "geolocation",
+   "troubleshooting",
+   "routing-policies",
+   "dns"
+  ]
+ },
+ {
+  "card_id": "44f3c664-6f4e-4a1b-9e49-e2e6f0e48860",
+  "tags": [
+   "s3",
+   "lifecycle",
+   "multipart",
+   "cost-optimization",
+   "glacier"
+  ]
+ },
+ {
+  "card_id": "455cea93-a154-4844-b3a1-36665de057ef",
+  "tags": [
+   "elb",
+   "stickiness",
+   "ec2",
+   "sessions"
+  ]
+ },
+ {
+  "card_id": "455e3349-095d-4d1e-9098-179cde5317b0",
+  "tags": [
+   "aurora",
+   "high-availability",
+   "fault-tolerance"
+  ]
+ },
+ {
+  "card_id": "4642e68a-165e-4468-a601-11d9c2987dce",
+  "tags": [
+   "s3",
+   "performance",
+   "prefixes",
+   "throughput"
+  ]
+ },
+ {
+  "card_id": "47b9c77d-5e1c-4bdd-b04b-3b641551c66f",
+  "tags": [
+   "cli",
+   "access-keys",
+   "regions"
+  ]
+ },
+ {
+  "card_id": "49ea36f2-b12a-4222-87ee-c7f3b9cac6ac",
+  "tags": [
+   "sigv4",
+   "s3",
+   "presigned-url",
+   "security"
+  ]
+ },
+ {
+  "card_id": "4a0d24d2-8d42-43e8-96ae-065466602e92",
+  "tags": [
+   "asg",
+   "instance-refresh",
+   "ec2",
+   "launch-template",
+   "deployment"
+  ]
+ },
+ {
+  "card_id": "4b5a97a5-b3a9-4efe-803f-b537ba58486d",
+  "tags": [
+   "cloudfront",
+   "cache-key",
+   "headers",
+   "cookies"
+  ]
+ },
+ {
+  "card_id": "4c1c2a5d-86dc-4bbd-a4bd-4b6ba93c11c7",
+  "tags": [
+   "route53",
+   "health-checks",
+   "failover",
+   "dns"
+  ]
+ },
+ {
+  "card_id": "4c5331c0-7a73-4fd1-92f1-4e09cb9d39ef",
+  "tags": [
+   "cloudfront",
+   "oac",
+   "s3",
+   "bucket-policy",
+   "security"
+  ]
+ },
+ {
+  "card_id": "4cb50ecb-6d94-42c1-a68b-ae285eab6d0f",
+  "tags": [
+   "s3",
+   "storage-classes",
+   "cost"
+  ]
+ },
+ {
+  "card_id": "4cd095d7-f347-4d6d-9732-d808ce81214c",
+  "tags": [
+   "route53",
+   "health-checks",
+   "alarms",
+   "cloudwatch"
+  ]
+ },
+ {
+  "card_id": "4cf50f69-dcbe-40d0-b2a0-64737f44fce9",
+  "tags": [
+   "s3",
+   "event-notifications",
+   "sqs",
+   "iam",
+   "messaging",
+   "lambda"
+  ]
+ },
+ {
+  "card_id": "4d1ba9e6-5ffa-4a34-8085-9050bc571a20",
+  "tags": [
+   "cloudfront",
+   "s3",
+   "origins",
+   "website"
+  ]
+ },
+ {
+  "card_id": "4e389960-493d-4906-b14f-a1b0473700b2",
+  "tags": [
+   "imds",
+   "sdk",
+   "roles",
+   "credentials",
+   "ec2",
+   "iam"
+  ]
+ },
+ {
+  "card_id": "4f0058da-f9ca-4cdf-8d19-f664e9c379d8",
+  "tags": [
+   "iam",
+   "best-practices",
+   "groups",
+   "least-privilege"
+  ]
+ },
+ {
+  "card_id": "4f1da420-4ecc-46f6-9f01-35c28522e644",
+  "tags": [
+   "s3",
+   "block-public-access",
+   "bucket-policy",
+   "access-control"
+  ]
+ },
+ {
+  "card_id": "4f7e46f9-f63b-4228-9349-d9277b1d5493",
+  "tags": [
+   "exponential-backoff",
+   "throttling",
+   "errors",
+   "retries"
+  ]
+ },
+ {
+  "card_id": "510a4262-aea6-460d-bb2d-1e4e01a93bbd",
+  "tags": [
+   "route53",
+   "hosted-zones",
+   "vpc",
+   "dns"
+  ]
+ },
+ {
+  "card_id": "512fe7e5-bc70-4da5-b6f1-82e45be74a8f",
+  "tags": [
+   "vpc",
+   "endpoints",
+   "s3",
+   "dynamodb"
+  ]
+ },
+ {
+  "card_id": "514216cc-31fe-47ba-bf15-dfb72e385fe1",
+  "tags": [
+   "user-data",
+   "ec2"
+  ]
+ },
+ {
+  "card_id": "523e15fb-8a0e-4484-9b81-3509c5f4aabb",
+  "tags": [
+   "iam",
+   "mfa",
+   "authentication",
+   "security"
+  ]
+ },
+ {
+  "card_id": "5282ddae-ed6a-4bca-b2ef-994f7cf3777c",
+  "tags": [
+   "cloudfront",
+   "invalidation",
+   "deployment",
+   "caching",
+   "cache-key"
+  ]
+ },
+ {
+  "card_id": "52eb421c-5ab4-44bc-84a7-27119ce11d66",
+  "tags": [
+   "alb",
+   "headers",
+   "load-balancing"
+  ]
+ },
+ {
+  "card_id": "531a272e-50c4-47e0-96dd-d25d46b848a6",
+  "tags": [
+   "vpc",
+   "security-groups",
+   "nacl",
+   "igw",
+   "nat",
+   "peering"
+  ]
+ },
+ {
+  "card_id": "5356e130-0c11-45fb-b144-9c86339ebb7d",
+  "tags": [
+   "ebs",
+   "volume-types",
+   "cost-optimization"
+  ]
+ },
+ {
+  "card_id": "53ed2337-17e1-4a17-932f-046a1c35f33a",
+  "tags": [
+   "cloudfront",
+   "caching",
+   "edge",
+   "origins",
+   "cache-key"
+  ]
+ },
+ {
+  "card_id": "5562084f-9d20-4817-89fb-11a8f9c05941",
+  "tags": [
+   "cloudfront",
+   "signed-urls",
+   "security"
+  ]
+ },
+ {
+  "card_id": "55ea3d3f-4c0b-45a5-877b-f261fa85f50c",
+  "tags": [
+   "iam",
+   "global-infra"
+  ]
+ },
+ {
+  "card_id": "56fb3788-860b-4145-abab-be55c365cbbd",
+  "tags": [
+   "snapshots",
+   "disaster-recovery",
+   "ebs",
+   "backup",
+   "regions"
+  ]
+ },
+ {
+  "card_id": "576bb73f-bdb0-4d28-a09f-3e77a68635f4",
+  "tags": [
+   "s3",
+   "multipart",
+   "performance"
+  ]
+ },
+ {
+  "card_id": "577f92bb-3bd2-4d3d-bc04-a90ca1526604",
+  "tags": [
+   "s3",
+   "replication",
+   "delete-marker",
+   "versioning",
+   "crr"
+  ]
+ }
+]

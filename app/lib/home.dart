@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 
 import 'api.dart';
-import 'cards.dart';
+import 'ai.dart';
+import 'exam.dart';
+import 'focus.dart';
+import 'i18n.dart';
+import 'weak.dart';
 import 'db.dart';
 import 'logic.dart';
 import 'stats.dart';
@@ -20,41 +24,35 @@ Future<void> studyCert(BuildContext context, List<Json> queue) => Navigator.push
               studyCert(context, next);
             })));
 
-/// Today + the minimal stats: due/new, per-domain readiness, predicted score vs exam date,
-/// leeches and misconceptions.
+/// Today: progress ring, exam countdown, the study button, and the weak spots to fix first.
 class TodayScreen extends StatelessWidget {
   const TodayScreen({super.key});
 
-  Future<(List<Json>, TodayStats, Readiness, List<Json>, Json?)> _load() async {
+  Future<(List<Json>, TodayStats, int, List<WeakSpot>)> _load() async {
     final cert = App.cert;
     final (queue, stats) = await buildQueue(cert);
-    final cards = await Db.cardsFor(cert['id']);
-    final exams = (await Db.query('exam')).where((e) => e['cert'] == cert['id']).toList()
-      ..sort((a, b) => (b['started_at'] as int).compareTo(a['started_at'] as int));
-    return (queue, stats, readiness(cert, cards, importance: await importanceFor(cert['id'])), cards, exams.firstOrNull);
+    final done = (await Db.reviewsSince(startOfToday())).where((r) => r['source'] == 'study').map((r) => r['card_id']).toSet().length;
+    return (queue, stats, done, await loadWeakSpots(cert));
   }
+
+  void _push(BuildContext context, Widget w) => Navigator.push(context, MaterialPageRoute(builder: (_) => w));
 
   @override
   Widget build(BuildContext context) {
     final cs = Theme.of(context).colorScheme;
+    final muted = TextStyle(color: cs.onSurfaceVariant);
     return Scaffold(
       appBar: AppBar(title: const Text('CertDeck'), actions: [
-        IconButton(
-            tooltip: 'Stats',
-            icon: const Icon(Icons.insights),
-            onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const StatsScreen()))),
-        const SyncButton(),
+        IconButton(tooltip: t('Stats'), icon: const Icon(Icons.insights), onPressed: () => _push(context, const StatsScreen())),
       ]),
       body: Live(
         load: _load,
         builder: (context, data) {
-          final (queue, st, r, cards, lastExam) = data;
+          final (queue, st, done, weak) = data;
           final cert = App.cert;
           final days = daysToExam(cert);
-          final pass = (cert['exam']['pass_pct'] as num) / 100;
-          final leeches = cards.where((c) => c['leech'] == true && !isSuspended(c)).length;
-          final misconceptions = cards.where((c) => c['misconception'] == true).length;
           final finalDays = days != null && days >= 0 && days <= 7;
+          final total = done + queue.length;
           return RefreshIndicator(
             onRefresh: () async {
               final err = await Api.sync();
@@ -63,116 +61,106 @@ class TodayScreen extends StatelessWidget {
             child: ListView(padding: const EdgeInsets.all(16), children: [
               const OnlineBanner(),
               if (!Api.configured)
-                const Card(
+                Card(
                     child: ListTile(
-                        leading: Icon(Icons.cloud_off),
-                        title: Text('Not connected'),
-                        subtitle: Text('Sign in from Settings to back up, restore and use AI.'))),
-              Text(cert['name'], style: Theme.of(context).textTheme.titleLarge),
-              Text(
-                  days == null
-                      ? 'No exam date set (Settings)'
-                      : days < 0
-                          ? 'Exam date passed'
-                          : 'Exam in $days day${days == 1 ? '' : 's'} · ${cert['exam_date']}',
-                  style: TextStyle(color: finalDays ? Colors.amber : Colors.white60)),
-              const SizedBox(height: 16),
-              Row(children: [
-                _stat(context, '${st.due}', 'due'),
-                _stat(context, '${st.newAvailable}', 'new today'),
-                _stat(context, '${st.plan.remaining}', 'unseen'),
-              ]),
-              if (st.plan.paced > App.newPerDay)
-                Padding(
-                  padding: const EdgeInsets.only(top: 8),
-                  child: Text(
-                      'Exam pacing: ${st.plan.paced} new/day to introduce all ${st.plan.remaining} unseen cards before the final review window.',
-                      style: const TextStyle(color: Colors.amber, fontSize: 13)),
+                        leading: const Icon(Icons.cloud_off),
+                        title: Text(t('Not connected')),
+                        subtitle: Text(t('Sign in from Settings to back up, restore and use AI.')))),
+              Center(
+                child: SizedBox(
+                  width: 130,
+                  height: 130,
+                  child: Stack(alignment: Alignment.center, children: [
+                    SizedBox.expand(
+                        child: CircularProgressIndicator(
+                            value: total == 0 ? 1 : done / total, strokeWidth: 10, strokeCap: StrokeCap.round, backgroundColor: cs.surfaceContainerHighest)),
+                    Column(mainAxisSize: MainAxisSize.min, children: [
+                      Text('$done', style: Theme.of(context).textTheme.headlineMedium),
+                      Text(t('of {n} today', {'n': total}), style: muted.copyWith(fontSize: 12)),
+                    ]),
+                  ]),
                 ),
-              const SizedBox(height: 16),
+              ),
+              const SizedBox(height: 12),
+              Center(
+                child: days == null
+                    ? TextButton(onPressed: () => ownerTab.value = 2, child: Text('${cert['code']} · ${t('No exam date set')}'))
+                    : Text(
+                        days < 0
+                            ? '${cert['code']} · ${t('Exam date passed')}'
+                            : '${cert['code']} · ${t(days == 1 ? 'exam in {n} day' : 'exam in {n} days', {'n': days})}',
+                        style: TextStyle(color: finalDays ? Colors.amber : cs.onSurfaceVariant)),
+              ),
+              const SizedBox(height: 12),
               FilledButton.icon(
                 style: FilledButton.styleFrom(padding: const EdgeInsets.all(18)),
                 onPressed: () async {
                   var q = queue;
                   if (q.isEmpty) q = await buildExtraQueue(cert); // all done for today: study ahead
                   if (!context.mounted) return;
-                  if (q.isEmpty) return toast(context, 'Nothing left to study. Everything is fresh.');
+                  if (q.isEmpty) return toast(context, t('Nothing left to study. Everything is fresh.'));
                   studyCert(context, q);
                 },
                 icon: const Icon(Icons.play_arrow),
-                label: Text(queue.isEmpty ? 'Done for today · study ahead' : 'Study (${queue.length}) · about ${App.sessionMinutes} min'),
+                label: Text(queue.isEmpty
+                    ? t('Done for today · study ahead')
+                    : done > 0
+                        ? t('Continue · {n} left', {'n': queue.length})
+                        : t('Study ({n}) · about {m} min', {'n': queue.length, 'm': App.sessionMinutes})),
               ),
+              if (st.plan.paced > App.newPerDay)
+                Padding(
+                  padding: const EdgeInsets.only(top: 8),
+                  child: Text(
+                      t('Exam pacing: {p} new/day to introduce all {r} unseen cards before the final review window.',
+                          {'p': st.plan.paced, 'r': st.plan.remaining}),
+                      style: const TextStyle(color: Colors.amber, fontSize: 13)),
+                ),
               const SizedBox(height: 8),
-              FilledButton.tonalIcon(
-                style: finalDays ? null : FilledButton.styleFrom(backgroundColor: Colors.transparent, side: const BorderSide(color: Colors.white24)),
-                onPressed: () async {
-                  final q = await buildCramQueue(cert);
-                  if (!context.mounted) return;
-                  if (q.isEmpty) return toast(context, 'Nothing weak to review yet.');
-                  Navigator.push(
-                      context, MaterialPageRoute(builder: (_) => StudyScreen(q, source: 'cram', title: finalDays ? 'Final review' : 'Weak areas')));
-                },
-                icon: const Icon(Icons.local_fire_department_outlined),
-                label: Text(finalDays ? 'Final review: weak domains & misconceptions' : 'Weak-area review'),
-              ),
+              Row(children: [
+                Expanded(
+                    child: OutlinedButton.icon(
+                        onPressed: () => _push(context, const ExamScreen()), icon: const Icon(Icons.timer_outlined), label: Text(t('Exam sim')))),
+                const SizedBox(width: 8),
+                Expanded(
+                    child: OutlinedButton.icon(
+                        onPressed: () => _push(context, generateScreen()),
+                        icon: const Icon(Icons.auto_awesome),
+                        label: Text(t('Generate')))),
+              ]),
               const SizedBox(height: 20),
               Row(children: [
-                Expanded(child: Text('Readiness', style: TextStyle(color: cs.primary, fontWeight: FontWeight.bold))),
-                Text('Predicted ${(r.predicted * 100).round()}%  ·  pass ${(pass * 100).round()}%',
-                    style: TextStyle(color: r.predicted >= pass ? Colors.green : Colors.orange)),
+                Expanded(
+                    child: Text(finalDays ? t('Final review') : t('Fix these first'),
+                        style: TextStyle(color: cs.primary, fontWeight: FontWeight.bold))),
+                if (finalDays)
+                  TextButton(
+                      onPressed: () async {
+                        final q = await buildCramQueue(cert);
+                        if (!context.mounted) return;
+                        if (q.isEmpty) return toast(context, t('Nothing weak to review yet.'));
+                        _push(context, StudyScreen(q, source: 'cram', title: t('Final review')));
+                      },
+                      child: Text(t('Review all'))),
+                TextButton(onPressed: () => _push(context, const WeakSpotsScreen()), child: Text(t('See all'))),
               ]),
-              if (lastExam != null)
-                Text(
-                    'Last simulation: ${((lastExam['score_pct'] as num) * 100).round()}%${lastExam['scaled'] != null ? ' (${lastExam['scaled']})' : ''}',
-                    style: const TextStyle(color: Colors.white60, fontSize: 13)),
-              const SizedBox(height: 8),
-              for (final d in cert['domains'] as List)
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 5),
-                  child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                    Row(children: [
-                      Expanded(child: Text('${d['name']}', style: const TextStyle(fontSize: 13))),
-                      Text(
-                          '${((r.byDomain[d['id']] ?? 0) * 100).round()}% · ${r.counts[d['id']]} cards · ${((d['weight'] as num) * 100).round()}% of exam',
-                          style: const TextStyle(fontSize: 12, color: Colors.white60)),
-                    ]),
-                    const SizedBox(height: 3),
-                    LinearProgressIndicator(
-                        value: r.byDomain[d['id']] ?? 0,
-                        minHeight: 6,
-                        borderRadius: BorderRadius.circular(3),
-                        color: (r.byDomain[d['id']] ?? 0) >= pass ? Colors.green : cs.primary),
+              if (weak.isEmpty)
+                Padding(padding: const EdgeInsets.symmetric(vertical: 12), child: Text(t('No weak spots in the last 14 days.'), style: muted))
+              else
+                SizedBox(
+                  height: 160,
+                  child: ListView(scrollDirection: Axis.horizontal, children: [
+                    for (final w in weak.take(5)) SizedBox(width: 220, child: WeakSpotCard(w)),
                   ]),
                 ),
-              const SizedBox(height: 16),
-              Wrap(spacing: 8, children: [
-                ActionChip(
-                    avatar: const Icon(Icons.bug_report_outlined, color: Colors.orange),
-                    label: Text('Leeches ($leeches)'),
-                    onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const CardsScreen(filter: 'leech')))),
-                ActionChip(
-                    avatar: const Icon(Icons.warning_amber, color: Colors.redAccent),
-                    label: Text('Misconceptions ($misconceptions)'),
-                    onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const CardsScreen(filter: 'misconception')))),
-              ]),
+              const SizedBox(height: 12),
+              Text(t('{d} due · {n} new · {u} unseen', {'d': st.due, 'n': st.newAvailable, 'u': st.plan.remaining}), style: muted.copyWith(fontSize: 13)),
             ]),
           );
         },
       ),
     );
   }
-
-  Widget _stat(BuildContext context, String value, String label) => Expanded(
-        child: Card(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 14),
-            child: Column(children: [
-              Text(value, style: Theme.of(context).textTheme.headlineMedium),
-              Text(label, style: const TextStyle(color: Colors.white60)),
-            ]),
-          ),
-        ),
-      );
 }
 
 class SyncButton extends StatelessWidget {

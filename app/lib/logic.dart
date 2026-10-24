@@ -134,9 +134,10 @@ bool isNew(Json c) => c['fsrs'] == null;
 
 /// "Rotate card versions": the original and its rewritten versions take turns, one per review
 /// (card['ver'] = the one shown last; a missed card's retry gets the next). Scheduling stays on the original.
-(int, Json) pickVersion(Json card, List versions) {
+(int, Json) pickVersion(Json card, List versions, {bool rewriteOnly = false}) {
   if (versions.isEmpty) return (0, card);
-  final i = (((card['ver'] as int?) ?? -1) + 1) % (versions.length + 1);
+  var i = (((card['ver'] as int?) ?? -1) + 1) % (versions.length + 1);
+  if (i == 0 && rewriteOnly) i = 1;
   if (i == 0) return (0, card);
   // Only the original's scheduling/meta carries over; its notes, images, accepted answers etc. belong to its own wording.
   final keep = {for (final k in _versionKeeps) if (card.containsKey(k)) k: card[k]};

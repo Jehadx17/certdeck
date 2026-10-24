@@ -111,7 +111,7 @@ class Reminders {
       await _plugin.cancelAll();
       if (App.settings['reminders'] == false) return;
       _learnedMinute = await _studyHour();
-      final plan = await todayPlan();
+      final plan = App.isOwner ? <PlanItem>[] : await todayPlan(); // the owner has no college plan
       if (plan.isEmpty) return _certReminders();
       await _askPermission();
       final now = DateTime.now();

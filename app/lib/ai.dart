@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'api.dart';
 import 'cards.dart';
 import 'db.dart';
+import 'i18n.dart';
 import 'logic.dart';
 import 'widgets.dart';
 
@@ -33,20 +34,8 @@ Future<String> queueCards(Json body) async {
 
 bool get backgroundGenerate => App.settings['background_generate'] != false;
 
-class AiScreen extends StatelessWidget {
-  const AiScreen({super.key});
-  @override
-  Widget build(BuildContext context) => DefaultTabController(
-        length: 2,
-        child: Scaffold(
-          appBar: AppBar(title: const Text('AI'), bottom: const TabBar(tabs: [Tab(text: 'Generate cards'), Tab(text: 'Weak areas')])),
-          body: const Column(children: [
-            OnlineBanner(),
-            Expanded(child: TabBarView(children: [GenerateTab(), InsightsTab()]))
-          ]),
-        ),
-      );
-}
+/// GenerateTab as its own screen (Today and Library open it this way).
+Widget generateScreen() => Scaffold(appBar: AppBar(title: Text(t('Generate cards'))), body: const GenerateTab());
 
 class GenerateTab extends StatefulWidget {
   final String? domain, topic;
@@ -279,6 +268,33 @@ class JobsList extends StatelessWidget {
       );
 }
 
+/// Sync, then analyze the review history and store the result. Returns an error to show, or null.
+Future<String?> runAnalysis(BuildContext context) async {
+  final err = await Api.sync();
+  if (err != null) return Api.online.value == false ? 'Needs connection' : err;
+  if (!context.mounted) return null;
+  final res = await busy(context, 'Analyzing your review history…', () => Api.ai('ai/analyze', {'cert': App.cert['id']}));
+  if (res == null) return Api.online.value == false ? 'Needs connection' : null;
+  final overrides = ((res.remove('overrides') as List?) ?? []).map((o) => Map<String, dynamic>.from(o as Map)).toList();
+  await Db.putAll('override', overrides, dirty: false);
+  await Db.putAll('analysis', [res], dirty: false);
+  await applyPendingOverrides();
+  await Api.sync();
+  return null;
+}
+
+/// Generate cards for an analysis action or weak area ({cert?, domain, topic, count?}).
+Future<void> generateFor(BuildContext context, Map a) async {
+  final body = {'cert': a['cert'] ?? App.cert['id'], 'domain': a['domain'], 'topic': a['topic'], 'count': a['count'] ?? 15};
+  String? msg;
+  if (backgroundGenerate) {
+    msg = await busy(context, 'Queuing ${a['count'] ?? 15} cards on ${a['topic']}…', () => queueCards(body));
+  } else {
+    msg = (await busy(context, 'Generating ${a['count'] ?? 15} cards on ${a['topic']}…', () => generateCards(body)))?.$1;
+  }
+  if (msg != null && context.mounted) toast(context, msg);
+}
+
 class InsightsTab extends StatefulWidget {
   const InsightsTab({super.key});
   @override
@@ -300,28 +316,11 @@ class _InsightsTabState extends State<InsightsTab> {
 
   Future<void> _run() async {
     setState(() => error = null);
-    final err = await Api.sync();
-    if (err != null) return setState(() => error = Api.online.value == false ? 'Needs connection' : err);
-    if (!mounted) return;
-    final res = await busy(context, 'Analyzing your review history…', () => Api.ai('ai/analyze', {'cert': App.cert['id']}));
-    if (res == null) return setState(() => error = Api.online.value == false ? 'Needs connection' : null);
-    final overrides = ((res.remove('overrides') as List?) ?? []).map((o) => Map<String, dynamic>.from(o as Map)).toList();
-    await Db.putAll('override', overrides, dirty: false);
-    await Db.putAll('analysis', [res], dirty: false);
-    await applyPendingOverrides();
-    await Api.sync();
+    final err = await runAnalysis(context);
+    if (mounted) setState(() => error = err);
   }
 
-  Future<void> _action(Map a) async {
-    final body = {'cert': a['cert'] ?? App.cert['id'], 'domain': a['domain'], 'topic': a['topic'], 'count': a['count'] ?? 15};
-    String? msg;
-    if (backgroundGenerate) {
-      msg = await busy(context, 'Queuing ${a['count']} cards on ${a['topic']}…', () => queueCards(body));
-    } else {
-      msg = (await busy(context, 'Generating ${a['count']} cards on ${a['topic']}…', () => generateCards(body)))?.$1;
-    }
-    if (msg != null && mounted) toast(context, msg);
-  }
+  Future<void> _action(Map a) => generateFor(context, a);
 
   @override
   Widget build(BuildContext context) {

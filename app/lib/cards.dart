@@ -68,7 +68,10 @@ class CardsScreen extends StatefulWidget {
   final String filter;
   /// Show only this course's cards (college); null = the cert/course picker decides.
   final String? course;
-  const CardsScreen({super.key, this.filter = 'all', this.course});
+  /// Owner: preselect a cert id ('any' = all cards), a tag chip, or a search text.
+  final String? cert, tag;
+  final String query;
+  const CardsScreen({super.key, this.filter = 'all', this.course, this.cert, this.tag, this.query = ''});
   @override
   State<CardsScreen> createState() => _CardsScreenState();
 }
@@ -76,9 +79,17 @@ class CardsScreen extends StatefulWidget {
 class _CardsScreenState extends State<CardsScreen> {
   late String filter = widget.filter;
   // 'active' = the active cert; 'any' = everything; a cert code; or 'course:<id>'. Students only have courses.
-  late String cert = widget.course != null ? 'course:${widget.course}' : (App.isOwner ? 'active' : 'any');
-  String q = '';
+  late String cert = widget.course != null ? 'course:${widget.course}' : (widget.cert ?? (App.isOwner ? 'active' : 'any'));
+  late String q = widget.query;
+  late String? tag = widget.tag;
   List<Json> courseList = [];
+  late final _qc = TextEditingController(text: widget.query);
+
+  @override
+  void dispose() {
+    _qc.dispose();
+    super.dispose();
+  }
 
   static const filters = {
     'all': 'All',
@@ -93,16 +104,18 @@ class _CardsScreenState extends State<CardsScreen> {
   @override
   void initState() {
     super.initState();
-    courses().then((l) => mounted ? setState(() => courseList = l) : null);
+    if (!App.isOwner) courses().then((l) => mounted ? setState(() => courseList = l) : null);
   }
 
-  bool _match(Json c) {
+  bool _match(Json c, {bool certOnly = false}) {
+    if (App.isOwner && c['course'] != null) return false; // owner has no college cards
     if (cert.startsWith('course:')) {
       if (c['course'] != cert.substring(7)) return false;
     } else {
       final certId = cert == 'active' ? App.cert['id'] : cert;
       if (certId != 'any' && !((c['certs'] as Map?) ?? {}).containsKey(certId)) return false;
     }
+    if (certOnly) return true;
     final ok = switch (filter) {
       'worked' => c['worked'] == true || c['similar_kp'] != null,
       'due' => !isNew(c) && dueOf(c) <= nowMs() && !isSuspended(c),
@@ -113,6 +126,7 @@ class _CardsScreenState extends State<CardsScreen> {
       _ => true,
     };
     if (!ok) return false;
+    if (tag != null && !((c['tags'] as List?) ?? []).contains(tag)) return false;
     if (q.isEmpty) return true;
     final hay = '${c['question']} ${c['answer']} ${(c['tags'] as List?)?.join(' ')} ${(c['options'] as List?)?.join(' ')}'.toLowerCase();
     return hay.contains(q.toLowerCase());
@@ -123,13 +137,14 @@ class _CardsScreenState extends State<CardsScreen> {
     return Scaffold(
       appBar: AppBar(
         title: TextField(
+          controller: _qc,
           decoration: InputDecoration(hintText: t('Search cards'), border: InputBorder.none, prefixIcon: const Icon(Icons.search)),
           onChanged: (v) => setState(() => q = v),
         ),
         actions: [
           PopupMenuButton<String>(
-            icon: const Icon(Icons.filter_list),
-            tooltip: t('Course'),
+            icon: Icon(App.isOwner ? Icons.verified_outlined : Icons.filter_list),
+            tooltip: t(App.isOwner ? 'Cert' : 'Course'),
             onSelected: (v) => setState(() => cert = v),
             itemBuilder: (_) => [
               if (App.isOwner) CheckedPopupMenuItem(value: 'active', checked: cert == 'active', child: const Text('Active cert')),
@@ -141,7 +156,7 @@ class _CardsScreenState extends State<CardsScreen> {
             ],
           ),
         ],
-        bottom: PreferredSize(
+        bottom: App.isOwner ? null : PreferredSize(
           preferredSize: const Size.fromHeight(48),
           child: SingleChildScrollView(
             scrollDirection: Axis.horizontal,
@@ -165,40 +180,68 @@ class _CardsScreenState extends State<CardsScreen> {
         load: () => Db.query('card', orderBy: 'updated_at DESC'),
         builder: (_, all) {
           final list = all.where(_match).toList();
+          final Widget body;
           if (list.isEmpty) {
-            return Center(child: Text(t('No cards here yet.'), textAlign: TextAlign.center));
-          }
-          return ListView.separated(
-            keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-            itemCount: list.length + 1,
-            separatorBuilder: (_, __) => const Divider(height: 1),
-            itemBuilder: (_, i) {
-              if (i == 0) {
-                return Padding(padding: const EdgeInsets.all(8), child: Text(t('{n} cards', {'n': list.length}), style: const TextStyle(color: Colors.white54)));
-              }
-              final c = list[i - 1];
-              final certJ = App.cert;
-              return ListTile(
-                title: autoText(plain(c['question']), maxLines: 2, overflow: TextOverflow.ellipsis),
-                subtitle: Text([
-                  t(typeLabels[c['type']] ?? c['type']),
-                  if (domainOf(c, certJ).isNotEmpty) 'D${domainOf(c, certJ)}',
-                  (c['certs'] as Map?)?.keys.join('/') ?? '',
-                  isSuspended(c) ? 'suspended' : dueLabel(c),
-                ].join(' · ')),
-                trailing: Row(mainAxisSize: MainAxisSize.min, children: [
-                  if (c['misconception'] == true) const Icon(Icons.warning_amber, color: Colors.redAccent, size: 18),
-                  if (c['leech'] == true) const Icon(Icons.bug_report_outlined, color: Colors.orange, size: 18),
-                ]),
-                onTap: () {
-                  FocusManager.instance.primaryFocus?.unfocus(); // else the search keyboard pops back on return
-                  Navigator.push(context, MaterialPageRoute(builder: (_) => CardDetail(c['id'])));
-                },
-              );
+            body = Center(child: Text(t('No cards here yet.'), textAlign: TextAlign.center));
+          } else {
+            body = ListView.separated(
+              keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+              itemCount: list.length + 1,
+              separatorBuilder: (_, __) => const Divider(height: 1),
+              itemBuilder: (_, i) {
+                if (i == 0) {
+                  return Padding(padding: const EdgeInsets.all(8), child: Text(t('{n} cards', {'n': list.length}), style: const TextStyle(color: Colors.white54)));
+                }
+                final c = list[i - 1];
+                final certJ = App.cert;
+                return ListTile(
+                  title: autoText(plain(c['question']), maxLines: 2, overflow: TextOverflow.ellipsis),
+                  subtitle: Text([
+                    t(typeLabels[c['type']] ?? c['type']),
+                    if (domainOf(c, certJ).isNotEmpty) 'D${domainOf(c, certJ)}',
+                    (c['certs'] as Map?)?.keys.join('/') ?? '',
+                    isSuspended(c) ? 'suspended' : dueLabel(c),
+                  ].join(' · ')),
+                  trailing: Row(mainAxisSize: MainAxisSize.min, children: [
+                    if (c['misconception'] == true) const Icon(Icons.warning_amber, color: Colors.redAccent, size: 18),
+                    if (c['leech'] == true) const Icon(Icons.bug_report_outlined, color: Colors.orange, size: 18),
+                  ]),
+                  onTap: () {
+                    FocusManager.instance.primaryFocus?.unfocus(); // else the search keyboard pops back on return
+                    Navigator.push(context, MaterialPageRoute(builder: (_) => CardDetail(c['id'])));
+                  },
+                );
             },
-          );
+            );
+          }
+          return App.isOwner ? Column(children: [_chips(all), Expanded(child: body)]) : body;
         },
       ),
+    );
+  }
+
+  /// Owner: status filters, then the card set's tags (most used first), as one scrolling row.
+  Widget _chips(List<Json> all) {
+    final n = <String, int>{};
+    for (final c in all.where((c) => _match(c, certOnly: true))) {
+      for (final g in ((c['tags'] as List?) ?? []).cast<String>()) {
+        n[g] = (n[g] ?? 0) + 1;
+      }
+    }
+    final tags = n.keys.toList()..sort((a, b) => n[b]!.compareTo(n[a]!));
+    if (tag != null && !tags.contains(tag)) tags.insert(0, tag!);
+    return SizedBox(
+      height: 48,
+      child: ListView(scrollDirection: Axis.horizontal, padding: const EdgeInsets.symmetric(horizontal: 12), children: [
+        for (final e in filters.entries)
+          Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 3),
+              child: FilterChip(label: Text(t(e.value)), selected: filter == e.key, onSelected: (_) => setState(() => filter = e.key))),
+        for (final g in tags)
+          Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 3),
+              child: FilterChip(label: Text(g), selected: tag == g, onSelected: (v) => setState(() => tag = v ? g : null))),
+      ]),
     );
   }
 }

@@ -1,0 +1,421 @@
+[
+ {
+  "card_id": "e5b882e7-f00e-48d9-ad2a-60ee4b16c7a4",
+  "tags": [
+   "ami",
+   "snapshots",
+   "ebs"
+  ]
+ },
+ {
+  "card_id": "e5fd1129-eac8-4ad6-a416-a2acbd84a810",
+  "tags": [
+   "s3",
+   "keys",
+   "objects",
+   "prefixes"
+  ]
+ },
+ {
+  "card_id": "e67d86f8-c6b3-40e8-967a-135f189d674b",
+  "tags": [
+   "vpc",
+   "nacl",
+   "security"
+  ]
+ },
+ {
+  "card_id": "e7bee902-63f6-423c-8532-9260d63388fd",
+  "tags": [
+   "asg",
+   "elb",
+   "high-availability",
+   "scaling-policies",
+   "ec2"
+  ]
+ },
+ {
+  "card_id": "e936ede4-2411-4523-99e5-bbd0e2cc621f",
+  "tags": [
+   "limits",
+   "quotas",
+   "throttling",
+   "vpc"
+  ]
+ },
+ {
+  "card_id": "e9a8265c-1501-4ccc-a444-04fd4596f9e7",
+  "tags": [
+   "cloudfront",
+   "real-time-logs",
+   "kinesis",
+   "logging",
+   "athena",
+   "s3"
+  ]
+ },
+ {
+  "card_id": "e9df81be-2692-41a6-b32f-25efc280ad54",
+  "tags": [
+   "route53",
+   "multi-value",
+   "health-checks",
+   "routing-policies"
+  ]
+ },
+ {
+  "card_id": "e9df98a1-30b6-4950-9f0e-ec45fb89735a",
+  "tags": [
+   "security-groups",
+   "troubleshooting",
+   "ec2",
+   "timeouts"
+  ]
+ },
+ {
+  "card_id": "eb80cbd2-3c11-4124-ac74-7d4e75766971",
+  "tags": [
+   "cloudfront",
+   "real-time-logs",
+   "kinesis",
+   "logging"
+  ]
+ },
+ {
+  "card_id": "ebfb90be-5a60-4fd6-82a2-9c35d7305fc7",
+  "tags": [
+   "efs",
+   "performance",
+   "throughput",
+   "latency"
+  ]
+ },
+ {
+  "card_id": "ec00370c-032c-4fe6-bca5-6a789804f381",
+  "tags": [
+   "s3",
+   "storage",
+   "durability"
+  ]
+ },
+ {
+  "card_id": "ee49d01b-4039-4056-82f4-63309503038a",
+  "tags": [
+   "s3",
+   "replication",
+   "crr"
+  ]
+ },
+ {
+  "card_id": "eefbabef-a391-4814-9169-77a6a90a5021",
+  "tags": [
+   "asg",
+   "capacity",
+   "scaling-policies"
+  ]
+ },
+ {
+  "card_id": "f01672f2-6331-4a9f-8978-c14a90a5d0cb",
+  "tags": [
+   "cloudfront",
+   "cache-behaviors",
+   "performance",
+   "cache-key",
+   "caching"
+  ]
+ },
+ {
+  "card_id": "f067f2d8-4da4-4351-aa18-0c6c757ed77a",
+  "tags": [
+   "rds",
+   "backups",
+   "multi-az",
+   "read-replicas",
+   "ec2"
+  ]
+ },
+ {
+  "card_id": "f067fb03-afe7-41d6-9269-a1cab33f1b81",
+  "tags": [
+   "s3",
+   "iam",
+   "bucket-policy",
+   "permissions"
+  ]
+ },
+ {
+  "card_id": "f1288751-9356-42a5-b45c-4c24163d6203",
+  "tags": [
+   "vpc",
+   "nat",
+   "lambda",
+   "rds"
+  ]
+ },
+ {
+  "card_id": "f20e1167-618d-49f1-9ee4-5fc53dada8c8",
+  "tags": [
+   "billing",
+   "iam",
+   "permissions"
+  ]
+ },
+ {
+  "card_id": "f28d2701-9244-4c63-af7d-5f9be8bae047",
+  "tags": [
+   "security-groups",
+   "networking",
+   "vpc",
+   "ec2",
+   "rds"
+  ]
+ },
+ {
+  "card_id": "f29a41b3-4101-42f8-a0fc-e62d50fb81f6",
+  "tags": [
+   "elb",
+   "ssl",
+   "sni",
+   "alb",
+   "nlb",
+   "acm"
+  ]
+ },
+ {
+  "card_id": "f2abad84-4802-404b-ba80-cf365c72bdfb",
+  "tags": [
+   "s3",
+   "replication",
+   "crr",
+   "versioning"
+  ]
+ },
+ {
+  "card_id": "f2e609bf-f60f-4653-9067-47588733d38f",
+  "tags": [
+   "s3",
+   "prefixes",
+   "objects",
+   "performance"
+  ]
+ },
+ {
+  "card_id": "f390ca8f-e406-41f9-af7a-af0f2b227959",
+  "tags": [
+   "s3",
+   "storage-classes",
+   "lifecycle"
+  ]
+ },
+ {
+  "card_id": "f3abc785-2e34-4a83-a0b6-f2c4395fd38b",
+  "tags": [
+   "s3",
+   "storage-classes"
+  ]
+ },
+ {
+  "card_id": "f3abd29d-6142-401b-80df-cd64340b05d2",
+  "tags": [
+   "s3",
+   "keys",
+   "objects",
+   "prefixes"
+  ]
+ },
+ {
+  "card_id": "f55b2992-0fdd-4bae-82e8-c10ea7a44087",
+  "tags": [
+   "s3",
+   "versioning",
+   "delete-marker"
+  ]
+ },
+ {
+  "card_id": "f5fa9f60-d027-4bb2-b296-62f4180975ae",
+  "tags": [
+   "cloudshell",
+   "cli",
+   "regions"
+  ]
+ },
+ {
+  "card_id": "f65daf65-759e-4003-aaa3-3f59a3ac4293",
+  "tags": [
+   "s3",
+   "lifecycle",
+   "multipart",
+   "cost"
+  ]
+ },
+ {
+  "card_id": "f69de95a-7a47-4c92-a2d4-dd63767aaaed",
+  "tags": [
+   "cloudfront",
+   "s3",
+   "replication",
+   "crr",
+   "caching"
+  ]
+ },
+ {
+  "card_id": "f7028fa1-bec9-4e5a-bebe-ff578fea7ebc",
+  "tags": [
+   "route53",
+   "alias",
+   "dns",
+   "records"
+  ]
+ },
+ {
+  "card_id": "f7c5cb03-39d4-419f-9d20-89163f009673",
+  "tags": [
+   "s3",
+   "iam",
+   "roles",
+   "ec2",
+   "credentials"
+  ]
+ },
+ {
+  "card_id": "f84d331d-e415-4519-b3f1-2c5c86352805",
+  "tags": [
+   "s3",
+   "presigned-url",
+   "cli"
+  ]
+ },
+ {
+  "card_id": "f8550d88-882f-48c8-8acc-b2e9b05199ce",
+  "tags": [
+   "architecture",
+   "efs",
+   "wordpress",
+   "ec2",
+   "alb"
+  ]
+ },
+ {
+  "card_id": "f8dbccee-b9bd-4a85-b5fc-f6ea469c304e",
+  "tags": [
+   "cloudfront",
+   "vpc-origin",
+   "alb",
+   "vpc"
+  ]
+ },
+ {
+  "card_id": "f9659a60-da65-475d-95e0-3bd6215d5b7f",
+  "tags": [
+   "route53",
+   "alias",
+   "dns",
+   "records",
+   "cname",
+   "alb"
+  ]
+ },
+ {
+  "card_id": "fa53fbe4-2272-491c-bb7d-264f182e17fc",
+  "tags": [
+   "alb",
+   "routing",
+   "target-groups"
+  ]
+ },
+ {
+  "card_id": "fafb91f2-a9d3-4d54-b1bd-18cbe9e84959",
+  "tags": [
+   "exponential-backoff",
+   "sdk",
+   "retries",
+   "throttling"
+  ]
+ },
+ {
+  "card_id": "fb1588d5-4c88-4daa-9a01-44a424054ff9",
+  "tags": [
+   "rds",
+   "encryption",
+   "kms",
+   "snapshots",
+   "read-replicas"
+  ]
+ },
+ {
+  "card_id": "fb18ba3c-55ce-41d3-bfde-c790afaa2b72",
+  "tags": [
+   "vpc",
+   "nat",
+   "subnets",
+   "igw"
+  ]
+ },
+ {
+  "card_id": "fb9eb425-afda-4047-8b2a-30bb2b9b48bc",
+  "tags": [
+   "iam",
+   "cli",
+   "access-keys",
+   "credentials"
+  ]
+ },
+ {
+  "card_id": "fcc6a63f-815c-43e3-8fb2-a38ca1b6d35a",
+  "tags": [
+   "route53",
+   "latency",
+   "routing-policies"
+  ]
+ },
+ {
+  "card_id": "fcca10ce-add4-4929-abac-ee975f1e395f",
+  "tags": [
+   "asg",
+   "cloudwatch",
+   "alarms",
+   "scaling-policies",
+   "cooldown",
+   "elb"
+  ]
+ },
+ {
+  "card_id": "fd296db5-1853-4281-972a-05c351888a53",
+  "tags": [
+   "instance-connect",
+   "ssh",
+   "troubleshooting",
+   "ec2",
+   "security-groups",
+   "iam"
+  ]
+ },
+ {
+  "card_id": "ff134f58-60a6-4f78-ac88-173554444214",
+  "tags": [
+   "elb",
+   "alb",
+   "nlb",
+   "gwlb"
+  ]
+ },
+ {
+  "card_id": "ff7d1043-53da-4ea2-b749-1ce8a8080dba",
+  "tags": [
+   "cloudfront",
+   "edge",
+   "caching"
+  ]
+ },
+ {
+  "card_id": "ffd2138c-11ac-4960-a334-dfe9cada09c7",
+  "tags": [
+   "vpc",
+   "endpoints",
+   "vpc-endpoint",
+   "privatelink",
+   "ec2",
+   "dynamodb"
+  ]
+ }
+]

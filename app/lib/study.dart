@@ -52,8 +52,10 @@ class StudyScreen extends StatefulWidget {
   final bool practice;
   /// "Do more" at the end of a easy session.
   final VoidCallback? onMore;
+  /// Drill: show only rewritten versions, never the original wording.
+  final bool rewriteOnly;
   const StudyScreen(this.queue,
-      {super.key, this.source = 'study', this.title = 'Study', this.custom, this.scheduler, this.easy = false, this.practice = false, this.onMore});
+      {super.key, this.source = 'study', this.title = 'Study', this.custom, this.scheduler, this.easy = false, this.practice = false, this.onMore, this.rewriteOnly = false});
   @override
   State<StudyScreen> createState() => _StudyScreenState();
 }
@@ -71,7 +73,7 @@ class _StudyScreenState extends State<StudyScreen> {
   late final int planned = widget.custom?.remaining ?? widget.queue.length;
   bool completed = false, studying = false; // studying: a new card shown first, for a student new to the subject
   Map<String, List> versions = {}; // card id -> its rewritten versions ("Rotate card versions" on)
-  bool loading = App.settings['rotate_versions'] == true;
+  late bool loading = App.settings['rotate_versions'] == true || widget.rewriteOnly;
   int shownVer = 0;
 
   @override
@@ -116,7 +118,7 @@ class _StudyScreenState extends State<StudyScreen> {
         card = session.next();
         ans = null;
         if (card != null) {
-          final (i, shown) = pickVersion(card!, versions[card!['id']] ?? const []);
+          final (i, shown) = pickVersion(card!, versions[card!['id']] ?? const [], rewriteOnly: widget.rewriteOnly);
           shownVer = i;
           ans = AnswerState(shown);
         }
@@ -204,14 +206,28 @@ class _StudyScreenState extends State<StudyScreen> {
       );
     }
     final c = card!;
+    final owner = App.isOwner;
     return Scaffold(
       appBar: AppBar(
-        title: Text('${widget.title} · ${t('{n} left', {'n': session.remaining + 1})}', style: const TextStyle(fontSize: 18)),
+        leading: owner ? IconButton(icon: const Icon(Icons.close), onPressed: () => Navigator.maybePop(context)) : null,
+        title: owner ? null : Text('${widget.title} · ${t('{n} left', {'n': session.remaining + 1})}', style: const TextStyle(fontSize: 18)),
+        bottom: owner
+            ? PreferredSize(
+                preferredSize: const Size.fromHeight(3),
+                child: LinearProgressIndicator(minHeight: 3, value: planned == 0 ? 0 : (done / planned).clamp(0.0, 1.0)))
+            : null,
         actions: [
-          IconButton(
-              tooltip: 'Ask AI',
-              icon: const Icon(Icons.forum_outlined),
-              onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => ChatScreen(c)))),
+          if (owner)
+            Center(
+                child: Text(
+                    // The session title (a Drill name) stays, small and muted; the default "Study" is dropped.
+                    '${widget.title == 'Study' ? '' : '${widget.title} · '}${t('{n} left', {'n': session.remaining + 1})}',
+                    style: const TextStyle(fontSize: 12, color: Colors.white54)))
+          else
+            IconButton(
+                tooltip: 'Ask AI',
+                icon: const Icon(Icons.forum_outlined),
+                onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => ChatScreen(c)))),
           PopupMenuButton<String>(
             onSelected: (v) async {
               if (v == 'edit') {
@@ -222,11 +238,14 @@ class _StudyScreenState extends State<StudyScreen> {
                 await Db.put('card', c..['suspended'] = true);
                 if (context.mounted) toast(context, 'Card suspended');
                 _next();
+              } else if (v == 'ask') {
+                await Navigator.push(context, MaterialPageRoute(builder: (_) => ChatScreen(c)));
               } else if (v == 'details') {
                 await Navigator.push(context, MaterialPageRoute(builder: (_) => CardDetail(c['id'])));
               }
             },
             itemBuilder: (_) => [
+              if (owner) PopupMenuItem(value: 'ask', child: Text(t('Ask AI'))),
               PopupMenuItem(value: 'edit', child: Text(t('Edit card'))),
               PopupMenuItem(value: 'details', child: Text(t('Card details & history'))),
               PopupMenuItem(value: 'suspend', child: Text(t('Suspend card'))),
@@ -240,6 +259,7 @@ class _StudyScreenState extends State<StudyScreen> {
           Expanded(
             child: ListView(padding: const EdgeInsets.all(16), children: [
               CardView(ans!, key: ObjectKey(ans), revealed: revealed, misconception: misconception, onChanged: () => setState(() {})),
+              if (revealed && owner) _afterReveal(c),
               const SizedBox(height: 80),
             ]),
           ),
@@ -249,6 +269,20 @@ class _StudyScreenState extends State<StudyScreen> {
     );
   }
 
+  /// Tags and Ask AI, only after the reveal (nothing around the card may hint at the answer before).
+  Widget _afterReveal(Json c) {
+    final tags = ((c['tags'] as List?) ?? []).cast<String>();
+    return Padding(
+        padding: const EdgeInsets.only(top: 12),
+        child: Wrap(spacing: 6, runSpacing: 4, crossAxisAlignment: WrapCrossAlignment.center, children: [
+          for (final g in tags) Chip(label: Text(g, style: const TextStyle(fontSize: 12)), visualDensity: VisualDensity.compact),
+          TextButton.icon(
+              icon: const Icon(Icons.forum_outlined, size: 18),
+              label: Text(t('Ask AI')),
+              onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => ChatScreen(c)))),
+        ]));
+  }
+
   Widget _bottom(ColorScheme cs) {
     Widget bar(List<Widget> children) => Container(
         padding: const EdgeInsets.fromLTRB(12, 8, 12, 12),
@@ -256,24 +290,52 @@ class _StudyScreenState extends State<StudyScreen> {
         child: Row(children: [for (final w in children) Expanded(child: Padding(padding: const EdgeInsets.symmetric(horizontal: 4), child: w))]));
     if (!revealed) {
       final ready = ans!.ready;
-      Widget btn(Conf c, String label, IconData icon, Color color) => FilledButton.tonal(
-          style: FilledButton.styleFrom(padding: const EdgeInsets.symmetric(vertical: 14), foregroundColor: color),
-          onPressed: ready
-              ? () => setState(() {
-                    conf = c;
-                    revealed = true;
-                  })
-              : null,
-          child: Column(children: [Icon(icon), Text(label)]));
+      if (!App.isOwner) {
+        Widget btn(Conf c, String label, IconData icon, Color color) => FilledButton.tonal(
+            style: FilledButton.styleFrom(padding: const EdgeInsets.symmetric(vertical: 14), foregroundColor: color),
+            onPressed: ready
+                ? () => setState(() {
+                      conf = c;
+                      revealed = true;
+                    })
+                : null,
+            child: Column(children: [Icon(icon), Text(label)]));
+        return Column(mainAxisSize: MainAxisSize.min, children: [
+          Padding(
+              padding: const EdgeInsets.only(top: 6),
+              child: Text(ready ? t('How confident are you?') : t('Pick an answer first'), style: const TextStyle(color: Colors.white54, fontSize: 12))),
+          bar([
+            btn(Conf.guess, t('Guessing'), Icons.casino_outlined, Colors.orange),
+            btn(Conf.unsure, t('Unsure'), Icons.help_outline, Colors.amber),
+            btn(Conf.sure, t('Sure'), Icons.verified_outlined, Colors.green),
+          ]),
+        ]);
+      }
+      ButtonSegment<Conf> seg(Conf c, String label, Color color) => ButtonSegment(value: c, label: Text(label, style: TextStyle(color: ready ? color : null)));
       return Column(mainAxisSize: MainAxisSize.min, children: [
         Padding(
             padding: const EdgeInsets.only(top: 6),
             child: Text(ready ? t('How confident are you?') : t('Pick an answer first'), style: const TextStyle(color: Colors.white54, fontSize: 12))),
-        bar([
-          btn(Conf.guess, t('Guessing'), Icons.casino_outlined, Colors.orange),
-          btn(Conf.unsure, t('Unsure'), Icons.help_outline, Colors.amber),
-          btn(Conf.sure, t('Sure'), Icons.verified_outlined, Colors.green),
-        ]),
+        Padding(
+            padding: const EdgeInsets.fromLTRB(12, 8, 12, 12),
+            child: SizedBox(
+                width: double.infinity,
+                child: SegmentedButton<Conf>(
+                  emptySelectionAllowed: true,
+                  showSelectedIcon: false,
+                  selected: const {},
+                  segments: [
+                    seg(Conf.guess, t('Guessing'), Colors.orange),
+                    seg(Conf.unsure, t('Unsure'), Colors.amber),
+                    seg(Conf.sure, t('Sure'), Colors.green),
+                  ],
+                  onSelectionChanged: ready
+                      ? (s) => setState(() {
+                            conf = s.first;
+                            revealed = true;
+                          })
+                      : null,
+                ))),
       ]);
     }
     if (!graded && ans!.written) {

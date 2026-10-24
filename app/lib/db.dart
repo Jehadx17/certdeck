@@ -18,6 +18,9 @@ int nowMs() => DateTime.now().millisecondsSinceEpoch;
 /// Bumped on every local write so screens can rebuild.
 final changes = ValueNotifier<int>(0);
 
+/// The owner's selected bottom tab (0 Today, 1 Library, 2 Me); other screens set it to jump.
+final ownerTab = ValueNotifier<int>(0);
+
 /// Everything is a sync document {id, kind, data, updated_at, deleted} (docs/PROTOCOL.md).
 /// A few columns are denormalized from `data` so card/review queries stay cheap.
 class Db {

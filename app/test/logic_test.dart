@@ -163,6 +163,14 @@ void main() {
     expect(pickVersion({'id': 'x', 'ver': 2}, []).$2['id'], 'x');
   });
 
+  test('rewriteOnly skips the original, and falls back to it with no versions', () {
+    final card = {'id': 'a', 'ver': 2, 'question': 'orig'};
+    final vs = [{'question': 'v1'}, {'question': 'v2'}];
+    expect(pickVersion(card, vs, rewriteOnly: true).$1, 1);
+    expect(pickVersion({'id': 'a', 'ver': 0}, vs, rewriteOnly: true).$1, 1);
+    expect(pickVersion(card, const [], rewriteOnly: true).$1, 0);
+  });
+
   test('stats count answering time per day, per confidence and per session', () {
     final today = DateTime(2026, 10, 24).millisecondsSinceEpoch, h = 3600000;
     Map<String, dynamic> r(int ts, int ms, String conf, bool ok) => {'card_id': 'c', 'ts': ts, 'duration_ms': ms, 'confidence': conf, 'correct': ok};
