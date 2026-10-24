@@ -180,6 +180,7 @@ void main() {
     final s = studyStats(reviews, sessions, today: today, days: 3);
     expect(s.todayMs, 80000);
     expect(s.todayCards, 2);
+    expect(s.todayAnswered, 3);
     expect(s.perDayMs, [0, 60000, 80000]);
     expect(s.avgMsByConf, {('sure', true): 40000, ('guess', false): 60000});
     expect([for (final x in s.sessions) (x.ms, x.cards)], [(80000, 3), (60000, 1)]);

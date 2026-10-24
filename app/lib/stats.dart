@@ -30,6 +30,8 @@ class StatsScreen extends StatelessWidget {
               Row(children: [
                 _Tile(_minutes(s.todayMs), t('studied today')),
                 const SizedBox(width: 8),
+                _Tile('${s.todayAnswered}', t('cards today')),
+                const SizedBox(width: 8),
                 _Tile('$sessionsToday', t('sessions today')),
                 const SizedBox(width: 8),
                 _Tile(s.todayCards == 0 ? '–' : '${(s.todayMs / s.todayCards / 1000).round()}s', t('per card today')),

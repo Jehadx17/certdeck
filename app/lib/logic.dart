@@ -340,16 +340,17 @@ Future<double> avgCardSeconds() async {
 }
 
 typedef SessionStat = ({int startedAt, int ms, int cards});
-typedef StudyStatsData = ({int todayMs, int todayCards, List<int> perDayMs, Map<(String, bool), int> avgMsByConf, List<SessionStat> sessions});
+typedef StudyStatsData = ({int todayMs, int todayCards, int todayAnswered, List<int> perDayMs, Map<(String, bool), int> avgMsByConf, List<SessionStat> sessions});
 
 /// The Stats page: answering time only (pauses between cards don't count), from one cert's [reviews] and the
 /// [sessions] the study screen logged. A session counts when at least one of [reviews] falls inside it.
 StudyStatsData studyStats(List<Json> reviews, List<Json> sessions, {required int today, int days = 14}) {
   final todayDay = DateTime.fromMillisecondsSinceEpoch(today);
   final perDay = List.filled(days, 0);
-  var todayMs = 0, todayCards = 0;
+  var todayMs = 0, todayCards = 0, todayAnswered = 0;
   final byConf = <(String, bool), List<int>>{};
   for (final r in reviews) {
+    if ((r['ts'] as int) >= today) todayAnswered++;
     final d = timedMs(r);
     if (d == null) continue;
     final ts = r['ts'] as int;
@@ -373,6 +374,7 @@ StudyStatsData studyStats(List<Json> reviews, List<Json> sessions, {required int
   return (
     todayMs: todayMs,
     todayCards: todayCards,
+    todayAnswered: todayAnswered,
     perDayMs: perDay,
     avgMsByConf: {for (final e in byConf.entries) e.key: e.value.reduce((a, b) => a + b) ~/ e.value.length},
     sessions: out,
