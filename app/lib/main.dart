@@ -27,12 +27,49 @@ Future<void> main() async {
   Updater.check().ignore();
 }
 
+final _scheme = ColorScheme.fromSeed(seedColor: const Color(0xff2dd4bf), brightness: Brightness.dark, surface: const Color(0xff111316));
+
+ThemeData studentTheme() => ThemeData(
+      colorScheme: _scheme,
+      useMaterial3: true,
+      scaffoldBackgroundColor: _scheme.surface,
+      cardTheme: CardTheme(color: _scheme.surfaceContainerLow, elevation: 0, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
+      appBarTheme: AppBarTheme(backgroundColor: _scheme.surface, scrolledUnderElevation: 0),
+    );
+
+// Owner-only refinement: rounder, tone-separated surfaces, muted secondary text.
+ThemeData ownerTheme() {
+  final s = _scheme;
+  final btn = RoundedRectangleBorder(borderRadius: BorderRadius.circular(14));
+  const pad = EdgeInsets.symmetric(vertical: 14, horizontal: 20);
+  final base = ThemeData(brightness: Brightness.dark, useMaterial3: true).textTheme;
+  return ThemeData(
+    colorScheme: s,
+    useMaterial3: true,
+    scaffoldBackgroundColor: s.surface,
+    cardTheme: CardTheme(color: s.surfaceContainerLow, elevation: 0, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16))),
+    filledButtonTheme: FilledButtonThemeData(style: FilledButton.styleFrom(shape: btn, padding: pad)),
+    outlinedButtonTheme: OutlinedButtonThemeData(style: OutlinedButton.styleFrom(shape: btn, padding: pad)),
+    navigationBarTheme: NavigationBarThemeData(
+      backgroundColor: s.surface,
+      indicatorColor: s.secondaryContainer,
+      labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
+    ),
+    listTileTheme: const ListTileThemeData(contentPadding: EdgeInsets.symmetric(horizontal: 16)),
+    chipTheme: const ChipThemeData(shape: StadiumBorder(), side: BorderSide.none),
+    textTheme: base.copyWith(
+      bodyMedium: base.bodyMedium?.copyWith(color: s.onSurfaceVariant),
+      bodySmall: base.bodySmall?.copyWith(color: s.onSurfaceVariant),
+    ),
+    appBarTheme: AppBarTheme(backgroundColor: s.surface, scrolledUnderElevation: 0, centerTitle: false),
+  );
+}
+
 class CertDeck extends StatelessWidget {
   const CertDeck({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final scheme = ColorScheme.fromSeed(seedColor: const Color(0xff2dd4bf), brightness: Brightness.dark, surface: const Color(0xff111316));
     // Rebuilds on settings changes so a language switch applies at once (Arabic = right-to-left everywhere).
     return ValueListenableBuilder(
       valueListenable: changes,
@@ -43,13 +80,7 @@ class CertDeck extends StatelessWidget {
       supportedLocales: const [Locale('en'), Locale('ar')],
       localizationsDelegates: GlobalMaterialLocalizations.delegates,
       themeMode: ThemeMode.dark,
-      darkTheme: ThemeData(
-        colorScheme: scheme,
-        useMaterial3: true,
-        scaffoldBackgroundColor: scheme.surface,
-        cardTheme: CardTheme(color: scheme.surfaceContainerLow, elevation: 0, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
-        appBarTheme: AppBarTheme(backgroundColor: scheme.surface, scrolledUnderElevation: 0),
-      ),
+      darkTheme: App.isOwner ? ownerTheme() : studentTheme(),
       // Keyed by language and role: switching either rebuilds every screen (strings, direction, which tabs).
       home: UpdateGate(key: ValueKey('${App.lang}/${App.role}'), child: const Shell()),
     ));
