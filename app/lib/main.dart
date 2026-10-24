@@ -120,7 +120,7 @@ class _ShellState extends State<Shell> with WidgetsBindingObserver {
     final tabs = [
       (const TodayScreen(), Icons.home_outlined, Icons.home, t('Today')),
       (const LibraryScreen(), Icons.style_outlined, Icons.style, t('Library')),
-      (const SettingsScreen(), Icons.person_outline, Icons.person, t('Me')), // Task 6: Me screen
+      (const SettingsScreen(), Icons.person_outline, Icons.person, t('Me')),
     ];
     final i = tab.clamp(0, tabs.length - 1);
     return Scaffold(
