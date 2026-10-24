@@ -1,0 +1,437 @@
+[
+ {
+  "card_id": "8ff5df4f-f7c1-45cb-a445-1ee8e42b3207",
+  "tags": [
+   "s3",
+   "encryption",
+   "sse-s3",
+   "sse-kms",
+   "dsse-kms",
+   "sse-c",
+   "client-side",
+   "kms"
+  ]
+ },
+ {
+  "card_id": "908d13fa-1675-4c6b-a37c-28b213994b51",
+  "tags": [
+   "s3",
+   "event-notifications",
+   "sns",
+   "sqs",
+   "lambda"
+  ]
+ },
+ {
+  "card_id": "90a929b5-9077-4e97-b154-f0fc46f4ca81",
+  "tags": [
+   "cloudfront",
+   "geo-restriction",
+   "route53",
+   "geolocation"
+  ]
+ },
+ {
+  "card_id": "915b67c0-a4ed-45c1-99c9-b92408dd74d4",
+  "tags": [
+   "ebs",
+   "instance-store",
+   "ec2",
+   "snapshots"
+  ]
+ },
+ {
+  "card_id": "9164895a-9b55-45cc-9e4b-ff4f4176df7b",
+  "tags": [
+   "elb",
+   "stickiness",
+   "cookies",
+   "alb"
+  ]
+ },
+ {
+  "card_id": "9206bb46-0d59-410a-81e8-f71c3a32bd23",
+  "tags": [
+   "s3",
+   "mfa-delete",
+   "versioning",
+   "iam",
+   "root-user"
+  ]
+ },
+ {
+  "card_id": "92085b0f-a356-46db-97df-4f54d1604085",
+  "tags": [
+   "billing",
+   "budgets",
+   "cost-explorer",
+   "alarms"
+  ]
+ },
+ {
+  "card_id": "93d05910-6a15-4b88-bd37-c8a9fc7d3e19",
+  "tags": [
+   "s3",
+   "object-lambda",
+   "lambda",
+   "access-points"
+  ]
+ },
+ {
+  "card_id": "93ea49c9-4c3e-4e0d-bc45-9fae3e0e6421",
+  "tags": [
+   "rds-proxy",
+   "lambda",
+   "rds"
+  ]
+ },
+ {
+  "card_id": "95bc93b1-bdf9-4a33-b60e-007c734c8ff5",
+  "tags": [
+   "s3",
+   "byte-range",
+   "performance",
+   "multipart",
+   "transfer-acceleration"
+  ]
+ },
+ {
+  "card_id": "95de57f0-3450-43e5-923d-1d4f3ba50fa5",
+  "tags": [
+   "ssl",
+   "elb",
+   "alb",
+   "acm",
+   "encryption-in-transit"
+  ]
+ },
+ {
+  "card_id": "96b8ed93-16a6-4745-ab49-f4415f6dcabc",
+  "tags": [
+   "vpc",
+   "regions",
+   "availability-zones"
+  ]
+ },
+ {
+  "card_id": "96d0d730-ca75-4400-a383-6380d89bd910",
+  "tags": [
+   "vpc",
+   "nacl",
+   "troubleshooting",
+   "security-groups"
+  ]
+ },
+ {
+  "card_id": "9774c388-fe04-4d6d-b1f5-c96cdf9d1768",
+  "tags": [
+   "cli",
+   "mfa",
+   "sts",
+   "troubleshooting",
+   "access-keys",
+   "credentials"
+  ]
+ },
+ {
+  "card_id": "97b39b16-276d-4b13-a834-a622c7fbf995",
+  "tags": [
+   "ec2",
+   "user-data",
+   "amazon-linux"
+  ]
+ },
+ {
+  "card_id": "98338471-befe-4e37-8021-8a518aae2d9e",
+  "tags": [
+   "ebs",
+   "efs",
+   "scenario",
+   "instance-store",
+   "storage"
+  ]
+ },
+ {
+  "card_id": "98aa94e5-4a45-4aad-abf1-ff893fc49fc6",
+  "tags": [
+   "gwlb"
+  ]
+ },
+ {
+  "card_id": "98e6db4a-9792-4343-abcd-61e093238ff2",
+  "tags": [
+   "route53",
+   "routing-policies",
+   "geolocation",
+   "geoproximity",
+   "weighted",
+   "failover",
+   "ip-based",
+   "multi-value"
+  ]
+ },
+ {
+  "card_id": "99587505-e73e-4db8-8caf-affaf991e5ff",
+  "tags": [
+   "snapshots",
+   "fsr",
+   "ebs"
+  ]
+ },
+ {
+  "card_id": "99955254-5244-4ea7-ac8f-95c412cc1509",
+  "tags": [
+   "sigv4",
+   "presigned-url",
+   "authentication",
+   "s3"
+  ]
+ },
+ {
+  "card_id": "9a373b98-0cb9-420f-adff-2a850299cb48",
+  "tags": [
+   "elb",
+   "cross-zone",
+   "alb",
+   "nlb",
+   "gwlb"
+  ]
+ },
+ {
+  "card_id": "9b5e8252-b7eb-4e51-8554-5b2904aab9e9",
+  "tags": [
+   "aurora",
+   "endpoints",
+   "rds"
+  ]
+ },
+ {
+  "card_id": "9bfa93b7-bbdd-4a77-8d0a-684f262d8fb7",
+  "tags": [
+   "s3",
+   "object-lambda",
+   "access-points",
+   "lambda"
+  ]
+ },
+ {
+  "card_id": "9cddbf09-947d-4e35-aa0e-312e94152430",
+  "tags": [
+   "elb",
+   "health-checks",
+   "alb",
+   "target-groups"
+  ]
+ },
+ {
+  "card_id": "9f02741a-0dbf-43f7-9fd1-b221516e7261",
+  "tags": [
+   "s3",
+   "presigned-url",
+   "signed-urls"
+  ]
+ },
+ {
+  "card_id": "9f2990ea-023e-4c10-8f16-22a8f2968e3e",
+  "tags": [
+   "vpc",
+   "endpoints",
+   "s3",
+   "igw",
+   "nat",
+   "dynamodb"
+  ]
+ },
+ {
+  "card_id": "a0e06b95-4559-4dac-9953-4099064cf57f",
+  "tags": [
+   "cli",
+   "mfa",
+   "sts",
+   "access-keys",
+   "credentials"
+  ]
+ },
+ {
+  "card_id": "a1a33afb-2b65-4552-b81f-95905aea58bc",
+  "tags": [
+   "iam",
+   "mfa",
+   "fido"
+  ]
+ },
+ {
+  "card_id": "a2d6093a-6877-4203-b638-9bd6ca8c8674",
+  "tags": [
+   "s3",
+   "encryption-in-transit",
+   "encryption"
+  ]
+ },
+ {
+  "card_id": "a2eb618f-d649-41bd-8508-19748a0031a3",
+  "tags": [
+   "vpc",
+   "nacl",
+   "security-groups"
+  ]
+ },
+ {
+  "card_id": "a4f22650-5aae-4733-9bf5-3da134c174b8",
+  "tags": [
+   "vpc",
+   "default-vpc",
+   "subnets",
+   "igw"
+  ]
+ },
+ {
+  "card_id": "a504612e-6865-415b-b7c2-175f78ebb7c7",
+  "tags": [
+   "caching",
+   "write-through",
+   "lazy-loading"
+  ]
+ },
+ {
+  "card_id": "a51ea63d-1998-43ab-906d-5e9227276e81",
+  "tags": [
+   "vpc",
+   "security-groups",
+   "nacl"
+  ]
+ },
+ {
+  "card_id": "a589c8bd-a3bd-4e7f-9879-1fadeb42fd14",
+  "tags": [
+   "ebs",
+   "volume-types",
+   "ami",
+   "instance-types"
+  ]
+ },
+ {
+  "card_id": "a5e43dba-12ec-4fe0-949b-93204d4c96d7",
+  "tags": [
+   "s3",
+   "metadata",
+   "tags",
+   "objects"
+  ]
+ },
+ {
+  "card_id": "a648bddb-0e3b-4544-89cf-bcc22959c89a",
+  "tags": [
+   "cors",
+   "headers"
+  ]
+ },
+ {
+  "card_id": "a68fdb6a-06c9-4dae-93b8-e0291d70dba6",
+  "tags": [
+   "s3",
+   "event-notifications",
+   "eventbridge",
+   "sns",
+   "sqs",
+   "lambda"
+  ]
+ },
+ {
+  "card_id": "a6accb4c-aa00-42e7-bf50-8a705625b685",
+  "tags": [
+   "s3",
+   "storage-classes",
+   "one-zone",
+   "intelligent-tiering"
+  ]
+ },
+ {
+  "card_id": "a713b724-0c66-4ae6-b4b8-9e6d9960a3a9",
+  "tags": [
+   "efs",
+   "one-zone",
+   "storage-classes"
+  ]
+ },
+ {
+  "card_id": "a7b6b373-5702-407d-8a78-b319746b0a46",
+  "tags": [
+   "nlb",
+   "health-checks"
+  ]
+ },
+ {
+  "card_id": "a85fb0d6-069b-4f04-9346-02eefbeb5f7c",
+  "tags": [
+   "efs",
+   "networking",
+   "subnets",
+   "security-groups"
+  ]
+ },
+ {
+  "card_id": "a9222b22-28f7-4528-b594-b59d7122cc43",
+  "tags": [
+   "elasticache",
+   "sessions",
+   "redis",
+   "memcached",
+   "alb"
+  ]
+ },
+ {
+  "card_id": "a9247453-1a06-4174-954f-09c229ca78ff",
+  "tags": [
+   "exponential-backoff",
+   "retries",
+   "throttling"
+  ]
+ },
+ {
+  "card_id": "a9d22178-285f-427b-b360-5b78f17ac080",
+  "tags": [
+   "ebs",
+   "volume-types",
+   "efs"
+  ]
+ },
+ {
+  "card_id": "aa391c3a-5dc9-4e60-abe7-2897bb64eab8",
+  "tags": [
+   "pricing",
+   "capacity",
+   "savings-plans",
+   "on-demand",
+   "reserved-instances",
+   "ec2"
+  ]
+ },
+ {
+  "card_id": "aa490f79-c160-4f18-b028-f07479f22619",
+  "tags": [
+   "ec2",
+   "user-data",
+   "troubleshooting"
+  ]
+ },
+ {
+  "card_id": "aa905b14-dea7-4864-9c36-40810444fd64",
+  "tags": [
+   "vpc",
+   "vpn",
+   "direct-connect",
+   "encryption"
+  ]
+ },
+ {
+  "card_id": "ab286a8d-e638-4355-b55b-6d23fed59322",
+  "tags": [
+   "s3",
+   "bucket-policy",
+   "troubleshooting",
+   "iam",
+   "policies"
+  ]
+ }
+]
