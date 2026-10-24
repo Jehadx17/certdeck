@@ -103,7 +103,14 @@ class _WeakSpotsScreenState extends State<WeakSpotsScreen> {
                   child: ListTile(
                 title: Text(weakTitle(w)),
                 subtitle: Text(weakEvidence(w)),
-                trailing: ActionChip(label: Text(_actionLabel(w)), onPressed: () => drill(context, w)),
+                trailing: Row(mainAxisSize: MainAxisSize.min, children: [
+                  if (w.kind == WeakKind.tag)
+                    IconButton(
+                        tooltip: t('See cards'),
+                        icon: const Icon(Icons.style_outlined),
+                        onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => CardsScreen(tag: w.title)))),
+                  ActionChip(label: Text(_actionLabel(w)), onPressed: () => drill(context, w)),
+                ]),
                 onTap: () => drill(context, w),
               )),
             const SizedBox(height: 8),

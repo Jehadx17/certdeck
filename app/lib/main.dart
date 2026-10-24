@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'api.dart';
-import 'cards.dart';
 import 'db.dart';
 import 'home.dart';
+import 'library.dart';
 import 'i18n.dart';
 import 'easy.dart';
 import 'logic.dart';
@@ -119,7 +119,7 @@ class _ShellState extends State<Shell> with WidgetsBindingObserver {
     if (!App.isOwner) return const EasyHome(); // students: the easy app; their setup screens are under "My courses" (EASY.md)
     final tabs = [
       (const TodayScreen(), Icons.home_outlined, Icons.home, t('Today')),
-      (const CardsScreen(), Icons.style_outlined, Icons.style, t('Library')), // Task 5: LibraryScreen
+      (const LibraryScreen(), Icons.style_outlined, Icons.style, t('Library')),
       (const SettingsScreen(), Icons.person_outline, Icons.person, t('Me')), // Task 6: Me screen
     ];
     final i = tab.clamp(0, tabs.length - 1);

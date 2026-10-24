@@ -124,7 +124,7 @@ class TodayScreen extends StatelessWidget {
                 const SizedBox(width: 8),
                 Expanded(
                     child: OutlinedButton.icon(
-                        onPressed: () => _push(context, Scaffold(appBar: AppBar(title: Text(t('Generate cards'))), body: const GenerateTab())),
+                        onPressed: () => _push(context, generateScreen()),
                         icon: const Icon(Icons.auto_awesome),
                         label: Text(t('Generate')))),
               ]),

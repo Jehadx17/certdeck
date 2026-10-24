@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'api.dart';
 import 'cards.dart';
 import 'db.dart';
+import 'i18n.dart';
 import 'logic.dart';
 import 'widgets.dart';
 
@@ -47,6 +48,9 @@ class AiScreen extends StatelessWidget {
         ),
       );
 }
+
+/// GenerateTab as its own screen (Today and Library open it this way).
+Widget generateScreen() => Scaffold(appBar: AppBar(title: Text(t('Generate cards'))), body: const GenerateTab());
 
 class GenerateTab extends StatefulWidget {
   final String? domain, topic;
