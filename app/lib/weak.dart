@@ -66,3 +66,11 @@ Future<List<WeakSpot>> loadWeakSpots(Json cert) async {
     ..sort((a, b) => ((b['created_at'] as int?) ?? 0).compareTo((a['created_at'] as int?) ?? 0));
   return weakSpots(cards, reviews, analysis: list.isEmpty ? null : list.first);
 }
+
+/// Cards of a weak spot to drill: due (or new) first, then soonest due (least retained); suspended out.
+List<Json> drillQueue(WeakSpot w, List<Json> cards, {int limit = 20}) {
+  final ids = w.cardIds.toSet();
+  final l = cards.where((c) => ids.contains(c['id']) && !isSuspended(c)).toList()
+    ..sort((a, b) => dueOf(a).compareTo(dueOf(b))); // due ones have dueOf <= now, so they sort first
+  return l.take(limit).toList();
+}

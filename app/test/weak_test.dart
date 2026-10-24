@@ -48,4 +48,12 @@ void main() {
     final rs = List.generate(6, (_) => r('a', false));
     expect(weakSpots([c('a')], rs).where((w) => w.kind == WeakKind.tag), isEmpty);
   });
+  test('drill: suspended out, due first, then soonest due, capped', () {
+    final now = DateTime.now().millisecondsSinceEpoch, day = 86400000;
+    Json k(String id, int due, {bool susp = false}) => {'id': id, 'fsrs': {'due': due}, if (susp) 'suspended': true};
+    final cards = [k('later', now + 9 * day), k('soon', now + day), k('susp', now - day, susp: true), k('due', now - day), k('other', now - day)];
+    const w = WeakSpot(WeakKind.tag, 'KMS', 3, 4, ['later', 'soon', 'susp', 'due']);
+    expect(drillQueue(w, cards).map((c) => c['id']), ['due', 'soon', 'later']);
+    expect(drillQueue(w, cards, limit: 1).map((c) => c['id']), ['due']);
+  });
 }

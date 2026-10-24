@@ -52,8 +52,10 @@ class StudyScreen extends StatefulWidget {
   final bool practice;
   /// "Do more" at the end of a easy session.
   final VoidCallback? onMore;
+  /// Drill: show only rewritten versions, never the original wording.
+  final bool rewriteOnly;
   const StudyScreen(this.queue,
-      {super.key, this.source = 'study', this.title = 'Study', this.custom, this.scheduler, this.easy = false, this.practice = false, this.onMore});
+      {super.key, this.source = 'study', this.title = 'Study', this.custom, this.scheduler, this.easy = false, this.practice = false, this.onMore, this.rewriteOnly = false});
   @override
   State<StudyScreen> createState() => _StudyScreenState();
 }
@@ -71,7 +73,7 @@ class _StudyScreenState extends State<StudyScreen> {
   late final int planned = widget.custom?.remaining ?? widget.queue.length;
   bool completed = false, studying = false; // studying: a new card shown first, for a student new to the subject
   Map<String, List> versions = {}; // card id -> its rewritten versions ("Rotate card versions" on)
-  bool loading = App.settings['rotate_versions'] == true;
+  late bool loading = App.settings['rotate_versions'] == true || widget.rewriteOnly;
   int shownVer = 0;
 
   @override
@@ -116,7 +118,7 @@ class _StudyScreenState extends State<StudyScreen> {
         card = session.next();
         ans = null;
         if (card != null) {
-          final (i, shown) = pickVersion(card!, versions[card!['id']] ?? const []);
+          final (i, shown) = pickVersion(card!, versions[card!['id']] ?? const [], rewriteOnly: widget.rewriteOnly);
           shownVer = i;
           ans = AnswerState(shown);
         }
