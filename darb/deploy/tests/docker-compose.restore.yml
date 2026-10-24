@@ -1,7 +1,0 @@
-# Restore test: the backup repository is a separate volume (pgBackRest posix repo) standing in for R2. The same test
-# against R2 runs on the server (docs/DARB-RESTORE.md).
-services:
-  db:
-    volumes: ["backups:/var/lib/pgbackrest"]
-volumes:
-  backups: {}

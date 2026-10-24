@@ -1,7 +1,0 @@
-# Postgres 16 + pgBackRest (WAL archive and backups to R2) + PgBouncer, all from the Debian packages.
-FROM postgres:16-bookworm
-RUN apt-get update && apt-get install -y --no-install-recommends pgbackrest pgbouncer ca-certificates \
-    && rm -rf /var/lib/apt/lists/* && mkdir -p /var/lib/pgbackrest /var/log/pgbackrest /var/spool/pgbackrest \
-    && chown -R postgres:postgres /var/lib/pgbackrest /var/log/pgbackrest /var/spool/pgbackrest
-COPY deploy/pgbouncer.sh deploy/backup.sh /usr/local/bin/
-COPY --chmod=755 deploy/initdb-pgbackrest.sh /docker-entrypoint-initdb.d/90-pgbackrest.sh
