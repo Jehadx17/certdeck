@@ -242,6 +242,7 @@ const _ar = <String, String>{
   'Back': 'رجوع',
   '{n} left': 'تبقى {n}',
   'Edit card': 'تعديل البطاقة',
+  'Ask AI': 'اسأل الذكاء الاصطناعي',
   'Card details & history': 'تفاصيل البطاقة وسجلها',
   'Suspend card': 'إيقاف البطاقة',
   'New': 'جديدة',
