@@ -139,6 +139,21 @@ void main() {
     expect(q.skip(5).map((c) => c['id']), ['7', '6']); // not studied: importance beats age
   });
 
+  test('cards added since yesterday come first without picking a topic', () {
+    final cert = {
+      'id': 'X',
+      'domains': [
+        {'id': '1', 'weight': 1}
+      ]
+    };
+    final cards = [
+      {'id': 'old', 'created_at': 1, 'certs': {'X': '1'}, 'tags': ['s3']},
+      {'id': 'yesterday', 'created_at': startOfToday() - 3600000, 'certs': {'X': '1'}, 'tags': ['ecs']},
+    ];
+    expect(orderNew(cards, cert, importance: {'old': 9}).map((c) => c['id']), ['yesterday', 'old']);
+    expect(studiedToday(cards[0], {}), false);
+  });
+
   test('a miss raises priority up to 2; Sure+correct twice in a row lowers it down to 0', () {
     expect(priorityAfter(0, correct: false, sureStreak: 0), 1);
     expect(priorityAfter(2, correct: false, sureStreak: 0), 2);

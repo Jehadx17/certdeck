@@ -300,7 +300,11 @@ int startOfToday() {
   return (limit: max(base, paced), paced: paced, remaining: remaining, days: d);
 }
 
-bool studiedToday(Json c, Set<String> studied) => ((c['tags'] as List?) ?? []).any(studied.contains);
+/// A card from the course the student is working through: tagged with a topic [studied] today, or added since yesterday
+/// (a section's import), so it comes first and skips the daily new-card limit.
+bool studiedToday(Json c, Set<String> studied) =>
+    ((c['tags'] as List?) ?? []).any(studied.contains) ||
+    ((c['created_at'] as int?) ?? 0) >= startOfToday() - Duration.millisecondsPerDay;
 
 /// New cards with a tag [studied] today come first, most [importance] first and taking turns across those topics; the
 /// rest follow the greedy weighted interleave: next new card comes from the domain whose introduced share lags its exam
@@ -308,7 +312,7 @@ bool studiedToday(Json c, Set<String> studied) => ((c['tags'] as List?) ?? []).a
 List<Json> orderNew(List<Json> cards, Json cert, {Set<String> studied = const {}, Map<String, int> importance = const {}}) {
   int byImportance(Json a, Json b) => (importance[b['id']] ?? 5).compareTo(importance[a['id']] ?? 5);
   final first = interleave(cards.where((c) => isNew(c) && !isSuspended(c) && studiedToday(c, studied)).toList()..sort(byImportance),
-      key: (c) => ((c['tags'] as List?) ?? []).firstWhere(studied.contains) as String);
+      key: (c) => ((c['tags'] as List?) ?? []).firstWhere(studied.contains, orElse: () => '') as String);
   final pools = <String, List<Json>>{};
   final introduced = <String, int>{};
   for (final c in cards.where((c) => !isSuspended(c) && !first.contains(c))) {
