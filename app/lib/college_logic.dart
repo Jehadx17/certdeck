@@ -189,11 +189,11 @@ Triage plan(Scope s, int minutes) {
   return Triage(interleave(master), skim, skip, minutes);
 }
 
-/// Round-robin across sections so similar cards don't come back to back (interleaving), keeping each section's order.
-List<Json> interleave(List<Json> cards) {
+/// Round-robin across sections (or [key]) so similar cards don't come back to back (interleaving), keeping each group's order.
+List<Json> interleave(List<Json> cards, {String Function(Json c)? key}) {
   final by = <String, List<Json>>{};
   for (final c in cards) {
-    (by[c['section'] ?? ''] ??= []).add(c);
+    (by[key?.call(c) ?? c['section'] ?? ''] ??= []).add(c);
   }
   final out = <Json>[];
   while (by.values.any((l) => l.isNotEmpty)) {

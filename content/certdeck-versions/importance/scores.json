@@ -1,0 +1,2162 @@
+{
+ "DVA-C02": {
+  "6b3efa5f-5e35-4a56-80ef-1619b4194ed4": {
+   "score": 2,
+   "reason": "EC2 purchasing/Savings Plans is SAA cost topic, barely in DVA"
+  },
+  "bc27258a-5678-429b-b5cc-3462dc25045a": {
+   "score": 2,
+   "reason": "EBS Multi-Attach file-system detail is infra trivia"
+  },
+  "68c5b237-be9d-4b04-9802-e3a94ed093b5": {
+   "score": 2,
+   "reason": "Capacity reservations are purchasing, not developer scope"
+  },
+  "29e0a708-0b15-4f7f-9aa7-580c1afc59a5": {
+   "score": 4,
+   "reason": "Global vs regional services is basic background"
+  },
+  "04525c31-ce03-4907-b568-e57e895173c3": {
+   "score": 3,
+   "reason": "IAM user administration/auditing is out of DVA scope"
+  },
+  "d15e001f-ca7e-496f-858a-b1dff1c11ee0": {
+   "score": 4,
+   "reason": "EBS delete-on-termination default is occasional EC2 basics"
+  },
+  "8adacc6e-76eb-422e-9748-beda56bc3efa": {
+   "score": 6,
+   "reason": "Redis vs Memcached features appear in caching questions"
+  },
+  "f2abad84-4802-404b-ba80-cf365c72bdfb": {
+   "score": 4,
+   "reason": "S3 replication nuance, tested occasionally"
+  },
+  "133ee3e9-294b-4e39-aa4d-d05d8bc728a9": {
+   "score": 7,
+   "reason": "Roles for EC2/Lambda underpin app authentication to AWS"
+  },
+  "e251b925-e66a-463c-b160-3c22ecd64bf3": {
+   "score": 4,
+   "reason": "CloudFront field-level encryption is a niche encryption option"
+  },
+  "a9247453-1a06-4174-954f-09c229ca78ff": {
+   "score": 8,
+   "reason": "Backoff with jitter is explicit in skill 1.1.13 resilient code"
+  },
+  "5866c40d-7d62-49f2-81e0-4ae5d897f1e9": {
+   "score": 3,
+   "reason": "Three-tier architecture ordering is design, out of DVA scope"
+  },
+  "fa53fbe4-2272-491c-bb7d-264f182e17fc": {
+   "score": 5,
+   "reason": "ALB path routing appears in ELB/ECS scenarios"
+  },
+  "49ea36f2-b12a-4222-87ee-c7f3b9cac6ac": {
+   "score": 6,
+   "reason": "Recognising SigV4/pre-signed URLs ties to authenticated calls"
+  },
+  "8d215d48-6405-4950-a116-7b459d478a53": {
+   "score": 2,
+   "reason": "VPC peering CIDR design is networking design, out of scope"
+  },
+  "cc6bffde-2f2a-414f-bad3-9310ace0c587": {
+   "score": 2,
+   "reason": "Site-to-Site VPN is hybrid networking, out of scope"
+  },
+  "f2e609bf-f60f-4653-9067-47588733d38f": {
+   "score": 5,
+   "reason": "Prefixes matter for S3 per-prefix performance questions"
+  },
+  "3aea6682-ef05-4fd6-a379-589e0ef1d5f0": {
+   "score": 3,
+   "reason": "EFS throughput modes are rarely tested for DVA"
+  },
+  "28305cdf-3063-4a8a-9292-662ce94d840b": {
+   "score": 2,
+   "reason": "ALB IP-target ranges are networking trivia"
+  },
+  "fafb91f2-a9d3-4d54-b1bd-18cbe9e84959": {
+   "score": 7,
+   "reason": "SDK built-in retries is a frequent developer fact"
+  },
+  "de7b26e9-e757-4714-8ea1-ece6d88fd974": {
+   "score": 2,
+   "reason": "Reserved Instance types are purchasing, not DVA"
+  },
+  "871acd14-efc1-4b95-9d3d-2e27a719c351": {
+   "score": 8,
+   "reason": "Caching strategies (lazy loading/write-through/TTL) are in skill 1.3.8"
+  },
+  "4a0d24d2-8d42-43e8-96ae-065466602e92": {
+   "score": 4,
+   "reason": "ASG instance refresh is a minor deployment option"
+  },
+  "5f22811b-efbe-42a2-80ba-335bb0b8d011": {
+   "score": 3,
+   "reason": "Route 53 geoproximity bias is mostly SAA"
+  },
+  "0631341c-cd1b-4b67-b8fc-9f6ab7fef995": {
+   "score": 7,
+   "reason": "STS GetSessionToken for MFA CLI is programmatic access"
+  },
+  "5b5c56d3-7b00-40bf-b2b9-8d383f4dd6de": {
+   "score": 6,
+   "reason": "Read replicas vs Multi-AZ is a common data store trap"
+  },
+  "7e5c12e1-1596-4bd4-84ce-b4376ab9d388": {
+   "score": 3,
+   "reason": "ASG cooldown is ops detail, rarely tested for DVA"
+  },
+  "290cb282-a816-4a4d-a728-b9837283e987": {
+   "score": 6,
+   "reason": "CLI named profiles are core programmatic access"
+  },
+  "9164895a-9b55-45cc-9e4b-ff4f4176df7b": {
+   "score": 3,
+   "reason": "Reserved ELB cookie names are trivia"
+  },
+  "16648582-2001-4184-b2ff-a1e0f6c7da00": {
+   "score": 5,
+   "reason": "S3 replication prerequisites tested sometimes"
+  },
+  "3868d09b-6438-49fa-a8a6-af4f2fa201ef": {
+   "score": 5,
+   "reason": "EFS for shared multi-AZ files is a common storage pick"
+  },
+  "e29c759f-0ed6-461b-9535-145717918b6b": {
+   "score": 3,
+   "reason": "Route 53 IP-based routing is mostly SAA"
+  },
+  "14b7c074-b82a-4cb5-bd1d-ed4c7694ae55": {
+   "score": 6,
+   "reason": "IMDS vs user data relevant to instance credentials/bootstrap"
+  },
+  "761b93ff-a6fe-4c0c-a217-2b9b9d0c8e86": {
+   "score": 3,
+   "reason": "Sticky cookie naming details are trivia"
+  },
+  "a0e06b95-4559-4dac-9953-4099064cf57f": {
+   "score": 7,
+   "reason": "MFA-backed CLI credentials via STS is programmatic access"
+  },
+  "ec00370c-032c-4fe6-bca5-6a789804f381": {
+   "score": 3,
+   "reason": "Generic S3 use cases are too basic to be tested"
+  },
+  "5fa9191d-4d53-4488-b436-21092c3f6f58": {
+   "score": 2,
+   "reason": "Instance family categories are SAA/CCP trivia"
+  },
+  "17432a9b-bf32-4b36-8f15-cc994ea925d9": {
+   "score": 4,
+   "reason": "Publishing RDS logs to CloudWatch Logs, occasional"
+  },
+  "1231a3d9-b984-4abb-a877-3039e928cfff": {
+   "score": 5,
+   "reason": "Null version ID for pre-versioning objects is a known S3 trap"
+  },
+  "ebfb90be-5a60-4fd6-82a2-9c35d7305fc7": {
+   "score": 2,
+   "reason": "EFS performance modes are architecture detail"
+  },
+  "e9df98a1-30b6-4950-9f0e-ec45fb89735a": {
+   "score": 6,
+   "reason": "Timeout implies security group is a classic troubleshooting fact"
+  },
+  "7692eda4-d1f0-4b12-9ad2-ba69c4b0ce0a": {
+   "score": 5,
+   "reason": "Intelligent-Tiering relates to data lifecycle choices"
+  },
+  "111fc471-69d9-41ea-ae3d-5d335f6a0cb8": {
+   "score": 3,
+   "reason": "DNS record types are background knowledge"
+  },
+  "7178eacc-d9f9-469e-bf2f-296f92cdf712": {
+   "score": 5,
+   "reason": "NLB vs ALB choice appears in ELB questions"
+  },
+  "0bc0df12-48b5-4d51-ab4d-db2a73546b90": {
+   "score": 5,
+   "reason": "ALB Lambda targets and L7 routing, tested sometimes"
+  },
+  "9f02741a-0dbf-43f7-9fd1-b221516e7261": {
+   "score": 8,
+   "reason": "Pre-signed URLs for temporary private access are heavily tested"
+  },
+  "8dbabccb-b404-4d9f-b4e4-76a186ae255e": {
+   "score": 2,
+   "reason": "Object tag limit is pure trivia"
+  },
+  "f20e1167-618d-49f1-9ee4-5fc53dada8c8": {
+   "score": 1,
+   "reason": "Billing console IAM access is account admin trivia"
+  },
+  "22a8a0a3-3c8f-43f3-bd2b-eafe00c0fd81": {
+   "score": 8,
+   "reason": "S3 CORS configuration is a frequent developer scenario"
+  },
+  "87dfb10f-abfd-40a4-a9f2-90fd47c3b5f5": {
+   "score": 4,
+   "reason": "Storage class retrieval-fee detail, occasional"
+  },
+  "52eb421c-5ab4-44bc-84a7-27119ce11d66": {
+   "score": 6,
+   "reason": "X-Forwarded-For for client IP behind ALB is a common question"
+  },
+  "455cea93-a154-4844-b3a1-36665de057ef": {
+   "score": 5,
+   "reason": "Sticky sessions vs stateless sessions, tested sometimes"
+  },
+  "6131eea3-1a14-407e-92c4-52aad5673b87": {
+   "score": 6,
+   "reason": "Reading IAM policy elements is part of defining permissions"
+  },
+  "b3ec2b08-8d6c-415a-b8a0-d46e93a3faf1": {
+   "score": 6,
+   "reason": "SSE-S3 default encryption is a common encryption fact"
+  },
+  "3babd413-5533-49b8-9cac-497f3de45336": {
+   "score": 4,
+   "reason": "S3 Access Points are an occasional access-control option"
+  },
+  "8ff5df4f-f7c1-45cb-a445-1ee8e42b3207": {
+   "score": 8,
+   "reason": "SSE-S3/KMS/C and client-side comparison is core skill 2.2.3"
+  },
+  "4cb50ecb-6d94-42c1-a68b-ae285eab6d0f": {
+   "score": 3,
+   "reason": "Storage class cost picks are more SAA than DVA"
+  },
+  "7732e2a9-3046-4d02-95f8-ea8f4aeea3d9": {
+   "score": 4,
+   "reason": "Glacier Deep Archive for long-term retention, occasional"
+  },
+  "c841af71-be92-46bf-8b82-6cc2762ed838": {
+   "score": 3,
+   "reason": "Route 53 IP-based routing is mostly SAA"
+  },
+  "4642e68a-165e-4468-a601-11d9c2987dce": {
+   "score": 5,
+   "reason": "S3 per-prefix request rate math, tested sometimes"
+  },
+  "024ad5e4-765c-46bd-ad24-c2f42caf32ee": {
+   "score": 6,
+   "reason": "CloudFront in front of S3 for latency is a common pattern"
+  },
+  "89dae12c-3323-46bb-9c4c-1601fcde49f9": {
+   "score": 5,
+   "reason": "CloudFront TTL and Cache-Control headers relate to skill 4.3.5"
+  },
+  "110f92ba-95e5-40db-9057-8ab6fc3cec95": {
+   "score": 7,
+   "reason": "CORS request flow underpins frequent S3/API CORS questions"
+  },
+  "a648bddb-0e3b-4544-89cf-bcc22959c89a": {
+   "score": 6,
+   "reason": "Same-origin definition needed to reason about CORS"
+  },
+  "ae96aa4c-1f60-4a4e-8cc3-fafee3b4a1c1": {
+   "score": 6,
+   "reason": "Versioned asset names vs invalidation is a deployment caching trap"
+  },
+  "67c8512f-9965-464d-86d1-dc8f1596f1ab": {
+   "score": 3,
+   "reason": "Subnet scope is networking background"
+  },
+  "111103ab-9d9f-486b-87b9-aef44def616d": {
+   "score": 4,
+   "reason": "DSSE-KMS is a newer, less tested encryption option"
+  },
+  "90a929b5-9077-4e97-b154-f0fc46f4ca81": {
+   "score": 4,
+   "reason": "CloudFront geo restriction, occasional"
+  },
+  "cba1f28d-79b5-4a57-94a6-6dac068e8dcf": {
+   "score": 8,
+   "reason": "Enforcing SSE-KMS via default encryption plus bucket policy is common"
+  },
+  "8e54e966-fd03-4412-af31-23800bd57c28": {
+   "score": 8,
+   "reason": "Which errors to retry is core resilient-code knowledge"
+  },
+  "72ae4a1b-6890-4591-bc7c-8b0227a5bf0e": {
+   "score": 5,
+   "reason": "Signed cookies vs signed URLs, tested sometimes"
+  },
+  "22341764-f6e7-43e6-aecc-7440a7713e59": {
+   "score": 6,
+   "reason": "Reading a public-read bucket policy is common"
+  },
+  "d2184ff0-0e80-41d3-9ff5-401e42759e82": {
+   "score": 4,
+   "reason": "CloudFront key groups is a niche signing detail"
+  },
+  "44f3c664-6f4e-4a1b-9e49-e2e6f0e48860": {
+   "score": 5,
+   "reason": "S3 lifecycle rules map to skill 1.3.7 data lifecycles"
+  },
+  "6cf0ca44-1fe0-4df9-bf8f-80f5a6cc45b1": {
+   "score": 3,
+   "reason": "Root volume retention is EC2 ops detail"
+  },
+  "c81b5071-df7b-43a6-a639-17f571f2804d": {
+   "score": 3,
+   "reason": "CloudFront price classes are cost trivia for DVA"
+  },
+  "e145f218-327f-4624-bd0a-0498f7bbae1d": {
+   "score": 1,
+   "reason": "Capacity reservation discounts are purchasing trivia"
+  },
+  "a589c8bd-a3bd-4e7f-9879-1fadeb42fd14": {
+   "score": 2,
+   "reason": "EBS boot volume types are SysOps/SAA trivia"
+  },
+  "600b6c5d-af5e-4519-948e-2cf06a84e7da": {
+   "score": 1,
+   "reason": "Route 53 pricing is trivia"
+  },
+  "e12584cb-c4ac-4ea4-8b45-fbbdf7ecc8c6": {
+   "score": 3,
+   "reason": "Simple routing behavior is mostly SAA"
+  },
+  "f28d2701-9244-4c63-af7d-5f9be8bae047": {
+   "score": 5,
+   "reason": "Security group referencing appears in app-to-DB scenarios"
+  },
+  "a4f22650-5aae-4733-9bf5-3da134c174b8": {
+   "score": 3,
+   "reason": "Default VPC layout is background"
+  },
+  "6b3bad8a-8abb-4e23-ac61-c7869de254df": {
+   "score": 4,
+   "reason": "Buckets are regional is basic but occasionally relevant"
+  },
+  "fcc6a63f-815c-43e3-8fb2-a38ca1b6d35a": {
+   "score": 4,
+   "reason": "Latency routing appears occasionally"
+  },
+  "a713b724-0c66-4ae6-b4b8-9e6d9960a3a9": {
+   "score": 2,
+   "reason": "EFS One Zone is storage cost trivia"
+  },
+  "6b996934-4a48-4f0c-8f94-4c872851945a": {
+   "score": 1,
+   "reason": "Dedicated Hosts/licensing is out of DVA scope"
+  },
+  "29226514-3236-45b6-99f8-5f3e68f77250": {
+   "score": 3,
+   "reason": "AMI snapshot internals are infra detail"
+  },
+  "f84d331d-e415-4519-b3f1-2c5c86352805": {
+   "score": 7,
+   "reason": "aws s3 presign from CLI is a hands-on developer task"
+  },
+  "a9d22178-285f-427b-b360-5b78f17ac080": {
+   "score": 3,
+   "reason": "EBS basics are infrequently tested in DVA"
+  },
+  "0501d9ec-a6d4-43d8-b44c-1cff856c89a0": {
+   "score": 6,
+   "reason": "OAC bucket policy is a common CloudFront+S3 security pattern"
+  },
+  "82364d12-8ebc-4174-ad67-7ce48278b958": {
+   "score": 4,
+   "reason": "Fargate Spot capacity providers, occasional"
+  },
+  "9774c388-fe04-4d6d-b1f5-c96cdf9d1768": {
+   "score": 7,
+   "reason": "Missing session token with temporary credentials is a common trap"
+  },
+  "fd35cdfe-a94e-4b49-9ca7-7e0d93336677": {
+   "score": 8,
+   "reason": "ECS task role in task definition is a heavily tested app-role fact"
+  },
+  "c9f4d641-2c4d-497d-98f9-2c77e9b2a5fe": {
+   "score": 4,
+   "reason": "ALB for ECS services is basic and rarely the crux"
+  },
+  "93ea49c9-4c3e-4e0d-bc45-9fae3e0e6421": {
+   "score": 8,
+   "reason": "RDS Proxy for Lambda connection exhaustion is a frequent scenario"
+  },
+  "c9569300-fc16-4f2c-ab16-66ab4646a8e4": {
+   "score": 5,
+   "reason": "S3 per-prefix performance numbers, tested sometimes"
+  },
+  "24edf9d5-a0e3-4b28-b5d1-f6be3d24c327": {
+   "score": 4,
+   "reason": "CloudFront signed-cookie login design, occasional"
+  },
+  "483cdde5-8ba4-4008-b7dc-8c6570ca4661": {
+   "score": 2,
+   "reason": "ECS S3 Files volume is very new and unlikely on the exam"
+  },
+  "36e9fc54-39ba-4ebc-9578-537cc5c04658": {
+   "score": 4,
+   "reason": "ECS service auto scaling metrics, occasional"
+  },
+  "8afff18a-e6cd-4391-a2f3-d59077634e77": {
+   "score": 5,
+   "reason": "Pending tasks from cluster capacity is a common ECS troubleshoot"
+  },
+  "576bb73f-bdb0-4d28-a09f-3e77a68635f4": {
+   "score": 7,
+   "reason": "Multipart upload for large objects is a frequent S3 developer fact"
+  },
+  "12e2e74a-9baa-46a1-83c8-582c966759d8": {
+   "score": 3,
+   "reason": "One Zone-IA identification is storage trivia for DVA"
+  },
+  "187b24a6-acd1-4385-958f-621350143bb5": {
+   "score": 7,
+   "reason": "Task definition contents are core ECS deployment knowledge"
+  },
+  "167f0421-665a-44c1-b283-42dce5dffb46": {
+   "score": 8,
+   "reason": "S3 event notification targets are core event-driven knowledge"
+  },
+  "e3c59540-1e89-48ba-b991-c10a6fcc17c9": {
+   "score": 6,
+   "reason": "Bucket policy capabilities are common security knowledge"
+  },
+  "450e0f33-5d07-4f8a-aab1-781d59a9107c": {
+   "score": 4,
+   "reason": "Fargate ephemeral storage, occasional"
+  },
+  "c11d24f6-096a-4238-a123-c4cd553b3e09": {
+   "score": 4,
+   "reason": "Placement strategies EC2-only, occasional ECS detail"
+  },
+  "2fa8a691-f2ec-43aa-b588-539e6c5387c7": {
+   "score": 4,
+   "reason": "ECS spread placement, occasional"
+  },
+  "9a373b98-0cb9-420f-adff-2a850299cb48": {
+   "score": 3,
+   "reason": "Cross-zone defaults/charges are SAA detail"
+  },
+  "35f5b9b2-bc78-43ea-92c7-75e3e0e185cd": {
+   "score": 6,
+   "reason": "ECR pull auth failures point to IAM, common troubleshooting"
+  },
+  "e8878b17-2ee7-49f0-b30b-9984926937f1": {
+   "score": 3,
+   "reason": "EKS Fargate storage is a niche detail"
+  },
+  "67230274-f548-46df-8b40-91137a485b20": {
+   "score": 4,
+   "reason": "EKS for Kubernetes migration is a basic service pick"
+  },
+  "d149f300-510f-44c5-9e93-df9407da7e03": {
+   "score": 5,
+   "reason": "Deregistration delay during deployments, tested sometimes"
+  },
+  "514216cc-31fe-47ba-bf15-dfb72e385fe1": {
+   "score": 4,
+   "reason": "User data runs as root, occasional"
+  },
+  "afc62b77-33dd-44eb-a9a1-7360a24d24c8": {
+   "score": 8,
+   "reason": "Lazy-loading downsides are core caching knowledge in 1.3.8"
+  },
+  "3df12104-c5da-46bc-a5bc-951ba1c7d25e": {
+   "score": 4,
+   "reason": "NAT gateway basics relevant to Lambda in VPC"
+  },
+  "c475da16-5d08-40d3-82c5-932da9e182b7": {
+   "score": 2,
+   "reason": "Snapshot-while-attached is EBS trivia"
+  },
+  "53ed2337-17e1-4a17-932f-046a1c35f33a": {
+   "score": 5,
+   "reason": "CloudFront cache miss flow supports caching questions"
+  },
+  "0bdc0264-78d1-4e4e-af84-6e1fc7db51ce": {
+   "score": 3,
+   "reason": "EFS lifecycle IA is storage cost detail"
+  },
+  "b75eeba9-b1c1-4779-be74-06406bc1c139": {
+   "score": 3,
+   "reason": "RDS storage autoscaling is ops detail"
+  },
+  "8b7968c0-9f8d-43bb-b391-ee8616e5a90c": {
+   "score": 5,
+   "reason": "S3 website 403 fix, tested sometimes"
+  },
+  "d6b5641a-3472-4c52-a1c5-cf711de40459": {
+   "score": 5,
+   "reason": "VPC endpoints for private-subnet/Lambda access to services"
+  },
+  "a5e43dba-12ec-4fe0-949b-93204d4c96d7": {
+   "score": 4,
+   "reason": "Metadata/tags not searchable is an occasional S3 fact"
+  },
+  "3308f41f-542d-41c0-b515-25af08731c2d": {
+   "score": 3,
+   "reason": "Cross-zone traffic math is SAA detail"
+  },
+  "c88609d2-ebc0-44b0-923f-262939830e36": {
+   "score": 2,
+   "reason": "EBS Snapshot Archive is storage cost trivia"
+  },
+  "96b8ed93-16a6-4745-ab49-f4415f6dcabc": {
+   "score": 3,
+   "reason": "VPC scope is networking background"
+  },
+  "ff7d1043-53da-4ea2-b749-1ce8a8080dba": {
+   "score": 4,
+   "reason": "CloudFront benefits are general background"
+  },
+  "577f92bb-3bd2-4d3d-bc04-a90ca1526604": {
+   "score": 4,
+   "reason": "S3 replication delete behavior, occasional"
+  },
+  "206884bf-54f7-407a-823c-0f6747d90144": {
+   "score": 4,
+   "reason": "CloudFront behavior path matching, occasional"
+  },
+  "4f1da420-4ecc-46f6-9f01-35c28522e644": {
+   "score": 6,
+   "reason": "Block Public Access overriding policies is a common trap"
+  },
+  "a504612e-6865-415b-b7c2-175f78ebb7c7": {
+   "score": 8,
+   "reason": "Write-through trade-offs are core caching knowledge in 1.3.8"
+  },
+  "41bd28f0-92d3-41cd-a24c-189ff74537b4": {
+   "score": 6,
+   "reason": "CloudFront signed URL vs S3 pre-signed URL is a frequent comparison"
+  },
+  "148e86db-4334-4994-9367-67136425a1d1": {
+   "score": 4,
+   "reason": "Existing objects not replicated without Batch Replication, occasional"
+  },
+  "f3abc785-2e34-4a83-a0b6-f2c4395fd38b": {
+   "score": 4,
+   "reason": "S3 Standard as default class; basic storage-class choice, lightly tested on DVA"
+  },
+  "8fd18261-8caa-432d-b527-36f138fb2d46": {
+   "score": 2,
+   "reason": "EBS Multi-Attach is infrastructure detail, rarely on DVA"
+  },
+  "2cf369dc-44be-499f-a0e8-52a45baac13e": {
+   "score": 1,
+   "reason": "RI Marketplace is purchasing/billing trivia, SAA-only"
+  },
+  "b149fd1b-4d82-4858-b55f-a7571c9fe369": {
+   "score": 3,
+   "reason": "Route 53 TTL migration trick is ops/architecture, rarely DVA"
+  },
+  "16d6b9db-5dce-40d3-9cdb-eca55dfb18b4": {
+   "score": 3,
+   "reason": "RDS Single-AZ to Multi-AZ conversion is admin detail"
+  },
+  "e2cae6a3-f731-4022-ad45-15fdf4bfe215": {
+   "score": 2,
+   "reason": "Route tables are VPC networking design, out of DVA scope"
+  },
+  "80c2071d-75ae-4a5b-b621-14ca9e4ee3c0": {
+   "score": 5,
+   "reason": "Redis vs Memcached features appears in caching-service choices"
+  },
+  "95de57f0-3450-43e5-923d-1d4f3ba50fa5": {
+   "score": 4,
+   "reason": "ALB SSL termination is encryption-in-transit basics, occasional"
+  },
+  "35f919e4-49e0-400a-a507-c1ac18bae607": {
+   "score": 8,
+   "reason": "Lazy loading is a heavily tested caching strategy (skill 1.3.8/4.3.6)"
+  },
+  "293cde6f-6521-47bb-a143-f7b98d6b3659": {
+   "score": 2,
+   "reason": "Deregistration delay tuning is ELB ops trivia"
+  },
+  "2b5b5a4a-d45e-4eac-b1bc-1b465ac7e4e4": {
+   "score": 1,
+   "reason": "Direct Connect explicitly out of DVA scope (networking design)"
+  },
+  "98338471-befe-4e37-8021-8a518aae2d9e": {
+   "score": 4,
+   "reason": "EFS shared storage for many instances; occasional storage choice"
+  },
+  "c5339872-6101-441e-9b75-9cb5410c716c": {
+   "score": 2,
+   "reason": "VPC peering transitivity is networking design, SAA topic"
+  },
+  "e033a7cf-7479-42f1-8efb-9ec2f7ccd086": {
+   "score": 3,
+   "reason": "SDK default Region behavior is minor SDK trivia"
+  },
+  "4c5331c0-7a73-4fd1-92f1-4e09cb9d39ef": {
+   "score": 5,
+   "reason": "CloudFront OAC for private S3 origin appears sometimes"
+  },
+  "7c127d31-d654-450b-96f5-5d6a76f977f4": {
+   "score": 6,
+   "reason": "CLI named profiles for multiple accounts: programmatic access (2.1.3)"
+  },
+  "f9b53ed4-c946-42b8-981e-5ee12fdd0e73": {
+   "score": 6,
+   "reason": "ECS dynamic port mapping with ALB is a known DVA ECS scenario"
+  },
+  "fecc55fe-5a1f-4984-9b24-7415c8886ad3": {
+   "score": 4,
+   "reason": "Fargate awsvpc ENI per task; occasional ECS detail"
+  },
+  "dbf00029-39f6-45fd-ba28-1c4159e08d7d": {
+   "score": 5,
+   "reason": "Quota increase vs backoff for sustained throttling; sometimes tested"
+  },
+  "19cd5299-a53f-4875-984f-5f4feaef3509": {
+   "score": 8,
+   "reason": "Client-side vs server-side encryption is explicit skill 2.2.3"
+  },
+  "623d16a0-786d-404e-b8d8-86c382d6358a": {
+   "score": 6,
+   "reason": "ECS env var sources incl. Secrets Manager/SSM; sensitive data in containers"
+  },
+  "6f9844de-2d35-4028-bf28-7ee4a2e305a6": {
+   "score": 7,
+   "reason": "Secrets Manager reference in task definition: managing secrets in code/config (2.3.3)"
+  },
+  "016b2702-3712-4df4-b951-d6670c1694f0": {
+   "score": 3,
+   "reason": "ECS sidecar bind mount is niche container detail"
+  },
+  "f390ca8f-e406-41f9-af7a-af0f2b227959": {
+   "score": 4,
+   "reason": "Ways to change S3 storage class; data lifecycle basics"
+  },
+  "f29a41b3-4101-42f8-a0fc-e62d50fb81f6": {
+   "score": 4,
+   "reason": "SNI for multiple certs on ALB; occasional"
+  },
+  "e0bd5733-c79d-4270-a0ae-056c43acc16c": {
+   "score": 4,
+   "reason": "ECS binpack placement strategy; tested sometimes"
+  },
+  "bec8d909-65fd-4271-9e3d-6a89bfd97fc6": {
+   "score": 3,
+   "reason": "ECS placement evaluation order is niche detail"
+  },
+  "6f45c638-f8fb-4851-898a-4b5fc450d84b": {
+   "score": 3,
+   "reason": "EKS node options; EKS in scope but lightly tested"
+  },
+  "8f28f3b6-34ff-445d-acb9-61239652a46a": {
+   "score": 7,
+   "reason": "SigV4 signing for authenticated API calls (skill 2.1.4)"
+  },
+  "e4abe70d-2919-4498-baf4-1bd8c6358d3b": {
+   "score": 3,
+   "reason": "ELB general benefits are basic architecture knowledge"
+  },
+  "04986f02-97cb-4437-b5fc-929199a862bd": {
+   "score": 6,
+   "reason": "Containers summary (Docker/ECR/ECS/Fargate) covers in-scope deploy basics"
+  },
+  "95bc93b1-bdf9-4a33-b60e-007c734c8ff5": {
+   "score": 5,
+   "reason": "S3 byte-range fetches for performance; occasional"
+  },
+  "4cd095d7-f347-4d6d-9732-d808ce81214c": {
+   "score": 2,
+   "reason": "Route 53 health check types are SAA networking detail"
+  },
+  "213c3284-cd12-4412-b85a-79c06f970727": {
+   "score": 3,
+   "reason": "S3 object tags vs metadata; rarely tested"
+  },
+  "b89f6350-e2c0-45d5-9c29-5019b382eb0e": {
+   "score": 2,
+   "reason": "EC2 instance family selection is SAA trivia"
+  },
+  "5b9b0b68-e155-4f7d-a873-ba1d3df8e7ad": {
+   "score": 6,
+   "reason": "IMDS for instance metadata is a developer-facing EC2 topic"
+  },
+  "38917418-8f6b-459e-b5be-49b3308c31a1": {
+   "score": 3,
+   "reason": "Shared responsibility for IAM is foundational/CCP-level"
+  },
+  "f067fb03-afe7-41d6-9269-a1cab33f1b81": {
+   "score": 7,
+   "reason": "IAM policy OR bucket policy evaluation for S3 access; common trap"
+  },
+  "a51ea63d-1998-43ab-906d-5e9227276e81": {
+   "score": 4,
+   "reason": "Security group properties; basic VPC knowledge, occasional"
+  },
+  "16af9d39-d6da-46a4-99e0-036c8a5ed40f": {
+   "score": 2,
+   "reason": "Compute optimized family choice is SAA trivia"
+  },
+  "6b4759b2-9e65-4c7e-90fa-2784cae6a5b8": {
+   "score": 3,
+   "reason": "Containers vs VMs is general background"
+  },
+  "8dd73318-4643-46db-8a49-20e5ba956133": {
+   "score": 3,
+   "reason": "S3 Analytics for lifecycle timing; rarely on DVA"
+  },
+  "212d79ea-7c6d-4aab-b2db-3842508f5933": {
+   "score": 4,
+   "reason": "S3 SRR use cases; replication tested occasionally"
+  },
+  "f8550d88-882f-48c8-8acc-b2e9b05199ce": {
+   "score": 4,
+   "reason": "EFS for shared WordPress uploads; occasional storage choice"
+  },
+  "c443f07f-47cb-4c4b-9092-5f692a54149e": {
+   "score": 2,
+   "reason": "Spot instance purchasing is SAA cost topic"
+  },
+  "2e16c031-8eae-4a26-9639-0b9f04e9a370": {
+   "score": 2,
+   "reason": "Where SG drops traffic is networking trivia"
+  },
+  "6d530264-654d-4ac8-b0f2-9e093b2bdb6b": {
+   "score": 6,
+   "reason": "EC2 instance profile vs task role in ECS; IAM-for-containers trap"
+  },
+  "bfef2f24-dac9-4923-9023-a79cfeec83c8": {
+   "score": 2,
+   "reason": "Storage optimized family choice is SAA trivia"
+  },
+  "16923b0e-0532-4f93-8c08-8bafe4d68d31": {
+   "score": 4,
+   "reason": "CloudShell is in-scope dev tool; light coverage"
+  },
+  "e0774cff-6d66-4144-8a2e-ee0279dfbaa1": {
+   "score": 9,
+   "reason": "IAM role on EC2 instead of keys is a core DVA security pattern"
+  },
+  "d4ac8ec9-9fb8-4ebd-9b25-a55e0ae8cfef": {
+   "score": 8,
+   "reason": "Per-task IAM roles in ECS: least privilege for apps, frequent"
+  },
+  "d5fc49ca-dad0-4549-b6ef-43afdc9d728c": {
+   "score": 2,
+   "reason": "NAT Gateway vs instance is networking design, out of scope"
+  },
+  "e9a8265c-1501-4ccc-a444-04fd4596f9e7": {
+   "score": 4,
+   "reason": "CloudFront standard vs real-time logs; logging choice, sometimes"
+  },
+  "8ede8186-5892-4544-8ef5-f4ebdcf6856b": {
+   "score": 2,
+   "reason": "NLB-in-front-of-ALB static IP design is SAA architecture"
+  },
+  "006f9c95-67c8-4c65-9777-dbde389d1028": {
+   "score": 8,
+   "reason": "Task execution role for ECR pulls/logs: classic DVA troubleshooting trap"
+  },
+  "57b25b10-56f7-4f5e-9883-8e5006f1428a": {
+   "score": 4,
+   "reason": "EFS for shared ECS storage across EC2/Fargate; occasional"
+  },
+  "cee3c3c8-b337-4fab-9f7f-a42dbfed7b94": {
+   "score": 4,
+   "reason": "ECS capacity providers for ASG scaling; sometimes"
+  },
+  "310eb208-fefa-423f-9f49-9dc14e81f17a": {
+   "score": 3,
+   "reason": "ECS EC2 scale-out sequence is detailed niche"
+  },
+  "531a272e-50c4-47e0-96dd-d25d46b848a6": {
+   "score": 3,
+   "reason": "VPC component summary; networking design largely out of DVA scope"
+  },
+  "23939928-182b-4598-a5f6-9959283e8247": {
+   "score": 5,
+   "reason": "S3 event -> EventBridge -> Fargate; event-driven pattern (1.1.12)"
+  },
+  "80838357-a631-4d8a-8c11-fbe8250ab816": {
+   "score": 5,
+   "reason": "EventBridge scheduled Fargate task; event-driven scheduling"
+  },
+  "9be3180d-44b8-44ac-b9a2-404a39506a26": {
+   "score": 5,
+   "reason": "ECS scaling on SQS backlog; sometimes tested"
+  },
+  "51e55bb6-29a4-40bb-b2f5-3291a6a81ad0": {
+   "score": 6,
+   "reason": "EventBridge rule on state change -> SNS notification (4.2.5)"
+  },
+  "8cbbd9cd-d7f0-435b-b54e-a2b2de999ed0": {
+   "score": 3,
+   "reason": "ECS host/container port mapping basics"
+  },
+  "1e127c77-dab5-4d77-9596-7974c4a566cb": {
+   "score": 3,
+   "reason": "Docker portability benefit is general background"
+  },
+  "61371fbe-58ce-44a3-9bf8-10419dfc7d93": {
+   "score": 5,
+   "reason": "Beanstalk environment runs one app version; underpins deploy questions"
+  },
+  "f267b13c-9991-43f2-a18a-954d78f162d5": {
+   "score": 6,
+   "reason": "Beanstalk as managed web app deployment; frequent service choice"
+  },
+  "c81f99b6-65d4-43d9-a3ae-21d937a64b1d": {
+   "score": 5,
+   "reason": "Beanstalk service role + instance profile; occasional"
+  },
+  "78842fc2-208e-4542-8576-31def66276be": {
+   "score": 6,
+   "reason": "Beanstalk worker tier with SQS; common scenario"
+  },
+  "76197977-312c-4ad6-ad69-21b0d93b83e2": {
+   "score": 8,
+   "reason": "Beanstalk all-at-once deployment tradeoff; deployment modes heavily tested"
+  },
+  "dc172f7b-942e-48f2-885c-14849870337c": {
+   "score": 5,
+   "reason": "S3 access mechanisms (IAM, bucket policy, ACL); basic"
+  },
+  "4a34c7eb-67f8-48c6-8c16-0754d19ea9e2": {
+   "score": 6,
+   "reason": "Cross-account S3 via bucket policy Principal; common"
+  },
+  "ff1e171c-f16f-47e0-8114-c17820fe0426": {
+   "score": 8,
+   "reason": "Beanstalk immutable deployment choice; heavily tested deployment strategies"
+  },
+  "9efdd9a4-534e-4622-bd3c-6f390bcb6855": {
+   "score": 9,
+   "reason": "Beanstalk deployment modes comparison table; core deployment-strategy knowledge"
+  },
+  "91a072e0-0e39-4a98-86fb-8fef95701567": {
+   "score": 6,
+   "reason": "Immutable deployment steps; detailed but on a heavily tested topic"
+  },
+  "30225e99-8534-4c25-86b0-e540245734cd": {
+   "score": 2,
+   "reason": "CloudFront real-time log sampling tuning is niche"
+  },
+  "dc245335-9efe-4aeb-8b08-25956bf7551c": {
+   "score": 8,
+   "reason": "Beanstalk blue/green via swap URLs; classic DVA question"
+  },
+  "bad76b45-5786-4b47-99b9-156ee2ca16f6": {
+   "score": 6,
+   "reason": "Origin request policy vs cache policy; skill 4.3.5 caching on headers"
+  },
+  "5d298eef-8302-453e-86b9-17ddde33322f": {
+   "score": 4,
+   "reason": "Beanstalk environment cloning; occasional"
+  },
+  "f69de95a-7a47-4c92-a2d4-dd63767aaaed": {
+   "score": 3,
+   "reason": "CloudFront vs CRR comparison is SAA architecture"
+  },
+  "9bcba2af-9dd4-48c1-85d8-53e61faae3f0": {
+   "score": 3,
+   "reason": "EB CLI commands; light"
+  },
+  "d5ac905f-1a03-4267-8068-5e6764eef7b5": {
+   "score": 6,
+   "reason": "Beanstalk 1,000 version limit / lifecycle policy; recurring DVA fact"
+  },
+  "b272c7fc-713a-4dbf-93f3-484b40fff87c": {
+   "score": 5,
+   "reason": "IMDSv2 token requirement troubleshooting; sometimes"
+  },
+  "bba3726a-b93d-445d-9446-31926bea2e67": {
+   "score": 7,
+   "reason": ".ebextensions file rules; frequently tested Beanstalk config"
+  },
+  "5d40ae59-ecdd-418a-b129-3763590bbb5f": {
+   "score": 6,
+   "reason": ".ebextensions option_settings for env vars; config files (3.1.1)"
+  },
+  "836485ad-efd1-41e0-85e1-44fc8cb8824e": {
+   "score": 4,
+   "reason": "S3 server access logging for auditing; occasional"
+  },
+  "8ac801a0-8d0a-4124-a641-2369d4a4168d": {
+   "score": 4,
+   "reason": "Beanstalk DELETE_FAILED with RDS protection; niche troubleshooting"
+  },
+  "92085b0f-a356-46db-97df-4f54d1604085": {
+   "score": 2,
+   "reason": "AWS Budgets forecast alerts; billing, not in DVA scope list"
+  },
+  "c07a5f4b-bbaa-4173-a390-471bdd668ca2": {
+   "score": 1,
+   "reason": "EC2 per-second billing minimums; pricing trivia"
+  },
+  "482313a9-4883-4fd9-bf1b-153afb523222": {
+   "score": 5,
+   "reason": "Principal element of bucket policy; policy syntax basic"
+  },
+  "9bfa93b7-bbdd-4a77-8d0a-684f262d8fb7": {
+   "score": 4,
+   "reason": "S3 Object Lambda requirements; occasional data transformation"
+  },
+  "f65daf65-759e-4003-aaa3-3f59a3ac4293": {
+   "score": 4,
+   "reason": "S3 lifecycle expiration targets; data lifecycle (1.3.7)"
+  },
+  "4f0058da-f9ca-4cdf-8d19-f664e9c379d8": {
+   "score": 4,
+   "reason": "IAM groups + least privilege; administering users is out of DVA scope but principle matters"
+  },
+  "1b10c36a-1a2f-416b-ad39-78390e609b77": {
+   "score": 4,
+   "reason": "CloudFront origin groups for failover; occasional"
+  },
+  "908d13fa-1675-4c6b-a37c-28b213994b51": {
+   "score": 4,
+   "reason": "S3 event notification latency; minor event-source fact"
+  },
+  "c880c94f-55b4-406d-9fd2-7b4424526931": {
+   "score": 6,
+   "reason": "CloudFront invalidation after deploying new content; common dev scenario"
+  },
+  "ba79ddb9-8524-4ab6-9d81-2faf0a848539": {
+   "score": 1,
+   "reason": "EC2 instance type naming is trivia"
+  },
+  "deb2a50e-33a0-43de-bbce-cafb0ae8f152": {
+   "score": 3,
+   "reason": "IAM policy Version string; minor syntax"
+  },
+  "8a07265f-2e2a-4fc1-b4ad-0793578cb06b": {
+   "score": 8,
+   "reason": "Recognizing lazy-loading code; caching strategies tested heavily"
+  },
+  "8e7e0cbc-139b-432b-ab39-888dbf6b9d63": {
+   "score": 4,
+   "reason": "EC2 User Data bootstrapping; occasional"
+  },
+  "2bfcfb0e-925f-4175-bd51-978c98f63e0c": {
+   "score": 1,
+   "reason": "DNS name anatomy is trivia for DVA"
+  },
+  "98aa94e5-4a45-4aad-abf1-ff893fc49fc6": {
+   "score": 1,
+   "reason": "GWLB GENEVE port is SAA networking trivia"
+  },
+  "dd463510-0b05-4697-a120-3fc6854bee9a": {
+   "score": 7,
+   "reason": "IMDS/CLI profiles/MFA/SDK backoff/SigV4 summary; core programmatic access"
+  },
+  "a9222b22-28f7-4528-b594-b59d7122cc43": {
+   "score": 7,
+   "reason": "ElastiCache for session state (stateless apps, skill 1.1.2); common"
+  },
+  "db48b502-c64a-417a-a9fb-c4c023d34c16": {
+   "score": 5,
+   "reason": "IMDSv1 vs v2 token difference; sometimes"
+  },
+  "dd8e2431-cc99-40bb-90a4-1899ee05792f": {
+   "score": 1,
+   "reason": "Multi-Attach max 16 instances is trivia"
+  },
+  "f7028fa1-bec9-4e5a-bebe-ff578fea7ebc": {
+   "score": 2,
+   "reason": "Route 53 alias target exceptions; SAA detail"
+  },
+  "cf53a565-7eee-4af8-b5aa-12fdc825dcec": {
+   "score": 3,
+   "reason": "NACL deny for an IP; networking security, occasional"
+  },
+  "325b9fc7-e2de-4143-bfbe-8008dddc38af": {
+   "score": 3,
+   "reason": "EFS properties; light on DVA"
+  },
+  "d250339d-0dbf-4c1a-bb01-4b1c8c72b2b1": {
+   "score": 4,
+   "reason": "Aurora failover promotes replica; occasional"
+  },
+  "c694a0e5-a5d6-4478-9e4b-3e5ed54cd5db": {
+   "score": 4,
+   "reason": "Aurora characteristics; occasional"
+  },
+  "88ea3ac3-3dc8-42dc-8489-88cd8e1e958d": {
+   "score": 5,
+   "reason": "Multi-AZ for HA vs read replicas for scaling; common trap"
+  },
+  "6b9e76a7-249a-4f6f-8160-43dcf614de08": {
+   "score": 1,
+   "reason": "io1 >32k IOPS needs Nitro is SAA trivia"
+  },
+  "6a641a55-6c8b-4813-b24b-f248a868bc25": {
+   "score": 3,
+   "reason": "Alias A record at zone apex; light Route 53 coverage on DVA"
+  },
+  "2e9e8ba7-c336-49b2-bb12-100eb3d762cd": {
+   "score": 2,
+   "reason": "Route 53 private-subnet health check via alarm; SAA detail"
+  },
+  "34744bd1-66e2-4f17-b5b0-dd3adcfc7def": {
+   "score": 2,
+   "reason": "gp2 IOPS scale with size; storage tuning trivia for DVA"
+  },
+  "6afa9a46-a416-41b5-97ef-87a9cfdd0e12": {
+   "score": 3,
+   "reason": "Glacier retrieval times; SAA-heavy, occasional"
+  },
+  "844c9996-56a5-40f6-8f3e-4b1b34300dc3": {
+   "score": 1,
+   "reason": "LAMP acronym is trivia"
+  },
+  "f7c5cb03-39d4-419f-9d20-89163f009673": {
+   "score": 9,
+   "reason": "IAM role for EC2 S3 access; core DVA security pattern"
+  },
+  "0a9e1c9f-3d4a-42f0-bfb6-0c7db86498c8": {
+   "score": 4,
+   "reason": "SG vs NACL comparison; basic VPC, occasional"
+  },
+  "c86dd58d-c5ec-4f70-912c-9d1f9237a72c": {
+   "score": 3,
+   "reason": "ASG scheduled scaling; light on DVA"
+  },
+  "f9659a60-da65-475d-95e0-3bd6215d5b7f": {
+   "score": 2,
+   "reason": "Alias record characteristics; SAA Route 53 detail"
+  },
+  "4c1c2a5d-86dc-4bbd-a4bd-4b6ba93c11c7": {
+   "score": 1,
+   "reason": "Route 53 18% health checker threshold is trivia"
+  },
+  "ca84378c-81fd-45d8-9d3b-647677b42a86": {
+   "score": 6,
+   "reason": "Beanstalk components definitions; foundation for Beanstalk questions"
+  },
+  "84452cf3-7de8-442e-a281-4ea4d9af094f": {
+   "score": 4,
+   "reason": "Beanstalk basic workflow order; light"
+  },
+  "fc144375-dd7a-4388-9881-2243d1998c02": {
+   "score": 5,
+   "reason": "Beanstalk single-instance vs HA mode for dev; sometimes"
+  },
+  "19e75d12-ed9a-4568-9413-ad362e36fd40": {
+   "score": 2,
+   "reason": "EFS provisioned throughput mode; storage tuning trivia"
+  },
+  "3fc41bfc-f609-4f19-96f0-583f9fec2299": {
+   "score": 3,
+   "reason": "Valid invalidation path formats; minor"
+  },
+  "6066bad8-ce81-450e-93b6-859669dd8e1d": {
+   "score": 5,
+   "reason": "Beanstalk uses CloudFormation underneath; recurring fact"
+  },
+  "0c14dfea-c39a-4ff1-aa0d-3f05b7813f93": {
+   "score": 1,
+   "reason": "RDS Custom for Oracle; SAA niche"
+  },
+  "b2c47db7-b1f2-4a4f-96d5-5f98cfeeb5b0": {
+   "score": 8,
+   "reason": "Rolling with additional batch choice; deployment modes heavily tested"
+  },
+  "24804658-c801-43f4-b6f8-c5472d83bffa": {
+   "score": 3,
+   "reason": "Glacier Instant Retrieval choice; storage class, SAA-leaning"
+  },
+  "8295eb28-4fb0-457c-9cc8-86adeb908d22": {
+   "score": 7,
+   "reason": ".ebextensions to provision extra resources; common Beanstalk question"
+  },
+  "e23be9cc-8db8-4622-9a7a-6f47fb024f16": {
+   "score": 3,
+   "reason": "Basic IGW/NAT placement; VPC network design is out of DVA scope"
+  },
+  "ab271acb-9505-4ccc-a1f2-f4654b8efee3": {
+   "score": 7,
+   "reason": "Classic Beanstalk trap: LB type change needs a new environment"
+  },
+  "042c0d73-1b85-4ea0-9fc8-88d758acb502": {
+   "score": 6,
+   "reason": "Decoupling RDS from Beanstalk is a known DVA scenario"
+  },
+  "965eb688-c013-4134-a259-06bd7192713a": {
+   "score": 7,
+   "reason": "Beanstalk prod pattern: RDS outside env, connection via env vars"
+  },
+  "0e84a391-32b3-4ee5-aff9-d34237dc41d9": {
+   "score": 3,
+   "reason": "Basic VPC fundamentals; networking design out of scope"
+  },
+  "aa905b14-dea7-4864-9c36-40810444fd64": {
+   "score": 1,
+   "reason": "VPN vs Direct Connect is SAA networking; Direct Connect explicitly out of DVA scope"
+  },
+  "f079f106-72d4-457d-b360-c2a85d4536fe": {
+   "score": 7,
+   "reason": "Beanstalk overview underpins many deployment questions"
+  },
+  "8652ddc5-4d63-48a1-b410-7d000873f78d": {
+   "score": 3,
+   "reason": "S3 durability figure is general trivia for DVA"
+  },
+  "8f2a9821-399b-47cc-82f1-d711c4c90fd3": {
+   "score": 4,
+   "reason": "Static website hosting basics, occasionally tested"
+  },
+  "f8dbccee-b9bd-4a85-b5fc-f6ea469c304e": {
+   "score": 3,
+   "reason": "CloudFront VPC origin is architecture-oriented"
+  },
+  "3a5e2005-44e3-46d5-a896-01bd9791123b": {
+   "score": 5,
+   "reason": "Know which container service is which (ECS/EKS/Fargate/ECR)"
+  },
+  "ee49d01b-4039-4056-82f4-63309503038a": {
+   "score": 5,
+   "reason": "CRR is a recognisable S3 feature, tested sometimes"
+  },
+  "6fbb7a03-01a3-441e-af42-b2d50baefbd7": {
+   "score": 5,
+   "reason": "IMDS address used by apps reading instance metadata"
+  },
+  "bae2fa9d-73f7-48ce-ad8b-68ba3602f4ac": {
+   "score": 2,
+   "reason": "Bucket naming rules are trivia"
+  },
+  "07f51f6e-d25d-4f38-b91a-39754062ef02": {
+   "score": 7,
+   "reason": "S3 CORS configuration is a frequent DVA topic"
+  },
+  "4b5a97a5-b3a9-4efe-803f-b537ba58486d": {
+   "score": 4,
+   "reason": "CloudFront cache key default, tested sometimes"
+  },
+  "cc8061dd-b4bf-463a-bd49-8bdd6433d943": {
+   "score": 3,
+   "reason": "Lifecycle transition waterfall detail, mainly SAA"
+  },
+  "2da4a479-fa5f-4c0d-b65e-56b5b8068449": {
+   "score": 5,
+   "reason": "Metadata indexing pattern S3 + DynamoDB appears occasionally"
+  },
+  "bb1546dd-70e8-4b44-a902-22a995e4a794": {
+   "score": 8,
+   "reason": "SSE-KMS throttling via KMS quota is a classic DVA question"
+  },
+  "e4f7b58f-c41c-4811-9a74-d81bfb6ecdff": {
+   "score": 7,
+   "reason": "S3 notifications vs EventBridge choice is a common event-source trap"
+  },
+  "dcf0fc40-28ca-4269-9ce9-83751478247c": {
+   "score": 4,
+   "reason": "ECS placement strategy syntax, occasionally tested"
+  },
+  "716c16f4-0b49-4e66-86d9-0e0954c87b1b": {
+   "score": 2,
+   "reason": "Instance store use cases are SAA-style storage trivia"
+  },
+  "a6accb4c-aa00-42e7-bf50-8a705625b685": {
+   "score": 3,
+   "reason": "Storage class cost selection is SAA-oriented"
+  },
+  "5562084f-9d20-4817-89fb-11a8f9c05941": {
+   "score": 3,
+   "reason": "Signed URL validity duration is minor detail"
+  },
+  "6541a6e9-30d6-400b-8ca9-4204a50a79cd": {
+   "score": 4,
+   "reason": "ECR feature set, tested lightly"
+  },
+  "5453bdc8-c08c-4b38-ab70-2d6371ec4e9a": {
+   "score": 4,
+   "reason": "ECR tag immutability, occasional"
+  },
+  "2ffd945c-fa1f-49c3-a2d4-2fdf3b2273ba": {
+   "score": 8,
+   "reason": "SDK/CLI default credential chain is core developer knowledge"
+  },
+  "e5fd1129-eac8-4ad6-a416-a2acbd84a810": {
+   "score": 3,
+   "reason": "S3 key basics, foundational but rarely a question"
+  },
+  "e29d2f75-82f8-4a63-94fa-e9a7a45030dc": {
+   "score": 2,
+   "reason": "Where to store Docker images is trivial"
+  },
+  "be3e5c13-c13d-4afc-ba3c-235dc7836c15": {
+   "score": 8,
+   "reason": "Pre-signed URLs are heavily tested in DVA"
+  },
+  "be5d22dc-bf01-4c46-b01c-b13687af3374": {
+   "score": 4,
+   "reason": "CloudFront cache key forwarding detail"
+  },
+  "d451db4e-2466-40db-ad91-1caee28966e8": {
+   "score": 5,
+   "reason": "S3 lifecycle/events/metadata summary; mixed relevance"
+  },
+  "5e8b2151-a368-468e-ba41-f43c35ba6f37": {
+   "score": 5,
+   "reason": "Byte-range fetch is a known S3 performance answer"
+  },
+  "ac268016-a619-4002-9a5d-d37abe726601": {
+   "score": 4,
+   "reason": "CLI syntax for byte-range GET, minor"
+  },
+  "ab286a8d-e638-4355-b55b-6d23fed59322": {
+   "score": 7,
+   "reason": "Bucket vs object ARN in policies is a frequent troubleshooting trap"
+  },
+  "db7908a3-e3d1-43e4-a58f-1d3dec654d72": {
+   "score": 7,
+   "reason": "ECR get-login-password + push is a classic DVA question"
+  },
+  "b42d14a5-a1da-4307-b249-86e5ddadbac7": {
+   "score": 2,
+   "reason": "Keyword-to-service mapping trivia"
+  },
+  "3621f643-414d-4561-9596-a53b0b86e6b6": {
+   "score": 3,
+   "reason": "Access-log loop is rarely tested"
+  },
+  "6ebfe66e-a3c0-4950-9b1c-4719d441afb3": {
+   "score": 3,
+   "reason": "ECS vs EKS choice is architecture-level"
+  },
+  "df8d33b2-6430-4dab-b3b6-5514e3373128": {
+   "score": 2,
+   "reason": "RDS engine list is trivia"
+  },
+  "ccbb0e35-865a-4cea-a645-f1c40d15075d": {
+   "score": 2,
+   "reason": "Edge locations is Cloud Practitioner-level"
+  },
+  "a97dd365-c62e-4656-8ef3-b45d091cadcf": {
+   "score": 3,
+   "reason": "Generic Docker workflow, low exam weight"
+  },
+  "337f8dc4-4510-4c66-8f13-f61b4ee134d1": {
+   "score": 5,
+   "reason": "SDK region configuration error, tested sometimes"
+  },
+  "c6f97613-9d3d-4b20-8855-cab04ef7af1e": {
+   "score": 6,
+   "reason": "Fargate serverless containers and scaling by tasks is common"
+  },
+  "8f91b441-b74a-4301-83e6-284576525762": {
+   "score": 7,
+   "reason": "ElastiCache for read-heavy DB load is a common scenario"
+  },
+  "080222d0-c1b1-496a-b225-d18f72bdb301": {
+   "score": 7,
+   "reason": "Multipart upload thresholds (100 MB / 5 GB) are frequently tested"
+  },
+  "cc687f84-d6ca-4822-b879-74445319d9f2": {
+   "score": 2,
+   "reason": "AMI sources are SAA/CCP trivia"
+  },
+  "11215d9c-7d3e-4c65-ba12-c741f40b9bfa": {
+   "score": 1,
+   "reason": "Budgets/billing alerts are outside DVA scope"
+  },
+  "d0f5c4e9-0179-404d-97c4-ead7c7a2ff10": {
+   "score": 3,
+   "reason": "EBS volume type choice is SAA-oriented"
+  },
+  "2bdcc754-48d0-4e5c-ba41-ea5b14d2c0d4": {
+   "score": 2,
+   "reason": "NAT Gateway AZ resilience is network design, out of scope"
+  },
+  "f55b2992-0fdd-4bae-82e8-c10ea7a44087": {
+   "score": 4,
+   "reason": "Versioning suspend behaviour, occasional"
+  },
+  "c8982904-19d7-459e-a78f-9cc37023f54e": {
+   "score": 4,
+   "reason": "Beanstalk platform support, tested lightly"
+  },
+  "f6ecf484-dbe4-4c64-8ca9-e3c8b50aecd8": {
+   "score": 2,
+   "reason": "Multi-AZ NAT design is networking architecture"
+  },
+  "11ebd564-ef9e-464a-a381-88fa2fd0c6e8": {
+   "score": 3,
+   "reason": "Instance Connect SG troubleshooting is sysadmin-ish"
+  },
+  "99587505-e73e-4db8-8caf-affaf991e5ff": {
+   "score": 1,
+   "reason": "Fast Snapshot Restore is SAA trivia"
+  },
+  "d04de694-2831-452b-9014-eece2ee578e8": {
+   "score": 3,
+   "reason": "Generic HA definition"
+  },
+  "d004a55a-c7a8-4003-ac91-59bce22aa4c7": {
+   "score": 5,
+   "reason": "Header in cache key for varied content, tested sometimes"
+  },
+  "93d05910-6a15-4b88-bd37-c8a9fc7d3e19": {
+   "score": 5,
+   "reason": "S3 Object Lambda appears occasionally"
+  },
+  "c3d2e9ee-3b72-450d-87a5-f7fec450fcbb": {
+   "score": 5,
+   "reason": "Beanstalk app deploy vs config update distinction"
+  },
+  "246bb456-dac8-41c7-83fe-55762362f559": {
+   "score": 5,
+   "reason": "CLI credentials/profiles file format, useful for developers"
+  },
+  "c816e1f1-a34b-49d1-aa66-f60d6606e935": {
+   "score": 6,
+   "reason": "ECS min/max healthy percent behaviour is a known DVA question"
+  },
+  "e263d394-2423-4686-887e-e215fcc38e3c": {
+   "score": 6,
+   "reason": "ECS min/max healthy percent behaviour is a known DVA question"
+  },
+  "2000b0c3-127c-4990-8e1a-37a5ad187a9c": {
+   "score": 2,
+   "reason": "Beanstalk pricing is trivia"
+  },
+  "07dd8b10-56dd-46b0-a17a-59f1b0cf53f4": {
+   "score": 5,
+   "reason": "SDK region sources, tested sometimes"
+  },
+  "da212186-c4ec-4f1d-8468-3bd5c6d4afe0": {
+   "score": 3,
+   "reason": "Route 53 conceptual basics"
+  },
+  "41c0820f-eb7b-4589-94e6-9626ae0cd436": {
+   "score": 6,
+   "reason": "Aurora reader endpoint is a common app-connection answer"
+  },
+  "32087bf7-76e1-41c8-af2c-60c2f4e1c7b5": {
+   "score": 7,
+   "reason": "Beanstalk-managed RDS lifecycle tied to env is a classic trap"
+  },
+  "7d1639bc-e051-4308-b9e8-19856f8fb8d5": {
+   "score": 2,
+   "reason": "Port numbers are trivia"
+  },
+  "dfd97566-0e6c-4df0-a5f7-8bd01bfc278d": {
+   "score": 5,
+   "reason": "Rolling batch size options, detail of deployment policies"
+  },
+  "9cddbf09-947d-4e35-aa0e-312e94152430": {
+   "score": 4,
+   "reason": "ELB health check basics"
+  },
+  "b885c203-aa28-46b9-85d8-6add7776635c": {
+   "score": 5,
+   "reason": "Beanstalk clone keeps RDS config not data"
+  },
+  "df51b4cb-78e7-4624-9c29-9ad801844710": {
+   "score": 6,
+   "reason": "Beanstalk version lifecycle policy (version limit) is tested"
+  },
+  "00689a94-db1b-4a1b-bf56-ee78b63bfef4": {
+   "score": 3,
+   "reason": "Flow Logs destinations, rarely tested for DVA"
+  },
+  "3aa77187-8c93-416e-977d-53cf84944df2": {
+   "score": 3,
+   "reason": "ECS capacity provider options, infra detail"
+  },
+  "512fe7e5-bc70-4da5-b6f1-82e45be74a8f": {
+   "score": 5,
+   "reason": "Gateway endpoints for S3/DynamoDB, occasional"
+  },
+  "09cb5450-c700-49d3-9d3a-4f93743e1405": {
+   "score": 5,
+   "reason": "Weighted routing for gradual shift, occasional"
+  },
+  "5c091ccd-9cd1-4b01-b751-ab20f37c11ac": {
+   "score": 6,
+   "reason": "Delete markers in versioned buckets are commonly tested"
+  },
+  "ecb06a71-8767-4e38-90b8-5588a53b1dbe": {
+   "score": 6,
+   "reason": "ECS rolling update settings"
+  },
+  "145f75c5-e1f4-457e-a941-ac847860655d": {
+   "score": 2,
+   "reason": "Container-per-task limit is trivia"
+  },
+  "e7bee902-63f6-423c-8532-9260d63388fd": {
+   "score": 4,
+   "reason": "ASG basics, supporting knowledge"
+  },
+  "237dd995-a0ab-4e84-8ccb-9da8ab50d0b2": {
+   "score": 4,
+   "reason": "ECS placement constraints, occasional"
+  },
+  "b61b52a7-655a-438a-b97f-e83848f1e611": {
+   "score": 3,
+   "reason": "Instance store ephemerality, mostly SAA"
+  },
+  "30e788f9-307f-4dcc-9f04-d1b92fdc7122": {
+   "score": 5,
+   "reason": "EC2 vs Fargate launch type responsibilities"
+  },
+  "622ba3aa-12f5-4350-b975-8c1d35ffa2f5": {
+   "score": 3,
+   "reason": "Three-tier subnet placement is architecture"
+  },
+  "1045e0fa-a799-40ab-8ded-ad9d1297dcfa": {
+   "score": 7,
+   "reason": "ElastiCache for sessions/stateless apps is a common DVA scenario"
+  },
+  "fb18ba3c-55ce-41d3-bfde-c790afaa2b72": {
+   "score": 2,
+   "reason": "NAT Gateway for patching is networking design"
+  },
+  "ec6c1467-bda3-4c50-9bc4-34e02e252cf7": {
+   "score": 5,
+   "reason": "What Beanstalk manages for you"
+  },
+  "1f9f8070-2e67-45b8-8004-05c17f950428": {
+   "score": 3,
+   "reason": "EBS persistence on stop, mostly SAA"
+  },
+  "f3abd29d-6142-401b-80df-cd64340b05d2": {
+   "score": 3,
+   "reason": "Flat key namespace concept"
+  },
+  "315d1d75-8131-47a5-a314-2ee4c9802661": {
+   "score": 5,
+   "reason": "Versioning benefits, basic"
+  },
+  "9f94e539-ea66-4b62-97ac-b2be712bb226": {
+   "score": 8,
+   "reason": "Beanstalk worker environment with SQS is heavily tested"
+  },
+  "76b3b957-9673-4336-b296-55fbbded3e7c": {
+   "score": 8,
+   "reason": "Exponential backoff for throttling is core DVA troubleshooting"
+  },
+  "e23dea05-8041-4af2-ba22-6498a164467c": {
+   "score": 3,
+   "reason": "Shared ALB in Beanstalk is a niche feature"
+  },
+  "d9bc494f-a034-41bd-aed0-521e9da73821": {
+   "score": 2,
+   "reason": "EFS performance/throughput modes are SAA detail"
+  },
+  "6a77fabe-9b23-4450-aa02-7f2e96ccbf79": {
+   "score": 1,
+   "reason": "Recycle Bin for snapshots is SAA trivia"
+  },
+  "434c10de-406f-46c5-8960-7e043f2ca155": {
+   "score": 7,
+   "reason": "Resource-based policies on event targets are frequent"
+  },
+  "40b27f87-75f4-42dc-952a-50e17d7cf54a": {
+   "score": 8,
+   "reason": "Lambda resource-based policy for S3 invoke is a core event-source concept"
+  },
+  "8577ede3-376e-45ed-bdfa-8fe8990c2816": {
+   "score": 7,
+   "reason": "Beanstalk rolling deployment behaviour is a core deployment-policy question"
+  },
+  "d79bd282-b315-4ff3-9f53-fc10adc553c5": {
+   "score": 6,
+   "reason": "IAM database authentication for apps, tested sometimes"
+  },
+  "2a285b0a-0598-4509-b07f-c311b4e532f7": {
+   "score": 5,
+   "reason": "Read replica properties, moderately tested"
+  },
+  "535e527b-947c-4b15-933a-c60335fc0bdd": {
+   "score": 2,
+   "reason": "EFS mode naming detail, SAA-oriented"
+  },
+  "d7bcd1dd-b66f-44b4-8e08-553daf2b253d": {
+   "score": 8,
+   "reason": "Beanstalk blue/green (separate env, swap/weighted) is heavily tested"
+  },
+  "4182060c-eed5-4622-9eb9-3612dcafccb6": {
+   "score": 2,
+   "reason": "Authoritative DNS definition is trivia"
+  },
+  "b1394f70-5c65-4113-8bb9-52f176d3ad30": {
+   "score": 3,
+   "reason": "Calculated health checks are SAA detail"
+  },
+  "b2e36465-c4c6-407a-be0c-22e986785292": {
+   "score": 5,
+   "reason": "Beanstalk source bundle mechanics"
+  },
+  "5282ddae-ed6a-4bca-b2ef-994f7cf3777c": {
+   "score": 5,
+   "reason": "Versioned filenames vs invalidation, occasional"
+  },
+  "361d900c-2397-48f6-81ef-60ebebeee82c": {
+   "score": 3,
+   "reason": "Multi-value routing is mostly SAA"
+  },
+  "3f318e13-0929-4645-8097-3bdbf3040d53": {
+   "score": 8,
+   "reason": "Beanstalk traffic splitting (canary) vs other policies is a frequent trap"
+  },
+  "5c385aba-0a90-4b70-b0b7-9003b9d9fe82": {
+   "score": 6,
+   "reason": "IMDSv2 token flow is relevant to app security"
+  },
+  "4cf50f69-dcbe-40d0-b2a0-64737f44fce9": {
+   "score": 7,
+   "reason": "SQS access policy for S3 notifications is a common fix"
+  },
+  "b456ecb6-e00a-4b80-b0e9-048e3b5b2a65": {
+   "score": 6,
+   "reason": "S3 upload/download performance options"
+  },
+  "41fe824a-afe2-4a0e-9166-68b837d4300d": {
+   "score": 7,
+   "reason": "Cross-account bucket policy access is frequently tested"
+  },
+  "f1288751-9356-42a5-b45c-4c24163d6203": {
+   "score": 7,
+   "reason": "Lambda in VPC needs NAT for internet is a classic DVA trap"
+  },
+  "65cdeb85-1331-4f9f-8e1b-7746cbea9dc2": {
+   "score": 2,
+   "reason": "Aurora Backtrack is niche"
+  },
+  "9f2990ea-023e-4c10-8f16-22a8f2968e3e": {
+   "score": 5,
+   "reason": "S3 gateway endpoint for private access, occasional"
+  },
+  "29e4cf80-a91a-4036-902d-65b9e06856c6": {
+   "score": 2,
+   "reason": "MemoryDB not in DVA in-scope list"
+  },
+  "bb481664-0f00-4c8d-9757-799c0b1b3c26": {
+   "score": 5,
+   "reason": "CloudFront signed URL flow, tested sometimes"
+  },
+  "5356e130-0c11-45fb-b144-9c86339ebb7d": {
+   "score": 2,
+   "reason": "EBS cold HDD choice is SAA"
+  },
+  "a68fdb6a-06c9-4dae-93b8-e0291d70dba6": {
+   "score": 7,
+   "reason": "S3 notifications vs EventBridge choice is a common event-source trap"
+  },
+  "bfc474f2-7d32-434f-8f53-738266a86017": {
+   "score": 3,
+   "reason": "Read replica Multi-AZ DR is SAA-oriented"
+  },
+  "816157bb-4eb4-4a6e-99eb-169538edf837": {
+   "score": 6,
+   "reason": "Transfer Acceleration is a common S3 performance answer"
+  },
+  "bf5f33be-e3e0-4b63-9163-33632932baaa": {
+   "score": 4,
+   "reason": "Cache policy components, occasional"
+  },
+  "06fa3bf2-4006-4c9a-b0ac-890e8012186d": {
+   "score": 4,
+   "reason": "CloudFront origin types, occasional"
+  },
+  "f01672f2-6331-4a9f-8978-c14a90a5d0cb": {
+   "score": 4,
+   "reason": "Cache behavior tuning, occasional"
+  },
+  "86d34b01-3ffb-4f14-9524-cc33b99cb6ef": {
+   "score": 4,
+   "reason": "S3 object anatomy, supporting knowledge"
+  },
+  "23afc5d2-c909-4044-aa05-d1e0573dd021": {
+   "score": 4,
+   "reason": "Lifecycle filters by prefix/tag"
+  },
+  "1115743d-eae0-4f35-8e7f-75ef8eae2e2d": {
+   "score": 5,
+   "reason": "User metadata prefix x-amz-meta- appears in developer questions"
+  },
+  "9e76af79-4421-449a-9fcd-0a29082d01d4": {
+   "score": 1,
+   "reason": "Route 53 IP-based routing CIDR collections is obscure"
+  },
+  "03db51a1-7f6a-4a2f-b548-c3fc42a1540c": {
+   "score": 3,
+   "reason": "Access point network origin is niche"
+  },
+  "3f3f7c66-9aa0-40f7-b5c9-69688ada08df": {
+   "score": 8,
+   "reason": "Choosing SSE-KMS for key control and audit is core encryption knowledge"
+  },
+  "78870b0e-848b-45c3-8821-6a703c092b60": {
+   "score": 3,
+   "reason": "Launch template contents are ops-level"
+  },
+  "118b6ce6-dd9b-4f5b-abfc-cca2d31ef9ca": {
+   "score": 5,
+   "reason": "Cache vs origin request policy, tested sometimes"
+  },
+  "363d26a6-7414-489d-874f-baed1499bd7e": {
+   "score": 9,
+   "reason": "kms:Decrypt missing for SSE-KMS GetObject is a top DVA troubleshooting question"
+  },
+  "47b9c77d-5e1c-4bdd-b04b-3b641551c66f": {
+   "score": 5,
+   "reason": "CLI programmatic access setup (2.1.3); basic but common"
+  },
+  "8a449c35-8694-42f1-a7e5-844cccc1de68": {
+   "score": 3,
+   "reason": "Basic security group port rule; networking basics"
+  },
+  "25e00578-5af0-4b69-b325-b86f53628099": {
+   "score": 3,
+   "reason": "ASG metric choice is SAA scaling design"
+  },
+  "0de2a88a-3693-4629-896d-c01a975d0374": {
+   "score": 2,
+   "reason": "RDS Multi-AZ internals; ops/architecture detail"
+  },
+  "cca31fe5-55f0-4d07-b7f3-3555cfa0d595": {
+   "score": 1,
+   "reason": "Server administration trivia; out of scope"
+  },
+  "5b4f18ba-bab5-477c-b8a9-ddac4e17b81d": {
+   "score": 6,
+   "reason": "IMDS role credentials/metadata used by apps"
+  },
+  "6a1d1118-c95a-43bc-b345-18ca72553e8a": {
+   "score": 6,
+   "reason": "Caching suitability; data caching skill 1.3.8"
+  },
+  "d3652975-7859-4144-a0b3-19e1dd042df6": {
+   "score": 3,
+   "reason": "Aurora reader endpoint load-balancing level; detail"
+  },
+  "f067f2d8-4da4-4351-aa18-0c6c757ed77a": {
+   "score": 3,
+   "reason": "RDS vs self-managed DB; architecture choice"
+  },
+  "7e1bfb1d-afe6-4700-b938-052643564da0": {
+   "score": 2,
+   "reason": "VPC peering design; networking design out of scope"
+  },
+  "39a263d6-fa93-4e0e-a7db-a7faf2030890": {
+   "score": 2,
+   "reason": "IAM group administration; out of scope for DVA"
+  },
+  "6c527824-ac3f-423d-b8a0-439610c54521": {
+   "score": 2,
+   "reason": "EBS volume families; SAA storage design"
+  },
+  "80cc0290-7721-447d-b6fc-5830814a3240": {
+   "score": 2,
+   "reason": "SSH port 22; basic server admin"
+  },
+  "1a1283da-8f92-4fed-acd4-81f04908c988": {
+   "score": 5,
+   "reason": "CloudFront signed URL key groups; tested sometimes"
+  },
+  "08fb96d3-d993-4f8c-a4ac-09b928a161ed": {
+   "score": 8,
+   "reason": "SDK credential provider chain precedence; classic trap"
+  },
+  "c5c3d8e8-afb5-46c2-9572-3f3717f67a25": {
+   "score": 6,
+   "reason": "CLI with MFA via STS GetSessionToken"
+  },
+  "fb9eb425-afda-4047-8b2a-30bb2b9b48bc": {
+   "score": 5,
+   "reason": "Programmatic access with own IAM user keys"
+  },
+  "8e92a22e-4423-42e8-be8d-9a0a498b5ae6": {
+   "score": 2,
+   "reason": "Instance store IOPS; SAA storage choice"
+  },
+  "7839e306-39bb-4223-bcef-c63571b1edea": {
+   "score": 3,
+   "reason": "Target tracking ASG policy; SAA scaling"
+  },
+  "a1a33afb-2b65-4552-b81f-95905aea58bc": {
+   "score": 1,
+   "reason": "MFA device admin for IAM users; out of scope"
+  },
+  "55ea3d3f-4c0b-45a5-877b-f261fa85f50c": {
+   "score": 3,
+   "reason": "IAM is global; basic fact"
+  },
+  "7c3919ba-9072-4809-a660-f1c5701c943a": {
+   "score": 3,
+   "reason": "S3 gateway endpoint cost; networking design"
+  },
+  "9b5e8252-b7eb-4e51-8554-5b2904aab9e9": {
+   "score": 5,
+   "reason": "Aurora cluster endpoint for writes; app connection config"
+  },
+  "dd34051a-f23f-4d65-8d91-abb8250352a5": {
+   "score": 3,
+   "reason": "DNS TTL caching; occasional"
+  },
+  "510a4262-aea6-460d-bb2d-1e4e01a93bbd": {
+   "score": 3,
+   "reason": "Route 53 private hosted zone; mostly SAA"
+  },
+  "64e36dba-f3e6-4389-b139-a7c7def5e09a": {
+   "score": 2,
+   "reason": "Route 53 health-check SG issue; niche"
+  },
+  "c9dad150-c8a4-42ca-8e8d-921c6a4b5616": {
+   "score": 6,
+   "reason": "S3 lifecycle actions; manage data lifecycle 1.3.7"
+  },
+  "28278185-b300-48a7-955e-242c4ed79edf": {
+   "score": 5,
+   "reason": "IAM eventual consistency; troubleshooting"
+  },
+  "7cb9a4bf-e4ed-4180-9753-88c7e8ee674f": {
+   "score": 3,
+   "reason": "Glacier retrieval class; SAA storage detail"
+  },
+  "99955254-5244-4ea7-ac8f-95c412cc1509": {
+   "score": 5,
+   "reason": "SigV4 header vs query string; authenticated calls 2.1.4"
+  },
+  "8aa8f049-58a2-46f9-8efe-54899a314a4c": {
+   "score": 6,
+   "reason": "SDK vs CLI; code uses SDK (1.1.9)"
+  },
+  "6b17d98b-6027-45da-9cd2-24bcb55c8cac": {
+   "score": 5,
+   "reason": "boto3 SDK for app code; basic"
+  },
+  "dba2076f-5689-4da8-b438-7b2f723353c8": {
+   "score": 2,
+   "reason": "Public IP change after stop/start; ops trivia"
+  },
+  "43c86bb3-76f1-4e1e-9dcf-866df7dbe653": {
+   "score": 3,
+   "reason": "Failover routing; SAA DR topic"
+  },
+  "cdcbec6c-99ec-4c72-b6c0-c06d8a8dde1a": {
+   "score": 4,
+   "reason": "ALB target types incl. Lambda"
+  },
+  "5c452b4a-8d21-449c-9724-58b3355419dd": {
+   "score": 3,
+   "reason": "Geolocation routing; SAA"
+  },
+  "b45b73fa-b7c1-470c-818f-cc63ab490b76": {
+   "score": 3,
+   "reason": "Multiple SGs union; networking basics"
+  },
+  "8c104e2b-7d01-4aab-804b-c8933b7a1b51": {
+   "score": 2,
+   "reason": "io2 Block Express; SAA storage"
+  },
+  "1bb8a25c-1d84-4176-a30c-2782228b62a6": {
+   "score": 2,
+   "reason": "IGW/NACL/SG order; networking design"
+  },
+  "8937cc9b-ecdd-4ee6-a2a2-d5d7b7f5f46f": {
+   "score": 1,
+   "reason": "Gateway Load Balancer; SAA networking"
+  },
+  "fb1588d5-4c88-4daa-9a01-44a424054ff9": {
+   "score": 5,
+   "reason": "Encrypt existing RDS via snapshot; encryption at rest"
+  },
+  "f5fa9f60-d027-4bb2-b296-62f4180975ae": {
+   "score": 4,
+   "reason": "CloudShell region/persistence; in-scope tool"
+  },
+  "725c05b7-f6f3-4ccc-b4ad-37679b1abd78": {
+   "score": 7,
+   "reason": "SSE-C requirements; client vs server encryption trap"
+  },
+  "8e1fad7b-8cfc-41a9-931a-934a9c610e31": {
+   "score": 2,
+   "reason": "External registrar NS delegation; SAA"
+  },
+  "2738efc8-6127-4418-baf7-c3ec85481c88": {
+   "score": 5,
+   "reason": "ACM for ALB TLS certs; certificate management"
+  },
+  "fd296db5-1853-4281-972a-05c351888a53": {
+   "score": 1,
+   "reason": "Instance Connect IP range; server admin"
+  },
+  "b99579e9-f759-4c41-ad2c-3d96860c0927": {
+   "score": 3,
+   "reason": "NACL vs SG statefulness; networking design"
+  },
+  "aa391c3a-5dc9-4e60-abe7-2897bb64eab8": {
+   "score": 1,
+   "reason": "Savings Plan vs Capacity Reservation; pricing out of scope"
+  },
+  "56fb3788-860b-4145-abab-be55c365cbbd": {
+   "score": 2,
+   "reason": "EBS cross-Region snapshot DR; SAA"
+  },
+  "df55e62f-5b20-4d87-b534-f633cc8e2707": {
+   "score": 4,
+   "reason": "IMDS credentials delay; troubleshooting niche"
+  },
+  "bbec4d72-9d9a-416f-8e57-122577011b73": {
+   "score": 6,
+   "reason": "RDS Proxy IAM auth, credentials out of code"
+  },
+  "9206bb46-0d59-410a-81e8-f71c3a32bd23": {
+   "score": 5,
+   "reason": "MFA Delete root+versioning; recurring S3 fact"
+  },
+  "5a339683-ea09-46e9-b833-60915e1097b2": {
+   "score": 3,
+   "reason": "Flow Logs levels; networking"
+  },
+  "d2524003-57f6-41b3-8244-40b02681c2c2": {
+   "score": 4,
+   "reason": "ALB HTTP->HTTPS redirect rule"
+  },
+  "1d6dc2ba-56fe-4b40-8916-a790c6ac0a73": {
+   "score": 3,
+   "reason": "SG referencing ALB SG; networking"
+  },
+  "d8094f66-f3b8-40ee-ad93-349b4a4fc597": {
+   "score": 4,
+   "reason": "CloudFront cache behaviors per path"
+  },
+  "3763e27b-7cfd-4beb-8cb0-aafd14924c83": {
+   "score": 7,
+   "reason": "Cache key with query strings; caching on request headers 4.3.5"
+  },
+  "e2f653c4-d4fa-4a3f-808b-fc308dc8aa94": {
+   "score": 5,
+   "reason": "Read replicas offload reads; common"
+  },
+  "5d124d54-d16f-4520-9af9-9db69f6dc46d": {
+   "score": 1,
+   "reason": "Region selection; cloud practitioner/SAA"
+  },
+  "27fda2ca-13ca-41f8-8eff-69af85d81660": {
+   "score": 5,
+   "reason": "CloudFront signed URL vs cookie"
+  },
+  "2f961cd2-3f3f-468d-aba1-f1769ea35171": {
+   "score": 1,
+   "reason": "chmod 400 key file; server admin"
+  },
+  "42f3252e-549e-42fe-81e1-64d789cb17a5": {
+   "score": 1,
+   "reason": "AZ counts; global infra trivia"
+  },
+  "83ef8d2e-2c08-436b-abf8-f5260db92c1d": {
+   "score": 2,
+   "reason": "Scale out/in terminology"
+  },
+  "73e9967b-2451-4bb6-8133-c9da661f542d": {
+   "score": 2,
+   "reason": "Public IP change; ops trivia"
+  },
+  "523e15fb-8a0e-4484-9b81-3509c5f4aabb": {
+   "score": 1,
+   "reason": "MFA device types for IAM users; admin"
+  },
+  "2518e92a-999e-452a-acb1-67542c3a9eeb": {
+   "score": 3,
+   "reason": "Access Advisor; IAM admin leaning"
+  },
+  "e5b882e7-f00e-48d9-ad2a-60ee4b16c7a4": {
+   "score": 3,
+   "reason": "Create AMI steps; ops"
+  },
+  "d074b0bc-734a-49d9-8bec-a5c5dc3a85c9": {
+   "score": 1,
+   "reason": "EBS snapshot archive/Recycle Bin; SAA trivia"
+  },
+  "8d525125-4da2-495a-9eed-9718cea39ed2": {
+   "score": 6,
+   "reason": "RDS Proxy benefits, Lambda connection pooling"
+  },
+  "446f1505-9ca9-4921-9357-30f2123bd9d4": {
+   "score": 2,
+   "reason": "Geolocation default record; SAA niche"
+  },
+  "2e256e40-ca7a-4489-85e6-8a2fafe7b2e7": {
+   "score": 2,
+   "reason": "Vertical scaling term"
+  },
+  "df64d108-994f-422c-9abb-5c419a0c425e": {
+   "score": 8,
+   "reason": "Write-through caching pattern; core caching skill"
+  },
+  "6cc3b750-bfb9-462f-9592-1cc44f47877d": {
+   "score": 1,
+   "reason": "Reserved Instances pricing; out of scope"
+  },
+  "eefbabef-a391-4814-9169-77a6a90a5021": {
+   "score": 2,
+   "reason": "ASG desired capacity; SAA"
+  },
+  "fcca10ce-add4-4929-abac-ee975f1e395f": {
+   "score": 2,
+   "reason": "ASG scale-out flow; SAA"
+  },
+  "e936ede4-2411-4523-99e5-bbd0e2cc621f": {
+   "score": 5,
+   "reason": "API rate limits vs quotas; throttling context"
+  },
+  "455e3349-095d-4d1e-9098-179cde5317b0": {
+   "score": 2,
+   "reason": "Aurora storage quorum; architecture trivia"
+  },
+  "db590033-f071-4225-bba1-9d304b546ece": {
+   "score": 1,
+   "reason": "Replication data transfer cost; SAA cost"
+  },
+  "0aa697fe-ab49-4ecc-b3c4-b3d85f4e4878": {
+   "score": 8,
+   "reason": "EC2 role for app API calls; core credentials pattern"
+  },
+  "67806387-f38f-409b-a2c8-58f38fe65487": {
+   "score": 3,
+   "reason": "EBS vs EFS comparison; storage basics"
+  },
+  "6cd31629-cfaa-4bbd-a2ed-0c7394750208": {
+   "score": 3,
+   "reason": "SG stateful; networking basics"
+  },
+  "04b3556d-638d-4130-8e06-afc3b89c7d7a": {
+   "score": 2,
+   "reason": "Step scaling; SAA"
+  },
+  "37da5027-e6d3-4b75-a725-400c7a90955c": {
+   "score": 5,
+   "reason": "Versioning+lifecycle for noncurrent versions"
+  },
+  "a85fb0d6-069b-4f04-9346-02eefbeb5f7c": {
+   "score": 3,
+   "reason": "EFS mount targets; storage networking"
+  },
+  "b89f56de-25ff-4acb-839e-ae4d2e17c3a4": {
+   "score": 2,
+   "reason": "NFS port 2049; trivia"
+  },
+  "22cd38cd-cf3f-4b94-87a6-6a821969e688": {
+   "score": 4,
+   "reason": "Multi-AZ failover same DNS endpoint"
+  },
+  "602070aa-8e27-4606-88e5-d3b7f58604ce": {
+   "score": 8,
+   "reason": "Cache-aside with TTL in Redis; core caching code"
+  },
+  "864e69ca-5e8e-4898-ae6a-ec11fbd1cbeb": {
+   "score": 1,
+   "reason": "Capacity Reservation pricing; out of scope"
+  },
+  "7e49ef93-c531-4b3c-8d64-a04a7c2ad2ec": {
+   "score": 3,
+   "reason": "SG properties; networking basics"
+  },
+  "98e6db4a-9792-4343-abcd-61e093238ff2": {
+   "score": 3,
+   "reason": "Route 53 policies overview; SAA-heavy"
+  },
+  "ffd2138c-11ac-4960-a334-dfe9cada09c7": {
+   "score": 4,
+   "reason": "VPC endpoint for private access to services"
+  },
+  "e9df81be-2692-41a6-b32f-25efc280ad54": {
+   "score": 1,
+   "reason": "Multi-value max 8 records; trivia"
+  },
+  "e67d86f8-c6b3-40e8-967a-135f189d674b": {
+   "score": 2,
+   "reason": "Default vs custom NACL; networking design"
+  },
+  "61c5430c-ff47-4d75-a764-58a65a1bc847": {
+   "score": 3,
+   "reason": "Flow Logs accept/reject troubleshooting"
+  },
+  "96d0d730-ca75-4400-a383-6380d89bd910": {
+   "score": 2,
+   "reason": "NACL ephemeral ports; networking design"
+  },
+  "26eb4d5d-43ec-4bdf-a260-3d55e78f151a": {
+   "score": 1,
+   "reason": "DNS resolution order; general networking"
+  },
+  "2a34b3ef-fe12-4352-ae6c-31444de1bea3": {
+   "score": 3,
+   "reason": "CloudFront = CDN; basic recognition"
+  },
+  "6ac0b0dc-eb1f-4b94-9767-fe63b91aba1b": {
+   "score": 7,
+   "reason": "aws:SecureTransport bucket policy; encryption in transit"
+  },
+  "df1e99ea-85b1-4ecb-9d42-18544a910a6f": {
+   "score": 1,
+   "reason": "IAM password policy; user admin out of scope"
+  },
+  "742c798f-92c1-412d-a0b1-cf509bffd2a0": {
+   "score": 2,
+   "reason": "EBS AZ-locked; SAA"
+  },
+  "4f7e46f9-f63b-4228-9349-d9277b1d5493": {
+   "score": 9,
+   "reason": "Exponential backoff on throttling; core resilient code 1.1.13"
+  },
+  "27e6a85d-bd74-4283-b043-29e2120a0e6f": {
+   "score": 3,
+   "reason": "Copy AMI across Regions"
+  },
+  "43f9d620-c3da-4cb5-ab93-1c907f7ec872": {
+   "score": 3,
+   "reason": "Standard-IA choice; SAA storage class"
+  },
+  "000276a1-3ac1-4a3e-88e8-873824352cd6": {
+   "score": 5,
+   "reason": "Refused vs timeout debugging; matches the security-group timeout card"
+  },
+  "64528c08-bfb9-4c83-a4d7-aeb421581ccf": {
+   "score": 2,
+   "reason": "NAT outbound path; networking design"
+  },
+  "804579ff-ad0f-4300-ad28-ebb733964808": {
+   "score": 3,
+   "reason": "Instance store ephemeral; SAA"
+  },
+  "a2eb618f-d649-41bd-8508-19748a0031a3": {
+   "score": 2,
+   "reason": "NACL properties; networking design"
+  },
+  "cb15b81e-a54f-40de-944c-ae5d441ac1b8": {
+   "score": 8,
+   "reason": "Deny uploads without SSE-KMS; common S3/KMS policy"
+  },
+  "39d61f7f-b10e-4fa6-a2ed-01f20c886ded": {
+   "score": 3,
+   "reason": "CloudFront real-time logs to Kinesis; niche"
+  },
+  "ac79cf19-acb4-4191-9688-30c6b477d3a8": {
+   "score": 2,
+   "reason": "CloudFront IP ranges on ALB; legacy SAA"
+  },
+  "aa490f79-c160-4f18-b028-f07479f22619": {
+   "score": 4,
+   "reason": "User data runs first boot only"
+  },
+  "b62f0b9c-5117-49d3-91c6-72472fc1be9c": {
+   "score": 5,
+   "reason": "Golden AMI to speed launches; deployment"
+  },
+  "a7b6b373-5702-407d-8a78-b319746b0a46": {
+   "score": 1,
+   "reason": "NLB health-check protocols; trivia"
+  },
+  "a2d6093a-6877-4203-b638-9bd6ca8c8674": {
+   "score": 5,
+   "reason": "S3 HTTPS and SSE-C requirement"
+  },
+  "057ebaf9-a4ad-4f73-bc49-547365d0bcb1": {
+   "score": 2,
+   "reason": "NAT per AZ HA; networking design"
+  },
+  "eb80cbd2-3c11-4124-ac74-7d4e75766971": {
+   "score": 3,
+   "reason": "CloudFront real-time logs destination; niche"
+  },
+  "d58a42b5-2845-43c6-bc64-f66f53c6afa5": {
+   "score": 5,
+   "reason": "Versioned file names vs invalidation; deploy caching"
+  },
+  "e13f0a0f-8d1b-4ea6-9462-c18486400ba8": {
+   "score": 2,
+   "reason": "CloudFront origin group DR; SAA"
+  },
+  "35ee2ab9-8098-49d2-b3f2-b076ca3464fa": {
+   "score": 2,
+   "reason": "Multi-AZ on read replica; SAA detail"
+  },
+  "aab8af82-0b43-4401-8942-3c983f9bafc1": {
+   "score": 5,
+   "reason": "Multi-AZ vs read replica distinction; frequent trap"
+  },
+  "4e389960-493d-4906-b14f-a1b0473700b2": {
+   "score": 7,
+   "reason": "SDK auto-reads IMDS role creds; credential chain"
+  },
+  "ce6010cd-6843-4f5c-8bda-4a2c6ae72ad8": {
+   "score": 9,
+   "reason": "S3 event notification -> Lambda; core event source"
+  },
+  "d3372492-b3df-4395-9b59-79e647bb3dd9": {
+   "score": 3,
+   "reason": "S3 class cost ranking; SAA"
+  },
+  "58d6a473-123a-4118-b986-72df9d3b8c0e": {
+   "score": 5,
+   "reason": "Replica lag eventual consistency; consistency models"
+  },
+  "21d71c84-a834-4101-9885-412da3bebb60": {
+   "score": 1,
+   "reason": "st1 HDD; SAA storage"
+  },
+  "4d1ba9e6-5ffa-4a34-8085-9050bc571a20": {
+   "score": 3,
+   "reason": "S3 website endpoint as custom origin"
+  },
+  "915b67c0-a4ed-45c1-99c9-b92408dd74d4": {
+   "score": 2,
+   "reason": "EBS persistence after termination; SAA"
+  },
+  "d57abf39-237d-43dd-925a-fd6f16cf0355": {
+   "score": 6,
+   "reason": "Cache eviction causes incl. TTL; caching skill"
+  },
+  "6197fc9a-42cb-469b-b443-18540ea59cd2": {
+   "score": 6,
+   "reason": "Pre-signed URL max expiry; frequently tested"
+  },
+  "5e91fe87-972d-409d-ad4d-17636496fd41": {
+   "score": 5,
+   "reason": "MFA Delete protected actions"
+  },
+  "ff134f58-60a6-4f78-ac88-173554444214": {
+   "score": 3,
+   "reason": "ALB L7 path routing; basic ELB"
+  },
+  "29a2da61-c377-4cc8-ba7c-90a79e0ae084": {
+   "score": 4,
+   "reason": "Custom origin header to lock origin"
+  },
+  "783455a5-3698-4c79-9013-1e669fbd03d2": {
+   "score": 3,
+   "reason": "Lifecycle scenario; SAA-flavored storage design"
+  }
+ },
+ "CKAD": {
+  "e8878b17-2ee7-49f0-b30b-9984926937f1": {
+   "score": 1,
+   "reason": "EKS Fargate storage; AWS-specific, not CKAD"
+  },
+  "016b2702-3712-4df4-b951-d6670c1694f0": {
+   "score": 3,
+   "reason": "Sidecar sharing files, but ECS task answer"
+  },
+  "6f45c638-f8fb-4851-898a-4b5fc450d84b": {
+   "score": 1,
+   "reason": "EKS node types; AWS-specific"
+  },
+  "6b4759b2-9e65-4c7e-90fa-2784cae6a5b8": {
+   "score": 3,
+   "reason": "Containers vs VMs; background"
+  },
+  "1e127c77-dab5-4d77-9596-7974c4a566cb": {
+   "score": 3,
+   "reason": "Container portability; background"
+  },
+  "b42d14a5-a1da-4307-b249-86e5ddadbac7": {
+   "score": 1,
+   "reason": "Word-mapping pods to EKS; AWS exam trick"
+  },
+  "a97dd365-c62e-4656-8ef3-b45d091cadcf": {
+   "score": 5,
+   "reason": "Build/push/run image workflow; images in curriculum"
+  }
+ }
+}

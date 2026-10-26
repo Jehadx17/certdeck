@@ -208,6 +208,11 @@ fsrs.Rating ratingFor(Conf conf, bool correct, {bool learning = false, bool mast
   return conf == Conf.sure || learning ? fsrs.Rating.good : fsrs.Rating.hard;
 }
 
+/// The card's weight in the review order (the AI coach's -2..2 scale): a miss raises it by 1, up to 2; from the second
+/// Sure+correct answer in a row, each one lowers a raised priority by 1, down to 0.
+int priorityAfter(int priority, {required bool correct, required int sureStreak}) =>
+    !correct ? min(2, priority + 1) : (sureStreak >= 2 && priority > 0 ? priority - 1 : priority);
+
 /// A new card for a student who said they are new to the subject (setup): read it first, then it comes back as a
 /// question. Everyone else guesses first (the pretesting effect).
 bool studyFirst(Json card) => isNew(card) && App.settings['expertise'] == 'new';
@@ -232,8 +237,6 @@ Future<Json> recordAnswer(Json card,
   correct = score == null ? correct : score >= .85;
   final wasNew = isNew(card);
   final misconception = conf == Conf.sure && (score == null ? !correct : score < .4);
-  // A miss makes the card count more in the review order (the AI coach's -2..2 scale).
-  if (!correct) card['priority'] = min(2, ((card['priority'] as int?) ?? 0) + 1);
   scheduler ??= card['course'] != null ? schedulerForDate((await assessmentForCard(card))?['date']) : schedulerFor(App.cert);
   final f = fromFsrs(scheduler.reviewCard(before, rating, reviewDateTime: now).card);
 
@@ -244,6 +247,7 @@ Future<Json> recordAnswer(Json card,
   } else if (card['sure_streak'] >= 2) {
     card['misconception'] = false;
   }
+  card['priority'] = priorityAfter((card['priority'] as int?) ?? 0, correct: correct, sureStreak: card['sure_streak']);
   // Misconceptions come back within a day until answered Sure+correct twice in a row.
   if (card['misconception'] == true) f['due'] = min(f['due'] as int, now.millisecondsSinceEpoch + dayMs);
   card['fsrs'] = f;
@@ -298,11 +302,13 @@ int startOfToday() {
 
 bool studiedToday(Json c, Set<String> studied) => ((c['tags'] as List?) ?? []).any(studied.contains);
 
-/// New cards with a tag [studied] today come first, most [importance] first; the rest follow the greedy weighted
-/// interleave: next new card comes from the domain whose introduced share lags its exam weight the most.
+/// New cards with a tag [studied] today come first, most [importance] first and taking turns across those topics; the
+/// rest follow the greedy weighted interleave: next new card comes from the domain whose introduced share lags its exam
+/// weight the most, the most important first within a domain.
 List<Json> orderNew(List<Json> cards, Json cert, {Set<String> studied = const {}, Map<String, int> importance = const {}}) {
-  final first = cards.where((c) => isNew(c) && !isSuspended(c) && studiedToday(c, studied)).toList()
-    ..sort((a, b) => (importance[b['id']] ?? 5).compareTo(importance[a['id']] ?? 5));
+  int byImportance(Json a, Json b) => (importance[b['id']] ?? 5).compareTo(importance[a['id']] ?? 5);
+  final first = interleave(cards.where((c) => isNew(c) && !isSuspended(c) && studiedToday(c, studied)).toList()..sort(byImportance),
+      key: (c) => ((c['tags'] as List?) ?? []).firstWhere(studied.contains) as String);
   final pools = <String, List<Json>>{};
   final introduced = <String, int>{};
   for (final c in cards.where((c) => !isSuspended(c) && !first.contains(c))) {
@@ -314,7 +320,10 @@ List<Json> orderNew(List<Json> cards, Json cert, {Set<String> studied = const {}
     }
   }
   for (final p in pools.values) {
-    p.sort((a, b) => ((a['created_at'] as int?) ?? 0).compareTo((b['created_at'] as int?) ?? 0));
+    p.sort((a, b) {
+      final i = byImportance(a, b);
+      return i != 0 ? i : ((a['created_at'] as int?) ?? 0).compareTo((b['created_at'] as int?) ?? 0);
+    });
   }
   final weight = {for (final d in (cert['domains'] as List)) d['id'] as String: (d['weight'] as num).toDouble()};
   final out = [...first];
@@ -436,8 +445,9 @@ Future<(List<Json>, TodayStats)> buildQueue(Json cert, {int? minutes}) async {
 }
 
 /// A session of [minutes] where unseen cards get at least [newShare] of the time (they hold what the student does not
-/// know yet, so known cards must not push them out), the rest going to [reviews] in their order. New cards come first. A new card takes about twice as long as a review.
-List<Json> mixByTime(List<Json> reviews, List<Json> news, int minutes, double secondsPerCard, {double newShare = .8}) {
+/// know yet, so known cards must not push them out), the rest going to [reviews] in their order (a heavy day of new
+/// cards must not starve the reviews either). Two new cards, then a review. A new card takes about twice as long as a review.
+List<Json> mixByTime(List<Json> reviews, List<Json> news, int minutes, double secondsPerCard, {double newShare = .5}) {
   final budget = minutes * 60.0, newCost = secondsPerCard * 2;
   final takeNew = <Json>[];
   var used = 0.0;
@@ -458,7 +468,13 @@ List<Json> mixByTime(List<Json> reviews, List<Json> news, int minutes, double se
     takeNew.add(c);
     used += newCost;
   }
-  return [...takeNew, ...takeRev];
+  final out = <Json>[];
+  var r = 0;
+  for (var i = 0; i < takeNew.length; i++) {
+    out.add(takeNew[i]);
+    if (i.isOdd && r < takeRev.length) out.add(takeRev[r++]);
+  }
+  return [...out, ...takeRev.skip(r)];
 }
 
 /// Studying more than today's plan: the daily new-card limit is ignored and cards that are not due yet come in, the most

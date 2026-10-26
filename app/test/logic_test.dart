@@ -10,12 +10,13 @@ void main() {
   test('unseen cards keep a share of the session even with a long backlog', () {
     final due = [for (var i = 0; i < 100; i++) {'id': 'd$i', 'fsrs': {'state': 2}}];
     final fresh = [for (var i = 0; i < 20; i++) {'id': 'n$i'}];
-    final q = mixByTime(due, fresh, 10, 30); // 600 s: 80% = 480 s -> 8 new cards (60 s each), then 4 reviews
-    expect(q.where(isNew).length, 8);
-    expect(q.length, 8 + 4);
-    expect(q.take(8).every(isNew), true); // new cards come first
+    final q = mixByTime(due, fresh, 10, 30); // 600 s: 50% = 300 s -> 5 new cards (60 s each), then 10 reviews
+    expect(q.where(isNew).length, 5);
+    expect(q.length, 5 + 10);
+    expect(q.take(6).map(isNew), [true, true, false, true, true, false]); // two new, then a review
     expect(mixByTime(due.take(2).toList(), fresh, 10, 30).where(isNew).length, 9); // few reviews: the time goes to new cards
     expect(mixByTime(due, [], 10, 30).length, 20);
+    expect(mixByTime([], fresh, 10, 30).length, 10); // nothing due: new cards get the whole session
   });
 
   test('a session is capped to its minutes, new cards cost double, at least one card always fits', () {
@@ -122,6 +123,29 @@ void main() {
     expect(q.take(3).map((c) => c['id']), ['2', '0', '1']);
     expect(q.map((c) => c['id']).toSet().length, 10);
     expect(orderNew(cards, cert).first['id'], '0'); // nothing studied: the old order
+  });
+
+  test('today\'s topics take turns; unseen cards of other topics go most important first', () {
+    final cert = {
+      'id': 'X',
+      'domains': [
+        {'id': '1', 'weight': 1}
+      ]
+    };
+    Map<String, dynamic> card(String id, String tag) => {'id': id, 'created_at': int.parse(id), 'certs': {'X': '1'}, 'tags': [tag]};
+    final cards = [card('1', 's3'), card('2', 's3'), card('3', 's3'), card('4', 'sqs'), card('5', 'sqs'), card('6', 'vpc'), card('7', 'vpc')];
+    final q = orderNew(cards, cert, studied: {'s3', 'sqs'}, importance: {'3': 9, '5': 8, '7': 9});
+    expect(q.take(5).map((c) => c['id']), ['3', '5', '1', '4', '2']); // s3, sqs, s3, sqs, s3: most important first in each
+    expect(q.skip(5).map((c) => c['id']), ['7', '6']); // not studied: importance beats age
+  });
+
+  test('a miss raises priority up to 2; Sure+correct twice in a row lowers it down to 0', () {
+    expect(priorityAfter(0, correct: false, sureStreak: 0), 1);
+    expect(priorityAfter(2, correct: false, sureStreak: 0), 2);
+    expect(priorityAfter(2, correct: true, sureStreak: 1), 2); // one right answer is not enough
+    expect(priorityAfter(2, correct: true, sureStreak: 2), 1);
+    expect(priorityAfter(0, correct: true, sureStreak: 5), 0);
+    expect(priorityAfter(-2, correct: true, sureStreak: 5), -2); // the coach's demotion stays
   });
 
   test('list titles: LaTeX as readable text, cloze answers, no Markdown marks', () {

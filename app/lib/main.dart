@@ -30,7 +30,7 @@ ThemeData studentTheme() => ThemeData(
       colorScheme: _scheme,
       useMaterial3: true,
       scaffoldBackgroundColor: _scheme.surface,
-      cardTheme: CardTheme(color: _scheme.surfaceContainerLow, elevation: 0, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
+      cardTheme: CardThemeData(color: _scheme.surfaceContainerLow, elevation: 0, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
       appBarTheme: AppBarTheme(backgroundColor: _scheme.surface, scrolledUnderElevation: 0),
     );
 
@@ -43,7 +43,7 @@ ThemeData ownerTheme() {
     colorScheme: s,
     useMaterial3: true,
     scaffoldBackgroundColor: s.surface,
-    cardTheme: CardTheme(color: s.surfaceContainerLow, elevation: 0, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16))),
+    cardTheme: CardThemeData(color: s.surfaceContainerLow, elevation: 0, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16))),
     filledButtonTheme: FilledButtonThemeData(style: FilledButton.styleFrom(shape: btn, padding: pad)),
     outlinedButtonTheme: OutlinedButtonThemeData(style: OutlinedButton.styleFrom(shape: btn, padding: pad)),
     navigationBarTheme: NavigationBarThemeData(
