@@ -120,6 +120,9 @@ class App {
 
   static Json get cert => certs.firstWhere((c) => c['id'] == settings['active_cert'], orElse: () => certs.first);
   static int setting(String k) => (settings[k] as num?)?.toInt() ?? defaultSettings[k] as int;
+  /// Topic tags the owner studied in the course today (Home → "I studied…"); empty from the next day on.
+  static Set<String> get studiedTags =>
+      settings['studied_on'] == startOfToday() ? {...((settings['studied_tags'] as List?) ?? []).cast<String>()} : {};
 
   static Future<void> saveSettings() async {
     await Db.put('settings', settings..['id'] = 'settings');
@@ -229,6 +232,8 @@ Future<Json> recordAnswer(Json card,
   correct = score == null ? correct : score >= .85;
   final wasNew = isNew(card);
   final misconception = conf == Conf.sure && (score == null ? !correct : score < .4);
+  // A miss makes the card count more in the review order (the AI coach's -2..2 scale).
+  if (!correct) card['priority'] = min(2, ((card['priority'] as int?) ?? 0) + 1);
   scheduler ??= card['course'] != null ? schedulerForDate((await assessmentForCard(card))?['date']) : schedulerFor(App.cert);
   final f = fromFsrs(scheduler.reviewCard(before, rating, reviewDateTime: now).card);
 
@@ -291,12 +296,16 @@ int startOfToday() {
   return (limit: max(base, paced), paced: paced, remaining: remaining, days: d);
 }
 
-/// Greedy weighted interleave: next new card comes from the domain whose introduced share
-/// lags its exam weight the most.
-List<Json> orderNew(List<Json> cards, Json cert) {
+bool studiedToday(Json c, Set<String> studied) => ((c['tags'] as List?) ?? []).any(studied.contains);
+
+/// New cards with a tag [studied] today come first, most [importance] first; the rest follow the greedy weighted
+/// interleave: next new card comes from the domain whose introduced share lags its exam weight the most.
+List<Json> orderNew(List<Json> cards, Json cert, {Set<String> studied = const {}, Map<String, int> importance = const {}}) {
+  final first = cards.where((c) => isNew(c) && !isSuspended(c) && studiedToday(c, studied)).toList()
+    ..sort((a, b) => (importance[b['id']] ?? 5).compareTo(importance[a['id']] ?? 5));
   final pools = <String, List<Json>>{};
   final introduced = <String, int>{};
-  for (final c in cards.where((c) => !isSuspended(c))) {
+  for (final c in cards.where((c) => !isSuspended(c) && !first.contains(c))) {
     final d = domainOf(c, cert);
     if (isNew(c)) {
       (pools[d] ??= []).add(c);
@@ -308,7 +317,7 @@ List<Json> orderNew(List<Json> cards, Json cert) {
     p.sort((a, b) => ((a['created_at'] as int?) ?? 0).compareTo((b['created_at'] as int?) ?? 0));
   }
   final weight = {for (final d in (cert['domains'] as List)) d['id'] as String: (d['weight'] as num).toDouble()};
-  final out = <Json>[];
+  final out = [...first];
   while (pools.values.any((p) => p.isNotEmpty)) {
     final d = pools.keys
         .where((k) => pools[k]!.isNotEmpty)
@@ -400,14 +409,17 @@ List<Json> capByTime(List<Json> queue, int minutes, double secondsPerCard) {
 Future<(List<Json>, TodayStats)> buildQueue(Json cert, {int? minutes}) async {
   final cards = await Db.cardsFor(cert['id']);
   final today = await Db.reviewsSince(startOfToday());
-  final newDone = today.where((r) => r['was_new'] == true && r['source'] != 'exam').length;
+  final studied = App.studiedTags;
+  final byId = {for (final c in cards) c['id']: c};
+  // Cards of today's studied topics don't count against the daily limit (they all come in today).
+  final newDone = today.where((r) => r['was_new'] == true && r['source'] != 'exam' && !studiedToday(byId[r['card_id']] ?? {}, studied)).length;
   final reviewsDone = today.where((r) => r['was_new'] != true && r['source'] == 'study').length;
   final now = nowMs();
   final sched = schedulerFor(cert);
   final imp = await importanceFor(cert['id']);
   // Learning cards first, then what is worth most now: importance x forgotten (a big backlog is cut to the best, not the oldest).
   double value(Json c) =>
-      (imp[c['id']] ?? 5) / 10 * (1 - retrievability(sched, c)) + (c['misconception'] == true ? .5 : 0) + ((c['priority'] as int?) ?? 0) * .05;
+      (imp[c['id']] ?? 5) / 10 * (1 - retrievability(sched, c)) + (c['misconception'] == true ? .5 : 0) + ((c['priority'] as int?) ?? 0) * .15;
   int rank(Json c) => c['fsrs']['state'] != 2 ? 1 : 0;
   final due = cards.where((c) => !isNew(c) && !isSuspended(c) && dueOf(c) <= now).toList()
     ..sort((a, b) {
@@ -416,7 +428,9 @@ Future<(List<Json>, TodayStats)> buildQueue(Json cert, {int? minutes}) async {
     });
   final reviews = due.take(max(0, App.setting('max_reviews_per_day') - reviewsDone)).toList();
   final plan = newPlan(cert, cards);
-  final news = orderNew(cards, cert).take(max(0, plan.limit - newDone)).toList();
+  final ordered = orderNew(cards, cert, studied: studied, importance: imp);
+  final firstCount = ordered.takeWhile((c) => studiedToday(c, studied)).length;
+  final news = [...ordered.take(firstCount), ...ordered.skip(firstCount).take(max(0, plan.limit - newDone))];
   final queue = mixByTime(reviews, news, minutes ?? App.sessionBudget, await avgCardSeconds());
   return (queue, TodayStats(due.length, news.length, newDone, reviewsDone, plan));
 }
@@ -457,7 +471,7 @@ Future<List<Json>> buildExtraQueue(Json cert, {int? minutes}) async {
   double value(Json c) => (imp[c['id']] ?? 5) / 10 * (1 - retrievability(s, c)) + (c['misconception'] == true ? .5 : 0);
   final ahead = cards.where((c) => !isNew(c) && !isSuspended(c) && dueOf(c) > now && retrievability(s, c) < .97).toList()
     ..sort((a, b) => value(b).compareTo(value(a)));
-  final news = orderNew(cards, cert);
+  final news = orderNew(cards, cert, studied: App.studiedTags, importance: imp);
   // Two reviews, then a new card, so extra time still goes mostly to what is slipping.
   final queue = <Json>[];
   var ni = 0;

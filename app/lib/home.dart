@@ -24,6 +24,35 @@ Future<void> studyCert(BuildContext context, List<Json> queue) => Navigator.push
               studyCert(context, next);
             })));
 
+/// Ticks the topic tags covered in today's course sections: their unseen cards come first today, past the daily limit.
+Future<void> pickStudiedTags(BuildContext context) async {
+  final tags = {for (final c in await Db.cardsFor(App.cert['id'])) ...((c['tags'] as List?) ?? []).cast<String>()}.toList()..sort();
+  final picked = App.studiedTags;
+  if (!context.mounted) return;
+  final ok = await showDialog<bool>(
+      context: context,
+      builder: (context) => StatefulBuilder(
+          builder: (context, setState) => AlertDialog(
+                title: Text(t('What did you study today?')),
+                content: SingleChildScrollView(
+                    child: Wrap(spacing: 6, runSpacing: 6, children: [
+                  for (final g in tags)
+                    FilterChip(
+                        label: Text(g),
+                        selected: picked.contains(g),
+                        onSelected: (on) => setState(() => on ? picked.add(g) : picked.remove(g))),
+                ])),
+                actions: [
+                  TextButton(onPressed: () => Navigator.pop(context, false), child: Text(t('Cancel'))),
+                  FilledButton(onPressed: () => Navigator.pop(context, true), child: Text(t('Save'))),
+                ],
+              )));
+  if (ok != true) return;
+  App.settings['studied_tags'] = picked.toList();
+  App.settings['studied_on'] = startOfToday();
+  await App.saveSettings();
+}
+
 /// Today: progress ring, exam countdown, the study button, and the weak spots to fix first.
 class TodayScreen extends StatelessWidget {
   const TodayScreen({super.key});
@@ -108,6 +137,12 @@ class TodayScreen extends StatelessWidget {
                         ? t('Continue · {n} left', {'n': queue.length})
                         : t('Study ({n}) · about {m} min', {'n': queue.length, 'm': App.sessionMinutes})),
               ),
+              TextButton.icon(
+                  onPressed: () => pickStudiedTags(context),
+                  icon: const Icon(Icons.menu_book_outlined),
+                  label: Text(App.studiedTags.isEmpty
+                      ? t('I studied… (pick today\'s course topics)')
+                      : t('Studied today: {tags}', {'tags': (App.studiedTags.toList()..sort()).join(', ')}))),
               if (st.plan.paced > App.newPerDay)
                 Padding(
                   padding: const EdgeInsets.only(top: 8),

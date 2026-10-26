@@ -102,6 +102,28 @@ void main() {
     expect(firstEight.where((d) => d == '1').length, 6);
   });
 
+  test('cards of topics studied today come first, most important first, and none go missing', () {
+    final cert = {
+      'id': 'X',
+      'domains': [
+        {'id': '1', 'weight': 1}
+      ]
+    };
+    final cards = [
+      for (var i = 0; i < 10; i++)
+        {
+          'id': '$i',
+          'created_at': i,
+          'certs': {'X': '1'},
+          'tags': [i < 3 ? 's3' : 'vpc']
+        }
+    ];
+    final q = orderNew(cards, cert, studied: {'s3'}, importance: {'2': 9, '0': 7});
+    expect(q.take(3).map((c) => c['id']), ['2', '0', '1']);
+    expect(q.map((c) => c['id']).toSet().length, 10);
+    expect(orderNew(cards, cert).first['id'], '0'); // nothing studied: the old order
+  });
+
   test('list titles: LaTeX as readable text, cloze answers, no Markdown marks', () {
     expect(plain(r'Evaluate $\int\frac{e^x}{1+e^{2x}}\,dx$.'), 'Evaluate ∫eˣ/(1+e²ˣ) dx.');
     expect(plain(r'$$\int_0^3 x^2\,dx$$'), '∫₀³ x² dx');
