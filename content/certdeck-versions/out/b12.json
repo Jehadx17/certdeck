@@ -1,0 +1,1182 @@
+[
+ {
+  "card_id": "1128afe4-fb8f-4bfd-87e6-e8056a3a1c3a",
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "A team wants to describe its VPC, subnets and EC2 instances in a file and have AWS build them in a sensible order. Which service fits?",
+    "options": [
+     "AWS CodeDeploy",
+     "AWS Systems Manager",
+     "AWS CloudFormation",
+     "AWS Config"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "CloudFormation reads the template and works out how to create everything.",
+    "option_explanations": [
+     "Deploys application code, not infrastructure.",
+     "Manages and patches existing instances.",
+     "Correct. Declarative infrastructure as code.",
+     "Records resource configuration; it doesn't create resources."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Writing a CloudFormation template, what can the author leave for the service to work out?",
+    "options": [
+     "The resource properties",
+     "The resource types",
+     "The creation sequence",
+     "The template sections"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Declarative: you say what you want, CloudFormation decides how and in which order.",
+    "option_explanations": [
+     "You set these.",
+     "You choose these.",
+     "Correct. CloudFormation derives it from dependencies.",
+     "You write at least Resources."
+    ]
+   }
+  ]
+ },
+ {
+  "card_id": "94afe682-130e-46dc-aca5-9aa0197420e9",
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Which are advantages of managing infrastructure through CloudFormation templates? (Choose 3)",
+    "options": [
+     "EC2 instances stop needing IAM roles",
+     "Every infrastructure change is versioned like code",
+     "Tagging by stack makes spend easy to follow",
+     "Applications get compiled and hosted by it",
+     "A dev setup can be torn down at night and rebuilt"
+    ],
+    "correct": [
+     1,
+     2,
+     4
+    ],
+    "explanation": "Other benefits: automatic diagrams, separation of concerns and template reuse.",
+    "option_explanations": [
+     "Instances still need roles for their own AWS calls.",
+     "Correct. No manual creation; review through version control.",
+     "Correct. Costs per stack are visible and estimable.",
+     "It provisions infrastructure, not app hosting.",
+     "Correct. Saves money outside working hours."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which is a real way CloudFormation helps cut AWS costs?",
+    "options": [
+     "Its resources are billed at a lower rate",
+     "Its stacks get an EC2 pricing discount",
+     "Idle stacks pause their resources",
+     "Stacks can be deleted and rebuilt on demand"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "Deleting and recreating environments from the same template is a common cost saver.",
+    "option_explanations": [
+     "Resources cost the same however they're created.",
+     "There's no such discount.",
+     "Stacks don't pause anything on their own.",
+     "Correct. The template recreates the environment in the morning."
+    ]
+   }
+  ]
+ },
+ {
+  "card_id": "f84049d0-bfa7-4c41-9a46-bf959f9891b9",
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "A stack is running and its template needs a change. What's the supported way to apply it?",
+    "options": [
+     "Edit the stored template copy",
+     "Change the resources by hand",
+     "Update the stack with a revised template",
+     "Create a second stack with the same name"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Updating a stack applies a new template version to the same stack.",
+    "option_explanations": [
+     "Stored templates can't be edited.",
+     "Causes drift.",
+     "Correct. Upload the new version and update.",
+     "Stack names must be unique in a Region."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "What identifies a CloudFormation stack, so an update targets the right one?",
+    "options": [
+     "Its template's file name",
+     "Its stack name",
+     "Its template's S3 bucket",
+     "Its creation timestamp"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Stacks are identified by name within a Region.",
+    "option_explanations": [
+     "File names aren't tracked.",
+     "Correct. Unique per Region.",
+     "Many stacks can share a bucket.",
+     "Not an identifier you use."
+    ]
+   }
+  ]
+ },
+ {
+  "card_id": "c164676a-5667-4a22-a2d9-8bf6886268b8",
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "A developer deletes a stack that created an SQS queue and an EC2 instance, with no DeletionPolicy set. What happens to them?",
+    "options": [
+     "They're kept but untagged",
+     "They're deleted as well",
+     "They're kept and need manual cleanup",
+     "They're stopped but kept"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Deleting a stack deletes what it created, unless a DeletionPolicy says otherwise.",
+    "option_explanations": [
+     "Resources aren't kept.",
+     "Correct. CloudFormation deletes them in the right order.",
+     "CloudFormation cleans up for you.",
+     "They're deleted, not stopped."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which setting keeps a resource when its stack is deleted?",
+    "options": [
+     "UpdateReplacePolicy: Delete",
+     "A stack policy",
+     "Termination protection",
+     "DeletionPolicy: Retain"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "Without a DeletionPolicy, deleting a stack removes everything it created.",
+    "option_explanations": [
+     "Applies to replacements during updates, and Delete removes it.",
+     "Stack policies guard updates, not deletes.",
+     "Blocks deleting the whole stack.",
+     "Correct. Snapshot also works for some types."
+    ]
+   }
+  ]
+ },
+ {
+  "card_id": "e21d79e2-b1a1-429c-8fac-8b70675d5efd",
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Which are two common ways to get a CloudFormation template deployed? (Choose 2)",
+    "options": [
+     "Run it from a CI/CD pipeline or the AWS CLI",
+     "Attach it to an EC2 instance as user data",
+     "Drop it into an S3 bucket to trigger a deploy",
+     "Upload it in the console after editing locally"
+    ],
+    "correct": [
+     0,
+     3
+    ],
+    "explanation": "Templates are usually YAML files kept in version control.",
+    "option_explanations": [
+     "Correct. Best for full automation.",
+     "User data runs on one instance; it doesn't create stacks.",
+     "S3 alone doesn't deploy anything.",
+     "Correct. Fine for learning."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "A team wants every template change deployed automatically, with no console clicks. What fits?",
+    "options": [
+     "Infrastructure Composer",
+     "The CloudFormation console",
+     "A CI/CD pipeline",
+     "AWS Trusted Advisor"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Automated deployment: template files plus the CLI or a CI/CD tool.",
+    "option_explanations": [
+     "A visual editor; deploying from it is manual.",
+     "That's manual.",
+     "Correct. It runs the CLI or deploy action on each change.",
+     "Gives recommendations; doesn't deploy."
+    ]
+   }
+  ]
+ },
+ {
+  "card_id": "887f03c0-3cab-4e83-a721-84f3e8a070fc",
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "A template has only a Resources section. Is it valid?",
+    "options": [
+     "No; Parameters are also required",
+     "No; a format version is also required",
+     "Yes; no other section is required",
+     "No; Outputs are also required"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Resources is the one mandatory section.",
+    "option_explanations": [
+     "Parameters are optional.",
+     "AWSTemplateFormatVersion is optional.",
+     "Correct.",
+     "Outputs are optional."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which template section can't be left out?",
+    "options": [
+     "Resources",
+     "Conditions",
+     "Mappings",
+     "Outputs"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Everything else, including Parameters and Description, is optional.",
+    "option_explanations": [
+     "Correct.",
+     "Optional.",
+     "Optional.",
+     "Optional."
+    ]
+   }
+  ]
+ },
+ {
+  "card_id": "e3c86fb6-79ae-4f38-9333-f8b05d585493",
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Which template section decides whether a resource or output gets created?",
+    "options": [
+     "Mappings",
+     "Parameters",
+     "Rules",
+     "Conditions"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "Conditions are true/false checks applied to resources or outputs.",
+    "option_explanations": [
+     "Static lookup values.",
+     "Inputs at deploy time.",
+     "Validates parameter values.",
+     "Correct."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "In a template, what's the Outputs section for?",
+    "options": [
+     "Fixed lookup tables keyed by Region",
+     "Values you view or share with other stacks",
+     "Values users type in when deploying the stack",
+     "The AWS resources the stack builds"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Parameters are inputs, Mappings are static lookups, Outputs are values to view or export.",
+    "option_explanations": [
+     "That's Mappings.",
+     "Correct.",
+     "That's Parameters.",
+     "That's Resources."
+    ]
+   }
+  ]
+ },
+ {
+  "card_id": "abec22fa-8f7d-47d4-ae8b-e31e512d35a1",
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "In a CloudFormation YAML template, what do lines starting with `- ` under a key create?",
+    "options": [
+     "A comment",
+     "A list",
+     "A string",
+     "A map"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Indentation nests objects; `-` items form a list.",
+    "option_explanations": [
+     "Comments start with #.",
+     "Correct. Each `-` line is one item.",
+     "Multi-line strings use `|`.",
+     "Indented `key: value` lines make a map."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "In YAML, which character starts a comment?",
+    "options": [
+     "A double slash (//)",
+     "A pipe (|)",
+     "A hash sign (#)",
+     "A semicolon (;)"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Everything after `#` on a line is ignored.",
+    "option_explanations": [
+     "Not a YAML comment.",
+     "Starts a multi-line string.",
+     "Correct.",
+     "Not a YAML comment."
+    ]
+   }
+  ]
+ },
+ {
+  "card_id": "e054fc9b-eba2-4b9a-b56c-296715348e55",
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Which is a correctly formed CloudFormation resource type?",
+    "options": [
+     "S3::Bucket",
+     "arn:aws:s3:::bucket",
+     "S3::Bucket::AWS",
+     "AWS::S3::Bucket"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "Format: service-provider::service-name::data-type-name.",
+    "option_explanations": [
+     "Missing the provider part.",
+     "That's an ARN.",
+     "Wrong order.",
+     "Correct."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "In `AWS::DynamoDB::Table`, what does the middle part name?",
+    "options": [
+     "The provider",
+     "The Region",
+     "The service",
+     "The data type"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Each type's properties are listed in the CloudFormation docs.",
+    "option_explanations": [
+     "That's the first part, AWS.",
+     "Types don't include a Region.",
+     "Correct.",
+     "That's the last part, Table."
+    ]
+   }
+  ]
+ },
+ {
+  "card_id": "aa7419f7-a58c-4ac4-af83-dc165f350ef3",
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "A stack update changes a property documented as 'Replacement'. What does CloudFormation do?",
+    "options": [
+     "Edits it with no downtime",
+     "A new resource takes its place",
+     "Rolls back with an error",
+     "Restarts it with the change"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Each property documents its update behavior: no interruption, some interruption or replacement.",
+    "option_explanations": [
+     "That's 'no interruption'.",
+     "Correct. The new one gets a new physical ID.",
+     "The update goes ahead.",
+     "That's 'some interruption'."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Changing an EC2 instance's ImageId in a stack update leads to what?",
+    "options": [
+     "The instance is rebooted",
+     "The instance is replaced",
+     "The new AMI is applied in place",
+     "The update is refused"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Check the docs' update behavior before changing a property.",
+    "option_explanations": [
+     "That's 'some interruption'.",
+     "Correct. ImageId requires replacement.",
+     "An AMI can't be swapped in place.",
+     "It proceeds."
+    ]
+   }
+  ]
+ },
+ {
+  "card_id": "e0ff3c8e-422d-441f-8327-ad410755c549",
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Which CloudFormation feature previews an update, including whether each resource will be swapped out?",
+    "options": [
+     "Drift detection",
+     "A change set",
+     "A stack policy",
+     "Stack outputs"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Review a change set before executing it.",
+    "option_explanations": [
+     "Compares live resources to the template.",
+     "Correct.",
+     "Protects resources from updates.",
+     "Values the stack exposes."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "A change set entry shows `Replacement: True`. What does that mean?",
+    "options": [
+     "It's changed in place",
+     "The whole stack is rebuilt",
+     "The resource is created anew",
+     "The template is swapped"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Change sets list each add, modify or remove and whether it replaces the resource.",
+    "option_explanations": [
+     "That's False.",
+     "Only that resource is affected.",
+     "Correct. It's recreated, then the old one deleted.",
+     "Replacement is per resource."
+    ]
+   }
+  ]
+ },
+ {
+  "card_id": "8cb6b0f9-b3c6-4755-9557-fb15f0339eb7",
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "A team needs CloudFormation to manage something no built-in resource type covers. What should they add?",
+    "options": [
+     "A nested stack",
+     "A custom resource",
+     "A stack set",
+     "A CloudFormation macro"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Custom resources fill gaps in CloudFormation support.",
+    "option_explanations": [
+     "Reuses templates; same supported types.",
+     "Correct. Often backed by Lambda.",
+     "Deploys across accounts and Regions.",
+     "Transforms template text."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which situation calls for a CloudFormation custom resource?",
+    "options": [
+     "Creating many similar resources from one snippet",
+     "Reusing a template across stacks",
+     "Deploying to many accounts at once",
+     "Managing a service with no resource type"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "Almost every AWS service is supported; custom resources cover the rest.",
+    "option_explanations": [
+     "That's a macro.",
+     "That's a nested stack.",
+     "That's StackSets.",
+     "Correct."
+    ]
+   }
+  ]
+ },
+ {
+  "card_id": "3ba17801-1447-4224-ad68-681cdaa8cd9b",
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Which value is the best fit for a template parameter?",
+    "options": [
+     "The AMI ID for each Region you support",
+     "The instance size a team picks",
+     "The account ID the stack runs in",
+     "A port number fixed for all stacks"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Parameters suit values that change or aren't known ahead of time.",
+    "option_explanations": [
+     "Known in advance: use a mapping.",
+     "Correct. It depends on the deployer.",
+     "Use the AWS::AccountId pseudo parameter.",
+     "Hardcode it."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Why make a not-yet-known value a parameter instead of hardcoding it?",
+    "options": [
+     "Parameters are encrypted at rest",
+     "Parameters are visible to all other stacks",
+     "Changing it doesn't need a new template",
+     "Parameters make deploys run faster"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Parameters make templates reusable across teams.",
+    "option_explanations": [
+     "Not by default.",
+     "That's exports.",
+     "Correct.",
+     "No speed difference."
+    ]
+   }
+  ]
+ },
+ {
+  "card_id": "1b42279e-9bfb-4c40-9779-f3006e2a174a",
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "A parameter block in a template may include which properties? (Choose 3)",
+    "options": [
+     "AllowedPattern",
+     "DependsOn",
+     "Default",
+     "MinLength",
+     "DeletionPolicy"
+    ],
+    "correct": [
+     0,
+     2,
+     3
+    ],
+    "explanation": "Parameter constraints catch bad input before deployment.",
+    "option_explanations": [
+     "Correct. A regex constraint.",
+     "That's a resource attribute.",
+     "Correct.",
+     "Correct. For String parameters.",
+     "That's a resource attribute."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "A parameter must accept only values matching a regex. Which property does that?",
+    "options": [
+     "AllowedValues",
+     "AllowedPattern",
+     "ConstraintDescription",
+     "MaxLength"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Combine AllowedPattern with ConstraintDescription for a clear error.",
+    "option_explanations": [
+     "A fixed list of values.",
+     "Correct.",
+     "The error message shown when a constraint fails.",
+     "Caps the length only."
+    ]
+   }
+  ]
+ },
+ {
+  "card_id": "370c85c7-56be-4491-894f-b492f2c26593",
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "How do you make a parameter appear as a dropdown of fixed choices in the console?",
+    "options": [
+     "Give it an AllowedPattern",
+     "Set its Type to CommaDelimitedList",
+     "Add a mapping of the choices",
+     "Give it AllowedValues"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "AllowedValues gives users a choice while you keep control.",
+    "option_explanations": [
+     "Validates text; no dropdown.",
+     "Accepts a list of values typed in.",
+     "Mappings aren't shown to users.",
+     "Correct."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "An InstanceType parameter defaults to t3.micro. How does an EC2 resource use it?",
+    "options": [
+     "InstanceType: !GetAtt InstanceType",
+     "InstanceType: ${InstanceType}",
+     "InstanceType: !Ref InstanceType",
+     "InstanceType: !ImportValue InstanceType"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "!Ref on a parameter returns its value.",
+    "option_explanations": [
+     "!GetAtt reads resource attributes.",
+     "${} works only inside !Sub.",
+     "Correct.",
+     "For exports from other stacks."
+    ]
+   }
+  ]
+ },
+ {
+  "card_id": "ab1e843d-f8c5-42af-a2f8-26e15d927371",
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Which parameter property shows a secret value as asterisks in the console and API output?",
+    "options": [
+     "Hidden",
+     "NoEcho",
+     "Mask",
+     "Sensitive"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "NoEcho doesn't hide values you copy into Metadata or Outputs.",
+    "option_explanations": [
+     "Not a parameter property.",
+     "Correct.",
+     "Not a parameter property.",
+     "Not a parameter property."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Besides NoEcho, what's the stronger way to supply a database password to a template?",
+    "options": [
+     "A Default value on the parameter",
+     "A mapping keyed by environment name",
+     "An export from a secrets stack",
+     "A Secrets Manager dynamic reference"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "Dynamic references resolve the secret at deploy time without storing it in the template.",
+    "option_explanations": [
+     "Puts the secret in the template.",
+     "Plain text in the template.",
+     "Exports are readable plain values.",
+     "Correct. Or an SSM SecureString reference."
+    ]
+   }
+  ]
+ },
+ {
+  "card_id": "9a332b9b-1957-4e32-901a-7ee6f668d6a2",
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "`!Ref MyInstance` points at an AWS::EC2::Instance resource. What does it return?",
+    "options": [
+     "The instance's ARN",
+     "The logical name",
+     "The instance ID",
+     "The private IP address"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "On a resource, !Ref returns its physical ID.",
+    "option_explanations": [
+     "Not for EC2 instances.",
+     "!Ref resolves to a value, not the name.",
+     "Correct.",
+     "Use !GetAtt PrivateIp."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "`!Ref EnvType` points at a parameter. What comes back?",
+    "options": [
+     "The ARN of the parameter",
+     "The type of the parameter",
+     "The name EnvType as text",
+     "The value it was given"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "Parameters and resources can't share a logical name, since !Ref works on both.",
+    "option_explanations": [
+     "Parameters have no ARN.",
+     "Not returned.",
+     "Resolves to a value, not the name.",
+     "Correct."
+    ]
+   }
+  ]
+ },
+ {
+  "card_id": "a96b47aa-5860-4beb-8b1c-c97b5d1f0bf5",
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Which pseudo parameter returns the 12-digit number of the account the stack runs in?",
+    "options": [
+     "AWS::StackId",
+     "AWS::AccountId",
+     "AWS::Region",
+     "AWS::NotificationARNs"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Pseudo parameters are always available with no setup.",
+    "option_explanations": [
+     "The stack's ID.",
+     "Correct.",
+     "The current Region.",
+     "SNS topics for stack events."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "A template must build a bucket name that includes the current Region, with no user input. What should it reference?",
+    "options": [
+     "A Region parameter",
+     "A mapping of Regions",
+     "AWS::Region",
+     "An exported value"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Others: AWS::StackId, AWS::StackName, AWS::NotificationARNs, AWS::NoValue.",
+    "option_explanations": [
+     "Needs user input.",
+     "Hardcoded values.",
+     "Correct. A pseudo parameter.",
+     "Comes from another stack."
+    ]
+   }
+  ]
+ },
+ {
+  "card_id": "4cdfea60-14d0-4511-a56e-da3c3c975810",
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Which pseudo parameter, returned from !If, drops a property entirely?",
+    "options": [
+     "AWS::Nothing",
+     "AWS::Null",
+     "AWS::NoValue",
+     "AWS::Undefined"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Typical use: !If [Cond, value, !Ref AWS::NoValue].",
+    "option_explanations": [
+     "Doesn't exist.",
+     "Doesn't exist.",
+     "Correct.",
+     "Doesn't exist."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "What does `!Ref AWS::Region` return?",
+    "options": [
+     "The account's home Region",
+     "The stack's current Region",
+     "The enabled Regions list",
+     "The S3 bucket's Region"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Pseudo parameters replace values CloudFormation already knows.",
+    "option_explanations": [
+     "Not a concept it returns.",
+     "Correct. E.g. us-east-1.",
+     "Not returned.",
+     "The bucket's Region doesn't matter."
+    ]
+   }
+  ]
+ },
+ {
+  "card_id": "06e679f7-3a1a-4e48-888e-083d8e954443",
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "AMI IDs differ per Region and are all known when the template is written. Where should they live?",
+    "options": [
+     "Parameters",
+     "Outputs",
+     "Mappings",
+     "Conditions"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Mappings suit values derived from Region, AZ, account or environment.",
+    "option_explanations": [
+     "Pushes the choice onto users.",
+     "Not inputs.",
+     "Correct.",
+     "Decide creation, not values."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which intrinsic function reads a value from a template's Mappings section?",
+    "options": [
+     "!FindInMap",
+     "!Select",
+     "!GetAtt",
+     "!ImportValue"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Pair it with AWS::Region to pick per-Region values.",
+    "option_explanations": [
+     "Correct.",
+     "Picks an item from a list.",
+     "Reads a resource attribute.",
+     "Reads another stack's export."
+    ]
+   }
+  ]
+ },
+ {
+  "card_id": "df8429c4-ccf1-4e49-855e-6d97475ff218",
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "A RegionMap mapping has Regions as top-level keys and HVM64 under each. Which picks the AMI for the stack's Region?",
+    "options": [
+     "!FindInMap [RegionMap, !Ref \"AWS::StackName\", HVM64]",
+     "!FindInMap [RegionMap, !Ref \"AWS::Region\", HVM64]",
+     "!FindInMap [HVM64, RegionMap, !Ref \"AWS::Region\"]",
+     "!Select [HVM64, !Ref \"AWS::Region\"]"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Order: map name, top-level key, second-level key.",
+    "option_explanations": [
+     "Keys are Regions, not stack names.",
+     "Correct.",
+     "Wrong key order.",
+     "!Select picks an item from a list."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "In `!FindInMap [MapName, TopLevelKey, SecondLevelKey]` for a per-Region AMI map, what usually fills TopLevelKey?",
+    "options": [
+     "!Ref AWS::AccountId",
+     "!Ref AWS::StackName",
+     "!GetAZs ''",
+     "!Ref AWS::Region"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "That makes one template work in every Region listed in the map.",
+    "option_explanations": [
+     "Account isn't the key here.",
+     "Stack names aren't keys here.",
+     "Returns AZs, not the Region.",
+     "Correct."
+    ]
+   }
+  ]
+ },
+ {
+  "card_id": "7d5d78d8-16d4-4dd7-9029-75a6a14cd097",
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Instance size is chosen by whoever deploys the stack. Parameter or mapping?",
+    "options": [
+     "A parameter",
+     "A mapping",
+     "A condition",
+     "A pseudo parameter"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "AMI per Region → mapping; size the user picks → parameter.",
+    "option_explanations": [
+     "Correct. Depends on the user.",
+     "For values known in advance.",
+     "Decides creation.",
+     "Built-in values only."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which describes when a mapping beats a parameter?",
+    "options": [
+     "The deployer chooses the value",
+     "The value is a secret password",
+     "Every value is known in advance",
+     "Another stack exports the value"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Mappings: known in advance. Parameters: depend on the user at deploy time.",
+    "option_explanations": [
+     "That's a parameter.",
+     "Use NoEcho or a dynamic reference.",
+     "Correct. Safer and more controlled.",
+     "That's !ImportValue."
+    ]
+   }
+  ]
+ },
+ {
+  "card_id": "ae4ff60e-1fcf-4da8-91f2-19f1ce3ab1f9",
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "How does an app stack read a VPC ID that a network stack exports?",
+    "options": [
+     "!GetAtt",
+     "!Ref",
+     "!ImportValue",
+     "!FindInMap"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Exports plus !ImportValue make cross-stack references.",
+    "option_explanations": [
+     "Reads attributes in the same stack.",
+     "Same-stack references only.",
+     "Correct.",
+     "Reads the stack's own mappings."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Two stacks need to share a subnet ID created in one of them. Which pairing works?",
+    "options": [
+     "A shared Mappings entry plus !FindInMap",
+     "An Outputs Export plus !ImportValue",
+     "A Parameter plus !Ref",
+     "A Condition plus !If"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Outputs can also simply be viewed in the console or CLI.",
+    "option_explanations": [
+     "Still hardcoded.",
+     "Correct.",
+     "Needs a user to copy the value.",
+     "Doesn't pass values between stacks."
+    ]
+   }
+  ]
+ },
+ {
+  "card_id": "12a8849d-caff-4a3a-9fc0-496e0229ccbe",
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Which are limits of CloudFormation cross-stack exports? (Choose 2)",
+    "options": [
+     "Each account can hold just one export",
+     "An export can't be imported in another Region",
+     "A stack can't be deleted while its export is imported",
+     "Imports must be refreshed by hand after a change"
+    ],
+    "correct": [
+     1,
+     2
+    ],
+    "explanation": "Import with !ImportValue ExportName.",
+    "option_explanations": [
+     "Many exports are allowed; names must be unique per Region.",
+     "Correct.",
+     "Correct.",
+     "An export in use can't be changed at all."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Stack B imports an export from stack A. What happens if you try to delete stack A?",
+    "options": [
+     "The deletion of A fails",
+     "Stack B is deleted too",
+     "B keeps a frozen copy",
+     "Stack B's resources are retained"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Exports in use can't be changed or removed.",
+    "option_explanations": [
+     "Correct. Remove the import first.",
+     "Stacks aren't deleted in a chain.",
+     "Imports aren't copied.",
+     "The delete doesn't proceed at all."
+    ]
+   }
+  ]
+ },
+ {
+  "card_id": "9b9384ac-1d59-4d9d-842e-df6893477661",
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "In stack A's Outputs, which key sets the name other stacks import a value by?",
+    "options": [
+     "Export Name",
+     "Logical ID",
+     "Output Description",
+     "Output Value"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Other stacks use !ImportValue with that export name.",
+    "option_explanations": [
+     "Correct.",
+     "Names the output inside the stack only.",
+     "Just text.",
+     "The value itself."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Stack A exports `CompanySshSG`. How does an instance in stack B list it in SecurityGroupIds?",
+    "options": [
+     "- !Ref CompanySshSG",
+     "- !GetAtt CompanySshSG.GroupId",
+     "- !ImportValue CompanySshSG",
+     "- !FindInMap [Exports, CompanySshSG]"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "!Ref on a security group in stack A returns the ID that gets exported.",
+    "option_explanations": [
+     "!Ref can't reach another stack.",
+     "Works only inside stack A.",
+     "Correct.",
+     "Exports aren't a mapping."
+    ]
+   }
+  ]
+ },
+ {
+  "card_id": "059b3d8d-d628-470b-ad0f-cf030da01338",
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "An Auto Scaling policy should exist only in prod stacks, based on an EnvType parameter. What do you attach to it?",
+    "options": [
+     "A DependsOn",
+     "A Condition",
+     "A Mapping",
+     "A DeletionPolicy"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Conditions can use Fn::And, Equals, If, Not and Or.",
+    "option_explanations": [
+     "Sets creation order.",
+     "Correct.",
+     "Gives values, not create/skip.",
+     "Controls deletion."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which defines an IsProd condition from an EnvType parameter?",
+    "options": [
+     "!If [EnvType, prod]",
+     "!Select [0, !Ref EnvType]",
+     "!FindInMap [Env, !Ref EnvType, prod]",
+     "!Equals [!Ref EnvType, prod]"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "Conditions can reference parameters, mappings and other conditions.",
+    "option_explanations": [
+     "!If picks values using a condition that already exists.",
+     "Picks a list item.",
+     "Looks up a mapping value.",
+     "Correct."
+    ]
+   }
+  ]
+ }
+]

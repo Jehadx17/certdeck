@@ -1,0 +1,446 @@
+[
+ {
+  "card_id": "1128afe4-fb8f-4bfd-87e6-e8056a3a1c3a",
+  "notes": [
+   [
+    "Deploys application code, not infrastructure.",
+    "Manages and patches existing instances.",
+    "Correct. Declarative infrastructure as code.",
+    "Records resource configuration; it doesn't create resources."
+   ],
+   [
+    "You set these.",
+    "You choose these.",
+    "Correct. CloudFormation derives it from dependencies.",
+    "You write at least Resources."
+   ]
+  ]
+ },
+ {
+  "card_id": "94afe682-130e-46dc-aca5-9aa0197420e9",
+  "notes": [
+   [
+    "Instances still need roles for their own AWS calls.",
+    "Correct. No manual creation; review through version control.",
+    "Correct. Costs per stack are visible and estimable.",
+    "It provisions infrastructure, not app hosting.",
+    "Correct. Saves money outside working hours."
+   ],
+   [
+    "Resources cost the same however they're created.",
+    "There's no such discount.",
+    "Stacks don't pause anything on their own.",
+    "Correct. The template recreates the environment in the morning."
+   ]
+  ]
+ },
+ {
+  "card_id": "f84049d0-bfa7-4c41-9a46-bf959f9891b9",
+  "notes": [
+   [
+    "Stored templates can't be edited.",
+    "Causes drift.",
+    "Correct. Upload the new version and update.",
+    "Stack names must be unique in a Region."
+   ],
+   [
+    "File names aren't tracked.",
+    "Correct. Unique per Region.",
+    "Many stacks can share a bucket.",
+    "Not an identifier you use."
+   ]
+  ]
+ },
+ {
+  "card_id": "c164676a-5667-4a22-a2d9-8bf6886268b8",
+  "notes": [
+   [
+    "Resources aren't kept.",
+    "Correct. CloudFormation deletes them in the right order.",
+    "CloudFormation cleans up for you.",
+    "They're deleted, not stopped."
+   ],
+   [
+    "Applies to replacements during updates, and Delete removes it.",
+    "Stack policies guard updates, not deletes.",
+    "Blocks deleting the whole stack.",
+    "Correct. Snapshot also works for some types."
+   ]
+  ]
+ },
+ {
+  "card_id": "e21d79e2-b1a1-429c-8fac-8b70675d5efd",
+  "notes": [
+   [
+    "Correct. Best for full automation.",
+    "User data runs on one instance; it doesn't create stacks.",
+    "S3 alone doesn't deploy anything.",
+    "Correct. Fine for learning."
+   ],
+   [
+    "A visual editor; deploying from it is manual.",
+    "That's manual.",
+    "Correct. It runs the CLI or deploy action on each change.",
+    "Gives recommendations; doesn't deploy."
+   ]
+  ]
+ },
+ {
+  "card_id": "887f03c0-3cab-4e83-a721-84f3e8a070fc",
+  "notes": [
+   [
+    "Parameters are optional.",
+    "AWSTemplateFormatVersion is optional.",
+    "Correct.",
+    "Outputs are optional."
+   ],
+   [
+    "Correct.",
+    "Optional.",
+    "Optional.",
+    "Optional."
+   ]
+  ]
+ },
+ {
+  "card_id": "e3c86fb6-79ae-4f38-9333-f8b05d585493",
+  "notes": [
+   [
+    "Static lookup values.",
+    "Inputs at deploy time.",
+    "Validates parameter values.",
+    "Correct."
+   ],
+   [
+    "That's Mappings.",
+    "Correct.",
+    "That's Parameters.",
+    "That's Resources."
+   ]
+  ]
+ },
+ {
+  "card_id": "abec22fa-8f7d-47d4-ae8b-e31e512d35a1",
+  "notes": [
+   [
+    "Comments start with #.",
+    "Correct. Each `-` line is one item.",
+    "Multi-line strings use `|`.",
+    "Indented `key: value` lines make a map."
+   ],
+   [
+    "Not a YAML comment.",
+    "Starts a multi-line string.",
+    "Correct.",
+    "Not a YAML comment."
+   ]
+  ]
+ },
+ {
+  "card_id": "e054fc9b-eba2-4b9a-b56c-296715348e55",
+  "notes": [
+   [
+    "Missing the provider part.",
+    "That's an ARN.",
+    "Wrong order.",
+    "Correct."
+   ],
+   [
+    "That's the first part, AWS.",
+    "Types don't include a Region.",
+    "Correct.",
+    "That's the last part, Table."
+   ]
+  ]
+ },
+ {
+  "card_id": "aa7419f7-a58c-4ac4-af83-dc165f350ef3",
+  "notes": [
+   [
+    "That's 'no interruption'.",
+    "Correct. The new one gets a new physical ID.",
+    "The update goes ahead.",
+    "That's 'some interruption'."
+   ],
+   [
+    "That's 'some interruption'.",
+    "Correct. ImageId requires replacement.",
+    "An AMI can't be swapped in place.",
+    "It proceeds."
+   ]
+  ]
+ },
+ {
+  "card_id": "e0ff3c8e-422d-441f-8327-ad410755c549",
+  "notes": [
+   [
+    "Compares live resources to the template.",
+    "Correct.",
+    "Protects resources from updates.",
+    "Values the stack exposes."
+   ],
+   [
+    "That's False.",
+    "Only that resource is affected.",
+    "Correct. It's recreated, then the old one deleted.",
+    "Replacement is per resource."
+   ]
+  ]
+ },
+ {
+  "card_id": "8cb6b0f9-b3c6-4755-9557-fb15f0339eb7",
+  "notes": [
+   [
+    "Reuses templates; same supported types.",
+    "Correct. Often backed by Lambda.",
+    "Deploys across accounts and Regions.",
+    "Transforms template text."
+   ],
+   [
+    "That's a macro.",
+    "That's a nested stack.",
+    "That's StackSets.",
+    "Correct."
+   ]
+  ]
+ },
+ {
+  "card_id": "3ba17801-1447-4224-ad68-681cdaa8cd9b",
+  "notes": [
+   [
+    "Known in advance: use a mapping.",
+    "Correct. It depends on the deployer.",
+    "Use the AWS::AccountId pseudo parameter.",
+    "Hardcode it."
+   ],
+   [
+    "Not by default.",
+    "That's exports.",
+    "Correct.",
+    "No speed difference."
+   ]
+  ]
+ },
+ {
+  "card_id": "1b42279e-9bfb-4c40-9779-f3006e2a174a",
+  "notes": [
+   [
+    "Correct. A regex constraint.",
+    "That's a resource attribute.",
+    "Correct.",
+    "Correct. For String parameters.",
+    "That's a resource attribute."
+   ],
+   [
+    "A fixed list of values.",
+    "Correct.",
+    "The error message shown when a constraint fails.",
+    "Caps the length only."
+   ]
+  ]
+ },
+ {
+  "card_id": "370c85c7-56be-4491-894f-b492f2c26593",
+  "notes": [
+   [
+    "Validates text; no dropdown.",
+    "Accepts a list of values typed in.",
+    "Mappings aren't shown to users.",
+    "Correct."
+   ],
+   [
+    "!GetAtt reads resource attributes.",
+    "${} works only inside !Sub.",
+    "Correct.",
+    "For exports from other stacks."
+   ]
+  ]
+ },
+ {
+  "card_id": "ab1e843d-f8c5-42af-a2f8-26e15d927371",
+  "notes": [
+   [
+    "Not a parameter property.",
+    "Correct.",
+    "Not a parameter property.",
+    "Not a parameter property."
+   ],
+   [
+    "Puts the secret in the template.",
+    "Plain text in the template.",
+    "Exports are readable plain values.",
+    "Correct. Or an SSM SecureString reference."
+   ]
+  ]
+ },
+ {
+  "card_id": "9a332b9b-1957-4e32-901a-7ee6f668d6a2",
+  "notes": [
+   [
+    "Not for EC2 instances.",
+    "!Ref resolves to a value, not the name.",
+    "Correct.",
+    "Use !GetAtt PrivateIp."
+   ],
+   [
+    "Parameters have no ARN.",
+    "Not returned.",
+    "Resolves to a value, not the name.",
+    "Correct."
+   ]
+  ]
+ },
+ {
+  "card_id": "a96b47aa-5860-4beb-8b1c-c97b5d1f0bf5",
+  "notes": [
+   [
+    "The stack's ID.",
+    "Correct.",
+    "The current Region.",
+    "SNS topics for stack events."
+   ],
+   [
+    "Needs user input.",
+    "Hardcoded values.",
+    "Correct. A pseudo parameter.",
+    "Comes from another stack."
+   ]
+  ]
+ },
+ {
+  "card_id": "4cdfea60-14d0-4511-a56e-da3c3c975810",
+  "notes": [
+   [
+    "Doesn't exist.",
+    "Doesn't exist.",
+    "Correct.",
+    "Doesn't exist."
+   ],
+   [
+    "Not a concept it returns.",
+    "Correct. E.g. us-east-1.",
+    "Not returned.",
+    "The bucket's Region doesn't matter."
+   ]
+  ]
+ },
+ {
+  "card_id": "06e679f7-3a1a-4e48-888e-083d8e954443",
+  "notes": [
+   [
+    "Pushes the choice onto users.",
+    "Not inputs.",
+    "Correct.",
+    "Decide creation, not values."
+   ],
+   [
+    "Correct.",
+    "Picks an item from a list.",
+    "Reads a resource attribute.",
+    "Reads another stack's export."
+   ]
+  ]
+ },
+ {
+  "card_id": "df8429c4-ccf1-4e49-855e-6d97475ff218",
+  "notes": [
+   [
+    "Keys are Regions, not stack names.",
+    "Correct.",
+    "Wrong key order.",
+    "!Select picks an item from a list."
+   ],
+   [
+    "Account isn't the key here.",
+    "Stack names aren't keys here.",
+    "Returns AZs, not the Region.",
+    "Correct."
+   ]
+  ]
+ },
+ {
+  "card_id": "7d5d78d8-16d4-4dd7-9029-75a6a14cd097",
+  "notes": [
+   [
+    "Correct. Depends on the user.",
+    "For values known in advance.",
+    "Decides creation.",
+    "Built-in values only."
+   ],
+   [
+    "That's a parameter.",
+    "Use NoEcho or a dynamic reference.",
+    "Correct. Safer and more controlled.",
+    "That's !ImportValue."
+   ]
+  ]
+ },
+ {
+  "card_id": "ae4ff60e-1fcf-4da8-91f2-19f1ce3ab1f9",
+  "notes": [
+   [
+    "Reads attributes in the same stack.",
+    "Same-stack references only.",
+    "Correct.",
+    "Reads the stack's own mappings."
+   ],
+   [
+    "Still hardcoded.",
+    "Correct.",
+    "Needs a user to copy the value.",
+    "Doesn't pass values between stacks."
+   ]
+  ]
+ },
+ {
+  "card_id": "12a8849d-caff-4a3a-9fc0-496e0229ccbe",
+  "notes": [
+   [
+    "Many exports are allowed; names must be unique per Region.",
+    "Correct.",
+    "Correct.",
+    "An export in use can't be changed at all."
+   ],
+   [
+    "Correct. Remove the import first.",
+    "Stacks aren't deleted in a chain.",
+    "Imports aren't copied.",
+    "The delete doesn't proceed at all."
+   ]
+  ]
+ },
+ {
+  "card_id": "9b9384ac-1d59-4d9d-842e-df6893477661",
+  "notes": [
+   [
+    "Correct.",
+    "Names the output inside the stack only.",
+    "Just text.",
+    "The value itself."
+   ],
+   [
+    "!Ref can't reach another stack.",
+    "Works only inside stack A.",
+    "Correct.",
+    "Exports aren't a mapping."
+   ]
+  ]
+ },
+ {
+  "card_id": "059b3d8d-d628-470b-ad0f-cf030da01338",
+  "notes": [
+   [
+    "Sets creation order.",
+    "Correct.",
+    "Gives values, not create/skip.",
+    "Controls deletion."
+   ],
+   [
+    "!If picks values using a condition that already exists.",
+    "Picks a list item.",
+    "Looks up a mapping value.",
+    "Correct."
+   ]
+  ]
+ }
+]

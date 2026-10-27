@@ -1,0 +1,676 @@
+[
+ {
+  "type": "mcq",
+  "question": "What is AWS CloudFormation?",
+  "options": [
+   "An infrastructure-as-code service",
+   "A metrics and logging service",
+   "A managed Git repository service",
+   "A content delivery network"
+  ],
+  "correct": [
+   0
+  ],
+  "option_explanations": [
+   "Correct. You declare what you want; CloudFormation creates it in the right order.",
+   "That's CloudWatch.",
+   "That's CodeCommit.",
+   "That's CloudFront."
+  ],
+  "explanation": "Declarative: you don't write the creation order yourself.",
+  "certs": {
+   "DVA-C02": "3",
+   "SAA-C03": "3"
+  },
+  "tags": [
+   "cloudformation",
+   "iac"
+  ],
+  "id": "1128afe4-fb8f-4bfd-87e6-e8056a3a1c3a"
+ },
+ {
+  "type": "mcq",
+  "question": "Which are benefits of CloudFormation? (Choose 3)",
+  "options": [
+   "Infrastructure changes are reviewed as code",
+   "Each stack's resources can be tagged to track costs",
+   "Whole environments can be deleted and recreated on demand",
+   "IAM permissions are no longer needed to deploy",
+   "Application code is built and run for you"
+  ],
+  "correct": [
+   0,
+   1,
+   2
+  ],
+  "option_explanations": [
+   "Correct. No manual resource creation; templates live in version control.",
+   "Correct. Tags per stack make costs visible and estimable.",
+   "Correct. E.g. delete dev at 5 PM, recreate at 8 AM.",
+   "CloudFormation still acts with IAM permissions (yours or a service role).",
+   "It provisions infrastructure; it doesn't run your code."
+  ],
+  "explanation": "Also: automatic diagrams, separation of concerns (network, app stacks…), and reuse of existing templates.",
+  "certs": {
+   "DVA-C02": "3",
+   "SAA-C03": "4"
+  },
+  "tags": [
+   "cloudformation"
+  ],
+  "id": "94afe682-130e-46dc-aca5-9aa0197420e9"
+ },
+ {
+  "type": "mcq",
+  "question": "How do you change a CloudFormation stack's template?",
+  "options": [
+   "Submit the revised template as a stack update",
+   "Edit the deployed template directly in S3",
+   "Delete the stack and create it again",
+   "Change each resource in the console"
+  ],
+  "correct": [
+   0
+  ],
+  "option_explanations": [
+   "Correct. Templates are uploaded to S3 and referenced by CloudFormation.",
+   "Old templates can't be edited.",
+   "Not needed; stacks support updates.",
+   "Manual changes cause drift and rollback problems."
+  ],
+  "explanation": "Stacks are identified by **name within a Region**.",
+  "certs": {
+   "DVA-C02": "3",
+   "SAA-C03": "3"
+  },
+  "tags": [
+   "cloudformation",
+   "stacks"
+  ],
+  "id": "f84049d0-bfa7-4c41-9a46-bf959f9891b9"
+ },
+ {
+  "type": "mcq",
+  "question": "What happens when you delete a CloudFormation stack?",
+  "options": [
+   "The stack's resources are deleted too",
+   "Only the stored template is removed",
+   "The resources stay but lose their tags",
+   "The resources stay and must be deleted by hand"
+  ],
+  "correct": [
+   0
+  ],
+  "option_explanations": [
+   "Correct. Unless a DeletionPolicy keeps them; CloudFormation also works out the deletion order.",
+   "The resources it created go too.",
+   "Resources are deleted, not kept.",
+   "CloudFormation deletes them itself."
+  ],
+  "explanation": "That's what makes cleanup easy. DeletionPolicy: Retain (or Snapshot) keeps a resource.",
+  "certs": {
+   "DVA-C02": "3",
+   "SAA-C03": "3"
+  },
+  "tags": [
+   "cloudformation",
+   "stacks"
+  ],
+  "id": "c164676a-5667-4a22-a2d9-8bf6886268b8"
+ },
+ {
+  "type": "mcq",
+  "question": "Which ways can you deploy CloudFormation templates? (Choose 2)",
+  "options": [
+   "Manually, editing in Infrastructure Composer and creating the stack in the console",
+   "Automatically, with the CLI or a CI/CD pipeline running on YAML files",
+   "Automatically, by uploading the file to any S3 bucket",
+   "Manually, by pasting it into an EC2 instance's user data"
+  ],
+  "correct": [
+   0,
+   1
+  ],
+  "option_explanations": [
+   "Correct. Good for learning.",
+   "Correct. Recommended for full automation.",
+   "Uploading to S3 alone doesn't create a stack.",
+   "User data runs scripts on one instance; it doesn't deploy templates."
+  ],
+  "explanation": "Infrastructure Composer also gives a visual diagram of the template.",
+  "certs": {
+   "DVA-C02": "3",
+   "SAA-C03": "3"
+  },
+  "tags": [
+   "cloudformation"
+  ],
+  "id": "e21d79e2-b1a1-429c-8fac-8b70675d5efd"
+ },
+ {
+  "type": "mcq",
+  "question": "Which section is the **only mandatory** part of a CloudFormation template?",
+  "options": [
+   "Resources",
+   "Parameters",
+   "Outputs",
+   "Mappings"
+  ],
+  "correct": [
+   0
+  ],
+  "option_explanations": [
+   "Correct.",
+   "Optional.",
+   "Optional.",
+   "Optional."
+  ],
+  "explanation": "Other sections: AWSTemplateFormatVersion, Description, Parameters, Mappings, Outputs, Conditions.",
+  "certs": {
+   "DVA-C02": "3",
+   "SAA-C03": "3"
+  },
+  "tags": [
+   "cloudformation",
+   "template"
+  ],
+  "id": "887f03c0-3cab-4e83-a721-84f3e8a070fc"
+ },
+ {
+  "type": "basic",
+  "question": "Name the CloudFormation template sections and what each is for.",
+  "answer": "- **AWSTemplateFormatVersion:** template format version\n- **Description:** comments\n- **Resources** (required): the AWS resources\n- **Parameters:** dynamic inputs\n- **Mappings:** static lookup values\n- **Outputs:** values to view or export\n- **Conditions:** create resources/outputs only when true\n- Helpers: references and intrinsic functions",
+  "explanation": "Parameters vs Mappings is a common exam comparison.",
+  "certs": {
+   "DVA-C02": "3",
+   "SAA-C03": "3"
+  },
+  "tags": [
+   "cloudformation",
+   "template"
+  ],
+  "id": "e3c86fb6-79ae-4f38-9333-f8b05d585493"
+ },
+ {
+  "type": "code",
+  "question": "Read this YAML. What are `SecurityGroups` and `Tags`, and what does `#` mean?",
+  "language": "yaml",
+  "explanation": "In YAML, `key: value` pairs and indentation create **nested objects**; `-` items form a **list** (array); `|` starts a **multi-line string**; `#` starts a **comment**. YAML is usually easier to read than JSON for CloudFormation.",
+  "certs": {
+   "DVA-C02": "3",
+   "SAA-C03": "3"
+  },
+  "tags": [
+   "yaml",
+   "cloudformation"
+  ],
+  "code": "Resources:\n  WebServer:\n    Type: AWS::EC2::Instance   # an EC2 instance\n    Properties:\n      InstanceType: t3.micro\n      SecurityGroups:\n        - !Ref WebSG\n        - !Ref SshSG\n      Tags:\n        - Key: Team\n          Value: payments",
+  "answer": "`SecurityGroups` is a **list of two items**; `Tags` is a **list of objects** (each with Key and Value). `#` marks a **comment**.",
+  "id": "abec22fa-8f7d-47d4-ae8b-e31e512d35a1"
+ },
+ {
+  "type": "mcq",
+  "question": "What's the format of a CloudFormation resource type identifier?",
+  "options": [
+   "AWS::EC2::Instance",
+   "arn:aws:ec2:instance",
+   "aws.ec2.instance",
+   "AWS/EC2/Instance"
+  ],
+  "correct": [
+   0
+  ],
+  "option_explanations": [
+   "Correct. service-provider::service-name::data-type-name.",
+   "That's ARN style.",
+   "Dots aren't used.",
+   "That's a CloudWatch namespace style."
+  ],
+  "explanation": "There are 700+ resource types. Look up each type's properties in the CloudFormation docs.",
+  "certs": {
+   "DVA-C02": "3",
+   "SAA-C03": "3"
+  },
+  "tags": [
+   "cloudformation",
+   "resources"
+  ],
+  "id": "e054fc9b-eba2-4b9a-b56c-296715348e55"
+ },
+ {
+  "type": "mcq",
+  "question": "The docs for an EC2 instance property say changing it **requires replacement**. What happens on a stack update that changes it?",
+  "options": [
+   "A new resource is created and the old one deleted",
+   "The resource is updated in place without downtime",
+   "The update fails until the resource is deleted by hand",
+   "The resource is stopped, updated, then restarted"
+  ],
+  "correct": [
+   0
+  ],
+  "option_explanations": [
+   "Correct. E.g. changing the AMI ID replaces the instance.",
+   "That's 'no interruption'.",
+   "CloudFormation handles the replacement itself.",
+   "That's 'some interruption'."
+  ],
+  "explanation": "Each property documents its update behavior: no interruption, some interruption, or replacement.",
+  "certs": {
+   "DVA-C02": "3",
+   "SAA-C03": "3"
+  },
+  "tags": [
+   "cloudformation",
+   "updates"
+  ],
+  "id": "aa7419f7-a58c-4ac4-af83-dc165f350ef3"
+ },
+ {
+  "type": "mcq",
+  "question": "Before updating a stack, a team wants to see exactly what will be added, modified or **replaced**. What should they review?",
+  "options": [
+   "A change set",
+   "The stack's outputs",
+   "CloudTrail",
+   "The stack policy"
+  ],
+  "correct": [
+   0
+  ],
+  "option_explanations": [
+   "Correct. It lists each change and whether replacement is true.",
+   "Outputs show values the stack exposes, not planned changes.",
+   "Shows API history, not planned changes.",
+   "Controls what may change, not a preview."
+  ],
+  "explanation": "Change sets let you check an update before running it.",
+  "certs": {
+   "DVA-C02": "3",
+   "SAA-C03": "3"
+  },
+  "tags": [
+   "cloudformation",
+   "change-sets"
+  ],
+  "id": "e0ff3c8e-422d-441f-8327-ad410755c549"
+ },
+ {
+  "type": "mcq",
+  "question": "You need a CloudFormation resource for something CloudFormation doesn't support yet. What's the exam answer?",
+  "options": [
+   "A custom resource",
+   "A template macro",
+   "A nested stack",
+   "A stack set"
+  ],
+  "correct": [
+   0
+  ],
+  "option_explanations": [
+   "Correct. Usually backed by a Lambda function.",
+   "Macros transform template text; they don't add support for new services.",
+   "Reuses templates; it can still only hold supported types.",
+   "Deploys stacks across accounts and Regions; adds no new types."
+  ],
+  "explanation": "Almost every AWS service is supported; custom resources fill the gaps.",
+  "certs": {
+   "DVA-C02": "3",
+   "SAA-C03": "3"
+  },
+  "tags": [
+   "cloudformation",
+   "custom-resources"
+  ],
+  "id": "8cb6b0f9-b3c6-4755-9557-fb15f0339eb7"
+ },
+ {
+  "type": "mcq",
+  "question": "When should a value be a **parameter** rather than hardcoded?",
+  "options": [
+   "When it may change or isn't known in advance",
+   "When it stays fixed for every deployment",
+   "When it varies by Region in a known way",
+   "For every value the template uses"
+  ],
+  "correct": [
+   0
+  ],
+  "option_explanations": [
+   "Correct. Updating it then doesn't need a new template.",
+   "Hardcode it, or use a mapping.",
+   "That's a mapping.",
+   "Overkill; fixed values don't need user input."
+  ],
+  "explanation": "Parameters make templates reusable across teams.",
+  "certs": {
+   "DVA-C02": "3",
+   "SAA-C03": "3"
+  },
+  "tags": [
+   "cloudformation",
+   "parameters"
+  ],
+  "id": "3ba17801-1447-4224-ad68-681cdaa8cd9b"
+ },
+ {
+  "type": "mcq",
+  "question": "Which are valid CloudFormation parameter settings? (Choose 3)",
+  "options": [
+   "Type",
+   "AllowedValues",
+   "NoEcho",
+   "Condition",
+   "Export"
+  ],
+  "correct": [
+   0,
+   1,
+   2
+  ],
+  "option_explanations": [
+   "Correct. String, Number, CommaDelimitedList, AWS-specific and SSM parameter types.",
+   "Correct. Others: AllowedPattern, Min/Max length or value, Default.",
+   "Correct. Masks the value.",
+   "That's for resources and outputs.",
+   "That's for outputs."
+  ],
+  "explanation": "Constraints and validation stop bad inputs before deployment.",
+  "certs": {
+   "DVA-C02": "3",
+   "SAA-C03": "3"
+  },
+  "tags": [
+   "cloudformation",
+   "parameters"
+  ],
+  "id": "1b42279e-9bfb-4c40-9779-f3006e2a174a"
+ },
+ {
+  "type": "code",
+  "question": "Make users choose an instance type from a dropdown of t3.micro, t3.small or t3.medium (default t3.micro), and use it on an instance.",
+  "language": "yaml",
+  "explanation": "**AllowedValues** turns the parameter into a dropdown: users get a choice, you keep control. Use it with `!Ref`.",
+  "certs": {
+   "DVA-C02": "3",
+   "SAA-C03": "3"
+  },
+  "tags": [
+   "cloudformation",
+   "parameters"
+  ],
+  "answer_code": "Parameters:\n  InstanceType:\n    Type: String\n    Default: t3.micro\n    AllowedValues: [t3.micro, t3.small, t3.medium]\n\nResources:\n  App:\n    Type: AWS::EC2::Instance\n    Properties:\n      InstanceType: !Ref InstanceType\n      ImageId: ami-0123456789abcdef0",
+  "id": "370c85c7-56be-4491-894f-b492f2c26593"
+ },
+ {
+  "type": "mcq",
+  "question": "A template takes a database password as a parameter. How do you keep it from showing in the console and logs?",
+  "options": [
+   "Set NoEcho: true",
+   "Set Type: Password",
+   "Set Hidden: true",
+   "Store it in a mapping"
+  ],
+  "correct": [
+   0
+  ],
+  "option_explanations": [
+   "Correct. The value shows as asterisks.",
+   "Not a parameter type.",
+   "Not a parameter property.",
+   "Mappings are plain text in the template."
+  ],
+  "explanation": "Even better, use Secrets Manager or an SSM SecureString dynamic reference. *(Goes slightly beyond the lecture.)*",
+  "certs": {
+   "DVA-C02": "2",
+   "SAA-C03": "1"
+  },
+  "tags": [
+   "cloudformation",
+   "parameters",
+   "noecho"
+  ],
+  "id": "ab1e843d-f8c5-42af-a2f8-26e15d927371"
+ },
+ {
+  "type": "mcq",
+  "question": "What does `!Ref` return when it points at a **parameter** vs a **resource**?",
+  "options": [
+   "Parameter → its value; resource → its physical ID",
+   "Parameter → its ARN; resource → its ARN",
+   "Parameter → its name; resource → its logical ID",
+   "Parameter → its ARN; resource → its value"
+  ],
+  "correct": [
+   0
+  ],
+  "option_explanations": [
+   "Correct. E.g. the instance ID for an EC2 instance.",
+   "Parameters have no ARN; resources return their physical ID.",
+   "!Ref resolves to values, not names.",
+   "Reversed."
+  ],
+  "explanation": "That's why parameters and resources can't share the same logical name. `!Ref` is short for `Fn::Ref`.",
+  "certs": {
+   "DVA-C02": "3",
+   "SAA-C03": "3"
+  },
+  "tags": [
+   "cloudformation",
+   "ref"
+  ],
+  "id": "9a332b9b-1957-4e32-901a-7ee6f668d6a2"
+ },
+ {
+  "type": "mcq",
+  "question": "A template must know which account and Region it's running in, without asking the user. What should it use?",
+  "options": [
+   "Pseudo parameters",
+   "Required parameters",
+   "Template mappings",
+   "Stack outputs"
+  ],
+  "correct": [
+   0
+  ],
+  "option_explanations": [
+   "Correct. E.g. AWS::AccountId and AWS::Region; always available, no setup.",
+   "Requires user input.",
+   "Hardcoded values.",
+   "Not inputs."
+  ],
+  "explanation": "Others: AWS::StackId, AWS::StackName, AWS::NotificationARNs, AWS::NoValue.",
+  "certs": {
+   "DVA-C02": "3",
+   "SAA-C03": "3"
+  },
+  "tags": [
+   "cloudformation",
+   "pseudo-parameters"
+  ],
+  "id": "a96b47aa-5860-4beb-8b1c-c97b5d1f0bf5"
+ },
+ {
+  "type": "cloze",
+  "question": "Pseudo parameters: `!Ref AWS::{{AccountId}}` returns the account number, `!Ref AWS::{{Region}}` returns the current Region, and `AWS::{{NoValue}}` removes a property.",
+  "explanation": "Use them instead of asking users for values CloudFormation already knows.",
+  "certs": {
+   "DVA-C02": "3",
+   "SAA-C03": "3"
+  },
+  "tags": [
+   "cloudformation",
+   "pseudo-parameters"
+  ],
+  "id": "4cdfea60-14d0-4511-a56e-da3c3c975810"
+ },
+ {
+  "type": "mcq",
+  "question": "A template needs a different AMI ID per Region and architecture, all known in advance. What's the best feature?",
+  "options": [
+   "Mappings",
+   "Parameters",
+   "Outputs",
+   "Conditions"
+  ],
+  "correct": [
+   0
+  ],
+  "option_explanations": [
+   "Correct. Fixed lookup values, read with !FindInMap and AWS::Region.",
+   "Would push the choice onto users.",
+   "Not inputs.",
+   "Decides whether to create something, not values."
+  ],
+  "explanation": "Mappings suit values derived from Region, AZ, account or environment (dev vs prod).",
+  "certs": {
+   "DVA-C02": "3",
+   "SAA-C03": "3"
+  },
+  "tags": [
+   "cloudformation",
+   "mappings"
+  ],
+  "id": "06e679f7-3a1a-4e48-888e-083d8e954443"
+ },
+ {
+  "type": "code",
+  "question": "Complete the ImageId so it picks the AMI for the current Region and HVM64 architecture.",
+  "language": "yaml",
+  "explanation": "`!FindInMap [MapName, TopLevelKey, SecondLevelKey]`. Using `AWS::Region` makes the same template work in every listed Region.",
+  "certs": {
+   "DVA-C02": "3",
+   "SAA-C03": "3"
+  },
+  "tags": [
+   "cloudformation",
+   "mappings",
+   "findinmap"
+  ],
+  "code": "Mappings:\n  RegionMap:\n    us-east-1: {HVM64: ami-0aaa1111bbbb2222c}\n    eu-west-1: {HVM64: ami-0ddd3333eeee4444f}\n\nResources:\n  Web:\n    Type: AWS::EC2::Instance\n    Properties:\n      InstanceType: t3.micro\n      ImageId: ____",
+  "answer_code": "      ImageId: !FindInMap [RegionMap, !Ref \"AWS::Region\", HVM64]",
+  "id": "df8429c4-ccf1-4e49-855e-6d97475ff218"
+ },
+ {
+  "type": "basic",
+  "question": "Parameters vs Mappings: when to use which?",
+  "answer": "**Mappings:** all possible values are known in advance and can be worked out from Region, AZ, account or environment. Safer and more controlled.\n\n**Parameters:** the value depends on what the user wants at deploy time. More freedom.",
+  "explanation": "AMI per Region → mapping. Instance size the user picks → parameter.",
+  "certs": {
+   "DVA-C02": "3",
+   "SAA-C03": "3"
+  },
+  "tags": [
+   "cloudformation",
+   "parameters",
+   "mappings"
+  ],
+  "id": "7d5d78d8-16d4-4dd7-9029-75a6a14cd097"
+ },
+ {
+  "type": "mcq",
+  "question": "A network team's stack creates a VPC, and app teams' stacks must use its ID. How?",
+  "options": [
+   "Export it from the network stack's outputs",
+   "Hardcode it in each app stack's resources",
+   "Store it in each app stack's mappings",
+   "Read it from the network stack's conditions"
+  ],
+  "correct": [
+   0
+  ],
+  "option_explanations": [
+   "Correct. App stacks read it with !ImportValue (cross-stack reference).",
+   "Breaks when it changes.",
+   "Still hardcoded.",
+   "Conditions don't share values between stacks."
+  ],
+  "explanation": "Outputs can also simply be viewed in the console or CLI.",
+  "certs": {
+   "DVA-C02": "3",
+   "SAA-C03": "3"
+  },
+  "tags": [
+   "cloudformation",
+   "outputs",
+   "exports"
+  ],
+  "id": "ae4ff60e-1fcf-4da8-91f2-19f1ce3ab1f9"
+ },
+ {
+  "type": "mcq",
+  "question": "Which statements about CloudFormation exports are TRUE? (Choose 2)",
+  "options": [
+   "Export names must be unique per account and Region",
+   "A stack can't be deleted while another stack imports its export",
+   "Exports can be imported from any Region",
+   "An export in use can be changed freely"
+  ],
+  "correct": [
+   0,
+   1
+  ],
+  "option_explanations": [
+   "Correct.",
+   "Correct.",
+   "They're Region-scoped.",
+   "You can't change an export that's in use."
+  ],
+  "explanation": "Import with `!ImportValue ExportName`.",
+  "certs": {
+   "DVA-C02": "3",
+   "SAA-C03": "3"
+  },
+  "tags": [
+   "cloudformation",
+   "exports"
+  ],
+  "id": "12a8849d-caff-4a3a-9fc0-496e0229ccbe"
+ },
+ {
+  "type": "code",
+  "question": "Export a security group ID from one stack and use it in another.",
+  "language": "yaml",
+  "explanation": "The export `Name` is what other stacks import. `!Ref` on a security group returns its ID.",
+  "certs": {
+   "DVA-C02": "3",
+   "SAA-C03": "3"
+  },
+  "tags": [
+   "cloudformation",
+   "outputs",
+   "importvalue"
+  ],
+  "answer_code": "# Stack A\nOutputs:\n  SshSgId:\n    Value: !Ref SshSecurityGroup\n    Export:\n      Name: CompanySshSG\n\n# Stack B\nResources:\n  Bastion:\n    Type: AWS::EC2::Instance\n    Properties:\n      SecurityGroupIds:\n        - !ImportValue CompanySshSG",
+  "id": "9b9384ac-1d59-4d9d-842e-df6893477661"
+ },
+ {
+  "type": "mcq",
+  "question": "An extra EBS volume should only be created in prod stacks. What feature fits?",
+  "options": [
+   "Conditions",
+   "Mappings",
+   "Outputs",
+   "A stack policy"
+  ],
+  "correct": [
+   0
+  ],
+  "option_explanations": [
+   "Correct. E.g. a CreateProdResources condition on an EnvType parameter, applied to the volume.",
+   "Mappings give values, not create/skip decisions.",
+   "Not used for this.",
+   "Controls updates, not creation."
+  ],
+  "explanation": "Conditions can use Fn::And, Equals, If, Not, Or, and can reference parameters, mappings and other conditions.",
+  "certs": {
+   "DVA-C02": "3",
+   "SAA-C03": "3"
+  },
+  "tags": [
+   "cloudformation",
+   "conditions"
+  ],
+  "id": "059b3d8d-d628-470b-ad0f-cf030da01338"
+ }
+]

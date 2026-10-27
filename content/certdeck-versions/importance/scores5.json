@@ -1,0 +1,259 @@
+{
+ "DVA-C02": [
+  {
+   "id": "1128afe4-fb8f-4bfd-87e6-e8056a3a1c3a",
+   "score": 3,
+   "reason": "CloudFormation definition; overview of IaC (3.3.4)"
+  },
+  {
+   "id": "94afe682-130e-46dc-aca5-9aa0197420e9",
+   "score": 2,
+   "reason": "CloudFormation benefits list; overview"
+  },
+  {
+   "id": "f84049d0-bfa7-4c41-9a46-bf959f9891b9",
+   "score": 5,
+   "reason": "Update stack with new template version (3.4.3)"
+  },
+  {
+   "id": "c164676a-5667-4a22-a2d9-8bf6886268b8",
+   "score": 5,
+   "reason": "Stack delete removes resources unless DeletionPolicy (3.3.4)"
+  },
+  {
+   "id": "e21d79e2-b1a1-429c-8fac-8b70675d5efd",
+   "score": 3,
+   "reason": "Manual vs CLI/CI-CD template deployment; general"
+  },
+  {
+   "id": "887f03c0-3cab-4e83-a721-84f3e8a070fc",
+   "score": 6,
+   "reason": "Resources is the only required section; recurring fact (3.3.4)"
+  },
+  {
+   "id": "e3c86fb6-79ae-4f38-9333-f8b05d585493",
+   "score": 3,
+   "reason": "Template sections summary; overview card"
+  },
+  {
+   "id": "abec22fa-8f7d-47d4-ae8b-e31e512d35a1",
+   "score": 2,
+   "reason": "YAML syntax basics; general knowledge"
+  },
+  {
+   "id": "e054fc9b-eba2-4b9a-b56c-296715348e55",
+   "score": 3,
+   "reason": "Resource type identifier format; minor detail"
+  },
+  {
+   "id": "aa7419f7-a58c-4ac4-af83-dc165f350ef3",
+   "score": 5,
+   "reason": "Replacement on update; IaC update behavior (3.4.3)"
+  },
+  {
+   "id": "e0ff3c8e-422d-441f-8327-ad410755c549",
+   "score": 7,
+   "reason": "Change sets preview updates; frequently tested (3.4.3)"
+  },
+  {
+   "id": "8cb6b0f9-b3c6-4755-9557-fb15f0339eb7",
+   "score": 6,
+   "reason": "Custom resource for unsupported resources; recurring exam answer"
+  },
+  {
+   "id": "3ba17801-1447-4224-ad68-681cdaa8cd9b",
+   "score": 3,
+   "reason": "When to parameterize; conceptual"
+  },
+  {
+   "id": "1b42279e-9bfb-4c40-9779-f3006e2a174a",
+   "score": 4,
+   "reason": "Parameter settings (Type, AllowedValues, NoEcho); detail"
+  },
+  {
+   "id": "370c85c7-56be-4491-894f-b492f2c26593",
+   "score": 4,
+   "reason": "AllowedValues parameter code; template authoring (3.3.4)"
+  },
+  {
+   "id": "ab1e843d-f8c5-42af-a2f8-26e15d927371",
+   "score": 6,
+   "reason": "NoEcho hides secret parameters; security in templates"
+  },
+  {
+   "id": "9a332b9b-1957-4e32-901a-7ee6f668d6a2",
+   "score": 7,
+   "reason": "!Ref returns value vs physical ID; classic trap (3.3.4)"
+  },
+  {
+   "id": "a96b47aa-5860-4beb-8b1c-c97b5d1f0bf5",
+   "score": 6,
+   "reason": "Pseudo parameters AWS::Region/AccountId; common"
+  },
+  {
+   "id": "4cdfea60-14d0-4511-a56e-da3c3c975810",
+   "score": 5,
+   "reason": "Pseudo parameter names incl. AWS::NoValue"
+  },
+  {
+   "id": "06e679f7-3a1a-4e48-888e-083d8e954443",
+   "score": 7,
+   "reason": "Mappings + FindInMap for per-Region AMI; frequently tested"
+  },
+  {
+   "id": "df8429c4-ccf1-4e49-855e-6d97475ff218",
+   "score": 6,
+   "reason": "FindInMap syntax with AWS::Region (3.3.4)"
+  },
+  {
+   "id": "7d5d78d8-16d4-4dd7-9029-75a6a14cd097",
+   "score": 4,
+   "reason": "Parameters vs Mappings comparison; summary"
+  },
+  {
+   "id": "ae4ff60e-1fcf-4da8-91f2-19f1ce3ab1f9",
+   "score": 8,
+   "reason": "Outputs Export + ImportValue cross-stack; core recurring (3.3.4)"
+  },
+  {
+   "id": "12a8849d-caff-4a3a-9fc0-496e0229ccbe",
+   "score": 6,
+   "reason": "Export uniqueness and delete blocking; tested detail"
+  },
+  {
+   "id": "9b9384ac-1d59-4d9d-842e-df6893477661",
+   "score": 6,
+   "reason": "Export/ImportValue code; cross-stack references"
+  },
+  {
+   "id": "059b3d8d-d628-470b-ad0f-cf030da01338",
+   "score": 6,
+   "reason": "Conditions for env-specific resources (3.3.5)"
+  },
+  {
+   "id": "e09adfde-3044-4217-b2c3-c28e66f81070",
+   "score": 5,
+   "reason": "Condition syntax on resource; template authoring"
+  },
+  {
+   "id": "4954a5dd-cbc9-4723-86ca-f018f3212d73",
+   "score": 7,
+   "reason": "!GetAtt for resource attributes; core intrinsic function"
+  },
+  {
+   "id": "1bc902ca-0441-450b-8fa2-14a16865ab92",
+   "score": 5,
+   "reason": "Key intrinsic functions list; overview-ish"
+  },
+  {
+   "id": "e463dadb-8013-44d7-80d5-e1bde6d55165",
+   "score": 5,
+   "reason": "Fn::Base64 for UserData; recurring small fact"
+  },
+  {
+   "id": "77c698ee-44da-4955-9a45-236f09334e14",
+   "score": 4,
+   "reason": "UserData with Base64 code; template detail"
+  },
+  {
+   "id": "76ab3d84-dc1c-4241-8e22-7bcf1c9cdebb",
+   "score": 4,
+   "reason": "Intrinsic functions summary; overview card"
+  },
+  {
+   "id": "1076528b-1bfd-411d-9591-f655c29f72f9",
+   "score": 6,
+   "reason": "Create-failure rollback and disabling it to troubleshoot (4.1)"
+  },
+  {
+   "id": "9e7ec4e5-6c6a-401c-9d74-e951a8731cf3",
+   "score": 5,
+   "reason": "Update failure rolls back to last good state (3.4.8)"
+  },
+  {
+   "id": "2b854e9c-c4e3-43eb-8234-d1d661cc4281",
+   "score": 5,
+   "reason": "UPDATE_ROLLBACK_FAILED + ContinueUpdateRollback; troubleshooting"
+  },
+  {
+   "id": "21a585b9-14af-47cf-9453-fa402f401989",
+   "score": 7,
+   "reason": "Service role + iam:PassRole for least privilege; frequently tested"
+  },
+  {
+   "id": "4e640c0c-25a9-4b96-82c0-26e3d52923d4",
+   "score": 7,
+   "reason": "iam:PassRole requirement; recurring security fact (2.1)"
+  },
+  {
+   "id": "d408239f-7d04-496a-af77-7f3ff3f22c88",
+   "score": 7,
+   "reason": "CAPABILITY_NAMED_IAM for InsufficientCapabilities; common trap"
+  },
+  {
+   "id": "665988fc-4143-4795-bcdc-23728ff14ee5",
+   "score": 5,
+   "reason": "CAPABILITY_AUTO_EXPAND for macros/SAM transforms"
+  },
+  {
+   "id": "c529691c-a40f-494c-9861-0adf96b0779f",
+   "score": 5,
+   "reason": "CLI deploy with --capabilities (3.3.4)"
+  },
+  {
+   "id": "0640d7f9-217a-4587-9d09-5ab1ed01820d",
+   "score": 7,
+   "reason": "DeletionPolicy Retain; frequently tested"
+  },
+  {
+   "id": "e1bc7873-f952-4f27-99ff-869d2d3fe97f",
+   "score": 6,
+   "reason": "DeletionPolicy Snapshot for RDS"
+  },
+  {
+   "id": "3d88aa54-fb5b-4bcc-96b9-d5d2ae0a6aaf",
+   "score": 6,
+   "reason": "Non-empty bucket blocks delete; custom resource fix"
+  },
+  {
+   "id": "4ae5d84a-6e7d-4735-8384-1c49f33bbca4",
+   "score": 5,
+   "reason": "Stack policy protects resources on update"
+  },
+  {
+   "id": "8de68a0d-9251-42a2-97c5-077615439e4d",
+   "score": 3,
+   "reason": "Writing stack policy JSON; syntax detail"
+  },
+  {
+   "id": "b8f03c52-a78a-498e-8278-e26d2c7e8ad7",
+   "score": 5,
+   "reason": "Termination protection against stack deletion"
+  },
+  {
+   "id": "307a13e0-790a-4129-a61a-d76e1229430a",
+   "score": 5,
+   "reason": "DeletionPolicy vs stack policy vs termination protection; useful distinction"
+  },
+  {
+   "id": "c6e834b9-71db-428a-a167-98c2649e97f3",
+   "score": 5,
+   "reason": "Custom resource use cases (Lambda-backed)"
+  },
+  {
+   "id": "8a7100c4-ab8b-487c-81e1-89e276343894",
+   "score": 3,
+   "reason": "Custom resource declaration code; ServiceToken detail"
+  },
+  {
+   "id": "77e210ec-f36d-40fe-98ae-ff6c637d593c",
+   "score": 5,
+   "reason": "StackSets multi-account/Region; occasionally on DVA"
+  },
+  {
+   "id": "32429b2a-7a2a-47d5-a876-8221f895fd35",
+   "score": 2,
+   "reason": "Section summary card; overview"
+  }
+ ]
+}

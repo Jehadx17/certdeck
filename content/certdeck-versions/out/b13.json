@@ -1,0 +1,1144 @@
+[
+ {
+  "card_id": "e09adfde-3044-4217-b2c3-c28e66f81070",
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "A template should create an EBS VolumeAttachment only for production, chosen through an EnvType parameter. What's the approach?",
+    "options": [
+     "Give the attachment a DeletionPolicy based on EnvType",
+     "Define an IsProd condition and set it on the resource",
+     "Add a DependsOn from the attachment to the EnvType parameter",
+     "Use a Mappings entry keyed by EnvType on the attachment"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Conditions are defined once in the Conditions section and attached with `Condition:`.",
+    "option_explanations": [
+     "DeletionPolicy only acts when the resource is deleted.",
+     "Correct. The condition decides whether the resource is created.",
+     "DependsOn sets creation order and takes resources, not parameters.",
+     "Mappings look up values; they can't skip a resource."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "You defined `IsProd: !Equals [!Ref EnvType, prod]`. What do you add to the attachment resource so it exists only in prod?",
+    "options": [
+     "Metadata: IsProd",
+     "Condition: IsProd",
+     "Enabled: !Ref IsProd",
+     "DependsOn: IsProd"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "`Condition:` goes at the resource level; `!If` is for choosing property values.",
+    "option_explanations": [
+     "Metadata holds extra data; it doesn't control creation.",
+     "Correct. A resource attribute next to Type and Properties.",
+     "There's no Enabled attribute, and conditions can't be Ref'd.",
+     "DependsOn takes logical IDs of resources, not conditions."
+    ]
+   }
+  ]
+ },
+ {
+  "card_id": "4954a5dd-cbc9-4723-86ca-f018f3212d73",
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "An output must show the hostname the internet uses to reach the instance WebServer, declared in the same template. Which expression?",
+    "options": [
+     "!ImportValue WebServer",
+     "!GetAtt WebServer.PublicDnsName",
+     "!GetAtt WebServer.PrivateDnsName",
+     "!Ref WebServer"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "GetAtt only returns attributes AWS documents for the type; EC2 has PublicDnsName, PublicIp, PrivateDnsName, PrivateIp and more.",
+    "option_explanations": [
+     "Reads another stack's export, not a resource here.",
+     "Correct.",
+     "That's the internal VPC hostname.",
+     "Ref on an instance returns its ID."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which approach reads an EC2 instance's internet-facing hostname from elsewhere in its own template?",
+    "options": [
+     "Fn::Sub on the instance name",
+     "Fn::FindInMap on the instance ID",
+     "Fn::GetAtt on PublicDnsName",
+     "Ref on the instance"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Use Ref for IDs and parameter values, GetAtt for other attributes.",
+    "option_explanations": [
+     "`${Instance}` inside Sub behaves like Ref and gives the ID.",
+     "Reads static values from Mappings.",
+     "Correct. GetAtt returns a resource's documented attributes.",
+     "Returns the instance ID."
+    ]
+   }
+  ]
+ },
+ {
+  "card_id": "1bc902ca-0441-450b-8fa2-14a16865ab92",
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "For DVA-C02, which CloudFormation functions are the key ones to know? (Choose 4)",
+    "options": [
+     "!Select",
+     "!ImportValue",
+     "!GetAtt",
+     "!Ref",
+     "!FindInMap",
+     "!GetAZs"
+    ],
+    "correct": [
+     1,
+     2,
+     3,
+     4
+    ],
+    "explanation": "Also know Base64, Join, Sub and the condition functions.",
+    "option_explanations": [
+     "Real, but rarely the focus of a question.",
+     "Correct.",
+     "Correct.",
+     "Correct.",
+     "Correct.",
+     "Real, but rarely the focus of a question."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which intrinsic functions deserve the most study time before the exam? (Choose 4)",
+    "options": [
+     "Fn::ImportValue",
+     "Fn::FindInMap",
+     "Ref",
+     "Fn::GetAtt",
+     "Fn::Cidr",
+     "Fn::Length"
+    ],
+    "correct": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "explanation": "Ref, GetAtt, FindInMap and ImportValue show up most; Base64 and the condition functions come next.",
+    "option_explanations": [
+     "Correct.",
+     "Correct.",
+     "Correct.",
+     "Correct.",
+     "Exists, but seldom tested.",
+     "Exists, but seldom tested."
+    ]
+   }
+  ]
+ },
+ {
+  "card_id": "e463dadb-8013-44d7-80d5-e1bde6d55165",
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "In templates, what is `!Base64` most often wrapped around?",
+    "options": [
+     "An IAM policy document",
+     "A Lambda function's ZipFile code",
+     "A parameter marked NoEcho",
+     "An instance's UserData script"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "The usual form is `UserData: !Base64 |` followed by the script.",
+    "option_explanations": [
+     "Policies are written as plain JSON or YAML.",
+     "Inline ZipFile code is plain text.",
+     "NoEcho masks the value already; no encoding is used.",
+     "Correct. EC2 needs UserData Base64-encoded."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Why does a template pass an EC2 bootstrap script through Fn::Base64?",
+    "options": [
+     "It keeps the template under the size limit",
+     "It hides secrets inside the script",
+     "EC2 requires UserData encoded this way",
+     "YAML lacks support for multi-line strings"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Wrap the script in `!Sub` inside `!Base64` if it needs values like `${AWS::Region}`.",
+    "option_explanations": [
+     "Base64 makes text about a third larger.",
+     "Base64 is encoding, not encryption; anyone can decode it.",
+     "Correct.",
+     "YAML block scalars (`|`) hold multi-line text fine."
+    ]
+   }
+  ]
+ },
+ {
+  "card_id": "77c698ee-44da-4955-9a45-236f09334e14",
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "In an AWS::EC2::Instance resource, how is a multi-line bash bootstrap script usually supplied?",
+    "options": [
+     "`UserData: !Join |` then the script",
+     "`UserData: !Sub |` then the script",
+     "`UserData: !Base64 |` then the script",
+     "`Metadata: !Base64 |` then the script"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "`!Base64` encodes the block scalar that follows `|`.",
+    "option_explanations": [
+     "Join needs a delimiter and a list, and still doesn't encode.",
+     "Sub alone leaves the text unencoded; EC2 needs Base64.",
+     "Correct.",
+     "Metadata isn't run on the instance."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "An instance's UserData is a plain multi-line string with no function in front, and the stack fails. What's missing?",
+    "options": [
+     "Fn::Base64 around the script",
+     "Fn::Join around the lines",
+     "Fn::Sub around the script",
+     "Fn::Transform around the script"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "AWS::EC2::Instance UserData must be Base64-encoded text.",
+    "option_explanations": [
+     "Correct.",
+     "Joining lines doesn't encode them.",
+     "Sub fills in variables; it doesn't encode.",
+     "Transform calls macros on the template."
+    ]
+   }
+  ]
+ },
+ {
+  "card_id": "76ab3d84-dc1c-4241-8e22-7bcf1c9cdebb",
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Which function returns a value that a different stack published as an export?",
+    "options": [
+     "Fn::ImportValue",
+     "Fn::GetAtt",
+     "Fn::FindInMap",
+     "Ref"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Exports are declared in Outputs; other stacks in the same Region read them with ImportValue.",
+    "option_explanations": [
+     "Correct.",
+     "Reads attributes of resources in this template.",
+     "Reads this template's Mappings.",
+     "Returns parameter values or physical IDs here."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "What does Ref return for a parameter, and what for a resource?",
+    "options": [
+     "The parameter's type; the resource's attributes",
+     "The parameter's default; the resource's logical ID",
+     "The parameter's name; the resource's ARN",
+     "The parameter's value; the resource's physical ID"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "For other values, use GetAtt (attributes), FindInMap (mappings) or ImportValue (exports).",
+    "option_explanations": [
+     "Attributes come from GetAtt.",
+     "It gives the actual value and the physical ID.",
+     "Ref gives the value, and the ID isn't always an ARN.",
+     "Correct."
+    ]
+   }
+  ]
+ },
+ {
+  "card_id": "1076528b-1bfd-411d-9591-f655c29f72f9",
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "A brand-new stack hits an error halfway through creation. With default settings, what does CloudFormation do?",
+    "options": [
+     "Keeps what it created and stops",
+     "Rolls back and deletes what it created",
+     "Retries the failed resource until it works",
+     "Marks the stack complete and logs the error"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Check the stack events to see which resource failed and why.",
+    "option_explanations": [
+     "Only if you disabled rollback.",
+     "Correct.",
+     "There's no endless retry.",
+     "A failed creation doesn't end as complete."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "A stack's creation keeps failing, and you want to look at the resources it managed to build. Which setting helps?",
+    "options": [
+     "Disabled rollback on failure",
+     "Termination protection on the stack",
+     "Drift detection on the stack",
+     "A change set for the creation"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "In the console it's 'Preserve successfully provisioned resources'; in the CLI, `--disable-rollback`.",
+    "option_explanations": [
+     "Correct. Successful resources are preserved; delete the stack yourself later.",
+     "Stops deletion by users, not the rollback.",
+     "Compares live resources with the template.",
+     "Previews changes; the rollback still happens."
+    ]
+   }
+  ]
+ },
+ {
+  "card_id": "9e7ec4e5-6c6a-401c-9d74-e951a8731cf3",
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "An update to a running stack fails partway through. By default, where does the stack end up?",
+    "options": [
+     "Deleted along with its resources",
+     "At its previous working configuration",
+     "Paused until you approve a retry",
+     "At the partly applied new configuration"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "You can choose to preserve successfully provisioned resources instead.",
+    "option_explanations": [
+     "A failed update doesn't delete the stack.",
+     "Correct. The stack ends in UPDATE_ROLLBACK_COMPLETE.",
+     "There's no approval step.",
+     "Only if you chose to preserve resources."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "A stack update fails. By default, what happens to the resources that update had just created?",
+    "options": [
+     "They're deleted in the rollback",
+     "They're kept until the next update runs",
+     "They're kept and moved to a new stack",
+     "They're kept and the stack shows failed"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "The rollback returns the stack to the last known working state.",
+    "option_explanations": [
+     "Correct.",
+     "The rollback removes them right away.",
+     "CloudFormation doesn't split stacks.",
+     "Only if you preserve successfully provisioned resources."
+    ]
+   }
+  ]
+ },
+ {
+  "card_id": "2b854e9c-c4e3-43eb-8234-d1d661cc4281",
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "A stack shows UPDATE_ROLLBACK_FAILED after someone deleted one of its resources by hand. How do you recover it?",
+    "options": [
+     "Recreate it, then call ContinueUpdateRollback",
+     "Protect the stack from termination, then redeploy",
+     "Call CancelUpdateStack, then retry",
+     "Run drift detection, then redeploy"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "You can also skip resources that can't be fixed when you continue the rollback.",
+    "option_explanations": [
+     "Correct. Available from the console, CLI or API.",
+     "Termination protection only blocks deletion.",
+     "CancelUpdateStack works only while an update is in progress.",
+     "Drift detection reports changes; it doesn't fix the stuck state."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which API call resumes a stack rollback that got stuck?",
+    "options": [
+     "ContinueUpdateRollback",
+     "CancelUpdateStack",
+     "UpdateTerminationProtection",
+     "SignalResource"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Fix the cause first (often a resource changed outside CloudFormation), then call it.",
+    "option_explanations": [
+     "Correct.",
+     "Cancels an update that's still in progress.",
+     "Turns deletion protection on or off.",
+     "Sends success or failure signals for creation policies."
+    ]
+   }
+  ]
+ },
+ {
+  "card_id": "21a585b9-14af-47cf-9453-fa402f401989",
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "A team's IAM users have no S3 rights, but their stacks must still create buckets. What's the fix?",
+    "options": [
+     "A stack policy permitting bucket creation",
+     "A bucket policy naming the users",
+     "A service role with S3 access",
+     "A permissions boundary allowing s3:*"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Least privilege: the role holds the permissions, the users only pass it.",
+    "option_explanations": [
+     "Stack policies control updates, not permissions.",
+     "Grants the users S3 rights and doesn't create buckets.",
+     "Correct. Users pass it (iam:PassRole); CloudFormation acts with it.",
+     "A boundary limits permissions; it grants none."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "When you create a stack without choosing a service role, whose permissions does CloudFormation use?",
+    "options": [
+     "The stack's default service role",
+     "The calling user's own permissions",
+     "An AWS-managed CloudFormation role",
+     "The account root user's"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Pass a service role to deploy with permissions the user doesn't hold.",
+    "option_explanations": [
+     "No default role exists unless you pass one.",
+     "Correct.",
+     "There's no hidden managed role.",
+     "CloudFormation never acts as root."
+    ]
+   }
+  ]
+ },
+ {
+  "card_id": "4e640c0c-25a9-4b96-82c0-26e3d52923d4",
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "A developer picks an existing IAM role as the CloudFormation service role and gets AccessDenied. Which permission is missing?",
+    "options": [
+     "iam:PassRole",
+     "iam:CreateRole",
+     "sts:AssumeRole",
+     "iam:AttachRolePolicy"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "PassRole is what lets a principal hand a role to any AWS service.",
+    "option_explanations": [
+     "Correct.",
+     "The role already exists.",
+     "CloudFormation assumes the role, not the developer.",
+     "Changes a role's policies; not needed to use it."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which statement about iam:PassRole is true?",
+    "options": [
+     "Users need it to switch roles in the console",
+     "CloudFormation needs it in its trust policy",
+     "Users need it when giving a service a role",
+     "Services need it to assume a user's role"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "PassRole is checked on the caller when a role ARN is given to a service.",
+    "option_explanations": [
+     "Switching roles uses sts:AssumeRole.",
+     "Trust policies name principals, not PassRole.",
+     "Correct. That includes giving CloudFormation a service role.",
+     "Services are trusted through the role's trust policy."
+    ]
+   }
+  ]
+ },
+ {
+  "card_id": "d408239f-7d04-496a-af77-7f3ff3f22c88",
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Your template defines an IAM role and gives it a fixed RoleName. Which capability must the deploy acknowledge?",
+    "options": [
+     "CAPABILITY_AUTO_EXPAND",
+     "CAPABILITY_NAMED_IAM",
+     "CAPABILITY_IAM",
+     "CAPABILITY_ROLE_NAME"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Without it the deploy fails with InsufficientCapabilitiesException.",
+    "option_explanations": [
+     "For macros and transforms.",
+     "Correct.",
+     "Enough only when IAM resources get generated names.",
+     "Not a real capability."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Deploying with CAPABILITY_IAM fails for a template whose role has a custom RoleName. Why?",
+    "options": [
+     "It needs CAPABILITY_AUTO_EXPAND too",
+     "The role needs DeletionPolicy: Retain",
+     "It needs CAPABILITY_NAMED_IAM instead",
+     "The deploy needs a service role"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "In the console it's a checkbox; in the CLI it's `--capabilities`.",
+    "option_explanations": [
+     "That's for macros and transforms.",
+     "DeletionPolicy doesn't affect the capability check.",
+     "Correct. Custom-named IAM resources need the NAMED variant.",
+     "A service role doesn't replace acknowledging capabilities."
+    ]
+   }
+  ]
+ },
+ {
+  "card_id": "665988fc-4143-4795-bcdc-23728ff14ee5",
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "A template declares `Transform: AWS::Serverless-2016-10-31`. Which capability covers the transform when you deploy it?",
+    "options": [
+     "CAPABILITY_AUTO_EXPAND",
+     "CAPABILITY_TRANSFORM",
+     "CAPABILITY_SERVERLESS",
+     "CAPABILITY_NAMED_IAM"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Templates with macros or transforms can change before they deploy, so you acknowledge it.",
+    "option_explanations": [
+     "Correct.",
+     "Not a real capability.",
+     "Not a real capability.",
+     "For IAM resources with custom names."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "What are you agreeing to when you acknowledge CAPABILITY_AUTO_EXPAND?",
+    "options": [
+     "Nested stacks may be created in other Regions",
+     "The stack may create IAM roles with custom names",
+     "Macros may change the template before it deploys",
+     "Auto Scaling groups may add instances to the stack"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Capabilities are explicit acknowledgements for operations that need care.",
+    "option_explanations": [
+     "Nested stacks stay in the parent's Region.",
+     "That's CAPABILITY_NAMED_IAM.",
+     "Correct.",
+     "Scaling isn't a capability."
+    ]
+   }
+  ]
+ },
+ {
+  "card_id": "c529691c-a40f-494c-9861-0adf96b0779f",
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Which `aws cloudformation deploy` option lets a template that creates named IAM roles go through?",
+    "options": [
+     "--parameter-overrides NamedIam=true",
+     "--capabilities CAPABILITY_NAMED_IAM",
+     "--capabilities CAPABILITY_IAM",
+     "--role-arn with an admin role"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "The same flag exists on create-stack and update-stack.",
+    "option_explanations": [
+     "Parameters don't acknowledge capabilities.",
+     "Correct.",
+     "Not enough for custom-named IAM resources.",
+     "A service role doesn't acknowledge capabilities."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "You run `aws cloudformation deploy` on a template with named IAM roles and pass no capabilities. What happens?",
+    "options": [
+     "It succeeds and skips the IAM roles",
+     "It fails and creates no resources",
+     "It waits for a yes/no prompt in the terminal",
+     "It succeeds and generates role names"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Add `--capabilities CAPABILITY_NAMED_IAM` to acknowledge it.",
+    "option_explanations": [
+     "CloudFormation doesn't skip resources.",
+     "Correct. The error is InsufficientCapabilitiesException.",
+     "The CLI doesn't ask; you pass the flag.",
+     "Names in the template are used as written."
+    ]
+   }
+  ]
+ },
+ {
+  "card_id": "0640d7f9-217a-4587-9d09-5ab1ed01820d",
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Deleting a stack must leave its DynamoDB table in place. What goes on the table resource?",
+    "options": [
+     "DeletionPolicy: Retain",
+     "DeletionPolicy: Delete",
+     "UpdateReplacePolicy: Retain",
+     "DeletionPolicy: Snapshot"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Retained resources stay (and bill) until you remove them by hand.",
+    "option_explanations": [
+     "Correct.",
+     "The default; the table goes with the stack.",
+     "Applies when an update replaces it, not on stack delete.",
+     "DynamoDB tables don't support Snapshot."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "A stack whose table has `DeletionPolicy: Retain` is deleted. What's true afterwards?",
+    "options": [
+     "The table joins a new stack",
+     "The table remains in the account",
+     "The stack deletion fails on the table",
+     "A backup of the table remains"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Clean it up by hand later if it's no longer needed.",
+    "option_explanations": [
+     "It's no longer managed by any stack.",
+     "Correct.",
+     "The stack deletes fine; the table is skipped.",
+     "That would be Snapshot, which DynamoDB doesn't support."
+    ]
+   }
+  ]
+ },
+ {
+  "card_id": "e1bc7873-f952-4f27-99ff-869d2d3fe97f",
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Tearing down a stack should remove its Aurora cluster but leave a point-in-time copy behind. Which DeletionPolicy?",
+    "options": [
+     "RetainExceptOnCreate",
+     "Delete",
+     "Retain",
+     "Snapshot"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "Delete old snapshots later to avoid storage costs.",
+    "option_explanations": [
+     "Retains the cluster except when creation rolls back.",
+     "Removes it with no copy.",
+     "Keeps the whole cluster running.",
+     "Correct."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which resource type does NOT support `DeletionPolicy: Snapshot`?",
+    "options": [
+     "AWS::RDS::DBCluster",
+     "AWS::DynamoDB::Table",
+     "AWS::Redshift::Cluster",
+     "AWS::EC2::Volume"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Snapshot works for EBS volumes, RDS, ElastiCache, Redshift, Neptune and DocumentDB.",
+    "option_explanations": [
+     "Supported.",
+     "Correct. Use Retain, or the table's own backups.",
+     "Supported.",
+     "Supported."
+    ]
+   }
+  ]
+ },
+ {
+  "card_id": "3d88aa54-fb5b-4bcc-96b9-d5d2ae0a6aaf",
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Deleting a stack ends in DELETE_FAILED on its S3 bucket. What's the usual cause?",
+    "options": [
+     "The bucket has Block Public Access on",
+     "The bucket still has objects in it",
+     "The bucket has default encryption on",
+     "The bucket has a lifecycle rule set"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Empty it by hand, or let a custom resource empty it on delete.",
+    "option_explanations": [
+     "Public access settings don't block deletion.",
+     "Correct. CloudFormation deletes only empty buckets.",
+     "Encryption doesn't block deletion.",
+     "Lifecycle rules don't block deletion."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "A stack's bucket fills with objects at runtime. What lets stack deletion remove the bucket with no manual steps?",
+    "options": [
+     "Termination protection switched off",
+     "A stack policy allowing Update:Delete",
+     "A custom resource emptying it",
+     "Snapshot as the DeletionPolicy"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "A common exam pattern: a Lambda-backed custom resource cleans up before the bucket is deleted.",
+    "option_explanations": [
+     "The stack can be deleted, but the bucket still fails.",
+     "Stack policies govern updates; the bucket is still not empty.",
+     "Correct. A Lambda function deletes the objects on the Delete event.",
+     "S3 doesn't support Snapshot."
+    ]
+   }
+  ]
+ },
+ {
+  "card_id": "4ae5d84a-6e7d-4735-8384-1c49f33bbca4",
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Stack updates may change anything except the RDS database. Which feature enforces that?",
+    "options": [
+     "An UpdateReplacePolicy",
+     "A stack policy",
+     "Termination protection",
+     "A service role"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Once a stack policy is set, everything is protected unless explicitly allowed.",
+    "option_explanations": [
+     "Decides what happens to a replaced resource; doesn't block updates.",
+     "Correct. Allow Update:* on all, deny it on the database.",
+     "Stops stack deletion only.",
+     "Controls permissions for the whole stack."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "As soon as a stack policy is attached, what's the default for updates?",
+    "options": [
+     "Stateful resources are protected by default",
+     "All resources are protected unless allowed",
+     "All resources stay updatable unless denied",
+     "Unmentioned resources are unaffected"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "So a policy usually starts with Allow Update:* on everything, then adds Deny statements.",
+    "option_explanations": [
+     "There's no special treatment for stateful resources.",
+     "Correct.",
+     "It's the other way round.",
+     "Unmentioned resources are protected."
+    ]
+   }
+  ]
+ },
+ {
+  "card_id": "8de68a0d-9251-42a2-97c5-077615439e4d",
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "A stack policy has a single statement: Deny Update:* on LogicalResourceId/ProductionDatabase. What can be updated?",
+    "options": [
+     "Only the database itself",
+     "Every resource except the database",
+     "Resources added after the policy",
+     "Nothing in the stack"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "Add an Allow Update:* on * so the Deny protects only the database.",
+    "option_explanations": [
+     "The database is explicitly denied.",
+     "That needs an Allow Update:* statement too.",
+     "New resources are protected as well.",
+     "Correct. With no Allow, everything is protected by default."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which pair of statements in a stack policy protects just ProductionDatabase?",
+    "options": [
+     "Allow Update:Modify on *, Deny Update:Replace on the database",
+     "Allow Update:* on the database, Deny Update:* on *",
+     "Deny Update:* on the database, nothing else",
+     "Allow Update:* on *, Deny Update:* on the database"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "Resources are written as `LogicalResourceId/ProductionDatabase`.",
+    "option_explanations": [
+     "The database could still be modified or deleted.",
+     "Protects everything, the database included.",
+     "Without an Allow, nothing can be updated.",
+     "Correct. Explicit Deny beats Allow."
+    ]
+   }
+  ]
+ },
+ {
+  "card_id": "b8f03c52-a78a-498e-8278-e26d2c7e8ad7",
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Which setting makes every DeleteStack call fail until someone switches it off?",
+    "options": [
+     "A stack policy",
+     "Termination protection",
+     "Drift detection",
+     "DeletionPolicy: Retain everywhere"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Turning it off needs permission to change termination protection.",
+    "option_explanations": [
+     "Controls updates, not deletion.",
+     "Correct.",
+     "Reports manual changes only.",
+     "The stack is deleted; resources are kept."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "A stack has DeletionPolicy: Retain on every resource and no termination protection. What happens when someone deletes the stack?",
+    "options": [
+     "The stack is deleted; the resources remain",
+     "The deletion is blocked entirely",
+     "The stack and its resources are deleted",
+     "The stack stays; the resources are deleted"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Termination protection blocks the stack; DeletionPolicy decides per resource.",
+    "option_explanations": [
+     "Correct.",
+     "That's what termination protection does.",
+     "Retain keeps the resources.",
+     "It's the reverse."
+    ]
+   }
+  ]
+ },
+ {
+  "card_id": "307a13e0-790a-4129-a61a-d76e1229430a",
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Which feature decides what happens to one resource when its stack goes away?",
+    "options": [
+     "Termination protection",
+     "Stack policy",
+     "UpdateReplacePolicy",
+     "DeletionPolicy"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "Exam questions often swap DeletionPolicy, stack policy and termination protection.",
+    "option_explanations": [
+     "Protects the whole stack.",
+     "Controls updates.",
+     "Applies when an update replaces a resource.",
+     "Correct. Delete (default), Retain or Snapshot."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which pairing of feature and job is right?",
+    "options": [
+     "Stack policy: guards the stack against deletion",
+     "Termination protection: guards a resource against deletion",
+     "Stack policy: guards resources against updates",
+     "DeletionPolicy: guards the stack against deletion"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "DeletionPolicy is per resource; stack policy and termination protection are per stack.",
+    "option_explanations": [
+     "That's termination protection.",
+     "It guards the whole stack.",
+     "Correct.",
+     "It acts per resource, on delete."
+    ]
+   }
+  ]
+ },
+ {
+  "card_id": "c6e834b9-71db-428a-a167-98c2649e97f3",
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "A template must register a DNS record with a third-party provider while the stack is created. What fits?",
+    "options": [
+     "A nested stack",
+     "A StackSet",
+     "A custom resource",
+     "A change set"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Custom resources also cover AWS resources CloudFormation doesn't support yet.",
+    "option_explanations": [
+     "Reuses templates; still AWS resources only.",
+     "Deploys stacks to many accounts and Regions.",
+     "Correct. Backed by Lambda or SNS, it can call outside APIs.",
+     "Previews changes before an update."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which can back a CloudFormation custom resource? (Choose 2)",
+    "options": [
+     "An EventBridge rule",
+     "A Step Functions state machine",
+     "An Amazon SNS topic",
+     "An AWS Lambda function",
+     "An Amazon SQS queue"
+    ],
+    "correct": [
+     2,
+     3
+    ],
+    "explanation": "The type is written `Custom::Name` (or AWS::CloudFormation::CustomResource).",
+    "option_explanations": [
+     "Not a supported service token.",
+     "Not a supported service token.",
+     "Correct.",
+     "Correct. The most common choice.",
+     "Not a supported service token."
+    ]
+   }
+  ]
+ },
+ {
+  "card_id": "8a7100c4-ab8b-487c-81e1-89e276343894",
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "In a custom resource declaration, which property points CloudFormation at the backing Lambda function?",
+    "options": [
+     "ServiceToken",
+     "Handler",
+     "TargetArn",
+     "FunctionArn"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Other properties are passed to the function as input.",
+    "option_explanations": [
+     "Correct.",
+     "Set on the Lambda function itself.",
+     "Not a custom resource property.",
+     "Not a custom resource property."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which statement about a custom resource's ServiceToken is true?",
+    "options": [
+     "It's a Lambda or SNS ARN in the stack's Region",
+     "It's the IAM role the function runs as",
+     "It's the pre-signed S3 URL that receives the reply",
+     "It's an API key for the outside provider"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Usually written as `ServiceToken: !GetAtt MyFunction.Arn`.",
+    "option_explanations": [
+     "Correct.",
+     "That's the function's execution role.",
+     "That's the ResponseURL CloudFormation sends.",
+     "Credentials go elsewhere, if at all."
+    ]
+   }
+  ]
+ },
+ {
+  "card_id": "77e210ec-f36d-40fe-98ae-ff6c637d593c",
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "An organization needs one AWS Config baseline in 40 accounts across 3 Regions, managed as a single unit. Which feature?",
+    "options": [
+     "Change sets",
+     "StackSets",
+     "Cross-stack exports",
+     "Nested stacks"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "One operation deploys or updates stack instances everywhere.",
+    "option_explanations": [
+     "Preview updates.",
+     "Correct. Run from an administrator or delegated admin account.",
+     "Share values within one Region.",
+     "Reuse templates inside one stack."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "What happens when you update the template of a StackSet?",
+    "options": [
+     "The admin account's stack changes alone",
+     "All its stack instances are updated",
+     "Newly added accounts get it first",
+     "Each account must approve the change"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Only an administrator (or delegated admin) account can create and manage StackSets.",
+    "option_explanations": [
+     "Every instance gets the change.",
+     "Correct.",
+     "Existing instances are updated too.",
+     "There's no per-account approval."
+    ]
+   }
+  ]
+ },
+ {
+  "card_id": "32429b2a-7a2a-47d5-a876-8221f895fd35",
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "A change set lists a resource with `Replacement: True`. What does that mean?",
+    "options": [
+     "The resource will get a new logical ID",
+     "A new physical resource will replace it",
+     "The resource will be updated in place",
+     "The template file will be swapped out"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Always review change sets for replacements before executing them.",
+    "option_explanations": [
+     "The logical ID stays; the physical one changes.",
+     "Correct. Data on the old one may be lost.",
+     "That's Replacement: False.",
+     "It refers to the resource, not the file."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which of these stops a stack from being deleted?",
+    "options": [
+     "Another stack imports one of its exports",
+     "It was last updated by a change set",
+     "Its outputs have no Export names",
+     "Its template uses the AWS::AccountId pseudo parameter"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Remove the importing references first, then delete the exporting stack.",
+    "option_explanations": [
+     "Correct.",
+     "Change sets don't block deletion.",
+     "Plain outputs don't block deletion.",
+     "Pseudo parameters don't block deletion."
+    ]
+   }
+  ]
+ }
+]

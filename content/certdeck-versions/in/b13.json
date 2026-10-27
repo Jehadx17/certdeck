@@ -1,0 +1,635 @@
+[
+ {
+  "type": "code",
+  "question": "Create the volume attachment only when EnvType is prod.",
+  "language": "yaml",
+  "explanation": "Define the condition once, then attach it to resources or outputs with `Condition:`. The exam only expects you to know conditions exist.",
+  "certs": {
+   "DVA-C02": "3",
+   "SAA-C03": "3"
+  },
+  "tags": [
+   "cloudformation",
+   "conditions"
+  ],
+  "answer_code": "Conditions:\n  IsProd: !Equals [!Ref EnvType, prod]\n\nResources:\n  DataVolumeAttach:\n    Type: AWS::EC2::VolumeAttachment\n    Condition: IsProd\n    Properties:\n      InstanceId: !Ref App\n      VolumeId: !Ref DataVolume\n      Device: /dev/sdh",
+  "id": "e09adfde-3044-4217-b2c3-c28e66f81070"
+ },
+ {
+  "type": "mcq",
+  "question": "A Route 53 record in the template needs the **public DNS name** of an EC2 instance created in the same template. Which function?",
+  "options": [
+   "!GetAtt",
+   "!Ref",
+   "!FindInMap",
+   "!ImportValue"
+  ],
+  "correct": [
+   0
+  ],
+  "option_explanations": [
+   "Correct. GetAtt returns documented attributes such as PublicDnsName.",
+   "Returns the instance ID.",
+   "Reads values from the Mappings section.",
+   "Reads exports from other stacks."
+  ],
+  "explanation": "You can only GetAtt the attributes AWS documents (for EC2: PrivateIp, PublicIp, PrivateDnsName, PublicDnsName, AZ…).",
+  "certs": {
+   "DVA-C02": "3",
+   "SAA-C03": "3"
+  },
+  "tags": [
+   "cloudformation",
+   "getatt"
+  ],
+  "id": "4954a5dd-cbc9-4723-86ca-f018f3212d73"
+ },
+ {
+  "type": "mcq",
+  "question": "Which intrinsic functions are the most important for the exam? (Choose 4)",
+  "options": [
+   "Ref",
+   "Fn::GetAtt",
+   "Fn::FindInMap",
+   "Fn::ImportValue",
+   "Fn::Cidr",
+   "Fn::Length"
+  ],
+  "correct": [
+   0,
+   1,
+   2,
+   3
+  ],
+  "option_explanations": [
+   "Correct.",
+   "Correct.",
+   "Correct.",
+   "Correct.",
+   "Exists but rarely tested.",
+   "Exists but rarely tested."
+  ],
+  "explanation": "Also know **Fn::Base64** and the condition functions, plus Join and Sub.",
+  "certs": {
+   "DVA-C02": "3",
+   "SAA-C03": "3"
+  },
+  "tags": [
+   "cloudformation",
+   "intrinsic-functions"
+  ],
+  "id": "1bc902ca-0441-450b-8fa2-14a16865ab92"
+ },
+ {
+  "type": "mcq",
+  "question": "Why is `Fn::Base64` used in templates?",
+  "options": [
+   "To encode UserData",
+   "To encrypt parameters",
+   "To compress templates",
+   "To sign IAM policies"
+  ],
+  "correct": [
+   0
+  ],
+  "option_explanations": [
+   "Correct. EC2 expects UserData to be Base64-encoded.",
+   "Base64 is encoding, not encryption.",
+   "Base64 makes text larger, not smaller.",
+   "Policies are plain JSON; nothing is signed."
+  ],
+  "explanation": "Usually written as `UserData: !Base64 |` followed by the script.",
+  "certs": {
+   "DVA-C02": "3",
+   "SAA-C03": "3"
+  },
+  "tags": [
+   "cloudformation",
+   "base64",
+   "user-data"
+  ],
+  "id": "e463dadb-8013-44d7-80d5-e1bde6d55165"
+ },
+ {
+  "type": "code",
+  "question": "Pass a bootstrap script to an instance from a template.",
+  "language": "yaml",
+  "explanation": "`!Base64` encodes the multi-line script. `!Sub` can insert values like `${AWS::Region}`. *(Goes slightly beyond the lecture.)*",
+  "certs": {
+   "DVA-C02": "3",
+   "SAA-C03": "3"
+  },
+  "tags": [
+   "cloudformation",
+   "base64",
+   "user-data"
+  ],
+  "answer_code": "Resources:\n  Web:\n    Type: AWS::EC2::Instance\n    Properties:\n      InstanceType: t3.micro\n      ImageId: ami-0123456789abcdef0\n      UserData: !Base64 |\n        #!/bin/bash\n        dnf install -y httpd\n        systemctl enable --now httpd",
+  "id": "77c698ee-44da-4955-9a45-236f09334e14"
+ },
+ {
+  "type": "basic",
+  "question": "Match each function to its job: Ref, GetAtt, FindInMap, ImportValue, Base64, Join/Sub, condition functions.",
+  "answer": "- **Ref:** parameter value or resource physical ID\n- **GetAtt:** a resource attribute (e.g. PublicDnsName)\n- **FindInMap:** value from a mapping\n- **ImportValue:** value exported by another stack\n- **Base64:** encode UserData\n- **Join / Sub:** build strings\n- **And / Equals / If / Not / Or:** conditions",
+  "explanation": "The `!` forms are YAML shortcuts, e.g. `!Ref` for `Fn::Ref`.",
+  "certs": {
+   "DVA-C02": "3",
+   "SAA-C03": "3"
+  },
+  "tags": [
+   "cloudformation",
+   "intrinsic-functions"
+  ],
+  "id": "76ab3d84-dc1c-4241-8e22-7bcf1c9cdebb"
+ },
+ {
+  "type": "mcq",
+  "question": "A stack **creation** fails. What happens by default, and what can you change?",
+  "options": [
+   "Everything rolls back; you can disable rollback instead",
+   "Created resources stay; you can trigger a rollback manually",
+   "The failed resource is retried; you can set a retry limit",
+   "The stack is marked complete; the error is only logged"
+  ],
+  "correct": [
+   0
+  ],
+  "option_explanations": [
+   "Correct. With rollback disabled (preserve resources), you delete the stack yourself afterwards.",
+   "By default nothing is kept; the stack rolls back on its own.",
+   "CloudFormation doesn't retry failed resources until they work.",
+   "A failed creation never ends as CREATE_COMPLETE."
+  ],
+  "explanation": "Check the stack **events/logs** to see why it failed.",
+  "certs": {
+   "DVA-C02": "4"
+  },
+  "tags": [
+   "cloudformation",
+   "rollbacks"
+  ],
+  "id": "1076528b-1bfd-411d-9591-f655c29f72f9"
+ },
+ {
+  "type": "mcq",
+  "question": "A stack **update** fails. What's the default behavior?",
+  "options": [
+   "Roll back the whole update",
+   "Keep the partial update",
+   "Delete the whole stack",
+   "Skip the failing resource"
+  ],
+  "correct": [
+   0
+  ],
+  "option_explanations": [
+   "Correct. Newly created resources are deleted during the rollback.",
+   "Only if you chose to preserve successfully provisioned resources.",
+   "A failed update rolls back; it doesn't delete the stack.",
+   "One failed resource fails the whole update."
+  ],
+  "explanation": "You can also choose to preserve successfully provisioned resources.",
+  "certs": {
+   "DVA-C02": "4"
+  },
+  "tags": [
+   "cloudformation",
+   "rollbacks"
+  ],
+  "id": "9e7ec4e5-6c6a-401c-9d74-e951a8731cf3"
+ },
+ {
+  "type": "mcq",
+  "question": "A stack is stuck because the **rollback itself failed** (someone changed resources manually). What's the fix?",
+  "options": [
+   "Repair them, then run ContinueUpdateRollback",
+   "Run CancelUpdateStack, then redeploy",
+   "Re-run the same update with the old template",
+   "Enable termination protection, then retry"
+  ],
+  "correct": [
+   0
+  ],
+  "option_explanations": [
+   "Correct. Available from the console, CLI or API.",
+   "CancelUpdateStack only works while an update is in progress.",
+   "No update is accepted while the stack is in UPDATE_ROLLBACK_FAILED.",
+   "Termination protection only blocks stack deletion."
+  ],
+  "explanation": "Another reason not to edit stack resources by hand.",
+  "certs": {
+   "DVA-C02": "4"
+  },
+  "tags": [
+   "cloudformation",
+   "rollbacks",
+   "troubleshooting"
+  ],
+  "id": "2b854e9c-c4e3-43eb-8234-d1d661cc4281"
+ },
+ {
+  "type": "mcq",
+  "question": "Developers should create stacks that make S3 buckets, but must **not** have S3 permissions themselves. What's the solution?",
+  "options": [
+   "A CloudFormation service role with S3 access",
+   "S3 full access on the developers' group",
+   "A stack policy that allows S3 resources",
+   "A bucket policy that trusts the developers"
+  ],
+  "correct": [
+   0
+  ],
+  "option_explanations": [
+   "Correct. Users pass the role (iam:PassRole) and CloudFormation acts with it: least privilege.",
+   "Gives developers the S3 rights they must not have.",
+   "Stack policies control which resources may be updated, not permissions.",
+   "Gives developers S3 rights and doesn't help stacks create buckets."
+  ],
+  "explanation": "If you don't choose a role, CloudFormation uses **your own** permissions.",
+  "certs": {
+   "DVA-C02": "2",
+   "SAA-C03": "1"
+  },
+  "tags": [
+   "cloudformation",
+   "service-role",
+   "iam"
+  ],
+  "id": "21a585b9-14af-47cf-9453-fa402f401989"
+ },
+ {
+  "type": "mcq",
+  "question": "Which permission must a user have to give a service role to CloudFormation?",
+  "options": [
+   "iam:PassRole",
+   "iam:CreateUser",
+   "sts:GetSessionToken",
+   "cloudformation:CreateStack"
+  ],
+  "correct": [
+   0
+  ],
+  "option_explanations": [
+   "Correct.",
+   "Creates IAM users; no role is handed over.",
+   "Returns temporary credentials for yourself.",
+   "Needed to create the stack, but not enough to hand over a role."
+  ],
+  "explanation": "PassRole is needed to hand any role to any AWS service.",
+  "certs": {
+   "DVA-C02": "2",
+   "SAA-C03": "1"
+  },
+  "tags": [
+   "cloudformation",
+   "iam",
+   "passrole"
+  ],
+  "id": "4e640c0c-25a9-4b96-82c0-26e3d52923d4"
+ },
+ {
+  "type": "mcq",
+  "question": "Deploying a template fails with **InsufficientCapabilitiesException**. The template creates an IAM role with a custom RoleName. What's the fix?",
+  "options": [
+   "Acknowledge CAPABILITY_NAMED_IAM",
+   "Add NoEcho to the parameters",
+   "Disable rollback on failure",
+   "Attach a stack policy"
+  ],
+  "correct": [
+   0
+  ],
+  "option_explanations": [
+   "Correct. Named IAM resources need NAMED_IAM; unnamed ones need CAPABILITY_IAM.",
+   "NoEcho hides parameter values; it doesn't grant capabilities.",
+   "Rollback settings don't affect the capability check.",
+   "Stack policies guard updates; they don't satisfy capabilities."
+  ],
+  "explanation": "It's a checkbox in the console, or `--capabilities` in the CLI.",
+  "certs": {
+   "DVA-C02": "4"
+  },
+  "tags": [
+   "cloudformation",
+   "capabilities",
+   "iam"
+  ],
+  "id": "d408239f-7d04-496a-af77-7f3ff3f22c88"
+ },
+ {
+  "type": "mcq",
+  "question": "Which capability must be acknowledged for templates using **macros or nested stacks** that transform the template?",
+  "options": [
+   "CAPABILITY_AUTO_EXPAND",
+   "CAPABILITY_IAM",
+   "CAPABILITY_NAMED_IAM",
+   "CAPABILITY_MACRO"
+  ],
+  "correct": [
+   0
+  ],
+  "option_explanations": [
+   "Correct. You accept that the template may change before deployment.",
+   "For IAM resources.",
+   "For named IAM resources.",
+   "Doesn't exist."
+  ],
+  "explanation": "Capabilities are an explicit acknowledgement for risky operations.",
+  "certs": {
+   "DVA-C02": "3",
+   "SAA-C03": "3"
+  },
+  "tags": [
+   "cloudformation",
+   "capabilities"
+  ],
+  "id": "665988fc-4143-4795-bcdc-23728ff14ee5"
+ },
+ {
+  "type": "code",
+  "question": "Deploy a template that creates named IAM roles from the CLI.",
+  "language": "bash",
+  "explanation": "Without `--capabilities` the deploy fails with InsufficientCapabilitiesException. *(Goes slightly beyond the lecture.)*",
+  "certs": {
+   "DVA-C02": "3",
+   "SAA-C03": "3"
+  },
+  "tags": [
+   "cloudformation",
+   "capabilities",
+   "cli"
+  ],
+  "answer_code": "aws cloudformation deploy \\\n  --template-file iam-roles.yaml \\\n  --stack-name app-iam \\\n  --capabilities CAPABILITY_NAMED_IAM",
+  "id": "c529691c-a40f-494c-9861-0adf96b0779f"
+ },
+ {
+  "type": "mcq",
+  "question": "A DynamoDB table must survive even if its stack is deleted. What should you set?",
+  "options": [
+   "DeletionPolicy: Retain",
+   "DeletionPolicy: Delete",
+   "A stack policy",
+   "Termination protection"
+  ],
+  "correct": [
+   0
+  ],
+  "option_explanations": [
+   "Correct. CloudFormation skips deleting it.",
+   "The default; the table would be deleted.",
+   "Stack policies protect against updates.",
+   "Blocks deleting the whole stack; it doesn't keep the table once the stack is deleted."
+  ],
+  "explanation": "Retained resources must later be cleaned up by hand if you want them gone.",
+  "certs": {
+   "DVA-C02": "3",
+   "SAA-C03": "2"
+  },
+  "tags": [
+   "cloudformation",
+   "deletion-policy"
+  ],
+  "id": "0640d7f9-217a-4587-9d09-5ab1ed01820d"
+ },
+ {
+  "type": "mcq",
+  "question": "An RDS instance should be deleted with the stack, but a **final backup** must be taken first. Which DeletionPolicy?",
+  "options": [
+   "Snapshot",
+   "Retain",
+   "Delete",
+   "Backup"
+  ],
+  "correct": [
+   0
+  ],
+  "option_explanations": [
+   "Correct. Supported for EBS volumes, RDS instances/clusters, ElastiCache, Redshift, Neptune, DocumentDB…",
+   "Keeps the resource itself.",
+   "No backup.",
+   "Not a valid value."
+  ],
+  "explanation": "Remember to delete old snapshots later to avoid costs.",
+  "certs": {
+   "DVA-C02": "3",
+   "SAA-C03": "2"
+  },
+  "tags": [
+   "cloudformation",
+   "deletion-policy",
+   "snapshot"
+  ],
+  "id": "e1bc7873-f952-4f27-99ff-869d2d3fe97f"
+ },
+ {
+  "type": "mcq",
+  "question": "A stack delete fails on an S3 bucket with DeletionPolicy: Delete. Why, and how do you fix it?",
+  "options": [
+   "The bucket isn't empty; empty it first",
+   "The bucket has a bucket policy; remove the policy first",
+   "Versioning is enabled; suspend versioning first",
+   "The DeletionPolicy is wrong; switch it to Snapshot"
+  ],
+  "correct": [
+   0
+  ],
+  "option_explanations": [
+   "Correct. Empty it by hand, or let a Lambda-backed custom resource empty it on delete. A common exam question.",
+   "A bucket policy doesn't block deleting the bucket.",
+   "Suspending versioning keeps the old versions; the bucket is still not empty.",
+   "S3 buckets don't support DeletionPolicy: Snapshot."
+  ],
+  "explanation": "CloudFormation can only delete **empty** buckets.",
+  "certs": {
+   "DVA-C02": "4"
+  },
+  "tags": [
+   "cloudformation",
+   "s3",
+   "deletion-policy"
+  ],
+  "id": "3d88aa54-fb5b-4bcc-96b9-d5d2ae0a6aaf"
+ },
+ {
+  "type": "mcq",
+  "question": "During stack updates, the production database must never be modified, but everything else can change. What should you use?",
+  "options": [
+   "A stack policy",
+   "DeletionPolicy: Retain",
+   "Termination protection",
+   "A service role"
+  ],
+  "correct": [
+   0
+  ],
+  "option_explanations": [
+   "Correct. Allow Update:* on all resources and deny Update:* on the database.",
+   "Only affects deletion.",
+   "Only stops stack deletion.",
+   "Controls permissions, not which resources may change."
+  ],
+  "explanation": "Once a stack policy is set, **everything is protected by default**, so you must explicitly allow what may be updated.",
+  "certs": {
+   "DVA-C02": "3",
+   "SAA-C03": "2"
+  },
+  "tags": [
+   "cloudformation",
+   "stack-policy"
+  ],
+  "id": "4ae5d84a-6e7d-4735-8384-1c49f33bbca4"
+ },
+ {
+  "type": "code",
+  "question": "Write a stack policy that protects only the ProductionDatabase resource.",
+  "language": "json",
+  "explanation": "Explicit Deny beats the Allow. Without the Allow statement, nothing could be updated.",
+  "certs": {
+   "DVA-C02": "3",
+   "SAA-C03": "2"
+  },
+  "tags": [
+   "cloudformation",
+   "stack-policy"
+  ],
+  "answer_code": "{\n  \"Statement\": [\n    {\"Effect\": \"Allow\", \"Action\": \"Update:*\", \"Principal\": \"*\", \"Resource\": \"*\"},\n    {\"Effect\": \"Deny\",  \"Action\": \"Update:*\", \"Principal\": \"*\",\n     \"Resource\": \"LogicalResourceId/ProductionDatabase\"}\n  ]\n}",
+  "id": "8de68a0d-9251-42a2-97c5-077615439e4d"
+ },
+ {
+  "type": "mcq",
+  "question": "A team wants to stop anyone from **accidentally deleting** an entire stack. What should they enable?",
+  "options": [
+   "Termination protection",
+   "A stack policy",
+   "DeletionPolicy: Retain on every resource",
+   "CAPABILITY_IAM"
+  ],
+  "correct": [
+   0
+  ],
+  "option_explanations": [
+   "Correct. Delete fails until it's turned off (by someone with permission).",
+   "Controls updates, not deletion.",
+   "The stack is still deleted; only the resources are kept.",
+   "Acknowledges IAM resources; doesn't stop deletion."
+  ],
+  "explanation": "Compare: **termination protection** (whole stack can't be deleted), **DeletionPolicy** (what happens to a resource when deleted), **stack policy** (what can be updated).",
+  "certs": {
+   "DVA-C02": "3",
+   "SAA-C03": "2"
+  },
+  "tags": [
+   "cloudformation",
+   "termination-protection"
+  ],
+  "id": "b8f03c52-a78a-498e-8278-e26d2c7e8ad7"
+ },
+ {
+  "type": "basic",
+  "question": "DeletionPolicy vs Stack policy vs Termination protection.",
+  "answer": "- **DeletionPolicy** (per resource): Delete (default), Retain, or Snapshot when the resource or stack is deleted\n- **Stack policy** (per stack, JSON): which resources may be **updated**\n- **Termination protection** (per stack): stops the **stack** from being deleted",
+  "explanation": "Exam questions often swap these three.",
+  "certs": {
+   "DVA-C02": "3",
+   "SAA-C03": "2"
+  },
+  "tags": [
+   "cloudformation",
+   "protection"
+  ],
+  "id": "307a13e0-790a-4129-a61a-d76e1229430a"
+ },
+ {
+  "type": "mcq",
+  "question": "What can CloudFormation custom resources be used for? (Choose 3)",
+  "options": [
+   "AWS features with no native template support yet",
+   "Provisioning on-premises or third-party resources",
+   "Running custom logic on create, update or delete",
+   "Skipping the CAPABILITY_IAM acknowledgement",
+   "Making every stack deployment run faster"
+  ],
+  "correct": [
+   0,
+   1,
+   2
+  ],
+  "option_explanations": [
+   "Correct.",
+   "Correct.",
+   "Correct. For example, emptying an S3 bucket before it's deleted.",
+   "Capabilities still have to be acknowledged.",
+   "A custom resource adds a Lambda call; it doesn't speed things up."
+  ],
+  "explanation": "Type format: `Custom::MyResourceName`. Backed by a **Lambda function** (most common) or an **SNS topic**.",
+  "certs": {
+   "DVA-C02": "3",
+   "SAA-C03": "3"
+  },
+  "tags": [
+   "cloudformation",
+   "custom-resources"
+  ],
+  "id": "c6e834b9-71db-428a-a167-98c2649e97f3"
+ },
+ {
+  "type": "code",
+  "question": "Declare a Lambda-backed custom resource that empties a bucket before deletion.",
+  "language": "yaml",
+  "explanation": "`ServiceToken` is the Lambda (or SNS) ARN, in the **same Region**. Extra properties are passed to the function as input. *(Goes slightly beyond the lecture.)*",
+  "certs": {
+   "DVA-C02": "3",
+   "SAA-C03": "3"
+  },
+  "tags": [
+   "cloudformation",
+   "custom-resources",
+   "lambda"
+  ],
+  "answer_code": "Resources:\n  EmptyBucketOnDelete:\n    Type: Custom::EmptyBucket\n    Properties:\n      ServiceToken: !GetAtt EmptyBucketFunction.Arn\n      BucketName: !Ref DataBucket",
+  "id": "8a7100c4-ab8b-487c-81e1-89e276343894"
+ },
+ {
+  "type": "mcq",
+  "question": "A security team must deploy the same baseline stack to **many accounts and Regions** in one operation, and update them all together. What fits?",
+  "options": [
+   "StackSets",
+   "Nested stacks",
+   "Change sets",
+   "Exports and imports"
+  ],
+  "correct": [
+   0
+  ],
+  "option_explanations": [
+   "Correct. From an administrator account, often across an AWS Organization.",
+   "Reuse templates inside one stack.",
+   "Preview updates.",
+   "Share values in one Region."
+  ],
+  "explanation": "Updating a StackSet updates **all** its stack instances. Only admin (or delegated admin) accounts can create them.",
+  "certs": {
+   "DVA-C02": "3",
+   "SAA-C03": "3"
+  },
+  "tags": [
+   "cloudformation",
+   "stacksets"
+  ],
+  "id": "77e210ec-f36d-40fe-98ae-ff6c637d593c"
+ },
+ {
+  "type": "basic",
+  "question": "Section 18 in one card: CloudFormation.",
+  "answer": "- **IaC**, declarative; templates in S3; update = upload a new template; delete removes everything\n- **Sections:** Resources (required), Parameters, Mappings, Outputs, Conditions\n- **Parameters:** types, AllowedValues, NoEcho, `!Ref`; pseudo parameters (AWS::Region, AWS::AccountId…)\n- **Mappings:** fixed lookups with `!FindInMap`\n- **Outputs/Exports:** `!ImportValue`; can't delete a stack whose export is in use\n- **Functions:** Ref, GetAtt, FindInMap, ImportValue, Base64 (UserData), conditions\n- **Change sets** preview updates; 'replacement' means new resource\n- **Rollbacks:** create fails → roll back (or preserve); update fails → previous state; stuck → fix and ContinueUpdateRollback\n- **Service role** + iam:PassRole; **capabilities** (IAM, NAMED_IAM, AUTO_EXPAND)\n- **DeletionPolicy:** Delete, Retain, Snapshot; non-empty S3 bucket blocks delete\n- **Stack policy** (protect from updates), **termination protection** (protect from delete)\n- **Custom resources** (Lambda/SNS); **StackSets** (many accounts/Regions)",
+  "explanation": "Review this first.",
+  "certs": {
+   "DVA-C02": "3",
+   "SAA-C03": "3"
+  },
+  "tags": [
+   "cloudformation"
+  ],
+  "id": "32429b2a-7a2a-47d5-a876-8221f895fd35"
+ }
+]
