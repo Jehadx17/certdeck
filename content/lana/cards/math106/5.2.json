@@ -1,0 +1,1964 @@
+[
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Which function is an antiderivative of $f(x)=6x^2$ on $(-\\infty,+\\infty)$?",
+   "options": [
+    "$12 x$",
+    "$3 x^{3}$",
+    "$2 x^{3} + 9$",
+    "$6 x^{3}$"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "F is an antiderivative of f when F' = f, so check by differentiating the candidate.",
+   "option_explanations": [
+    "Differentiates f instead of integrating.",
+    "Divides by the exponent 2 instead of by 3.",
+    "Correct.",
+    "Raises the power without dividing by the new exponent."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Which function is an antiderivative of $f(x)=\\frac{1}{x^2}$ on $(0,+\\infty)$?",
+    "options": [
+     "$3 - \\frac{1}{x}$",
+     "$\\frac{1}{x}$",
+     "$- \\frac{2}{x^{3}}$",
+     "$\\ln{\\left(x \\right)}$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Check F' = f: the derivative of -1/x + 3 is 1/x^2.",
+    "option_explanations": [
+     "Correct.",
+     "Sign lost: the derivative of 1/x is -1/x^2.",
+     "Differentiates f instead of integrating.",
+     "Treats it like the 1/x rule."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which function is an antiderivative of $f(x)=\\sec^2 x$ on $\\left(-\\frac{\\pi}{2},\\frac{\\pi}{2}\\right)$?",
+    "options": [
+     "$\\frac{\\sec^{3}{\\left(x \\right)}}{3}$",
+     "$\\tan{\\left(x \\right)} \\sec{\\left(x \\right)}$",
+     "$- \\tan{\\left(x \\right)} + 2 x$",
+     "$\\tan{\\left(x \\right)} + 2$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "Since the derivative of tan x is sec^2 x, tan x plus any constant is an antiderivative.",
+    "option_explanations": [
+     "Applies the power rule to sec x as if it were x.",
+     "Differentiates f instead of integrating.",
+     "Sign error and a stray term: its derivative is $-\\sec^2x+2$.",
+     "Correct."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "If $F$ and $G$ are both antiderivatives of $f$ on an interval, then $F(x)-G(x)$ is",
+   "options": [
+    "equal to $f(x)$",
+    "a constant",
+    "identically $0$",
+    "a linear function"
+   ],
+   "correct": [
+    1
+   ],
+   "explanation": "Two antiderivatives of the same function on an interval differ by a constant (Theorem 5.2.2).",
+   "option_explanations": [
+    "Confuses the difference of antiderivatives with f itself.",
+    "Correct: Differentiating F - G gives f - f = 0, so F - G is constant.",
+    "Forgets that antiderivatives may differ by a constant.",
+    "Differentiating F - G gives 0, not a nonzero constant."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "$F(x)=\\sin x$ is an antiderivative of $\\cos x$, and $G$ is another one with $G(0)=4$. Which is $G(x)$?",
+    "options": [
+     "$\\sin x$",
+     "$4\\sin x$",
+     "$\\cos x+4$",
+     "$\\sin x+4$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "Every antiderivative has the form F(x) + C, and the value at one point fixes C.",
+    "option_explanations": [
+     "Ignores G(0) = 4; this has value 0 at x = 0.",
+     "Multiplies instead of adding a constant.",
+     "Adds the constant to f rather than to F.",
+     "Correct: G = F + C with G(0) = 0 + C = 4."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which function is **not** an antiderivative of $f(x)=2x$?",
+    "options": [
+     "$(x+1)^2$",
+     "$x^2-3$",
+     "$x^2+\\sqrt{2}$",
+     "$x^2$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Antiderivatives of 2x are exactly x^2 + C; (x+1)^2 has derivative 2x + 2.",
+    "option_explanations": [
+     "Correct: Its derivative is 2x + 2, not 2x.",
+     "Derivative 2x: a valid antiderivative.",
+     "Derivative 2x: a valid antiderivative.",
+     "Derivative 2x: a valid antiderivative."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "What is $\\frac{d}{dx}\\left[\\int \\sin(x^2)\\,dx\\right]$?",
+   "options": [
+    "$\\sin(x^2)$",
+    "$2x\\cos(x^2)$",
+    "$-\\cos(x^2)$",
+    "$\\sin(x^2)+C$"
+   ],
+   "correct": [
+    0
+   ],
+   "explanation": "Differentiating an antiderivative of f gives back f.",
+   "option_explanations": [
+    "Correct: Differentiating an antiderivative returns the integrand.",
+    "Differentiates the integrand instead of undoing the integral.",
+    "Integrates once more instead of differentiating.",
+    "Differentiation removes the constant; no C remains."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "What is $\\frac{d}{dx}\\left[\\int e^{3x}\\cos x\\,dx\\right]$?",
+    "options": [
+     "$3e^{3x}\\cos x-e^{3x}\\sin x$",
+     "$e^{3x}\\sin x+3e^{3x}\\cos x$",
+     "$e^{3x}\\cos x$",
+     "$\\frac{1}{3}e^{3x}\\cos x$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Differentiating an antiderivative of f gives f back.",
+    "option_explanations": [
+     "Differentiates the integrand with the product rule.",
+     "Differentiates the integrand (with a sign slip) instead of undoing the integral.",
+     "Correct: The derivative undoes the integral.",
+     "Inserts a chain-rule factor that does not belong."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "What is $\\int \\frac{d}{dx}\\left[x^2\\ln x\\right]dx$?",
+    "options": [
+     "$2x\\ln x+x+C$",
+     "$x^2\\ln x+C$",
+     "$\\frac{x^2}{2}\\ln x+C$",
+     "$\\frac{x^3}{3}\\ln x+C$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Integrating a derivative gives back the function plus a constant.",
+    "option_explanations": [
+     "Stops at the derivative instead of integrating it.",
+     "Correct: Integration undoes differentiation up to a constant.",
+     "Integrates the factor x^2 as if it were x.",
+     "Integrates x^2 and ln x separately."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "In the expression $\\int x^2e^{x}\\,dx$, what is the function $x^2e^{x}$ called?",
+   "options": [
+    "the differential",
+    "the constant of integration",
+    "the integrand",
+    "the antiderivative"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "In $\\int f(x)\\,dx$, f is the integrand, dx the differential, and C the constant of integration.",
+   "option_explanations": [
+    "The differential is the symbol dx.",
+    "That is the arbitrary C added to the result.",
+    "Correct: It is the function being integrated.",
+    "That is the result of integrating, not the function inside."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "What is the arbitrary $C$ in $\\int f(x)\\,dx=F(x)+C$ called?",
+    "options": [
+     "the constant of integration",
+     "the integrand",
+     "the differential",
+     "the lower limit"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "C is the constant of integration, representing an arbitrary constant.",
+    "option_explanations": [
+     "Correct: It records that antiderivatives differ by constants.",
+     "The integrand is f(x).",
+     "The differential is dx.",
+     "Limits belong to definite integrals."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "In $\\int \\sec^2 t\\,dt$, which symbol is the **differential**?",
+    "options": [
+     "$\\sec^2 t$",
+     "$\\int$",
+     "$t$",
+     "$dt$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "The differential symbol dt identifies the independent variable.",
+    "option_explanations": [
+     "That is the integrand.",
+     "That is the integral sign.",
+     "That is the variable itself, not the differential.",
+     "Correct: It names the variable of integration."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "What does the symbol $dx$ do in $\\int(3x+2t)\\,dx$?",
+   "options": [
+    "marks $t$ as the variable of integration",
+    "marks $x$ as the variable, so $t$ acts as a constant",
+    "makes the integral definite",
+    "multiplies the integrand by $x$"
+   ],
+   "correct": [
+    1
+   ],
+   "explanation": "dx identifies the independent variable of integration, so other letters are treated as constants.",
+   "option_explanations": [
+    "t is not the variable named by dx.",
+    "Correct: dx identifies the independent variable.",
+    "dx does not change the type of integral.",
+    "dx is a differential, not a factor x."
+   ]
+  },
+  "versions": [
+   {
+    "type": "basic",
+    "question": "Evaluate $\\int (3x+2t)\\,dx$, treating $t$ as a constant.",
+    "answer": "The differential $dx$ says the variable is $x$, so $2t$ is a constant factor.\n$\\int 3x\\,dx = \\frac{3}{2}x^2$ and $\\int 2t\\,dx = 2tx$.\nAnswer: $\\frac{3}{2}x^2+2tx+C$."
+   },
+   {
+    "type": "mcq",
+    "question": "What is $\\int 5u\\,dt$?",
+    "options": [
+     "$5ut+C$",
+     "$\\frac{5u^2}{2}+C$",
+     "$\\frac{5t^2}{2}u+C$",
+     "$5 t + 5 u + C$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "The differential dt names t as the variable, so 5u is a constant and its integral is 5ut.",
+    "option_explanations": [
+     "Correct: Integrating with respect to t treats u as a constant.",
+     "Integrates with respect to u instead of t.",
+     "Raises t to a power although the integrand has no t.",
+     "Treats $u$ as the variable and adds a stray term."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Evaluate $\\int x^{7}\\,dx$.",
+   "options": [
+    "$x^{8} + C$",
+    "$\\frac{x^{8}}{8} + C$",
+    "$7 x^{6} + C$",
+    "$\\frac{x^{6}}{6} + C$"
+   ],
+   "correct": [
+    1
+   ],
+   "explanation": "Power rule: add 1 to the exponent and divide by the new exponent.",
+   "option_explanations": [
+    "Adds 1 to the exponent but does not divide.",
+    "Correct.",
+    "Differentiates instead of integrating.",
+    "Subtracts 1 from the exponent instead of adding."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int x^{4}\\,dx$.",
+    "options": [
+     "$x^{5} + C$",
+     "$\\frac{x^{3}}{3} + C$",
+     "$4 x^{3} + C$",
+     "$\\frac{x^{5}}{5} + C$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "Power rule: x^4 gives x^5/5.",
+    "option_explanations": [
+     "Does not divide by the new exponent.",
+     "Subtracts 1 from the exponent.",
+     "Differentiates instead of integrating.",
+     "Correct."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int \\sqrt[3]{x}\\,dx$.",
+    "options": [
+     "$\\frac{x^{\\frac{4}{3}}}{3} + C$",
+     "$\\frac{3 x^{\\frac{2}{3}}}{2} + C$",
+     "$\\frac{3 x^{\\frac{4}{3}}}{4} + C$",
+     "$x^{\\frac{4}{3}} + C$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Add 1 to 1/3 to get 4/3 and divide by 4/3, i.e. multiply by 3/4.",
+    "option_explanations": [
+     "Divides by the old exponent 1/3 instead of the new exponent 4/3.",
+     "Subtracts 1 from the exponent.",
+     "Correct.",
+     "Does not divide by the new exponent."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Evaluate $\\int \\frac{1}{x^5}\\,dx$.",
+   "options": [
+    "$- \\frac{1}{4 x^{4}} + C$",
+    "$\\frac{1}{4 x^{4}} + C$",
+    "$- \\frac{1}{5 x^{6}} + C$",
+    "$- \\frac{5}{x^{6}} + C$"
+   ],
+   "correct": [
+    0
+   ],
+   "explanation": "Write 1/x^5 as x^(-5), add 1 to get x^(-4) and divide by -4.",
+   "option_explanations": [
+    "Correct.",
+    "Sign error: the new exponent -4 is negative.",
+    "Subtracts 1 from the exponent.",
+    "Differentiates instead of integrating."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int \\frac{1}{x^3}\\,dx$.",
+    "options": [
+     "$\\frac{1}{2 x^{2}} + C$",
+     "$- \\frac{1}{3 x^{4}} + C$",
+     "$- \\frac{1}{2 x^{2}} + C$",
+     "$- \\frac{3}{x^{4}} + C$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "x^(-3) integrates to x^(-2)/(-2).",
+    "option_explanations": [
+     "Drops the minus sign from dividing by -2.",
+     "Subtracts 1 from the exponent.",
+     "Correct.",
+     "Differentiates instead of integrating."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int \\frac{1}{x^2\\sqrt{x}}\\,dx$.",
+    "options": [
+     "$\\frac{2}{3 x^{\\frac{3}{2}}} + C$",
+     "$- \\frac{2}{7 x^{\\frac{7}{2}}} + C$",
+     "$- \\frac{2}{5 x^{\\frac{5}{2}}} + C$",
+     "$- \\frac{2}{3 x^{\\frac{3}{2}}} + C$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "x^2 sqrt(x) = x^(5/2), so the integrand is x^(-5/2); the antiderivative is x^(-3/2)/(-3/2).",
+    "option_explanations": [
+     "Loses the minus sign: the new exponent -3/2 is negative.",
+     "Subtracts 1 from the exponent.",
+     "Uses the old exponent magnitude 5/2 for the division.",
+     "Correct."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Why can $\\int x^{-1}\\,dx$ **not** be found with the rule for powers of $x$?",
+   "options": [
+    "the formula would divide by $0$",
+    "the integrand is not continuous",
+    "the exponent is negative",
+    "the answer would need a constant factor"
+   ],
+   "correct": [
+    0
+   ],
+   "explanation": "For r = -1 the new exponent r + 1 is 0, so one uses $\\int \\frac{1}{x}dx=\\ln|x|+C$ instead.",
+   "option_explanations": [
+    "Correct: The new exponent r + 1 = 0.",
+    "Continuity is not the obstruction to the power rule.",
+    "Other negative exponents work fine.",
+    "No factor is missing."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int \\frac{7}{x}\\,dx$.",
+    "options": [
+     "$- \\frac{7}{2 x^{2}} - 7 x + C$",
+     "$7 x \\ln{\\left(\\left|{x}\\right| \\right)} + C$",
+     "$7 \\ln{\\left(\\left|{x}\\right| \\right)} + C$",
+     "$14 \\ln{\\left(\\left|{x}\\right| \\right)} + C$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "The 1/x formula gives ln|x|; the constant 7 factors out.",
+    "option_explanations": [
+     "Differentiates instead of integrating, halves the coefficient and adds a stray term.",
+     "Multiplies by x instead of using the 1/x rule.",
+     "Correct.",
+     "Doubles the coefficient (writes ln of x squared)."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which function has derivative $\\frac{1}{x}$ for $x\\ne 0$?",
+    "options": [
+     "$-\\frac{1}{x^2}$",
+     "$\\ln|x|$",
+     "$\\frac{x^0}{0}$",
+     "$x\\ln|x|$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Formula 11 of Table 5.2.1: the derivative of ln|x| is 1/x, so $\\int \\frac1x dx=\\ln|x|+C$.",
+    "option_explanations": [
+     "This is the derivative of 1/x.",
+     "Correct: d/dx ln|x| = 1/x.",
+     "Applies the power rule with new exponent 0.",
+     "Its derivative is ln|x| + 1."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Evaluate $\\int 5\\sin x\\,dx$.",
+   "options": [
+    "$5 \\cos{\\left(x \\right)} + C$",
+    "$- 5 \\sin{\\left(x \\right)} + C$",
+    "$5 \\sin{\\left(x \\right)} + C$",
+    "$- 5 \\cos{\\left(x \\right)} + C$"
+   ],
+   "correct": [
+    3
+   ],
+   "explanation": "The derivative of -cos x is sin x, so the integral of sin x is -cos x.",
+   "option_explanations": [
+    "Sign lost: the integral of sin x is -cos x.",
+    "Differentiates instead of integrating.",
+    "Treats sin x as its own antiderivative.",
+    "Correct."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int 6\\cos x\\,dx$.",
+    "options": [
+     "$6 \\sin{\\left(x \\right)} + C$",
+     "$- 6 \\sin{\\left(x \\right)} + C$",
+     "$6 \\sin{\\left(x \\right)} \\cos{\\left(x \\right)} + C$",
+     "$- 6 \\cos{\\left(x \\right)} + C$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Constant factor out, then $\\int\\cos x\\,dx=\\sin x+C$.",
+    "option_explanations": [
+     "Correct.",
+     "Sign error: the integral of cos x has no minus sign.",
+     "Multiplies the two functions instead of integrating.",
+     "Uses the sin x formula."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int (2\\cos x-\\sin x)\\,dx$.",
+    "options": [
+     "$2 \\sin{\\left(x \\right)} - \\cos{\\left(x \\right)} + C$",
+     "$- 2 \\sin{\\left(x \\right)} + \\cos{\\left(x \\right)} + C$",
+     "$2 \\sin{\\left(x \\right)} + \\cos{\\left(x \\right)} + C$",
+     "$- 2 \\sin{\\left(x \\right)} - \\cos{\\left(x \\right)} + C$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Integrate term by term: cos x gives sin x, and -sin x gives +cos x.",
+    "option_explanations": [
+     "Sign error on the sin x term.",
+     "Sign error on the cos x term.",
+     "Correct.",
+     "Differentiates instead of integrating."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Evaluate $\\int (3\\sin x-2\\sec^2 x)\\,dx$.",
+   "options": [
+    "$3 \\cos{\\left(x \\right)} - 2 \\tan{\\left(x \\right)} + C$",
+    "$- 3 \\cos{\\left(x \\right)} - 2 \\tan{\\left(x \\right)} + C$",
+    "$- 3 \\cos{\\left(x \\right)} - 2 \\tan{\\left(x \\right)} \\sec{\\left(x \\right)} + C$",
+    "$- 3 \\cos{\\left(x \\right)} + 2 \\tan{\\left(x \\right)} + C$"
+   ],
+   "correct": [
+    1
+   ],
+   "explanation": "Use $\\int\\sin x\\,dx=-\\cos x+C$ and $\\int\\sec^2x\\,dx=\\tan x+C$.",
+   "option_explanations": [
+    "Sign lost on the sin x term.",
+    "Correct.",
+    "Differentiates sec^2 instead of integrating it.",
+    "Sign lost on the second term."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int 4\\csc^2 x\\,dx$.",
+    "options": [
+     "$4 \\cot{\\left(x \\right)} + C$",
+     "$- 4 \\csc{\\left(x \\right)} + C$",
+     "$4 \\tan{\\left(x \\right)} + C$",
+     "$- 4 \\cot{\\left(x \\right)} + C$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "The derivative of -cot x is csc^2 x.",
+    "option_explanations": [
+     "Sign lost: the integral of csc^2 x is -cot x.",
+     "Uses the csc x cot x formula.",
+     "Uses the sec^2 x formula.",
+     "Correct."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int (\\sec^2 x+\\csc^2 x)\\,dx$.",
+    "options": [
+     "$\\tan{\\left(x \\right)} - \\cot{\\left(x \\right)} + C$",
+     "$\\tan{\\left(x \\right)} + \\cot{\\left(x \\right)} + C$",
+     "$- \\tan{\\left(x \\right)} - \\cot{\\left(x \\right)} + C$",
+     "$\\tan{\\left(x \\right)} \\sec{\\left(x \\right)} - \\cot{\\left(x \\right)} \\csc{\\left(x \\right)} + C$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "$\\int\\sec^2x\\,dx=\\tan x+C$ and $\\int\\csc^2x\\,dx=-\\cot x+C$.",
+    "option_explanations": [
+     "Correct.",
+     "Sign lost on the csc^2 term.",
+     "Sign error on the sec^2 term.",
+     "Differentiates instead of integrating."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Evaluate $\\int 2\\sec x\\tan x\\,dx$.",
+   "options": [
+    "$\\tan^{2}{\\left(x \\right)} + C$",
+    "$2 \\sec^{2}{\\left(x \\right)} + C$",
+    "$2 \\sec{\\left(x \\right)} + C$",
+    "$\\sec^{2}{\\left(x \\right)} + C$"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "The derivative of sec x is sec x tan x.",
+   "option_explanations": [
+    "Treats sec x as a constant.",
+    "Differentiates instead of integrating.",
+    "Correct.",
+    "Treats sec x tan x like a power of one function."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int 3\\csc x\\cot x\\,dx$.",
+    "options": [
+     "$- 3 \\csc{\\left(x \\right)} + C$",
+     "$3 \\csc{\\left(x \\right)} + C$",
+     "$- 3 \\cot{\\left(x \\right)} + C$",
+     "$3 \\csc^{2}{\\left(x \\right)} + C$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "The derivative of -csc x is csc x cot x.",
+    "option_explanations": [
+     "Correct.",
+     "Sign lost: the integral has a minus sign.",
+     "Uses the csc^2 x formula.",
+     "Differentiates instead of integrating."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int \\sec x(\\sec x+\\tan x)\\,dx$.",
+    "options": [
+     "$\\tan{\\left(x \\right)} - \\sec{\\left(x \\right)} \\tan{\\left(x \\right)} + C$",
+     "$\\tan{\\left(x \\right)} + \\sec{\\left(x \\right)} + C$",
+     "$\\frac{\\sec^{3}{\\left(x \\right)}}{3} + \\frac{\\sec^{2}{\\left(x \\right)}}{2} + C$",
+     "$\\tan{\\left(x \\right)} \\sec{\\left(x \\right)} + \\sec{\\left(x \\right)} + C$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Distribute: $\\sec^2x+\\sec x\\tan x$, then use the two table formulas.",
+    "option_explanations": [
+     "Sign error and an extra factor of tan x on the sec x term.",
+     "Correct.",
+     "Integrates sec x as if it were a variable.",
+     "Differentiates sec x and sec x tan x in place of integrating."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Evaluate $\\int \\left(\\frac{2}{x}+3e^{x}\\right)\\,dx$.",
+   "options": [
+    "$3 e^{x} + 2 \\ln{\\left(\\left|{x}\\right| \\right)} + C$",
+    "$3 x e^{x} + 2 \\ln{\\left(\\left|{x}\\right| \\right)} + C$",
+    "$3 e^{x} - \\frac{2}{x^{2}} + C$",
+    "$2 \\ln{\\left(\\left|{x}\\right| \\right)} + \\frac{3 e^{x}}{x} + C$"
+   ],
+   "correct": [
+    0
+   ],
+   "explanation": "Use $\\int\\frac1x dx=\\ln|x|+C$ and $\\int e^x dx=e^x+C$ term by term.",
+   "option_explanations": [
+    "Correct.",
+    "Multiplies the exponential term by x.",
+    "Differentiates the 1/x term instead of integrating.",
+    "Divides the exponential term by x."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int \\left(e^{x}-\\frac{5}{x}\\right)\\,dx$.",
+    "options": [
+     "$e^{x} + 5 \\ln{\\left(\\left|{x}\\right| \\right)} + C$",
+     "$x e^{x} - 5 \\ln{\\left(\\left|{x}\\right| \\right)} + C$",
+     "$e^{x} + \\frac{5}{x^{2}} + C$",
+     "$e^{x} - 5 \\ln{\\left(\\left|{x}\\right| \\right)} + C$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "e^x is its own antiderivative, and 5/x integrates to 5 ln|x|.",
+    "option_explanations": [
+     "Sign lost on the 5/x term.",
+     "Multiplies e^x by x.",
+     "Differentiates the 5/x term instead of integrating.",
+     "Correct."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int \\left(4e^{x}+\\frac{1}{x}\\right)\\,dx$.",
+    "options": [
+     "$e^{x} + \\ln{\\left(\\left|{x}\\right| \\right)} + C$",
+     "$4 e^{x} + \\ln{\\left(\\left|{x}\\right| \\right)} + C$",
+     "$\\ln{\\left(\\left|{x}\\right| \\right)} + \\frac{4 e^{x}}{x} + C$",
+     "$4 e^{x} - \\ln{\\left(\\left|{x}\\right| \\right)} + C$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Term by term: e^x gives e^x, and 1/x gives ln|x|.",
+    "option_explanations": [
+     "Drops the coefficient 4.",
+     "Correct.",
+     "Divides the exponential term by x.",
+     "Sign error on the log term."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Evaluate $\\int 5^{x}\\,dx$.",
+   "options": [
+    "$\\frac{5^{x + 1}}{x + 1} + C$",
+    "$5^{x} \\ln{\\left(5 \\right)} + C$",
+    "$\\frac{5^{x}}{\\ln{\\left(5 \\right)}} + C$",
+    "$5^{x} + C$"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "Formula: $\\int b^x dx=\\frac{b^x}{\\ln b}+C$.",
+   "option_explanations": [
+    "Applies the power rule to the exponent.",
+    "Differentiates instead of integrating (multiplies by ln 5).",
+    "Correct.",
+    "Treats 5^x as its own antiderivative."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int 3\\cdot 2^{x}\\,dx$.",
+    "options": [
+     "$\\frac{3 \\cdot 2^{x}}{\\ln{\\left(2 \\right)}} + C$",
+     "$3 \\cdot 2^{x} + C$",
+     "$3 \\cdot 2^{x} \\ln{\\left(2 \\right)} + C$",
+     "$\\frac{3 \\cdot 2^{x + 1}}{x + 1} + C$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "The factor 3 stays; $\\int 2^x dx=\\frac{2^x}{\\ln 2}+C$.",
+    "option_explanations": [
+     "Correct.",
+     "Forgets to divide by ln 2.",
+     "Multiplies by ln 2 instead of dividing.",
+     "Applies the power rule to the exponent."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int 10^{x}\\,dx$.",
+    "options": [
+     "$10^{x} \\ln{\\left(10 \\right)} + C$",
+     "$\\frac{10^{x}}{10} + C$",
+     "$10^{x} + C$",
+     "$\\frac{10^{x}}{\\ln{\\left(10 \\right)}} + C$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "$\\int b^x dx=\\frac{b^x}{\\ln b}+C$ for $b>0,b\\neq1$.",
+    "option_explanations": [
+     "Multiplies by ln 10 instead of dividing.",
+     "Divides by the base rather than by ln of the base.",
+     "Treats 10^x as its own antiderivative.",
+     "Correct."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Evaluate $\\int \\frac{4}{1+x^2}\\,dx$.",
+   "options": [
+    "$4 \\ln{\\left(x^{2} + 1 \\right)} + C$",
+    "$4 \\tan^{-1}{\\left(x \\right)} + C$",
+    "$- 4 \\tan^{-1}{\\left(x \\right)} + C$",
+    "$4 \\sin^{-1}{\\left(x \\right)} + 4 x + C$"
+   ],
+   "correct": [
+    1
+   ],
+   "explanation": "$\\int\\frac{1}{1+x^2}dx=\\tan^{-1}x+C$.",
+   "option_explanations": [
+    "Treats the denominator like a 1/x integral.",
+    "Correct.",
+    "Sign error.",
+    "Uses the arcsine rule and adds a stray term."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int \\frac{3}{\\sqrt{1-x^2}}\\,dx$.",
+    "options": [
+     "$- 3 \\sin^{-1}{\\left(x \\right)} + C$",
+     "$3 \\tan^{-1}{\\left(x \\right)} - 3 x + C$",
+     "$\\frac{3 x}{\\sqrt{1 - x^{2}}} + C$",
+     "$3 \\sin^{-1}{\\left(x \\right)} + C$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "$\\int\\frac{1}{\\sqrt{1-x^2}}dx=\\sin^{-1}x+C$.",
+    "option_explanations": [
+     "Sign error.",
+     "Uses the arctangent rule and adds a stray term.",
+     "Pulls x into the numerator.",
+     "Correct."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int \\frac{2}{x\\sqrt{x^2-1}}\\,dx$ for $x>1$.",
+    "options": [
+     "$2 \\sec^{-1}{\\left(\\left|{x}\\right| \\right)} + C$",
+     "$2 \\sin^{-1}{\\left(\\left|{x}\\right| \\right)} + C$",
+     "$2 \\tan^{-1}{\\left(\\left|{x}\\right| \\right)} + C$",
+     "$2 \\sqrt{x^{2} - 1} \\ln{\\left(\\left|{x}\\right| \\right)} + C$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Formula 14: $\\int\\frac{1}{x\\sqrt{x^2-1}}dx=\\sec^{-1}|x|+C$.",
+    "option_explanations": [
+     "Correct.",
+     "Uses the arcsine formula.",
+     "Uses the arctangent formula.",
+     "Mixes the 1/x rule with the radical."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Evaluate $\\int \\left[\\frac{1}{2\\sqrt{1-x^2}}-\\frac{3}{1+x^2}\\right]\\,dx$.",
+   "options": [
+    "$\\sin^{-1}{\\left(x \\right)} - 3 \\tan^{-1}{\\left(x \\right)} + C$",
+    "$\\frac{\\sin^{-1}{\\left(x \\right)}}{2} + 3 \\tan^{-1}{\\left(x \\right)} + C$",
+    "$\\frac{\\sin^{-1}{\\left(x \\right)}}{2} - 3 \\tan^{-1}{\\left(x \\right)} + C$",
+    "$- 3 \\sin^{-1}{\\left(x \\right)} + \\frac{\\tan^{-1}{\\left(x \\right)}}{2} + C$"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "Constant factors move outside: $\\frac12\\sin^{-1}x-3\\tan^{-1}x+C$.",
+   "option_explanations": [
+    "Loses the factor 1/2 on the arcsine term.",
+    "Sign lost on the arctangent term.",
+    "Correct.",
+    "Swaps the two inverse trig functions."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int \\left[\\frac{5}{1+x^2}+\\frac{1}{3\\sqrt{1-x^2}}\\right]\\,dx$.",
+    "options": [
+     "$\\frac{\\sin^{-1}{\\left(x \\right)}}{3} + 5 \\tan^{-1}{\\left(x \\right)} + C$",
+     "$\\sin^{-1}{\\left(x \\right)} + 5 \\tan^{-1}{\\left(x \\right)} + C$",
+     "$- \\frac{\\sin^{-1}{\\left(x \\right)}}{3} + 5 \\tan^{-1}{\\left(x \\right)} + C$",
+     "$5 \\sin^{-1}{\\left(x \\right)} + \\frac{\\tan^{-1}{\\left(x \\right)}}{3} + C$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Integrate each term with its table formula and keep the constants.",
+    "option_explanations": [
+     "Correct.",
+     "Loses the factor 1/3.",
+     "Sign error on the arcsine term.",
+     "Swaps the two inverse trig functions."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int \\left[\\frac{2}{1+x^2}-\\frac{4}{\\sqrt{1-x^2}}\\right]\\,dx$.",
+    "options": [
+     "$4 \\sin^{-1}{\\left(x \\right)} + 2 \\tan^{-1}{\\left(x \\right)} + C$",
+     "$- 4 \\sin^{-1}{\\left(x \\right)} + 2 \\tan^{-1}{\\left(x \\right)} + C$",
+     "$- 2 \\sin^{-1}{\\left(x \\right)} + 4 \\tan^{-1}{\\left(x \\right)} + C$",
+     "$2 \\ln{\\left(x^{2} + 1 \\right)} - 4 \\sin^{-1}{\\left(x \\right)} + C$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "$\\tan^{-1}x$ and $\\sin^{-1}x$ with their coefficients.",
+    "option_explanations": [
+     "Sign error on the second term.",
+     "Correct.",
+     "Swaps the coefficients.",
+     "Treats the first denominator like a 1/x integral."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Which equation is a valid property of the indefinite integral?",
+   "options": [
+    "$\\int [f(x)-g(x)]\\,dx=\\int f(x)\\,dx-\\int g(x)\\,dx$",
+    "$\\int f(x)g(x)\\,dx=\\int f(x)\\,dx\\cdot\\int g(x)\\,dx$",
+    "$\\int \\frac{f(x)}{g(x)}\\,dx=\\frac{\\int f(x)\\,dx}{\\int g(x)\\,dx}$",
+    "$\\int x f(x)\\,dx=x\\int f(x)\\,dx$"
+   ],
+   "correct": [
+    0
+   ],
+   "explanation": "Only constant factors, sums and differences split: Theorem 5.2.3.",
+   "option_explanations": [
+    "Correct: Differences split term by term.",
+    "Integrals do not turn products into products.",
+    "Integrals do not turn quotients into quotients.",
+    "x is not a constant, so it cannot leave the integral."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "A student writes $\\int x\\sin x\\,dx = x\\int \\sin x\\,dx = -x\\cos x+C$. What is the error?",
+    "options": [
+     "$\\int \\sin x\\,dx$ equals $+\\cos x$",
+     "the constant $C$ must be placed before the integral",
+     "the integral of a product must be a sum",
+     "$x$ is not a constant, so it cannot be moved outside"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "Theorem 5.2.3 only lets a constant factor pass through the integral sign.",
+    "option_explanations": [
+     "The sign of the sin x integral is correct.",
+     "C goes at the end of the result.",
+     "Products are not turned into sums.",
+     "Correct: Only constant factors can be moved through an integral sign."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which step is justified by Theorem 5.2.3?",
+    "options": [
+     "$\\int 3x^2\\,dx=3x\\int x\\,dx$",
+     "$\\int \\frac{x^2}{x+1}\\,dx=\\frac{\\int x^2\\,dx}{\\int (x+1)\\,dx}$",
+     "$\\int (3x^2-7x)\\,dx=3\\int x^2\\,dx-7\\int x\\,dx$",
+     "$\\int x^2\\cdot x\\,dx=\\int x^2\\,dx\\cdot\\int x\\,dx$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Constant factors and sums/differences split; products and quotients do not.",
+    "option_explanations": [
+     "Pulls out a variable factor.",
+     "Splits a quotient.",
+     "Correct: Constants move out and the difference splits.",
+     "Splits a product."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "basic",
+   "question": "Evaluate $\\int (3x^6-2x^2+7x+1)\\,dx$.",
+   "answer": "Split the integral and use $\\int x^r dx=\\frac{x^{r+1}}{r+1}$ on each term:\n$3\\int x^6dx-2\\int x^2dx+7\\int x\\,dx+\\int 1\\,dx$\n$=\\frac{3x^7}{7}-\\frac{2x^3}{3}+\\frac{7x^2}{2}+x+C$."
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int (x^3-2x)\\,dx$.",
+    "options": [
+     "$\\frac{x^{4}}{4} - 2 x^{2} + C$",
+     "$x^{4} - x^{2} + C$",
+     "$3 x^{2} - 2 + C$",
+     "$\\frac{x^{4}}{4} - x^{2} + C$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "Integrate term by term: x^3 gives x^4/4 and 2x gives x^2.",
+    "option_explanations": [
+     "Forgets to divide the second term by the new exponent.",
+     "Does not divide the first term by 4.",
+     "Differentiates instead of integrating.",
+     "Correct."
+    ]
+   },
+   {
+    "type": "basic",
+    "question": "Evaluate $\\int (4x^3+6x^2-5x+2)\\,dx$.",
+    "answer": "Split into terms and use the power rule on each:\n$4\\int x^3dx+6\\int x^2dx-5\\int x\\,dx+2\\int 1\\,dx$\n$=x^4+2x^3-\\frac{5}{2}x^2+2x+C$."
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Evaluate $\\int \\frac{\\cos x}{\\sin^2 x}\\,dx$.",
+   "options": [
+    "$\\csc{\\left(x \\right)} + C$",
+    "$- \\cot{\\left(x \\right)} + C$",
+    "$\\ln{\\left(\\left|{\\sin{\\left(x \\right)}}\\right| \\right)} + C$",
+    "$- \\csc{\\left(x \\right)} + C$"
+   ],
+   "correct": [
+    3
+   ],
+   "explanation": "Write it as (1/sin x)(cos x/sin x) = csc x cot x.",
+   "option_explanations": [
+    "Sign lost: the integral of csc x cot x is -csc x.",
+    "Uses the csc^2 x formula.",
+    "Treats cos x / sin x as the integrand.",
+    "Correct."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int \\frac{\\sin x}{\\cos^2 x}\\,dx$.",
+    "options": [
+     "$\\sec{\\left(x \\right)} + C$",
+     "$- \\sec{\\left(x \\right)} + C$",
+     "$\\tan{\\left(x \\right)} \\sec{\\left(x \\right)} + C$",
+     "$- \\ln{\\left(\\left|{\\cos{\\left(x \\right)}}\\right| \\right)} + C$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Write it as (1/cos x)(sin x/cos x) = sec x tan x.",
+    "option_explanations": [
+     "Correct.",
+     "Sign error.",
+     "Differentiates $\\sec x$ and multiplies instead of integrating.",
+     "Treats sin x / cos x as the integrand."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int \\frac{\\cos x}{1-\\cos^2 x}\\,dx$.",
+    "options": [
+     "$\\csc{\\left(x \\right)} + C$",
+     "$- \\cot{\\left(x \\right)} + C$",
+     "$- \\csc{\\left(x \\right)} + C$",
+     "$- \\tan{\\left(x \\right)} + C$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Since 1 - cos^2 x = sin^2 x, the integrand is cos x / sin^2 x = csc x cot x.",
+    "option_explanations": [
+     "Sign lost on the csc x cot x integral.",
+     "Uses the csc^2 x formula.",
+     "Correct.",
+     "Uses the wrong trig identity."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Evaluate $\\int \\frac{t^2-2t^4}{t^4}\\,dt$.",
+   "options": [
+    "$- 2 t + \\frac{1}{t} + C$",
+    "$- 2 t - \\frac{1}{t} + C$",
+    "$-2 - \\frac{1}{t} + C$",
+    "$- 2 t^{2} - \\frac{1}{t} + C$"
+   ],
+   "correct": [
+    1
+   ],
+   "explanation": "Divide each term first: 1/t^2 - 2, then integrate.",
+   "option_explanations": [
+    "Sign lost on the t^(-2) integral.",
+    "Correct.",
+    "Treats the constant -2 as needing no integration.",
+    "Integrates the constant -2 as if it were -2t."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int \\frac{x^5+2x^2-1}{x^4}\\,dx$.",
+    "options": [
+     "$\\frac{x^{2}}{2} - \\frac{2}{x} + \\frac{1}{3 x^{3}} + C$",
+     "$\\frac{x^{2}}{2} - \\frac{2}{x} - \\frac{1}{3 x^{3}} + C$",
+     "$\\frac{x^{2}}{2} + 2 \\ln{\\left(\\left|{x}\\right| \\right)} + \\frac{1}{3 x^{3}} + C$",
+     "$\\frac{x^{2}}{2} - \\frac{2}{x} + \\frac{1}{x^{3}} + C$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Divide termwise: x + 2x^(-2) - x^(-4); then apply the power rule to each.",
+    "option_explanations": [
+     "Correct.",
+     "Sign error on the last term: -x^(-4) integrates to +1/(3x^3).",
+     "Integrates 2x^(-2) with the 1/x rule.",
+     "Forgets to divide the x^(-4) term by -3."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int \\frac{t^3+5t^2}{t^5}\\,dt$.",
+    "options": [
+     "$- \\frac{1}{t} + \\frac{5}{2 t^{2}} + \\ln{\\left(\\left|{t}\\right| \\right)} + C$",
+     "$- \\frac{1}{3 t^{3}} - \\frac{5}{4 t^{4}} + C$",
+     "$\\ln{\\left(\\left|{t}\\right| \\right)} - \\frac{5}{2 t^{2}} + C$",
+     "$- \\frac{1}{t} - \\frac{5}{2 t^{2}} + C$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "Divide termwise: t^(-2) + 5t^(-3); integrate each.",
+    "option_explanations": [
+     "Sign error on the second term and a stray logarithm.",
+     "Subtracts 1 from the exponents instead of adding.",
+     "Integrates t^(-2) with the 1/x rule.",
+     "Correct."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Evaluate $\\int \\frac{x^2}{x^2+1}\\,dx$.",
+   "options": [
+    "$x + \\tan^{-1}{\\left(x \\right)} + C$",
+    "$\\frac{x^{3}}{3 \\tan^{-1}{\\left(x \\right)}} + C$",
+    "$x - \\tan^{-1}{\\left(x \\right)} + C$",
+    "$\\ln{\\left(x^{2} + 1 \\right)} + C$"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "Write x^2 = (x^2+1) - 1 so the integrand is 1 - 1/(x^2+1).",
+   "option_explanations": [
+    "Sign error after adding and subtracting 1.",
+    "Splits the quotient as a quotient of integrals.",
+    "Correct.",
+    "Treats the integrand like f'/f."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int \\frac{x^2+3}{x^2+1}\\,dx$.",
+    "options": [
+     "$x + 3 \\tan^{-1}{\\left(x \\right)} + C$",
+     "$x + 2 \\tan^{-1}{\\left(x \\right)} + C$",
+     "$x - 2 \\tan^{-1}{\\left(x \\right)} + C$",
+     "$x + 2 \\ln{\\left(x^{2} + 1 \\right)} + C$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Rewrite (x^2+3) = (x^2+1) + 2, so the integrand is 1 + 2/(x^2+1).",
+    "option_explanations": [
+     "Does not split off the 1 from the numerator.",
+     "Correct.",
+     "Sign error after rewriting.",
+     "Treats the remainder like f'/f."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int \\frac{3x^2+2}{x^2+1}\\,dx$.",
+    "options": [
+     "$3 x - \\tan^{-1}{\\left(x \\right)} + C$",
+     "$3 x + 2 \\tan^{-1}{\\left(x \\right)} + C$",
+     "$3 x - 3 \\tan^{-1}{\\left(x \\right)} + C$",
+     "$x^{3} + 2 \\tan^{-1}{\\left(x \\right)} + C$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Rewrite 3x^2+2 = 3(x^2+1) - 1, so the integrand is 3 - 1/(x^2+1).",
+    "option_explanations": [
+     "Correct.",
+     "Sign error: the arctangent term is subtracted.",
+     "Uses the wrong remainder.",
+     "Integrates the numerator and the denominator separately."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Evaluate $\\int x(1+x^3)\\,dx$.",
+   "options": [
+    "$\\frac{x^{2} \\left(\\frac{x^{4}}{4} + x\\right)}{2} + C$",
+    "$\\frac{x^{4}}{4} + \\frac{x^{2}}{2} + C$",
+    "$\\frac{x^{6}}{6} + \\frac{x^{2}}{2} + C$",
+    "$\\frac{x^{5}}{5} + \\frac{x^{2}}{2} + C$"
+   ],
+   "correct": [
+    3
+   ],
+   "explanation": "Expand first: x + x^4, then use the power rule.",
+   "option_explanations": [
+    "Integrates each factor separately.",
+    "Forgets that multiplying x by x^3 gives x^4.",
+    "Raises the wrong exponent after multiplying.",
+    "Correct."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int x^2(x-4)\\,dx$.",
+    "options": [
+     "$\\frac{x^{3} \\left(\\frac{x^{2}}{2} - 4 x\\right)}{3} + C$",
+     "$\\frac{x^{4}}{4} - \\frac{4 x^{3}}{3} + C$",
+     "$\\frac{x^{4}}{4} - 2 x^{2} + C$",
+     "$\\frac{x^{4}}{4} - 4 x^{3} + C$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Expand first: x^3 - 4x^2.",
+    "option_explanations": [
+     "Integrates each factor separately.",
+     "Correct.",
+     "Does not multiply 4 by x^2 before integrating.",
+     "Forgets to divide the second term by 3."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int (2x-1)^2\\,dx$.",
+    "options": [
+     "$\\frac{\\left(2 x - 1\\right)^{3}}{3} + C$",
+     "$\\frac{4 x^{3}}{3} + 2 x^{2} + x + C$",
+     "$\\frac{4 x^{3}}{3} - 2 x^{2} + x + C$",
+     "$\\frac{4 x^{3}}{3} - x^{2} + x + C$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Expand: 4x^2 - 4x + 1, then integrate term by term.",
+    "option_explanations": [
+     "Applies the power rule without the chain-rule factor.",
+     "Sign error on the middle term of the expansion.",
+     "Correct.",
+     "Forgets to double the cross term."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "basic",
+   "question": "Evaluate $\\int \\frac{\\sec x+\\cos x}{2\\cos x}\\,dx$.",
+   "answer": "Split the fraction:\n$\\frac{\\sec x+\\cos x}{2\\cos x}=\\frac{1}{2}\\cdot\\frac{1}{\\cos^2 x}+\\frac12=\\frac12\\sec^2 x+\\frac12$.\nIntegrate: $\\frac12\\tan x+\\frac12 x+C$."
+  },
+  "versions": [
+   {
+    "type": "basic",
+    "question": "Evaluate $\\int \\frac{\\csc x+\\sin x}{3\\sin x}\\,dx$.",
+    "answer": "Split: $\\frac{\\csc x}{3\\sin x}=\\frac13\\csc^2x$ and $\\frac{\\sin x}{3\\sin x}=\\frac13$.\nIntegrate: $-\\frac13\\cot x+\\frac13 x+C$."
+   },
+   {
+    "type": "mcq",
+    "question": "Which expression equals $\\frac{\\sec x+\\cos x}{2\\cos x}$ and is easiest to integrate?",
+    "options": [
+     "$\\frac12\\sec x+\\frac12$",
+     "$\\frac12\\sec^2x+\\frac12$",
+     "$\\frac12\\sec^2x+\\cos x$",
+     "$\\sec x\\cos x+\\frac12$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Split into sec x/(2cos x) = sec^2 x / 2 and cos x/(2cos x) = 1/2.",
+    "option_explanations": [
+     "Forgets the extra 1/cos x factor in the first term.",
+     "Correct: Dividing each term by 2 cos x gives sec^2 x / 2 + 1/2.",
+     "Divides the second term by 2 only.",
+     "Keeps the numerator unsplit."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "How are the integral curves of a function $f$ (graphs of its antiderivatives) related to each other?",
+   "options": [
+    "they are vertical translations of one another",
+    "they are horizontal translations of one another",
+    "they are reflections of one another in the $x$-axis",
+    "they are vertical stretches of one another by a constant factor"
+   ],
+   "correct": [
+    0
+   ],
+   "explanation": "All integral curves are $y=F(x)+C$, vertical translations of one curve.",
+   "option_explanations": [
+    "Correct: Antiderivatives differ by the constant C, which shifts the graph up or down.",
+    "C is added to y, not to x.",
+    "Reflection would change F to -F, not F + C.",
+    "A stretch multiplies F; C only adds to it."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "The curves $y=\\frac13x^3+2$ and $y=\\frac13x^3-1$ are both integral curves of $f(x)=x^2$. How are they related?",
+    "options": [
+     "one is the other shifted horizontally by 3 units",
+     "they are reflections in the $x$-axis",
+     "one is the other shifted vertically by 3 units",
+     "they are the same curve"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Changing C translates the graph vertically.",
+    "option_explanations": [
+     "The constant is added to y, not x.",
+     "Reflections would change the sign of the whole function.",
+     "Correct: They differ by 2 - (-1) = 3 in y.",
+     "Different C give different curves."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which curve is **not** an integral curve of $f(x)=2x$?",
+    "options": [
+     "$y=x^2-5$",
+     "$y=x^2$",
+     "$y=x^2+\\frac{3}{4}$",
+     "$y=x^2+2x$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "Integral curves of 2x are y = x^2 + C only.",
+    "option_explanations": [
+     "Derivative 2x: an integral curve.",
+     "Derivative 2x: an integral curve.",
+     "Derivative 2x: an integral curve.",
+     "Correct: Its derivative is 2x + 2."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "A curve $y=f(x)$ has tangent slope $2x$ at each point $(x,y)$ and passes through $(1,5)$. Which is its equation?",
+   "options": [
+    "$y=x^{2} + 5$",
+    "$y=x^{2} + 4$",
+    "$y=x^{2} - 4$",
+    "$y=x^{2} + 6$"
+   ],
+   "correct": [
+    1
+   ],
+   "explanation": "Integrate to get y = x^2 + C and solve 5 = 1 + C.",
+   "option_explanations": [
+    "Takes C = y0 without substituting x0.",
+    "Correct.",
+    "Sign error when solving for C.",
+    "Adds x0 to C by mistake."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "A curve $y=f(x)$ has tangent slope $3x^2$ at each point $(x,y)$ and passes through $(2,10)$. Which is its equation?",
+    "options": [
+     "$y=x^{3} - 2 x + 10$",
+     "$y=x^{3} + 10$",
+     "$y=x^{3} + 18$",
+     "$y=x^{3} + 2$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "y = x^3 + C and 10 = 8 + C gives C = 2.",
+    "option_explanations": [
+     "Wrong constant and an extra term from misreading the slope.",
+     "Uses y0 as C.",
+     "Adds instead of subtracting x0^3.",
+     "Correct."
+    ]
+   },
+   {
+    "type": "basic",
+    "question": "A curve has tangent slope $x^2$ at each point $(x,y)$ and passes through $(2,1)$. Find its equation.",
+    "answer": "Since $\\frac{dy}{dx}=x^2$, $y=\\int x^2\\,dx=\\frac13x^3+C$.\nThe point $(2,1)$ gives $1=\\frac13(2)^3+C=\\frac83+C$, so $C=-\\frac53$.\nAnswer: $y=\\frac13x^3-\\frac53$."
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "basic",
+   "question": "A curve has slope $4x-3$ at each point and passes through $(1,6)$. Find its equation.",
+   "answer": "$y=\\int(4x-3)\\,dx=2x^2-3x+C$.\nAt $(1,6)$: $6=2-3+C$, so $C=7$.\nAnswer: $y=2x^2-3x+7$."
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "A curve $y=f(x)$ has tangent slope $4x-3$ at each point $(x,y)$ and passes through $(0,9)$. Which is its equation?",
+    "options": [
+     "$y=2 x^{2} - 3 x$",
+     "$y=2 x^{2} - 3 x - 9$",
+     "$y=2 x^{2} - 3 x + 9$",
+     "$y=4 x + 6$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "y = 2x^2 - 3x + C and y(0) = 9 gives C = 9.",
+    "option_explanations": [
+     "Forgets the constant of integration.",
+     "Sign error on C.",
+     "Correct.",
+     "Adds the point's y to the slope."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "A curve $y=f(x)$ has tangent slope $6x^2$ at each point $(x,y)$ and passes through $(1,3)$. Which is its equation?",
+    "options": [
+     "$y=2 x^{3} + 1$",
+     "$y=2 x^{3} + 3$",
+     "$y=2 x^{3} - 1$",
+     "$y=6 x^{3} + 3$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "y = 2x^3 + C and 3 = 2 + C gives C = 1.",
+    "option_explanations": [
+     "Correct.",
+     "Uses y0 as C.",
+     "Sign error when solving for C.",
+     "Forgets to divide by the new exponent."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "How does the equation $\\frac{dy}{dx}=x^2$ differ from an ordinary equation such as $x^2+5x-6=0$?",
+   "options": [
+    "it has no solutions",
+    "its unknown is the number $x$",
+    "it has exactly one solution",
+    "its unknown is a function rather than a number"
+   ],
+   "correct": [
+    3
+   ],
+   "explanation": "dy/dx = f(x) is a differential equation: its solutions are the antiderivatives of f.",
+   "option_explanations": [
+    "Its solutions are the antiderivatives of x^2.",
+    "x is the independent variable here.",
+    "Solutions form a family with arbitrary constant C.",
+    "Correct: A differential equation asks for a function y(x)."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "What are the solutions of $\\frac{dy}{dx}=\\cos x$?",
+    "options": [
+     "$y=-\\sin x+C$",
+     "$y=\\sin x+C$",
+     "$y=\\cos x+x+C$",
+     "$y=-\\cos x+C$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "The solutions of dy/dx = f(x) are the antiderivatives of f.",
+    "option_explanations": [
+     "Differentiates cos x instead of integrating.",
+     "Correct: Integrate both sides.",
+     "Replaces the integral by the integrand and adds a stray term.",
+     "Uses the sin x antiderivative."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which problem asks for the solution of $\\frac{dy}{dx}=f(x)$ whose graph passes through $(x_0,y_0)$?",
+    "options": [
+     "the initial-value problem $y'=f(x),\\ y(x_0)=y_0$",
+     "finding the general antiderivative of $f$",
+     "finding $f'(x_0)$",
+     "evaluating $\\int_{x_0}^{y_0} f$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "The condition y(x0) = y0 fixes C.",
+    "option_explanations": [
+     "Correct: Solving it gives one specific antiderivative.",
+     "That keeps C arbitrary.",
+     "This finds a slope, not a function.",
+     "Mixes limits with the initial point."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "In the initial-value problem $\\frac{dy}{dx}=\\cos x,\\ y(0)=1$, what is $y(0)=1$ called?",
+   "options": [
+    "the differential equation",
+    "the integrand",
+    "the initial condition",
+    "the constant of integration"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "y(x0) = y0 is the initial condition of the initial-value problem.",
+   "option_explanations": [
+    "That is dy/dx = cos x.",
+    "The integrand is cos x.",
+    "Correct: It fixes the value of C.",
+    "C is found from the condition; it is not the condition itself."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "For $\\frac{dy}{dt}=e^t,\\ y(0)=3$, which part is the initial condition?",
+    "options": [
+     "$y(0)=3$",
+     "$\\frac{dy}{dt}=e^t$",
+     "$e^t$",
+     "$y=e^t+C$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "The initial condition specifies the value of the unknown function at one point.",
+    "option_explanations": [
+     "Correct: It gives y at a specific input.",
+     "That is the differential equation.",
+     "That is the integrand.",
+     "That is the general solution."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "If $F$ is an antiderivative of $f$, which expression gives **all** solutions of $\\frac{dy}{dx}=f(x)$?",
+    "options": [
+     "$y=C\\,F(x)$",
+     "$y=F(x)+C$",
+     "$y=F(x+C)$",
+     "$y=F'(x)+C$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Every solution is F(x) + C; the initial condition then picks C.",
+    "option_explanations": [
+     "C multiplies instead of being added.",
+     "Correct: Antiderivatives differ by an additive constant.",
+     "C shifts x instead of y.",
+     "Uses the derivative of F, which is f."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Solve the initial-value problem $\\frac{dy}{dx}=\\sin x,\\ y(0)=3$.",
+   "options": [
+    "$y=3 - \\cos{\\left(x \\right)}$",
+    "$y=4 - \\cos{\\left(x \\right)}$",
+    "$y=\\cos{\\left(x \\right)} + 2$",
+    "$y=2 - \\cos{\\left(x \\right)}$"
+   ],
+   "correct": [
+    1
+   ],
+   "explanation": "y = -cos x + C and 3 = -1 + C gives C = 4.",
+   "option_explanations": [
+    "Uses y(0) = 3 as C without evaluating -cos 0.",
+    "Correct.",
+    "Sign error on the antiderivative.",
+    "Sign error when solving for C."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Solve the initial-value problem $\\frac{dy}{dx}=e^{x},\\ y(0)=5$.",
+    "options": [
+     "$y=e^{x} + 5$",
+     "$y=e^{x} - 4$",
+     "$y=e^{x}$",
+     "$y=e^{x} + 4$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "y = e^x + C and 5 = 1 + C gives C = 4.",
+    "option_explanations": [
+     "Uses y0 as C without evaluating e^0.",
+     "Sign error when solving for C.",
+     "Leaves out the constant of integration.",
+     "Correct."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Solve the initial-value problem $\\frac{dy}{dx}=3x^2,\\ y(1)=4$.",
+    "options": [
+     "$y=x^{3} + 3$",
+     "$y=x^{3} + 4$",
+     "$y=x^{3} - 3$",
+     "$y=x^{3} + 1$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "y = x^3 + C and 4 = 1 + C gives C = 3.",
+    "option_explanations": [
+     "Correct.",
+     "Uses y0 as C.",
+     "Sign error when solving for C.",
+     "Uses x0^3 as C."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "basic",
+   "question": "Solve the initial-value problem $\\frac{dy}{dx}=\\sqrt[3]{x},\\ y(1)=2$.",
+   "answer": "$y=\\int x^{1/3}dx=\\frac34x^{4/3}+C$.\nAt $x=1$: $2=\\frac34+C$, so $C=\\frac54$.\nAnswer: $y=\\frac34x^{4/3}+\\frac54$."
+  },
+  "versions": [
+   {
+    "type": "basic",
+    "question": "Solve the initial-value problem $\\frac{dy}{dx}=\\sqrt{x},\\ y(4)=1$.",
+    "answer": "$y=\\int x^{1/2}dx=\\frac23x^{3/2}+C$.\nAt $x=4$: $1=\\frac23\\cdot 8+C=\\frac{16}{3}+C$, so $C=-\\frac{13}{3}$.\nAnswer: $y=\\frac23x^{3/2}-\\frac{13}{3}$."
+   },
+   {
+    "type": "mcq",
+    "question": "Solve the initial-value problem $\\frac{dy}{dx}=x^{-2},\\ y(1)=3$.",
+    "options": [
+     "$y=3 - \\frac{1}{x}$",
+     "$y=2 + \\frac{1}{x}$",
+     "$y=4 - \\frac{1}{x}$",
+     "$y=2 - \\frac{1}{x}$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "y = -1/x + C and 3 = -1 + C gives C = 4.",
+    "option_explanations": [
+     "Uses y0 as C.",
+     "Sign error on the antiderivative.",
+     "Correct.",
+     "Sign error when solving for C."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Solve the initial-value problem $\\frac{dy}{dt}=\\sin t+1,\\ y(\\frac{\\pi}{3})=\\frac12$.",
+   "options": [
+    "$y=t - \\cos{\\left(t \\right)} - \\frac{\\pi}{3} + 1$",
+    "$y=t - \\cos{\\left(t \\right)}$",
+    "$y=t - \\cos{\\left(t \\right)} + 1$",
+    "$y=t + \\cos{\\left(t \\right)} - \\frac{1}{2}$"
+   ],
+   "correct": [
+    0
+   ],
+   "explanation": "y = -cos t + t + C; at t = pi/3: 1/2 = -1/2 + pi/3 + C, so C = 1 - pi/3.",
+   "option_explanations": [
+    "Correct.",
+    "Forgets the constant of integration.",
+    "Uses y0 as C without substituting.",
+    "Sign error on the antiderivative."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Solve the initial-value problem $\\frac{dy}{dt}=\\cos t+2,\\ y(0)=1$.",
+    "options": [
+     "$y=2 t + \\sin{\\left(t \\right)}$",
+     "$y=2 t - \\sin{\\left(t \\right)} + 1$",
+     "$y=2 t + \\sin{\\left(t \\right)} - 1$",
+     "$y=2 t + \\sin{\\left(t \\right)} + 1$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "y = sin t + 2t + C and y(0) = 1 gives C = 1.",
+    "option_explanations": [
+     "Forgets the constant of integration.",
+     "Sign error on the cos t antiderivative.",
+     "Sign error when solving for C.",
+     "Correct."
+    ]
+   },
+   {
+    "type": "basic",
+    "question": "Solve $\\frac{dy}{dt}=\\sin t+1,\\ y\\left(\\frac{\\pi}{3}\\right)=\\frac12$.",
+    "answer": "$y=\\int(\\sin t+1)\\,dt=-\\cos t+t+C$.\nAt $t=\\frac\\pi3$: $\\frac12=-\\frac12+\\frac\\pi3+C$, so $C=1-\\frac\\pi3$.\nAnswer: $y=-\\cos t+t+1-\\frac\\pi3$."
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Which equation is correct? (Check by differentiating the right side.)",
+   "options": [
+    "$\\int 2x\\cos(x^2)\\,dx=\\sin(x^2)+C$",
+    "$\\int \\ln x\\,dx=\\frac{1}{x}+C$",
+    "$\\int \\tan x\\,dx=\\sec^2 x+C$",
+    "$\\int e^{2x}dx=e^{2x}+C$"
+   ],
+   "correct": [
+    0
+   ],
+   "explanation": "An antiderivative is verified by differentiating it back to the integrand.",
+   "option_explanations": [
+    "Correct: The derivative of sin(x^2) is 2x cos(x^2).",
+    "The derivative of 1/x is -1/x^2, not ln x.",
+    "The derivative of sec^2 x is 2 sec^2 x tan x.",
+    "The derivative of e^(2x) is 2e^(2x)."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Which equation is correct? (Differentiate to check.)",
+    "options": [
+     "$\\int \\left(\\frac{1}{x}+3\\right)dx=\\ln|x|+3+C$",
+     "$\\int \\left(\\frac{1}{x}+3\\right)dx=-\\frac{1}{x^2}+3x+C$",
+     "$\\int \\left(\\frac{1}{x}+3\\right)dx=\\frac{\\ln|x|}{3}+3x+C$",
+     "$\\int \\left(\\frac{1}{x}+3\\right)dx=\\ln|x|+3x+C$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "Differentiating the right side must return the integrand.",
+    "option_explanations": [
+     "Differentiating gives 1/x only.",
+     "-1/x^2 differentiates to 2/x^3.",
+     "Differentiating gives 1/(3x) + 3.",
+     "Correct: d/dx(ln|x| + 3x) = 1/x + 3."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which equation is correct? (Differentiate to check.)",
+    "options": [
+     "$\\int \\sec x\\tan x\\,dx=\\tan x\\sec x+C$",
+     "$\\int \\sec x\\tan x\\,dx=\\frac{\\sec^2x}{2}\\tan x+C$",
+     "$\\int \\sec x\\tan x\\,dx=\\sec x+C$",
+     "$\\int \\sec x\\tan x\\,dx=-\\sec x\\tan x+C$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "The derivative of sec x is sec x tan x.",
+    "option_explanations": [
+     "Multiplies the two functions instead of finding the antiderivative.",
+     "This does not differentiate to sec x tan x.",
+     "Correct: d/dx sec x = sec x tan x.",
+     "Sign error: d/dx(-sec x) = -sec x tan x."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Evaluate $\\int \\frac{dx}{x^3}$.",
+   "options": [
+    "$\\frac{1}{2 x^{2}} + C$",
+    "$- \\frac{1}{3 x^{4}} + C$",
+    "$- \\frac{3}{x^{4}} + C$",
+    "$- \\frac{1}{2 x^{2}} + C$"
+   ],
+   "correct": [
+    3
+   ],
+   "explanation": "$\\int\\frac{dx}{x^3}$ means $\\int\\frac{1}{x^3}dx$.",
+   "option_explanations": [
+    "Drops the minus sign from dividing by -2.",
+    "Subtracts 1 from the exponent.",
+    "Differentiates instead of integrating.",
+    "Correct."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int \\frac{dx}{x^2}$.",
+    "options": [
+     "$\\frac{1}{2 x^{2}} + C$",
+     "$- \\frac{1}{x} + C$",
+     "$- \\frac{1}{2 x^{3}} + C$",
+     "$- \\frac{2}{x^{3}} + C$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "$\\frac{dx}{x^2}$ is shorthand for $\\frac1{x^2}dx$.",
+    "option_explanations": [
+     "Sign lost and the exponent is divided by 2 instead of 1.",
+     "Correct.",
+     "Subtracts 1 from the exponent.",
+     "Differentiates instead of integrating."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "What does $\\int dx$ stand for?",
+    "options": [
+     "$\\int 1\\,dx=x+C$",
+     "$\\int 0\\,dx=0\\cdot x+C$",
+     "$\\int x\\,dx=\\frac{x^2}{2}+C$",
+     "$\\int \\frac{1}{x}\\,dx=\\ln|x|+C$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "$\\int dx$ is shorthand for $\\int 1\\,dx$, which equals x + C.",
+    "option_explanations": [
+     "Correct: Absorbing the factor 1 into dx.",
+     "dx is not zero.",
+     "dx is not a factor of x.",
+     "dx is not a 1/x."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Evaluate $\\int \\left(\\sqrt{x}+\\frac{1}{\\sqrt{x}}\\right)\\,dx$.",
+   "options": [
+    "$\\frac{2 x^{\\frac{3}{2}}}{3} + \\frac{\\sqrt{x}}{2} + C$",
+    "$\\frac{2 x^{\\frac{3}{2}}}{3} - 2 \\sqrt{x} + C$",
+    "$\\frac{2 x^{\\frac{3}{2}}}{3} + 2 \\sqrt{x} + C$",
+    "$\\frac{x^{\\frac{3}{2}}}{2} + 2 \\sqrt{x} + C$"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "Rewrite as x^(1/2) + x^(-1/2); the new exponents are 3/2 and 1/2.",
+   "option_explanations": [
+    "Divides the x^(-1/2) term by 2 instead of 1/2.",
+    "Sign error on the second term.",
+    "Correct.",
+    "Divides the first term by 2 instead of 3/2."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int \\left(x^{2/3}-\\frac{1}{x^{2}}\\right)\\,dx$.",
+    "options": [
+     "$\\frac{3 x^{\\frac{5}{3}}}{5} - \\frac{1}{x} + C$",
+     "$\\frac{3 x^{\\frac{5}{3}}}{5} + \\frac{1}{x} + C$",
+     "$\\frac{3 x^{\\frac{5}{3}}}{5} + \\ln{\\left(\\left|{x}\\right| \\right)} + C$",
+     "$\\frac{x^{\\frac{5}{3}}}{5} + \\frac{1}{x} + C$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "x^(2/3) -> (3/5)x^(5/3); -x^(-2) -> +x^(-1).",
+    "option_explanations": [
+     "Sign error: x^(-2) integrates to -1/x, so subtracting gives +1/x.",
+     "Correct.",
+     "Uses the 1/x rule for x^(-2).",
+     "Divides by 5 only, not by 5/3."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int \\left(\\frac{2}{\\sqrt{t}}-t\\sqrt{t}\\right)\\,dt$.",
+    "options": [
+     "$- \\frac{2 t^{\\frac{5}{2}}}{5} + 4 \\sqrt{t} + C$",
+     "$\\frac{2 t^{\\frac{5}{2}}}{5} + 4 \\sqrt{t} + C$",
+     "$- \\frac{2 t^{\\frac{5}{2}}}{5} + 2 \\sqrt{t} + C$",
+     "$- \\frac{t^{\\frac{5}{2}}}{2} + 4 \\sqrt{t} + C$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "2t^(-1/2) -> 4t^(1/2); t^(3/2) -> (2/5)t^(5/2).",
+    "option_explanations": [
+     "Correct.",
+     "Sign error on the second term.",
+     "Divides 2 t^(-1/2) by the old exponent.",
+     "Divides the second term by 2 instead of 5/2."
+    ]
+   }
+  ]
+ }
+]

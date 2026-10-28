@@ -1,0 +1,3839 @@
+[
+ {
+  "original": {
+   "type": "mcq",
+   "question": "A graph is written $G=(V,E)$. What do $V$ and $E$ contain?",
+   "options": [
+    "A set of edges and a set of cycles",
+    "A set of vertices and a set of paths",
+    "A set of vertices and a set of edges",
+    "A set of vertices and a set of degrees"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "A graph is a set of vertices together with a set of edges, where each edge connects two vertices.",
+   "option_explanations": [
+    "Cycles are special walks, not part of the definition.",
+    "Paths are derived from edges, not stored in $E$.",
+    "Correct.",
+    "Degrees are computed from the edges."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "In a road-network graph, each city is an element of which set, and each road is an element of which set?",
+    "options": [
+     "$V$ for cities, $E$ for roads",
+     "$E$ for cities, $V$ for roads",
+     "$V$ for cities, $V$ for roads",
+     "$E$ for cities, $E$ for roads"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Cities are the vertices and roads are the edges.",
+    "option_explanations": [
+     "Correct.",
+     "This swaps the two sets.",
+     "Roads connect vertices; they are not vertices.",
+     "Cities are not edges."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which pair is the data that defines a graph $G$?",
+    "options": [
+     "Vertices and their labels",
+     "Edges and their degrees",
+     "Paths and cycles",
+     "Vertices and edges"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "$G=(V,E)$: vertices and the edges connecting pairs of them.",
+    "option_explanations": [
+     "Labels are optional extras.",
+     "Degrees follow from the edges.",
+     "These are built from vertices and edges.",
+     "Correct."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "An edge $e=(u,v)$ joins vertices $u$ and $v$. Which statement uses the terms correctly?",
+   "options": [
+    "$u$ and $v$ are incident; $e$ is adjacent to both",
+    "$u$ and $v$ are adjacent; $e$ is incident to both",
+    "$u$ and $v$ are adjacent; $e$ is adjacent to both",
+    "$u$ and $v$ are incident; $e$ is incident to both"
+   ],
+   "correct": [
+    1
+   ],
+   "explanation": "Vertices joined by an edge are adjacent (neighbors); the edge is incident to its end points.",
+   "option_explanations": [
+    "The terms are swapped.",
+    "Correct.",
+    "An edge is incident to, not adjacent to, its end points.",
+    "Two vertices are adjacent, not incident, to each other."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Edge $f$ has end points $x$ and $y$. What is the relation between $x$ and $f$?",
+    "options": [
+     "Adjacent",
+     "Incident",
+     "Neighbors",
+     "Isolated"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "An edge is incident to each of its end points; its end points are adjacent to each other.",
+    "option_explanations": [
+     "Adjacency is between two vertices.",
+     "Correct.",
+     "Neighbors are vertices, and $f$ is an edge.",
+     "An isolated vertex has no incident edge at all."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "A graph has edges $(a,b),(a,c),(b,c),(c,d)$. Which pair of vertices is NOT adjacent?",
+    "options": [
+     "$a$ and $b$",
+     "$b$ and $c$",
+     "$c$ and $d$",
+     "$b$ and $d$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "Two vertices are adjacent only when an edge joins them directly.",
+    "option_explanations": [
+     "Edge $(a,b)$ exists.",
+     "Edge $(b,c)$ exists.",
+     "Edge $(c,d)$ exists.",
+     "Correct: No edge $(b,d)$."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "A graph has edges $(1,2),(1,3),(1,4),(2,3)$. What is $\\deg(3)$?",
+   "options": [
+    "2",
+    "1",
+    "3",
+    "4"
+   ],
+   "correct": [
+    0
+   ],
+   "explanation": "deg is the number of edges incident to the vertex; vertex 3 lies on $(1,3)$ and $(2,3)$.",
+   "option_explanations": [
+    "Correct.",
+    "Misses one of the two edges at 3.",
+    "This is $\\deg(1)$.",
+    "Number of edges in the graph."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "A graph has edges $(a,b),(a,c),(a,d),(a,e),(b,c)$. What is $\\deg(a)$?",
+    "options": [
+     "2",
+     "3",
+     "4",
+     "5"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Four edges contain $a$.",
+    "option_explanations": [
+     "Only counts the neighbors $b$ and $c$.",
+     "Misses one edge at $a$.",
+     "Correct.",
+     "This is the total number of edges."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "A graph has edges $(p,q),(q,r),(r,s),(q,s),(s,t)$. What is $\\deg(s)$?",
+    "options": [
+     "2",
+     "4",
+     "5",
+     "3"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "The edges at $s$ are $(r,s),(q,s),(s,t)$.",
+    "option_explanations": [
+     "Misses one edge.",
+     "Overcounts.",
+     "This is the number of edges in the graph.",
+     "Correct."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "In a multigraph, vertex $w$ has one loop and three ordinary edges. What is $\\deg(w)$?",
+   "options": [
+    "4",
+    "5",
+    "6",
+    "3"
+   ],
+   "correct": [
+    1
+   ],
+   "explanation": "A loop is counted twice in the degree, so $2+3=5$.",
+   "option_explanations": [
+    "Counts the loop once.",
+    "Correct.",
+    "Counts the loop three times.",
+    "Ignores the loop."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Vertex $z$ of a multigraph has two loops and two ordinary edges. What is $\\deg(z)$?",
+    "options": [
+     "6",
+     "4",
+     "5",
+     "8"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Each loop adds 2: $2\\cdot 2+2=6$.",
+    "option_explanations": [
+     "Correct.",
+     "Counts each loop once.",
+     "Counts one loop twice and the other once, then adds the two ordinary edges: $2+1+2$.",
+     "Counts each ordinary edge twice."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Vertex $m$ of a multigraph has three loops and one ordinary edge. What is $\\deg(m)$?",
+    "options": [
+     "4",
+     "10",
+     "7",
+     "5"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Each loop adds 2: $3\\cdot2+1=7$.",
+    "option_explanations": [
+     "Counts each loop once.",
+     "Counts each loop three times and adds the edge: $3\\cdot3+1$.",
+     "Correct.",
+     "Counts two loops and the edge."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "A graph has 12 edges. What is the sum of the degrees of all its vertices?",
+   "options": [
+    "24",
+    "12",
+    "6",
+    "36"
+   ],
+   "correct": [
+    0
+   ],
+   "explanation": "Handshaking theorem: $\\sum_{v}\\deg(v)=2|E|$.",
+   "option_explanations": [
+    "Correct.",
+    "This is $|E|$, not $2|E|$.",
+    "Half the edge count.",
+    "Three times the edge count."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "A graph has 15 edges. What is the degree sum?",
+    "options": [
+     "15",
+     "45",
+     "30",
+     "7.5"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "$\\sum \\deg(v)=2\\cdot 15=30$.",
+    "option_explanations": [
+     "Equals $|E|$ only for the directed in/out sums.",
+     "Triple instead of double.",
+     "Correct.",
+     "Half of $|E|$."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "The degrees of all vertices of a graph add up to 40. How many edges does it have?",
+    "options": [
+     "40",
+     "20",
+     "80",
+     "10"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "$2|E|=40$, so $|E|=20$.",
+    "option_explanations": [
+     "Treats the sum as $|E|$.",
+     "Correct.",
+     "Doubles again.",
+     "Halves too many times."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "A graph has 5 vertices with degrees $3,3,2,2,2$. How many edges does it have?",
+   "options": [
+    "12",
+    "5",
+    "7",
+    "6"
+   ],
+   "correct": [
+    3
+   ],
+   "explanation": "Degree sum is 12, so $|E|=12/2=6$.",
+   "option_explanations": [
+    "The degree sum, not the edge count.",
+    "The number of vertices.",
+    "Off by one.",
+    "Correct."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "A graph has 6 vertices with degrees $4,3,3,2,2,2$. How many edges?",
+    "options": [
+     "16",
+     "6",
+     "8",
+     "7"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Sum $=16$, so $|E|=8$.",
+    "option_explanations": [
+     "The degree sum.",
+     "The number of vertices.",
+     "Correct.",
+     "Off by one."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "A graph has 7 vertices with degrees $1,1,1,2,2,3,4$. How many edges?",
+    "options": [
+     "7",
+     "14",
+     "6",
+     "28"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Sum $=14$, so $|E|=7$.",
+    "option_explanations": [
+     "Correct.",
+     "The degree sum.",
+     "Counts the vertices minus one.",
+     "Doubles the sum instead of halving it."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Which list of vertex degrees is impossible for any graph?",
+   "options": [
+    "$1,2,2,3$",
+    "$2,2,2,2,2$",
+    "$1,1,2,2,4$",
+    "$3,3,3,3,3$"
+   ],
+   "correct": [
+    3
+   ],
+   "explanation": "The degree sum must be even ($2|E|$); only one list has an odd sum.",
+   "option_explanations": [
+    "Sum 8: possible.",
+    "Sum 10: possible.",
+    "Sum 10: possible.",
+    "Correct: Sum 15 is odd."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Which list of degrees cannot belong to a graph on 6 vertices?",
+    "options": [
+     "$4,3,3,2,2,2$",
+     "$4,3,3,3,2,2$",
+     "$1,1,1,1,1,1$",
+     "$2,3,3,4,4,0$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "An odd degree sum violates the handshaking theorem.",
+    "option_explanations": [
+     "Sum 16: possible.",
+     "Correct: Sum 17 is odd.",
+     "Sum 6: possible.",
+     "Sum 16: possible."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "For which number of vertices $n$ is a graph with every vertex of degree 3 impossible?",
+    "options": [
+     "$n=4$",
+     "$n=9$",
+     "$n=6$",
+     "$n=8$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Degree sum $3n$ must be even, so $n$ must be even.",
+    "option_explanations": [
+     "$K_4$ works.",
+     "Correct: Sum 27 is odd.",
+     "Degree sum 18: possible.",
+     "Degree sum 24: possible."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Why does the degree sum of a graph equal $2|E|$?",
+   "options": [
+    "Every edge adds 2 to the degree of one end point",
+    "Every vertex lies on exactly two edges",
+    "Each edge is counted at its smaller end point",
+    "Each edge adds 1 to the degree of both its end points"
+   ],
+   "correct": [
+    3
+   ],
+   "explanation": "Every edge adds 1 to the degree of each of its two end points, so 2 per edge in total.",
+   "option_explanations": [
+    "Each end point gets 1, not 2 for one of them.",
+    "Vertex degrees can be anything.",
+    "Both end points count it.",
+    "Correct."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "In the handshaking proof, what is the total contribution of a single loop to the degree sum?",
+    "options": [
+     "2",
+     "1",
+     "0",
+     "4"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "A loop has one vertex used twice, so it adds 2 to that vertex's degree.",
+    "option_explanations": [
+     "Correct.",
+     "Loops are counted twice.",
+     "Loops do count.",
+     "Too many."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "In the proof of the handshaking theorem, what do all the edges contribute to the degree sum together?",
+    "options": [
+     "$|E|$",
+     "$|V|$",
+     "$2|E|$",
+     "$2|V|$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Each of the $|E|$ edges contributes 2.",
+    "option_explanations": [
+     "One per edge only.",
+     "Depends on vertices, not edges.",
+     "Correct.",
+     "Depends on vertices."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "In a directed graph, $\\mathrm{indeg}(v)$ is the number of edges that",
+   "options": [
+    "start at $v$",
+    "touch $v$ in either direction",
+    "start at a neighbor of $v$",
+    "end at $v$"
+   ],
+   "correct": [
+    3
+   ],
+   "explanation": "$\\mathrm{indeg}(v)$ counts edges with terminal vertex $v$.",
+   "option_explanations": [
+    "That is $\\mathrm{outdeg}(v)$.",
+    "That is $\\deg(v)$ ignoring directions.",
+    "Not a definition.",
+    "Correct."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "In a directed graph, $\\mathrm{outdeg}(v)$ is the number of edges with",
+    "options": [
+     "$v$ as terminal vertex",
+     "$v$ as initial vertex",
+     "$v$ as either end point",
+     "$v$ as a loop only"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "$\\mathrm{outdeg}(v)$ counts edges whose initial vertex is $v$.",
+    "option_explanations": [
+     "That is $\\mathrm{indeg}(v)$.",
+     "Correct.",
+     "That is the total degree.",
+     "Loops are only one kind of edge."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "For a directed edge $(p,q)$, which description is right?",
+    "options": [
+     "$p$ is initial and $q$ is terminal",
+     "$p$ is terminal and $q$ is initial",
+     "Both $p$ and $q$ are initial",
+     "$q$ is initial and $p$ is isolated"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "In $(u,v)$ the edge runs from the initial vertex $u$ to the terminal vertex $v$.",
+    "option_explanations": [
+     "Correct.",
+     "Swapped.",
+     "One is initial, the other terminal.",
+     "Not defined that way."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "A directed graph has edges $(a,b),(a,c),(b,c),(d,c),(c,a)$. What is $\\mathrm{indeg}(c)$?",
+   "options": [
+    "1",
+    "2",
+    "3",
+    "4"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "Edges ending at $c$: $(a,c),(b,c),(d,c)$.",
+   "option_explanations": [
+    "This is outdeg(c).",
+    "Misses one incoming edge.",
+    "Correct.",
+    "Counts $(c,a)$ too."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "A directed graph has edges $(x,y),(x,z),(y,z),(z,x),(w,x),(x,w)$. What is $\\mathrm{outdeg}(x)$?",
+    "options": [
+     "3",
+     "2",
+     "4",
+     "5"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Edges leaving $x$: $(x,y),(x,z),(x,w)$.",
+    "option_explanations": [
+     "Correct.",
+     "This is indeg(x).",
+     "No direction-based count gives 4: $x$ has 3 out-edges and 2 in-edges.",
+     "Counts all edges at $x$ regardless of direction."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "A directed graph has edges $(1,2),(1,3),(2,3),(3,4),(4,2),(4,1),(5,4)$. What is $\\mathrm{indeg}(4)$?",
+    "options": [
+     "1",
+     "3",
+     "2",
+     "4"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Edges ending at 4: $(3,4)$ and $(5,4)$.",
+    "option_explanations": [
+     "Misses one edge.",
+     "Counts one of the outgoing edges $(4,2)$ or $(4,1)$ as incoming.",
+     "Correct.",
+     "Counts all edges at vertex 4."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "A directed graph has 8 edges. What is the sum of all outdegrees?",
+   "options": [
+    "4",
+    "8",
+    "16",
+    "64"
+   ],
+   "correct": [
+    1
+   ],
+   "explanation": "Sum of indegrees = sum of outdegrees = $|E|$.",
+   "option_explanations": [
+    "Half the edges.",
+    "Correct.",
+    "Counts in- and out-degree together.",
+    "Squares the edge count."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "In a directed graph the indegrees are $2,0,1,3,1$. What is the sum of the outdegrees?",
+    "options": [
+     "14",
+     "5",
+     "0",
+     "7"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "The two sums are equal, both $|E|$: $2+0+1+3+1=7$.",
+    "option_explanations": [
+     "Doubles.",
+     "Number of vertices.",
+     "Not forced to be zero.",
+     "Correct."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "A directed graph has 11 edges. What is (sum of indegrees) + (sum of outdegrees)?",
+    "options": [
+     "11",
+     "5",
+     "22",
+     "121"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Each sum is 11, so the total is 22.",
+    "option_explanations": [
+     "Only one of the sums.",
+     "Half.",
+     "Correct.",
+     "Squares."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Which describes a complete graph $K_n$?",
+   "options": [
+    "A simple undirected graph with every pair joined",
+    "A simple undirected graph with no cycles",
+    "A multigraph with all pairs joined by an edge",
+    "A directed graph with an edge from each vertex to one other"
+   ],
+   "correct": [
+    0
+   ],
+   "explanation": "$K_n$ is simple, undirected, and every pair of vertices is joined by an edge.",
+   "option_explanations": [
+    "Correct.",
+    "That is a forest.",
+    "Complete graphs are simple.",
+    "Not the definition."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "In which graph can no further edge be added without losing simplicity?",
+    "options": [
+     "Any tree",
+     "Any cycle $C_n$ with $n\\ge4$",
+     "Any bipartite graph",
+     "$K_n$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "That maximal property defines the complete graph.",
+    "option_explanations": [
+     "Edges can still be added, creating a cycle.",
+     "Chords can still be added.",
+     "Edges between the parts or inside can still be added in general.",
+     "Correct."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which statement about $K_5$ is true?",
+    "options": [
+     "It has loops at each vertex",
+     "It has 10 edges",
+     "It has 5 edges",
+     "It is directed"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "$K_5$ is simple and undirected with all $\\binom{5}{2}=10$ pairs joined.",
+    "option_explanations": [
+     "Complete graphs are simple (no loops).",
+     "Correct.",
+     "Counts the vertices.",
+     "Complete graphs are undirected."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "How many edges does $K_7$ have?",
+   "options": [
+    "14",
+    "21",
+    "42",
+    "28"
+   ],
+   "correct": [
+    1
+   ],
+   "explanation": "$\\binom{7}{2}=21$.",
+   "option_explanations": [
+    "$2\\cdot 7$.",
+    "Correct.",
+    "$7\\cdot 6$, counting each pair twice.",
+    "$\\binom{8}{2}$."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "How many edges does $K_{10}$ have?",
+    "options": [
+     "90",
+     "100",
+     "36",
+     "45"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "$\\binom{10}{2}=10\\cdot9/2=45$.",
+    "option_explanations": [
+     "Counts each edge twice.",
+     "$10^2$.",
+     "$\\binom{9}{2}$.",
+     "Correct."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "A complete graph $K_n$ has 28 edges. What is $n$?",
+    "options": [
+     "8",
+     "7",
+     "9",
+     "14"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "$n(n-1)/2=28$ gives $n=8$.",
+    "option_explanations": [
+     "Correct.",
+     "$\\binom72=21$.",
+     "$\\binom92=36$.",
+     "Half of 28."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "A graph has edges $ab,bc,cd,da,ac$. How is $(a,b,c,a,d)$ best described?",
+   "options": [
+    "A path",
+    "A cycle",
+    "A walk that is not a path",
+    "Not a walk"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "Consecutive vertices are adjacent ($ab,bc,ca,ad$), but $a$ repeats in the middle, so it is a walk, not a path.",
+   "option_explanations": [
+    "$a$ repeats, and it is not the last vertex.",
+    "First and last vertices differ.",
+    "Correct.",
+    "Every consecutive pair is adjacent."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "A graph has edges $pq,qr,rs,sp,qs$. How is $(p,q,r,s,p)$ best described?",
+    "options": [
+     "A walk that is not a path",
+     "Not a walk",
+     "A path of length zero",
+     "A cycle"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "Distinct vertices except first = last: a cycle of length 4.",
+    "option_explanations": [
+     "Only the first and last repeat, which a path allows.",
+     "All consecutive pairs are adjacent.",
+     "It has 4 edges.",
+     "Correct."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "A graph has edges $ab,bc,cd,de,ce$. How is $(a,c,d,e)$ best described?",
+    "options": [
+     "A path of length 3",
+     "Not a walk",
+     "A walk that is not a path",
+     "A cycle"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "$a$ and $c$ are not adjacent, so it is not even a walk.",
+    "option_explanations": [
+     "$ac$ is not an edge.",
+     "Correct.",
+     "Not a walk at all.",
+     "First and last differ."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Why is the length of a path always finite?",
+   "options": [
+    "Each edge may be used at most twice",
+    "A path must end at a vertex of degree 1",
+    "No vertex repeats except possibly first and last",
+    "Edges of a path have no weights"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "Vertices cannot repeat (except possibly first = last), and the graph has finitely many vertices.",
+   "option_explanations": [
+    "Not part of the definition.",
+    "Paths can end anywhere.",
+    "Correct.",
+    "Weights are unrelated."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "The sequence $(b,c,b,c,b,c,\\dots)$ in a graph with edge $bc$ is",
+    "options": [
+     "an infinite path",
+     "an infinite walk",
+     "an infinite cycle",
+     "a finite walk"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Repeating vertices forever gives an infinite walk, not a path.",
+    "option_explanations": [
+     "Paths are finite.",
+     "Correct.",
+     "Cycles are finite.",
+     "It never ends."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which of the following can have infinite length?",
+    "options": [
+     "A path",
+     "A cycle",
+     "A path of length one",
+     "A walk"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "Only walks can repeat vertices indefinitely.",
+    "option_explanations": [
+     "Vertex repetition is forbidden.",
+     "Cycles are paths, hence finite.",
+     "Length one.",
+     "Correct."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "A graph is bipartite if its vertices can be split into two partitions so that",
+   "options": [
+    "every vertex of one part is adjacent to every vertex of the other",
+    "each partition forms a cycle",
+    "no edge lies inside a partition",
+    "both partitions have the same size"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "No edge has both end points in the same partition.",
+   "option_explanations": [
+    "That is complete bipartite.",
+    "Not required.",
+    "Correct.",
+    "Sizes can differ."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "In a bipartite graph drawn in two boxes, where are all the edges?",
+    "options": [
+     "Between the boxes",
+     "Inside one box",
+     "Inside both boxes",
+     "Between every pair of boxed vertices"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Every edge goes between the two parts.",
+    "option_explanations": [
+     "Correct.",
+     "Edges inside a part are forbidden.",
+     "Edges inside a part are forbidden.",
+     "That is the complete case."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "The edges are $14,15,24,26,35,36$. Which split into two parts shows the graph is bipartite?",
+    "options": [
+     "$\\{1,2,4\\}$ and $\\{3,5,6\\}$",
+     "$\\{1,2,5\\}$ and $\\{3,4,6\\}$",
+     "$\\{1,3,4\\}$ and $\\{2,5,6\\}$",
+     "$\\{1,2,3\\}$ and $\\{4,5,6\\}$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "Each edge must join the two parts; $\\{1,2,3\\}$ and $\\{4,5,6\\}$ work.",
+    "option_explanations": [
+     "Edge 14 is inside a part.",
+     "Edge 15 is inside a part.",
+     "Edge 14 is inside a part.",
+     "Correct."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Which cycle is NOT bipartite?",
+   "options": [
+    "$C_4$",
+    "$C_9$",
+    "$C_6$",
+    "$C_{10}$"
+   ],
+   "correct": [
+    1
+   ],
+   "explanation": "Odd cycles force an edge inside a part.",
+   "option_explanations": [
+    "Even: bipartite.",
+    "Correct: Odd.",
+    "Even: bipartite.",
+    "Even: bipartite."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Which cycle can be drawn as a bipartite graph?",
+    "options": [
+     "$C_5$",
+     "$C_{12}$",
+     "$C_7$",
+     "$C_{11}$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Even cycles alternate between the two parts.",
+    "option_explanations": [
+     "Odd.",
+     "Correct: Even.",
+     "Odd.",
+     "Odd."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "A cycle $C_n$ is bipartite exactly when",
+    "options": [
+     "$n$ is odd",
+     "$n$ is a multiple of 3",
+     "$n\\ge4$",
+     "$n$ is even"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "Alternating vertices split into parts only if the length is even.",
+    "option_explanations": [
+     "Odd cycles are not bipartite.",
+     "Irrelevant.",
+     "$C_5$ fails.",
+     "Correct."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "What is the degree sum of $K_{4,6}$?",
+   "options": [
+    "48",
+    "24",
+    "10",
+    "20"
+   ],
+   "correct": [
+    0
+   ],
+   "explanation": "$K_{m,n}$ has $mn$ edges, so degree sum $2mn=48$.",
+   "option_explanations": [
+    "Correct.",
+    "This is the edge count $mn$.",
+    "$m+n$.",
+    "$2(m+n)$."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "How many edges does $K_{5,7}$ have?",
+    "options": [
+     "12",
+     "70",
+     "35",
+     "24"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "$mn=35$.",
+    "option_explanations": [
+     "$m+n$.",
+     "$2mn$, the degree sum.",
+     "Correct.",
+     "$2(m+n)$."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "In $K_{2,9}$, what is the degree of a vertex in the part of size 2?",
+    "options": [
+     "2",
+     "11",
+     "18",
+     "9"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "It is adjacent to all 9 vertices of the other part.",
+    "option_explanations": [
+     "Its own part's size.",
+     "All vertices.",
+     "Edge count.",
+     "Correct."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "A graph has edges $ab,ac,bc,cd$. What is the adjacency-list entry for $c$?",
+   "options": [
+    "$a,b$",
+    "$a,b,d$",
+    "$b,d$",
+    "$a,d$"
+   ],
+   "correct": [
+    1
+   ],
+   "explanation": "List all neighbors of $c$: $a,b,d$.",
+   "option_explanations": [
+    "Misses $d$.",
+    "Correct.",
+    "Misses $a$.",
+    "Misses $b$."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "A graph has edges $xy,xz,yw,zw,zv$. What is the adjacency-list entry for $z$?",
+    "options": [
+     "$x,w,v$",
+     "$x,w$",
+     "$y,w,v$",
+     "$x,y,w,v$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Neighbors of $z$: $x,w,v$.",
+    "option_explanations": [
+     "Correct.",
+     "Misses $v$.",
+     "$y$ is not adjacent to $z$.",
+     "$y$ is not adjacent to $z$."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "A simple graph has 7 edges. How many vertex entries in total appear across all its adjacency lists?",
+    "options": [
+     "7",
+     "21",
+     "14",
+     "28"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Each edge appears in two lists: $2\\cdot7=14$.",
+    "option_explanations": [
+     "Each edge appears twice.",
+     "Too many.",
+     "Correct.",
+     "Too many."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "For which kind of graph does an adjacency list fail to work?",
+   "options": [
+    "Graphs with multiple edges between two vertices",
+    "Directed graphs",
+    "Graphs containing cycles",
+    "Graphs with isolated vertices"
+   ],
+   "correct": [
+    0
+   ],
+   "explanation": "A list of neighbors cannot record how many parallel edges join two vertices.",
+   "option_explanations": [
+    "Correct.",
+    "Lists of out-neighbors work.",
+    "Cycles are no problem.",
+    "Just an empty list."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Which graph type is unsuitable for an adjacency list?",
+    "options": [
+     "A directed graph",
+     "A complete graph",
+     "A multigraph with parallel edges",
+     "A tree"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Parallel edges cannot be distinguished from a single edge in a neighbor list.",
+    "option_explanations": [
+     "Works.",
+     "Works.",
+     "Correct.",
+     "Works."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which graph would have an ambiguous adjacency list?",
+    "options": [
+     "Two vertices joined by one edge",
+     "Two vertices joined by three parallel edges",
+     "Two vertices joined by a directed edge",
+     "A single isolated vertex"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Two vertices joined by three edges list each other once, hiding the multiplicity.",
+    "option_explanations": [
+     "Unambiguous.",
+     "Correct.",
+     "Unambiguous.",
+     "Unambiguous."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "A directed graph has edges $(a,b),(a,c),(c,b),(b,d),(d,a)$. What is the adjacency-list entry for $b$?",
+   "options": [
+    "$a,c,d$",
+    "$a,c$",
+    "$a,d$",
+    "$d$"
+   ],
+   "correct": [
+    3
+   ],
+   "explanation": "For a directed graph, list the vertices $b$ points to: only $d$.",
+   "option_explanations": [
+    "Includes in-neighbors too.",
+    "Lists only the in-neighbors.",
+    "Includes an in-neighbor.",
+    "Correct."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "A directed graph has edges $(p,q),(q,r),(r,p),(r,q)$. What is the adjacency-list entry for $q$?",
+    "options": [
+     "$p$",
+     "$p,r$",
+     "$r$",
+     "$q,r$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "$q$ has only one outgoing edge, to $r$.",
+    "option_explanations": [
+     "$p$ points to $q$, not the reverse.",
+     "Includes the in-neighbor $p$.",
+     "Correct.",
+     "No loop at $q$."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "A directed graph has edges $(a,b),(a,c),(b,c)$. After reversing every edge, what is the entry for $c$?",
+    "options": [
+     "$a,b$",
+     "empty",
+     "$a$",
+     "$b$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Reversed edges are $(b,a),(c,a),(c,b)$; so $c$ points to $a$ and $b$.",
+    "option_explanations": [
+     "Correct.",
+     "That was the original list of $c$.",
+     "Misses $b$.",
+     "Misses $a$."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "A simple undirected graph has adjacency matrix $M=\\begin{pmatrix}0&1&1&0\\\\1&0&1&1\\\\1&1&0&0\\\\0&1&0&0\\end{pmatrix}$ (rows and columns $a,b,c,d$). How many edges does it have?",
+   "options": [
+    "8",
+    "3",
+    "6",
+    "4"
+   ],
+   "correct": [
+    3
+   ],
+   "explanation": "The matrix has eight 1s; each edge gives two, so there are 4 edges.",
+   "option_explanations": [
+    "Counts the 1s without halving.",
+    "Counts the 1s in a single row.",
+    "Not matching.",
+    "Correct."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "A simple undirected graph on vertices $1,\\dots,5$ has adjacency matrix $M=\\begin{pmatrix}0&1&1&1&0\\\\1&0&0&1&1\\\\1&0&0&0&0\\\\1&1&0&0&1\\\\0&1&0&1&0\\end{pmatrix}$. What is $\\deg(2)$?",
+    "options": [
+     "2",
+     "3",
+     "4",
+     "5"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Row 2 sum is $1+0+0+1+1=3$.",
+    "option_explanations": [
+     "Misses one 1.",
+     "Correct.",
+     "Row 2 has only three 1s; the diagonal entries are 0.",
+     "The number of vertices."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "The adjacency matrix of a simple undirected graph with 9 edges contains how many entries equal to 1?",
+    "options": [
+     "9",
+     "18",
+     "36",
+     "81"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Each edge sets two entries: $18$.",
+    "option_explanations": [
+     "One per edge.",
+     "Correct.",
+     "Too many.",
+     "$9^2$."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "A multigraph has 3 parallel edges between $u$ and $v$ (undirected). What are $M[u,v]$ and $M[v,u]$?",
+   "options": [
+    "1 and 1",
+    "3 and 0",
+    "6 and 6",
+    "3 and 3"
+   ],
+   "correct": [
+    3
+   ],
+   "explanation": "Both entries equal the number of edges between the pair.",
+   "option_explanations": [
+    "Only for simple graphs.",
+    "Not symmetric for undirected graphs.",
+    "Double counted.",
+    "Correct."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "In an undirected multigraph's adjacency matrix, $M[u,v]=2$. This means",
+    "options": [
+     "two edges join $u$ and $v$",
+     "the weight of the edge is 2",
+     "$u$ has degree 2",
+     "$v$ is 2 steps from $u$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "The entry counts edges between $u$ and $v$.",
+    "option_explanations": [
+     "Correct.",
+     "That is a weighted graph.",
+     "Degree is a row sum.",
+     "Not meaning of the entry."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Vertex $u$ has 2 parallel edges to $v$ and 1 edge to $w$ (no loops). The row of $u$ in the adjacency matrix sums to",
+    "options": [
+     "2",
+     "1",
+     "3",
+     "4"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "The row sum counts all edges at $u$: $2+1=3$.",
+    "option_explanations": [
+     "Misses the edge to $w$.",
+     "Only the edge to $w$.",
+     "Correct.",
+     "Overcounts."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "A directed edge $(u,v)$ is recorded in the adjacency matrix by",
+   "options": [
+    "$M[v,u]=1$ only",
+    "both $M[u,v]=1$ and $M[v,u]=1$",
+    "$M[u,u]=1$",
+    "$M[u,v]=1$ only"
+   ],
+   "correct": [
+    3
+   ],
+   "explanation": "Only the entry for the direction $u\\to v$ gets 1.",
+   "option_explanations": [
+    "Reversed.",
+    "That is for undirected edges.",
+    "That would be a loop.",
+    "Correct."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "A directed graph has edges $(1,2),(2,3),(3,1),(1,3)$. What is row 1 of its adjacency matrix?",
+    "options": [
+     "$(0,0,1)$",
+     "$(0,1,1)$",
+     "$(0,1,0)$",
+     "$(1,1,0)$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Row 1 shows edges leaving vertex 1: to 2 and to 3.",
+    "option_explanations": [
+     "Only edge $(1,3)$.",
+     "Correct.",
+     "Only edge $(1,2)$.",
+     "Includes a loop and misses $(1,3)$."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "A directed graph has edges $(a,b),(b,c),(c,a),(c,b)$ with rows and columns ordered $a,b,c$. What is row $c$?",
+    "options": [
+     "$(1,1,0)$",
+     "$(0,1,0)$",
+     "$(1,0,0)$",
+     "$(0,0,1)$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Edges leaving $c$ go to $a$ and $b$.",
+    "option_explanations": [
+     "Correct.",
+     "That is row $a$ (the edge $(a,b)$), not row $c$.",
+     "Misses $(c,b)$.",
+     "Not a loop."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Which statement about symmetry of adjacency matrices is correct?",
+   "options": [
+    "Symmetric for directed graphs, not for undirected ones",
+    "Symmetric for trees, not for other graphs",
+    "Symmetric for undirected graphs, not always for directed ones",
+    "Symmetric for simple graphs, not for multigraphs"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "An undirected edge sets both $M[u,v]$ and $M[v,u]$; a directed edge sets only one.",
+   "option_explanations": [
+    "Reversed.",
+    "Any undirected graph gives symmetry.",
+    "Correct.",
+    "Undirected multigraphs are also symmetric."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "A matrix $M$ has $M[2,5]=1$ but $M[5,2]=0$. It could be the adjacency matrix of",
+    "options": [
+     "A directed graph",
+     "A simple undirected graph",
+     "An undirected multigraph",
+     "A complete graph"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Asymmetry rules out undirected graphs.",
+    "option_explanations": [
+     "Correct.",
+     "Would be symmetric.",
+     "Would be symmetric.",
+     "Would be symmetric."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "$M[u,v]=M[v,u]$ for all $u,v$ is guaranteed whenever the graph is",
+    "options": [
+     "directed",
+     "connected",
+     "undirected",
+     "weighted"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Undirected edges are recorded in both positions.",
+    "option_explanations": [
+     "Not guaranteed.",
+     "A directed connected graph may be asymmetric.",
+     "Correct.",
+     "A directed weighted graph may be asymmetric."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Reversing every edge of a directed graph changes its adjacency matrix $M$ into",
+   "options": [
+    "$M$ itself",
+    "its transpose",
+    "the matrix with 0s and 1s swapped",
+    "$M$ with rows in reverse order"
+   ],
+   "correct": [
+    1
+   ],
+   "explanation": "Edge $(u,v)$ becomes $(v,u)$, swapping row and column roles.",
+   "option_explanations": [
+    "Only for symmetric $M$.",
+    "Correct.",
+    "That is the complement.",
+    "Not the effect of reversing directions."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "In a directed graph $M[3,1]=1$. After reversing all edges, which entry is 1?",
+    "options": [
+     "$M'[3,1]$",
+     "$M'[1,1]$",
+     "$M'[3,3]$",
+     "$M'[1,3]$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "Edge $(3,1)$ becomes $(1,3)$.",
+    "option_explanations": [
+     "Unchanged position.",
+     "Not a loop.",
+     "Not a loop.",
+     "Correct."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "After reversing all edges of a directed graph, the row of $v$ in the new matrix equals which line of the old matrix?",
+    "options": [
+     "Row of $v$",
+     "Row of $v$ read backwards",
+     "Column of $v$",
+     "Diagonal entry of $v$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Out-edges become in-edges, so rows and columns swap.",
+    "option_explanations": [
+     "That would be unchanged.",
+     "Not the effect.",
+     "Correct.",
+     "Not meaningful here."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "A simple graph has 8 vertices and 15 edges. What is the size of its incidence matrix?",
+   "options": [
+    "$8\\times15$",
+    "$15\\times8$",
+    "$8\\times8$",
+    "$15\\times15$"
+   ],
+   "correct": [
+    0
+   ],
+   "explanation": "Rows are vertices, columns are edges: $8\\times15$.",
+   "option_explanations": [
+    "Correct.",
+    "Rows and columns swapped.",
+    "Adjacency matrix size.",
+    "Not a matrix of this graph."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "What is the size of the incidence matrix of $K_5$?",
+    "options": [
+     "$5\\times5$",
+     "$10\\times10$",
+     "$10\\times5$",
+     "$5\\times10$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "$K_5$ has 5 vertices and 10 edges.",
+    "option_explanations": [
+     "Adjacency matrix.",
+     "Not right.",
+     "Swapped.",
+     "Correct."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "What is the size of the incidence matrix of $K_{3,4}$?",
+    "options": [
+     "$7\\times7$",
+     "$7\\times12$",
+     "$12\\times7$",
+     "$3\\times4$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "7 vertices and $3\\cdot4=12$ edges.",
+    "option_explanations": [
+     "Adjacency matrix.",
+     "Correct.",
+     "Swapped.",
+     "The part sizes."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "In the incidence matrix $\\begin{array}{c|cccc} &e_1&e_2&e_3&e_4\\\\\\hline a&1&1&0&0\\\\ b&1&0&1&0\\\\ c&0&1&1&1\\\\ d&0&0&0&1\\end{array}$ which vertices does $e_3$ join?",
+   "options": [
+    "$a$ and $b$",
+    "$b$ and $c$",
+    "$a$ and $c$",
+    "$c$ and $d$"
+   ],
+   "correct": [
+    1
+   ],
+   "explanation": "Column $e_3$ has 1s in rows $b$ and $c$.",
+   "option_explanations": [
+    "That is $e_1$.",
+    "Correct.",
+    "That is $e_2$.",
+    "That is $e_4$."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "A simple graph has incidence matrix rows $1,2,3,4$ and columns $f_1..f_4$: $1\\!:\\!1001$, $2\\!:\\!1100$, $3\\!:\\!0110$, $4\\!:\\!0011$. Which vertices does $f_4$ join?",
+    "options": [
+     "3 and 4",
+     "1 and 2",
+     "2 and 3",
+     "1 and 4"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "Column $f_4$ has 1s in rows 1 and 4.",
+    "option_explanations": [
+     "That is $f_3$.",
+     "That is $f_1$.",
+     "That is $f_2$.",
+     "Correct."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "In the incidence matrix $\\begin{array}{c|cccc} &e_1&e_2&e_3&e_4\\\\\\hline a&1&1&0&0\\\\ b&1&0&1&0\\\\ c&0&1&1&1\\\\ d&0&0&0&1\\end{array}$ what is $\\deg(c)$?",
+    "options": [
+     "3",
+     "2",
+     "4",
+     "1"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Row $c$ has three 1s.",
+    "option_explanations": [
+     "Correct.",
+     "Misses a 1.",
+     "Counts all edges.",
+     "Only one 1."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "In the adjacency matrix of a weighted undirected graph, an edge $(u,v)$ of weight 75 is stored as",
+   "options": [
+    "1 at $M[u,v]$ and $M[v,u]$",
+    "75 at $M[u,v]$, 0 at $M[v,u]$",
+    "75 at $M[u,v]$ and $M[v,u]$",
+    "75 at $M[u,v]$, $-75$ at $M[v,u]$"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "The weight is placed in both symmetric entries.",
+   "option_explanations": [
+    "That is the unweighted rule.",
+    "Undirected edges are symmetric.",
+    "Correct.",
+    "Weights are not negated."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "In the lecture's weighted-graph matrix, two cities with no road between them are shown as",
+    "options": [
+     "1",
+     "$-1$",
+     "the largest weight",
+     "0"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "Missing edges get 0.",
+    "option_explanations": [
+     "1 marks an unweighted edge.",
+     "A negative weight is a real weight.",
+     "Not used.",
+     "Correct."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "In a road network, a negative edge weight means",
+    "options": [
+     "the road is closed",
+     "a reward for using the road",
+     "the road is one-way",
+     "the road is missing from the map"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "A negative weight is allowed; here it models an incentive for using the road.",
+    "option_explanations": [
+     "Closed means no edge.",
+     "Correct.",
+     "Directions are separate.",
+     "No edge in that case."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "$G'$ is a subgraph of $G$ if",
+   "options": [
+    "$V'\\subseteq V$ and $E'\\subseteq E$",
+    "$V'=V$ and $E'\\subseteq E$",
+    "$V'\\subseteq V$ and $E'=E$",
+    "$|V'|<|V|$ and $|E'|<|E|$"
+   ],
+   "correct": [
+    0
+   ],
+   "explanation": "Both its vertex set and edge set are subsets of those of $G$.",
+   "option_explanations": [
+    "Correct.",
+    "That is a spanning subgraph, a special case.",
+    "Not general.",
+    "That describes proper subgraphs."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "$G$ has vertices $\\{1,2,3,4\\}$ and edges $\\{12,23,34\\}$. Which is a subgraph of $G$?",
+    "options": [
+     "vertices $\\{1,2,3\\}$, edges $\\{12,13\\}$",
+     "vertices $\\{1,2\\}$, edges $\\{12,23\\}$",
+     "vertices $\\{1,2,3\\}$, edges $\\{12,23\\}$",
+     "vertices $\\{1,2,3,4\\}$, edges $\\{12,24\\}$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Edges must be in $G$ and their end points in the vertex set.",
+    "option_explanations": [
+     "$13$ is not in $G$.",
+     "Edge 23 needs vertex 3.",
+     "Correct.",
+     "$24$ is not in $G$."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which graph is always a subgraph of $G$?",
+    "options": [
+     "$G$'s vertices with no edges",
+     "$G$ with one extra edge",
+     "$G$ plus an extra isolated vertex",
+     "The complete graph on $V$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Keeping all vertices and dropping every edge gives a subgraph.",
+    "option_explanations": [
+     "Correct.",
+     "Extra edge not in $G$.",
+     "Extra vertex not in $G$.",
+     "It has edges not in $G$."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "$G$ is a 4-cycle $abcd$ plus the chord $ac$. Which graph is NOT a subgraph of $G$?",
+   "options": [
+    "A triangle",
+    "A path of length 3",
+    "$K_4$",
+    "A 4-cycle"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "$K_4$ needs 6 edges but $G$ has only 5.",
+   "option_explanations": [
+    "Triangle $abc$ is inside $G$.",
+    "$a,b,c,d$ is inside $G$.",
+    "Correct.",
+    "$abcd$ is inside $G$."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "$G$ is a 5-cycle. Which graph is NOT a subgraph of $G$?",
+    "options": [
+     "A path of length 4",
+     "A cycle of length 3",
+     "A path of length 2",
+     "A cycle of length 5"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "A 5-cycle has no triangles.",
+    "option_explanations": [
+     "Remove one edge of the cycle.",
+     "Correct.",
+     "Fits.",
+     "$G$ itself."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "$G$ is the path $a-b-c-d-e$. Which graph is NOT a subgraph of $G$?",
+    "options": [
+     "Two disjoint edges",
+     "A path of length 3",
+     "A single vertex",
+     "A star with a center and 3 leaves"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "A star with 3 leaves needs a vertex of degree 3; $G$ has max degree 2.",
+    "option_explanations": [
+     "$ab$ and $de$.",
+     "$a,b,c,d$.",
+     "Any vertex.",
+     "Correct."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "A graph is connected if",
+   "options": [
+    "any two vertices are adjacent",
+    "it has no cycle",
+    "any two vertices are joined by a path",
+    "every vertex has degree at least 1"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "Any two vertices must be joined by a path.",
+   "option_explanations": [
+    "That is a complete graph.",
+    "That is a forest.",
+    "Correct.",
+    "Isolated pairs can still be disconnected."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Which graph on vertices $1,\\dots,5$ is disconnected?",
+    "options": [
+     "edges $12,23,31,45$",
+     "edges $12,23,34,45$",
+     "edges $12,13,14,15$",
+     "edges $12,23,34,45,51$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Edges $12,23,31,45$ leave no path from 1 to 4.",
+    "option_explanations": [
+     "Correct.",
+     "A path joins all.",
+     "A star joins all.",
+     "A cycle joins all."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "In a connected graph, between any two distinct vertices there is",
+    "options": [
+     "an edge",
+     "a cycle",
+     "a loop",
+     "a path"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "Connectedness only guarantees at least one path.",
+    "option_explanations": [
+     "That would be a complete graph.",
+     "Trees are connected with no cycle.",
+     "Not required.",
+     "Correct."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "A graph on vertices $a,\\dots,g$ has edges $ab,bc,ca,de,fg$. How many connected components does it have?",
+   "options": [
+    "2",
+    "3",
+    "4",
+    "5"
+   ],
+   "correct": [
+    1
+   ],
+   "explanation": "Components: $\\{a,b,c\\},\\{d,e\\},\\{f,g\\}$.",
+   "option_explanations": [
+    "Merges two groups.",
+    "Correct.",
+    "Overcounts.",
+    "Counts edges."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "A graph on vertices $1,\\dots,8$ has edges $12,23,45,56$. How many connected components does it have?",
+    "options": [
+     "2",
+     "4",
+     "3",
+     "8"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "$\\{1,2,3\\},\\{4,5,6\\},\\{7\\},\\{8\\}$.",
+    "option_explanations": [
+     "Ignores isolated vertices.",
+     "Correct.",
+     "Ignores one isolated vertex.",
+     "Counts vertices."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "A graph on vertices $1,\\dots,9$ has edges $12,23,45,67,89,78$. How many connected components?",
+    "options": [
+     "2",
+     "4",
+     "6",
+     "3"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "$\\{1,2,3\\},\\{4,5\\},\\{6,7,8,9\\}$: 6-7, 7-8, 8-9.",
+    "option_explanations": [
+     "Merges a group.",
+     "Overcounts.",
+     "Counts edges.",
+     "Correct."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "A connected component of a graph is",
+   "options": [
+    "a maximal connected subgraph",
+    "any connected subgraph",
+    "a connected subgraph with the fewest vertices",
+    "a connected subgraph without cycles"
+   ],
+   "correct": [
+    0
+   ],
+   "explanation": "It cannot be enlarged while remaining connected.",
+   "option_explanations": [
+    "Correct.",
+    "Not maximal.",
+    "A single vertex would qualify.",
+    "That is a tree."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "In the path $1-2-3-4$, which connected subgraph is a component?",
+    "options": [
+     "The edge $12$ with its end points",
+     "Vertices $2,3,4$ with their edges",
+     "The whole path",
+     "Vertex 1 alone"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "The whole path is the only maximal connected subgraph.",
+    "option_explanations": [
+     "Can be enlarged.",
+     "Can be enlarged.",
+     "Correct.",
+     "Can be enlarged."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "How many connected components does a connected graph have?",
+    "options": [
+     "0",
+     "Equal to the number of vertices",
+     "Equal to the number of edges",
+     "1"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "It is its own only component.",
+    "option_explanations": [
+     "It has itself.",
+     "That is an edgeless graph.",
+     "Not related.",
+     "Correct."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "A tree is",
+   "options": [
+    "a simple graph with no cycle",
+    "a simple connected graph with no cycle",
+    "a simple connected graph with exactly one cycle",
+    "a connected multigraph with no cycle"
+   ],
+   "correct": [
+    1
+   ],
+   "explanation": "A tree is simple, connected and has no cycle.",
+   "option_explanations": [
+    "Missing connectivity: a forest.",
+    "Correct.",
+    "Trees have none.",
+    "Trees are simple."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Which of these is a tree?",
+    "options": [
+     "One vertex, no edges",
+     "Two isolated vertices",
+     "A triangle",
+     "A 4-cycle"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "A tree is connected without cycles; a single vertex qualifies.",
+    "option_explanations": [
+     "Correct.",
+     "Not connected.",
+     "Has a cycle.",
+     "Has a cycle."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which graph on vertices $1,\\dots,5$ is a tree?",
+    "options": [
+     "edges $12,23,31,45$",
+     "edges $12,34$",
+     "edges $12,23,34,45$",
+     "edges $12,23,34,41$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Edges $12,23,34,45$ form a connected path without cycles.",
+    "option_explanations": [
+     "Triangle and disconnected.",
+     "Disconnected.",
+     "Correct.",
+     "Has a cycle and misses vertex 5."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "A forest with 10 vertices and 7 edges has how many trees?",
+   "options": [
+    "3",
+    "2",
+    "4",
+    "7"
+   ],
+   "correct": [
+    0
+   ],
+   "explanation": "A forest with $n$ vertices and $k$ trees has $n-k$ edges, so $k=3$.",
+   "option_explanations": [
+    "Correct.",
+    "Gives 8 edges.",
+    "Gives 6 edges.",
+    "Number of edges."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "A forest has 15 vertices and 11 edges. How many trees does it contain?",
+    "options": [
+     "3",
+     "5",
+     "4",
+     "11"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "$k=n-|E|=15-11=4$.",
+    "option_explanations": [
+     "Gives 12 edges.",
+     "Gives 10 edges.",
+     "Correct.",
+     "Number of edges."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "A forest has 20 vertices made up of 5 trees. How many edges does it have?",
+    "options": [
+     "19",
+     "15",
+     "20",
+     "5"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Each tree has $n_i-1$ edges; total $20-5=15$.",
+    "option_explanations": [
+     "Treats it as one tree.",
+     "Correct.",
+     "Number of vertices.",
+     "Number of trees."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "A rooted tree has root $r$ with children $a,b$; $a$ has children $c,d$; $c$ has child $e$. What is its height?",
+   "options": [
+    "2",
+    "4",
+    "6",
+    "3"
+   ],
+   "correct": [
+    3
+   ],
+   "explanation": "Longest root-to-leaf path $r\\to a\\to c\\to e$ has levels 0,1,2,3.",
+   "option_explanations": [
+    "Misses the last level.",
+    "Counts levels, not the maximum level.",
+    "Counts vertices ($r,a,b,c,d,e$), not the maximum level.",
+    "Correct."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Root $p$ has children $q,r,s$; $q$ has child $t$; $t$ has children $u,v$; $v$ has child $w$. What is the height?",
+    "options": [
+     "3",
+     "4",
+     "5",
+     "8"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Deepest vertex $w$ is on level 4.",
+    "option_explanations": [
+     "Misses $w$.",
+     "Correct.",
+     "Number of levels.",
+     "Number of vertices."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "The height of a rooted tree is",
+    "options": [
+     "the number of leaves",
+     "the largest level of any vertex",
+     "the number of levels",
+     "the largest vertex degree"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "It is the maximum level of any vertex.",
+    "option_explanations": [
+     "Unrelated.",
+     "Correct.",
+     "One more than the height.",
+     "Unrelated."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "A rooted tree has root $r$ with children $x,y$; $x$ has children $p,q$; $y$ has children $s,w$; $s$ has children $u,v$. How many leaves?",
+   "options": [
+    "4",
+    "6",
+    "9",
+    "5"
+   ],
+   "correct": [
+    3
+   ],
+   "explanation": "Leaves have no children: $p,q,w,u,v$.",
+   "option_explanations": [
+    "Misses one leaf.",
+    "Adds an internal vertex.",
+    "All vertices.",
+    "Correct."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Root $a$ has children $b,c,d$; $b$ has children $e,f$; $d$ has child $g$. How many internal nodes?",
+    "options": [
+     "3",
+     "2",
+     "4",
+     "7"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Internal nodes have children: $a,b,d$.",
+    "option_explanations": [
+     "Correct.",
+     "Misses one.",
+     "Counts $c$ too.",
+     "All vertices."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "In the rooted tree where $r$ has children $x,y$, $x$ has children $p,q$, $y$ has children $s,w$, $s$ has children $u,v$, what is the parent of $v$?",
+    "options": [
+     "$y$",
+     "$r$",
+     "$s$",
+     "$u$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "$v$ hangs below $s$.",
+    "option_explanations": [
+     "Grandparent.",
+     "Root.",
+     "Correct.",
+     "Sibling."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "In the rooted tree with $r\\to x,y$; $x\\to p,q$; $y\\to s,w$; $s\\to u,v$, what are the ancestors of $v$?",
+   "options": [
+    "$s,y$",
+    "$s,u$",
+    "$u,v,s$",
+    "$s,y,r$"
+   ],
+   "correct": [
+    3
+   ],
+   "explanation": "Ancestors are the vertices on the path to the root: $s,y,r$.",
+   "option_explanations": [
+    "Omits the root.",
+    "Includes sibling.",
+    "Includes descendants of $s$.",
+    "Correct."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Root $a$ has children $b,c$; $b$ has children $d,e,f$; $c$ has child $g$. What are the ancestors of $e$?",
+    "options": [
+     "$b$",
+     "$b,a$",
+     "$a$",
+     "$d,f,b,a$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Path from $e$ to the root: $b,a$.",
+    "option_explanations": [
+     "Omits the root.",
+     "Correct.",
+     "Omits the parent.",
+     "Includes siblings."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which statement about ancestors is true in a rooted tree?",
+    "options": [
+     "The root is an ancestor of every other node",
+     "Leaves have no ancestors",
+     "The root has one ancestor",
+     "Siblings are ancestors of each other"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "The root lies on every path to the root.",
+    "option_explanations": [
+     "Correct.",
+     "Leaves have the root at least.",
+     "The root has none.",
+     "They share a parent only."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "In the rooted tree with $r\\to x,y$; $x\\to p,q$; $y\\to s,w$; $s\\to u,v$, what are the descendants of $y$?",
+   "options": [
+    "$s,w$",
+    "$y,s,w,u,v$",
+    "$s,w,u,v$",
+    "$r,s,w$"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "Descendants of $y$: all vertices below it.",
+   "option_explanations": [
+    "Only children.",
+    "Includes $y$ itself.",
+    "Correct.",
+    "Includes the root."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Root $a$ has children $b,c$; $b$ has children $d,e,f$; $c$ has child $g$. How many descendants does $b$ have?",
+    "options": [
+     "3",
+     "2",
+     "4",
+     "6"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "$d,e,f$ only.",
+    "option_explanations": [
+     "Correct.",
+     "Misses one.",
+     "Counts $b$.",
+     "All other nodes."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "How many descendants does a leaf have?",
+    "options": [
+     "1",
+     "One per sibling",
+     "0",
+     "Equal to its level"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Leaves have no children, hence no descendants.",
+    "option_explanations": [
+     "Not even itself.",
+     "Siblings are not descendants.",
+     "Correct.",
+     "Level counts ancestors."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "A binary tree is",
+   "options": [
+    "an ordered rooted tree with at most two children per node",
+    "a rooted tree where every node has exactly two children",
+    "a rooted tree with exactly two leaves",
+    "an ordered rooted tree with two levels"
+   ],
+   "correct": [
+    0
+   ],
+   "explanation": "An ordered rooted tree where every internal node has at most two children.",
+   "option_explanations": [
+    "Correct.",
+    "That is a stricter case.",
+    "Not the definition.",
+    "Not the definition."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "What is the maximum number of children of a node in a binary tree?",
+    "options": [
+     "1",
+     "3",
+     "Unbounded",
+     "2"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "At most a left child and a right child.",
+    "option_explanations": [
+     "Fewer than allowed.",
+     "More than allowed.",
+     "Not binary.",
+     "Correct."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "A binary tree has 9 nodes and no node has a right child. What is its height?",
+    "options": [
+     "3",
+     "8",
+     "4",
+     "9"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "It is a path: 8 edges, so the deepest node is on level 8.",
+    "option_explanations": [
+     "As if balanced.",
+     "Correct.",
+     "As if balanced.",
+     "Counts nodes."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "A complete binary tree is one in which",
+   "options": [
+    "every node has two children",
+    "every internal node has two children and all leaves share the last level",
+    "every internal node has one or two children and all leaves share the last level",
+    "leaves can be on several levels but internal nodes have two children"
+   ],
+   "correct": [
+    1
+   ],
+   "explanation": "All leaves are on the last level and every internal node has two children.",
+   "option_explanations": [
+    "Leaves have none.",
+    "Correct.",
+    "Single children allowed would break completeness.",
+    "Leaves must share the last level."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Which binary tree is complete?",
+    "options": [
+     "Height 2 with 1, 2, 3 nodes on levels 0, 1, 2",
+     "Height 2 with 1, 1, 2 nodes",
+     "Height 3 with 1, 2, 4, 5 nodes",
+     "Height 2 with 1, 2, 4 nodes on levels 0, 1, 2"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "Level sizes $1,2,4$ are full up to the last level.",
+    "option_explanations": [
+     "Level 2 is not full.",
+     "Levels not full.",
+     "Last level not full.",
+     "Correct."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "How many nodes can a complete binary tree have?",
+    "options": [
+     "31",
+     "20",
+     "24",
+     "40"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Node counts are $2^{h+1}-1$: 1, 3, 7, 15, 31, ...",
+    "option_explanations": [
+     "Correct: $2^5-1$.",
+     "Not of the form $2^{h+1}-1$.",
+     "Not of the form.",
+     "Not of the form."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "How many nodes does a complete ternary tree of height 3 have?",
+   "options": [
+    "27",
+    "13",
+    "40",
+    "121"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "$1+3+9+27=40$.",
+   "option_explanations": [
+    "Only the leaves.",
+    "Height 2.",
+    "Correct.",
+    "Height 4."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "How many nodes does a complete 4-ary tree of height 2 have?",
+    "options": [
+     "16",
+     "5",
+     "85",
+     "21"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "$1+4+16=21$.",
+    "option_explanations": [
+     "Only the leaves.",
+     "Height 1.",
+     "Height 3.",
+     "Correct."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "How many nodes does a complete 5-ary tree of height 2 have?",
+    "options": [
+     "25",
+     "31",
+     "6",
+     "156"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "$1+5+25=31$.",
+    "option_explanations": [
+     "Only the leaves.",
+     "Correct.",
+     "Height 1.",
+     "Height 3."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Removing an internal vertex $v$ of degree 4 from a tree leaves how many trees?",
+   "options": [
+    "1",
+    "2",
+    "4",
+    "5"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "Removing $v$ splits the tree into $\\deg(v)$ trees.",
+   "option_explanations": [
+    "Only removing a leaf keeps it one tree.",
+    "That is for deleting an edge.",
+    "Correct.",
+    "One more than the degree."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Removing a vertex of degree 6 from a tree gives how many smaller trees?",
+    "options": [
+     "5",
+     "6",
+     "7",
+     "2"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "$\\deg(v)=6$.",
+    "option_explanations": [
+     "One less.",
+     "Correct.",
+     "One more.",
+     "Not dependent on the degree."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Removing a leaf from a tree gives",
+    "options": [
+     "a forest of two trees",
+     "a graph with a cycle",
+     "a disconnected graph",
+     "a smaller tree"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "Degree 1, so one remaining tree.",
+    "option_explanations": [
+     "That is for an internal vertex of degree 2.",
+     "No cycle can appear.",
+     "It stays connected.",
+     "Correct."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Adding an edge between two existing vertices of a tree",
+   "options": [
+    "gives a larger tree",
+    "splits it into two trees",
+    "creates a cycle",
+    "changes nothing"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "The new edge closes a cycle with the unique path between its end points.",
+   "option_explanations": [
+    "A cycle appears.",
+    "Adding cannot disconnect.",
+    "Correct.",
+    "Graph changes."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Deleting an edge of a tree (keeping both end points) leaves",
+    "options": [
+     "two trees",
+     "one tree",
+     "a tree with a cycle",
+     "a single vertex"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Removing it disconnects the tree into two trees.",
+    "option_explanations": [
+     "Correct.",
+     "It becomes disconnected.",
+     "Cycles don't appear.",
+     "Rest remains."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "After deleting one edge of a tree with 12 vertices, the pieces together have how many edges?",
+    "options": [
+     "11",
+     "12",
+     "9",
+     "10"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "A tree has 11 edges; remove one: 10.",
+    "option_explanations": [
+     "Original count.",
+     "Number of vertices.",
+     "Too many removed.",
+     "Correct."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "In a tree, between any two vertices there is",
+   "options": [
+    "at least two paths",
+    "exactly one path",
+    "no path unless they are adjacent",
+    "exactly one walk"
+   ],
+   "correct": [
+    1
+   ],
+   "explanation": "Existence from connectivity, uniqueness from acyclicity.",
+   "option_explanations": [
+    "That would create a cycle.",
+    "Correct.",
+    "Connectivity gives a path.",
+    "Walks may be infinite in number."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Which statement about paths in a tree is true?",
+    "options": [
+     "Two vertices may have several paths of the same length",
+     "Each pair of vertices has a unique path",
+     "Two vertices have a path only when adjacent",
+     "Each pair has a unique cycle"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Two vertices are joined by one and only one path.",
+    "option_explanations": [
+     "Would give a cycle.",
+     "Correct.",
+     "Connected.",
+     "Trees have no cycle."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Where does the uniqueness of the path in a tree come from?",
+    "options": [
+     "Connectedness",
+     "Having $n-1$ edges",
+     "Being bipartite",
+     "Having no cycle"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "Two distinct paths would form a cycle.",
+    "option_explanations": [
+     "Gives existence only.",
+     "A different fact.",
+     "Unrelated.",
+     "Correct."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "In the proof of unique paths, two different paths $P_1,P_2$ from $u$ to $v$ lead to",
+   "options": [
+    "a cycle, contradicting the definition of a tree",
+    "a vertex of degree zero, contradicting connectivity",
+    "a loop, contradicting simplicity",
+    "a disconnected graph, contradicting connectivity"
+   ],
+   "correct": [
+    0
+   ],
+   "explanation": "They separate at $x$ and merge at $y$, forming a cycle.",
+   "option_explanations": [
+    "Correct.",
+    "They give a cycle, not isolation.",
+    "Not a loop.",
+    "Both paths exist, so connected."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "In that proof, the existence of at least one path between $u$ and $v$ follows from",
+    "options": [
+     "T having no cycle",
+     "T having $n-1$ edges",
+     "T being connected",
+     "T being bipartite"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Trees are connected graphs.",
+    "option_explanations": [
+     "Gives uniqueness.",
+     "Different theorem.",
+     "Correct.",
+     "Different theorem."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "In the proof, which parts form the cycle after $P_1$ and $P_2$ diverge at $x$ and meet again at $y$?",
+    "options": [
+     "$P_1$ from $u$ to $x$ and $P_2$ from $y$ to $v$",
+     "$P_1$ alone",
+     "The edge $uv$",
+     "The $x$-to-$y$ parts of both paths"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "$P_1$ from $x$ to $y$ and $P_2$ from $y$ back to $x$.",
+    "option_explanations": [
+     "Those parts are shared, not a cycle.",
+     "A path alone is no cycle.",
+     "Not used.",
+     "Correct."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "A tree has 40 vertices. How many edges does it have?",
+   "options": [
+    "38",
+    "39",
+    "40",
+    "41"
+   ],
+   "correct": [
+    1
+   ],
+   "explanation": "$n-1=39$.",
+   "option_explanations": [
+    "Off by one.",
+    "Correct.",
+    "Number of vertices.",
+    "Off by one the other way."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "A tree has 25 edges. How many vertices does it have?",
+    "options": [
+     "26",
+     "24",
+     "25",
+     "50"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "$n=|E|+1=26$.",
+    "option_explanations": [
+     "Correct.",
+     "Off by one.",
+     "Number of edges.",
+     "Doubles."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "A tree has 12 vertices. What is the sum of the degrees of all its vertices?",
+    "options": [
+     "11",
+     "24",
+     "22",
+     "12"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "11 edges, degree sum $22$.",
+    "option_explanations": [
+     "Number of edges.",
+     "$2n$.",
+     "Correct.",
+     "Number of vertices."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "To show every tree is bipartite, the vertices of a rooted tree are split by",
+   "options": [
+    "even levels versus odd levels",
+    "leaves versus internal nodes",
+    "left subtree versus right subtree",
+    "levels up to the height's half versus the rest"
+   ],
+   "correct": [
+    0
+   ],
+   "explanation": "Even levels in part A, odd levels in part B; each edge joins consecutive levels.",
+   "option_explanations": [
+    "Correct.",
+    "Edges between internal nodes break this.",
+    "Edges across the root break this.",
+    "Edges across the split break this."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "In a rooted tree, every edge joins two vertices whose levels differ by",
+    "options": [
+     "0",
+     "2",
+     "1",
+     "the height"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Parent and child are on consecutive levels.",
+    "option_explanations": [
+     "Same-level edges don't exist.",
+     "Skipping a level.",
+     "Correct.",
+     "Only for a path to a deep leaf."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which graph is bipartite but not a tree?",
+    "options": [
+     "A path with 4 vertices",
+     "A cycle of length 4",
+     "A star",
+     "A single edge"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "$C_4$ has a cycle, so it is not a tree.",
+    "option_explanations": [
+     "A tree.",
+     "Correct.",
+     "A tree.",
+     "A tree."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "A complete binary tree of height 5 has how many leaves?",
+   "options": [
+    "16",
+    "31",
+    "63",
+    "32"
+   ],
+   "correct": [
+    3
+   ],
+   "explanation": "$2^h=32$.",
+   "option_explanations": [
+    "$2^{h-1}$.",
+    "Internal nodes.",
+    "Total nodes.",
+    "Correct."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "A complete binary tree of height 7 has how many internal nodes?",
+    "options": [
+     "64",
+     "128",
+     "127",
+     "255"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "$2^h-1=127$.",
+    "option_explanations": [
+     "$2^{h-1}$.",
+     "Leaves.",
+     "Correct.",
+     "Total nodes."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "A complete binary tree of height 6 has how many nodes in total?",
+    "options": [
+     "127",
+     "64",
+     "63",
+     "128"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "$2^{h+1}-1=127$.",
+    "option_explanations": [
+     "Correct.",
+     "That is the number of leaves, $2^6$.",
+     "Internal nodes.",
+     "One more."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "A complete binary tree of height $h$ has",
+   "options": [
+    "$2^h$ internal nodes and $2^h-1$ leaves",
+    "$2^{h+1}$ leaves and $2^h$ internal nodes",
+    "$2^{h-1}$ leaves and $2^h-1$ internal nodes",
+    "$2^h$ leaves and $2^h-1$ internal nodes"
+   ],
+   "correct": [
+    3
+   ],
+   "explanation": "Leaves $2^h$, internal nodes $2^h-1$.",
+   "option_explanations": [
+    "Swapped.",
+    "Too many leaves.",
+    "Not matching.",
+    "Correct."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "How many nodes are on level 9 of a complete binary tree?",
+    "options": [
+     "256",
+     "512",
+     "511",
+     "1024"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Level $l$ has $2^l$ nodes: $512$.",
+    "option_explanations": [
+     "Level 8.",
+     "Correct.",
+     "Sum up to level 8.",
+     "Level 10."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "At which level does a complete binary tree have 256 nodes?",
+    "options": [
+     "7",
+     "8",
+     "9",
+     "256"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "$2^l=256$ gives $l=8$.",
+    "option_explanations": [
+     "$2^7=128$.",
+     "Correct.",
+     "$2^9=512$.",
+     "Number of nodes, not a level."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "What is the maximum number of nodes in a binary tree of height 4?",
+   "options": [
+    "15",
+    "16",
+    "32",
+    "31"
+   ],
+   "correct": [
+    3
+   ],
+   "explanation": "$2^{h+1}-1=31$.",
+   "option_explanations": [
+    "Height 3.",
+    "Leaves only.",
+    "One more.",
+    "Correct."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "What is the maximum number of nodes in a binary tree of height 9?",
+    "options": [
+     "1023",
+     "511",
+     "512",
+     "1024"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "$2^{10}-1=1023$.",
+    "option_explanations": [
+     "Correct.",
+     "Height 8.",
+     "Leaves of height 9.",
+     "One more."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "What is the smallest possible height of a binary tree with 100 nodes?",
+    "options": [
+     "5",
+     "7",
+     "6",
+     "50"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Need $2^{h+1}-1\\ge100$: $h=5$ gives 63, $h=6$ gives 127.",
+    "option_explanations": [
+     "Max 63 nodes.",
+     "Larger than necessary.",
+     "Correct.",
+     "Too large."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "A complete binary tree has 127 nodes. What is its height?",
+   "options": [
+    "5",
+    "7",
+    "126",
+    "6"
+   ],
+   "correct": [
+    3
+   ],
+   "explanation": "$h=\\log_2(n+1)-1=\\log_2 128-1=6$.",
+   "option_explanations": [
+    "Too small.",
+    "$\\log_2 128$ without subtracting 1.",
+    "Edges count.",
+    "Correct."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "A complete binary tree has 255 nodes. What is its height?",
+    "options": [
+     "6",
+     "7",
+     "8",
+     "254"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "$h=\\log_2 256-1=7$.",
+    "option_explanations": [
+     "Too small.",
+     "Correct.",
+     "$\\log_2 256$.",
+     "Edges count."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "A complete binary tree has 31 nodes. What is its height?",
+    "options": [
+     "4",
+     "3",
+     "5",
+     "30"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "$h=\\log_2 32-1=4$.",
+    "option_explanations": [
+     "Correct.",
+     "Too small.",
+     "$\\log_2 32$.",
+     "Edges count."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "A complete binary tree has 128 leaves. What is its height?",
+   "options": [
+    "6",
+    "8",
+    "7",
+    "127"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "$l=2^h$, so $h=\\log_2 l=7$.",
+   "option_explanations": [
+    "Too small.",
+    "Too large.",
+    "Correct.",
+    "Internal nodes."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "A complete binary tree has 512 leaves. What is its height?",
+    "options": [
+     "9",
+     "8",
+     "10",
+     "511"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "$h=\\log_2 512=9$.",
+    "option_explanations": [
+     "Correct.",
+     "Too small.",
+     "Too large.",
+     "Internal nodes."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "A complete binary tree has 32 leaves. What is its height?",
+    "options": [
+     "4",
+     "6",
+     "5",
+     "31"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "$h=\\log_2 32=5$.",
+    "option_explanations": [
+     "Too small.",
+     "Too large.",
+     "Correct.",
+     "Internal nodes."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "A complete binary tree has 15 internal nodes. What is its height?",
+   "options": [
+    "3",
+    "4",
+    "5",
+    "15"
+   ],
+   "correct": [
+    1
+   ],
+   "explanation": "Internal $=2^h-1=15$ gives $h=4$.",
+   "option_explanations": [
+    "Gives 7 internal nodes.",
+    "Correct.",
+    "Gives 31 internal nodes.",
+    "Number of internal nodes."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "A complete binary tree has 63 internal nodes. What is its height?",
+    "options": [
+     "5",
+     "7",
+     "63",
+     "6"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "$2^h-1=63$ gives $h=6$.",
+    "option_explanations": [
+     "Gives 31.",
+     "Gives 127.",
+     "Number of internal nodes.",
+     "Correct."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "A complete binary tree has 255 internal nodes. What is its height?",
+    "options": [
+     "7",
+     "9",
+     "8",
+     "255"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "$2^h-1=255$ gives $h=8$.",
+    "option_explanations": [
+     "Gives 127.",
+     "Gives 511.",
+     "Correct.",
+     "Number of internal nodes."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "A multigraph has two vertices, with only loops, and each vertex has degree 6. How many loops does each vertex have?",
+   "options": [
+    "2",
+    "6",
+    "3",
+    "12"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "Each loop adds 2: $6/2=3$.",
+   "option_explanations": [
+    "Gives degree 4.",
+    "Counts each loop once.",
+    "Correct.",
+    "Too many."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "A multigraph has two vertices with only loops, each of degree 10. How many loops does each have?",
+    "options": [
+     "10",
+     "4",
+     "6",
+     "5"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "$10/2=5$.",
+    "option_explanations": [
+     "Counts loops once.",
+     "Gives degree 8.",
+     "Gives degree 12.",
+     "Correct."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Two vertices are joined by one edge, and each has loops so that its degree is 9. How many loops does each vertex have?",
+    "options": [
+     "5",
+     "4",
+     "3",
+     "9"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Degree $=1+2\\cdot\\#\\text{loops}$, so 4.",
+    "option_explanations": [
+     "Gives degree 11.",
+     "Correct.",
+     "Gives degree 7.",
+     "Counts loops once."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "basic",
+   "question": "A directed graph has vertices $a,b,c,d,e$ and edges $(a,b),(a,c),(b,c),(c,d),(d,a),(e,c)$. Find indeg and outdeg of every vertex and verify the handshaking theorem.",
+   "answer": "Indegree = edges ending at the vertex; outdegree = edges starting there.\nindeg: $a=1$ (from $d$), $b=1$, $c=3$ (from $a,b,e$), $d=1$, $e=0$. Sum $=6$.\noutdeg: $a=2$, $b=1$, $c=1$, $d=1$, $e=1$. Sum $=6$.\n$|E|=6$, so $\\sum\\mathrm{indeg}=\\sum\\mathrm{outdeg}=|E|=6$ and the theorem holds."
+  },
+  "versions": [
+   {
+    "type": "basic",
+    "question": "A directed graph has edges $(1,2),(1,3),(2,3),(3,4),(4,2),(4,1),(5,4)$. List every indegree and outdegree and check the handshaking theorem.",
+    "answer": "indeg: $1=1$ (from 4), $2=2$ (from 1,4), $3=2$ (from 1,2), $4=2$ (from 3,5), $5=0$. Sum $=7$.\noutdeg: $1=2$, $2=1$, $3=1$, $4=2$, $5=1$. Sum $=7$.\n$|E|=7$, so both sums equal $|E|$ as the theorem says."
+   },
+   {
+    "type": "mcq",
+    "question": "A directed graph has edges $(p,q),(q,r),(r,p),(r,s),(s,q),(p,s),(r,q)$. What is $\\mathrm{indeg}(q)$?",
+    "options": [
+     "3",
+     "2",
+     "4",
+     "7"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Edges ending at $q$: $(p,q),(s,q),(r,q)$.",
+    "option_explanations": [
+     "Correct.",
+     "Misses one.",
+     "Counts $(q,r)$.",
+     "All edges."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "basic",
+   "question": "Graph $G$ has vertices $a,b,c,d$ and edges $e_1=ab$, $e_2=ac$, $e_3=bc$, $e_4=cd$. Write its adjacency list, adjacency matrix and incidence matrix.",
+   "answer": "Adjacency list: $a: b,c$; $b: a,c$; $c: a,b,d$; $d: c$.\nAdjacency matrix (rows/columns $a,b,c,d$): $\\begin{pmatrix}0&1&1&0\\\\1&0&1&0\\\\1&1&0&1\\\\0&0&1&0\\end{pmatrix}$ (symmetric).\nIncidence matrix (rows $a..d$, columns $e_1..e_4$): $\\begin{pmatrix}1&1&0&0\\\\1&0&1&0\\\\0&1&1&1\\\\0&0&0&1\\end{pmatrix}$; each column has exactly two 1s."
+  },
+  "versions": [
+   {
+    "type": "basic",
+    "question": "Graph has vertices $1,\\dots,5$ and edges $e_1=12$, $e_2=13$, $e_3=24$, $e_4=34$, $e_5=45$. Write its adjacency list, adjacency matrix and incidence matrix.",
+    "answer": "Adjacency list: $1: 2,3$; $2: 1,4$; $3: 1,4$; $4: 2,3,5$; $5: 4$.\nAdjacency matrix rows: $1\\!:\\!01100$, $2\\!:\\!10010$, $3\\!:\\!10010$, $4\\!:\\!01101$, $5\\!:\\!00010$.\nIncidence matrix rows (columns $e_1..e_5$): $1\\!:\\!11000$, $2\\!:\\!10100$, $3\\!:\\!01010$, $4\\!:\\!00111$, $5\\!:\\!00001$; each column has two 1s."
+   },
+   {
+    "type": "mcq",
+    "question": "Which is the adjacency matrix of the path $1-2-3-4$ (rows and columns in order $1,2,3,4$)?",
+    "options": [
+     "rows $0100/0010/0001/0000$",
+     "rows $0101/1010/0101/1010$",
+     "rows $0100/1010/0101/0010$",
+     "rows $1100/1110/0111/0011$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Neighbors of 1: 2; of 2: 1,3; of 3: 2,4; of 4: 3.",
+    "option_explanations": [
+     "A directed path, not symmetric.",
+     "That is the 4-cycle.",
+     "Correct.",
+     "Has 1s on the diagonal (loops)."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "basic",
+   "question": "Decide whether each graph is bipartite; if so give the two parts. (i) the 6-cycle $1-2-3-4-5-6-1$; (ii) edges $12,23,34,41,13$.",
+   "answer": "(i) Alternate vertices: $A=\\{1,3,5\\}$, $B=\\{2,4,6\\}$; every edge joins $A$ and $B$, so it is bipartite (even cycle).\n(ii) Edges $12,23,13$ form a triangle (odd cycle); any split puts two of $1,2,3$ together with an edge between them. Not bipartite."
+  },
+  "versions": [
+   {
+    "type": "basic",
+    "question": "Decide whether each graph is bipartite; if so give the parts. (i) the 7-cycle $1-2-\\dots-7-1$; (ii) the tree with edges $ab,ac,ad,be,bf$.",
+    "answer": "(i) Odd cycle: not bipartite.\n(ii) Root at $a$: even levels $A=\\{a,e,f\\}$, odd levels $B=\\{b,c,d\\}$. Every edge joins $A$ and $B$ ($ab,ac,ad,be,bf$), so it is bipartite (as every tree is)."
+   },
+   {
+    "type": "mcq",
+    "question": "Which graph is NOT bipartite?",
+    "options": [
+     "$K_4$",
+     "The cycle $C_{10}$",
+     "$K_{3,5}$",
+     "A tree with 7 vertices"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "$K_4$ contains triangles (odd cycles).",
+    "option_explanations": [
+     "Correct.",
+     "Even cycle.",
+     "Bipartite by definition.",
+     "Trees are bipartite."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "basic",
+   "question": "A graph has vertices $1,\\dots,9$ and edges $12,23,31,45,56,78$. Find its connected components, say which are trees, and decide if the graph is a forest.",
+   "answer": "Components: $\\{1,2,3\\}$ (triangle), $\\{4,5,6\\}$ (path $4-5-6$), $\\{7,8\\}$ (one edge), $\\{9\\}$ (isolated). That is 4 components.\nTrees (connected, no cycle): $\\{4,5,6\\}$, $\\{7,8\\}$, $\\{9\\}$. $\\{1,2,3\\}$ has a cycle, so it is not a tree.\nSo the graph is not a forest."
+  },
+  "versions": [
+   {
+    "type": "basic",
+    "question": "A graph has vertices $a,\\dots,h$ and edges $ab,bc,de,ef,fg,gd$. Find the components and decide if it is a forest.",
+    "answer": "Components: $\\{a,b,c\\}$ (path, a tree), $\\{d,e,f,g\\}$ (4-cycle, not a tree), $\\{h\\}$ (isolated, a tree). 3 components.\nBecause $\\{d,e,f,g\\}$ contains a cycle, the graph is not a forest."
+   },
+   {
+    "type": "mcq",
+    "question": "A graph on vertices $1,\\dots,8$ has edges $12,13,45,46,47$. Which statement is true?",
+    "options": [
+     "It is a tree",
+     "It is a forest with 2 trees",
+     "It is a forest with 3 trees",
+     "It is connected with one cycle"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Components $\\{1,2,3\\}$, $\\{4,5,6,7\\}$, $\\{8\\}$ are all trees: 3 trees, and edges $=8-3=5$.",
+    "option_explanations": [
+     "It is disconnected.",
+     "There are 3 (vertex 8 is isolated).",
+     "Correct.",
+     "It is disconnected with no cycle."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "basic",
+   "question": "A complete binary tree has 255 nodes. Find its height, number of leaves and number of internal nodes.",
+   "answer": "$n=2^{h+1}-1$ so $2^{h+1}=256$, $h+1=8$, $h=7$.\nLeaves $=2^h=128$. Internal nodes $=2^h-1=127$.\nCheck: $128+127=255$."
+  },
+  "versions": [
+   {
+    "type": "basic",
+    "question": "A complete binary tree has 63 nodes. Find its height, number of leaves and number of internal nodes.",
+    "answer": "$2^{h+1}=64$ gives $h=5$.\nLeaves $=2^5=32$; internal $=2^5-1=31$; check $32+31=63$."
+   },
+   {
+    "type": "mcq",
+    "question": "A complete binary tree has 511 nodes. How many leaves does it have?",
+    "options": [
+     "128",
+     "256",
+     "255",
+     "512"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "$2^{h+1}=512$ gives $h=8$, leaves $2^8=256$.",
+    "option_explanations": [
+     "Level 7 size.",
+     "Correct.",
+     "Internal nodes.",
+     "Total plus one."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "basic",
+   "question": "Find all paths of length 3 in the graph with edges $ab,bc,cd,da$ (a 4-cycle). Count a path and its reverse once.",
+   "answer": "A path of length 3 uses 3 edges and 4 distinct vertices, so it is the cycle with one edge removed.\nRemove $da$: $a-b-c-d$. Remove $ab$: $b-c-d-a$. Remove $bc$: $c-d-a-b$. Remove $cd$: $d-a-b-c$.\nThere are 4 paths of length 3."
+  },
+  "versions": [
+   {
+    "type": "basic",
+    "question": "Find all paths of length 3 in the tree with edges $ab,bc,cd,ce$. Count a path and its reverse once.",
+    "answer": "Four distinct vertices joined by 3 edges: any such path must run through $b$-$c$.\n$a-b-c-d$ and $a-b-c-e$. Paths such as $d-c-e$ have length 2, and $b-c-d$ has length 2.\nThere are 2 paths of length 3."
+   },
+   {
+    "type": "mcq",
+    "question": "How many paths of length 3 does the cycle $C_5$ have (a path and its reverse counted once)?",
+    "options": [
+     "4",
+     "10",
+     "8",
+     "5"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "Choose 4 consecutive vertices of the 5-cycle: 5 ways.",
+    "option_explanations": [
+     "One too few.",
+     "Counts both directions.",
+     "No such count: each of the 5 starting vertices gives exactly one path in a fixed direction.",
+     "Correct."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "basic",
+   "question": "Prove by induction that a tree with $n$ nodes has $n-1$ edges.",
+   "answer": "Base case: $n=1$. A single vertex has 0 edges $=1-1$.\nInduction hypothesis: every tree with $k$ nodes has $k-1$ edges.\nStep: take a tree $T_{k+1}$ with $k+1$ nodes. It has a leaf $v$ with parent $u$. Remove $v$ and the edge $(u,v)$ (keep $u$). The result is a tree $T_k$ with $k$ nodes, so it has $k-1$ edges by the hypothesis.\nAdding back the removed edge, $T_{k+1}$ has $(k-1)+1=k$ edges $=(k+1)-1$. By induction the claim holds for all $n$."
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "In the induction step proving that a tree with $k+1$ nodes has $k$ edges, what is done?",
+    "options": [
+     "Remove the root and apply the hypothesis to each subtree",
+     "Add an edge to $T_k$ and apply the hypothesis",
+     "Remove a leaf and its edge, apply the hypothesis, add 1",
+     "Remove an internal node and apply the hypothesis to the pieces"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Delete a leaf and its edge, use the hypothesis on the smaller tree, and add one edge back.",
+    "option_explanations": [
+     "Not the lecture's argument.",
+     "Adding an edge makes a cycle.",
+     "Correct.",
+     "Removing an internal node gives several trees."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "What is the base case in the induction proof that a tree with $n$ nodes has $n-1$ edges?",
+    "options": [
+     "$n=1$ with 0 edges",
+     "$n=0$ with 0 edges",
+     "$n=2$ with 1 edge",
+     "$n=1$ with 1 edge"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "The smallest tree is a single node with no edges.",
+    "option_explanations": [
+     "Correct.",
+     "No empty tree here.",
+     "Not the smallest tree.",
+     "Wrong count."
+    ]
+   }
+  ]
+ }
+]

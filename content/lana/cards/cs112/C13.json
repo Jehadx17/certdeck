@@ -1,0 +1,3169 @@
+[
+  {
+    "original": {
+      "type": "mcq",
+      "question": "Which line causes a compile error?\n\n```java\nabstract class Shape { }\nclass Circle extends Shape { }\n\npublic class Main {\n  public static void main(String[] args) {\n    Shape a = new Circle();      // (a)\n    Shape b = new Shape();       // (b)\n    Shape[] c = new Shape[3];    // (c)\n    Object d = new Circle();     // (d)\n  }\n}\n```",
+      "options": [
+        "Line (a)",
+        "Line (b)",
+        "Line (c)",
+        "Line (d)"
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": "An abstract class cannot be instantiated with the new operator, but it can be subclassed, used as a variable type, and used as an array element type.",
+      "option_explanations": [
+        "A Circle object stored in a Shape variable is ordinary polymorphism.",
+        "Correct: `new Shape()` tries to create an instance of an abstract class.",
+        "This only creates an array of Shape references; no Shape object is created.",
+        "Circle is concrete, and an Object variable can hold any object."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "Exactly one statement below is rejected by the compiler. Which one?\n\n```java\nabstract class Vehicle {\n  Vehicle(String name) { }\n}\nclass Car extends Vehicle {\n  Car(String name) { super(name); }\n}\n\npublic class Main {\n  public static void main(String[] args) {\n    Car x = new Car(\"A\");              // (a)\n    Vehicle[] y = new Vehicle[2];      // (b)\n    Vehicle z = new Vehicle(\"B\");      // (c)\n    y[0] = x;                          // (d)\n  }\n}\n```",
+        "options": [
+          "Line (a)",
+          "Line (b)",
+          "Line (c)",
+          "Line (d)"
+        ],
+        "correct": [
+          2
+        ],
+        "explanation": "The compiler rejects `new` on any abstract class, even when the class has a constructor.",
+        "option_explanations": [
+          "Car is concrete, so creating it is fine.",
+          "An array of an abstract type holds only references, so it compiles.",
+          "Correct: Vehicle is abstract, so `new Vehicle(\"B\")` is illegal even though it has a constructor.",
+          "Storing a Car into a Vehicle array element is legal."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "One of these four lines fails to compile. Which one?\n\n```java\nabstract class Animal {\n  abstract void speak();\n}\nclass Dog extends Animal {\n  void speak() { }\n}\n\npublic class Main {\n  public static void main(String[] args) {\n    Animal p = new Animal();     // (a)\n    Animal q = new Dog();        // (b)\n    Animal[] r = new Animal[5];  // (c)\n    r[0] = new Dog();            // (d)\n  }\n}\n```",
+        "options": [
+          "Line (a)",
+          "Line (b)",
+          "Line (c)",
+          "Line (d)"
+        ],
+        "correct": [
+          0
+        ],
+        "explanation": "Abstract classes can be subclassed and used for declarations, but `new` can only be applied to a concrete class.",
+        "option_explanations": [
+          "Correct: Animal is abstract, so `new Animal()` is a compile error.",
+          "Dog is concrete and extends Animal, so this is fine.",
+          "Declaring an Animal array only allocates reference slots.",
+          "Dog is a concrete Animal, so it can be stored in the array."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "Which method declaration is legal inside an abstract class?",
+      "options": [
+        "`public abstract double getArea();`",
+        "`public abstract double getArea() { }`",
+        "`public abstract static double getArea();`",
+        "`public double getArea();`"
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": "An abstract method has the abstract modifier and ends with a semicolon instead of a body; it cannot be static.",
+      "option_explanations": [
+        "Correct: It has the abstract modifier and no body, ending in a semicolon.",
+        "The empty braces are a body, which an abstract method may not have.",
+        "Abstract methods cannot be combined with static.",
+        "Without abstract this is an ordinary method that is missing its body."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "Which of these abstract-class members compiles?",
+        "options": [
+          "`abstract void check(double balance) { }`",
+          "`abstract void check(double balance)`",
+          "`void check(double balance);`",
+          "`abstract void check(double balance);`"
+        ],
+        "correct": [
+          3
+        ],
+        "explanation": "Abstract methods are declared without implementation: no braces, and a terminating semicolon.",
+        "option_explanations": [
+          "Braces give the method an implementation, which is not allowed.",
+          "The declaration is not terminated, so the compiler expects a body or a semicolon.",
+          "A method with no body must be marked abstract.",
+          "Correct: Modifier abstract, a header, and a semicolon: a complete abstract declaration."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "Pick the line that is a valid member of an abstract class.",
+        "options": [
+          "`protected abstract String describe() { return \"\"; }`",
+          "`protected String describe();`",
+          "`protected abstract String describe();`",
+          "`abstract private String describe();`"
+        ],
+        "correct": [
+          2
+        ],
+        "explanation": "An abstract method must have no body and must be overridable by subclasses, so it cannot be private.",
+        "option_explanations": [
+          "It is marked abstract yet has a body.",
+          "Without abstract, a method must have a body.",
+          "Correct: Abstract, no body, and visible to subclasses: valid.",
+          "A private method cannot be overridden, so it cannot be abstract."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "What is wrong with this class?\n\n```java\npublic class Account {\n  abstract void check(double balance);\n}\n```",
+      "options": [
+        "The method must be given an empty body.",
+        "The method must be declared static.",
+        "The class itself must be declared abstract.",
+        "The class must implement an interface."
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": "A class that contains an abstract method must itself be abstract; a concrete class cannot contain abstract methods.",
+      "option_explanations": [
+        "Giving it a body would remove the abstract method, not satisfy the rule.",
+        "Abstract methods can never be static.",
+        "Correct: Any class with an abstract method must have abstract in its own header.",
+        "Interfaces are unrelated to this error."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "The compiler rejects this declaration:\n\n```java\nclass Pet {\n  abstract String sound();\n}\n```\nWhich change fixes it while keeping `sound()` abstract?",
+        "options": [
+          "Change the header to `abstract class Pet`.",
+          "Change `sound()` to `static String sound();`",
+          "Change the header to `interface class Pet`.",
+          "Add the keyword final before the class."
+        ],
+        "correct": [
+          0
+        ],
+        "explanation": "Because Pet declares an abstract method, Pet must be an abstract class.",
+        "option_explanations": [
+          "Correct: Marking the class abstract allows it to hold abstract methods.",
+          "Static abstract methods are illegal.",
+          "interface class is not valid Java syntax.",
+          "A final class cannot be extended, so its abstract method could never be implemented."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "Which statement about a class that contains an abstract method is true?",
+        "options": [
+          "It has to be declared final.",
+          "It has to be declared abstract.",
+          "It has to be declared public.",
+          "It has to extend Object explicitly."
+        ],
+        "correct": [
+          1
+        ],
+        "explanation": "Presence of an abstract method forces the enclosing class to be abstract; other modifiers are unaffected.",
+        "option_explanations": [
+          "final would forbid subclasses, which defeats the purpose.",
+          "Correct: That is the rule: abstract methods only live in abstract classes (or interfaces).",
+          "Visibility has no connection with containing abstract methods.",
+          "Every class extends Object implicitly anyway."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "What happens when this program is compiled?\n\n```java\nabstract class Shape {\n  abstract double getArea();\n  abstract double getPerimeter();\n}\nclass Square extends Shape {\n  double side = 5;\n  double getArea() { return side * side; }\n}\n\npublic class Main {\n  public static void main(String[] args) {\n    System.out.println(new Square().getArea());\n  }\n}\n```",
+      "options": [
+        "Compile error: Square does not implement getPerimeter().",
+        "It compiles, and getPerimeter() returns 0.0 if called.",
+        "It compiles and prints 25.0.",
+        "It compiles, but calling getPerimeter() throws an exception."
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": "A concrete subclass must implement every inherited abstract method; otherwise it must itself be declared abstract.",
+      "option_explanations": [
+        "Correct: Square is concrete but leaves getPerimeter() unimplemented, which the compiler rejects.",
+        "There is no default body for an abstract method.",
+        "The program never reaches execution because it does not compile.",
+        "The problem is caught at compile time, not at run time."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "How can the compile error in this code be removed, without adding any method?\n\n```java\nabstract class Animal {\n  abstract void sound();\n  abstract void move();\n}\nclass Dog extends Animal {\n  void sound() { System.out.println(\"Woof\"); }\n}\n```",
+        "options": [
+          "Declare Animal as final.",
+          "Make sound() in Dog static.",
+          "Replace extends with implements.",
+          "Declare Dog as abstract."
+        ],
+        "correct": [
+          3
+        ],
+        "explanation": "A subclass that does not implement all abstract methods must be declared abstract itself.",
+        "option_explanations": [
+          "final classes cannot be extended at all.",
+          "A static method cannot override an instance method.",
+          "implements is for interfaces, and Animal is a class.",
+          "Correct: An abstract Dog is allowed to leave move() unimplemented."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "Given the declarations below, what does the program print?\n\n```java\nabstract class Animal {\n  abstract void sound();\n  abstract void move();\n}\nabstract class Puppy extends Animal {\n  void sound() { System.out.println(\"Yip\"); }\n}\nclass Pug extends Puppy {\n  void move() { System.out.println(\"Trot\"); }\n}\n\npublic class Main {\n  public static void main(String[] args) {\n    Animal a = new Pug();\n    a.move();\n  }\n}\n```",
+        "options": [
+          "Yip",
+          "Trot",
+          "Nothing, it fails to compile",
+          "Yip then Trot"
+        ],
+        "correct": [
+          1
+        ],
+        "explanation": "Puppy may stay abstract with move() unimplemented; the concrete Pug supplies the remaining abstract method.",
+        "option_explanations": [
+          "Only sound() prints Yip, and it is never called.",
+          "Correct: Pug implements move(), and the call through the Animal reference runs it.",
+          "Puppy is abstract, so leaving an abstract method unimplemented is legal there.",
+          "Only move() is invoked."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "Which statement about abstract classes is correct?",
+      "options": [
+        "It can declare a constructor for subclasses.",
+        "It must declare at least one abstract method.",
+        "Its constructor runs when it is created with new.",
+        "Every one of its methods has to be abstract."
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": "An abstract class may have constructors (used through constructor chaining by subclasses) and may have no abstract methods or only some.",
+      "option_explanations": [
+        "Correct: Subclass constructors call it through super(...), so it is useful.",
+        "An abstract class can contain just concrete methods, or none at all.",
+        "new cannot be applied to an abstract class.",
+        "It can mix concrete and abstract methods."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "Which of these is allowed for an abstract class?",
+        "options": [
+          "Being created with new in main.",
+          "Having only static abstract methods.",
+          "Declaring an abstract method that has a body.",
+          "Having a constructor that sets a data field."
+        ],
+        "correct": [
+          3
+        ],
+        "explanation": "Abstract classes may have fields and constructors; the constructor is run via super() when a concrete subclass is created.",
+        "option_explanations": [
+          "Instantiating an abstract class is a compile error.",
+          "Abstract methods cannot be static.",
+          "A body contradicts the abstract modifier.",
+          "Correct: A constructor initialising a field is fine; subclasses reach it with super(...)."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "Which claim about an abstract class is true?",
+        "options": [
+          "It can be instantiated if it has a constructor.",
+          "It must have a constructor with no parameters.",
+          "It can be written with no abstract methods at all.",
+          "It can only contain static members."
+        ],
+        "correct": [
+          2
+        ],
+        "explanation": "Declaring a class abstract is enough to block instantiation, even if every method is concrete.",
+        "option_explanations": [
+          "A constructor does not make instantiation legal.",
+          "It may declare any constructors, or just use the default.",
+          "Correct: The abstract keyword on the class is all that is required.",
+          "Instance fields and methods are allowed."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "Which line causes a compile error?\n\n```java\nabstract class Tool {\n  abstract void run();            // (a)\n  abstract static void stop();    // (b)\n  static void reset() { }         // (c)\n  void log() { }                  // (d)\n}\n\npublic class Main {\n  public static void main(String[] args) { }\n}\n```",
+      "options": [
+        "Line (a)",
+        "Line (b)",
+        "Line (c)",
+        "Line (d)"
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": "Abstract methods are non-static methods: an abstract method has no body yet, and static methods belong to the class and are not overridden.",
+      "option_explanations": [
+        "An abstract instance method with no body is the normal form.",
+        "Correct: abstract and static cannot be combined.",
+        "A concrete static method is fine in an abstract class.",
+        "Concrete instance methods may sit beside abstract ones."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "Which of the lines below is rejected by the compiler?\n\n```java\nabstract class Printer {\n  abstract void print();          // (a)\n  void status() { }               // (b)\n  static abstract void warmUp();  // (c)\n  abstract int pages();           // (d)\n}\n\npublic class Main {\n  public static void main(String[] args) { }\n}\n```",
+        "options": [
+          "Line (a)",
+          "Line (b)",
+          "Line (d)",
+          "Line (c)"
+        ],
+        "correct": [
+          3
+        ],
+        "explanation": "Modifiers abstract and static form an illegal combination, in either order.",
+        "option_explanations": [
+          "This is a standard abstract method.",
+          "A concrete method in an abstract class is allowed.",
+          "Abstract methods may return int or any other type.",
+          "Correct: The method is both static and abstract."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "In an abstract class, which declaration is legal?",
+        "options": [
+          "`abstract void run();`",
+          "`abstract static void run();`",
+          "`abstract final void run();`",
+          "`abstract private void run();`"
+        ],
+        "correct": [
+          0
+        ],
+        "explanation": "An abstract method must be overridable and non-static, so static, final and private are all illegal with abstract.",
+        "option_explanations": [
+          "Correct: A plain abstract instance method is the valid form.",
+          "Static methods are not overridden, so cannot be abstract.",
+          "final forbids overriding, which abstract requires.",
+          "private methods are invisible to subclasses, so cannot be overridden."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "How are an abstract class and its abstract methods written in a UML class diagram (course notation)?",
+      "options": [
+        "Their names are underlined.",
+        "Their names are shown in bold.",
+        "Their names are shown in italics.",
+        "Their names are written in capital letters."
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": "In UML graphic notation the names of abstract classes and their abstract methods are italicized.",
+      "option_explanations": [
+        "Underlining marks static members in UML.",
+        "Bold has no meaning for abstractness in UML.",
+        "Correct: Slanted (italic) text marks abstract classes and abstract methods.",
+        "Capital letters carry no UML meaning."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "In a UML diagram of GeometricObject, getArea() and getPerimeter() are abstract. How do they appear?",
+        "options": [
+          "Slanted text.",
+          "Underlined text.",
+          "Plain text with a plus sign.",
+          "Plain text in brackets."
+        ],
+        "correct": [
+          0
+        ],
+        "explanation": "Abstract class and method names are italicized in UML.",
+        "option_explanations": [
+          "Correct: Italic (slanted) lettering is the abstract marker.",
+          "Underlined members are static members.",
+          "A plus sign only shows public visibility.",
+          "Brackets are not an abstract marker."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "Which UML style tells you that the class named Plant is abstract?",
+        "options": [
+          "Plant is written inside a dashed box.",
+          "Plant is written in a slanted font.",
+          "Plant is written with a dotted underline.",
+          "Plant is written in bold letters."
+        ],
+        "correct": [
+          1
+        ],
+        "explanation": "Italics are the UML marker for abstract classes and abstract methods.",
+        "option_explanations": [
+          "A dashed outline is not used for abstract classes.",
+          "Correct: The italic font marks the class as abstract.",
+          "Underlining is for static members.",
+          "Bold is not the abstract marker."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "Which UML arrow shows that a class implements an interface?",
+      "options": [
+        "A solid line ending in a hollow triangle.",
+        "A dashed line ending in an open V arrowhead.",
+        "A solid line ending in a filled diamond.",
+        "A dashed line ending in a hollow triangle."
+      ],
+      "correct": [
+        3
+      ],
+      "explanation": "Implementation is drawn with a dashed arrow; extends (inheritance) uses a solid arrow.",
+      "option_explanations": [
+        "Solid with a hollow triangle is the extends arrow.",
+        "A dashed open arrow means dependency.",
+        "A diamond means composition or aggregation.",
+        "Correct: The dashed line with a hollow triangle is the implements arrow."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "In a UML diagram, what does a solid line with a hollow triangular head from Circle to GeometricObject show?",
+        "options": [
+          "Circle implements GeometricObject.",
+          "Circle extends GeometricObject.",
+          "Circle contains a GeometricObject.",
+          "Circle depends on GeometricObject."
+        ],
+        "correct": [
+          1
+        ],
+        "explanation": "A solid arrow is inheritance (extends); a dashed arrow is implements.",
+        "option_explanations": [
+          "Implements would be a dashed arrow.",
+          "Correct: Solid lines with a hollow triangle mean the subclass extends the superclass.",
+          "Containment is shown with a diamond.",
+          "A dependency is a dashed line with an open arrow."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "A dashed arrow runs from AppleTree to Edible. What does it say?",
+        "options": [
+          "AppleTree implements the interface Edible.",
+          "AppleTree extends the class Edible.",
+          "AppleTree is an abstract class.",
+          "AppleTree has an Edible field."
+        ],
+        "correct": [
+          0
+        ],
+        "explanation": "Dashed arrows point from a class to the interface it implements.",
+        "option_explanations": [
+          "Correct: Dashed means implements.",
+          "Extending a class uses a solid arrow.",
+          "Abstract classes are shown in italics, not by arrows.",
+          "A field relationship is an association line."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "How is an interface such as Edible drawn in a UML class box?",
+      "options": [
+        "The name is underlined with the stereotype <<static>> above it.",
+        "The name is slanted with the stereotype <<interface>> above it.",
+        "The name is plain with the stereotype <<class>> above it.",
+        "The name is bold with the stereotype <<final>> above it."
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": "An interface is written in slanted text together with the <<interface>> keyword in the box.",
+      "option_explanations": [
+        "Underlining marks static members, not interfaces.",
+        "Correct: <<interface>> and italic lettering identify an interface.",
+        "<<class>> is not the interface marker.",
+        "<<final>> is not how interfaces are drawn."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "Which header in a UML box means the box describes an interface?",
+        "options": [
+          "<<interface>> followed by a slanted name",
+          "<<abstract>> followed by an underlined name",
+          "<<implements>> followed by a bold name",
+          "<<extends>> followed by a plain name"
+        ],
+        "correct": [
+          0
+        ],
+        "explanation": "Interfaces carry the <<interface>> label and an italic name.",
+        "option_explanations": [
+          "Correct: That is the course notation for interfaces.",
+          "Underlining is not how abstract classes are drawn; they use italics.",
+          "implements is an arrow, not a box label.",
+          "extends is an arrow too, not a box label."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "In the UML diagram, Fruitful is an interface. What identifies it?",
+        "options": [
+          "It has a diamond at one corner.",
+          "It has its attributes underlined.",
+          "It has <<interface>> over a slanted name.",
+          "It has a dashed border all around."
+        ],
+        "correct": [
+          2
+        ],
+        "explanation": "Interface boxes show <<interface>> and an italic name.",
+        "option_explanations": [
+          "A diamond is on an association line, not on a box corner.",
+          "Underlined attributes are static.",
+          "Correct: The stereotype plus the italic name is the interface marker.",
+          "Dashed borders are not used."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "basic",
+      "question": "A UML diagram shows: the interfaces Fruitful (method pickFruit()) and Edible (method eat()); the abstract class Plant (fields colorful and hasLeaf, both boolean, protected; a constructor Plant(colorful, hasLeaf)); a class AppleTree that extends Plant and implements both interfaces; and a class Flower that extends Plant only. Write the Java declarations (class headers and members, bodies of the two overriding methods may print any message).",
+      "answer": "Plant must carry abstract, interfaces are implemented with implements (comma separated), and the subclass constructor calls super.\n\n```java\ninterface Fruitful {\n    void pickFruit();\n}\ninterface Edible {\n    void eat();\n}\nabstract class Plant {\n    protected boolean colorful;\n    protected boolean hasLeaf;\n    public Plant(boolean colorful, boolean hasLeaf) {\n        this.colorful = colorful;\n        this.hasLeaf = hasLeaf;\n    }\n}\nclass AppleTree extends Plant implements Fruitful, Edible {\n    public AppleTree(boolean colorful, boolean hasLeaf) {\n        super(colorful, hasLeaf);\n    }\n    @Override\n    public void pickFruit() { System.out.println(\"fresh fruit\"); }\n    @Override\n    public void eat() { System.out.println(\"Not all plants are edible\"); }\n}\nclass Flower extends Plant {\n    public Flower(boolean colorful, boolean hasLeaf) {\n        super(colorful, hasLeaf);\n    }\n}\n```"
+    },
+    "versions": [
+      {
+        "type": "basic",
+        "question": "Write Java for this UML: interface Playable with method play(); abstract class Instrument with a protected String name and a constructor Instrument(name); class Piano extends Instrument and implements Playable; class Drum extends Instrument only.",
+        "answer": "```java\ninterface Playable {\n    void play();\n}\nabstract class Instrument {\n    protected String name;\n    public Instrument(String name) { this.name = name; }\n}\nclass Piano extends Instrument implements Playable {\n    public Piano(String name) { super(name); }\n    @Override\n    public void play() { System.out.println(\"Plink\"); }\n}\nclass Drum extends Instrument {\n    public Drum(String name) { super(name); }\n}\n```"
+      },
+      {
+        "type": "basic",
+        "question": "Write Java for this UML: interfaces Swimmer (swim()) and Runner (run()); abstract class Athlete with a protected int age and constructor Athlete(age); class Triathlete extends Athlete and implements both interfaces, giving each method a body.",
+        "answer": "```java\ninterface Swimmer {\n    void swim();\n}\ninterface Runner {\n    void run();\n}\nabstract class Athlete {\n    protected int age;\n    public Athlete(int age) { this.age = age; }\n}\nclass Triathlete extends Athlete implements Swimmer, Runner {\n    public Triathlete(int age) { super(age); }\n    @Override\n    public void swim() { System.out.println(\"Splash\"); }\n    @Override\n    public void run() { System.out.println(\"Dash\"); }\n}\n```"
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "According to the course, what can the body of an interface contain?",
+      "options": [
+        "Constants and abstract methods.",
+        "Instance variables and abstract methods.",
+        "Constants, constructors and abstract methods.",
+        "Constants and fully implemented methods."
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": "An interface is a class-like construct that contains only constants and abstract methods.",
+      "option_explanations": [
+        "Correct: Constants (public static final) and abstract method signatures are the only members.",
+        "Data fields in an interface are constants, not instance variables.",
+        "Interfaces have no constructors.",
+        "Methods in an interface are abstract, without bodies."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "According to the course, which pair of members is an interface made of?",
+        "options": [
+          "Mutable fields and concrete methods",
+          "Constructors and static helper methods",
+          "Private fields and abstract methods",
+          "Constant fields and abstract methods"
+        ],
+        "correct": [
+          3
+        ],
+        "explanation": "public interface InterfaceName { constant declarations; abstract method signatures; }",
+        "option_explanations": [
+          "Fields are always final, and methods are abstract.",
+          "Interfaces cannot be constructed.",
+          "Interface members are always public.",
+          "Correct: That is exactly the general form of an interface."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "Which member can legally be placed in an interface?",
+        "options": [
+          "`private int count;`",
+          "`Edible() { }`",
+          "`int MAX = 100;`",
+          "`void eat() { }`"
+        ],
+        "correct": [
+          2
+        ],
+        "explanation": "Fields become public static final constants; methods are abstract signatures; constructors are not allowed.",
+        "option_explanations": [
+          "Interface fields must be public static final, so private is illegal.",
+          "An interface cannot have constructors.",
+          "Correct: It becomes a public static final constant.",
+          "A method with a body is not abstract."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "Which line causes a compile error?\n\n```java\ninterface T1 {\n  int K = 1;\n  void p();\n}\nclass Impl implements T1 {\n  public void p() { }\n}\n\npublic class Main {\n  public static void main(String[] args) {\n    int a = T1.K;          // (a)\n    T1.K = 5;              // (b)\n    int b = Impl.K;        // (c)\n    T1 t = new Impl();     // (d)\n  }\n}\n```",
+      "options": [
+        "Line (a)",
+        "Line (c)",
+        "Line (b)",
+        "Line (d)"
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": "Data fields in an interface are public static final, so they are read with InterfaceName.CONSTANT_NAME and cannot be assigned.",
+      "option_explanations": [
+        "Reading T1.K through the interface name is the standard access syntax.",
+        "A class that implements T1 inherits K, so Impl.K is legal.",
+        "Correct: K is a final constant; assigning to it is rejected.",
+        "An interface type can refer to an object of an implementing class."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "The interface below declares MAX without any modifiers. Which statement is rejected?\n\n```java\ninterface Limits {\n  int MAX = 10;\n}\n\npublic class Main {\n  public static void main(String[] args) {\n    int x = Limits.MAX;      // (a)\n    int y = Limits.MAX + 1;  // (b)\n    Limits.MAX++;            // (c)\n    System.out.println(x + y);  // (d)\n  }\n}\n```",
+        "options": [
+          "Line (c)",
+          "Line (a)",
+          "Line (b)",
+          "Line (d)"
+        ],
+        "correct": [
+          0
+        ],
+        "explanation": "Interface fields are implicitly public static final, so modifying them is illegal.",
+        "option_explanations": [
+          "Correct: `Limits.MAX++` tries to change a final constant.",
+          "Reading the constant is allowed.",
+          "Using the constant in an expression is allowed.",
+          "Printing the sum is ordinary code."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "Exactly one line below fails to compile. Which is it?\n\n```java\ninterface Rate {\n  double TAX = 0.2;\n}\n\npublic class Main {\n  public static void main(String[] args) {\n    Rate.TAX = 0.3;                         // (a)\n    double t = Rate.TAX;                    // (b)\n    System.out.println(t * 100);            // (c)\n    System.out.println(Rate.TAX < 1);       // (d)\n  }\n}\n```",
+        "options": [
+          "Line (b)",
+          "Line (c)",
+          "Line (d)",
+          "Line (a)"
+        ],
+        "correct": [
+          3
+        ],
+        "explanation": "Constants declared in an interface cannot be reassigned.",
+        "option_explanations": [
+          "Reading a constant into a variable is fine.",
+          "Multiplying by the constant is fine.",
+          "Comparing the constant to a number is fine.",
+          "Correct: TAX is implicitly final."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "Why does this code fail to compile?\n\n```java\ninterface Edible {\n  String howToEat();\n}\nclass Chicken implements Edible {\n  String howToEat() { return \"Fry it\"; }\n}\n\npublic class Main {\n  public static void main(String[] args) {\n    System.out.println(new Chicken().howToEat());\n  }\n}\n```",
+      "options": [
+        "Chicken is not declared abstract.",
+        "Edible does not declare howToEat() as static.",
+        "The class must use extends rather than implements.",
+        "Chicken's howToEat() is not declared public."
+      ],
+      "correct": [
+        3
+      ],
+      "explanation": "Interface methods are public abstract, so an implementing method must also be public.",
+      "option_explanations": [
+        "Chicken implements the only method, so it can be concrete.",
+        "Interface methods are abstract instance methods; static is not required.",
+        "A class implements an interface with implements.",
+        "Correct: A package-private method is weaker access than the public interface method."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "What must be changed so this class compiles?\n\n```java\nclass Point implements Comparable<Point> {\n  int x;\n  int compareTo(Point o) { return x - o.x; }\n}\n\npublic class Main {\n  public static void main(String[] args) {\n    System.out.println(new Point().compareTo(new Point()));\n  }\n}\n```",
+        "options": [
+          "Make Point abstract.",
+          "Add public before compareTo.",
+          "Make compareTo static.",
+          "Change Comparable to Object."
+        ],
+        "correct": [
+          1
+        ],
+        "explanation": "A method implementing an interface method must be public, because interface methods are implicitly public.",
+        "option_explanations": [
+          "compareTo is implemented, so Point can stay concrete.",
+          "Correct: compareTo in Comparable is public, so the implementation must be public.",
+          "A static method cannot implement an instance method.",
+          "That would not give Point any contract to implement."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "What is the cause of the compile error?\n\n```java\nclass Job implements Runnable {\n  void run() { System.out.println(\"working\"); }\n}\n\npublic class Main {\n  public static void main(String[] args) {\n    new Job().run();\n  }\n}\n```",
+        "options": [
+          "run() has package access, not public.",
+          "The class Job should have been declared final.",
+          "Runnable should be extended instead of implemented.",
+          "The method needs a return value."
+        ],
+        "correct": [
+          0
+        ],
+        "explanation": "Because interface methods are public, implementations must use public.",
+        "option_explanations": [
+          "Correct: Implementing methods cannot reduce visibility below public.",
+          "final does not affect implementing methods.",
+          "A class implements an interface; extends is not used.",
+          "run() is void in the interface."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "Apple and Chicken extend different superclasses, but both are edible. What is the best way to model this shared behavior?",
+      "options": [
+        "Define an interface Edible and let both classes implement it.",
+        "Define an abstract class Edible and let both classes extend it.",
+        "Define a concrete class Edible and make both classes inherit from it.",
+        "Copy the howToEat() method into each class separately."
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": "Interfaces can specify common behavior for objects of unrelated classes, while abstract classes model the common behavior of related classes.",
+      "option_explanations": [
+        "Correct: A class can implement an interface without changing its existing superclass.",
+        "A class can extend only one class, and Apple and Chicken already have different superclasses.",
+        "That also uses up their single superclass slot.",
+        "Duplicating code gives no common type to program against."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "Which design lets objects of unrelated classes be treated alike through one type?",
+        "options": [
+          "An abstract class that each class extends",
+          "A static utility class",
+          "An interface that each class implements",
+          "A final class with public data fields"
+        ],
+        "correct": [
+          2
+        ],
+        "explanation": "Interfaces specify common behavior for unrelated classes; abstract classes serve related classes.",
+        "option_explanations": [
+          "Unrelated classes with their own superclasses cannot all extend one abstract class.",
+          "A utility class gives no shared type to the objects.",
+          "Correct: Implementing an interface gives unrelated classes a shared type.",
+          "A final class cannot be a supertype of anything."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "A Car class (extends Vehicle) and a House class (extends Building) must both be priced through a common type. Which is correct?",
+        "options": [
+          "Declare an abstract class Sellable that both extend.",
+          "Declare an interface Sellable that both implement.",
+          "Declare Sellable as a class and let Vehicle extend it.",
+          "Make Car extend Building."
+        ],
+        "correct": [
+          1
+        ],
+        "explanation": "An interface can unify unrelated classes without disturbing their superclass.",
+        "option_explanations": [
+          "Both classes already have a superclass, and only one is allowed.",
+          "Correct: Each class keeps its own superclass and also implements Sellable.",
+          "That would not cover House, which extends Building.",
+          "That would change the class hierarchy to fit the code."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "In an interface, the declaration `int K = 1;` is equivalent to which declaration?",
+      "options": [
+        "`private static final int K = 1;`",
+        "`public final int K = 1;`",
+        "`protected static int K = 1;`",
+        "`public static final int K = 1;`"
+      ],
+      "correct": [
+        3
+      ],
+      "explanation": "All data fields in an interface are public final static, and all methods are public abstract; the modifiers can be omitted.",
+      "option_explanations": [
+        "Interface members are never private.",
+        "Without static the constant would belong to each object, but interfaces have no instances.",
+        "protected and non-final are not implied.",
+        "Correct: These three modifiers are implied."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "Which declaration is equivalent to the method `void p();` inside an interface?",
+        "options": [
+          "`public static void p();`",
+          "`public abstract void p();`",
+          "`protected abstract void p();`",
+          "`abstract final void p();`"
+        ],
+        "correct": [
+          1
+        ],
+        "explanation": "Interface methods are implicitly public abstract.",
+        "option_explanations": [
+          "Abstract methods are not static.",
+          "Correct: The omitted modifiers are public and abstract.",
+          "Interface methods are public, not protected.",
+          "final would forbid overriding, so is not implied."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "An interface contains `double RATE = 0.5;` and `void apply();`. Which pair of modifier sets is implied?",
+        "options": [
+          "The field is public static final; the method is public abstract.",
+          "The field is private final; the method is public abstract.",
+          "The field is public static; the method is protected abstract.",
+          "The field is public static final; the method is public static."
+        ],
+        "correct": [
+          0
+        ],
+        "explanation": "Fields default to public static final and methods to public abstract.",
+        "option_explanations": [
+          "Correct: Those are the defaults, so the keywords can be dropped.",
+          "Fields in interfaces are never private.",
+          "The field is also final, and the method is public.",
+          "The method is abstract, not static."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "Which statement about constructors is correct?",
+      "options": [
+        "An abstract class may declare constructors, but an interface has none.",
+        "An interface may declare constructors, but an abstract class has none.",
+        "Both an abstract class and an interface may declare constructors.",
+        "Neither an abstract class nor an interface may declare constructors."
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": "Abstract class constructors are invoked by subclasses through constructor chaining; an interface has no constructors.",
+      "option_explanations": [
+        "Correct: Subclasses call the abstract class constructor via super(...); interfaces have nothing to construct.",
+        "The roles are reversed.",
+        "Interfaces cannot contain constructors.",
+        "Abstract classes do have constructors."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "When a concrete class extends an abstract class, how does the abstract class constructor get executed?",
+        "options": [
+          "It runs by itself when the program starts.",
+          "A subclass constructor calls it via super().",
+          "The new operator calls it directly on the abstract class.",
+          "It is only executed if the subclass overrides it."
+        ],
+        "correct": [
+          1
+        ],
+        "explanation": "Constructors are not inherited, but a subclass constructor always calls a superclass constructor via super().",
+        "option_explanations": [
+          "Constructors run only when an object is created.",
+          "Correct: super(...) is called explicitly or implicitly at the start of the subclass constructor.",
+          "new cannot be used on an abstract class.",
+          "Constructors cannot be overridden."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "Which construct has no constructors?",
+        "options": [
+          "An abstract class",
+          "A concrete subclass",
+          "An interface",
+          "A class with abstract methods"
+        ],
+        "correct": [
+          2
+        ],
+        "explanation": "Interfaces can be neither instantiated nor given constructors.",
+        "option_explanations": [
+          "Abstract classes may have constructors for chaining.",
+          "Every class has a constructor, written or default.",
+          "Correct: An interface declares only constants and abstract methods.",
+          "A class with abstract methods is an abstract class, which can have constructors."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "Given classes A and B and interfaces I and J, which declaration is legal?",
+      "options": [
+        "`class C extends A, B { }`",
+        "`class C extends A implements I, J { }`",
+        "`interface K extends A { }`",
+        "`class C implements A { }`"
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": "A class extends one class and may implement many interfaces; an interface may extend many interfaces.",
+      "option_explanations": [
+        "Java classes cannot extend two classes.",
+        "Correct: One superclass plus several interfaces is the multiple-inheritance form Java allows.",
+        "An interface can only extend interfaces, not a class.",
+        "implements is for interfaces, and A is a class."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "With class Bird and interfaces Walker and Swimmer, which declaration compiles?",
+        "options": [
+          "`class Duck extends Bird, Swimmer { }`",
+          "`class Duck implements Bird, Swimmer { }`",
+          "`interface Both implements Walker, Swimmer { }`",
+          "`interface Both extends Walker, Swimmer { }`"
+        ],
+        "correct": [
+          3
+        ],
+        "explanation": "Interfaces extend other interfaces (several are allowed); classes extend one class and implement interfaces.",
+        "option_explanations": [
+          "Two types after extends are illegal for a class.",
+          "Bird is a class, so implements cannot name it.",
+          "An interface extends other interfaces; implements is for classes.",
+          "Correct: An interface may extend several interfaces."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "Which of these is allowed when Base is a class and P and Q are interfaces?",
+        "options": [
+          "A class that implements both P and Q",
+          "A class that extends both Base and P",
+          "A class that extends P and Q",
+          "An interface that implements P and Q"
+        ],
+        "correct": [
+          0
+        ],
+        "explanation": "A class implements interfaces and extends at most one class, and interfaces use extends.",
+        "option_explanations": [
+          "Correct: implements may list any number of interfaces.",
+          "P is an interface, so a class cannot extend it.",
+          "Classes use implements for interfaces.",
+          "Interfaces use extends, not implements."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "Given the declarations below, which methods must a concrete class implementing `I2` provide?\n\n```java\ninterface I1 { void a(); }\ninterface I2 extends I1 { void b(); }\n```",
+      "options": [
+        "Only b()",
+        "Only a()",
+        "Both a() and b()",
+        "Neither, since I2 is an interface"
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": "A sub-interface inherits the abstract methods of its parent interface, so an implementing concrete class must define them all.",
+      "option_explanations": [
+        "Inherited abstract methods must also be implemented.",
+        "b() is also required.",
+        "Correct: I2 inherits a() from I1 and adds b().",
+        "Implementing an interface requires all its abstract methods."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "A concrete class Sq implements Shape2, and the interfaces are:\n\n```java\ninterface Shape1 { double area(); }\ninterface Shape2 extends Shape1 { double perimeter(); }\n```\nSq defines only `public double area()`. What happens?",
+        "options": [
+          "A compile error: area() is not allowed in Sq.",
+          "A compile error: perimeter() is missing.",
+          "A runtime error when perimeter() is called.",
+          "It compiles because Shape1 covers perimeter()."
+        ],
+        "correct": [
+          1
+        ],
+        "explanation": "Sq must implement every abstract method of Shape2, including those inherited from Shape1.",
+        "option_explanations": [
+          "area() is exactly the method that Shape1 requires.",
+          "Correct: perimeter() from Shape2 is still unimplemented, so Sq would have to be abstract.",
+          "The problem is detected at compile time.",
+          "perimeter() is declared in Shape2, not Shape1."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "Interface Dog2 extends Animal2, where Animal2 declares `void eat();` and Dog2 declares `void bark();`. Concrete class Pup implements Dog2. Which statement is correct?",
+        "options": [
+          "Pup needs bodies for both bark() and eat().",
+          "Pup needs a body for bark() alone.",
+          "Pup needs a body for eat() alone.",
+          "Pup needs no bodies since both are interfaces."
+        ],
+        "correct": [
+          0
+        ],
+        "explanation": "Abstract methods are inherited by sub-interfaces, and the concrete implementing class must implement all of them.",
+        "option_explanations": [
+          "Correct: Both the inherited and the declared method must be implemented.",
+          "eat() is inherited from Animal2.",
+          "bark() is also needed.",
+          "A concrete class must implement all abstract methods."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "A single file Main.java declares a class Main, an interface Edible and an abstract class Fruit. After compiling, how many bytecode (.class) files exist?",
+      "options": [
+        "1",
+        "3",
+        "2",
+        "4"
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": "Each interface is compiled into a separate bytecode file, just like a regular class.",
+      "option_explanations": [
+        "That would count only the public class.",
+        "Correct: One file each for Main, Edible and Fruit.",
+        "That omits one of the three types.",
+        "There is no extra file beyond the declared types."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "One source file contains interfaces A and B, abstract class C, class D and class Main. How many .class files does javac produce?",
+        "options": [
+          "1",
+          "3",
+          "4",
+          "5"
+        ],
+        "correct": [
+          3
+        ],
+        "explanation": "Interfaces, abstract classes and ordinary classes each get their own bytecode file.",
+        "option_explanations": [
+          "One file per source file would ignore the separate types.",
+          "That counts only classes, skipping the interfaces.",
+          "That misses one of the five types.",
+          "Correct: Five types give five .class files."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "Main.java defines interface Edible, abstract class Fruit, class Apple and class Main. How many bytecode files are produced?",
+        "options": [
+          "4",
+          "2",
+          "3",
+          "1"
+        ],
+        "correct": [
+          0
+        ],
+        "explanation": "Every class and interface is compiled to its own bytecode file.",
+        "option_explanations": [
+          "Correct: Four types, four files.",
+          "That ignores the interface and one class.",
+          "That leaves out one of the four types.",
+          "javac does not put them together into one file."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "Which line causes a compile error?\n\n```java\ninterface Edible {\n  String howToEat();\n}\nclass Chicken implements Edible {\n  public String howToEat() { return \"Fry it\"; }\n  public String cluck() { return \"Cluck\"; }\n}\n\npublic class Main {\n  public static void main(String[] args) {\n    Edible e = new Chicken();                 // (a)\n    System.out.println(e.howToEat());         // (b)\n    System.out.println(e.cluck());            // (c)\n    System.out.println(((Chicken) e).cluck());   // (d)\n  }\n}\n```",
+      "options": [
+        "Line (a)",
+        "Line (b)",
+        "Line (c)",
+        "Line (d)"
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": "The compiler checks method calls against the declared type: an Edible variable only exposes Edible's methods unless it is cast to the class.",
+      "option_explanations": [
+        "An interface variable may refer to an object of an implementing class.",
+        "howToEat() is declared in the interface.",
+        "Correct: Edible declares no cluck() method; the variable needs a cast to Chicken first.",
+        "After the cast, the Chicken method is visible."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "Which line is rejected by the compiler?\n\n```java\nabstract class Shape {\n  abstract double area();\n}\nclass Circle extends Shape {\n  double r = 1;\n  double area() { return 3 * r * r; }\n  double getRadius() { return r; }\n}\n\npublic class Main {\n  public static void main(String[] args) {\n    Shape s = new Circle();                    // (a)\n    System.out.println(s.area());              // (b)\n    System.out.println(((Circle) s).getRadius()); // (c)\n    System.out.println(s.getRadius());         // (d)\n  }\n}\n```",
+        "options": [
+          "Line (d)",
+          "Line (a)",
+          "Line (b)",
+          "Line (c)"
+        ],
+        "correct": [
+          0
+        ],
+        "explanation": "A variable of the superclass type can call only members declared in that type, unless cast to the subclass.",
+        "option_explanations": [
+          "Correct: Shape does not declare getRadius().",
+          "A superclass variable can reference a Circle.",
+          "area() is declared in Shape.",
+          "The cast exposes the Circle method."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "One statement does not compile. Which one?\n\n```java\ninterface Playable {\n  void play();\n}\nclass Guitar implements Playable {\n  public void play() { System.out.println(\"strum\"); }\n  public void tune() { System.out.println(\"tune\"); }\n}\n\npublic class Main {\n  public static void main(String[] args) {\n    Playable p = new Guitar();       // (a)\n    p.tune();                        // (b)\n    p.play();                        // (c)\n    ((Guitar) p).tune();             // (d)\n  }\n}\n```",
+        "options": [
+          "Line (a)",
+          "Line (c)",
+          "Line (d)",
+          "Line (b)"
+        ],
+        "correct": [
+          3
+        ],
+        "explanation": "Through an interface-typed variable only the interface methods can be called, unless the variable is cast back to the class.",
+        "option_explanations": [
+          "An interface type can hold the implementing object.",
+          "play() is declared by the interface.",
+          "The cast to Guitar makes tune() accessible.",
+          "Correct: tune() is not declared in Playable."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "What is printed?\n\n```java\ninterface Edible {\n  String howToEat();\n}\nclass Chicken implements Edible {\n  public String howToEat() { return \"Fry it\"; }\n}\nclass Apple implements Edible {\n  public String howToEat() { return \"Bake it\"; }\n}\n\npublic class Main {\n  public static void main(String[] args) {\n    Edible[] items = { new Apple(), new Chicken(), new Apple() };\n    for (Edible e : items)\n      System.out.print(e.howToEat() + \";\");\n  }\n}\n```",
+      "options": [
+        "Bake it;Fry it;Bake it;",
+        "Fry it;Bake it;Fry it;",
+        "Bake it;Bake it;Fry it;",
+        "A compile error"
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": "The call e.howToEat() is dispatched to the actual object's class at run time (polymorphism), in array order.",
+      "option_explanations": [
+        "Correct: Each element runs its own howToEat(), in order Apple, Chicken, Apple.",
+        "That is the reverse pattern of the array contents.",
+        "The elements are Apple, Chicken, Apple in that order.",
+        "Edible[] holding implementing objects is legal."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "What is printed?\n\n```java\ninterface Playable {\n  String sound();\n}\nclass Piano implements Playable {\n  public String sound() { return \"Plink\"; }\n}\nclass Drum implements Playable {\n  public String sound() { return \"Boom\"; }\n}\n\npublic class Main {\n  public static void main(String[] args) {\n    Playable[] band = { new Drum(), new Drum(), new Piano() };\n    for (Playable p : band)\n      System.out.print(p.sound() + \" \");\n  }\n}\n```",
+        "options": [
+          "Plink Boom Boom",
+          "Boom Plink Plink",
+          "Boom Boom Plink",
+          "Playable Playable Playable"
+        ],
+        "correct": [
+          2
+        ],
+        "explanation": "An interface-typed array can hold objects of different implementing classes; each call runs the implementation of the real object.",
+        "option_explanations": [
+          "That is not the array order.",
+          "That swaps the object counts.",
+          "Correct: Drum, Drum, Piano produce Boom Boom Plink.",
+          "The method returns text, not the type name."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "What is the output?\n\n```java\ninterface Edible {\n  String howToEat();\n}\nclass Chicken implements Edible {\n  public String howToEat() { return \"Fry it\"; }\n}\nclass Apple implements Edible {\n  public String howToEat() { return \"Bake it\"; }\n}\n\npublic class Main {\n  static void serve(Edible e) {\n    System.out.print(e.howToEat() + \",\");\n  }\n  public static void main(String[] args) {\n    serve(new Chicken());\n    serve(new Apple());\n    serve(new Chicken());\n  }\n}\n```",
+        "options": [
+          "Bake it,Fry it,Bake it,",
+          "Fry it,Bake it,Fry it,",
+          "Fry it,Fry it,Fry it,",
+          "Edible,Edible,Edible,"
+        ],
+        "correct": [
+          1
+        ],
+        "explanation": "A method taking the interface type accepts any implementing object and calls its own version of the method.",
+        "option_explanations": [
+          "That swaps the two classes.",
+          "Correct: Chicken, Apple, Chicken are served in that order.",
+          "The Edible parameter does not force one implementation.",
+          "The method call returns text, not the type name."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "What is printed?\n\n```java\nabstract class Shape {\n  abstract double area();\n  void show() { System.out.print(\"Area=\" + area() + \" \"); }\n}\nclass Sq extends Shape {\n  double s;\n  Sq(double s) { this.s = s; }\n  double area() { return s * s; }\n}\nclass Rect extends Shape {\n  double w, h;\n  Rect(double w, double h) { this.w = w; this.h = h; }\n  double area() { return w * h; }\n}\n\npublic class Main {\n  public static void main(String[] args) {\n    Shape[] a = { new Sq(3), new Rect(2, 5) };\n    for (Shape x : a) x.show();\n  }\n}\n```",
+      "options": [
+        "Area=6.0 Area=10.0",
+        "Area=3.0 Area=7.0",
+        "Area=0.0 Area=0.0",
+        "Area=9.0 Area=10.0"
+      ],
+      "correct": [
+        3
+      ],
+      "explanation": "A concrete method in an abstract class may call an abstract method; the call runs the subclass's implementation.",
+      "option_explanations": [
+        "Squaring 3 gives 9.0, not 6.0.",
+        "These are neither sums nor products of the arguments.",
+        "area() is overridden, not left at a default.",
+        "Correct: Sq(3) gives 9.0 and Rect(2, 5) gives 10.0."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "What is printed?\n\n```java\nabstract class Employee {\n  abstract double pay();\n  void show() { System.out.print(\"Pay=\" + pay() + \" \"); }\n}\nclass Hourly extends Employee {\n  double hours = 10, rate = 2.5;\n  double pay() { return hours * rate; }\n}\nclass Salaried extends Employee {\n  double pay() { return 1000; }\n}\n\npublic class Main {\n  public static void main(String[] args) {\n    Employee[] e = { new Hourly(), new Salaried() };\n    for (Employee x : e) x.show();\n  }\n}\n```",
+        "options": [
+          "Pay=25.0 Pay=1000.0",
+          "Pay=0.0 Pay=0.0",
+          "Pay=12.5 Pay=1000.0",
+          "Pay=25.0 Pay=0.0"
+        ],
+        "correct": [
+          0
+        ],
+        "explanation": "show() is inherited from the abstract class and calls the object's own pay() through dynamic binding.",
+        "option_explanations": [
+          "Correct: 10 hours at 2.5 gives 25.0; the salaried employee returns 1000.0.",
+          "pay() has real implementations in both subclasses.",
+          "hours * rate is 25.0, not 12.5.",
+          "Salaried.pay() returns 1000."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "What is the output?\n\n```java\nabstract class Animal {\n  abstract String sound();\n  void speak() { System.out.print(\"I say \" + sound() + \". \"); }\n}\nclass Dog extends Animal {\n  String sound() { return \"Woof\"; }\n}\nclass Cat extends Animal {\n  String sound() { return \"Meow\"; }\n}\n\npublic class Main {\n  public static void main(String[] args) {\n    Animal a = new Cat();\n    a.speak();\n    a = new Dog();\n    a.speak();\n  }\n}\n```",
+        "options": [
+          "I say Woof. I say Meow.",
+          "I say Meow. I say Woof.",
+          "I say Meow. I say Meow.",
+          "I say . I say ."
+        ],
+        "correct": [
+          1
+        ],
+        "explanation": "The same speak() method behaves differently depending on the object that sound() is invoked on.",
+        "option_explanations": [
+          "The variable first refers to a Cat.",
+          "Correct: The first call is on a Cat, the second on a Dog.",
+          "The variable was reassigned to a Dog before the second call.",
+          "sound() is implemented in both subclasses."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "What is printed?\n\n```java\nabstract class A {\n  A() { System.out.print(\"A \"); }\n}\nclass B extends A {\n  B() { System.out.print(\"B \"); }\n}\nclass C extends B {\n  C() { System.out.print(\"C \"); }\n}\n\npublic class Main {\n  public static void main(String[] args) {\n    new C();\n  }\n}\n```",
+      "options": [
+        "C B A",
+        "C",
+        "A B C",
+        "A C"
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": "Constructors run from the top of the hierarchy down through constructor chaining: the abstract superclass constructor runs first.",
+      "option_explanations": [
+        "Chaining goes from the top class down, not bottom up.",
+        "The superclass constructors still run.",
+        "Correct: Each constructor first calls its superclass constructor, so the output starts with A.",
+        "B's constructor also runs, between A and C."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "What is printed?\n\n```java\nabstract class Shape {\n  Shape() { System.out.print(\"S \"); }\n}\nclass Rect extends Shape {\n  Rect() { System.out.print(\"R \"); }\n}\nclass Square extends Rect {\n  Square() { System.out.print(\"Q \"); }\n}\n\npublic class Main {\n  public static void main(String[] args) {\n    new Square();\n    new Rect();\n  }\n}\n```",
+        "options": [
+          "S R Q S R",
+          "Q R S R S",
+          "S R Q R",
+          "S Q R S R"
+        ],
+        "correct": [
+          0
+        ],
+        "explanation": "Every object creation runs the whole chain, starting with the abstract class constructor.",
+        "option_explanations": [
+          "Correct: new Square() prints S R Q and new Rect() prints S R.",
+          "That is each chain printed bottom up.",
+          "The second object also runs the Shape constructor.",
+          "Rect's constructor runs before Square's."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "What is printed?\n\n```java\nabstract class P {\n  P(String s) { System.out.print(s + \" \"); }\n}\nclass Q extends P {\n  Q() {\n    super(\"one\");\n    System.out.print(\"two \");\n  }\n}\n\npublic class Main {\n  public static void main(String[] args) {\n    new Q();\n  }\n}\n```",
+        "options": [
+          "two one",
+          "one two",
+          "two",
+          "one"
+        ],
+        "correct": [
+          1
+        ],
+        "explanation": "super(\"one\") calls the abstract class constructor first; the rest of the subclass constructor runs afterwards.",
+        "option_explanations": [
+          "The superclass constructor runs before the rest of the subclass constructor.",
+          "Correct: The super call comes first, then the body of Q().",
+          "The superclass constructor is also called.",
+          "The statement after super(...) also runs."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "`GeometricObject` is abstract. Why does `GeometricObject[] geo = new GeometricObject[10];` compile?",
+      "options": [
+        "It creates ten null references, not objects.",
+        "Array creation is exempt from the abstract modifier.",
+        "The compiler fills the array with Circle objects.",
+        "It compiles only if GeometricObject has a constructor."
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": "Instantiation means creating an instance; the array only holds references, so no abstract object is created. `geo[0] = new GeometricObject();` would be an error, while `geo[0] = new Circle();` is fine.",
+      "option_explanations": [
+        "Correct: Only references are declared, and each starts as null.",
+        "The abstract rule applies to new GeometricObject() wherever it appears.",
+        "No objects are created automatically.",
+        "Constructors are irrelevant to creating the array."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "What is printed?\n\n```java\nabstract class Shape {\n  abstract double area();\n}\n\npublic class Main {\n  public static void main(String[] args) {\n    Shape[] s = new Shape[2];\n    System.out.println(s[0]);\n  }\n}\n```",
+        "options": [
+          "0",
+          "A compile error",
+          "A runtime exception",
+          "null"
+        ],
+        "correct": [
+          3
+        ],
+        "explanation": "An array of an abstract type compiles, and its elements start as null because no objects exist yet.",
+        "option_explanations": [
+          "Reference elements do not default to 0.",
+          "Declaring an array of an abstract class is legal.",
+          "Reading a null element does not throw; calling a method on it would.",
+          "Correct: Array elements of a class type default to null."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "What happens when this program runs?\n\n```java\nabstract class Shape {\n  abstract double area();\n}\nclass Sq extends Shape {\n  double area() { return 4; }\n}\n\npublic class Main {\n  public static void main(String[] args) {\n    Shape[] s = new Shape[2];\n    s[0] = new Sq();\n    System.out.println(s[0].area());\n    System.out.println(s[1].area());\n  }\n}\n```",
+        "options": [
+          "It prints 4.0 then 0.0.",
+          "It prints 4.0, then throws a NullPointerException.",
+          "It does not compile.",
+          "It prints 4.0, then throws an ArrayIndexOutOfBoundsException."
+        ],
+        "correct": [
+          1
+        ],
+        "explanation": "Only s[0] was assigned; s[1] is still null, so calling area() on it throws NullPointerException.",
+        "option_explanations": [
+          "Null references do not return default numbers.",
+          "Correct: s[1] holds null because only slot 0 was filled.",
+          "Abstract array declarations are legal.",
+          "Index 1 exists in an array of length 2."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "Which statement about inheritance with abstract classes is correct?",
+      "options": [
+        "An abstract class can extend a concrete class.",
+        "A subclass of an abstract class is automatically abstract.",
+        "An abstract class must extend another abstract class.",
+        "A concrete class can declare abstract methods."
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": "A subclass can be abstract even if its superclass is concrete: Object is concrete, yet GeometricObject extends it and is abstract.",
+      "option_explanations": [
+        "Correct: For example, GeometricObject is abstract and extends the concrete class Object.",
+        "A subclass that implements all abstract methods is concrete.",
+        "Its superclass can be concrete, like Object.",
+        "Only abstract classes may contain abstract methods."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "Which is true for the class hierarchy GeometricObject (abstract) extends Object?",
+        "options": [
+          "Object must be abstract for this to compile.",
+          "GeometricObject becomes concrete after extending Object.",
+          "GeometricObject cannot declare abstract methods.",
+          "An abstract subclass of a concrete superclass is legal."
+        ],
+        "correct": [
+          3
+        ],
+        "explanation": "Object is concrete, but its subclass GeometricObject may be abstract.",
+        "option_explanations": [
+          "Object is a concrete class.",
+          "The abstract modifier stays.",
+          "Abstract classes can declare abstract methods.",
+          "Correct: The abstract modifier of a subclass is independent of its superclass."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "Which pairing can appear in a Java program?",
+        "options": [
+          "A concrete class with an abstract method",
+          "A concrete superclass with an abstract subclass",
+          "An abstract class that is instantiated with new",
+          "A final abstract class"
+        ],
+        "correct": [
+          1
+        ],
+        "explanation": "Abstract classes can extend concrete ones; concrete classes cannot hold abstract methods and abstract classes cannot be instantiated.",
+        "option_explanations": [
+          "Concrete classes cannot contain abstract methods.",
+          "Correct: The subclass may be abstract even if the superclass is concrete.",
+          "Abstract classes cannot be instantiated.",
+          "final forbids subclassing, which an abstract class needs."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "What is a derived class that implements all the missing functionality of an abstract base class called?",
+      "options": [
+        "A final class",
+        "A generic class",
+        "A concrete class",
+        "A wrapper class"
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": "An abstract class is meant as a base class; a derived class that supplies all the missing implementations is called a concrete class.",
+      "option_explanations": [
+        "final only prevents subclassing.",
+        "Generic classes take type parameters.",
+        "Correct: Concrete classes can be instantiated.",
+        "Wrapper classes wrap primitive values."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "Square extends the abstract class Shape and implements every inherited abstract method. How is Square described?",
+        "options": [
+          "Concrete",
+          "Interface",
+          "Abstract",
+          "Static"
+        ],
+        "correct": [
+          0
+        ],
+        "explanation": "A class with no unimplemented abstract methods is concrete and may be instantiated.",
+        "option_explanations": [
+          "Correct: All missing functionality is supplied.",
+          "Interfaces are a separate construct.",
+          "It would stay abstract only if some methods were still missing.",
+          "static describes members, not top-level classes."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "What is the role of an abstract class relative to its subclasses?",
+        "options": [
+          "It is a final class whose methods are all complete.",
+          "It is a utility class used without any subclasses.",
+          "It is a factory that creates instances with new.",
+          "A base class whose subclasses provide the missing parts."
+        ],
+        "correct": [
+          3
+        ],
+        "explanation": "Abstract classes are meant to be used as the base class from which other classes are derived; the derived class provides the unimplemented methods.",
+        "option_explanations": [
+          "Final classes cannot be derived from.",
+          "An abstract class cannot be used without subclasses.",
+          "An abstract class cannot be instantiated with new.",
+          "Correct: Subclasses fill in what the abstract base class leaves out."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "Why does this code not compile?\n\n```java\nabstract class GeometricObject { }\nclass Circle extends GeometricObject {\n  double r = 1;\n  double getArea() { return 3.14 * r * r; }\n}\n\npublic class Main {\n  static boolean equalArea(GeometricObject a, GeometricObject b) {\n    return a.getArea() == b.getArea();\n  }\n  public static void main(String[] args) {\n    System.out.println(equalArea(new Circle(), new Circle()));\n  }\n}\n```",
+      "options": [
+        "equalArea must be declared abstract.",
+        "GeometricObject does not declare getArea().",
+        "The two doubles cannot be compared with ==.",
+        "Circle must declare a constructor."
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": "A method can be invoked through a superclass variable only if it is declared in the superclass; declaring getArea() abstract there makes generic code like equalArea possible.",
+      "option_explanations": [
+        "equalArea is a static helper with a body; it is not abstract.",
+        "Correct: The parameter type GeometricObject has no getArea() method.",
+        "Comparing two double results with == is legal.",
+        "Circle gets a default constructor automatically."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "The compiler rejects `a.speak()` in this code. What is the cause?\n\n```java\nabstract class Animal { }\nclass Dog extends Animal {\n  void speak() { System.out.println(\"Woof\"); }\n}\n\npublic class Main {\n  static void chorus(Animal a) {\n    a.speak();\n  }\n  public static void main(String[] args) {\n    chorus(new Dog());\n  }\n}\n```",
+        "options": [
+          "Dog must be declared abstract.",
+          "chorus cannot take an abstract class as a parameter.",
+          "Animal does not declare any speak() method.",
+          "speak() must be declared static."
+        ],
+        "correct": [
+          2
+        ],
+        "explanation": "To call a method polymorphically through a superclass variable, the superclass must declare it, typically as abstract.",
+        "option_explanations": [
+          "Dog is a perfectly good concrete class.",
+          "An abstract class can be used as a parameter type.",
+          "Correct: The variable type Animal exposes only Animal's members.",
+          "A static method would not be polymorphic."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "After adding `abstract double getArea();` to GeometricObject, what does this program print?\n\n```java\nabstract class GeometricObject {\n  abstract double getArea();\n}\nclass Circle extends GeometricObject {\n  double r = 1;\n  double getArea() { return 3 * r * r; }\n}\nclass Square extends GeometricObject {\n  double s = 1.5;\n  double getArea() { return 3; }\n}\n\npublic class Main {\n  static boolean equalArea(GeometricObject a, GeometricObject b) {\n    return a.getArea() == b.getArea();\n  }\n  public static void main(String[] args) {\n    System.out.println(equalArea(new Circle(), new Square()));\n  }\n}\n```",
+        "options": [
+          "true",
+          "false",
+          "A compile error",
+          "A runtime exception"
+        ],
+        "correct": [
+          0
+        ],
+        "explanation": "Declaring the abstract method makes a.getArea() legal, and each object computes its own area: 3.0 for both.",
+        "option_explanations": [
+          "Correct: Circle gives 3 * 1 * 1 and Square returns 3, so they are equal.",
+          "The two areas are both 3.0.",
+          "With the abstract method declared, the call is legal.",
+          "Nothing throws an exception here."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "Which statement about java.lang.Number is correct?",
+      "options": [
+        "It is an abstract superclass of the numeric wrapper classes.",
+        "It is a concrete class that only Integer and Double extend.",
+        "It is an interface implemented by the numeric wrapper classes.",
+        "It is the superclass of Character and Boolean too."
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": "Number is an abstract superclass for the numeric wrapper classes, BigInteger, and BigDecimal; its common methods (intValue(), doubleValue() etc.) are defined in it.",
+      "option_explanations": [
+        "Correct: Number sits above Short, Byte, Integer, Long, Float, Double, BigInteger and BigDecimal.",
+        "Many more classes than two extend it, and it is abstract.",
+        "Number is a class, not an interface.",
+        "Character and Boolean are not numeric and do not extend Number."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "What kind of type is Number, and who extends it?",
+        "options": [
+          "A concrete class extended by String and Integer.",
+          "An abstract class that Integer and BigInteger extend.",
+          "An interface implemented by Integer and Double.",
+          "A final class that has no subclasses at all."
+        ],
+        "correct": [
+          1
+        ],
+        "explanation": "Number is abstract; the numeric wrapper classes, BigInteger and BigDecimal are its subclasses.",
+        "option_explanations": [
+          "String is not a numeric type and is not a Number.",
+          "Correct: That is the hierarchy given in the case study.",
+          "Number is not an interface, and many classes extend it.",
+          "A final class cannot be extended, but these classes extend Number."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "Which pair are both subclasses of Number?",
+        "options": [
+          "Character and Integer",
+          "String and Double",
+          "Boolean and BigInteger",
+          "Long and BigDecimal"
+        ],
+        "correct": [
+          3
+        ],
+        "explanation": "Numeric wrappers plus BigInteger and BigDecimal extend the abstract class Number; Character, Boolean and String do not.",
+        "option_explanations": [
+          "Character is not numeric.",
+          "String is not a Number.",
+          "Boolean is not a Number.",
+          "Correct: Both are numeric types under Number."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "What is printed?\n\n```java\npublic class Main {\n  public static void main(String[] args) {\n    Number[] a = { Integer.valueOf(3), Double.valueOf(4.5), Long.valueOf(2) };\n    double max = a[0].doubleValue();\n    for (Number n : a)\n      if (n.doubleValue() > max) max = n.doubleValue();\n    System.out.println(max);\n  }\n}\n```",
+      "options": [
+        "4.5",
+        "3",
+        "4",
+        "2.0"
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": "doubleValue() is defined in Number, so mixed numeric objects can be compared through a Number array; the largest value is 4.5.",
+      "option_explanations": [
+        "Correct: Compared as doubles, the values are 3.0, 4.5 and 2.0.",
+        "3 is not the largest value and would print as 3.0.",
+        "4.5 is not truncated to 4 when held as a double.",
+        "2.0 is the smallest value."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "What is printed?\n\n```java\npublic class Main {\n  public static void main(String[] args) {\n    Number[] a = { Integer.valueOf(7), Float.valueOf(2.5f), Double.valueOf(9.25) };\n    double sum = 0;\n    for (Number n : a) sum += n.doubleValue();\n    System.out.println(sum);\n  }\n}\n```",
+        "options": [
+          "9.25",
+          "18.75",
+          "12.0",
+          "19"
+        ],
+        "correct": [
+          1
+        ],
+        "explanation": "Each element is converted with doubleValue() before being added, so mixed types can be summed: 7.0 + 2.5 + 9.25.",
+        "option_explanations": [
+          "That is only the largest element.",
+          "Correct: 7 + 2.5 + 9.25 is 18.75.",
+          "That drops the fractional parts.",
+          "The sum is a double, so it is not an integer."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "What is printed (one value per line)?\n\n```java\npublic class Main {\n  public static void main(String[] args) {\n    Number n = Double.valueOf(8.9);\n    System.out.println(n.intValue());\n    n = Integer.valueOf(4);\n    System.out.println(n.doubleValue());\n  }\n}\n```",
+        "options": [
+          "9 then 4",
+          "8.9 then 4",
+          "8 then 4.0",
+          "8 then 4"
+        ],
+        "correct": [
+          2
+        ],
+        "explanation": "intValue() truncates a double to an int, and doubleValue() returns a double, so 4 is shown as 4.0.",
+        "option_explanations": [
+          "intValue() truncates; it does not round up.",
+          "intValue() returns an int, so it is not 8.9.",
+          "Correct: The first call truncates 8.9 to 8; the second returns 4.0.",
+          "doubleValue() returns a double, which prints as 4.0."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "Which method is defined in the Number class?",
+      "options": [
+        "`charValue()`",
+        "`longValue()`",
+        "`booleanValue()`",
+        "`stringValue()`"
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": "Number defines byteValue(), shortValue(), intValue(), longValue(), floatValue() and doubleValue().",
+      "option_explanations": [
+        "No Number method returns a char.",
+        "Correct: longValue() is one of the six conversion methods.",
+        "No Number method returns a boolean.",
+        "Converting to text is done with toString()."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "Which of these calls is available on any Number reference?",
+        "options": [
+          "`n.floatValue()`",
+          "`n.charValue()`",
+          "`n.isEmpty()`",
+          "`n.length()`"
+        ],
+        "correct": [
+          0
+        ],
+        "explanation": "Number provides byteValue(), shortValue(), intValue(), longValue(), floatValue() and doubleValue().",
+        "option_explanations": [
+          "Correct: floatValue() returns the value as a float.",
+          "There is no conversion to char in Number.",
+          "Number has no emptiness test.",
+          "Number has no length."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "Which list contains only methods of the abstract class Number?",
+        "options": [
+          "`byteValue()`, `charValue()`, `intValue()`",
+          "`shortValue()`, `stringValue()`, `longValue()`",
+          "`byteValue()`, `shortValue()`, `intValue()`",
+          "`booleanValue()`, `intValue()`, `doubleValue()`"
+        ],
+        "correct": [
+          2
+        ],
+        "explanation": "The six value-conversion methods of Number return byte, short, int, long, float and double.",
+        "option_explanations": [
+          "charValue() is not in Number.",
+          "stringValue() is not in Number.",
+          "Correct: All three are real conversion methods.",
+          "booleanValue() is not in Number."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "Calendar is abstract and GregorianCalendar is a concrete subclass. Which statement compiles?",
+      "options": [
+        "`Calendar c = new GregorianCalendar();`",
+        "`Calendar c = new Calendar();`",
+        "`GregorianCalendar c = new Calendar();`",
+        "`Calendar c = new Calendar(2020, 0, 1);`"
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": "An abstract class cannot be instantiated with new, but a variable of the abstract type can refer to an object of a concrete subclass.",
+      "option_explanations": [
+        "Correct: It creates a GregorianCalendar object (current time) held in a Calendar variable.",
+        "new Calendar() instantiates an abstract class.",
+        "That also instantiates an abstract class, and it is the wrong type.",
+        "The arguments do not change that Calendar is abstract."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "Which line creates a calendar object for 1 January 2020?",
+        "options": [
+          "`Calendar c = new Calendar(2020, 0, 1);`",
+          "`Calendar c = Calendar(2020, 0, 1);`",
+          "`GregorianCalendar c = new Calendar(2020);`",
+          "`Calendar c = new GregorianCalendar(2020, 0, 1);`"
+        ],
+        "correct": [
+          3
+        ],
+        "explanation": "new GregorianCalendar(year, month, date) builds a concrete calendar for the given date; the month is 0-based.",
+        "option_explanations": [
+          "Calendar is abstract, so new cannot be used on it.",
+          "There is no such factory call without new in this chapter.",
+          "Calendar is abstract, and that constructor does not exist.",
+          "Correct: GregorianCalendar is the concrete class, and 0 means January."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "Which statement about Calendar and GregorianCalendar is true?",
+        "options": [
+          "Calendar can be instantiated, but GregorianCalendar cannot.",
+          "GregorianCalendar can be instantiated, but Calendar cannot.",
+          "Both can be instantiated with new.",
+          "Neither can be instantiated with new."
+        ],
+        "correct": [
+          1
+        ],
+        "explanation": "GregorianCalendar is a concrete subclass of the abstract class Calendar, so only it can be created with new.",
+        "option_explanations": [
+          "The roles are swapped.",
+          "Correct: The concrete subclass supplies all implementations.",
+          "Calendar is abstract.",
+          "GregorianCalendar is concrete."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "What does this program print?\n\n```java\nimport java.util.*;\n\npublic class Main {\n  public static void main(String[] args) {\n    Calendar c = new GregorianCalendar(2021, 11, 25);\n    System.out.println(c.get(Calendar.MONTH) + \" \" + c.get(Calendar.DATE));\n  }\n}\n```",
+      "options": [
+        "11 25",
+        "12 25",
+        "10 25",
+        "25 11"
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": "The month parameter and the Calendar.MONTH field are 0-based: 0 is January, so 11 is December.",
+      "option_explanations": [
+        "Correct: December is month 11 because counting starts at 0.",
+        "That would be a 1-based month.",
+        "The month passed in is 11, not 10.",
+        "MONTH is printed first, then DATE."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "What does this program print?\n\n```java\nimport java.util.*;\n\npublic class Main {\n  public static void main(String[] args) {\n    Calendar c = new GregorianCalendar(2022, 0, 1);\n    System.out.println(c.get(Calendar.YEAR) + \" \" + c.get(Calendar.MONTH));\n  }\n}\n```",
+        "options": [
+          "2022 1",
+          "2021 12",
+          "2022 0",
+          "2022 January"
+        ],
+        "correct": [
+          2
+        ],
+        "explanation": "January is month 0 in GregorianCalendar and Calendar.get(Calendar.MONTH).",
+        "option_explanations": [
+          "1 would mean February.",
+          "The year is 2022, not 2021.",
+          "Correct: The month value for January is 0, and the year is printed first.",
+          "get() returns an int, not a month name."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "Which call creates a GregorianCalendar for 9 March 2020?",
+        "options": [
+          "`new GregorianCalendar(2020, 3, 9)`",
+          "`new GregorianCalendar(2020, 2, 9)`",
+          "`new GregorianCalendar(2020, 9, 3)`",
+          "`new GregorianCalendar(2020, 9, 2)`"
+        ],
+        "correct": [
+          1
+        ],
+        "explanation": "The arguments are (year, month, date) with a 0-based month, so March is 2.",
+        "option_explanations": [
+          "Month 3 is April.",
+          "Correct: Month 2 is March.",
+          "Month 9 is October.",
+          "The month and day are in the wrong places."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "What is printed?\n\n```java\nimport java.util.*;\n\npublic class Main {\n  public static void main(String[] args) {\n    Calendar c = new GregorianCalendar(2021, 1, 5);\n    System.out.println(c.get(Calendar.DAY_OF_YEAR));\n  }\n}\n```",
+      "options": [
+        "36",
+        "35",
+        "5",
+        "37"
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": "get(Calendar.DAY_OF_YEAR) counts days from 1 January: 31 days of January plus 5 gives 36.",
+      "option_explanations": [
+        "Correct: Month 1 is February; 31 + 5 = 36.",
+        "31 + 5 is 36, counting starts at 1.",
+        "5 is DAY_OF_MONTH, not DAY_OF_YEAR.",
+        "That counts one day too many."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "What is printed?\n\n```java\nimport java.util.*;\n\npublic class Main {\n  public static void main(String[] args) {\n    Calendar c = new GregorianCalendar(2021, 2, 1);\n    System.out.println(c.get(Calendar.DAY_OF_YEAR));\n  }\n}\n```",
+        "options": [
+          "59",
+          "60",
+          "61",
+          "1"
+        ],
+        "correct": [
+          1
+        ],
+        "explanation": "Month 2 is March; January (31) plus February 2021 (28) is 59 days, so 1 March is day 60.",
+        "option_explanations": [
+          "That is the last day of February.",
+          "Correct: 31 + 28 + 1 = 60.",
+          "2021 is not a leap year, so 61 is too many.",
+          "That is the DAY_OF_MONTH, not DAY_OF_YEAR."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "What is printed? (Sunday is 1, Saturday is 7.)\n\n```java\nimport java.util.*;\n\npublic class Main {\n  public static void main(String[] args) {\n    Calendar c = new GregorianCalendar(2021, 2, 10);\n    System.out.println(c.get(Calendar.DAY_OF_WEEK));\n  }\n}\n```",
+        "options": [
+          "3",
+          "10",
+          "4",
+          "5"
+        ],
+        "correct": [
+          2
+        ],
+        "explanation": "DAY_OF_WEEK returns 1 for Sunday through 7 for Saturday; 10 March 2021 is a Wednesday, so 4.",
+        "option_explanations": [
+          "3 would be Tuesday.",
+          "10 is the day of the month.",
+          "Correct: Wednesday is the fourth day when Sunday is 1.",
+          "5 would be Thursday."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "What is the purpose of the abstract class java.util.Calendar?",
+      "options": [
+        "To extract year, month and hour from a time value.",
+        "To store an instant with millisecond precision.",
+        "To format numbers for a given locale.",
+        "To measure the time a program takes to run."
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": "An instance of java.util.Date represents a specific instant in time with millisecond precision; Calendar extracts detailed information from it.",
+      "option_explanations": [
+        "Correct: Calendar provides get(field) for year, month, date, hour and so on.",
+        "That describes java.util.Date.",
+        "Number formatting is unrelated to Calendar.",
+        "Timing a program is not Calendar's purpose."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "Which class represents a specific instant in time with millisecond precision?",
+        "options": [
+          "java.util.Calendar",
+          "java.util.Date",
+          "java.util.GregorianCalendar",
+          "java.lang.Number"
+        ],
+        "correct": [
+          1
+        ],
+        "explanation": "Date represents the instant; Calendar (with subclasses like GregorianCalendar) extracts details from it.",
+        "option_explanations": [
+          "Calendar is the abstract class for extracting fields.",
+          "Correct: Date holds the instant, and Calendar reads its fields.",
+          "GregorianCalendar is a concrete calendar system.",
+          "Number is the numeric superclass."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "Subclasses of Calendar are written for:",
+        "options": [
+          "specific number types such as Integer or Long.",
+          "specific font sizes such as 12pt or 14pt.",
+          "specific time zones such as UTC or GMT.",
+          "specific calendar systems such as Gregorian or Jewish."
+        ],
+        "correct": [
+          3
+        ],
+        "explanation": "Subclasses of Calendar can implement specific calendar systems; the Java API currently supplies GregorianCalendar.",
+        "option_explanations": [
+          "Numbers are handled by Number and its subclasses.",
+          "Fonts are unrelated.",
+          "Time zones are not the abstraction here.",
+          "Correct: Different calendar systems are the reason for the abstract base class."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "What does a.compareTo(b) return when a is less than b?",
+      "options": [
+        "A negative integer",
+        "Zero",
+        "A positive integer",
+        "false"
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": "compareTo returns a negative integer, zero, or a positive integer if this object is less than, equal to, or greater than the argument.",
+      "option_explanations": [
+        "Correct: Less than maps to a negative result.",
+        "Zero means the objects are equal in order.",
+        "Positive means this object is greater.",
+        "compareTo returns an int, not a boolean."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "If x.compareTo(y) returns a positive number, what is true about x and y?",
+        "options": [
+          "x comes after y in the natural order.",
+          "x comes before y in the natural order.",
+          "x and y are equal in the natural order.",
+          "x and y cannot be compared."
+        ],
+        "correct": [
+          0
+        ],
+        "explanation": "A positive result means this object (x) is greater than the argument (y).",
+        "option_explanations": [
+          "Correct: x is greater than y.",
+          "That would be a negative result.",
+          "That would be zero.",
+          "compareTo always gives a number for comparable objects."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "What does `s.compareTo(t) == 0` tell you?",
+        "options": [
+          "s is smaller than t.",
+          "s and t are equal in the natural order.",
+          "s is greater than t.",
+          "s and t are the same object in memory."
+        ],
+        "correct": [
+          1
+        ],
+        "explanation": "A result of zero means this object equals the argument in the ordering.",
+        "option_explanations": [
+          "That would be a negative value.",
+          "Correct: Zero signals equal order.",
+          "That would be a positive value.",
+          "Equal order does not mean identical references."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "Which header correctly declares a class Student whose objects can be compared with other Student objects?",
+      "options": [
+        "`class Student extends Comparable<Student>`",
+        "`class Student implements Comparable<Student>`",
+        "`class Student implements Comparable<E>`",
+        "`class Student implements Compare<Student>`"
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": "A class implements an interface with implements, and the generic type E of Comparable<E> is replaced by the concrete type.",
+      "option_explanations": [
+        "Comparable is an interface, so extends is not used for a class.",
+        "Correct: implements with the concrete type Student as the type argument.",
+        "E is the interface's placeholder and must be replaced by a real type.",
+        "The interface is named Comparable, not Compare."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "Which declaration makes Book comparable to other Book objects?",
+        "options": [
+          "`class Book extends Comparable<Book>`",
+          "`class Book implements Comparable<Book>()`",
+          "`class Book implements Comparable<Book>`",
+          "`class Book implements Comparable<Object>()`"
+        ],
+        "correct": [
+          2
+        ],
+        "explanation": "Use implements with Comparable and the concrete class name as the type argument, with no parentheses.",
+        "option_explanations": [
+          "A class cannot extend an interface.",
+          "Parentheses after the interface name are not allowed.",
+          "Correct: That is the standard form.",
+          "The type argument is Book, and there are no parentheses."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "Which class header is valid for a Point class that can be compared with another Point?",
+        "options": [
+          "`class Point extends Comparable`",
+          "`class Point implements Comparable<Point> extends Object`",
+          "`class Point implements Comparable(Point)`",
+          "`class Point implements Comparable<Point>`"
+        ],
+        "correct": [
+          3
+        ],
+        "explanation": "The generic parameter goes in angle brackets, and the keyword for interfaces is implements.",
+        "option_explanations": [
+          "Extends cannot be used with an interface.",
+          "The extends clause must come before implements.",
+          "Parentheses are not used for generic type arguments.",
+          "Correct: Angle brackets give the generic type."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "What are the three lines printed?\n\n```java\npublic class Main {\n  public static void main(String[] args) {\n    System.out.println(Integer.valueOf(3).compareTo(Integer.valueOf(5)));\n    System.out.println(\"ABC\".compareTo(\"ABE\"));\n    System.out.println(\"b\".compareTo(\"a\"));\n  }\n}\n```",
+      "options": [
+        "-1, -1, 1",
+        "-2, -2, 1",
+        "-1, -2, 1",
+        "1, 2, -1"
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": "Integer.compareTo returns -1, 0 or 1, while String.compareTo returns the difference of the first differing characters ('C' - 'E' is -2).",
+      "option_explanations": [
+        "The String result is the character difference, which is -2.",
+        "Integer.compareTo gives -1, not -2.",
+        "Correct: 3 < 5 gives -1; 'C' - 'E' gives -2; 'b' - 'a' gives 1.",
+        "These have the wrong signs."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "What are the three lines printed?\n\n```java\npublic class Main {\n  public static void main(String[] args) {\n    System.out.println(\"hello\".compareTo(\"help\"));\n    System.out.println(Integer.valueOf(9).compareTo(Integer.valueOf(2)));\n    System.out.println(\"cat\".compareTo(\"cat\"));\n  }\n}\n```",
+        "options": [
+          "-4, 1, 0",
+          "-1, 1, 0",
+          "4, 7, 0",
+          "-4, 7, 1"
+        ],
+        "correct": [
+          0
+        ],
+        "explanation": "String.compareTo returns the difference of the first differing chars ('l' - 'p' = -4) and 0 for equal strings; Integer.compareTo returns 1 here.",
+        "option_explanations": [
+          "Correct: 'l' is 4 before 'p'; 9 is greater than 2 giving 1; equal strings give 0.",
+          "The String result is -4, not -1.",
+          "The sign of the first value is negative, and Integer gives 1, not 7.",
+          "Equal strings give 0, and Integer gives 1, not 7."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "What are the three lines printed?\n\n```java\npublic class Main {\n  public static void main(String[] args) {\n    System.out.println(\"Z\".compareTo(\"a\"));\n    System.out.println(Integer.valueOf(8).compareTo(Integer.valueOf(1)));\n    System.out.println(\"apple\".compareTo(\"apricot\"));\n  }\n}\n```",
+        "options": [
+          "-7, 7, -2",
+          "-7, 1, -2",
+          "7, 1, 2",
+          "-1, 1, -1"
+        ],
+        "correct": [
+          1
+        ],
+        "explanation": "'Z' (90) minus 'a' (97) is -7; Integer.compareTo gives 1; \"apple\" versus \"apricot\" first differs at 'p' versus 'r' giving -2.",
+        "option_explanations": [
+          "Integer.compareTo returns 1, not the difference.",
+          "Correct: Uppercase letters come before lowercase ones, so Z is 7 less than a.",
+          "All three signs are wrong in this option.",
+          "String.compareTo does not simply return -1."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "What is printed?\n\n```java\npublic class Main {\n  public static void main(String[] args) {\n    Integer n = 5;\n    String s = \"x\";\n    Object o = new Object();\n    System.out.println((n instanceof Comparable) + \" \" + (s instanceof Object) + \" \" + (o instanceof Comparable));\n  }\n}\n```",
+      "options": [
+        "true true false",
+        "true true true",
+        "false true false",
+        "true false false"
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": "Integer, String and Date implement Comparable and extend Object; a plain Object does not implement Comparable.",
+      "option_explanations": [
+        "Correct: Integer is Comparable, every String is an Object, and a plain Object is not Comparable.",
+        "A plain Object does not implement Comparable.",
+        "Integer does implement Comparable.",
+        "Every String is an Object."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "What is printed?\n\n```java\npublic class Main {\n  public static void main(String[] args) {\n    Integer n = 5;\n    Object d = new java.util.Date();\n    Object o = new Object();\n    System.out.println((n instanceof Number) + \" \" + (o instanceof Comparable) + \" \" + (d instanceof Comparable));\n  }\n}\n```",
+        "options": [
+          "true true true",
+          "false false true",
+          "true false false",
+          "true false true"
+        ],
+        "correct": [
+          3
+        ],
+        "explanation": "Integer extends Number, Date implements Comparable, and a plain Object does not.",
+        "option_explanations": [
+          "A plain Object is not Comparable.",
+          "Integer extends Number.",
+          "Date implements Comparable<Date>.",
+          "Correct: Integer is a Number, Object is not Comparable, Date is Comparable."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "What is printed?\n\n```java\npublic class Main {\n  public static void main(String[] args) {\n    String s = \"abc\";\n    Object o = new Object();\n    Object m = Integer.valueOf(3);\n    System.out.println((o instanceof Comparable) + \" \" + (s instanceof Comparable) + \" \" + (m instanceof String));\n  }\n}\n```",
+        "options": [
+          "false true true",
+          "true true false",
+          "false true false",
+          "false false false"
+        ],
+        "correct": [
+          2
+        ],
+        "explanation": "String implements Comparable, a plain Object does not, and an Integer is not a String.",
+        "option_explanations": [
+          "An Integer object is not a String.",
+          "A plain Object does not implement Comparable.",
+          "Correct: Only the String is Comparable.",
+          "String does implement Comparable."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "Which of these classes does NOT implement Comparable?",
+      "options": [
+        "Object",
+        "String",
+        "Character",
+        "BigDecimal"
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": "All numeric wrapper classes, Character, String, Date, BigInteger and BigDecimal implement Comparable; Object does not.",
+      "option_explanations": [
+        "Correct: Object is the root class and defines no ordering.",
+        "String implements Comparable<String>.",
+        "Character implements Comparable.",
+        "BigDecimal implements Comparable."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "Which of these classes does NOT implement Comparable?",
+        "options": [
+          "java.lang.Integer",
+          "The chapter's Rectangle",
+          "java.util.Date",
+          "java.math.BigInteger"
+        ],
+        "correct": [
+          1
+        ],
+        "explanation": "Rectangle does not implement Comparable, so sort() cannot sort Rectangle objects until a ComparableRectangle is defined.",
+        "option_explanations": [
+          "Integer implements Comparable<Integer>.",
+          "Correct: Rectangle has no compareTo method.",
+          "Date implements Comparable<Date>.",
+          "BigInteger implements Comparable<BigInteger>."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "Which array can be passed to java.util.Arrays.sort and sorted without any extra code?",
+        "options": [
+          "A Rectangle array",
+          "A GeometricObject array",
+          "An Integer array",
+          "An array of plain Object instances"
+        ],
+        "correct": [
+          2
+        ],
+        "explanation": "Arrays.sort(Object[]) uses compareTo, so the element type must implement Comparable; Integer does.",
+        "option_explanations": [
+          "Rectangle does not implement Comparable.",
+          "GeometricObject does not implement Comparable.",
+          "Correct: Integer implements Comparable<Integer>.",
+          "Plain Object does not implement Comparable."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "What is printed?\n\n```java\nimport java.util.*;\n\npublic class Main {\n  public static void main(String[] args) {\n    String[] a = { \"pear\", \"apple\", \"fig\" };\n    Arrays.sort(a);\n    System.out.println(Arrays.toString(a));\n  }\n}\n```",
+      "options": [
+        "[apple, fig, pear]",
+        "[pear, apple, fig]",
+        "[fig, pear, apple]",
+        "[pear, fig, apple]"
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": "Arrays.sort uses the compareTo method that String implements (alphabetical order).",
+      "option_explanations": [
+        "Correct: Alphabetical order puts apple, fig, pear.",
+        "That is the original, unsorted order.",
+        "That is not alphabetical.",
+        "That is reverse alphabetical order."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "What is printed?\n\n```java\nimport java.util.*;\n\npublic class Main {\n  public static void main(String[] args) {\n    Integer[] a = { 10, 9, 100, 2 };\n    Arrays.sort(a);\n    System.out.println(Arrays.toString(a));\n  }\n}\n```",
+        "options": [
+          "[10, 100, 2, 9]",
+          "[2, 9, 10, 100]",
+          "[100, 10, 9, 2]",
+          "[2, 9, 100, 10]"
+        ],
+        "correct": [
+          1
+        ],
+        "explanation": "Integer implements Comparable, so sort orders the numbers numerically, not as text.",
+        "option_explanations": [
+          "That is a text (dictionary) order, but Integer compares numerically.",
+          "Correct: Numeric order ascending.",
+          "That is descending order.",
+          "That is not fully sorted."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "What is printed?\n\n```java\nimport java.util.*;\n\npublic class Main {\n  public static void main(String[] args) {\n    String[] a = { \"banana\", \"Cherry\", \"apple\" };\n    Arrays.sort(a);\n    System.out.println(Arrays.toString(a));\n  }\n}\n```",
+        "options": [
+          "[apple, banana, Cherry]",
+          "[Cherry, banana, apple]",
+          "[Cherry, apple, banana]",
+          "[banana, Cherry, apple]"
+        ],
+        "correct": [
+          2
+        ],
+        "explanation": "String.compareTo compares character codes, so uppercase letters come before lowercase ones.",
+        "option_explanations": [
+          "That would ignore case, but compareTo does not.",
+          "The last two are in reverse order.",
+          "Correct: 'C' (67) is smaller than 'a' (97), so Cherry comes first.",
+          "That is the original array."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "What happens when this program runs?\n\n```java\nimport java.util.*;\n\nclass Box {\n  int w;\n  Box(int w) { this.w = w; }\n}\n\npublic class Main {\n  public static void main(String[] args) {\n    Box[] b = { new Box(3), new Box(1) };\n    Arrays.sort(b);\n    System.out.println(b[0].w);\n  }\n}\n```",
+      "options": [
+        "It throws a ClassCastException.",
+        "It fails to compile on sort.",
+        "It prints 1 after sorting.",
+        "It prints 3 as the first width."
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": "Arrays.sort(Object[]) requires elements that implement Comparable; Box does not, so the failure appears only at run time.",
+      "option_explanations": [
+        "Correct: sort tries to cast the elements to Comparable and fails.",
+        "The code compiles because sort accepts Object[].",
+        "That assumes the sort succeeds, but Box is not Comparable.",
+        "The program never reaches the print statement."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "What happens when this program runs?\n\n```java\nimport java.util.*;\n\nclass Rect {\n  double w, h;\n  Rect(double w, double h) { this.w = w; this.h = h; }\n}\n\npublic class Main {\n  public static void main(String[] args) {\n    Rect[] r = { new Rect(3, 5), new Rect(1, 2), new Rect(4, 4) };\n    Arrays.sort(r);\n    System.out.println(\"sorted\");\n  }\n}\n```",
+        "options": [
+          "The rectangles are sorted by area.",
+          "The program prints sorted.",
+          "A compile error is reported for Arrays.sort.",
+          "A ClassCastException is thrown by Arrays.sort."
+        ],
+        "correct": [
+          3
+        ],
+        "explanation": "Rect does not implement Comparable, so sort cannot compare its objects.",
+        "option_explanations": [
+          "Nothing in Rect defines an area ordering.",
+          "The exception occurs before the print.",
+          "The call compiles; the problem is found at run time.",
+          "Correct: Rect has no compareTo, so the cast to Comparable fails."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "What is printed?\n\n```java\nimport java.util.*;\n\nclass Box implements Comparable<Box> {\n  int w;\n  Box(int w) { this.w = w; }\n  public int compareTo(Box o) { return w - o.w; }\n}\n\npublic class Main {\n  public static void main(String[] args) {\n    Box[] b = { new Box(3), new Box(1) };\n    Arrays.sort(b);\n    System.out.println(b[0].w);\n  }\n}\n```",
+        "options": [
+          "3",
+          "A ClassCastException",
+          "1",
+          "A compile error"
+        ],
+        "correct": [
+          2
+        ],
+        "explanation": "Box implements Comparable<Box>, so Arrays.sort orders it by compareTo (ascending w) and b[0] has w = 1.",
+        "option_explanations": [
+          "That is the first element before sorting.",
+          "Box is Comparable, so there is no exception.",
+          "Correct: After sorting, the smallest width comes first.",
+          "The class compiles because compareTo is implemented."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "Fill in the blank so the class compiles.\n\n```java\nclass ComparableRectangle extends Rectangle\n    implements Comparable<ComparableRectangle> {\n  public int compareTo(____ o) {\n    if (getArea() > o.getArea()) return 1;\n    else if (getArea() < o.getArea()) return -1;\n    else return 0;\n  }\n}\n```",
+      "options": [
+        "Object",
+        "Rectangle",
+        "ComparableRectangle",
+        "Comparable"
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": "With Comparable<E>, E is replaced by the concrete type, so the method must be compareTo(ComparableRectangle o).",
+      "option_explanations": [
+        "compareTo(Object) does not implement compareTo(ComparableRectangle).",
+        "Rectangle differs from the type argument, so it is not the implemented method.",
+        "Correct: The type argument given in implements must match the parameter type.",
+        "The parameter is the type being compared, not the interface."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "Which blank completes the class header so the class compiles?\n\n```java\nclass Student ____ Comparable<Student> {\n  int id;\n  public int compareTo(Student o) { return id - o.id; }\n}\n```",
+        "options": [
+          "implements",
+          "extends",
+          "inherits",
+          "uses"
+        ],
+        "correct": [
+          0
+        ],
+        "explanation": "A class uses implements to adopt an interface.",
+        "option_explanations": [
+          "Correct: Comparable is an interface, so the keyword is implements.",
+          "extends is for classes (and for interfaces extending interfaces).",
+          "inherits is not a Java keyword.",
+          "uses is not a Java keyword."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "Fill in the blank. Students are ordered by id, ascending.\n\n```java\nclass Student implements Comparable<Student> {\n  int id;\n  public int compareTo(Student o) {\n    if (this.id > o.id) return ____;\n    else if (this.id < o.id) return -1;\n    else return 0;\n  }\n}\n```",
+        "options": [
+          "-1",
+          "1",
+          "0",
+          "o.id - this.id"
+        ],
+        "correct": [
+          1
+        ],
+        "explanation": "compareTo returns a positive number when this object is greater than the argument.",
+        "option_explanations": [
+          "Negative would mean this is smaller.",
+          "Correct: A positive value means this student comes after o.",
+          "Zero means equal.",
+          "That value is negative when this.id is larger."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "What is printed?\n\n```java\nimport java.util.*;\n\nclass CR implements Comparable<CR> {\n  double w, h;\n  CR(double w, double h) { this.w = w; this.h = h; }\n  double area() { return w * h; }\n  public int compareTo(CR o) { return Double.compare(area(), o.area()); }\n  public String toString() { return \"\" + area(); }\n}\n\npublic class Main {\n  public static void main(String[] args) {\n    CR[] r = { new CR(3, 2), new CR(1, 1), new CR(2, 2) };\n    Arrays.sort(r);\n    for (CR x : r) System.out.print(x + \" \");\n  }\n}\n```",
+      "options": [
+        "1.0 4.0 6.0",
+        "6.0 1.0 4.0",
+        "6.0 4.0 1.0",
+        "1.0 6.0 4.0"
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": "sort uses compareTo, which here orders by area ascending.",
+      "option_explanations": [
+        "Correct: Areas are 6.0, 1.0 and 4.0; ascending order is 1.0, 4.0, 6.0.",
+        "That is the original order.",
+        "That is descending order.",
+        "That is not sorted."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "What is printed? (Note the order of the operands in compareTo.)\n\n```java\nimport java.util.*;\n\nclass CR implements Comparable<CR> {\n  double w, h;\n  CR(double w, double h) { this.w = w; this.h = h; }\n  double area() { return w * h; }\n  public int compareTo(CR o) { return Double.compare(o.area(), area()); }\n  public String toString() { return \"\" + area(); }\n}\n\npublic class Main {\n  public static void main(String[] args) {\n    CR[] r = { new CR(3, 2), new CR(1, 1), new CR(2, 2) };\n    Arrays.sort(r);\n    for (CR x : r) System.out.print(x + \" \");\n  }\n}\n```",
+        "options": [
+          "1.0 4.0 6.0",
+          "6.0 1.0 4.0",
+          "4.0 6.0 1.0",
+          "6.0 4.0 1.0"
+        ],
+        "correct": [
+          3
+        ],
+        "explanation": "compareTo compares the other object's area to this object's, which reverses the order: largest first.",
+        "option_explanations": [
+          "That would be ascending.",
+          "That is the original order.",
+          "That is not sorted either way.",
+          "Correct: Swapping the operands makes the sort descending."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "What is printed?\n\n```java\nimport java.util.*;\n\nclass Word implements Comparable<Word> {\n  String t;\n  Word(String t) { this.t = t; }\n  public int compareTo(Word o) { return t.length() - o.t.length(); }\n  public String toString() { return t; }\n}\n\npublic class Main {\n  public static void main(String[] args) {\n    Word[] w = { new Word(\"kiwi\"), new Word(\"fig\"), new Word(\"banana\"), new Word(\"apple\") };\n    Arrays.sort(w);\n    for (Word x : w) System.out.print(x + \" \");\n  }\n}\n```",
+        "options": [
+          "fig apple kiwi banana",
+          "fig kiwi apple banana",
+          "banana apple kiwi fig",
+          "kiwi fig banana apple"
+        ],
+        "correct": [
+          1
+        ],
+        "explanation": "compareTo orders words by length (3, 4, 5, 6).",
+        "option_explanations": [
+          "apple (5) must come after kiwi (4).",
+          "Correct: Shortest word first by length.",
+          "That is longest first.",
+          "That is the original order."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "What is printed?\n\n```java\ninterface Edible {\n  String howToEat();\n}\nabstract class Fruit implements Edible { }\nclass Apple extends Fruit {\n  public String howToEat() { return \"Apple: make cider\"; }\n}\nclass Orange extends Fruit {\n  public String howToEat() { return \"Orange: make juice\"; }\n}\n\npublic class Main {\n  public static void main(String[] args) {\n    Fruit f = new Orange();\n    Edible e = new Apple();\n    System.out.println(f.howToEat() + \" / \" + e.howToEat());\n  }\n}\n```",
+      "options": [
+        "Apple: make cider / Orange: make juice",
+        "Orange: make juice / Apple: make cider",
+        "Fruit / Edible",
+        "A compile error"
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": "An abstract class that implements an interface need not implement its methods; its concrete subclasses supply them.",
+      "option_explanations": [
+        "f refers to an Orange and e to an Apple.",
+        "Correct: Each object calls its own class's howToEat().",
+        "The method returns text, not type names.",
+        "Fruit is abstract, so omitting howToEat() is allowed."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "Why does this program not compile?\n\n```java\ninterface Edible {\n  String howToEat();\n}\nclass Fruit implements Edible { }\n\npublic class Main {\n  public static void main(String[] args) {\n    System.out.println(\"hi\");\n  }\n}\n```",
+        "options": [
+          "Edible is not allowed to have methods.",
+          "main must not print before declaring an object.",
+          "Fruit lacks howToEat() and is not abstract.",
+          "Fruit must extend Edible, not implement it."
+        ],
+        "correct": [
+          2
+        ],
+        "explanation": "A class that implements an interface without implementing all its methods must be declared abstract.",
+        "option_explanations": [
+          "Interfaces are made of abstract methods.",
+          "main has nothing to do with the error.",
+          "Correct: Declaring Fruit abstract (as in the slides) would fix it.",
+          "A class implements an interface; it does not extend it."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "What is printed?\n\n```java\ninterface Walker {\n  void walk();\n  void stop();\n}\nabstract class Robot implements Walker {\n  public void walk() { System.out.print(\"walk \"); }\n}\nclass Droid extends Robot {\n  public void stop() { System.out.print(\"stop\"); }\n}\n\npublic class Main {\n  public static void main(String[] args) {\n    Walker w = new Droid();\n    w.walk();\n    w.stop();\n  }\n}\n```",
+        "options": [
+          "walk stop",
+          "stop walk",
+          "walk",
+          "Nothing, it does not compile"
+        ],
+        "correct": [
+          0
+        ],
+        "explanation": "Robot is abstract, so it can implement just walk(); the concrete Droid supplies the remaining abstract method stop().",
+        "option_explanations": [
+          "Correct: w.walk() runs Robot's version, then w.stop() runs Droid's.",
+          "The calls are made in order walk then stop.",
+          "stop() is also called.",
+          "Robot being abstract makes this legal."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "Given `String howToEat();` in the interface Edible, which implementation inside a concrete class is correct?",
+      "options": [
+        "`public String howToEat() { return \"Fry\"; }`",
+        "`public void howToEat() { }`",
+        "`String howToEat() { return \"Fry\"; }`",
+        "`public String howToEat(String s) { return s; }`"
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": "An implementing method must use the exact signature and return type of the interface method, and be public.",
+      "option_explanations": [
+        "Correct: Same name, parameters and return type, and public.",
+        "The return type differs from String.",
+        "Without public the access is weaker than the interface's.",
+        "A different parameter list is an overload, not the interface method."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "An interface declares `double area();`. Which method in an implementing class is accepted?",
+        "options": [
+          "`public int area() { return 1; }`",
+          "`double area() { return 1; }`",
+          "`public double area(int s) { return 1; }`",
+          "`public double area() { return 1; }`"
+        ],
+        "correct": [
+          3
+        ],
+        "explanation": "The implementation must match the name, parameter list and return type, and keep public access.",
+        "option_explanations": [
+          "int is not the declared return type.",
+          "The package-private method reduces visibility.",
+          "A new parameter makes it a different method.",
+          "Correct: It matches the declared signature and is public."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "An interface declares `void greet(String name);`. Which implementation compiles in a concrete class?",
+        "options": [
+          "`public String greet(String name) { return name; }`",
+          "`void greet(String name) { }`",
+          "`public void greet(String name) { }`",
+          "`public void greet() { }`"
+        ],
+        "correct": [
+          2
+        ],
+        "explanation": "Return type, name and parameter types must match, and the method must be public.",
+        "option_explanations": [
+          "The return type differs.",
+          "Interface methods are public, so a weaker modifier is rejected.",
+          "Correct: Everything matches and the method is public.",
+          "The parameter list differs, so greet(String) is still unimplemented."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "Which line causes a compile error?\n\n```java\ninterface Edible {\n  String howToEat();\n}\nclass Chicken implements Edible {\n  public String howToEat() { return \"Fry it\"; }\n}\n\npublic class Main {\n  public static void main(String[] args) {\n    Edible a = new Chicken();     // (a)\n    Edible b = new Edible();      // (b)\n    Edible[] c = new Edible[3];   // (c)\n    Object d = a;                 // (d)\n  }\n}\n```",
+      "options": [
+        "Line (a)",
+        "Line (c)",
+        "Line (d)",
+        "Line (b)"
+      ],
+      "correct": [
+        3
+      ],
+      "explanation": "Like an abstract class, an interface cannot be instantiated with new, but it can be used as a data type and for array elements.",
+      "option_explanations": [
+        "A class that implements the interface can be created.",
+        "An array of the interface type only holds references.",
+        "Any object can be assigned to Object.",
+        "Correct: `new Edible()` tries to instantiate an interface."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "Which statement does not compile?\n\n```java\ninterface Playable {\n  void play();\n}\nclass Guitar implements Playable {\n  public void play() { }\n}\n\npublic class Main {\n  public static void main(String[] args) {\n    Playable p = new Guitar();    // (a)\n    Playable q = new Playable();  // (b)\n    p.play();                     // (c)\n    Playable[] r = { p, p };      // (d)\n  }\n}\n```",
+        "options": [
+          "Line (a)",
+          "Line (b)",
+          "Line (c)",
+          "Line (d)"
+        ],
+        "correct": [
+          1
+        ],
+        "explanation": "An interface has no constructors and cannot be the target of new.",
+        "option_explanations": [
+          "Guitar is concrete.",
+          "Correct: Playable is an interface, so it cannot be instantiated.",
+          "The call is made through the interface type.",
+          "Array initialisation with Playable references is legal."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "Exactly one line fails. Which one?\n\n```java\ninterface Sellable {\n  double price();\n}\nclass Car implements Sellable {\n  public double price() { return 5000; }\n}\n\npublic class Main {\n  public static void main(String[] args) {\n    Sellable[] items = new Sellable[2];   // (a)\n    items[0] = new Car();                 // (b)\n    items[1] = new Sellable();            // (c)\n    System.out.println(items[0].price());  // (d)\n  }\n}\n```",
+        "options": [
+          "Line (c)",
+          "Line (a)",
+          "Line (b)",
+          "Line (d)"
+        ],
+        "correct": [
+          0
+        ],
+        "explanation": "new works on concrete classes only, not on interfaces.",
+        "option_explanations": [
+          "Correct: Sellable is an interface, so `new Sellable()` is illegal.",
+          "Creating an array of an interface type is legal.",
+          "Car is a concrete class implementing Sellable.",
+          "The call uses the polymorphic method of Car."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "basic",
+      "question": "Write an abstract class Shape with a protected String field color, a constructor taking the color, an abstract method `double area()`, and a concrete method describe() that prints the color and the area. Then write a concrete subclass Circle with a radius that implements area() (use 3 * radius * radius).",
+      "answer": "The abstract class holds the common part; the subclass calls super(...) and implements the abstract method. new Circle(\"red\", 2).describe() prints: red shape, area 12.0\n\n```java\nabstract class Shape {\n  protected String color;\n  public Shape(String color) { this.color = color; }\n  public abstract double area();\n  public void describe() {\n    System.out.println(color + \" shape, area \" + area());\n  }\n}\nclass Circle extends Shape {\n  private double radius;\n  public Circle(String color, double radius) {\n    super(color);\n    this.radius = radius;\n  }\n  @Override\n  public double area() { return 3 * radius * radius; }\n}\n```"
+    },
+    "versions": [
+      {
+        "type": "basic",
+        "question": "Write an abstract class Employee with a protected String name, a constructor taking the name, an abstract method `double pay()`, and a concrete method show() that prints the name and the pay. Then write a concrete subclass Manager with a salary field.",
+        "answer": "new Manager(\"Sam\", 3000).show() prints: Sam earns 3000.0\n\n```java\nabstract class Employee {\n  protected String name;\n  public Employee(String name) { this.name = name; }\n  public abstract double pay();\n  public void show() {\n    System.out.println(name + \" earns \" + pay());\n  }\n}\nclass Manager extends Employee {\n  private double salary;\n  public Manager(String name, double salary) {\n    super(name);\n    this.salary = salary;\n  }\n  @Override\n  public double pay() { return salary; }\n}\n```"
+      },
+      {
+        "type": "basic",
+        "question": "Write an interface Edible with one method `String howToEat()`, and a class Chicken that implements it so that it returns \"Fry it\". Show how to call it through an Edible variable.",
+        "answer": "The implementing method must be public and match the signature.\n\n```java\ninterface Edible {\n  String howToEat();\n}\nclass Chicken implements Edible {\n  @Override\n  public String howToEat() { return \"Fry it\"; }\n}\n\n// in main:\nEdible e = new Chicken();\nSystem.out.println(e.howToEat());   // Fry it\n```"
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "basic",
+      "question": "Trace this program and write exactly what it prints, line by line.\n\n```java\ninterface Speaker {\n  void speak();\n}\nabstract class Pet implements Speaker {\n  String name;\n  Pet(String n) {\n    name = n;\n    System.out.println(\"Pet \" + n);\n  }\n  void intro() {\n    System.out.print(name + \": \");\n    speak();\n  }\n}\nclass Dog extends Pet {\n  Dog() {\n    super(\"Rex\");\n    System.out.println(\"Dog\");\n  }\n  public void speak() { System.out.println(\"Woof\"); }\n}\nclass Cat extends Pet {\n  Cat() { super(\"Tom\"); }\n  public void speak() { System.out.println(\"Meow\"); }\n}\n\npublic class Main {\n  public static void main(String[] args) {\n    Pet[] ps = { new Dog(), new Cat() };\n    for (Pet p : ps) p.intro();\n  }\n}\n```",
+      "answer": "Pet Rex\nDog\nPet Tom\nRex: Woof\nTom: Meow\n\nThe array is built first (each constructor runs the abstract Pet constructor before its own body), then intro() calls the object's own speak()."
+    },
+    "versions": [
+      {
+        "type": "basic",
+        "question": "Trace this program and write exactly what it prints, line by line.\n\n```java\ninterface Mover {\n  void move();\n}\nabstract class Vehicle implements Mover {\n  String id;\n  Vehicle(String id) {\n    this.id = id;\n    System.out.println(\"Vehicle \" + id);\n  }\n  void go() {\n    System.out.print(id + \" -> \");\n    move();\n  }\n}\nclass Car extends Vehicle {\n  Car() {\n    super(\"C1\");\n    System.out.println(\"Car\");\n  }\n  public void move() { System.out.println(\"drive\"); }\n}\nclass Boat extends Vehicle {\n  Boat() { super(\"B7\"); }\n  public void move() { System.out.println(\"sail\"); }\n}\n\npublic class Main {\n  public static void main(String[] args) {\n    Vehicle[] v = { new Boat(), new Car() };\n    for (Vehicle x : v) x.go();\n  }\n}\n```",
+        "answer": "Vehicle B7\nVehicle C1\nCar\nB7 -> sail\nC1 -> drive\n\nThe array elements are created in order (Boat first), each constructor starting with the Vehicle constructor; then go() runs move() of the real object."
+      },
+      {
+        "type": "basic",
+        "question": "Trace this program and write exactly what it prints, line by line.\n\n```java\nabstract class Base {\n  Base() { System.out.println(\"Base\"); }\n  abstract String tag();\n  void show() { System.out.println(\"<\" + tag() + \">\"); }\n}\nclass A extends Base {\n  A() { System.out.println(\"A\"); }\n  String tag() { return \"a\"; }\n}\nclass B extends A {\n  B() { System.out.println(\"B\"); }\n  String tag() { return \"b\"; }\n}\n\npublic class Main {\n  public static void main(String[] args) {\n    Base x = new B();\n    x.show();\n    x = new A();\n    x.show();\n  }\n}\n```",
+        "answer": "Base\nA\nB\n<b>\nBase\nA\n<a>\n\nnew B() chains Base, A, B; show() calls the overridden tag() of the actual object, first B's then A's."
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "Fill in the blanks.\n\n```java\npublic ____ class Shape {\n  public ____ double getArea();\n}\n```",
+      "options": [
+        "abstract, abstract",
+        "abstract, interface",
+        "interface, abstract",
+        "final, abstract"
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": "The class header and the method header both use the abstract modifier.",
+      "option_explanations": [
+        "Correct: An abstract class with an abstract method.",
+        "interface is not a method modifier.",
+        "interface class is not valid.",
+        "A final class cannot be abstract."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "Fill in the blank.\n\n```java\npublic class Chicken ____ Edible {\n  public String howToEat() { return \"Fry it\"; }\n}\n```\nEdible is an interface.",
+        "options": [
+          "extends",
+          "implements",
+          "instanceof",
+          "overrides"
+        ],
+        "correct": [
+          1
+        ],
+        "explanation": "A class adopts an interface with implements.",
+        "option_explanations": [
+          "extends is used when the parent is a class.",
+          "Correct: implements is the keyword for interface inheritance.",
+          "instanceof is a test operator.",
+          "overrides is not a Java keyword."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "Fill in the blank to make interface B inherit the methods of interface A.\n\n```java\ninterface A { void f(); }\ninterface B ____ A { void g(); }\n```",
+        "options": [
+          "implements",
+          "inherits",
+          "extends",
+          "uses"
+        ],
+        "correct": [
+          2
+        ],
+        "explanation": "An interface inherits from another interface with extends (and may extend several).",
+        "option_explanations": [
+          "implements is used by classes.",
+          "inherits is not a Java keyword.",
+          "Correct: Interfaces extend interfaces.",
+          "uses is not a Java keyword."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "How does java.lang.Comparable<E> declare its method?",
+      "options": [
+        "`public boolean compareTo(E o);`",
+        "`public int compareTo(E o);`",
+        "`public int compare(E a, E b);`",
+        "`public E compareTo(int o);`"
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": "Comparable<E> declares one method, `int compareTo(E o)`.",
+      "option_explanations": [
+        "compareTo returns an int, not a boolean.",
+        "Correct: It takes one object of the generic type and returns an int.",
+        "That is the two-argument compare of a different interface.",
+        "The parameter is the object, and the return is an int."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "What are the parameter and return type of compareTo in Comparable<E>?",
+        "options": [
+          "It takes an E and returns an int.",
+          "It takes an int and returns an E.",
+          "It takes two Es and returns a boolean.",
+          "It takes nothing and returns an int."
+        ],
+        "correct": [
+          0
+        ],
+        "explanation": "compareTo(E o) compares this object with the argument and returns negative, zero or positive.",
+        "option_explanations": [
+          "Correct: One parameter of the generic type and an int result.",
+          "That swaps the parameter and the return type.",
+          "It compares this with one other object and returns an int.",
+          "It needs the other object as its parameter."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "In `public interface Comparable<E> { public int compareTo(E o); }`, what does E represent?",
+        "options": [
+          "A constant that holds the comparison result.",
+          "A keyword that marks the interface as generic.",
+          "A type placeholder filled in by the implementing class.",
+          "The exception type compareTo throws when it fails."
+        ],
+        "correct": [
+          2
+        ],
+        "explanation": "Comparable is a generic interface: E is replaced by a concrete type such as Student.",
+        "option_explanations": [
+          "The result is the int return value.",
+          "Generic is shown by the angle brackets, with E as a type name.",
+          "Correct: For example Comparable<Student> makes compareTo take a Student.",
+          "No exception is involved."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "According to the course, which method can appear in an abstract class but not in an interface?",
+      "options": [
+        "An abstract method",
+        "A concrete method with a body",
+        "A public method",
+        "A method with parameters"
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": "Interface methods must be public abstract (no bodies); an abstract class has no restrictions on its methods, except that abstract methods cannot be static.",
+      "option_explanations": [
+        "Interfaces are made of abstract methods.",
+        "Correct: Abstract classes can mix concrete and abstract methods.",
+        "Interface methods are public.",
+        "Interface methods can take parameters."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "Which data field can an abstract class have but an interface cannot?",
+        "options": [
+          "A static final constant",
+          "A public static final field",
+          "A constant set with a literal",
+          "A non-final instance variable"
+        ],
+        "correct": [
+          3
+        ],
+        "explanation": "In an interface all variables must be public static final; an abstract class has no restriction on its variables.",
+        "option_explanations": [
+          "Interfaces can have constants.",
+          "That is exactly the implied modifier set of an interface.",
+          "Interfaces can hold constants.",
+          "Correct: Interface variables are always constants."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "According to the course, which statement is true of both abstract classes and interfaces?",
+        "options": [
+          "Neither can be created with new.",
+          "Both can declare constructors.",
+          "Both allow instance variables.",
+          "Both can contain methods with bodies."
+        ],
+        "correct": [
+          0
+        ],
+        "explanation": "Neither an abstract class nor an interface can be instantiated using new; they differ in constructors, variables and methods.",
+        "option_explanations": [
+          "Correct: new is illegal for both.",
+          "Only abstract classes have constructors.",
+          "Interfaces allow only constants.",
+          "Interface methods have no body."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "basic",
+      "question": "Write a class Student with an int id so that an array of Student objects can be sorted by id (smallest first) with java.util.Arrays.sort(array).",
+      "answer": "The class must implement Comparable<Student> with a public compareTo(Student o) that returns a negative, zero or positive int.\n\n```java\nimport java.util.*;\n\nclass Student implements Comparable<Student> {\n  int id;\n  Student(int id) { this.id = id; }\n  public int compareTo(Student o) {\n    if (id > o.id) return 1;\n    else if (id < o.id) return -1;\n    else return 0;\n  }\n}\n```\nSorting {30, 10, 20} gives 10 20 30."
+    },
+    "versions": [
+      {
+        "type": "basic",
+        "question": "Write a class Book with a String title so that a Book array can be sorted alphabetically by title with Arrays.sort.",
+        "answer": "Delegate to String's own compareTo.\n\n```java\nimport java.util.*;\n\nclass Book implements Comparable<Book> {\n  String title;\n  Book(String title) { this.title = title; }\n  public int compareTo(Book o) { return title.compareTo(o.title); }\n}\n```\nSorting Zen, Art, Math gives Art Math Zen."
+      },
+      {
+        "type": "basic",
+        "question": "Write a class Item with a double price so that Arrays.sort puts the most expensive item first.",
+        "answer": "Reverse the operands (other first) to get a descending order.\n\n```java\nimport java.util.*;\n\nclass Item implements Comparable<Item> {\n  double price;\n  Item(double price) { this.price = price; }\n  public int compareTo(Item o) { return Double.compare(o.price, price); }\n}\n```\nSorting 2.5, 9, 4 gives 9.0 4.0 2.5."
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "basic",
+      "question": "According to the course (Java 8-era interfaces): State the difference between an abstract class and an interface for (1) variables, (2) constructors and (3) methods, and say which one to use for unrelated classes.",
+      "answer": "(1) Abstract class: no restrictions on variables; interface: variables must be public static final.\n(2) Abstract class: constructors are invoked by subclasses through constructor chaining; interface: no constructors. Neither can be created with new.\n(3) Abstract class: no restrictions on methods (abstract methods cannot be static); interface: methods must be public abstract.\nUse an interface to give common behavior to unrelated classes; an abstract class models common behavior of related classes."
+    },
+    "versions": [
+      {
+        "type": "basic",
+        "question": "According to the course (Java 8-era interfaces): Complete the comparison. For an interface: variables are ____, constructors are ____, methods are ____. For an abstract class the three are: ____, ____ and ____.",
+        "answer": "Interface: variables public static final; no constructors; methods public abstract.\nAbstract class: no restrictions on variables; constructors invoked by subclasses through constructor chaining; no restrictions on methods (abstract methods cannot be static).\nNeither can be instantiated with new."
+      },
+      {
+        "type": "basic",
+        "question": "Give one example of two unrelated classes that share a behavior, and show which construct models it and how a class joins it.",
+        "answer": "Apple (extends Fruit) and Chicken (extends Animal) are both edible. Define `public interface Edible { String howToEat(); }`, and let each class declare `implements Edible` with a public howToEat(). An abstract class cannot do this because the classes already have different superclasses."
+      }
+    ]
+  }
+]

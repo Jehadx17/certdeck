@@ -221,7 +221,7 @@ class _ExamRunState extends State<ExamRun> {
   void initState() {
     super.initState();
     timer = Timer.periodic(const Duration(seconds: 1), (_) {
-      if (nowMs() >= endsAt) _submit();
+      if (widget.minutes > 0 && nowMs() >= endsAt) _submit(); // 0 minutes = untimed
       if (mounted) setState(() {});
     });
   }
@@ -275,7 +275,8 @@ class _ExamRunState extends State<ExamRun> {
           automaticallyImplyLeading: false,
           title: Text(reviewing ? t('Review answers') : t('Question {i} / {n}', {'i': i + 1, 'n': states.length})),
           actions: [
-            Center(
+            if (widget.minutes > 0)
+              Center(
                 child:
                     Text(clock, style: TextStyle(fontFeatures: const [FontFeature.tabularFigures()], color: left.inMinutes < 5 ? cs.error : null))),
             if (!reviewing)

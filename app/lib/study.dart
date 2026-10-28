@@ -372,10 +372,6 @@ class _StudyScreenState extends State<StudyScreen> {
           child: Column(children: [
             Expanded(
               child: ListView(padding: const EdgeInsets.all(16), children: [
-                if (isNew(card!) && !revealed)
-                  Padding(
-                      padding: const EdgeInsets.only(bottom: 10),
-                      child: Text(t('A new one! Make your best guess first. Guessing is how you learn it.'), style: const TextStyle(fontSize: 14, color: Colors.white60))),
                 if (studying)
                   Padding(
                       padding: const EdgeInsets.only(bottom: 10),
@@ -451,11 +447,11 @@ class _StudyScreenState extends State<StudyScreen> {
         Row(children: [
           Expanded(
               child: FilledButton.icon(
-                  style: easyButton(Colors.deepOrange), icon: const Icon(Icons.replay_rounded), label: Text(t('Not yet')), onPressed: () => _easyVerdict(false))),
+                  style: easyButton(const Color(0xFF9A6A5E)), icon: const Icon(Icons.replay_rounded), label: Text(t('Not yet')), onPressed: () => _easyVerdict(false))),
           const SizedBox(width: 12),
           Expanded(
               child: FilledButton.icon(
-                  style: easyButton(Colors.green), icon: const Icon(Icons.thumb_up_alt_rounded), label: Text(t('Yes')), onPressed: () => _easyVerdict(true))),
+                  style: easyButton(const Color(0xFF5E8A6A)), icon: const Icon(Icons.thumb_up_alt_rounded), label: Text(t('Yes')), onPressed: () => _easyVerdict(true))),
         ]),
       ]));
     }

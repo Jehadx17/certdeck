@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:typed_data';
 import 'dart:math';
 
@@ -8,6 +9,7 @@ import 'package:flutter_highlight/themes/atom-one-dark.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_math_fork/flutter_math.dart';
 import 'package:google_mlkit_translation/google_mlkit_translation.dart';
+import 'package:http/http.dart' as http;
 import 'package:highlight/languages/all.dart' show allLanguages;
 import 'package:markdown/markdown.dart' as md;
 import 'package:url_launcher/url_launcher.dart';
@@ -16,6 +18,7 @@ import 'api.dart';
 import 'db.dart';
 import 'i18n.dart';
 import 'logic.dart';
+import 'speak.dart';
 
 const typeLabels = {
   'basic': 'Basic',
@@ -437,12 +440,44 @@ class CardView extends StatefulWidget {
   State<CardView> createState() => _CardViewState();
 }
 
+/// English → Arabic on the web: Google Translate's free public endpoint (no key, allows any site; unofficial, so it may
+/// change). Leaves `$...$` math as it is.
+Future<String> _googleArabic(String text) async {
+  try {
+    final res = await http
+        .post(Uri.https('translate.googleapis.com', '/translate_a/single', {'client': 'gtx', 'sl': 'en', 'tl': 'ar', 'dt': 't'}), body: {'q': text})
+        .timeout(const Duration(seconds: 15));
+    if (res.statusCode == 200) return [for (final p in jsonDecode(res.body)[0] as List) p[0]].join();
+  } catch (_) {}
+  throw ApiError("Couldn't translate. Check your internet connection and try again.");
+}
+
 class _CardViewState extends State<CardView> {
   late final _typed = TextEditingController(text: widget.state.typed);
   int _steps = 1; // easy: problem steps shown so far
   String? _arabic; // the shown text translated, while the translate icon is on
+  String? _arabicExplanation; // the same for the Explanation box (its own icon: it shows up only after answering)
 
-  /// English → Arabic on the phone (Google ML Kit, free). The first use downloads the ~30MB model, then it works offline.
+  /// English → Arabic: on the phone Google ML Kit (free; the first use downloads the ~30MB model, then it works offline),
+  /// on the web Google Translate ([_googleArabic]). Null = it failed (the student was told).
+  Future<String?> _inArabic(List<String> parts) async {
+    parts = parts.where((p) => p.trim().isNotEmpty).toList();
+    final res = await busy(context, t('Translating…'), () async {
+      if (kIsWeb) return [await _googleArabic(parts.join('\n\n'))];
+      for (final l in [TranslateLanguage.english, TranslateLanguage.arabic]) {
+        if (!await _models.isModelDownloaded(l.bcpCode)) await _models.downloadModel(l.bcpCode);
+      }
+      return Future.wait(parts.map(_toArabic.translateText));
+    });
+    return res?.join('\n\n');
+  }
+
+  Future<void> _translateExplanation() async {
+    if (_arabicExplanation != null) return setState(() => _arabicExplanation = null);
+    final res = await _inArabic(['${c['explanation'] ?? ''}']);
+    if (res != null && mounted) setState(() => _arabicExplanation = res);
+  }
+
   Future<void> _translate() async {
     if (_arabic != null) return setState(() => _arabic = null);
     final question = c['question']?.toString() ?? '';
@@ -452,21 +487,31 @@ class _CardViewState extends State<CardView> {
       if (s.type == 'ordering') for (final it in s.order) '• $it',
       if (widget.revealed) ...[
         if (s.type == 'problem') ...((c['steps'] as List?) ?? []).map((e) => '$e'),
-        '${c['answer'] ?? ''}',
-        if (widget.showExplanation) '${c['explanation'] ?? ''}',
+        '${c['answer'] ?? ''}', // the explanation has its own translate icon
       ],
-    ].where((p) => p.trim().isNotEmpty).toList();
-    final res = await busy(context, t('Translating…'), () async {
-      for (final l in [TranslateLanguage.english, TranslateLanguage.arabic]) {
-        if (!await _models.isModelDownloaded(l.bcpCode)) await _models.downloadModel(l.bcpCode);
-      }
-      return Future.wait(parts.map(_toArabic.translateText));
-    });
-    if (res != null && mounted) setState(() => _arabic = res.join('\n\n'));
+    ];
+    final res = await _inArabic(parts);
+    if (res != null && mounted) setState(() => _arabic = res);
   }
 
   AnswerState get s => widget.state;
   Json get c => s.card;
+  String? get _word => kIsWeb ? cardWord(c) : null; // the speaker: web word cards only
+
+  @override
+  void initState() {
+    super.initState();
+    _prepareWord();
+  }
+
+  void _prepareWord() {
+    final w = _word;
+    if (w != null) Speak.prepare(w).ignore(); // ahead of the tap: iPhone Safari only plays straight from a tap
+  }
+
+  void _sayWord() {
+    if (!Speak.say(_word!)) toast(context, t("You're offline. Connect to the internet to hear the word."));
+  }
 
   void _changed() {
     setState(() {});
@@ -476,8 +521,26 @@ class _CardViewState extends State<CardView> {
   @override
   void didUpdateWidget(CardView old) {
     super.didUpdateWidget(old);
-    if (old.state != widget.state) _typed.text = widget.state.typed;
-    if (old.state != widget.state || old.revealed != widget.revealed) _arabic = null; // translated text is stale
+    if (old.state != widget.state) {
+      _typed.text = widget.state.typed;
+      _prepareWord();
+    }
+    if (old.state != widget.state || old.revealed != widget.revealed) _arabic = _arabicExplanation = null; // translated text is stale
+  }
+
+  /// A word card's front: the word big in the middle, its sense and part of speech (`(of a door)`, `n., v.`) small and grey.
+  Widget _wordFront(String word, String question) {
+    final rest = question.replaceFirst('**$word**', '').replaceAll('*', '').split('\n').map((l) => l.trim()).where((l) => l.isNotEmpty).join('  ·  ');
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 40),
+      child: Column(children: [
+        Text(word, textAlign: TextAlign.center, style: const TextStyle(fontSize: 40, fontWeight: FontWeight.bold)),
+        if (rest.isNotEmpty)
+          Padding(padding: const EdgeInsets.only(top: 6), child: Text(rest, textAlign: TextAlign.center, style: const TextStyle(fontSize: 14, color: Colors.white54))),
+        if (_word != null)
+          Speak.button(t('Hear the word'), _sayWord),
+      ]),
+    );
   }
 
   @override
@@ -487,8 +550,11 @@ class _CardViewState extends State<CardView> {
     final question = c['question']?.toString() ?? '';
     return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
       Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        Expanded(child: s.type == 'cloze' ? Md(revealed ? clozeBack(question) : clozeFront(question)) : Md(question)),
-        if (!kIsWeb) // ML Kit on-device translation has no web version
+        Expanded(
+            child: cardWord(c) != null
+                ? _wordFront(cardWord(c)!, question)
+                : s.type == 'cloze' ? Md(revealed ? clozeBack(question) : clozeFront(question)) : Md(question)),
+        if (cardWord(c) == null) // word cards have the Arabic on their back
         IconButton(
             tooltip: t('Translate to Arabic'),
             visualDensity: VisualDensity.compact,
@@ -755,9 +821,19 @@ class _CardViewState extends State<CardView> {
         decoration: BoxDecoration(
             color: widget.misconception ? cs.errorContainer.withOpacity(.35) : cs.surfaceContainerHigh, borderRadius: BorderRadius.circular(10)),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Text(t('Explanation'), style: TextStyle(color: cs.primary, fontWeight: FontWeight.bold)),
-          const SizedBox(height: 4),
+          Row(children: [
+            Expanded(child: Text(t('Explanation'), style: TextStyle(color: cs.primary, fontWeight: FontWeight.bold))),
+            IconButton(
+                tooltip: t('Translate to Arabic'),
+                visualDensity: VisualDensity.compact,
+                icon: Icon(Icons.translate, size: 20, color: _arabicExplanation != null ? cs.primary : Colors.white54),
+                onPressed: _translateExplanation),
+          ]),
           Md(c['explanation']),
+          if (_arabicExplanation != null)
+            Padding(
+                padding: const EdgeInsets.only(top: 8),
+                child: Directionality(textDirection: TextDirection.rtl, child: Md(_arabicExplanation!))),
         ]),
       ));
     }

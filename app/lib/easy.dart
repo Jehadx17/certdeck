@@ -6,6 +6,7 @@ import 'college.dart';
 import 'college_exam.dart';
 import 'college_logic.dart';
 import 'db.dart';
+import 'exam.dart';
 import 'i18n.dart';
 import 'logic.dart';
 import 'settings.dart';
@@ -183,9 +184,14 @@ class _ExamCard extends StatelessWidget {
               icon: const Icon(Icons.play_arrow_rounded),
               label: Text(t('Study now · {m} min', {'m': App.sessionMinutes})),
               onPressed: () => easyStudy(context, e.a)),
-          Align(
-              alignment: AlignmentDirectional.centerEnd,
-              child: TextButton(onPressed: () => pickSessionMinutes(context), child: Text(t('Change time'), style: const TextStyle(fontSize: 13)))),
+          Row(mainAxisAlignment: MainAxisAlignment.end, children: [
+            if (((e.a['scope'] as List?) ?? []).length > 1)
+              TextButton(
+                  onPressed: () => pickStudyChapters(context, e.a),
+                  child: Text(studyChapters(e.a) == null ? t('All chapters') : t('{n} chapters', {'n': studyChapters(e.a)!.length}),
+                      style: const TextStyle(fontSize: 13))),
+            TextButton(onPressed: () => pickSessionMinutes(context), child: Text(t('Change time'), style: const TextStyle(fontSize: 13))),
+          ]),
           const SizedBox(height: 10),
           OutlinedButton.icon(
               style: OutlinedButton.styleFrom(minimumSize: const Size.fromHeight(46), textStyle: const TextStyle(fontSize: 15)),
@@ -200,7 +206,8 @@ class _ExamCard extends StatelessWidget {
 
 /// One tap: a session of the student's length (10 minutes unless the setup or the autopilot says otherwise), the app picks the cards (most marks first when the exam is close).
 Future<void> easyStudy(BuildContext context, Json a, {String kind = 'study'}) async {
-  final s = await Scope.load(a);
+  final only = studyChapters(a);
+  final s = await Scope.load(only == null ? a : {...a, 'scope': [for (final c in (a['scope'] as List).cast<Map>()) if (only.contains(sectionKey(c))) c]});
   var q = <Json>[];
   StudyQueue? custom;
   if (kind == 'morning') {
@@ -228,6 +235,53 @@ Future<void> easyStudy(BuildContext context, Json a, {String kind = 'study'}) as
               onMore: kind == 'morning' ? null : () => easyStudy(context, a))));
 }
 
+/// The chapters "Study now" sticks to, per assessment; null = all of them.
+Set<String>? studyChapters(Json a) => (((App.settings['study_chapters'] as Map?) ?? {})[a['id']] as List?)?.cast<String>().toSet();
+
+Future<void> pickStudyChapters(BuildContext context, Json a) async {
+  final chapters = ((a['scope'] as List?) ?? []).cast<Map>();
+  final picked = studyChapters(a) ?? {for (final c in chapters) sectionKey(c)};
+  final ok = await showModalBottomSheet<bool>(
+      context: context,
+      isScrollControlled: true,
+      builder: (c) => StatefulBuilder(
+          builder: (c, set) => SafeArea(
+                  child: Column(mainAxisSize: MainAxisSize.min, children: [
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(20, 16, 12, 0),
+                  child: Row(children: [
+                    Expanded(child: Text(t('Which chapters do you want to study?'), style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold))),
+                    TextButton(
+                        onPressed: () => set(() => picked.length == chapters.length ? picked.clear() : picked.addAll(chapters.map(sectionKey))),
+                        child: Text(picked.length == chapters.length ? t('None') : t('All'))),
+                  ]),
+                ),
+                Flexible(
+                    child: ListView(shrinkWrap: true, children: [
+                  for (final ch in chapters)
+                    CheckboxListTile(
+                      value: picked.contains(sectionKey(ch)),
+                      title: autoText('${ch['title'] ?? ch['section_id']}'),
+                      onChanged: (v) => set(() => v! ? picked.add(sectionKey(ch)) : picked.remove(sectionKey(ch))),
+                    ),
+                ])),
+                Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: FilledButton(
+                      style: easyButton(), onPressed: picked.isEmpty ? null : () => Navigator.pop(c, true), child: Text(t('Save'))),
+                ),
+              ]))));
+  if (ok != true) return;
+  final all = {...((App.settings['study_chapters'] as Map?) ?? {})};
+  if (picked.length == chapters.length) {
+    all.remove(a['id']);
+  } else {
+    all[a['id']] = picked.toList();
+  }
+  App.settings['study_chapters'] = all;
+  await App.saveSettings();
+}
+
 /// 5 / 10 / 15 / 20 minutes: the student's own choice for the next sessions (the autopilot may adjust it later).
 Future<void> pickSessionMinutes(BuildContext context) async {
   final v = await showModalBottomSheet<int>(
@@ -250,15 +304,113 @@ Future<void> pickSessionMinutes(BuildContext context) async {
   await App.saveSettings();
 }
 
-/// A practice test with fixed settings: 10 questions from the cards (no AI, works offline), feedback per question,
-/// a score per topic at the end.
-Future<void> easyPractice(BuildContext context, Json a) async {
-  final s = await Scope.load(a);
-  final cards = pickPractice(s, await Db.get('profile-${a['course_id']}'), 10)..shuffle();
-  if (!context.mounted) return;
-  if (cards.isEmpty) return easyMessage(context, Icons.hourglass_empty_rounded, t('Not ready yet.'), t('Prepare this exam first in "My courses".'));
-  await Navigator.push(
-      context, MaterialPageRoute(builder: (_) => StudyScreen(cards, easy: true, practice: true, title: t('Practice test'), source: 'exam', scheduler: s.scheduler)));
+/// Practice on the chapters the student ticks: a quick practice (10 questions from the cards, feedback per question,
+/// works offline) or a mock exam (10-40 questions, timed or not, scored per chapter at the end).
+Future<void> easyPractice(BuildContext context, Json a) => Navigator.push(context, MaterialPageRoute(builder: (_) => PracticePicker(a)));
+
+class PracticePicker extends StatefulWidget {
+  final Json a;
+  const PracticePicker(this.a, {super.key});
+  @override
+  State<PracticePicker> createState() => _PracticePickerState();
+}
+
+class _PracticePickerState extends State<PracticePicker> {
+  late final chapters = ((widget.a['scope'] as List?) ?? []).cast<Map>();
+  late final picked = {for (final c in chapters) sectionKey(c)};
+  Map<String, int> counts = {};
+  bool mock = false, timed = true;
+  int n = 20;
+
+  @override
+  void initState() {
+    super.initState();
+    Scope.load(widget.a).then((s) {
+      final by = <String, int>{};
+      for (final c in s.cards) {
+        by['${c['section']}'] = (by['${c['section']}'] ?? 0) + 1;
+      }
+      if (mounted) setState(() => counts = by);
+    });
+  }
+
+  Future<void> _start() async {
+    final a = {...widget.a, 'scope': chapters.where((c) => picked.contains(sectionKey(c))).toList()};
+    final s = await Scope.load(a);
+    final cards = pickPractice(s, await Db.get('profile-${a['course_id']}'), mock ? n : 10)..shuffle();
+    if (!mounted) return;
+    if (cards.isEmpty) return easyMessage(context, Icons.hourglass_empty_rounded, t('Not ready yet.'), t('These chapters have no cards yet.'));
+    final m = timed ? (cards.length * 1.5).ceil() : 0;
+    await Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (_) => mock
+                ? ExamRun(cards, m, results: (states, flagged, started) => PracticeResults(a, states, flagged, started, m))
+                : StudyScreen(cards, easy: true, practice: true, title: t('Practice test'), source: 'exam', scheduler: s.scheduler)));
+  }
+
+  @override
+  Widget build(BuildContext context) => easyScale(
+        context,
+        Scaffold(
+          appBar: AppBar(title: Text(t('Practice test'))),
+          body: ListView(padding: const EdgeInsets.symmetric(vertical: 8), children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Row(children: [
+                Expanded(child: Text(t('Chapters'), style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold))),
+                TextButton(
+                    onPressed: () => setState(() => picked.length == chapters.length ? picked.clear() : picked.addAll(chapters.map(sectionKey))),
+                    child: Text(picked.length == chapters.length ? t('None') : t('All'))),
+              ]),
+            ),
+            for (final c in chapters)
+              CheckboxListTile(
+                value: picked.contains(sectionKey(c)),
+                title: autoText('${c['title'] ?? c['section_id']}'),
+                subtitle: Text(t('{n} cards', {'n': counts[sectionKey(c)] ?? 0})),
+                onChanged: (v) => setState(() => v! ? picked.add(sectionKey(c)) : picked.remove(sectionKey(c))),
+              ),
+            const Divider(),
+            Padding(
+              padding: const EdgeInsets.all(16),
+              child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+                SegmentedButton<bool>(
+                  segments: [
+                    ButtonSegment(value: false, label: Text(t('Quick practice'))),
+                    ButtonSegment(value: true, label: Text(t('Mock exam'))),
+                  ],
+                  selected: {mock},
+                  onSelectionChanged: (v) => setState(() => mock = v.first),
+                ),
+                const SizedBox(height: 12),
+                if (!mock)
+                  Text(t('10 questions, with the answer after each one.'), style: const TextStyle(fontSize: 14, color: Colors.white70))
+                else ...[
+                  Text(t('Questions'), style: const TextStyle(fontSize: 14, color: Colors.white70)),
+                  Wrap(spacing: 10, children: [
+                    for (final k in const [10, 20, 30, 40]) ChoiceChip(label: Text('$k'), selected: n == k, onSelected: (_) => setState(() => n = k)),
+                  ]),
+                  SwitchListTile(
+                    contentPadding: EdgeInsets.zero,
+                    value: timed,
+                    title: Text(t('Timed')),
+                    subtitle: Text(timed ? t('{m} minutes', {'m': (n * 1.5).ceil()}) : t('No time limit')),
+                    onChanged: (v) => setState(() => timed = v),
+                  ),
+                  Text(t('Answers and your score per chapter at the end.'), style: const TextStyle(fontSize: 14, color: Colors.white70)),
+                ],
+                const SizedBox(height: 16),
+                FilledButton.icon(
+                    style: easyButton(),
+                    icon: const Icon(Icons.play_arrow_rounded),
+                    label: Text(t('Start')),
+                    onPressed: picked.isEmpty ? null : _start),
+              ]),
+            ),
+          ]),
+        ),
+      );
 }
 
 /// The summary in large text, then a quick review.

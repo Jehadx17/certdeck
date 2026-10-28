@@ -1,0 +1,3271 @@
+[
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Which identity, obtained from a double-angle formula, rewrites $\\sin^2 x$ without a square?",
+   "options": [
+    "$\\frac{1 + \\cos 2 x}{2}$",
+    "$1 - \\cos 2 x$",
+    "$\\frac{1 - \\sin 2 x}{2}$",
+    "$\\frac{1 - \\cos 2 x}{2}$"
+   ],
+   "correct": [
+    3
+   ],
+   "explanation": "From $\\cos 2x = 1-2\\sin^2 x$ we get $\\sin^2 x=\\frac12(1-\\cos 2x)$ (identity 5).",
+   "option_explanations": [
+    "That is the identity for $\\cos^2 x$; the sign is flipped.",
+    "Drops the factor $\\frac12$.",
+    "Uses $\\sin 2x$ where $\\cos 2x$ belongs.",
+    "Correct."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Use the half-angle identity to rewrite $\\sin^2 3x$.",
+    "options": [
+     "$\\frac{1 - \\cos 3 x}{2}$",
+     "$\\frac{1 - \\cos 6 x}{2}$",
+     "$\\frac{1 + \\cos 6 x}{2}$",
+     "$1 - \\cos 6 x$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Replace $x$ by $3x$ in $\\sin^2 x=\\frac12(1-\\cos 2x)$, so the cosine has angle $6x$.",
+    "option_explanations": [
+     "Forgets that the angle doubles: $2\\cdot 3x=6x$.",
+     "Correct.",
+     "Sign flipped; that is the formula for $\\cos^2 3x$.",
+     "Drops the factor $\\frac12$."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Solve $\\cos 2x = 1-2\\sin^2 x$ for $\\sin^2 x$.",
+    "options": [
+     "$\\frac{1}{2} - \\frac{\\cos 2x}{2}$",
+     "$1 - \\frac{\\cos 2x}{2}$",
+     "$\\frac{\\cos 2x - 1}{2}$",
+     "$\\frac{1}{2} - \\cos 2x$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "$2\\sin^2 x = 1-\\cos 2x$, then divide by 2.",
+    "option_explanations": [
+     "Correct.",
+     "Divides only the cosine term by 2, not the constant.",
+     "Sign slip when moving the 1 across: $2\\sin^2x=\\cos 2x-1$.",
+     "Divides only the constant by 2, not the cosine term."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Which identity, obtained from a double-angle formula, rewrites $\\cos^2 x$ without a square?",
+   "options": [
+    "$\\frac{1 - \\cos 2 x}{2}$",
+    "$\\frac{1 + \\cos 2 x}{2}$",
+    "$1 + \\cos 2 x$",
+    "$\\frac{1 + \\sin 2 x}{2}$"
+   ],
+   "correct": [
+    1
+   ],
+   "explanation": "From $\\cos 2x = 2\\cos^2 x-1$ we get $\\cos^2 x=\\frac12(1+\\cos 2x)$ (identity 6).",
+   "option_explanations": [
+    "That is the identity for $\\sin^2 x$; the sign is flipped.",
+    "Correct.",
+    "Drops the factor $\\frac12$.",
+    "Uses $\\sin 2x$ where $\\cos 2x$ belongs."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Use the half-angle identity to rewrite $\\cos^2 5x$.",
+    "options": [
+     "$\\frac{1 + \\cos 5 x}{2}$",
+     "$\\frac{1 - \\cos 10 x}{2}$",
+     "$1 + \\cos 10 x$",
+     "$\\frac{1 + \\cos 10 x}{2}$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "Replace $x$ by $5x$ in $\\cos^2 x=\\frac12(1+\\cos 2x)$.",
+    "option_explanations": [
+     "Forgets that the angle doubles: $2\\cdot 5x=10x$.",
+     "Sign flipped; that is the formula for $\\sin^2 5x$.",
+     "Drops the factor $\\frac12$.",
+     "Correct."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Solve $\\cos 2x = 2\\cos^2 x-1$ for $\\cos^2 x$.",
+    "options": [
+     "$\\cos 2 x + 1$",
+     "$\\frac{1}{2} + \\frac{\\cos 2x}{2}$",
+     "$\\frac{\\cos 2x - 1}{2}$",
+     "$1 + \\frac{\\cos 2x}{2}$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "$2\\cos^2 x = 1+\\cos 2x$, then divide by 2.",
+    "option_explanations": [
+     "Forgets to divide by 2.",
+     "Correct.",
+     "Sign slip when moving the 1: $2\\cos^2x=\\cos 2x+1$, not $\\cos 2x-1$.",
+     "Divides only the cosine term by 2, not the constant."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Evaluate $\\int \\sin^{2} x\\,dx$",
+   "options": [
+    "$\\frac{x}{2} - \\frac{\\sin 2 x}{4} + C$",
+    "$\\frac{\\sin^{3} x}{3} + C$",
+    "$\\frac{x}{2} - \\frac{\\sin x}{2} + C$",
+    "$x - \\frac{\\sin 2x}{2} + C$"
+   ],
+   "correct": [
+    0
+   ],
+   "explanation": "Write $\\sin^2 x=\\frac12(1-\\cos 2x)$ and integrate term by term (formula 7).",
+   "option_explanations": [
+    "Correct.",
+    "Power rule on $\\sin x$.",
+    "Does not double the angle in the half-angle identity.",
+    "Forgets the factor $\\frac12$ of the half-angle identity."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int \\sin^{2} 3 x\\,dx$",
+    "options": [
+     "$\\frac{\\sin^{3} 3x}{9} + C$",
+     "$\\frac{x}{2} - \\frac{\\sin 3x}{6} + C$",
+     "$\\frac{x}{2} - \\frac{\\sin 6 x}{12} + C$",
+     "$x - \\frac{\\sin 6x}{6} + C$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "$\\sin^2 3x=\\frac12(1-\\cos 6x)$ and $\\int\\cos 6x\\,dx=\\frac16\\sin 6x$, then multiply by $\\frac12$.",
+    "option_explanations": [
+     "Power rule on $\\sin 3x$.",
+     "Does not double the angle in the half-angle identity.",
+     "Correct.",
+     "Forgets the factor $\\frac12$ of the half-angle identity."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int \\sin^{2} {\\frac{x}{2}}\\,dx$",
+    "options": [
+     "$\\frac{x}{2} - \\sin {\\frac{x}{2}} + C$",
+     "$- \\frac{x}{2} + \\frac{\\sin x}{2} + C$",
+     "$- \\frac{x}{2} - \\frac{\\sin x}{2} + C$",
+     "$\\frac{x}{2} - \\frac{\\sin x}{2} + C$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "$\\sin^2\\frac x2=\\frac12(1-\\cos x)$, so the integral is $\\frac x2-\\frac12\\sin x$.",
+    "option_explanations": [
+     "Keeps $\\cos\\frac x2$ in the identity instead of doubling the angle to $\\cos x$.",
+     "Overall sign error.",
+     "Sign error on the first term.",
+     "Correct."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Evaluate $\\int \\cos^{2} x\\,dx$",
+   "options": [
+    "$\\frac{x}{2} + \\frac{\\sin 2 x}{4} + C$",
+    "$\\frac{\\cos^{3} x}{3} + C$",
+    "$\\frac{x}{2} + \\frac{\\sin x}{2} + C$",
+    "$x + \\frac{\\sin 2x}{2} + C$"
+   ],
+   "correct": [
+    0
+   ],
+   "explanation": "Write $\\cos^2 x=\\frac12(1+\\cos 2x)$ and integrate term by term (formula 8).",
+   "option_explanations": [
+    "Correct.",
+    "Power rule on $\\cos x$.",
+    "Does not double the angle in the half-angle identity.",
+    "Forgets the factor $\\frac12$ of the half-angle identity."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int \\cos^{2} 4 x\\,dx$",
+    "options": [
+     "$\\frac{x}{2} + \\frac{\\sin 8 x}{16} + C$",
+     "$\\frac{\\cos^{3} 4x}{12} + C$",
+     "$\\frac{x}{2} + \\frac{\\sin 4x}{8} + C$",
+     "$x + \\frac{\\sin 8x}{8} + C$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "$\\cos^2 4x=\\frac12(1+\\cos 8x)$ and $\\int\\cos 8x\\,dx=\\frac18\\sin 8x$.",
+    "option_explanations": [
+     "Correct.",
+     "Power rule on $\\cos 4x$.",
+     "Does not double the angle in the half-angle identity.",
+     "Forgets the factor $\\frac12$ of the half-angle identity."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int \\cos^{2} {\\frac{x}{3}}\\,dx$",
+    "options": [
+     "$- \\frac{x}{2} - \\frac{3 \\sin {\\frac{2 x}{3}}}{4} + C$",
+     "$- \\frac{x}{2} + \\frac{3 \\sin {\\frac{2 x}{3}}}{4} + C$",
+     "$\\frac{x^{2}}{4} + \\frac{3 \\sin {\\frac{2 x}{3}}}{4} + C$",
+     "$\\frac{x}{2} + \\frac{3 \\sin {\\frac{2 x}{3}}}{4} + C$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "$\\cos^2\\frac x3=\\frac12\\left(1+\\cos\\frac{2x}{3}\\right)$ and $\\int\\cos\\frac{2x}{3}dx=\\frac32\\sin\\frac{2x}{3}$.",
+    "option_explanations": [
+     "Overall sign error.",
+     "Sign error on the first term.",
+     "Integrates the constant term as if $\\int c\\,dx$ were $\\frac{c x^2}{2}$.",
+     "Correct."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Formula 3 gives $\\int\\sin^2 x\\,dx=\\frac x2-\\frac12\\sin x\\cos x+C$, while formula 7 uses only $\\sin 2x$. Rewrite the first answer with $\\sin 2x$.",
+   "options": [
+    "$\\frac{x}{2} - \\frac{\\sin 2x}{2}$",
+    "$\\frac{x}{2} - \\frac{\\sin 2 x}{4}$",
+    "$\\frac{x}{2} + \\frac{\\sin 2x}{4}$",
+    "$\\frac{x}{2} - \\frac{\\sin 2x}{8}$"
+   ],
+   "correct": [
+    1
+   ],
+   "explanation": "Since $\\sin 2x=2\\sin x\\cos x$, we have $\\sin x\\cos x=\\frac12\\sin 2x$.",
+   "option_explanations": [
+    "Replaces $\\sin x\\cos x$ by $\\sin 2x$, forgetting that $\\sin 2x=2\\sin x\\cos x$.",
+    "Correct.",
+    "Sign slip: that is the $\\cos^2x$ antiderivative.",
+    "Takes $\\sin x\\cos x=\\frac14\\sin 2x$."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Formula 4 gives $\\int\\cos^2 x\\,dx=\\frac x2+\\frac12\\sin x\\cos x+C$. Express this in terms of $\\sin 2x$ only.",
+    "options": [
+     "$\\frac{x}{2} + \\frac{\\sin 2x}{2}$",
+     "$\\frac{x}{2} + \\frac{\\sin 2x}{8}$",
+     "$\\frac{x}{2} - \\frac{\\sin 2x}{4}$",
+     "$\\frac{x}{2} + \\frac{\\sin 2 x}{4}$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "$\\sin x\\cos x=\\frac12\\sin 2x$, so $\\frac12\\sin x\\cos x=\\frac14\\sin 2x$.",
+    "option_explanations": [
+     "Replaces $\\sin x\\cos x$ by $\\sin 2x$, forgetting that $\\sin 2x=2\\sin x\\cos x$.",
+     "Takes $\\sin x\\cos x=\\frac14\\sin 2x$.",
+     "Sign slip: that is the $\\sin^2x$ antiderivative.",
+     "Correct."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Formula 7 reads $\\int\\sin^2 x\\,dx=\\frac x2-\\frac14\\sin 2x+C$. Write the same antiderivative using $\\sin x\\cos x$.",
+    "options": [
+     "$\\frac{x}{2} - \\sin x \\cos x$",
+     "$\\frac{x}{2} - \\frac{\\sin x\\cos x}{4}$",
+     "$\\frac{x}{2} + \\frac{\\sin x\\cos x}{2}$",
+     "$\\frac{x}{2} - \\frac{\\sin x \\cos x}{2}$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "$\\frac14\\sin 2x=\\frac14\\cdot 2\\sin x\\cos x=\\frac12\\sin x\\cos x$.",
+    "option_explanations": [
+     "Takes $\\frac14\\sin 2x$ as $\\sin x\\cos x$.",
+     "Keeps the $\\frac14$ although $\\sin 2x=2\\sin x\\cos x$ doubles the product.",
+     "Sign slip: that is the $\\cos^2x$ antiderivative.",
+     "Correct."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Reduction formula 9 writes $\\int\\sin^n x\\,dx=-\\frac1n\\sin^{n-1}x\\cos x+c\\int\\sin^{n-2}x\\,dx$. For $n=6$, what is $c$?",
+   "options": [
+    "$\\frac16$",
+    "$\\frac65$",
+    "$\\frac46$",
+    "$\\frac56$"
+   ],
+   "correct": [
+    3
+   ],
+   "explanation": "The coefficient is $\\frac{n-1}{n}$.",
+   "option_explanations": [
+    "Uses $\\frac1n$, the coefficient of the first term.",
+    "Inverts the ratio.",
+    "Uses $\\frac{n-2}{n}$ instead of $\\frac{n-1}{n}$.",
+    "Correct."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "In reduction formula 10, $\\int\\cos^n x\\,dx=\\frac1n\\cos^{n-1}x\\sin x+c\\int\\cos^{n-2}x\\,dx$. Find $c$ when $n=7$.",
+    "options": [
+     "$\\frac17$",
+     "$\\frac76$",
+     "$\\frac67$",
+     "$\\frac57$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "The coefficient is $\\frac{n-1}{n}$.",
+    "option_explanations": [
+     "Uses $\\frac1n$, the first-term coefficient.",
+     "Inverts the ratio.",
+     "Correct.",
+     "Uses $\\frac{n-2}{n}$ instead of $\\frac{n-1}{n}$."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Apply formula 9 once to $\\int\\sin^3 x\\,dx$. What multiplies the remaining integral $\\int\\sin x\\,dx$?",
+    "options": [
+     "$\\frac13$",
+     "$\\frac32$",
+     "$-\\frac23$",
+     "$\\frac23$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "With $n=3$, $\\frac{n-1}{n}=\\frac23$; the sign of the second term is plus.",
+    "option_explanations": [
+     "Uses $\\frac1n$.",
+     "Inverts the ratio.",
+     "Carries over the minus sign of the first term.",
+     "Correct."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "By reduction formula 10, $\\int\\cos^5 x\\,dx=\\,?\\;+\\frac45\\int\\cos^3 x\\,dx$. What replaces the question mark?",
+   "options": [
+    "$-\\frac15\\cos^4 x\\sin x$",
+    "$\\frac15\\sin^4 x\\cos x$",
+    "$\\frac15\\cos^4 x\\sin x$",
+    "$\\frac14\\cos^4 x\\sin x$"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "Formula 10 starts with $\\frac1n\\cos^{n-1}x\\sin x$.",
+   "option_explanations": [
+    "Puts in the minus sign that belongs to the sine formula.",
+    "Swaps the roles of sine and cosine.",
+    "Correct.",
+    "Divides by $n-1$ instead of $n$."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "By reduction formula 9, $\\int\\sin^4 x\\,dx=\\,?\\;+\\frac34\\int\\sin^2 x\\,dx$. What replaces the question mark?",
+    "options": [
+     "$\\frac14\\sin^3 x\\cos x$",
+     "$-\\frac14\\cos^3 x\\sin x$",
+     "$-\\frac13\\sin^3 x\\cos x$",
+     "$-\\frac14\\sin^3 x\\cos x$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "Formula 9 starts with $-\\frac1n\\sin^{n-1}x\\cos x$.",
+    "option_explanations": [
+     "Drops the minus sign.",
+     "Swaps the roles of sine and cosine.",
+     "Divides by $n-1$ instead of $n$.",
+     "Correct."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Reduction formula 10 for $n=6$ gives $\\int\\cos^6 x\\,dx=\\,?\\;+\\frac56\\int\\cos^4 x\\,dx$. Which term is missing?",
+    "options": [
+     "$-\\frac16\\cos^5 x\\sin x$",
+     "$\\frac16\\cos^6 x\\sin x$",
+     "$\\frac15\\cos^5 x\\sin x$",
+     "$\\frac16\\cos^5 x\\sin x$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "The leading term is $\\frac1n\\cos^{n-1}x\\sin x$ with $n=6$.",
+    "option_explanations": [
+     "Puts in the minus sign of the sine formula.",
+     "Does not lower the power of cosine.",
+     "Divides by $n-1$ instead of $n$.",
+     "Correct."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Reduction formula 10 is applied repeatedly to $\\int\\cos^7 x\\,dx$. Which integral is left at the end?",
+   "options": [
+    "$\\int 1\\,dx$",
+    "$\\int\\cos^2 x\\,dx$",
+    "$\\int\\cos x\\,dx$",
+    "$\\int\\cos^3 x\\,dx$"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "The exponent drops by 2 each time: 7, 5, 3, 1.",
+   "option_explanations": [
+    "That happens only for even exponents.",
+    "The exponent keeps dropping by 2, so it cannot stop at 2 from 7.",
+    "Correct.",
+    "That is an intermediate step, not the last one."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Formula 9 is applied repeatedly to $\\int\\sin^8 x\\,dx$. What integral remains in the last step?",
+    "options": [
+     "$\\int\\sin x\\,dx$",
+     "$\\int 1\\,dx$",
+     "$\\int\\sin^2 x\\,dx$",
+     "$\\int\\sin^4 x\\,dx$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "The exponent drops by 2 each time: 8, 6, 4, 2, 0.",
+    "option_explanations": [
+     "That happens only for odd exponents.",
+     "Correct.",
+     "That is an intermediate step, not the last one.",
+     "That is an intermediate step, not the last one."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "How many times must reduction formula 9 be used to bring $\\int\\sin^6 x\\,dx$ down to $\\int 1\\,dx$?",
+    "options": [
+     "3",
+     "2",
+     "5",
+     "6"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "6 to 4 to 2 to 0 is three steps.",
+    "option_explanations": [
+     "Correct.",
+     "Stops at $\\sin^2 x$, which is not yet $\\int 1\\,dx$.",
+     "Lowers the exponent by 1 instead of 2 each time.",
+     "Counts one step per unit of the exponent."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "To derive reduction formula 10 by integration by parts, how are $u$ and $dv$ chosen for $\\int\\cos^n x\\,dx$?",
+   "options": [
+    "$u=\\cos^{n}x,\\ dv=dx$",
+    "$u=\\cos^{n-1}x,\\ dv=\\cos x\\,dx$",
+    "$u=\\cos x,\\ dv=\\cos^{n-1}x\\,dx$",
+    "$u=\\sin x,\\ dv=\\cos^{n}x\\,dx$"
+   ],
+   "correct": [
+    1
+   ],
+   "explanation": "Splitting $\\cos^n x=\\cos^{n-1}x\\cdot\\cos x$ makes $v=\\sin x$ and lowers the power in $du$.",
+   "option_explanations": [
+    "Then $v=x$ and the power does not drop usefully.",
+    "Correct.",
+    "Then $v$ is as hard as the original integral.",
+    "There is no $\\sin x$ in the integrand to peel off."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Deriving formula 9 for $\\int\\sin^n x\\,dx$ by parts: which pair works?",
+    "options": [
+     "$u=\\sin^{n}x,\\ dv=dx$",
+     "$u=\\sin^{n-1}x,\\ dv=\\sin x\\,dx$",
+     "$u=\\sin x,\\ dv=\\sin^{n-1}x\\,dx$",
+     "$u=\\cos x,\\ dv=\\sin^{n}x\\,dx$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Splitting $\\sin^n x=\\sin^{n-1}x\\cdot\\sin x$ gives $v=-\\cos x$ and a lower power in $du$.",
+    "option_explanations": [
+     "Then $v=x$ and nothing simplifies.",
+     "Correct.",
+     "Then $v$ is as hard as the original integral.",
+     "There is no $\\cos x$ in the integrand to peel off."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "In the by-parts derivation of formula 10 we take $u=\\cos^{n-1}x$ and $dv=\\cos x\\,dx$. What is $du$?",
+    "options": [
+     "$(n-1)\\cos^{n-2}x\\,dx$",
+     "$(n-1)\\cos^{n-2}x\\sin x\\,dx$",
+     "$-(n-1)\\cos^{n-2}x\\sin x\\,dx$",
+     "$-(n-1)\\cos^{n}x\\sin x\\,dx$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "By the chain rule, $(\\cos^{n-1}x)'=-(n-1)\\cos^{n-2}x\\sin x$.",
+    "option_explanations": [
+     "Omits the chain-rule factor $-\\sin x$.",
+     "Loses the minus sign from $(\\cos x)'=-\\sin x$.",
+     "Correct.",
+     "Forgets to lower the exponent to $n-2$."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "In the derivation of formula 10, the integral $\\int\\sin^2 x\\cos^{n-2}x\\,dx$ appears. Which identity turns it into the two integrals needed?",
+   "options": [
+    "$\\sin^2 x=\\frac12(1-\\cos 2x)$",
+    "$\\sin^2 x=1+\\cos^2 x$",
+    "$\\sin^2 x=1-\\cos^2 x$",
+    "$\\sin^2 x=\\tan^2 x\\cos^2 x$"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "$\\sin^2x=1-\\cos^2x$ splits it into $\\int\\cos^{n-2}x\\,dx-\\int\\cos^n x\\,dx$.",
+   "option_explanations": [
+    "That would keep a $\\cos 2x$ factor and not return $\\int\\cos^n x\\,dx$.",
+    "Sign error in the Pythagorean identity.",
+    "Correct.",
+    "True, but it brings tangents into the integrand."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Deriving formula 9 leaves $\\int\\sin^{n-2}x\\cos^2 x\\,dx$. Which replacement produces $\\int\\sin^{n-2}x\\,dx$ and $\\int\\sin^n x\\,dx$?",
+    "options": [
+     "$\\cos^2 x=\\frac12(1+\\cos 2x)$",
+     "$\\cos^2 x=\\sin^2 x-1$",
+     "$\\cos^2 x=1-\\sin^2 x$",
+     "$\\cos^2 x=1+\\sin^2 x$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "$\\cos^2x=1-\\sin^2x$ gives $\\int\\sin^{n-2}x\\,dx-\\int\\sin^n x\\,dx$.",
+    "option_explanations": [
+     "That keeps a $\\cos 2x$ factor and does not give $\\int\\sin^n x\\,dx$.",
+     "Sign error in the Pythagorean identity.",
+     "Correct.",
+     "Sign error in the Pythagorean identity."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "At the end of the proof of formula 10 we get $\\int\\cos^n x\\,dx=\\cos^{n-1}x\\sin x+(n-1)\\int\\cos^{n-2}x\\,dx-(n-1)\\int\\cos^n x\\,dx$. What is the next move?",
+    "options": [
+     "Differentiate both sides",
+     "Add $(n-1)\\int\\cos^n x\\,dx$ to both sides",
+     "Subtract $\\int\\cos^{n-2}x\\,dx$ from both sides",
+     "Divide both sides by $n-1$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Collecting gives $n\\int\\cos^n x\\,dx=\\cos^{n-1}x\\sin x+(n-1)\\int\\cos^{n-2}x\\,dx$; then divide by $n$.",
+    "option_explanations": [
+     "That undoes the integral instead of solving for it.",
+     "Correct.",
+     "Does not collect the $\\int\\cos^n x\\,dx$ terms.",
+     "The $\\int\\cos^n x\\,dx$ terms are still on both sides."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Evaluate $\\int \\sin^{3} x\\,dx$",
+   "options": [
+    "$\\cos x - \\frac{\\cos^{3} x}{3} + C$",
+    "$- \\cos x + \\cos^{3} x + C$",
+    "$- \\cos x + \\frac{\\cos^{3} x}{3} + C$",
+    "$\\cos x + \\frac{\\cos^{3} x}{3} + C$"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "Write $\\sin^3x=(1-\\cos^2x)\\sin x$ and let $u=\\cos x$ (formula 11).",
+   "option_explanations": [
+    "Loses the minus sign that comes from $\\int\\sin x\\,dx=-\\cos x$.",
+    "Forgets the $\\frac13$ when integrating $u^2$.",
+    "Correct.",
+    "Sign error on the first term."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int \\sin^{3} 2 x\\,dx$",
+    "options": [
+     "$- \\cos 2 x + \\frac{\\cos^{3} 2 x}{3} + C$",
+     "$- \\frac{\\cos 2 x}{2} + \\frac{\\cos^{3} 2 x}{6} + C$",
+     "$\\frac{\\sin^{4} 2 x}{8} + C$",
+     "$\\frac{\\cos 2 x}{2} - \\frac{\\cos^{3} 2 x}{6} + C$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Let $u=\\cos 2x$, $du=-2\\sin 2x\\,dx$; the whole answer carries a factor $\\frac12$.",
+    "option_explanations": [
+     "Forgets the factor $\\frac12$ from $u=\\cos 2x$.",
+     "Correct.",
+     "Power rule on $\\sin 2x$.",
+     "Overall sign error."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int \\sin^{3} {\\frac{x}{2}}\\,dx$",
+    "options": [
+     "$- \\cos {\\frac{x}{2}} + \\frac{\\cos^{3} {\\frac{x}{2}}}{3} + C$",
+     "$2 \\cos {\\frac{x}{2}} - \\frac{2 \\cos^{3} {\\frac{x}{2}}}{3} + C$",
+     "$- 2 \\cos {\\frac{x}{2}} + \\frac{2 \\cos^{3} {\\frac{x}{2}}}{3} + C$",
+     "$- 2 \\cos {\\frac{x}{2}} + \\frac{\\cos^{3} {\\frac{x}{2}}}{3} + C$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Let $u=\\cos\\frac x2$, $du=-\\frac12\\sin\\frac x2\\,dx$, so every term gets a factor 2.",
+    "option_explanations": [
+     "Forgets the factor 2 from $u=\\cos\\frac x2$.",
+     "Overall sign error.",
+     "Correct.",
+     "Applies the factor 2 only to the first term."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Evaluate $\\int \\cos^{3} x\\,dx$",
+   "options": [
+    "$- \\sin x + \\frac{\\sin^{3} x}{3} + C$",
+    "$\\sin x - \\frac{\\sin^{3} x}{3} + C$",
+    "$- \\sin x - \\frac{\\sin^{3} x}{3} + C$",
+    "$\\sin x - \\frac{\\sin^{3} x \\cos x}{3} + C$"
+   ],
+   "correct": [
+    1
+   ],
+   "explanation": "Write $\\cos^3x=(1-\\sin^2x)\\cos x$ and let $u=\\sin x$ (formula 12).",
+   "option_explanations": [
+    "Overall sign error.",
+    "Correct.",
+    "Sign error on the first term.",
+    "Leaves the $du$ factor $\\cos x$ in the answer instead of absorbing it into the substitution."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int \\cos^{3} 3 x\\,dx$",
+    "options": [
+     "$\\sin 3x - \\frac{\\sin^{3} 3x}{3} + C$",
+     "$\\frac{\\sin 3 x}{3} - \\frac{\\sin^{3} 3 x}{9} + C$",
+     "$- \\frac{\\sin 3 x}{3} - \\frac{\\sin^{3} 3 x}{9} + C$",
+     "$\\frac{\\sin 3x}{3} + \\frac{\\sin^{3} 3x}{9} + C$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Let $u=\\sin 3x$, $du=3\\cos 3x\\,dx$; the whole answer carries a factor $\\frac13$.",
+    "option_explanations": [
+     "Forgets the chain factor $\\frac13$ from $u=\\sin 3x$.",
+     "Correct.",
+     "Sign error on the first term.",
+     "Uses $\\cos^2 3x=1+\\sin^2 3x$."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int \\cos^{3} {\\frac{x}{2}}\\,dx$",
+    "options": [
+     "$2 \\sin {\\frac{x}{2}} - \\frac{2 \\sin^{3} {\\frac{x}{2}}}{3} + C$",
+     "$\\sin {\\frac{x}{2}} - \\frac{\\sin^{3} {\\frac{x}{2}}}{3} + C$",
+     "$2 \\sin {\\frac{x}{2}} - \\frac{\\sin^{3} {\\frac{x}{2}}}{3} + C$",
+     "$\\sin {\\frac{x}{2}} - \\frac{2\\sin^{3} {\\frac{x}{2}}}{3} + C$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Let $u=\\sin\\frac x2$, $du=\\frac12\\cos\\frac x2\\,dx$, so every term gets a factor 2.",
+    "option_explanations": [
+     "Correct.",
+     "Forgets the factor 2 from $u=\\sin\\frac x2$.",
+     "Applies the factor 2 only to the first term.",
+     "Applies the factor 2 only to the second term."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Evaluate $\\int \\sin^{4} x\\,dx$",
+   "options": [
+    "$\\frac{x}{4} - \\frac{\\sin 2x}{4} + C$",
+    "$\\frac{3 x}{8} - \\frac{\\sin 2 x}{4} + \\frac{\\sin 4 x}{32} + C$",
+    "$\\frac{x}{8} - \\frac{\\sin 4x}{32} + C$",
+    "$\\frac{3x}{8} + \\frac{\\sin 4x}{32} + C$"
+   ],
+   "correct": [
+    1
+   ],
+   "explanation": "Square $\\frac12(1-\\cos 2x)$, then use $\\cos^2 2x=\\frac12(1+\\cos 4x)$ (formula 13).",
+   "option_explanations": [
+    "Drops the $\\cos^2 2x$ term when expanding $(1-\\cos 2x)^2$.",
+    "Correct.",
+    "Expands $(1-\\cos 2x)^2$ as $1-\\cos^2 2x$.",
+    "Drops the cross term $-2\\cos 2x$ when expanding the square."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int \\sin^{4} 2 x\\,dx$",
+    "options": [
+     "$\\frac{x}{4} - \\frac{\\sin 4x}{8} + C$",
+     "$\\frac{3 x}{8} - \\frac{\\sin 4 x}{8} + \\frac{\\sin 8 x}{64} + C$",
+     "$\\frac{x}{8} - \\frac{\\sin 8x}{64} + C$",
+     "$\\frac{3x}{8} + \\frac{\\sin 8x}{64} + C$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Substitute $u=2x$ in formula 13; every term gets a factor $\\frac12$.",
+    "option_explanations": [
+     "Drops the $\\cos^2 4x$ term when expanding $(1-\\cos 4x)^2$.",
+     "Correct.",
+     "Expands $(1-\\cos 4x)^2$ as $1-\\cos^2 4x$.",
+     "Drops the cross term $-2\\cos 4x$ when expanding the square."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int \\sin^{4} {\\frac{x}{2}}\\,dx$",
+    "options": [
+     "$\\frac{x}{4} - \\frac{\\sin x}{2} + C$",
+     "$\\frac{3 x}{8} - \\frac{\\sin x}{2} + \\frac{\\sin 2 x}{16} + C$",
+     "$\\frac{x}{8} - \\frac{\\sin 2x}{16} + C$",
+     "$\\frac{3x}{8} + \\frac{\\sin 2x}{16} + C$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Substitute $u=\\frac x2$ in formula 13, $dx=2\\,du$: sine terms $-\\frac12\\sin x$ and $\\frac1{16}\\sin 2x$.",
+    "option_explanations": [
+     "Drops the $\\cos^2 x$ term when expanding $(1-\\cos x)^2$.",
+     "Correct.",
+     "Expands $(1-\\cos x)^2$ as $1-\\cos^2 x$.",
+     "Drops the cross term $-2\\cos x$ when expanding the square."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Evaluate $\\int \\cos^{4} x\\,dx$",
+   "options": [
+    "$\\frac{3 x}{8} + \\frac{\\sin 2 x}{4} + \\frac{\\sin 4 x}{32} + C$",
+    "$\\frac{x}{4} + \\frac{\\sin 2x}{4} + C$",
+    "$\\frac{3x}{8} + \\frac{\\sin 4x}{32} + C$",
+    "$\\frac{\\cos^{5} x}{5} + C$"
+   ],
+   "correct": [
+    0
+   ],
+   "explanation": "Square $\\frac12(1+\\cos 2x)$, then use $\\cos^2 2x=\\frac12(1+\\cos 4x)$ (formula 14).",
+   "option_explanations": [
+    "Correct.",
+    "Drops the $\\cos^2 2x$ term when expanding $(1+\\cos 2x)^2$.",
+    "Drops the cross term $2\\cos 2x$ when expanding the square.",
+    "Power rule on $\\cos x$."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int \\cos^{4} 2 x\\,dx$",
+    "options": [
+     "$\\frac{x}{4} + \\frac{\\sin 4x}{8} + C$",
+     "$\\frac{3x}{8} + \\frac{\\sin 8x}{64} + C$",
+     "$\\frac{3 x}{8} + \\frac{\\sin 4 x}{8} + \\frac{\\sin 8 x}{64} + C$",
+     "$\\frac{\\cos^{5} 2x}{10} + C$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Substitute $u=2x$ in formula 14; every term gets a factor $\\frac12$.",
+    "option_explanations": [
+     "Drops the $\\cos^2 4x$ term when expanding $(1+\\cos 4x)^2$.",
+     "Drops the cross term $2\\cos 4x$ when expanding the square.",
+     "Correct.",
+     "Power rule on $\\cos 2x$, with the chain factor $\\frac12$."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int \\cos^{4} {\\frac{x}{2}}\\,dx$",
+    "options": [
+     "$\\frac{x}{4} + \\frac{\\sin x}{2} + C$",
+     "$\\frac{3x}{8} + \\frac{\\sin 2x}{16} + C$",
+     "$\\frac{2\\cos^{5} {\\frac{x}{2}}}{5} + C$",
+     "$\\frac{3 x}{8} + \\frac{\\sin x}{2} + \\frac{\\sin 2 x}{16} + C$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "Substitute $u=\\frac x2$ in formula 14, $dx=2\\,du$.",
+    "option_explanations": [
+     "Drops the $\\cos^2 x$ term when expanding $(1+\\cos x)^2$.",
+     "Drops the cross term $2\\cos x$ when expanding the square.",
+     "Power rule on $\\cos\\frac x2$, with the chain factor 2.",
+     "Correct."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "basic",
+   "question": "Evaluate $\\int \\cos^{4} x\\,dx$.",
+   "answer": "Reduction formula 10 with $n=4$: $\\int\\cos^4x\\,dx=\\frac14\\cos^3x\\sin x+\\frac34\\int\\cos^2x\\,dx$.\nApply formula 10 again with $n=2$: $\\int\\cos^2x\\,dx=\\frac12\\cos x\\sin x+\\frac12\\int 1\\,dx=\\frac12\\cos x\\sin x+\\frac12 x$.\nCombine: $\\frac14\\cos^3x\\sin x+\\frac34\\left(\\frac12\\cos x\\sin x+\\frac12x\\right)$.\nResult: $\\frac{\\cos^{3} x \\sin x}{4} + \\frac{3 \\cos x \\sin x}{8} + \\frac{3 x}{8} + C$."
+  },
+  "versions": [
+   {
+    "type": "basic",
+    "question": "Evaluate $\\int \\sin^{4} x\\,dx$.",
+    "answer": "Reduction formula 9 with $n=4$: $\\int\\sin^4x\\,dx=-\\frac14\\sin^3x\\cos x+\\frac34\\int\\sin^2x\\,dx$.\nApply formula 9 again with $n=2$: $\\int\\sin^2x\\,dx=-\\frac12\\sin x\\cos x+\\frac12 x$.\nCombine: $-\\frac14\\sin^3x\\cos x+\\frac34\\left(-\\frac12\\sin x\\cos x+\\frac12x\\right)$.\nResult: $- \\frac{\\sin^{3} x \\cos x}{4} - \\frac{3 \\sin x \\cos x}{8} + \\frac{3 x}{8} + C$."
+   },
+   {
+    "type": "basic",
+    "question": "Evaluate $\\int \\cos^{5} x\\,dx$.",
+    "answer": "Formula 10 with $n=5$: $\\int\\cos^5x\\,dx=\\frac15\\cos^4x\\sin x+\\frac45\\int\\cos^3x\\,dx$.\nFormula 10 with $n=3$: $\\int\\cos^3x\\,dx=\\frac13\\cos^2x\\sin x+\\frac23\\int\\cos x\\,dx=\\frac13\\cos^2x\\sin x+\\frac23\\sin x$.\nCombine: $\\frac15\\cos^4x\\sin x+\\frac45\\left(\\frac13\\cos^2x\\sin x+\\frac23\\sin x\\right)$.\nResult: $\\frac{\\cos^{4} x \\sin x}{5} + \\frac{4 \\cos^{2} x \\sin x}{15} + \\frac{8 \\sin x}{15} + C$."
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "basic",
+   "question": "Without the reduction formula, evaluate (square the half-angle identity) $\\int \\sin^{4} x\\,dx$.",
+   "answer": "$\\sin^4x=(\\sin^2x)^2=\\frac14(1-\\cos 2x)^2=\\frac14(1-2\\cos 2x+\\cos^22x)$.\nUse $\\cos^2 2x=\\frac12(1+\\cos 4x)$: $\\sin^4x=\\frac14\\left(\\frac32-2\\cos 2x+\\frac12\\cos 4x\\right)$.\nIntegrate: $\\frac14\\left(\\frac32x-\\sin 2x+\\frac18\\sin 4x\\right)$.\nResult: $\\frac{3 x}{8} - \\frac{\\sin 2 x}{4} + \\frac{\\sin 4 x}{32} + C$."
+  },
+  "versions": [
+   {
+    "type": "basic",
+    "question": "Using only the half-angle identity twice, find $\\int \\cos^{4} x\\,dx$.",
+    "answer": "$\\cos^4x=(\\cos^2x)^2=\\frac14(1+\\cos 2x)^2=\\frac14(1+2\\cos 2x+\\cos^22x)$.\nUse $\\cos^2 2x=\\frac12(1+\\cos 4x)$: $\\cos^4x=\\frac14\\left(\\frac32+2\\cos 2x+\\frac12\\cos 4x\\right)$.\nIntegrate: $\\frac14\\left(\\frac32x+\\sin 2x+\\frac18\\sin 4x\\right)$.\nResult: $\\frac{3 x}{8} + \\frac{\\sin 2 x}{4} + \\frac{\\sin 4 x}{32} + C$."
+   },
+   {
+    "type": "basic",
+    "question": "Squaring the half-angle identity, evaluate $\\int \\sin^{4} 2 x\\,dx$.",
+    "answer": "$\\sin^42x=\\frac14(1-\\cos 4x)^2=\\frac14(1-2\\cos 4x+\\cos^24x)$, and $\\cos^24x=\\frac12(1+\\cos 8x)$.\nSo $\\sin^42x=\\frac14\\left(\\frac32-2\\cos 4x+\\frac12\\cos 8x\\right)$.\nIntegrate: $\\frac14\\left(\\frac32x-\\frac12\\sin 4x+\\frac1{16}\\sin 8x\\right)$.\nResult: $\\frac{3 x}{8} - \\frac{\\sin 4 x}{8} + \\frac{\\sin 8 x}{64} + C$."
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "What is the best first step for $\\int\\cos^2 5x\\,dx$?",
+   "options": [
+    "Split off $\\cos 5x$ and let $u=\\sin 5x$",
+    "Write $\\cos^2 5x=1-\\sin^2 5x$ and let $u=\\sin 5x$",
+    "Replace $\\cos^2 5x$ by $\\frac12(1+\\cos 10x)$",
+    "Let $u=\\cos 5x$ and integrate $u^2$"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "With an even power and no other factor, use the half-angle identity.",
+   "option_explanations": [
+    "Splitting works only when the cosine power is odd.",
+    "This leaves $\\int\\sin^2 5x\\,dx$, no simpler than the original.",
+    "Correct.",
+    "$du=-5\\sin 5x\\,dx$ is not in the integrand."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Which is the right way to start $\\int\\sin^2 4x\\,dx$?",
+    "options": [
+     "Peel off $\\sin 4x$ and set $u=\\cos 4x$",
+     "Set $u=\\sin 4x$ and apply the power rule",
+     "Use $\\sin^2 4x=\\frac12(1-\\cos 8x)$",
+     "Rewrite $\\sin^2 4x=1+\\cos^2 4x$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "An even power of sine alone calls for the half-angle identity.",
+    "option_explanations": [
+     "There is no odd power to peel from.",
+     "$du=4\\cos 4x\\,dx$ does not appear in the integrand.",
+     "Correct.",
+     "Sign error in the Pythagorean identity."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "How should you begin $\\int\\cos^2\\frac x2\\,dx$?",
+    "options": [
+     "Write $\\cos^2\\frac x2=\\frac12(1+\\cos x)$",
+     "Factor out $\\cos\\frac x2$ and let $u=\\sin\\frac x2$",
+     "Let $u=\\cos\\frac x2$ and integrate $u^2$",
+     "Write $\\cos^2\\frac x2=\\frac12(1-\\cos x)$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Half-angle identity: replace $x$ by $\\frac x2$ in $\\cos^2x=\\frac12(1+\\cos 2x)$.",
+    "option_explanations": [
+     "Correct.",
+     "That needs an odd power of cosine.",
+     "The factor $\\sin\\frac x2$ required by $du$ is missing.",
+     "Wrong sign: that is the identity for $\\sin^2\\frac x2$."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "For $\\int\\sin^4 x\\cos^7 x\\,dx$, which procedure from Table 7.3.1 applies?",
+   "options": [
+    "Split off $\\sin x$, use $\\sin^2x=1-\\cos^2x$, let $u=\\cos x$",
+    "Use $\\sin^2x=\\frac12(1-\\cos 2x)$ and $\\cos^2x=\\frac12(1+\\cos 2x)$",
+    "Split off $\\cos x$, use $\\cos^2x=1-\\sin^2x$, let $u=\\sin x$",
+    "Split off $\\cos x$, use $\\cos^2x=1-\\sin^2x$, let $u=\\cos x$"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "The cosine exponent 7 is odd: peel off one $\\cos x$, convert the rest, substitute $u=\\sin x$.",
+   "option_explanations": [
+    "That is the procedure for an odd power of sine.",
+    "That is for the case where both exponents are even.",
+    "Correct.",
+    "Right split, but $du$ must be $\\cos x\\,dx$, so $u=\\sin x$."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "What substitution suits $\\int\\sin^2 x\\cos^5 x\\,dx$?",
+    "options": [
+     "Write $\\cos^5x=(1-\\sin^2x)^2\\cos x$ and set $u=\\sin x$",
+     "Write $\\sin^2x=1-\\cos^2x$ and set $u=\\cos x$",
+     "Apply $\\sin^2x=\\frac12(1-\\cos 2x)$ and expand",
+     "Write $\\cos^5x=(1-\\sin^2x)^2\\cos x$ and set $u=\\cos x$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Odd power of cosine: factor one $\\cos x$ out and let $u=\\sin x$.",
+    "option_explanations": [
+     "Correct.",
+     "The leftover $\\cos^5x$ has no single $\\sin x\\,dx$ for $du$.",
+     "That is the procedure when both exponents are even.",
+     "The split is right but $du=-\\sin x\\,dx$ does not match the leftover $\\cos x$."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Choose the correct plan for $\\int\\sin^6 x\\cos^3 x\\,dx$.",
+    "options": [
+     "Peel off one $\\cos x$, convert $\\cos^2x$ to $1-\\sin^2x$, then $u=\\sin x$",
+     "Peel off one $\\sin x$, convert $\\sin^2x$ to $1-\\cos^2x$, then $u=\\cos x$",
+     "Replace both powers using the double-angle identities",
+     "Peel off one $\\cos x$, convert $\\cos^2x$ to $1-\\sin^2x$, then $u=\\cos x$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "The odd exponent is on the cosine, so the sine is the substitution variable.",
+    "option_explanations": [
+     "Correct.",
+     "That plan needs an odd power of sine.",
+     "Reserved for the case where both exponents are even.",
+     "With this split $du$ should contain $\\cos x\\,dx$, which only $u=\\sin x$ gives."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "For $\\int\\sin^5 x\\cos^2 x\\,dx$, which procedure from Table 7.3.1 applies?",
+   "options": [
+    "Split off $\\sin x$, use $\\sin^2x=1-\\cos^2x$, let $u=\\cos x$",
+    "Split off $\\cos x$, use $\\cos^2x=1-\\sin^2x$, let $u=\\sin x$",
+    "Use $\\sin^2x=\\frac12(1-\\cos 2x)$ and $\\cos^2x=\\frac12(1+\\cos 2x)$",
+    "Split off $\\sin x$, use $\\sin^2x=1-\\cos^2x$, let $u=\\sin x$"
+   ],
+   "correct": [
+    0
+   ],
+   "explanation": "The sine exponent 5 is odd: peel off one $\\sin x$, convert the rest, substitute $u=\\cos x$.",
+   "option_explanations": [
+    "Correct.",
+    "That is the procedure for an odd power of cosine.",
+    "That is for the case where both exponents are even.",
+    "Right split, but $du$ must be $-\\sin x\\,dx$, so $u=\\cos x$."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "What substitution suits $\\int\\sin^3 x\\cos^4 x\\,dx$?",
+    "options": [
+     "Write $\\cos^4x=(1-\\sin^2x)^2$ and set $u=\\sin x$",
+     "Write $\\sin^3x=(1-\\cos^2x)\\sin x$ and set $u=\\cos x$",
+     "Apply $\\cos^2x=\\frac12(1+\\cos 2x)$ and expand",
+     "Write $\\sin^3x=(1-\\cos^2x)\\sin x$ and set $u=\\sin x$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Odd power of sine: factor one $\\sin x$ out and let $u=\\cos x$.",
+    "option_explanations": [
+     "The leftover $\\sin^3x$ has no single $\\cos x\\,dx$ for $du$.",
+     "Correct.",
+     "That is the procedure when both exponents are even.",
+     "The split is right but $du=\\cos x\\,dx$ does not match the leftover $\\sin x$."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Pick the correct plan for $\\int\\sin^7 x\\cos^2 x\\,dx$.",
+    "options": [
+     "Peel off one $\\cos x$, convert $\\cos^2x$ to $1-\\sin^2x$, then $u=\\sin x$",
+     "Replace both powers using the double-angle identities",
+     "Peel off one $\\sin x$, convert $\\sin^2x$ to $1-\\cos^2x$, then $u=\\sin x$",
+     "Peel off one $\\sin x$, convert $\\sin^2x$ to $1-\\cos^2x$, then $u=\\cos x$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "The odd exponent is on the sine, so cosine is the substitution variable.",
+    "option_explanations": [
+     "That plan needs an odd power of cosine.",
+     "Reserved for the case where both exponents are even.",
+     "With this split $du$ should contain $-\\sin x\\,dx$, which only $u=\\cos x$ gives.",
+     "Correct."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "For $\\int\\sin^2 x\\cos^6 x\\,dx$, which procedure from Table 7.3.1 applies?",
+   "options": [
+    "Split off $\\cos x$, use $\\cos^2x=1-\\sin^2x$, let $u=\\sin x$",
+    "Split off $\\sin x$, use $\\sin^2x=1-\\cos^2x$, let $u=\\cos x$",
+    "Reduce the powers with $\\sin^2x=\\frac12(1-\\cos 2x)$ and $\\cos^2x=\\frac12(1+\\cos 2x)$",
+    "Let $u=\\cos x$ and use the power rule"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "Both exponents are even, so use the half-angle identities.",
+   "option_explanations": [
+    "That needs an odd cosine exponent; 6 is even.",
+    "That needs an odd sine exponent; 2 is even.",
+    "Correct.",
+    "No factor of $\\sin x\\,dx$ is available."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "How is $\\int\\sin^4 x\\cos^2 x\\,dx$ approached?",
+    "options": [
+     "Rewrite with $\\sin^2x=\\frac12(1-\\cos 2x)$, $\\cos^2x=\\frac12(1+\\cos 2x)$",
+     "Peel off one $\\cos x$ and let $u=\\sin x$",
+     "Peel off one $\\sin x$ and let $u=\\cos x$",
+     "Let $u=\\sin x$ and use the power rule"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "When both exponents are even, the half-angle identities reduce the powers.",
+    "option_explanations": [
+     "Correct.",
+     "The cosine exponent 2 is even, so one factor cannot be split off cleanly.",
+     "The sine exponent 4 is even.",
+     "No factor $\\cos x\\,dx$ is available for $du$."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which approach fits $\\int\\sin^8 x\\cos^4 x\\,dx$?",
+    "options": [
+     "Substitute $u=\\sin x$ after splitting off $\\cos x$",
+     "Substitute $u=\\cos x$ after splitting off $\\sin x$",
+     "Use the identities for $\\sin^2x$ and $\\cos^2x$ in terms of $\\cos 2x$",
+     "Apply the reduction formula for $\\tan^n x$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Even-even case: half-angle identities.",
+    "option_explanations": [
+     "The cosine exponent is even, so nothing can be split off.",
+     "The sine exponent is even, so nothing can be split off.",
+     "Correct.",
+     "Not a tangent integral."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "basic",
+   "question": "Evaluate $\\int \\sin^{4} x \\cos^{5} x\\,dx$.",
+   "answer": "The exponent of $\\cos x$ is odd: split off one $\\cos x$ and use $\\cos^2x=1-\\sin^2x$:\n$\\sin^4x\\cos^5x=\\sin^4x(1-\\sin^2x)^2\\cos x$.\nLet $u=\\sin x$, $du=\\cos x\\,dx$: $\\int u^4(1-u^2)^2du=\\int(u^4-2u^6+u^8)\\,du=\\frac{u^5}5-\\frac{2u^7}7+\\frac{u^9}9$.\nResult: $\\frac{\\sin^{5} x}{5} - \\frac{2 \\sin^{7} x}{7} + \\frac{\\sin^{9} x}{9} + C$."
+  },
+  "versions": [
+   {
+    "type": "basic",
+    "question": "Evaluate $\\int \\sin^{2} x \\cos^{5} x\\,dx$.",
+    "answer": "The exponent of $\\cos x$ is odd: $\\sin^2x\\cos^5x=\\sin^2x(1-\\sin^2x)^2\\cos x$.\nLet $u=\\sin x$: $\\int u^2(1-u^2)^2du=\\int(u^2-2u^4+u^6)\\,du=\\frac{u^3}3-\\frac{2u^5}5+\\frac{u^7}7$.\nResult: $\\frac{\\sin^{3} x}{3} - \\frac{2 \\sin^{5} x}{5} + \\frac{\\sin^{7} x}{7} + C$."
+   },
+   {
+    "type": "basic",
+    "question": "Evaluate $\\int \\sin^{3} x \\cos^{3} x\\,dx$.",
+    "answer": "Both exponents are odd; split off $\\cos x$: $\\sin^3x\\cos^3x=\\sin^3x(1-\\sin^2x)\\cos x$.\nLet $u=\\sin x$: $\\int u^3(1-u^2)\\,du=\\int(u^3-u^5)\\,du=\\frac{u^4}4-\\frac{u^6}6$.\nResult: $\\frac{\\sin^{4} x}{4} - \\frac{\\sin^{6} x}{6} + C$."
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Evaluate $\\int \\sin^{2} t \\cos^{3} t\\,dt$",
+   "options": [
+    "$\\frac{\\sin^{3} t}{3} - \\frac{\\sin^{5} t}{5} + C$",
+    "$- \\frac{\\sin^{3} t}{3} + \\frac{\\sin^{5} t}{5} + C$",
+    "$- \\frac{\\sin^{3} t}{3} - \\frac{\\sin^{5} t}{5} + C$",
+    "$\\frac{\\sin^{3} t \\cos t}{3} - \\frac{\\sin^{5} t}{5} + C$"
+   ],
+   "correct": [
+    0
+   ],
+   "explanation": "Let $u=\\sin t$: $\\int u^2(1-u^2)\\,du=\\frac{u^3}3-\\frac{u^5}5$.",
+   "option_explanations": [
+    "Correct.",
+    "Overall sign error.",
+    "Sign error on the first term.",
+    "Leaves the $du$ factor $\\cos t$ in the answer instead of absorbing it into the substitution."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int \\sin^{4} x \\cos^{3} x\\,dx$",
+    "options": [
+     "$\\frac{\\sin^{5} x}{5} - \\frac{\\sin^{7} x}{7} + C$",
+     "$- \\frac{\\sin^{5} x}{5} + \\frac{\\sin^{7} x}{7} + C$",
+     "$- \\frac{\\sin^{5} x}{5} - \\frac{\\sin^{7} x}{7} + C$",
+     "$\\frac{\\sin^{5} x \\cos x}{5} - \\frac{\\sin^{7} x}{7} + C$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Let $u=\\sin x$: $\\int u^4(1-u^2)\\,du=\\frac{u^5}5-\\frac{u^7}7$.",
+    "option_explanations": [
+     "Correct.",
+     "Flips every sign, as if $du=-\\cos x\\,dx$ for $u=\\sin x$.",
+     "Sign error on the first term.",
+     "Leaves the $du$ factor $\\cos x$ in the answer instead of absorbing it into the substitution."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int \\cos^{5} x\\,dx$",
+    "options": [
+     "$\\sin x - \\frac{2 \\sin^{3} x}{3} + \\frac{\\sin^{5} x}{5} + C$",
+     "$- \\sin x + \\frac{2 \\sin^{3} x}{3} - \\frac{\\sin^{5} x}{5} + C$",
+     "$- \\sin x - \\frac{2 \\sin^{3} x}{3} + \\frac{\\sin^{5} x}{5} + C$",
+     "$\\sin x - \\frac{2 \\sin^{3} x \\cos x}{3} + \\frac{\\sin^{5} x}{5} + C$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "$\\cos^5x=(1-\\sin^2x)^2\\cos x$; with $u=\\sin x$ integrate $1-2u^2+u^4$.",
+    "option_explanations": [
+     "Correct.",
+     "Overall sign error.",
+     "Sign error on the first term.",
+     "Leaves the $du$ factor $\\cos x$ in the answer instead of absorbing it into the substitution."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Evaluate $\\int \\sin^{3} x \\cos^{2} x\\,dx$",
+   "options": [
+    "$- \\frac{\\cos^{3} x}{3} + \\frac{\\cos^{5} x}{5} + C$",
+    "$\\frac{\\cos^{3} x}{3} - \\frac{\\cos^{5} x}{5} + C$",
+    "$\\frac{\\sin^{4} x\\,\\cos^{3} x}{12} + C$",
+    "$\\frac{\\cos^{3} x}{3} + \\frac{\\cos^{5} x}{5} + C$"
+   ],
+   "correct": [
+    0
+   ],
+   "explanation": "Let $u=\\cos x$: $-\\int(1-u^2)u^2\\,du=-\\frac{u^3}3+\\frac{u^5}5$.",
+   "option_explanations": [
+    "Correct.",
+    "Forgets the minus sign in $du=-\\sin x\\,dx$.",
+    "Integrates each factor separately and multiplies.",
+    "Sign error on the first term."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int \\sin^{5} x \\cos^{2} x\\,dx$",
+    "options": [
+     "$- \\frac{\\cos^{3} x}{3} + \\frac{2 \\cos^{5} x}{5} - \\frac{\\cos^{7} x}{7} + C$",
+     "$\\frac{\\cos^{3} x}{3} - \\frac{2\\cos^{5} x}{5} + \\frac{\\cos^{7} x}{7} + C$",
+     "$- \\frac{\\cos^{3} x}{3} + \\frac{\\cos^{5} x}{5} - \\frac{\\cos^{7} x}{7} + C$",
+     "$- \\frac{\\cos^{3} x}{3} + \\frac{\\cos^{7} x}{7} + C$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "$\\sin^5x=(1-\\cos^2x)^2\\sin x$; with $u=\\cos x$ integrate $-u^2(1-2u^2+u^4)$.",
+    "option_explanations": [
+     "Correct.",
+     "Forgets the minus sign in $du=-\\sin x\\,dx$.",
+     "Expands $(1-u^2)^2$ without the cross term $-2u^2$.",
+     "Expands $(1-u^2)^2$ as $1-u^4$."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int \\sin^{3} \\theta \\cos^{4} \\theta\\,d\\theta$",
+    "options": [
+     "$\\frac{\\cos^{5}\\theta}{5} - \\frac{\\cos^{7}\\theta}{7} + C$",
+     "$\\frac{\\cos^{5} \\theta}{5} + \\frac{\\cos^{7} \\theta}{7} + C$",
+     "$- \\frac{\\cos^{5} \\theta}{5} + \\frac{\\cos^{7} \\theta}{7} + C$",
+     "$- \\cos^{5} \\theta + \\frac{\\cos^{7} \\theta}{7} + C$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Let $u=\\cos\\theta$: $-\\int(1-u^2)u^4\\,du=-\\frac{u^5}5+\\frac{u^7}7$.",
+    "option_explanations": [
+     "Forgets the minus sign in $du=-\\sin\\theta\\,d\\theta$.",
+     "Sign error on the first term.",
+     "Correct.",
+     "Forgets to divide by the new exponent when integrating the power of $u$."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Evaluate $\\int \\sin^{2} 2 x \\cos^{2} 2 x\\,dx$",
+   "options": [
+    "$\\frac{x}{8} - \\frac{\\sin 8 x}{64} + C$",
+    "$- \\frac{x}{8} + \\frac{\\sin 8 x}{64} + C$",
+    "$- \\frac{x}{8} - \\frac{\\sin 8 x}{64} + C$",
+    "$\\frac{x^{2}}{16} - \\frac{\\sin 8 x}{64} + C$"
+   ],
+   "correct": [
+    0
+   ],
+   "explanation": "$\\sin 2x\\cos 2x=\\frac12\\sin 4x$, so the integrand is $\\frac14\\sin^24x=\\frac18(1-\\cos 8x)$.",
+   "option_explanations": [
+    "Correct.",
+    "Overall sign error.",
+    "Sign error on the first term.",
+    "Integrates the constant term as if $\\int c\\,dx$ were $\\frac{c x^2}{2}$."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int \\sin^{2} 3 x \\cos^{2} 3 x\\,dx$",
+    "options": [
+     "$- \\frac{x}{8} + \\frac{\\sin 12 x}{96} + C$",
+     "$- \\frac{x}{8} - \\frac{\\sin 12 x}{96} + C$",
+     "$\\frac{x^{2}}{16} - \\frac{\\sin 12 x}{96} + C$",
+     "$\\frac{x}{8} - \\frac{\\sin 12 x}{96} + C$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "$\\sin 3x\\cos 3x=\\frac12\\sin 6x$, so the integrand is $\\frac14\\sin^26x=\\frac18(1-\\cos 12x)$.",
+    "option_explanations": [
+     "Overall sign error.",
+     "Sign error on the first term.",
+     "Integrates the constant term as if $\\int c\\,dx$ were $\\frac{c x^2}{2}$.",
+     "Correct."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int 4 \\sin^{2} x \\cos^{2} x\\,dx$",
+    "options": [
+     "$\\frac{x}{2} - \\frac{\\sin 4 x}{8} + C$",
+     "$- \\frac{x}{2} + \\frac{\\sin 4 x}{8} + C$",
+     "$- \\frac{x}{2} - \\frac{\\sin 4 x}{8} + C$",
+     "$\\frac{x^{2}}{4} - \\frac{\\sin 4 x}{8} + C$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "$4\\sin^2x\\cos^2x=\\sin^22x=\\frac12(1-\\cos 4x)$.",
+    "option_explanations": [
+     "Correct.",
+     "Overall sign error.",
+     "Sign error on the first term.",
+     "Integrates the constant term as if $\\int c\\,dx$ were $\\frac{c x^2}{2}$."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "basic",
+   "question": "Evaluate $\\int \\sin^{4} x \\cos^{4} x\\,dx$.",
+   "answer": "Both exponents are even. Use $\\sin x\\cos x=\\frac12\\sin 2x$: $\\sin^4x\\cos^4x=\\frac1{16}\\sin^42x$.\nLet $u=2x$, $dx=\\frac12du$: $\\frac1{32}\\int\\sin^4u\\,du$.\nFormula 13: $\\int\\sin^4u\\,du=\\frac38u-\\frac14\\sin 2u+\\frac1{32}\\sin 4u$.\nSo the integral is $\\frac1{32}\\left(\\frac38\\cdot 2x-\\frac14\\sin 4x+\\frac1{32}\\sin 8x\\right)$.\nResult: $\\frac{3 x}{128} - \\frac{\\sin 4 x}{128} + \\frac{\\sin 8 x}{1024} + C$."
+  },
+  "versions": [
+   {
+    "type": "basic",
+    "question": "Evaluate $\\int \\sin^{2} x \\cos^{2} x\\,dx$.",
+    "answer": "Both exponents are even: $\\sin^2x\\cos^2x=\\frac14\\sin^22x=\\frac18(1-\\cos 4x)$.\nIntegrate: $\\frac18\\left(x-\\frac14\\sin 4x\\right)$.\nResult: $\\frac{x}{8} - \\frac{\\sin 4 x}{32} + C$."
+   },
+   {
+    "type": "basic",
+    "question": "Evaluate $\\int \\sin^{2} x \\cos^{4} x\\,dx$.",
+    "answer": "Both exponents are even: $\\sin^2x\\cos^4x=(\\sin x\\cos x)^2\\cos^2x=\\frac14\\sin^22x\\cdot\\frac12(1+\\cos 2x)$.\n$=\\frac18\\sin^22x+\\frac18\\sin^22x\\cos 2x=\\frac1{16}(1-\\cos 4x)+\\frac18\\sin^22x\\cos 2x$.\nThe first part integrates to $\\frac1{16}x-\\frac1{64}\\sin 4x$; for the second, $u=\\sin 2x$, $du=2\\cos 2x\\,dx$ gives $\\frac1{16}\\cdot\\frac{u^3}3$.\nResult: $\\frac{x}{16} - \\frac{\\sin 4 x}{64} + \\frac{\\sin^{3} 2 x}{48} + C$."
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Using $\\sin x\\cos x=\\frac12\\sin 2x$, rewrite $\\sin^4x\\cos^4x$.",
+   "options": [
+    "$\\frac{\\sin^{4} 2 x}{16}$",
+    "$\\frac{\\sin^{4} 2 x}{4}$",
+    "$\\frac{\\sin^{4} 2 x}{8}$",
+    "$\\frac{\\sin^{2} 2 x}{16}$"
+   ],
+   "correct": [
+    0
+   ],
+   "explanation": "$(\\sin x\\cos x)^4=\\left(\\frac12\\sin 2x\\right)^4$.",
+   "option_explanations": [
+    "Correct.",
+    "Raises $\\sin 2x$ to the fourth power but squares $\\frac12$ instead of raising it to the fourth.",
+    "Takes $\\left(\\frac12\\right)^3$ instead of $\\left(\\frac12\\right)^4$.",
+    "Squares $\\sin 2x$ instead of raising it to the fourth power."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Rewrite $\\sin^2x\\cos^2x$ using the double-angle formula for sine.",
+    "options": [
+     "$\\frac{\\sin^{2} 2 x}{2}$",
+     "$\\frac{\\sin 2 x}{4}$",
+     "$\\sin^{2} 2 x$",
+     "$\\frac{\\sin^{2} 2 x}{4}$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "$(\\sin x\\cos x)^2=\\left(\\frac12\\sin 2x\\right)^2$.",
+    "option_explanations": [
+     "Squares $\\sin 2x$ but forgets to square the $\\frac12$.",
+     "Does not square the sine.",
+     "Forgets the factor $\\frac14$.",
+     "Correct."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Express $\\sin^3x\\cos^3x$ with a single sine of a double angle.",
+    "options": [
+     "$\\frac{\\sin^{3} 2 x}{2}$",
+     "$\\frac{\\sin^{3} 2 x}{4}$",
+     "$\\frac{\\sin^{6} 2 x}{8}$",
+     "$\\frac{\\sin^{3} 2 x}{8}$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "$(\\sin x\\cos x)^3=\\left(\\frac12\\sin 2x\\right)^3$.",
+    "option_explanations": [
+     "Cubes the sine but not the $\\frac12$.",
+     "Squares the $\\frac12$ instead of cubing it.",
+     "Squares the exponent.",
+     "Correct."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Which sum equals $\\sin 5x\\cos 2x$?",
+   "options": [
+    "$\\frac{\\sin 3 x - \\sin 7 x}{2}$",
+    "$\\frac{\\cos 3 x + \\cos 7 x}{2}$",
+    "$\\frac{\\sin 3 x + \\sin 7 x}{2}$",
+    "$\\sin 3 x + \\sin 7 x$"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "$\\sin A\\cos B=\\frac12[\\sin(A-B)+\\sin(A+B)]$ (identity 16).",
+   "option_explanations": [
+    "Sign error: the identity adds the two sines.",
+    "Uses the cosine product formula.",
+    "Correct.",
+    "Drops the factor $\\frac12$."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Convert $\\sin 6x\\cos 4x$ into a sum.",
+    "options": [
+     "$\\frac{\\sin 2 x - \\sin 10 x}{2}$",
+     "$\\frac{\\sin 2 x + \\sin 24 x}{2}$",
+     "$\\frac{\\cos 2 x + \\cos 10 x}{2}$",
+     "$\\frac{\\sin 2 x + \\sin 10 x}{2}$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "$A-B=2x$, $A+B=10x$.",
+    "option_explanations": [
+     "Sign error.",
+     "Multiplies the angles instead of adding them.",
+     "Uses the cosine product formula.",
+     "Correct."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Apply $\\sin\\alpha\\cos\\beta=\\frac12[\\sin(\\alpha-\\beta)+\\sin(\\alpha+\\beta)]$ to $\\sin 4x\\cos x$.",
+    "options": [
+     "$\\frac{\\sin 3 x + \\sin 5 x}{2}$",
+     "$\\frac{\\sin 3 x - \\sin 5 x}{2}$",
+     "$\\frac{\\sin 4 x + \\sin x}{2}$",
+     "$\\frac{\\sin 3 x + \\sin 5 x}{4}$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "$\\alpha-\\beta=3x$ and $\\alpha+\\beta=5x$.",
+    "option_explanations": [
+     "Correct.",
+     "Sign error.",
+     "Does not combine the angles.",
+     "Uses $\\frac14$ instead of $\\frac12$."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Which expression equals $\\sin 4x\\sin x$?",
+   "options": [
+    "$\\frac{\\cos 3 x + \\cos 5 x}{2}$",
+    "$\\frac{\\cos 3 x - \\cos 5 x}{2}$",
+    "$\\frac{\\cos 5 x - \\cos 3 x}{2}$",
+    "$\\cos 3 x - \\cos 5 x$"
+   ],
+   "correct": [
+    1
+   ],
+   "explanation": "$\\sin A\\sin B=\\frac12[\\cos(A-B)-\\cos(A+B)]$ (identity 17).",
+   "option_explanations": [
+    "Sign error: that is the formula for $\\cos\\cos$.",
+    "Correct.",
+    "Subtracts in the wrong order.",
+    "Drops the factor $\\frac12$."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Write $\\sin 7x\\sin 3x$ as a difference of cosines.",
+    "options": [
+     "$\\frac{\\cos 4 x + \\cos 10 x}{2}$",
+     "$\\frac{\\cos 10 x - \\cos 4 x}{2}$",
+     "$\\frac{\\cos 4 x - \\cos 10 x}{2}$",
+     "$\\frac{\\sin 4 x - \\sin 10 x}{2}$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "$A-B=4x$ and $A+B=10x$.",
+    "option_explanations": [
+     "Sign error.",
+     "Subtracts in the wrong order.",
+     "Correct.",
+     "Uses sines instead of cosines."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Apply $\\sin\\alpha\\sin\\beta=\\frac12[\\cos(\\alpha-\\beta)-\\cos(\\alpha+\\beta)]$ to $\\sin 5x\\sin 2x$.",
+    "options": [
+     "$\\frac{\\cos 3 x + \\cos 7 x}{2}$",
+     "$\\frac{\\cos 3 x - \\cos 7 x}{2}$",
+     "$\\frac{\\cos 7 x - \\cos 3 x}{2}$",
+     "$\\frac{\\cos 3 x - \\cos 7 x}{4}$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "$\\alpha-\\beta=3x$ and $\\alpha+\\beta=7x$.",
+    "option_explanations": [
+     "Sign error.",
+     "Correct.",
+     "Subtracts in the wrong order.",
+     "Uses $\\frac14$ instead of $\\frac12$."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Which sum equals $\\cos 5x\\cos 3x$?",
+   "options": [
+    "$\\frac{\\cos 2 x - \\cos 8 x}{2}$",
+    "$\\frac{\\sin 2 x + \\sin 8 x}{2}$",
+    "$\\cos 2 x + \\cos 8 x$",
+    "$\\frac{\\cos 2 x + \\cos 8 x}{2}$"
+   ],
+   "correct": [
+    3
+   ],
+   "explanation": "$\\cos A\\cos B=\\frac12[\\cos(A-B)+\\cos(A+B)]$ (identity 18).",
+   "option_explanations": [
+    "Sign error: that is the formula for $\\sin\\sin$.",
+    "Uses sines instead of cosines.",
+    "Drops the factor $\\frac12$.",
+    "Correct."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Convert $\\cos 6x\\cos x$ into a sum.",
+    "options": [
+     "$\\frac{\\cos 5 x - \\cos 7 x}{2}$",
+     "$\\frac{\\cos 6 x + \\cos x}{2}$",
+     "$\\frac{\\sin 5 x + \\sin 7 x}{2}$",
+     "$\\frac{\\cos 5 x + \\cos 7 x}{2}$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "$A-B=5x$ and $A+B=7x$.",
+    "option_explanations": [
+     "Sign error.",
+     "Does not combine the angles.",
+     "Uses sines instead of cosines.",
+     "Correct."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Using $\\cos\\alpha\\cos\\beta=\\frac12[\\cos(\\alpha-\\beta)+\\cos(\\alpha+\\beta)]$, rewrite $\\cos 4x\\cos 2x$.",
+    "options": [
+     "$\\frac{\\cos 2 x + \\cos 6 x}{2}$",
+     "$\\frac{\\cos 2 x - \\cos 6 x}{2}$",
+     "$\\frac{\\cos 2 x + \\cos 8 x}{2}$",
+     "$\\frac{\\cos 2 x + \\cos 6 x}{4}$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "$\\alpha-\\beta=2x$ and $\\alpha+\\beta=6x$.",
+    "option_explanations": [
+     "Correct.",
+     "Sign error.",
+     "Adds $2\\cdot 4x$ instead of $4x+2x$.",
+     "Uses $\\frac14$ instead of $\\frac12$."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Evaluate $\\int \\sin 7 x \\cos 3 x\\,dx$",
+   "options": [
+    "$\\frac{- \\cos 7 x \\sin 3 x}{21} + C$",
+    "$- \\frac{\\cos 4 x}{8} - \\frac{\\cos 10 x}{20} + C$",
+    "$\\frac{\\cos 4 x}{8} - \\frac{\\cos 10 x}{20} + C$",
+    "$\\frac{\\cos 4 x}{8} + \\frac{\\cos 10 x}{20} + C$"
+   ],
+   "correct": [
+    1
+   ],
+   "explanation": "$\\sin 7x\\cos 3x=\\frac12(\\sin 4x+\\sin 10x)$, then integrate each sine.",
+   "option_explanations": [
+    "Integrates each factor separately and multiplies.",
+    "Correct.",
+    "Sign error on the first term.",
+    "Overall sign error."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int \\sin 5 x \\cos 2 x\\,dx$",
+    "options": [
+     "$- \\frac{\\cos 3 x}{3} - \\frac{\\cos 7 x}{7} + C$",
+     "$\\frac{\\cos 3 x}{6} + \\frac{\\cos 7 x}{14} + C$",
+     "$\\frac{\\cos 3 x}{6} - \\frac{\\cos 7 x}{14} + C$",
+     "$- \\frac{\\cos 3 x}{6} - \\frac{\\cos 7 x}{14} + C$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "$\\sin 5x\\cos 2x=\\frac12(\\sin 3x+\\sin 7x)$.",
+    "option_explanations": [
+     "Forgets the factor $\\frac12$ of the identity.",
+     "Forgets that $\\int\\sin ax\\,dx=-\\frac1a\\cos ax$.",
+     "Sign error on the first term.",
+     "Correct."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int \\sin 4 x \\cos 6 x\\,dx$",
+    "options": [
+     "$- \\frac{\\cos 2 x}{4} - \\frac{\\cos 10 x}{20} + C$",
+     "$\\frac{\\cos 2 x}{2} - \\frac{\\cos 10 x}{10} + C$",
+     "$\\frac{\\cos 2 x}{4} - \\frac{\\cos 10 x}{20} + C$",
+     "$\\frac{\\cos 2 x}{4} + \\frac{\\cos 10 x}{20} + C$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "$\\sin 4x\\cos 6x=\\frac12(\\sin(-2x)+\\sin 10x)=\\frac12(-\\sin 2x+\\sin 10x)$.",
+    "option_explanations": [
+     "Uses $\\sin 2x$ instead of $\\sin(-2x)=-\\sin 2x$.",
+     "Forgets the factor $\\frac12$ of the identity.",
+     "Correct.",
+     "Sign error on the second integral."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Evaluate $\\int \\sin 3 x \\sin 2 x\\,dx$",
+   "options": [
+    "$\\sin x - \\frac{\\sin 5 x}{5} + C$",
+    "$\\frac{\\sin x}{2} + \\frac{\\sin 5x}{10} + C$",
+    "$\\frac{\\sin x}{2} - \\frac{\\sin 5x}{2} + C$",
+    "$\\frac{\\sin x}{2} - \\frac{\\sin 5 x}{10} + C$"
+   ],
+   "correct": [
+    3
+   ],
+   "explanation": "$\\sin 3x\\sin 2x=\\frac12(\\cos x-\\cos 5x)$.",
+   "option_explanations": [
+    "Forgets the factor $\\frac12$ of the identity.",
+    "Sign error: $\\sin A\\sin B$ has a minus between the cosines.",
+    "Integrates $\\cos 5x$ without the chain factor $\\frac15$.",
+    "Correct."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int \\sin 6 x \\sin x\\,dx$",
+    "options": [
+     "$- \\frac{\\sin 5 x}{10} + \\frac{\\sin 7 x}{14} + C$",
+     "$\\frac{\\sin 5 x}{10} - \\frac{\\sin 7 x}{14} + C$",
+     "$- \\frac{\\sin 5 x}{10} - \\frac{\\sin 7 x}{14} + C$",
+     "$\\frac{\\sin 5 x}{10} + \\frac{\\sin 7 x}{14} + C$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "$\\sin 6x\\sin x=\\frac12(\\cos 5x-\\cos 7x)$.",
+    "option_explanations": [
+     "Overall sign error.",
+     "Correct.",
+     "Sign error on the first term.",
+     "Uses $\\sin A\\sin B=\\frac12[\\cos(A-B)+\\cos(A+B)]$ with a plus sign."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int \\sin 4 x \\sin 8 x\\,dx$",
+    "options": [
+     "$\\frac{\\sin 4x}{8} + \\frac{\\sin 12x}{24} + C$",
+     "$\\frac{\\sin 4x}{4} - \\frac{\\sin 12x}{12} + C$",
+     "$\\frac{\\sin 4 x}{8} - \\frac{\\sin 12 x}{24} + C$",
+     "$\\frac{\\sin 12x}{24} - \\frac{\\sin 4x}{8} + C$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "$\\sin 4x\\sin 8x=\\frac12(\\cos(-4x)-\\cos 12x)=\\frac12(\\cos 4x-\\cos 12x)$.",
+    "option_explanations": [
+     "Sign error: $\\sin A\\sin B$ has a minus between the cosines.",
+     "Forgets the factor $\\frac12$ of the identity.",
+     "Correct.",
+     "Subtracts the cosines in the wrong order."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Evaluate $\\int \\cos 4 x \\cos x\\,dx$",
+   "options": [
+    "$\\frac{\\sin 3 x}{3} + \\frac{\\sin 5 x}{5} + C$",
+    "$\\frac{\\sin 4 x \\sin x}{4} + C$",
+    "$\\frac{\\sin 3 x}{6} + \\frac{\\sin 5 x}{10} + C$",
+    "$\\frac{\\sin 3x}{2} + \\frac{\\sin 5x}{2} + C$"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "$\\cos 4x\\cos x=\\frac12(\\cos 3x+\\cos 5x)$.",
+   "option_explanations": [
+    "Forgets the factor $\\frac12$ of the identity.",
+    "Integrates each factor separately and multiplies.",
+    "Correct.",
+    "Integrates $\\cos 3x$, $\\cos 5x$ without the chain factors."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int \\cos 6 x \\cos 2 x\\,dx$",
+    "options": [
+     "$\\frac{\\sin 4 x}{8} + \\frac{\\sin 8 x}{16} + C$",
+     "$- \\frac{\\sin 4 x}{8} - \\frac{\\sin 8 x}{16} + C$",
+     "$\\frac{\\sin 4x}{2} + \\frac{\\sin 8x}{2} + C$",
+     "$- \\frac{\\sin 4 x}{8} + \\frac{\\sin 8 x}{16} + C$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "$\\cos 6x\\cos 2x=\\frac12(\\cos 4x+\\cos 8x)$.",
+    "option_explanations": [
+     "Correct.",
+     "Overall sign error.",
+     "Integrates $\\cos 4x$, $\\cos 8x$ without the chain factors.",
+     "Sign error on the first term."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int \\cos 5 x \\cos 3 x\\,dx$",
+    "options": [
+     "$\\frac{\\sin 2 x}{2} + \\frac{\\sin 8 x}{8} + C$",
+     "$\\frac{\\sin 2 x}{4} + \\frac{\\sin 8 x}{16} + C$",
+     "$\\frac{\\sin 2 x}{4} + \\frac{\\sin 8 x}{8} + C$",
+     "$\\frac{\\sin 2x}{4} - \\frac{\\sin 8x}{16} + C$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "$\\cos 5x\\cos 3x=\\frac12(\\cos 2x+\\cos 8x)$.",
+    "option_explanations": [
+     "Forgets the factor $\\frac12$ of the identity.",
+     "Correct.",
+     "Forgets that $\\int\\cos 8x\\,dx$ has a factor $\\frac18$ before multiplying by $\\frac12$.",
+     "Sign error: $\\cos A\\cos B$ has a plus between the cosines."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Which method handles $\\int\\sin 5x\\cos 2x\\,dx$?",
+   "options": [
+    "Integrate each factor separately and multiply the results",
+    "Use $\\sin^2x=\\frac12(1-\\cos 2x)$ to reduce the powers",
+    "Write the product as $\\frac12[\\sin 3x+\\sin 7x]$ with $\\sin A\\cos B=\\frac12[\\sin(A-B)+\\sin(A+B)]$",
+    "Split off a factor $\\cos x$ and substitute $u=\\sin x$"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "Products of sines and cosines of different angles are turned into sums.",
+   "option_explanations": [
+    "The integral of a product is not the product of integrals.",
+    "There are no squared factors here.",
+    "Correct.",
+    "The angles $5x$, $2x$ differ, so no single $u$ works."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "How would you start $\\int\\cos 9x\\cos 4x\\,dx$?",
+    "options": [
+     "Let $u=\\cos 4x$ and integrate $\\cos 9x\\,du$",
+     "Replace the product by $\\frac12[\\cos 5x+\\cos 13x]$",
+     "Apply reduction formula 10 with $n=9$",
+     "Multiply the antiderivatives $\\frac19\\sin 9x$ and $\\frac14\\sin 4x$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "$\\cos A\\cos B$ with different angles needs the product-to-sum identity (18).",
+    "option_explanations": [
+     "$du=-4\\sin 4x\\,dx$ is not in the integrand.",
+     "Correct.",
+     "The reduction formulas are for powers of one angle.",
+     "The integral of a product is not the product of integrals."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "What is the first step for $\\int\\sin 2x\\sin 5x\\,dx$?",
+    "options": [
+     "Use $\\sin^2x=1-\\cos^2x$ on both factors",
+     "Differentiate one factor and integrate the other",
+     "Use $\\sin A\\sin B=\\frac12[\\cos(A-B)-\\cos(A+B)]$",
+     "Let $u=\\sin 2x$ and $du=\\sin 5x\\,dx$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "A product of sines of different angles becomes a difference of cosines.",
+    "option_explanations": [
+     "The factors have different angles, so there is no square.",
+     "No by-parts structure is needed.",
+     "Correct.",
+     "$du$ would be $2\\cos 2x\\,dx$, which is not there."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Reduction formula 19 gives $\\int\\tan^6x\\,dx=\\frac{\\tan^5x}5-\\,?$. What replaces the question mark?",
+   "options": [
+    "$\\int\\tan^5x\\,dx$",
+    "$\\int\\tan^3x\\,dx$",
+    "$\\int\\tan^4x\\,dx$",
+    "$\\int\\sec^4x\\,dx$"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "$\\int\\tan^nx\\,dx=\\frac{\\tan^{n-1}x}{n-1}-\\int\\tan^{n-2}x\\,dx$.",
+   "option_explanations": [
+    "The exponent drops by 2, not by 1.",
+    "The exponent drops by 2 from 6, giving 4.",
+    "Correct.",
+    "Reduction formula 19 stays within powers of tangent."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "By reduction formula 19, $\\int\\tan^7x\\,dx=\\frac{\\tan^6x}6-\\,?$. Which integral completes it?",
+    "options": [
+     "$\\int\\tan^5x\\,dx$",
+     "$\\int\\tan^6x\\,dx$",
+     "$\\int\\tan^4x\\,dx$",
+     "$\\int\\sec^5x\\,dx$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "The remaining integral has exponent $n-2=5$.",
+    "option_explanations": [
+     "Correct.",
+     "The exponent drops by 2, not by 1.",
+     "The exponent drops by 2 from 7, giving 5.",
+     "Reduction formula 19 stays within powers of tangent."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Reduction formula 19 with $n=4$ gives $\\int\\tan^4x\\,dx=\\,?\\;-\\int\\tan^2x\\,dx$. Which is the missing term?",
+    "options": [
+     "$\\frac{\\tan^3x}{4}$",
+     "$\\frac{\\tan^5x}{5}$",
+     "$\\tan^3x$",
+     "$\\frac{\\tan^3x}{3}$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "The first term is $\\frac{\\tan^{n-1}x}{n-1}$.",
+    "option_explanations": [
+     "Divides by $n$ instead of $n-1$.",
+     "Raises the exponent instead of lowering it.",
+     "Forgets the denominator $n-1$.",
+     "Correct."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Reduction formula 20 reads $\\int\\sec^nx\\,dx=\\frac{\\sec^{n-2}x\\tan x}{n-1}+c\\int\\sec^{n-2}x\\,dx$. For $n=5$ find $c$.",
+   "options": [
+    "$\\frac34$",
+    "$\\frac14$",
+    "$\\frac43$",
+    "$\\frac35$"
+   ],
+   "correct": [
+    0
+   ],
+   "explanation": "$c=\\frac{n-2}{n-1}$.",
+   "option_explanations": [
+    "Correct.",
+    "Uses $\\frac1{n-1}$, the first-term denominator.",
+    "Inverts the ratio.",
+    "Divides by $n$ instead of $n-1$."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "In formula 20 for $\\int\\sec^4x\\,dx=\\frac{\\sec^2x\\tan x}{3}+c\\int\\sec^2x\\,dx$, what is $c$?",
+    "options": [
+     "$\\frac23$",
+     "$\\frac13$",
+     "$\\frac32$",
+     "$\\frac12$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "$c=\\frac{n-2}{n-1}=\\frac23$ for $n=4$.",
+    "option_explanations": [
+     "Correct.",
+     "Uses $\\frac1{n-1}$, the first-term denominator.",
+     "Inverts the ratio.",
+     "Divides by $n$ instead of $n-1$."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Reduction formula 20 applied to $\\int\\sec^7x\\,dx$ leaves $c\\int\\sec^5x\\,dx$. What is $c$?",
+    "options": [
+     "$\\frac56$",
+     "$\\frac16$",
+     "$\\frac65$",
+     "$\\frac57$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "$c=\\frac{n-2}{n-1}=\\frac56$ for $n=7$.",
+    "option_explanations": [
+     "Correct.",
+     "Uses $\\frac1{n-1}$, the first-term denominator.",
+     "Inverts the ratio.",
+     "Divides by $n$ instead of $n-1$."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Evaluate $\\int \\tan x\\,dx$",
+   "options": [
+    "$\\frac{\\sec^{2} x}{2} + C$",
+    "$- \\ln\\left|\\sec x\\right| + C$",
+    "$\\ln\\left|\\sec x\\right| + C$",
+    "$\\ln\\left|\\sin x\\right| + C$"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "$\\int\\tan x\\,dx=-\\ln|\\cos x|+C=\\ln|\\sec x|+C$ (formula 21).",
+   "option_explanations": [
+    "Power rule on $\\tan x$ type manipulation; $\\left(\\frac{\\sec^2x}2\\right)'=\\sec^2x\\tan x$.",
+    "Sign error: that equals $\\ln|\\cos x|$.",
+    "Correct.",
+    "Confuses with $\\int\\cot x\\,dx$."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int \\tan 4 x\\,dx$",
+    "options": [
+     "$\\ln\\left|\\sec 4 x\\right| + C$",
+     "$- \\frac{\\ln\\left|\\sec 4 x\\right|}{4} + C$",
+     "$4 \\ln\\left|\\sec 4 x\\right| + C$",
+     "$\\frac{\\ln\\left|\\sec 4 x\\right|}{4} + C$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "Let $u=4x$: $\\frac14\\ln|\\sec 4x|$.",
+    "option_explanations": [
+     "Forgets the factor $\\frac14$.",
+     "Sign error.",
+     "Multiplies by 4 instead of dividing.",
+     "Correct."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int \\tan {\\frac{x}{2}}\\,dx$",
+    "options": [
+     "$\\ln\\left|\\sec {\\frac{x}{2}}\\right| + C$",
+     "$\\frac{\\ln\\left|\\sec {\\frac{x}{2}}\\right|}{2} + C$",
+     "$2 \\ln\\left|\\sec {\\frac{x}{2}}\\right| + C$",
+     "$- 2 \\ln\\left|\\sec {\\frac{x}{2}}\\right| + C$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Let $u=\\frac x2$, $dx=2\\,du$: $2\\ln|\\sec\\frac x2|$.",
+    "option_explanations": [
+     "Forgets the factor 2 from $u=\\frac x2$.",
+     "Divides by 2 instead of multiplying.",
+     "Correct.",
+     "Sign error."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Evaluate $\\int \\sec x\\,dx$",
+   "options": [
+    "$\\ln\\left|\\sec x\\right| + C$",
+    "$\\sec x\\tan x + C$",
+    "$- \\ln\\left|\\sec x + \\tan x\\right| + C$",
+    "$\\ln\\left|\\sec x + \\tan x\\right| + C$"
+   ],
+   "correct": [
+    3
+   ],
+   "explanation": "$\\int\\sec x\\,dx=\\ln|\\sec x+\\tan x|+C$ (formula 22).",
+   "option_explanations": [
+    "Drops the $\\tan x$ term, treating it like $\\int\\tan x\\,dx$.",
+    "Reverses differentiation: that is the derivative of $\\sec x$.",
+    "Overall sign error.",
+    "Correct."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int \\sec 3 x\\,dx$",
+    "options": [
+     "$\\ln\\left|\\sec 3 x + \\tan 3 x\\right| + C$",
+     "$3 \\ln\\left|\\sec 3 x + \\tan 3 x\\right| + C$",
+     "$\\frac{\\ln\\left|\\sec 3 x\\right|}{3} + C$",
+     "$\\frac{\\ln\\left|\\sec 3 x + \\tan 3 x\\right|}{3} + C$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "Let $u=3x$: $\\frac13\\ln|\\sec 3x+\\tan 3x|$.",
+    "option_explanations": [
+     "Forgets the factor $\\frac13$.",
+     "Multiplies by 3 instead of dividing.",
+     "Drops the $\\tan 3x$ term.",
+     "Correct."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int \\sec {\\frac{x}{2}}\\,dx$",
+    "options": [
+     "$2 \\ln\\left|\\sec {\\frac{x}{2}} + \\tan {\\frac{x}{2}}\\right| + C$",
+     "$\\ln\\left|\\sec {\\frac{x}{2}} + \\tan {\\frac{x}{2}}\\right| + C$",
+     "$2 \\ln\\left|\\sec {\\frac{x}{2}}\\right| + C$",
+     "$\\frac{1}{2}\\ln\\left|\\sec {\\frac{x}{2}} + \\tan {\\frac{x}{2}}\\right| + C$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Let $u=\\frac x2$, $dx=2\\,du$: $2\\ln|\\sec\\frac x2+\\tan\\frac x2|$.",
+    "option_explanations": [
+     "Correct.",
+     "Forgets the factor 2.",
+     "Drops the $\\tan\\frac x2$ term.",
+     "Divides by 2 instead of multiplying."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "To integrate $\\sec x$ we multiply by $\\frac{\\sec x+\\tan x}{\\sec x+\\tan x}$ and let $u=\\sec x+\\tan x$. What is $du$?",
+   "options": [
+    "$(\\sec x\\tan x+\\sec^2x)\\,dx$",
+    "$(\\sec x\\tan x-\\sec^2x)\\,dx$",
+    "$(\\sec x\\tan x+\\sec x)\\,dx$",
+    "$(\\sec^2x+\\tan^2x)\\,dx$"
+   ],
+   "correct": [
+    0
+   ],
+   "explanation": "$(\\sec x)'=\\sec x\\tan x$ and $(\\tan x)'=\\sec^2x$.",
+   "option_explanations": [
+    "Correct.",
+    "Sign error in the derivative of $\\tan x$.",
+    "Takes $\\tan x$ to differentiate to $\\sec x$.",
+    "Differentiates $\\sec x$ to $\\sec^2 x$ and $\\tan x$ to $\\tan^2 x$."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "After multiplying $\\sec x$ by $\\frac{\\sec x+\\tan x}{\\sec x+\\tan x}$, what is the numerator?",
+    "options": [
+     "$\\sec x+\\tan x$",
+     "$\\sec^2x-\\sec x\\tan x$",
+     "$\\sec^2x+\\tan x$",
+     "$\\sec^2x+\\sec x\\tan x$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "$\\sec x(\\sec x+\\tan x)=\\sec^2x+\\sec x\\tan x$.",
+    "option_explanations": [
+     "That is the denominator, not the product.",
+     "Sign error.",
+     "Forgets to multiply $\\tan x$ by $\\sec x$.",
+     "Correct."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "In the proof of $\\int\\sec x\\,dx$, why does $u=\\sec x+\\tan x$ work?",
+    "options": [
+     "The numerator is the square of the denominator",
+     "The denominator is the derivative of the numerator",
+     "The numerator is the derivative of the denominator",
+     "The numerator equals $\\sec x$ times $du$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "$\\int\\frac{du}{u}=\\ln|u|$ because the numerator is exactly $\\frac{du}{dx}$.",
+    "option_explanations": [
+     "Squaring would give $\\sec^2x+2\\sec x\\tan x+\\tan^2x$.",
+     "The derivative of the numerator is more complicated.",
+     "Correct.",
+     "The numerator equals $du/dx$ itself."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Which expression equals $-\\ln|\\cos x|$?",
+   "options": [
+    "$\\ln|\\cos x|$",
+    "$\\ln|\\sin x|$",
+    "$\\ln|\\tan x|$",
+    "$\\ln|\\sec x|$"
+   ],
+   "correct": [
+    3
+   ],
+   "explanation": "$-\\ln|\\cos x|=\\ln\\left|\\frac1{\\cos x}\\right|=\\ln|\\sec x|$.",
+   "option_explanations": [
+    "Drops the minus sign.",
+    "Confuses cosine with sine.",
+    "Confuses with a different antiderivative.",
+    "Correct."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Rewrite $\\ln|\\cos 3x|$ using secant.",
+    "options": [
+     "$\\ln|\\sec 3x|$",
+     "$-\\ln\\left|\\sec^{3} x\\right|$",
+     "$-3\\ln|\\sec x|$",
+     "$-\\ln|\\sec 3x|$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "$\\cos 3x=\\frac1{\\sec 3x}$, so $\\ln|\\cos 3x|=-\\ln|\\sec 3x|$.",
+    "option_explanations": [
+     "Forgets that taking the reciprocal flips the sign.",
+     "Cubes the secant instead of tripling the angle.",
+     "Treats $3x$ as a factor of 3.",
+     "Correct."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which equals $-2\\ln|\\cos x|$?",
+    "options": [
+     "$\\ln\\sec^2x$",
+     "$\\ln\\cos^2x$",
+     "$-\\ln\\sec^2x$",
+     "$2\\ln|\\sin x|$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "$-2\\ln|\\cos x|=\\ln\\frac1{\\cos^2x}=\\ln\\sec^2x$.",
+    "option_explanations": [
+     "Correct.",
+     "Drops the minus sign.",
+     "Flips the sign twice.",
+     "Confuses cosine with sine."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Evaluate $\\int \\tan^{2} x\\,dx$",
+   "options": [
+    "$\\frac{\\tan^{3} x}{3} + C$",
+    "$\\tan x - x + C$",
+    "$- \\tan x + x + C$",
+    "$- \\tan x - x + C$"
+   ],
+   "correct": [
+    1
+   ],
+   "explanation": "$\\tan^2x=\\sec^2x-1$ (formula 23).",
+   "option_explanations": [
+    "Power rule on $\\tan x$.",
+    "Correct.",
+    "Overall sign error.",
+    "Sign error on the first term."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int \\tan^{2} 3 x\\,dx$",
+    "options": [
+     "$\\frac{\\tan^{3} 3 x}{9} + C$",
+     "$- \\frac{\\tan 3 x}{3} + x + C$",
+     "$\\frac{\\tan 3 x}{3} - x + C$",
+     "$- \\frac{\\tan 3 x}{3} - x + C$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "$\\tan^23x=\\sec^23x-1$ and $\\int\\sec^23x\\,dx=\\frac13\\tan 3x$.",
+    "option_explanations": [
+     "Power rule on $\\tan 3x$.",
+     "Overall sign error.",
+     "Correct.",
+     "Sign error on the first term."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int \\tan^{2} {\\frac{x}{2}}\\,dx$",
+    "options": [
+     "$\\frac{\\tan^{3} {\\frac{x}{2}}}{6} + C$",
+     "$\\frac{\\tan {\\frac{x}{2}}}{2} - x + C$",
+     "$2 \\tan {\\frac{x}{2}} - x + C$",
+     "$- 2 \\tan {\\frac{x}{2}} + x + C$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "$\\tan^2\\frac x2=\\sec^2\\frac x2-1$ and $\\int\\sec^2\\frac x2\\,dx=2\\tan\\frac x2$.",
+    "option_explanations": [
+     "Power rule on $\\tan\\frac x2$.",
+     "Divides by 2 instead of multiplying for $u=\\frac x2$.",
+     "Correct.",
+     "Overall sign error."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Evaluate $\\int \\sec^{2} 5 x\\,dx$",
+   "options": [
+    "$\\frac{\\sec^{3} 5 x}{15} + C$",
+    "$\\frac{\\tan 5 x}{5} + C$",
+    "$5\\tan 5x + C$",
+    "$-\\frac{\\tan 5x}{5} + C$"
+   ],
+   "correct": [
+    1
+   ],
+   "explanation": "$\\int\\sec^2 u\\,du=\\tan u$ with $u=5x$ (formula 24).",
+   "option_explanations": [
+    "Power rule on $\\sec 5x$.",
+    "Correct.",
+    "Multiplies by 5 instead of dividing.",
+    "Borrows the minus sign from the derivative of $\\cot$."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int \\sec^{2} {\\frac{x}{3}}\\,dx$",
+    "options": [
+     "$\\frac{\\tan {\\frac{x}{3}}}{3} + C$",
+     "$3 \\tan {\\frac{x}{3}} + C$",
+     "$\\tan {\\frac{x}{3}} + C$",
+     "$-3\\tan {\\frac{x}{3}} + C$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "$\\int\\sec^2\\frac x3\\,dx=3\\tan\\frac x3$.",
+    "option_explanations": [
+     "Divides by 3 instead of multiplying.",
+     "Correct.",
+     "Forgets the factor 3 from the chain rule.",
+     "Borrows the minus sign from the derivative of $\\cot$."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int 4 \\sec^{2} 2 x\\,dx$",
+    "options": [
+     "$4 \\tan 2 x + C$",
+     "$\\tan 2 x + C$",
+     "$8 \\tan 2 x + C$",
+     "$2 \\tan 2 x + C$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "$4\\int\\sec^22x\\,dx=4\\cdot\\frac12\\tan 2x$.",
+    "option_explanations": [
+     "Forgets the factor $\\frac12$ from the chain rule.",
+     "Drops the constant 4.",
+     "Multiplies by 2 instead of dividing.",
+     "Correct."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Evaluate $\\int \\tan^{3} x\\,dx$",
+   "options": [
+    "$\\frac{\\tan^{2} x}{2} - \\ln\\left|\\sec x\\right| + C$",
+    "$- \\frac{\\tan^{2} x}{2} + \\ln\\left|\\sec x\\right| + C$",
+    "$- \\frac{\\tan^{2} x}{2} - \\ln\\left|\\sec x\\right| + C$",
+    "$\\frac{\\tan^{2} x \\sec^{2} x}{2} - \\ln\\left|\\sec x\\right| + C$"
+   ],
+   "correct": [
+    0
+   ],
+   "explanation": "$\\tan^3x=\\tan x(\\sec^2x-1)$, so $\\int=\\frac{\\tan^2x}2-\\ln|\\sec x|$ (formula 25).",
+   "option_explanations": [
+    "Correct.",
+    "Overall sign error.",
+    "Sign error on the first term.",
+    "Leaves the $du$ factor $\\sec^{2} x$ in the answer instead of absorbing it into the substitution."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int \\tan^{3} 2 x\\,dx$",
+    "options": [
+     "$\\frac{\\tan^{2} 2 x}{2} - \\ln\\left|\\sec 2 x\\right| + C$",
+     "$\\frac{\\tan^{2} 2 x}{4} + \\frac{\\ln\\left|\\sec 2 x\\right|}{2} + C$",
+     "$\\frac{\\tan^{2} 2 x}{4} - \\frac{\\ln\\left|\\sec 2 x\\right|}{2} + C$",
+     "$\\frac{\\tan^{4} 2 x}{8} + C$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Let $u=2x$: $\\frac12\\left(\\frac{\\tan^2u}2-\\ln|\\sec u|\\right)$.",
+    "option_explanations": [
+     "Forgets the factor $\\frac12$ from $u=2x$.",
+     "Sign error on the logarithm.",
+     "Correct.",
+     "Power rule on $\\tan 2x$."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int \\tan^{5} x\\,dx$",
+    "options": [
+     "$- \\frac{\\tan^{4} x}{4} + \\frac{\\tan^{2} x}{2} - \\ln\\left|\\sec x\\right| + C$",
+     "$- \\frac{\\tan^{4} x}{4} - \\frac{\\tan^{2} x}{2} + \\ln\\left|\\sec x\\right| + C$",
+     "$\\frac{\\tan^{4} x \\sec^{2} x}{4} - \\frac{\\tan^{2} x}{2} + \\ln\\left|\\sec x\\right| + C$",
+     "$\\frac{\\tan^{4} x}{4} - \\frac{\\tan^{2} x}{2} + \\ln\\left|\\sec x\\right| + C$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "Formula 19 twice: $\\frac{\\tan^4x}4-\\int\\tan^3x\\,dx$, then formula 25.",
+    "option_explanations": [
+     "Overall sign error.",
+     "Sign error on the first term.",
+     "Leaves the $du$ factor $\\sec^{2} x$ in the answer instead of absorbing it into the substitution.",
+     "Correct."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "basic",
+   "question": "Evaluate $\\int \\tan^{3} x\\,dx$.",
+   "answer": "Write $\\tan^3x=\\tan x\\,\\tan^2x=\\tan x(\\sec^2x-1)=\\tan x\\sec^2x-\\tan x$.\nFor $\\int\\tan x\\sec^2x\\,dx$ let $u=\\tan x$: it equals $\\frac{\\tan^2x}2$.\nAlso $\\int\\tan x\\,dx=\\ln|\\sec x|$.\nResult: $\\frac{\\tan^{2} x}{2} - \\ln\\left|\\sec x\\right| + C$."
+  },
+  "versions": [
+   {
+    "type": "basic",
+    "question": "Evaluate $\\int \\tan^{3} 3 x\\,dx$.",
+    "answer": "$\\tan^33x=\\tan 3x(\\sec^23x-1)=\\tan 3x\\sec^23x-\\tan 3x$.\nWith $u=\\tan 3x$, $du=3\\sec^23x\\,dx$: $\\int\\tan 3x\\sec^23x\\,dx=\\frac{\\tan^23x}6$.\n$\\int\\tan 3x\\,dx=\\frac13\\ln|\\sec 3x|$.\nResult: $\\frac{\\tan^{2} 3 x}{6} - \\frac{\\ln\\left|\\sec 3 x\\right|}{3} + C$."
+   },
+   {
+    "type": "basic",
+    "question": "Evaluate $\\int \\tan^{5} x\\,dx$.",
+    "answer": "Formula 19 with $n=5$: $\\int\\tan^5x\\,dx=\\frac{\\tan^4x}4-\\int\\tan^3x\\,dx$.\nFormula 25: $\\int\\tan^3x\\,dx=\\frac{\\tan^2x}2-\\ln|\\sec x|$.\nSubtract: $\\frac{\\tan^4x}4-\\frac{\\tan^2x}2+\\ln|\\sec x|$.\nResult: $\\frac{\\tan^{4} x}{4} - \\frac{\\tan^{2} x}{2} + \\ln\\left|\\sec x\\right| + C$."
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Evaluate $\\int \\sec^{3} x\\,dx$",
+   "options": [
+    "$\\frac{\\sec x \\tan x}{2} - \\frac{\\ln\\left|\\sec x + \\tan x\\right|}{2} + C$",
+    "$\\frac{\\sec x \\tan x}{2} + \\frac{\\ln\\left|\\sec x + \\tan x\\right|}{2} + C$",
+    "$\\sec x \\tan x + \\ln\\left|\\sec x + \\tan x\\right| + C$",
+    "$\\frac{\\sec^{4} x}{4} + C$"
+   ],
+   "correct": [
+    1
+   ],
+   "explanation": "Formula 26: by parts, $2\\int\\sec^3x\\,dx=\\sec x\\tan x+\\int\\sec x\\,dx$.",
+   "option_explanations": [
+    "Sign error on the logarithm.",
+    "Correct.",
+    "Forgets the factor $\\frac12$ on both terms.",
+    "Power rule on $\\sec x$."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int \\sec^{3} 2 x\\,dx$",
+    "options": [
+     "$\\frac{\\sec 2 x \\tan 2 x}{4} + \\frac{\\ln\\left|\\sec 2 x + \\tan 2 x\\right|}{4} + C$",
+     "$\\frac{\\sec 2 x \\tan 2 x}{2} + \\frac{\\ln\\left|\\sec 2 x + \\tan 2 x\\right|}{2} + C$",
+     "$\\frac{\\sec 2 x \\tan 2 x}{4} - \\frac{\\ln\\left|\\sec 2 x + \\tan 2 x\\right|}{4} + C$",
+     "$\\frac{\\sec^{4} 2 x}{8} + C$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Let $u=2x$ in formula 26, giving a factor $\\frac12$.",
+    "option_explanations": [
+     "Correct.",
+     "Forgets the extra factor $\\frac12$ from $u=2x$.",
+     "Sign error on the logarithm.",
+     "Power rule on $\\sec 2x$."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int \\sec^{5} x\\,dx$",
+    "options": [
+     "$-\\frac{\\sec^{3} x\\tan x}{4} + \\frac{3\\sec x\\tan x}{8} + \\frac{3\\ln\\left|\\sec x + \\tan x\\right|}{8} + C$",
+     "$\\frac{\\sec^{3} x\\tan x}{4} + \\frac{3\\sec x\\tan x}{8} + \\frac{3\\ln\\left|\\sec x + \\tan x\\right|}{8} + C$",
+     "$\\frac{\\sec^{3} x\\tan x}{4} + \\frac{3\\sec x\\tan x}{4} + \\frac{3\\ln\\left|\\sec x + \\tan x\\right|}{4} + C$",
+     "$\\frac{\\sec^{3} x\\tan x}{4} + \\frac{\\sec x\\tan x}{8} + \\frac{\\ln\\left|\\sec x + \\tan x\\right|}{8} + C$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Formula 20 with $n=5$: $\\frac{\\sec^3x\\tan x}4+\\frac34\\int\\sec^3x\\,dx$, then formula 26.",
+    "option_explanations": [
+     "Sign error on the first term.",
+     "Correct.",
+     "Forgets the factor $\\frac12$ in $\\int\\sec^3x\\,dx$ when substituting it.",
+     "Uses $\\frac14$ instead of $\\frac34$ in front of $\\int\\sec^3x\\,dx$."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "basic",
+   "question": "Evaluate $\\int \\sec^{3} x\\,dx$.",
+   "answer": "Integrate by parts with $u=\\sec x$, $dv=\\sec^2x\\,dx$, so $du=\\sec x\\tan x\\,dx$, $v=\\tan x$:\n$\\int\\sec^3x\\,dx=\\sec x\\tan x-\\int\\sec x\\tan^2x\\,dx=\\sec x\\tan x-\\int\\sec x(\\sec^2x-1)\\,dx$.\nSo $\\int\\sec^3x\\,dx=\\sec x\\tan x-\\int\\sec^3x\\,dx+\\int\\sec x\\,dx$.\nSolve: $2\\int\\sec^3x\\,dx=\\sec x\\tan x+\\ln|\\sec x+\\tan x|$.\nResult: $\\frac{\\sec x \\tan x}{2} + \\frac{\\ln\\left|\\sec x + \\tan x\\right|}{2} + C$."
+  },
+  "versions": [
+   {
+    "type": "basic",
+    "question": "Evaluate $\\int \\sec^{5} x\\,dx$.",
+    "answer": "Formula 20 with $n=5$: $\\int\\sec^5x\\,dx=\\frac{\\sec^3x\\tan x}4+\\frac34\\int\\sec^3x\\,dx$.\nFormula 20 with $n=3$: $\\int\\sec^3x\\,dx=\\frac{\\sec x\\tan x}2+\\frac12\\int\\sec x\\,dx=\\frac{\\sec x\\tan x}2+\\frac12\\ln|\\sec x+\\tan x|$.\nCombine: $\\frac{\\sec^3x\\tan x}4+\\frac34\\left(\\frac{\\sec x\\tan x}2+\\frac12\\ln|\\sec x+\\tan x|\\right)$.\nResult: $\\frac{\\sec^{3} x \\tan x}{4} + \\frac{3 \\sec x \\tan x}{8} + \\frac{3 \\ln\\left|\\sec x + \\tan x\\right|}{8} + C$."
+   },
+   {
+    "type": "basic",
+    "question": "Evaluate $\\int \\sec^{3} 3 x\\,dx$.",
+    "answer": "Let $u=3x$, $dx=\\frac13du$: $\\frac13\\int\\sec^3u\\,du$.\nFormula 26: $\\int\\sec^3u\\,du=\\frac12\\sec u\\tan u+\\frac12\\ln|\\sec u+\\tan u|$.\nMultiply by $\\frac13$ and put $u=3x$ back.\nResult: $\\frac{\\sec 3 x \\tan 3 x}{6} + \\frac{\\ln\\left|\\sec 3 x + \\tan 3 x\\right|}{6} + C$."
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Which choice of $u$ and $dv$ is used to integrate $\\sec^3x$ by parts?",
+   "options": [
+    "$u=\\sec^2x,\\ dv=\\sec x\\,dx$",
+    "$u=\\sec^3x,\\ dv=dx$",
+    "$u=\\sec x,\\ dv=\\sec^2x\\,dx$",
+    "$u=\\tan x,\\ dv=\\sec^2x\\,dx$"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "Splitting $\\sec^3x=\\sec x\\cdot\\sec^2x$ makes $v=\\tan x$, and $\\tan^2x=\\sec^2x-1$ brings back $\\int\\sec^3x$.",
+   "option_explanations": [
+    "Then $v=\\ln|\\sec x+\\tan x|$ and the integral does not simplify.",
+    "Then $v=x$ and nothing simplifies.",
+    "Correct.",
+    "There is no $\\tan x$ factor in $\\sec^3x$ to peel off."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "By parts, $\\int\\sec^3x\\,dx=\\sec x\\tan x-\\int\\sec x\\tan^2x\\,dx$. Using $\\tan^2x=\\sec^2x-1$, what is $2\\int\\sec^3x\\,dx$?",
+    "options": [
+     "$\\sec x\\tan x-\\int\\sec x\\,dx$",
+     "$\\sec x\\tan x+\\int\\sec x\\,dx$",
+     "$2\\sec x\\tan x+\\int\\sec x\\,dx$",
+     "$\\sec x\\tan x+\\int\\sec^3x\\,dx$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "$\\int\\sec^3x=\\sec x\\tan x-\\int\\sec^3x+\\int\\sec x$, then move $\\int\\sec^3x$ to the left.",
+    "option_explanations": [
+     "Sign error: the term $-\\int\\sec x\\cdot(-1)\\,dx$ is positive.",
+     "Correct.",
+     "Doubles the boundary term as well.",
+     "Does not collect the $\\int\\sec^3x\\,dx$ terms."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "In the by-parts evaluation of $\\int\\sec^3x\\,dx$ with $dv=\\sec^2x\\,dx$, what is $v$?",
+    "options": [
+     "$-\\tan x$",
+     "$\\tan x$",
+     "$\\sec x\\tan x$",
+     "$\\frac{\\sec^3x}3$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "$\\int\\sec^2x\\,dx=\\tan x$ (formula 24).",
+    "option_explanations": [
+     "Carries over a minus sign from the sine/cosine pattern.",
+     "Correct.",
+     "That is the derivative of $\\sec x$.",
+     "Power rule on $\\sec x$."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "For $\\int\\tan^2x\\sec^4x\\,dx$, which procedure from Table 7.3.2 applies?",
+   "options": [
+    "Split off $\\sec x\\tan x$, use $\\tan^2x=\\sec^2x-1$, let $u=\\sec x$",
+    "Use $\\tan^2x=\\sec^2x-1$ to get powers of $\\sec x$, then a reduction formula",
+    "Split off $\\sec^2x$, use $\\sec^2x=\\tan^2x+1$, let $u=\\sec x$",
+    "Split off $\\sec^2x$, use $\\sec^2x=\\tan^2x+1$, let $u=\\tan x$"
+   ],
+   "correct": [
+    3
+   ],
+   "explanation": "The exponent of $\\sec x$ is even: peel off $\\sec^2x$ and substitute $u=\\tan x$.",
+   "option_explanations": [
+    "That is the procedure for an odd power of tangent.",
+    "That is for even tangent power with odd secant power.",
+    "Right split, but $du=\\sec^2x\\,dx$ requires $u=\\tan x$.",
+    "Correct."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Which substitution fits $\\int\\tan^4x\\sec^6x\\,dx$?",
+    "options": [
+     "Write $\\tan^4x=(\\sec^2x-1)^2$ and let $u=\\sec x$",
+     "Write $\\sec^6x=(\\tan^2x+1)^2\\sec^2x$ and let $u=\\tan x$",
+     "Write $\\sec^6x=(\\tan^2x+1)^2\\sec^2x$ and let $u=\\sec x$",
+     "Convert to sines and cosines and use reduction formula 10"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Even power of secant: factor out $\\sec^2x$ and use $u=\\tan x$.",
+    "option_explanations": [
+     "No $\\sec x\\tan x$ factor is available for $du$.",
+     "Correct.",
+     "The split is right but $du=\\sec^2x\\,dx$ needs $u=\\tan x$.",
+     "Not the procedure the table prescribes."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "How is $\\int\\tan^3x\\sec^8x\\,dx$ best started?",
+    "options": [
+     "Peel off $\\sec x\\tan x$, rewrite $\\tan^2x$ via $\\sec^2x-1$, set $u=\\sec x$",
+     "Apply reduction formula 19 to $\\tan^3x$ first",
+     "Peel off $\\sec^2x$, rewrite $\\sec^6x$ via $\\tan^2x+1$, set $u=\\sec x$",
+     "Peel off $\\sec^2x$, rewrite $\\sec^6x$ via $\\tan^2x+1$, set $u=\\tan x$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "Because the exponent of $\\sec x$ is even, $u=\\tan x$ works (the odd tangent power is harmless).",
+    "option_explanations": [
+     "The sec exponent 8 would leave $\\sec^7x$, which is odd and awkward for this plan.",
+     "Formula 19 handles pure powers of tangent.",
+     "The split is right but $du=\\sec^2x\\,dx$ needs $u=\\tan x$.",
+     "Correct."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "For $\\int\\tan^3x\\sec^3x\\,dx$, which procedure from Table 7.3.2 applies?",
+   "options": [
+    "Split off $\\sec^2x$, use $\\sec^2x=\\tan^2x+1$, let $u=\\tan x$",
+    "Split off $\\sec x\\tan x$, use $\\tan^2x=\\sec^2x-1$, let $u=\\sec x$",
+    "Use $\\tan^2x=\\sec^2x-1$ to get powers of $\\sec x$, then a reduction formula",
+    "Split off $\\sec x\\tan x$, use $\\tan^2x=\\sec^2x-1$, let $u=\\tan x$"
+   ],
+   "correct": [
+    1
+   ],
+   "explanation": "The exponent of $\\tan x$ is odd: peel off $\\sec x\\tan x$ and substitute $u=\\sec x$.",
+   "option_explanations": [
+    "That is for an even power of secant; here it is 3.",
+    "Correct.",
+    "That is for even tangent power with odd secant power.",
+    "Right split, but $du=\\sec x\\tan x\\,dx$ requires $u=\\sec x$."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "What substitution suits $\\int\\tan^5x\\sec^3x\\,dx$?",
+    "options": [
+     "Write $\\tan^4x=(\\sec^2x-1)^2$ and let $u=\\sec x$",
+     "Write $\\sec^3x=(\\tan^2x+1)\\sec x$ and let $u=\\tan x$",
+     "Write $\\tan^4x=(\\sec^2x-1)^2$ and let $u=\\tan x$",
+     "Apply reduction formula 20 to $\\sec^3x$ first"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Odd power of tangent: factor out $\\sec x\\tan x$, convert $\\tan^4x$, let $u=\\sec x$.",
+    "option_explanations": [
+     "Correct.",
+     "The integrand has no $\\sec^2x$ factor to serve as $du$.",
+     "The split is right but $du=\\sec x\\tan x\\,dx$ needs $u=\\sec x$.",
+     "The tangent factor is left unresolved."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Pick the plan for $\\int\\tan^3x\\sec^7x\\,dx$.",
+    "options": [
+     "Peel off $\\sec x\\tan x$, rewrite $\\tan^2x$ via $\\sec^2x-1$, set $u=\\sec x$",
+     "Peel off $\\sec^2x$, rewrite the rest via $\\tan^2x+1$, set $u=\\tan x$",
+     "Apply reduction formula 19 to $\\tan^3x$",
+     "Peel off $\\sec x\\tan x$, rewrite $\\tan^2x$ via $\\sec^2x-1$, set $u=\\tan x$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Odd power of tangent: $u=\\sec x$.",
+    "option_explanations": [
+     "Correct.",
+     "The exponent of $\\sec x$ is odd, so $\\sec^2x$ cannot be peeled off cleanly.",
+     "Formula 19 is for pure powers of tangent.",
+     "The split is right but $du=\\sec x\\tan x\\,dx$ needs $u=\\sec x$."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "For $\\int\\tan^2x\\sec^3x\\,dx$, which procedure from Table 7.3.2 applies?",
+   "options": [
+    "Split off $\\sec^2x$, rewrite the rest, let $u=\\tan x$",
+    "Split off $\\sec x\\tan x$, rewrite the rest, let $u=\\sec x$",
+    "Rewrite $\\tan^2x=\\sec^2x-1$, then use the reduction formula for powers of $\\sec x$",
+    "Apply reduction formula 19 for powers of $\\tan x$"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "Even tangent and odd secant: reduce to powers of $\\sec x$ alone, then use formula 20.",
+   "option_explanations": [
+    "The exponent of $\\sec x$ is odd, so no $\\sec^2x$ can be peeled off.",
+    "The exponent of $\\tan x$ is even, so $\\sec x\\tan x$ cannot be peeled off.",
+    "Correct.",
+    "The secant factor remains, so formula 19 does not apply directly."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "How do you start $\\int\\tan^4x\\sec x\\,dx$?",
+    "options": [
+     "Write $\\tan^4x=(\\sec^2x-1)^2$, expand, and integrate powers of $\\sec x$",
+     "Let $u=\\tan x$ and $du=\\sec x\\,dx$",
+     "Let $u=\\sec x$ and $du=\\tan^4x\\,dx$",
+     "Split off $\\sec^2x$ and let $u=\\tan x$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "No substitution works directly; reduce to powers of $\\sec x$ alone.",
+    "option_explanations": [
+     "Correct.",
+     "$(\\tan x)'=\\sec^2x$, not $\\sec x$.",
+     "$du=\\sec x\\tan x\\,dx$ does not match.",
+     "There is only one factor of $\\sec x$ available."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "What is the right approach to $\\int\\tan^2x\\sec^5x\\,dx$?",
+    "options": [
+     "Replace $\\sec^5x$ by $(\\tan^2x+1)^2\\sec x$ and let $u=\\tan x$",
+     "Peel off $\\sec x\\tan x$ and let $u=\\sec x$",
+     "Use the reduction formula 19 on $\\tan^2x$",
+     "Replace $\\tan^2x$ by $\\sec^2x-1$ and apply the reduction formula for $\\sec^nx$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "Even tangent, odd secant: powers of $\\sec x$ only, then formula 20.",
+    "option_explanations": [
+     "$du=\\sec^2x\\,dx$ is not available from an odd power of secant.",
+     "The tangent exponent 2 is even.",
+     "Formula 19 does not handle the extra secant factor.",
+     "Correct."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Evaluate $\\int \\tan^{2} x \\sec^{4} x\\,dx$",
+   "options": [
+    "$- \\frac{\\tan^{5} x}{5} - \\frac{\\tan^{3} x}{3} + C$",
+    "$\\frac{\\tan^{5} x}{5} + \\frac{\\tan^{3} x}{3} + C$",
+    "$- \\frac{\\tan^{5} x}{5} + \\frac{\\tan^{3} x}{3} + C$",
+    "$\\frac{\\tan^{5} x \\sec^{2} x}{5} + \\frac{\\tan^{3} x}{3} + C$"
+   ],
+   "correct": [
+    1
+   ],
+   "explanation": "Let $u=\\tan x$: $\\int u^2(u^2+1)\\,du=\\frac{u^5}5+\\frac{u^3}3$.",
+   "option_explanations": [
+    "Overall sign error.",
+    "Correct.",
+    "Sign error on the first term.",
+    "Leaves the $du$ factor $\\sec^{2} x$ in the answer instead of absorbing it into the substitution."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int \\tan^{3} x \\sec^{4} x\\,dx$",
+    "options": [
+     "$- \\frac{\\tan^{4} x}{4} - \\frac{\\tan^{6} x}{6} + C$",
+     "$- \\frac{\\tan^{4} x}{4} + \\frac{\\tan^{6} x}{6} + C$",
+     "$\\frac{\\tan^{4} x \\sec^{2} x}{4} + \\frac{\\tan^{6} x}{6} + C$",
+     "$\\frac{\\tan^{4} x}{4} + \\frac{\\tan^{6} x}{6} + C$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "Let $u=\\tan x$: $\\int u^3(u^2+1)\\,du=\\frac{u^6}6+\\frac{u^4}4$.",
+    "option_explanations": [
+     "Overall sign error.",
+     "Sign error on the first term.",
+     "Leaves the $du$ factor $\\sec^{2} x$ in the answer instead of absorbing it into the substitution.",
+     "Correct."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int \\tan^{4} x \\sec^{4} x\\,dx$",
+    "options": [
+     "$- \\frac{\\tan^{5} x}{5} - \\frac{\\tan^{7} x}{7} + C$",
+     "$- \\frac{\\tan^{5} x}{5} + \\frac{\\tan^{7} x}{7} + C$",
+     "$\\frac{\\tan^{5} x \\sec^{2} x}{5} + \\frac{\\tan^{7} x}{7} + C$",
+     "$\\frac{\\tan^{5} x}{5} + \\frac{\\tan^{7} x}{7} + C$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "Let $u=\\tan x$: $\\int u^4(u^2+1)\\,du=\\frac{u^7}7+\\frac{u^5}5$.",
+    "option_explanations": [
+     "Overall sign error.",
+     "Sign error on the first term.",
+     "Leaves the $du$ factor $\\sec^{2} x$ in the answer instead of absorbing it into the substitution.",
+     "Correct."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Evaluate $\\int \\tan^{3} x \\sec^{3} x\\,dx$",
+   "options": [
+    "$\\frac{\\sec^{5} x}{5} - \\frac{\\sec^{3} x}{3} + C$",
+    "$- \\frac{\\sec^{5} x}{5} + \\frac{\\sec^{3} x}{3} + C$",
+    "$- \\frac{\\sec^{5} x}{5} - \\frac{\\sec^{3} x}{3} + C$",
+    "$\\frac{\\sec^{5} x \\sec x \\tan x}{5} - \\frac{\\sec^{3} x}{3} + C$"
+   ],
+   "correct": [
+    0
+   ],
+   "explanation": "Let $u=\\sec x$: $\\int(u^2-1)u^2\\,du=\\frac{u^5}5-\\frac{u^3}3$.",
+   "option_explanations": [
+    "Correct.",
+    "Overall sign error.",
+    "Sign error on the first term.",
+    "Leaves the $du$ factor $\\sec x \\tan x$ in the answer instead of absorbing it into the substitution."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int \\sec^{5} x \\tan^{3} x\\,dx$",
+    "options": [
+     "$- \\frac{\\sec^{7} x}{7} + \\frac{\\sec^{5} x}{5} + C$",
+     "$- \\frac{\\sec^{7} x}{7} - \\frac{\\sec^{5} x}{5} + C$",
+     "$\\frac{\\sec^{7} x \\sec x \\tan x}{7} - \\frac{\\sec^{5} x}{5} + C$",
+     "$\\frac{\\sec^{7} x}{7} - \\frac{\\sec^{5} x}{5} + C$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "Let $u=\\sec x$: $\\int u^4(u^2-1)\\,du=\\frac{u^7}7-\\frac{u^5}5$.",
+    "option_explanations": [
+     "Overall sign error.",
+     "Sign error on the first term.",
+     "Leaves the $du$ factor $\\sec x \\tan x$ in the answer instead of absorbing it into the substitution.",
+     "Correct."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int \\tan^{5} x \\sec^{3} x\\,dx$",
+    "options": [
+     "$- \\frac{\\sec^{7} x}{7} + \\frac{2 \\sec^{5} x}{5} - \\frac{\\sec^{3} x}{3} + C$",
+     "$\\frac{\\sec^{7} x}{7} - \\frac{2 \\sec^{5} x}{5} + \\frac{\\sec^{3} x}{3} + C$",
+     "$- \\frac{\\sec^{7} x}{7} - \\frac{2 \\sec^{5} x}{5} + \\frac{\\sec^{3} x}{3} + C$",
+     "$\\frac{\\sec^{7} x \\sec x \\tan x}{7} - \\frac{2 \\sec^{5} x}{5} + \\frac{\\sec^{3} x}{3} + C$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Let $u=\\sec x$: $\\int(u^2-1)^2u^2\\,du$.",
+    "option_explanations": [
+     "Overall sign error.",
+     "Correct.",
+     "Sign error on the first term.",
+     "Leaves the $du$ factor $\\sec x \\tan x$ in the answer instead of absorbing it into the substitution."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "basic",
+   "question": "Evaluate $\\int \\tan^{2} x \\sec x\\,dx$.",
+   "answer": "The exponent of $\\tan x$ is even and that of $\\sec x$ is odd: rewrite with $\\tan^2x=\\sec^2x-1$.\n$\\int\\tan^2x\\sec x\\,dx=\\int\\sec^3x\\,dx-\\int\\sec x\\,dx$.\nUse formulas 26 and 22: $\\left(\\frac12\\sec x\\tan x+\\frac12\\ln|\\sec x+\\tan x|\\right)-\\ln|\\sec x+\\tan x|$.\nResult: $\\frac{\\sec x \\tan x}{2} - \\frac{\\ln\\left|\\sec x + \\tan x\\right|}{2} + C$."
+  },
+  "versions": [
+   {
+    "type": "basic",
+    "question": "Evaluate $\\int \\tan^{2} x \\sec^{3} x\\,dx$.",
+    "answer": "Use $\\tan^2x=\\sec^2x-1$: $\\int\\tan^2x\\sec^3x\\,dx=\\int\\sec^5x\\,dx-\\int\\sec^3x\\,dx$.\nFormula 20: $\\int\\sec^5x\\,dx=\\frac{\\sec^3x\\tan x}4+\\frac34\\int\\sec^3x\\,dx$.\nSo the integral is $\\frac{\\sec^3x\\tan x}4-\\frac14\\int\\sec^3x\\,dx$, and $\\int\\sec^3x\\,dx=\\frac12\\sec x\\tan x+\\frac12\\ln|\\sec x+\\tan x|$.\nResult: $\\frac{\\sec^{3} x \\tan x}{4} - \\frac{\\sec x \\tan x}{8} - \\frac{\\ln\\left|\\sec x + \\tan x\\right|}{8} + C$."
+   },
+   {
+    "type": "basic",
+    "question": "Evaluate $\\int \\tan^{4} x \\sec x\\,dx$.",
+    "answer": "$\\tan^4x\\sec x=(\\sec^2x-1)^2\\sec x=\\sec^5x-2\\sec^3x+\\sec x$.\n$\\int\\sec^5x\\,dx=\\frac{\\sec^3x\\tan x}4+\\frac34\\int\\sec^3x\\,dx$, so the integral is $\\frac{\\sec^3x\\tan x}4-\\frac54\\int\\sec^3x\\,dx+\\int\\sec x\\,dx$.\nWith $\\int\\sec^3x\\,dx=\\frac12\\sec x\\tan x+\\frac12\\ln|\\sec x+\\tan x|$ and $\\int\\sec x\\,dx=\\ln|\\sec x+\\tan x|$ this simplifies.\nResult: $\\frac{\\sec^{3} x \\tan x}{4} - \\frac{5 \\sec x \\tan x}{8} + \\frac{3 \\ln\\left|\\sec x + \\tan x\\right|}{8} + C$."
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Table 7.3.2 is adapted to $\\int\\cot^mx\\csc^nx\\,dx$. Which identity replaces $\\tan^2x=\\sec^2x-1$?",
+   "options": [
+    "$\\cot^2x=\\sec^2x-1$",
+    "$\\cot^2x=\\csc^2x-1$",
+    "$\\cot^2x=1-\\csc^2x$",
+    "$\\cot^2x=\\csc^2x+1$"
+   ],
+   "correct": [
+    1
+   ],
+   "explanation": "From $1+\\cot^2x=\\csc^2x$.",
+   "option_explanations": [
+    "Mixes up secant and cosecant.",
+    "Correct.",
+    "Sign error.",
+    "Sign error."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "In integrals of $\\cot^mx\\csc^nx$, what is $\\csc^2x$ equal to?",
+    "options": [
+     "$1-\\cot^2x$",
+     "$1+\\tan^2x$",
+     "$\\cot^2x-1$",
+     "$1+\\cot^2x$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "$1+\\cot^2x=\\csc^2x$.",
+    "option_explanations": [
+     "Sign error.",
+     "That is $\\sec^2x$.",
+     "Sign error.",
+     "Correct."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which Pythagorean identity is used for products of $\\cot x$ and $\\csc x$?",
+    "options": [
+     "$1+\\csc^2x=\\cot^2x$",
+     "$1+\\cot^2x=\\sec^2x$",
+     "$\\cot^2x+\\csc^2x=1$",
+     "$1+\\cot^2x=\\csc^2x$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "Dividing $\\sin^2x+\\cos^2x=1$ by $\\sin^2x$ gives $1+\\cot^2x=\\csc^2x$.",
+    "option_explanations": [
+     "Rearranged incorrectly.",
+     "Mixes up secant and cosecant.",
+     "Not a valid identity.",
+     "Correct."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Evaluate $\\int \\cot^{2} x \\csc^{2} x\\,dx$",
+   "options": [
+    "$\\frac{\\cot^{3} x}{3} + C$",
+    "$- \\frac{\\csc^{3} x}{3} + C$",
+    "$- \\frac{\\cot^{3} x}{3} + C$",
+    "$\\frac{\\cot^{3} x \\csc^{3} x}{9} + C$"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "Let $u=\\cot x$, $du=-\\csc^2x\\,dx$: $-\\int u^2\\,du$.",
+   "option_explanations": [
+    "Forgets that $(\\cot x)'=-\\csc^2x$.",
+    "Integrates the wrong factor.",
+    "Correct.",
+    "Integrates each factor separately and multiplies."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int \\cot^{4} x \\csc^{2} x\\,dx$",
+    "options": [
+     "$\\frac{\\cot^{5} x \\csc^{3} x}{15} + C$",
+     "$- \\frac{\\cot^{5} x}{5} + C$",
+     "$\\frac{\\cot^{5} x}{5} + C$",
+     "$- \\frac{\\cot^{4} x}{4} + C$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Let $u=\\cot x$: $-\\int u^4\\,du$.",
+    "option_explanations": [
+     "Integrates each factor separately and multiplies.",
+     "Correct.",
+     "Forgets that $(\\cot x)'=-\\csc^2x$.",
+     "Forgets to raise the exponent: integrates $u^4$ as $\\frac{u^4}{4}$."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int \\cot x \\csc^{4} x\\,dx$",
+    "options": [
+     "$\\frac{\\cot^{2} x}{2} + \\frac{\\cot^{4} x}{4} + C$",
+     "$\\frac{\\cot^{2} x \\csc^{5} x}{10} + C$",
+     "$- \\frac{\\cot^{2} x}{2} - \\frac{\\cot^{4} x}{4} + C$",
+     "$\\frac{\\cot^{2} x}{2} - \\frac{\\cot^{4} x}{4} + C$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Peel off $\\csc^2x$, $u=\\cot x$: $-\\int u(1+u^2)\\,du$.",
+    "option_explanations": [
+     "Forgets that $du=-\\csc^2x\\,dx$.",
+     "Integrates each factor separately and multiplies.",
+     "Correct.",
+     "Sign error on the first term."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Evaluate $\\int \\cot^{3} x \\csc^{3} x\\,dx$",
+   "options": [
+    "$\\frac{\\csc^{5} x}{5} - \\frac{\\csc^{3} x}{3} + C$",
+    "$- \\frac{\\csc^{5} x}{5} + \\frac{\\csc^{3} x}{3} + C$",
+    "$\\frac{\\csc^{5} x}{5} + \\frac{\\csc^{3} x}{3} + C$",
+    "$- \\csc^{5} x + \\frac{\\csc^{3} x}{3} + C$"
+   ],
+   "correct": [
+    1
+   ],
+   "explanation": "Let $u=\\csc x$, $du=-\\csc x\\cot x\\,dx$: $-\\int(u^2-1)u^2\\,du$.",
+   "option_explanations": [
+    "Forgets the minus sign in $du=-\\csc x\\cot x\\,dx$.",
+    "Correct.",
+    "Sign error on the first term.",
+    "Forgets to divide by the new exponent when integrating the power of $u$."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int \\cot^{3} x \\csc x\\,dx$",
+    "options": [
+     "$\\frac{\\csc^{3} x}{3} - \\csc x + C$",
+     "$\\frac{\\csc^{3} x}{3} + \\csc x + C$",
+     "$- \\frac{\\csc^{3} x}{3} + \\csc x + C$",
+     "$- \\csc^{3} x + \\csc x + C$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Let $u=\\csc x$: $-\\int(u^2-1)\\,du$.",
+    "option_explanations": [
+     "Forgets the minus sign in $du=-\\csc x\\cot x\\,dx$.",
+     "Sign error on the first term.",
+     "Correct.",
+     "Forgets to divide by the new exponent when integrating the power of $u$."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int \\cot^{3} x \\csc^{5} x\\,dx$",
+    "options": [
+     "$\\frac{\\csc^{7} x}{7} - \\frac{\\csc^{5} x}{5} + C$",
+     "$- \\frac{\\csc^{7} x}{7} + \\frac{\\csc^{5} x}{5} + C$",
+     "$\\frac{\\csc^{7} x}{7} + \\frac{\\csc^{5} x}{5} + C$",
+     "$- \\csc^{7} x + \\frac{\\csc^{5} x}{5} + C$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Let $u=\\csc x$: $-\\int(u^2-1)u^4\\,du$.",
+    "option_explanations": [
+     "Forgets the minus sign in $du=-\\csc x\\cot x\\,dx$.",
+     "Correct.",
+     "Sign error on the first term.",
+     "Forgets to divide by the new exponent when integrating the power of $u$."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "For the substitution $u=\\sec x$, what is $du$?",
+   "options": [
+    "$\\sec x\\tan x\\,dx$",
+    "$\\sec^2x\\,dx$",
+    "$-\\sec x\\tan x\\,dx$",
+    "$\\sec x\\,dx$"
+   ],
+   "correct": [
+    0
+   ],
+   "explanation": "$(\\sec x)'=\\sec x\\tan x$.",
+   "option_explanations": [
+    "Correct.",
+    "That is the differential of $\\tan x$.",
+    "Sign error borrowed from the cosine derivative.",
+    "Forgets the chain of differentiation."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "If $u=\\tan x$, what is $du$?",
+    "options": [
+     "$\\sec x\\tan x\\,dx$",
+     "$\\sec^2x\\,dx$",
+     "$-\\sec^2x\\,dx$",
+     "$\\tan x\\sec^2x\\,dx$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "$(\\tan x)'=\\sec^2x$.",
+    "option_explanations": [
+     "That is the differential of $\\sec x$.",
+     "Correct.",
+     "Sign error borrowed from the cotangent derivative.",
+     "Multiplies by an extra $\\tan x$."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "With $u=\\sec 2x$, find $du$.",
+    "options": [
+     "$\\sec 2x\\tan 2x\\,dx$",
+     "$2\\sec^22x\\,dx$",
+     "$2\\sec 2x\\tan 2x\\,dx$",
+     "$\\frac12\\sec 2x\\tan 2x\\,dx$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Chain rule: $(\\sec 2x)'=2\\sec 2x\\tan 2x$.",
+    "option_explanations": [
+     "Forgets the inner derivative 2.",
+     "Differentiates as if it were $\\tan 2x$.",
+     "Correct.",
+     "Divides by 2 instead of multiplying."
+    ]
+   }
+  ]
+ }
+]

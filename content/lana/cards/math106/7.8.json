@@ -1,0 +1,3086 @@
+[
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Which of these integrals is improper?",
+   "options": [
+    "$\\int_{0}^{\\pi/4}\\tan x\\,dx$",
+    "$\\int_{-1}^{1}\\frac{dx}{x^{2}+1}$",
+    "$\\int_{1}^{3}\\frac{dx}{x-2}$",
+    "$\\int_{0}^{4}\\sqrt{x}\\,dx$"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "An integral is improper when an interval is infinite or the integrand has an infinite discontinuity in $[a,b]$.",
+   "option_explanations": [
+    "$\\tan x$ is continuous on $[0,\\pi/4]$, so this is an ordinary integral.",
+    "The integrand is continuous everywhere; this is an ordinary integral.",
+    "Correct: the integrand blows up at $x=2$, inside $[1,3]$.",
+    "$\\sqrt{x}$ is continuous on $[0,4]$ (finite at $0$); ordinary integral."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Exactly one of the following is an improper integral. Which one?",
+    "options": [
+     "$\\int_{0}^{\\pi/2}\\tan x\\,dx$",
+     "$\\int_{0}^{\\pi/3}\\tan x\\,dx$",
+     "$\\int_{1}^{e}\\ln x\\,dx$",
+     "$\\int_{-2}^{2}\\frac{dx}{x^{2}+4}$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "$\\tan x\\to+\\infty$ as $x\\to\\pi/2^-$, so the upper endpoint is an infinite discontinuity.",
+    "option_explanations": [
+     "Correct: $\\tan x$ is unbounded near $\\pi/2$.",
+     "$\\pi/3<\\pi/2$, so $\\tan x$ stays finite on the interval.",
+     "$\\ln x$ is continuous on $[1,e]$.",
+     "$x^2+4$ never vanishes, so the integrand is continuous."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which integral below must be treated as improper?",
+    "options": [
+     "$\\int_{1}^{2}\\frac{dx}{x^{2}}$",
+     "$\\int_{-1}^{1}e^{x}\\,dx$",
+     "$\\int_{0}^{2}\\frac{dx}{x+3}$",
+     "$\\int_{-1}^{1}\\frac{dx}{x^{2}}$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "Check whether the integrand has a vertical asymptote in the interval; $1/x^2$ is infinite at $x=0\\in[-1,1]$.",
+    "option_explanations": [
+     "$[1,2]$ avoids $x=0$; the integrand is continuous.",
+     "$e^{x}$ is continuous on $[-1,1]$.",
+     "$x+3\\neq0$ on $[0,2]$; the integrand is continuous.",
+     "Correct: $x=0$ is inside the interval and $1/x^2\\to\\infty$ there."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Why is $\\int_{1}^{\\infty}\\frac{dx}{x^{2}}$ called an improper integral?",
+   "options": [
+    "The integrand has a vertical asymptote at $x=1$",
+    "The interval of integration has infinite length",
+    "The integrand is negative on part of the interval",
+    "The integrand has an infinite discontinuity inside"
+   ],
+   "correct": [
+    1
+   ],
+   "explanation": "Improper integrals are of two kinds: infinite intervals, or infinite discontinuities of the integrand.",
+   "option_explanations": [
+    "$1/x^2$ is finite at $x=1$; the problem is at the upper limit.",
+    "Correct.",
+    "$1/x^2>0$ everywhere; sign has nothing to do with it.",
+    "There is no discontinuity of $1/x^2$ on $[1,\\infty)$."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "What makes $\\int_{0}^{4}\\frac{dx}{\\sqrt{4-x}}$ improper?",
+    "options": [
+     "The upper limit is not finite",
+     "The integrand becomes infinite at the right endpoint",
+     "The integrand blows up in the middle of the interval",
+     "Its antiderivative is not an elementary function"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "The integrand $1/\\sqrt{4-x}\\to+\\infty$ as $x\\to4^-$, an infinite discontinuity at the endpoint $b=4$.",
+    "option_explanations": [
+     "Both limits $0$ and $4$ are finite numbers.",
+     "Correct.",
+     "The only trouble point $x=4$ is an endpoint, not an interior point.",
+     "The antiderivative $-2\\sqrt{4-x}$ is elementary; the issue is the asymptote."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "What kind of improper integral is $\\int_{-3}^{3}\\frac{dx}{x}$?",
+    "options": [
+     "An infinite discontinuity lies at the left endpoint",
+     "Both of the limits of integration are infinite",
+     "The integrand is bounded but the interval is long",
+     "An infinite discontinuity lies inside the interval"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "$1/x$ is unbounded at $x=0$, which is in the middle of $[-3,3]$, so the integral must be split there.",
+    "option_explanations": [
+     "The asymptote $x=0$ is not at $-3$.",
+     "Both limits are finite.",
+     "$1/x$ is not bounded near $0$.",
+     "Correct."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "By definition, $\\int_{2}^{\\infty}f(x)\\,dx$ equals",
+   "options": [
+    "$\\lim_{b\\to\\infty}\\int_{2}^{b}f(x)\\,dx$",
+    "$\\lim_{b\\to 2^{+}}\\int_{b}^{\\infty}f(x)\\,dx$",
+    "$\\lim_{a\\to-\\infty}\\int_{a}^{2}f(x)\\,dx$",
+    "$\\int_{2}^{b}f(x)\\,dx$ evaluated at $b=\\infty$"
+   ],
+   "correct": [
+    0
+   ],
+   "explanation": "Replace the infinite limit by a finite $b$, integrate, then let $b\\to\\infty$.",
+   "option_explanations": [
+    "Correct.",
+    "The finite end is $2$; the limit must be taken at the infinite end.",
+    "That is the integral over $(-\\infty,2]$, not $[2,\\infty)$.",
+    "Plugging in $\\infty$ directly is not defined; a limit is required."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Which expression defines $\\int_{5}^{\\infty}g(x)\\,dx$?",
+    "options": [
+     "$\\lim_{t\\to 5^{+}}\\int_{t}^{\\infty}g(x)\\,dx$",
+     "$\\lim_{t\\to-\\infty}\\int_{t}^{5}g(x)\\,dx$",
+     "$\\lim_{t\\to\\infty}\\int_{5}^{t}g(x)\\,dx$",
+     "$G(\\infty)-G(5)$ with no limit taken"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "An infinite upper limit is replaced by a variable $t$ that tends to $+\\infty$.",
+    "option_explanations": [
+     "That is a limit at the finite endpoint, used for discontinuities.",
+     "That defines $\\int_{-\\infty}^{5}g$.",
+     "Correct.",
+     "Antiderivative values at $\\infty$ are meaningless without a limit."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "For continuous $h$, the improper integral $\\int_{a}^{+\\infty}h(x)\\,dx$ is the value of which limit?",
+    "options": [
+     "$\\lim_{R\\to a}\\int_{R}^{\\infty}h(x)\\,dx$",
+     "$\\lim_{R\\to\\infty}\\int_{R}^{a}h(x)\\,dx$",
+     "$\\lim_{R\\to\\infty}h(R)$",
+     "$\\lim_{R\\to\\infty}\\int_{a}^{R}h(x)\\,dx$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "The area over $[a,R]$ is computed first, and then $R\\to\\infty$.",
+    "option_explanations": [
+     "The variable end must be the infinite one.",
+     "Bounds reversed: this gives the negative of the integral.",
+     "This is the limit of the integrand, not of its integral.",
+     "Correct."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "The improper integral $\\int_{-\\infty}^{b}f(x)\\,dx$ is defined as",
+   "options": [
+    "$\\lim_{a\\to\\infty}\\int_{a}^{b}f(x)\\,dx$",
+    "$\\lim_{a\\to-\\infty}\\int_{a}^{b}f(x)\\,dx$",
+    "$\\lim_{a\\to-\\infty}\\int_{b}^{a}f(x)\\,dx$",
+    "$\\lim_{a\\to b}\\int_{-\\infty}^{a}f(x)\\,dx$"
+   ],
+   "correct": [
+    1
+   ],
+   "explanation": "Replace $-\\infty$ by a variable $a\\to-\\infty$.",
+   "option_explanations": [
+    "The variable must go to $-\\infty$, not $+\\infty$.",
+    "Correct.",
+    "Reversing the bounds changes the sign of the integral.",
+    "The limit should be taken at the infinite end, not at $b$."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "How is $\\int_{-\\infty}^{0}\\phi(x)\\,dx$ computed?",
+    "options": [
+     "$\\lim_{t\\to 0^{-}}\\int_{-\\infty}^{t}\\phi(x)\\,dx$",
+     "$\\lim_{t\\to\\infty}\\int_{-t}^{0}\\phi(x)\\,dx\\cdot(-1)$",
+     "$\\lim_{t\\to-\\infty}\\int_{t}^{0}\\phi(x)\\,dx$",
+     "$\\int_{0}^{-\\infty}\\phi(x)\\,dx$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Use a finite lower limit $t$ and let it tend to $-\\infty$.",
+    "option_explanations": [
+     "That treats $0$ as a discontinuity; here the trouble is at $-\\infty$.",
+     "Introduces an extra minus sign that does not belong in the definition.",
+     "Correct.",
+     "This reverses the orientation and gives the negative."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which limit represents $\\int_{-\\infty}^{4}k(x)\\,dx$?",
+    "options": [
+     "$\\lim_{s\\to-\\infty}\\int_{s}^{4}k(x)\\,dx$",
+     "$\\lim_{s\\to4}\\int_{-\\infty}^{s}k(x)\\,dx$",
+     "$\\lim_{s\\to+\\infty}\\int_{s}^{4}k(x)\\,dx$",
+     "$\\lim_{s\\to-\\infty}k(s)$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Only the lower endpoint is infinite, so the limit is taken as $s\\to-\\infty$.",
+    "option_explanations": [
+     "Correct.",
+     "Taking the limit at $4$ is the discontinuity definition.",
+     "$s\\to+\\infty$ would go past the upper limit.",
+     "This is the limit of the integrand, not of the integral."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "When does $\\int_{-\\infty}^{\\infty}f(x)\\,dx$ converge, using a real number $c$ to split it?",
+   "options": [
+    "When $\\lim_{b\\to\\infty}\\int_{-b}^{b}f$ exists",
+    "When at least one of the two pieces converges",
+    "When both $\\int_{-\\infty}^{c}f$ and $\\int_{c}^{\\infty}f$ converge",
+    "When $f(x)\\to0$ as $x\\to\\pm\\infty$"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "Definition 7.8.3: the integral over $(-\\infty,\\infty)$ converges only if both halves converge.",
+   "option_explanations": [
+    "A symmetric limit can exist even when the halves diverge (e.g. $f(x)=x$).",
+    "One divergent piece makes the whole integral diverge.",
+    "Correct.",
+    "$f\\to0$ is not sufficient (e.g. $1/x$ is not integrable at infinity)."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Suppose $\\int_{-\\infty}^{0}f(x)\\,dx=5$ but $\\int_{0}^{\\infty}f(x)\\,dx$ diverges. What about $\\int_{-\\infty}^{\\infty}f(x)\\,dx$?",
+    "options": [
+     "It diverges",
+     "It converges to $5$",
+     "It converges to $0$",
+     "It converges, since one piece does"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Both pieces must converge for the whole integral to converge.",
+    "option_explanations": [
+     "Correct.",
+     "The divergent half cannot be ignored.",
+     "Assumed the pieces cancel to $0$; a divergent piece cannot be cancelled by anything.",
+     "Convergence needs both pieces."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "If $\\int_{-\\infty}^{c}f(x)\\,dx=3$ and $\\int_{c}^{\\infty}f(x)\\,dx=4$, then $\\int_{-\\infty}^{\\infty}f(x)\\,dx$ is",
+    "options": [
+     "$3\\cdot4$",
+     "$\\max(3,4)$",
+     "$4-3$",
+     "$7$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "The two pieces add.",
+    "option_explanations": [
+     "Multiplied the two pieces; they are added.",
+     "Kept only the larger piece and ignored the other.",
+     "Subtracted the pieces; the definition adds them.",
+     "Correct: the two convergent pieces add, $3+4=7$."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "If $\\lim_{b\\to\\infty}\\int_{a}^{b}f(x)\\,dx$ does not exist, the improper integral",
+   "options": [
+    "converges to $0$",
+    "is said to diverge and has no value assigned",
+    "converges to a negative number",
+    "has a value equal to $\\infty$ by definition"
+   ],
+   "correct": [
+    1
+   ],
+   "explanation": "Definition 7.8.1: no limit means divergence, and no value is assigned.",
+   "option_explanations": [
+    "A non-existent limit does not give $0$.",
+    "Correct.",
+    "Non-existence does not produce any number.",
+    "Divergent integrals are not assigned a value."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Which statement matches the terminology for $\\int_{1}^{\\infty}\\frac{dx}{x}$?",
+    "options": [
+     "It converges to $\\infty$",
+     "It diverges, so no numerical value is given",
+     "It converges with value $0$",
+     "It is undefined, never convergent or divergent"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "A non-existent limit means divergence; the integral is not assigned a value.",
+    "option_explanations": [
+     "\\\"Converges\\\" requires a finite limit.",
+     "Correct.",
+     "$\\ln b\\to\\infty$, not $0$.",
+     "Undefined is not the technical term; the integral diverges."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "An improper integral is said to converge when",
+    "options": [
+     "its integrand tends to $0$",
+     "its antiderivative is bounded below",
+     "its limit is $+\\infty$",
+     "its defining limit exists as a finite number"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "Converge means the limit in the definition exists (finite).",
+    "option_explanations": [
+     "The integrand tending to $0$ does not guarantee a finite limit.",
+     "Bounded antiderivative is not part of the definition.",
+     "An infinite limit means the integral diverges.",
+     "Correct."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "If $f\\ge0$ on $[a,\\infty)$ and $\\int_{a}^{\\infty}f(x)\\,dx$ diverges, the area under the graph is regarded as",
+   "options": [
+    "infinite",
+    "zero",
+    "equal to $f(a)$",
+    "equal to the last partial area"
+   ],
+   "correct": [
+    0
+   ],
+   "explanation": "A divergent improper integral of a nonnegative function corresponds to infinite area.",
+   "option_explanations": [
+    "Correct.",
+    "Area is not zero; the partial areas grow without bound.",
+    "The area has nothing to do with a single value of $f$.",
+    "There is no last partial area as $b\\to\\infty$."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "For $f\\ge0$ on $[a,\\infty)$, $\\int_{a}^{\\infty}f(x)\\,dx=7$ means the region under $y=f(x)$ over $[a,\\infty)$ has area",
+    "options": [
+     "$+\\infty$",
+     "$7(b-a)$",
+     "$7$",
+     "$7a$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "A convergent integral gives the (finite) area as its value.",
+    "option_explanations": [
+     "Convergence gives a finite area, not an infinite one.",
+     "Multiplied by an extra width $b-a$; the value is already the area.",
+     "Correct.",
+     "Multiplied by the left endpoint $a$; the value itself is the area."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "A region extends infinitely far to the right. Its area, defined as an improper integral of $f\\ge0$, is finite exactly when",
+    "options": [
+     "the region is bounded above",
+     "$f$ is decreasing",
+     "$f(x)\\to\\infty$",
+     "the improper integral converges"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "Area of an unbounded region is defined through the improper integral and is finite iff it converges.",
+    "option_explanations": [
+     "A bounded height is not enough ($1/x$ is bounded above but gives infinite area).",
+     "$1/x$ decreases, yet its area is infinite.",
+     "$f\\to\\infty$ makes the area infinite.",
+     "Correct."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "For $b>1$, the area above $[1,b]$ under $y=1/x^{2}$ is $\\int_{1}^{b}x^{-2}\\,dx=$",
+   "options": [
+    "$\\frac{1}{b}-1$",
+    "$1-\\frac{1}{b}$",
+    "$-\\frac{1}{b}$",
+    "$\\ln b$"
+   ],
+   "correct": [
+    1
+   ],
+   "explanation": "$\\int x^{-2}dx=-x^{-1}$, so the value is $-\\frac1b+1$.",
+   "option_explanations": [
+    "Sign error: upper minus lower gives $-1/b-(-1)$.",
+    "Correct.",
+    "Forgot to subtract the lower-limit value.",
+    "$\\ln$ is the antiderivative of $x^{-1}$, not $x^{-2}$."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "For $b>1$, $\\int_{1}^{b}x^{-4}\\,dx$ equals",
+    "options": [
+     "$\\frac{1}{3b^{3}}-\\frac{1}{3}$",
+     "$1-\\frac{1}{b^{3}}$",
+     "$\\frac{1}{3}-\\frac{1}{3b^{3}}$",
+     "$\\frac{1}{3}-\\frac{1}{b^{3}}$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "$\\int x^{-4}dx=-\\frac{1}{3}x^{-3}$; evaluate from $1$ to $b$.",
+    "option_explanations": [
+     "Sign reversed (lower minus upper).",
+     "Missed the factor $\\frac13$ from $\\frac{x^{-3}}{-3}$.",
+     "Correct.",
+     "Dropped the $\\frac13$ on the $b$ term only."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Compute the area over $[1,b]$, $b>1$, under $y=x^{-3}$.",
+    "options": [
+     "$\\frac{1}{2}-\\frac{1}{2b^{2}}$",
+     "$\\frac{1}{2b^{2}}-\\frac{1}{2}$",
+     "$\\frac{1}{2}-\\frac{1}{b^{2}}$",
+     "$1-\\frac{1}{b^{2}}$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "$\\int_1^b x^{-3}dx=\\left[-\\frac{1}{2x^{2}}\\right]_1^b$.",
+    "option_explanations": [
+     "Correct.",
+     "Upper and lower values swapped.",
+     "Lost the $\\frac12$ on the $b$ term.",
+     "Used the antiderivative of $x^{-2}$ instead."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "The area under $y=\\frac{1}{x^{2}}$ over $[1,\\infty)$ is",
+   "options": [
+    "$\\frac{1}{2}$",
+    "$\\frac{3}{2}$",
+    "$1$",
+    "diverges"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "$\\lim_{b\\to\\infty}(1-1/b)=1$, so the area is finite.",
+   "option_explanations": [
+    "$\\frac12$ is the value for $1/x^{3}$.",
+    "Added $\\frac12$ to the value $1$ instead of taking $\\lim\\left(1-\\frac1b\\right)=1$.",
+    "Correct.",
+    "Infinite extent does not force infinite area."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Find the area under $y=\\frac{1}{x^{4}}$ on $[1,\\infty)$.",
+    "options": [
+     "$\\frac{1}{3}$",
+     "$\\frac{1}{4}$",
+     "$1$",
+     "$\\infty$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "$\\lim_{b\\to\\infty}\\left(\\frac13-\\frac{1}{3b^3}\\right)=\\frac13$.",
+    "option_explanations": [
+     "Correct.",
+     "$\\frac14$ ignores that $\\int x^{-4}=-\\frac{x^{-3}}{3}$.",
+     "Forgot the factor $\\frac13$.",
+     "The area is finite since $4>1$."
+    ]
+   },
+   {
+    "type": "basic",
+    "question": "Find the area of the region under $y=x^{-7}$ over $[1,\\infty)$.",
+    "answer": "$A=\\lim_{b\\to\\infty}\\int_{1}^{b}x^{-7}dx=\\lim_{b\\to\\infty}\\left[-\\frac{1}{6x^{6}}\\right]_{1}^{b}=\\lim_{b\\to\\infty}\\left(\\frac{1}{6}-\\frac{1}{6b^{6}}\\right)=\\frac{1}{6}$."
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "$\\int_{1}^{\\infty}\\frac{dx}{x^{3}}=$",
+   "options": [
+    "$1$",
+    "$-\\frac{1}{2}$",
+    "$\\infty$",
+    "$\\frac{1}{2}$"
+   ],
+   "correct": [
+    3
+   ],
+   "explanation": "$\\left[-\\frac{1}{2x^{2}}\\right]_1^b=\\frac12-\\frac{1}{2b^2}\\to\\frac12$.",
+   "option_explanations": [
+    "$1$ is the value for $1/x^2$.",
+    "Sign error: lower limit contributes $+\\frac12$.",
+    "It converges since the power $3>1$.",
+    "Correct."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int_{2}^{\\infty}\\frac{dx}{x^{3}}$.",
+    "options": [
+     "$\\frac{1}{2}$",
+     "$\\frac{1}{8}$",
+     "$-\\frac{1}{8}$",
+     "$\\frac{1}{4}$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "$\\left[-\\frac{1}{2x^{2}}\\right]_2^\\infty=0+\\frac{1}{8}$.",
+    "option_explanations": [
+     "$\\frac12$ is the value starting from $1$, not $2$.",
+     "Correct.",
+     "Sign error with the lower limit.",
+     "Forgot the $\\frac12$ factor: $\\frac{1}{2^2}$."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "What is $\\int_{1}^{\\infty}x^{-6}\\,dx$?",
+    "options": [
+     "$\\frac{1}{6}$",
+     "$\\frac{1}{5}$",
+     "$1$",
+     "$-\\frac{1}{5}$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "$\\int x^{-6}dx=-\\frac{x^{-5}}{5}$, giving $0+\\frac15$.",
+    "option_explanations": [
+     "Wrong denominator: the power rule gives $-5$, not $-6$.",
+     "Correct.",
+     "Dropped the factor $\\frac15$.",
+     "Sign error at the lower limit."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "$\\int_{1}^{\\infty}\\frac{dx}{x}$",
+   "options": [
+    "$1$",
+    "$0$",
+    "$e$",
+    "diverges"
+   ],
+   "correct": [
+    3
+   ],
+   "explanation": "$\\lim_{b\\to\\infty}\\ln b=\\infty$, so the integral diverges.",
+   "option_explanations": [
+    "$1$ is the value for $1/x^2$.",
+    "Only $\\ln 1=0$ was used; the upper limit gives $\\infty$.",
+    "$e$ is the base of the logarithm, not the limit; $\\ln b\\to\\infty$.",
+    "Correct."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int_{2}^{\\infty}\\frac{dx}{x}$.",
+    "options": [
+     "diverges",
+     "$\\ln 2$",
+     "$-\\ln 2$",
+     "$0$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "$[\\ln x]_2^b=\\ln b-\\ln2\\to\\infty$.",
+    "option_explanations": [
+     "Correct.",
+     "Ignored the upper limit's growth.",
+     "Used only the lower-limit term, with a sign.",
+     "$\\ln b$ does not tend to $0$."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "What happens to $\\int_{1}^{\\infty}\\frac{dx}{\\sqrt{x}}$?",
+    "options": [
+     "$2$",
+     "$1$",
+     "diverges",
+     "$\\frac{1}{2}$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "$[2\\sqrt x]_1^b=2\\sqrt b-2\\to\\infty$.",
+    "option_explanations": [
+     "$2$ would come from dropping $\\sqrt b$.",
+     "$1$ is the value for $1/x^2$.",
+     "Correct.",
+     "$\\frac12$ is a wrong antiderivative coefficient."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "On $[1,\\infty)$, why can the area under $1/x^{2}$ be finite while the area under $1/x$ is infinite?",
+   "options": [
+    "$1/x^{2}$ is larger than $1/x$ there",
+    "$1/x^{2}$ has a vertical asymptote",
+    "$1/x$ is negative for large $x$",
+    "$1/x^{2}$ tends to zero faster, so area builds up more slowly"
+   ],
+   "correct": [
+    3
+   ],
+   "explanation": "Both approach $0$, but $1/x^{2}$ decays rapidly enough for the accumulated area to stay bounded.",
+   "option_explanations": [
+    "$1/x^2\\le1/x$ for $x\\ge1$; it is smaller.",
+    "Neither function has an asymptote on $[1,\\infty)$.",
+    "Both are positive on the interval.",
+    "Correct."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "The graphs of $1/x^{3}$, $1/x^{2}$, $1/x$ on $[1,\\infty)$ look alike. Which statement explains the different areas?",
+    "options": [
+     "Higher powers have larger values",
+     "Higher powers decay faster, so less area accumulates",
+     "Only $1/x$ is continuous",
+     "Only $1/x^{3}$ is positive"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "The area over $[1,b]$ grows like $\\ln b$ for $1/x$ but stays bounded for $1/x^2$ and $1/x^3$.",
+    "option_explanations": [
+     "Larger powers give smaller values for $x>1$.",
+     "Correct.",
+     "All three are continuous on $[1,\\infty)$.",
+     "All three are positive."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "As $b\\to\\infty$, $\\int_{1}^{b}\\frac{dx}{x}$ grows without bound while $\\int_{1}^{b}\\frac{dx}{x^{2}}$ approaches $1$. The reason is that",
+    "options": [
+     "$1/x^{2}$ is not even defined at the point $x=1$",
+     "$1/x$ is not continuous at the starting point $x=1$",
+     "$1/x^{2}$ decays faster than $1/x$",
+     "both integrals start at the same point"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Rate of decay at infinity decides finiteness of the area.",
+    "option_explanations": [
+     "$1/x^2$ is defined at $1$.",
+     "$1/x$ is continuous on $[1,\\infty)$.",
+     "Correct.",
+     "The starting point is the same for both, so it cannot distinguish them."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "For which $p$ does $\\int_{1}^{\\infty}\\frac{dx}{x^{p}}$ converge?",
+   "options": [
+    "$p>1$",
+    "$p\\ge1$",
+    "$p<1$",
+    "$p>0$"
+   ],
+   "correct": [
+    0
+   ],
+   "explanation": "Theorem 7.8.2: converges iff $p>1$ (and then equals $\\frac{1}{p-1}$).",
+   "option_explanations": [
+    "Correct.",
+    "$p=1$ gives $\\ln b\\to\\infty$, diverges.",
+    "For $p<1$, $b^{1-p}\\to\\infty$.",
+    "$0<p\\le1$ diverges."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Which of the following improper integrals converges?",
+    "options": [
+     "$\\int_{1}^{\\infty}x^{-1}\\,dx$",
+     "$\\int_{1}^{\\infty}x^{-1/2}\\,dx$",
+     "$\\int_{1}^{\\infty}x^{-3/2}\\,dx$",
+     "$\\int_{1}^{\\infty}x^{0}\\,dx$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Only exponent $p=3/2>1$ gives convergence.",
+    "option_explanations": [
+     "$p=1$: $\\ln b\\to\\infty$.",
+     "$p=\\frac12<1$: $2\\sqrt b\\to\\infty$.",
+     "Correct.",
+     "$p=0$: the integral of $1$ grows like $b-1$."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which integral diverges?",
+    "options": [
+     "$\\int_{1}^{\\infty}\\frac{dx}{x^{0.9}}$",
+     "$\\int_{1}^{\\infty}\\frac{dx}{x^{1.1}}$",
+     "$\\int_{1}^{\\infty}\\frac{dx}{x^{2}}$",
+     "$\\int_{1}^{\\infty}\\frac{dx}{x^{5}}$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Divergence needs $p\\le1$; $0.9<1$.",
+    "option_explanations": [
+     "Correct.",
+     "$p=1.1>1$ converges (value $10$).",
+     "$p=2>1$ converges (value $1$).",
+     "$p=5>1$ converges (value $\\frac14$)."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "$\\int_{1}^{\\infty}x^{-5/2}\\,dx=$",
+   "options": [
+    "$\\frac{3}{2}$",
+    "$\\frac{5}{2}$",
+    "$\\frac{2}{5}$",
+    "$\\frac{2}{3}$"
+   ],
+   "correct": [
+    3
+   ],
+   "explanation": "For $p>1$ the value is $\\frac{1}{p-1}=\\frac{1}{3/2}$.",
+   "option_explanations": [
+    "Inverted the fraction: $\\frac{1}{p-1}$, not $p-1$.",
+    "Used $p$ itself.",
+    "Used $\\frac1p$ instead of $\\frac{1}{p-1}$.",
+    "Correct."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int_{1}^{\\infty}\\frac{dx}{x^{3/2}}$.",
+    "options": [
+     "$\\frac{1}{2}$",
+     "$2$",
+     "$\\frac{2}{3}$",
+     "$\\frac{3}{2}$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "$\\frac{1}{p-1}$ with $p=\\frac32$ is $2$.",
+    "option_explanations": [
+     "Inverted: $p-1=\\frac12$, so the value is its reciprocal.",
+     "Correct.",
+     "Used $\\frac1p$.",
+     "Used $p$ itself."
+    ]
+   },
+   {
+    "type": "basic",
+    "question": "Evaluate $\\int_{1}^{\\infty}\\frac{dx}{x^{11/10}}$.",
+    "answer": "$p=\\frac{11}{10}>1$, so it converges: $\\lim_{b\\to\\infty}\\left[\\frac{x^{-1/10}}{-1/10}\\right]_{1}^{b}=\\lim_{b\\to\\infty}\\left(10-10\\,b^{-1/10}\\right)=10$."
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "An antiderivative of $(1-x)e^{-x}$ is",
+   "options": [
+    "$-xe^{-x}$",
+    "$xe^{-x}$",
+    "$(1-x)e^{-x}$",
+    "$(x-2)e^{-x}$"
+   ],
+   "correct": [
+    1
+   ],
+   "explanation": "Parts with $u=1-x$, $dv=e^{-x}dx$ gives $-(1-x)e^{-x}-e^{-x}=xe^{-x}$; check: $(xe^{-x})'=(1-x)e^{-x}$.",
+   "option_explanations": [
+    "Its derivative is $(x-1)e^{-x}$, the opposite sign.",
+    "Correct.",
+    "Its derivative is $(x-2)e^{-x}$, the opposite sign of the integrand.",
+    "Its derivative is $(3-x)e^{-x}$, not the integrand."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Find an antiderivative of $(2-x)e^{-x}$.",
+    "options": [
+     "$(1-x)e^{-x}$",
+     "$(x-3)e^{-x}$",
+     "$-(x+1)e^{-x}$",
+     "$(x-1)e^{-x}$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "Parts with $u=2-x$, $dv=e^{-x}dx$.",
+    "option_explanations": [
+     "Its derivative is $(x-2)e^{-x}$, wrong sign.",
+     "Derivative is $(4-x)e^{-x}$.",
+     "Derivative is $x e^{-x}$.",
+     "Correct."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "$\\int(x+1)e^{-x}\\,dx=$",
+    "options": [
+     "$-(x+2)e^{-x}+C$",
+     "$-(x+1)e^{-x}+C$",
+     "$(x+2)e^{-x}+C$",
+     "$(x+1)e^{-x}+C$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Parts: $u=x+1$, $dv=e^{-x}dx$, $v=-e^{-x}$; $-(x+1)e^{-x}+\\int e^{-x}dx$.",
+    "option_explanations": [
+     "Correct.",
+     "Forgot the $\\int v\\,du$ term; its derivative is $xe^{-x}$.",
+     "Sign error from $\\int e^{-x}dx=-e^{-x}$; its derivative is $-(x+1)e^{-x}$.",
+     "Its derivative is $-xe^{-x}$, not the integrand."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "To evaluate $\\int_{0}^{\\infty}(1-x)e^{-x}\\,dx$ by parts, a good choice is",
+   "options": [
+    "$u=e^{-x},\\ dv=(1-x)dx$",
+    "$u=1,\\ dv=(1-x)e^{-x}dx$",
+    "$u=1-x,\\ dv=e^{-x}dx$",
+    "$u=e^{-x}(1-x),\\ dv=dx$"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "By LIATE the algebraic factor is $u$; it becomes simpler on differentiating.",
+   "option_explanations": [
+    "Taking the exponential as $u$ makes the remaining integral no simpler.",
+    "This leaves the original integral as $dv$, with no progress.",
+    "Correct.",
+    "Then $v=x$ and $\\int v\\,du$ is harder than the original."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "For $\\int_{0}^{\\infty}x\\,e^{-2x}\\,dx$, which parts setup is the right one?",
+    "options": [
+     "$u=e^{-2x},\\ dv=x\\,dx$",
+     "$u=xe^{-2x},\\ dv=dx$",
+     "$u=x^{2},\\ dv=e^{-2x}dx$",
+     "$u=x,\\ dv=e^{-2x}dx$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "Choose $u=x$ (algebraic) so that $du=dx$ is simpler, and $v=-\\frac12e^{-2x}$.",
+    "option_explanations": [
+     "This makes $v=x^2/2$ and the next integral worse.",
+     "This is no simplification of the integrand.",
+     "$x^2$ is not a factor of the integrand.",
+     "Correct."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which pair of choices works for $\\int(3-x)e^{-x}\\,dx$?",
+    "options": [
+     "$u=e^{-x},\\ dv=(3-x)dx$",
+     "$u=3-x,\\ dv=e^{-x}dx$",
+     "$u=3,\\ dv=-xe^{-x}dx$",
+     "$u=x,\\ dv=3e^{-x}dx$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "The polynomial factor goes in $u$; $du=-dx$ then removes it.",
+    "option_explanations": [
+     "Gives $v=3x-x^2/2$: more complicated.",
+     "Correct.",
+     "This splits the integral without simplifying.",
+     "This drops the term $-x e^{-x}$ and does not simplify."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "basic",
+   "question": "Evaluate $\\int_{0}^{\\infty}(1-x)e^{-x}\\,dx$, showing the integration by parts and the limit.",
+   "answer": "Parts: $u=1-x$, $dv=e^{-x}dx$, so $du=-dx$, $v=-e^{-x}$.\n$\\int(1-x)e^{-x}dx=-(1-x)e^{-x}-\\int e^{-x}dx=-(1-x)e^{-x}+e^{-x}=xe^{-x}+C$.\n$\\int_{0}^{\\infty}(1-x)e^{-x}dx=\\lim_{b\\to\\infty}\\left[xe^{-x}\\right]_{0}^{b}=\\lim_{b\\to\\infty}be^{-b}-0$.\n$be^{-b}=\\frac{b}{e^{b}}$ is of type $\\infty/\\infty$; L'Hopital gives $\\lim\\frac{1}{e^{b}}=0$.\nSo the integral converges, and its value is $0$."
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int_{0}^{\\infty}x\\,e^{-x}\\,dx$.",
+    "options": [
+     "$-2$",
+     "$2$",
+     "$1$",
+     "$-1$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "$\\int xe^{-x}dx=-(x+1)e^{-x}$; at $b\\to\\infty$ it tends to $0$, at $0$ it is $-1$, so the value is $0-(-1)=1$.",
+    "option_explanations": [
+     "Kept $-(x+2)e^{-x}$ with the wrong overall sign, so the limits give $-2$.",
+     "Doubled the $\\int v\\,du$ term, giving $-(x+2)e^{-x}$, so the lower limit adds $2$.",
+     "Correct.",
+     "Sign slip on $\\int v\\,du$ gave $(1-x)e^{-x}$, so the lower limit contributes $-1$."
+    ]
+   },
+   {
+    "type": "basic",
+    "question": "Evaluate $\\int_{0}^{\\infty}(3-x)e^{-x}\\,dx$.",
+    "answer": "Parts with $u=3-x$, $dv=e^{-x}dx$: $\\int(3-x)e^{-x}dx=-(3-x)e^{-x}-\\int e^{-x}dx=(x-2)e^{-x}+C$.\n$\\lim_{b\\to\\infty}\\left[(x-2)e^{-x}\\right]_{0}^{b}=\\lim_{b\\to\\infty}\\frac{b-2}{e^{b}}-(-2)=0+2=2$ (L'Hopital for the limit)."
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "$\\lim_{b\\to\\infty}b\\,e^{-b}=$",
+   "options": [
+    "$0$",
+    "$\\frac{1}{e}$",
+    "$-\\infty$",
+    "$\\frac{1}{2}$"
+   ],
+   "correct": [
+    0
+   ],
+   "explanation": "Write $b/e^{b}$ ($\\infty/\\infty$); L'Hopital gives $1/e^{b}\\to0$.",
+   "option_explanations": [
+    "Correct.",
+    "$e^{-b}\\to0$, not $e^{-1}$.",
+    "$be^{-b}$ stays positive.",
+    "L'Hopital leaves $1/e^{b}\\to0$, not $\\frac12$."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Find $\\lim_{b\\to\\infty}\\frac{e^{b}}{b}$.",
+    "options": [
+     "$0$",
+     "$1$",
+     "$\\infty$",
+     "$e$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Type $\\infty/\\infty$; L'Hopital gives $\\lim e^{b}/1=\\infty$.",
+    "option_explanations": [
+     "That is the limit of $b/e^{b}$, the reciprocal.",
+     "Both grow, but not at the same rate.",
+     "Correct.",
+     "$e$ is not the limit; $e^{b}$ itself is unbounded."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\lim_{b\\to\\infty}\\frac{3b+1}{e^{b}}$.",
+    "options": [
+     "$0$",
+     "$3e$",
+     "$-\\infty$",
+     "$\\frac{1}{3}$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Type $\\infty/\\infty$; L'Hopital gives $3/e^{b}\\to0$.",
+    "option_explanations": [
+     "Correct.",
+     "Multiplied instead of cancelling the growth.",
+     "$e^{b}$ outgrows any linear function.",
+     "Inverted the coefficient."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "$\\int_{0}^{\\infty}(1-x)e^{-x}\\,dx=0$ means that the net signed area between $y=(1-x)e^{-x}$ and $[0,\\infty)$ is",
+   "options": [
+    "zero, since the graph lies on the axis",
+    "infinite, but balanced",
+    "not defined",
+    "zero, with the part above the axis cancelling the part below"
+   ],
+   "correct": [
+    3
+   ],
+   "explanation": "The integrand is positive on $(0,1)$ and negative for $x>1$; the signed areas cancel.",
+   "option_explanations": [
+    "The graph is not the axis; $1-x\\ne0$ for $x\\ne1$.",
+    "The integral converges to a finite value.",
+    "It converges, so the net area is defined and equals $0$.",
+    "Correct."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "If an improper integral of a function taking both signs equals $0$, the integral is",
+    "options": [
+     "divergent, with no area",
+     "convergent, with total signed area $0$",
+     "convergent, so the function is $0$",
+     "divergent, since $0$ is no valid value"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Convergence only needs a finite limit; $0$ is finite.",
+    "option_explanations": [
+     "A limit equal to $0$ exists, so it converges.",
+     "Correct.",
+     "A zero integral does not force $f\\equiv0$.",
+     "$0$ is a perfectly good value of a limit."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "For $f(x)=(2-x)e^{-x}$ the value of $\\int_{0}^{\\infty}f(x)\\,dx$ is positive. This is read as",
+    "options": [
+     "area below the axis exceeds that above",
+     "net signed area above the axis exceeds that below",
+     "the integral diverges",
+     "$f$ is positive everywhere"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "The value is the net signed area: positive means more area above the axis.",
+    "option_explanations": [
+     "That would give a negative value.",
+     "Correct.",
+     "The value $1$ is finite.",
+     "$f(x)<0$ for $x>2$."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "$\\int_{-\\infty}^{\\infty}\\frac{dx}{1+x^{2}}=$",
+   "options": [
+    "$\\frac{\\pi}{2}$",
+    "$\\frac{\\pi}{4}$",
+    "$2\\pi$",
+    "$\\pi$"
+   ],
+   "correct": [
+    3
+   ],
+   "explanation": "Split at $0$: each half equals $\\tan^{-1}$ difference $\\frac{\\pi}{2}$, total $\\pi$.",
+   "option_explanations": [
+    "$\\frac{\\pi}{2}$ is only one half.",
+    "$\\frac{\\pi}{4}$ would be $\\tan^{-1}1$.",
+    "Each half is $\\frac{\\pi}{2}$, not $\\pi$.",
+    "Correct."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int_{-\\infty}^{\\infty}\\frac{dx}{x^{2}+9}$.",
+    "options": [
+     "$\\frac{\\pi}{3}$",
+     "$\\frac{\\pi}{6}$",
+     "$\\pi$",
+     "$\\frac{\\pi}{9}$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "$\\int\\frac{dx}{x^{2}+9}=\\frac13\\tan^{-1}\\frac{x}{3}$; total change $\\frac13\\cdot\\pi$.",
+    "option_explanations": [
+     "Correct.",
+     "$\\frac{\\pi}{6}$ is the integral over only one half-line.",
+     "Forgot the factor $\\frac13$.",
+     "Divided by $9$ instead of $3$."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Compute $\\int_{-\\infty}^{\\infty}\\frac{dx}{x^{2}+4}$.",
+    "options": [
+     "$\\frac{\\pi}{4}$",
+     "$\\pi$",
+     "$\\frac{\\pi}{2}$",
+     "$2\\pi$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "$\\frac12\\tan^{-1}\\frac{x}{2}$ changes by $\\frac12\\cdot\\pi$.",
+    "option_explanations": [
+     "That is the half-line value $\\frac12\\cdot\\frac{\\pi}{2}$.",
+     "Forgot the factor $\\frac12$.",
+     "Correct.",
+     "Multiplied by $2$ instead of dividing."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "$\\lim_{x\\to-\\infty}\\tan^{-1}x=$",
+   "options": [
+    "$\\frac{\\pi}{2}$",
+    "$0$",
+    "$-\\pi$",
+    "$-\\frac{\\pi}{2}$"
+   ],
+   "correct": [
+    3
+   ],
+   "explanation": "$\\tan^{-1}$ has horizontal asymptotes $\\pm\\frac{\\pi}{2}$.",
+   "option_explanations": [
+    "That is the limit as $x\\to+\\infty$.",
+    "$\\tan^{-1}0=0$, not the limit at infinity.",
+    "The range of $\\tan^{-1}$ is $(-\\frac\\pi2,\\frac\\pi2)$.",
+    "Correct."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "$\\lim_{x\\to\\infty}\\tan^{-1}x=$",
+    "options": [
+     "$\\pi$",
+     "$\\frac{\\pi}{2}$",
+     "$\\infty$",
+     "$1$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "The graph of $y=\\tan^{-1}x$ levels off at $\\frac{\\pi}{2}$.",
+    "option_explanations": [
+     "$\\tan^{-1}$ never exceeds $\\frac{\\pi}{2}$.",
+     "Correct.",
+     "$\\tan^{-1}$ is bounded.",
+     "$\\tan^{-1}x$ climbs past $1$ (at $x\\approx1.56$) and keeps rising toward $\\frac{\\pi}{2}$."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Find $\\lim_{x\\to\\infty}\\tan^{-1}(2x)$.",
+    "options": [
+     "$\\pi$",
+     "$\\frac{\\pi}{4}$",
+     "$\\frac{\\pi}{2}$",
+     "$2$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "As $x\\to\\infty$, $2x\\to\\infty$, and $\\tan^{-1}$ of anything tending to $\\infty$ tends to $\\frac{\\pi}{2}$.",
+    "option_explanations": [
+     "The factor $2$ is inside the arctan, not outside.",
+     "$\\frac{\\pi}{4}$ is $\\tan^{-1}1$.",
+     "Correct.",
+     "$\\tan^{-1}$ is bounded by $\\frac{\\pi}{2}$."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "$\\int_{0}^{\\infty}\\frac{dx}{1+x^{2}}=$",
+   "options": [
+    "$\\frac{\\pi}{2}$",
+    "$\\pi$",
+    "$\\frac{\\pi}{4}$",
+    "$1$"
+   ],
+   "correct": [
+    0
+   ],
+   "explanation": "$[\\tan^{-1}x]_0^b\\to\\frac{\\pi}{2}-0$.",
+   "option_explanations": [
+    "Correct.",
+    "$\\pi$ is the integral over the whole line.",
+    "$\\frac{\\pi}{4}$ would be $\\tan^{-1}1$.",
+    "This is not the value of the arctan limit."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int_{-\\infty}^{0}\\frac{dx}{x^{2}+16}$.",
+    "options": [
+     "$\\frac{\\pi}{4}$",
+     "$\\frac{\\pi}{16}$",
+     "$\\frac{\\pi}{8}$",
+     "$\\frac{\\pi}{2}$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "$\\frac14\\tan^{-1}\\frac{x}{4}$ from $-\\infty$ to $0$: $\\frac14\\left(0+\\frac{\\pi}{2}\\right)$.",
+    "option_explanations": [
+     "Forgot the $\\frac12$ from the half-line limit.",
+     "Divided by $16$ instead of $4$.",
+     "Correct.",
+     "Forgot the factor $\\frac14$."
+    ]
+   },
+   {
+    "type": "basic",
+    "question": "Evaluate $\\int_{0}^{\\infty}\\frac{dx}{x^{2}+25}$.",
+    "answer": "$\\int\\frac{dx}{x^{2}+25}=\\frac15\\tan^{-1}\\frac{x}{5}$. Then $\\lim_{b\\to\\infty}\\frac15\\left[\\tan^{-1}\\frac{x}{5}\\right]_0^b=\\frac15\\left(\\frac{\\pi}{2}-0\\right)=\\frac{\\pi}{10}$."
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "In splitting $\\int_{-\\infty}^{\\infty}f(x)\\,dx$ at a number $c$, choosing a different $c$",
+   "options": [
+    "changes neither convergence nor the value",
+    "changes the value but not convergence",
+    "can change convergence but not value",
+    "changes both"
+   ],
+   "correct": [
+    0
+   ],
+   "explanation": "The note after Example 4: the choice of $c$ does not matter.",
+   "option_explanations": [
+    "Correct.",
+    "The two pieces always add up to the same total.",
+    "Convergence is also independent of $c$.",
+    "Neither is affected."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "You evaluate $\\int_{-\\infty}^{\\infty}\\frac{dx}{1+x^{2}}$ once splitting at $c=0$ and once at $c=5$. The two answers",
+    "options": [
+     "differ by $\\tan^{-1}5$",
+     "agree only if $c=0$",
+     "differ, with $c=5$ giving less",
+     "are the same, $\\pi$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "The value does not depend on $c$.",
+    "option_explanations": [
+     "The pieces change but the sum does not.",
+     "Any $c$ gives the same total.",
+     "The total does not depend on $c$.",
+     "Correct."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which statement about the splitting point $c$ in Definition 7.8.3 is true?",
+    "options": [
+     "$c$ must be $0$",
+     "any real $c$ works and gives the same result",
+     "$c$ must be the midpoint",
+     "$c$ must make both halves equal"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "$c$ is arbitrary.",
+    "option_explanations": [
+     "Usually $c=0$ is convenient, but not required.",
+     "Correct.",
+     "There is no midpoint of an infinite interval.",
+     "The halves need not be equal."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "$\\int_{-\\infty}^{0}e^{2x}\\,dx=$",
+   "options": [
+    "$2$",
+    "$\\frac{1}{2}$",
+    "$-\\frac{1}{2}$",
+    "$\\infty$"
+   ],
+   "correct": [
+    1
+   ],
+   "explanation": "$\\left[\\frac12e^{2x}\\right]_{a}^{0}=\\frac12-\\frac12e^{2a}\\to\\frac12$.",
+   "option_explanations": [
+    "Forgot to divide by the inner coefficient $2$; also inverted.",
+    "Correct.",
+    "Sign error at the limit $a\\to-\\infty$.",
+    "$e^{2x}\\to0$ as $x\\to-\\infty$, so it converges."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int_{-\\infty}^{0}e^{3x}\\,dx$.",
+    "options": [
+     "$3$",
+     "$1$",
+     "$-\\frac{1}{3}$",
+     "$\\frac{1}{3}$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "$\\frac13e^{3x}$ goes from $0$ (as $x\\to-\\infty$) to $\\frac13$.",
+    "option_explanations": [
+     "Multiplied by $3$ instead of dividing.",
+     "Forgot the factor $\\frac13$.",
+     "Sign error: upper minus lower is $\\frac13-0$.",
+     "Correct."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "What is $\\int_{-\\infty}^{1}e^{2x}\\,dx$?",
+    "options": [
+     "$\\frac{e^{2}}{2}$",
+     "$e^{2}$",
+     "$\\frac{1}{2}$",
+     "$2e^{2}$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "$\\frac12e^{2x}$ at $x=1$ is $\\frac{e^2}{2}$; at $-\\infty$ it is $0$.",
+    "option_explanations": [
+     "Correct.",
+     "Missed the factor $\\frac12$.",
+     "Used the upper limit $0$ instead of $1$.",
+     "Multiplied by $2$ instead of dividing."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "$\\int_{-\\infty}^{\\infty}x\\,dx$ is",
+   "options": [
+    "$0$, by symmetry",
+    "$\\infty$",
+    "divergent",
+    "$\\frac{1}{2}$"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "$\\int_{0}^{\\infty}x\\,dx=\\lim\\frac{b^{2}}{2}=\\infty$, so the whole integral diverges; symmetric cancelling is not allowed.",
+   "option_explanations": [
+    "Cancellation would need both halves to converge.",
+    "Divergent integrals are not assigned a value, not even $\\infty$.",
+    "Correct.",
+    "No power-rule step gives $\\frac12$ at infinity."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int_{-\\infty}^{\\infty}\\frac{x}{1+x^{2}}\\,dx$.",
+    "options": [
+     "$0$",
+     "$\\pi$",
+     "$\\ln 2$",
+     "it diverges"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "Each half is $\\frac12\\ln(1+x^2)\\to\\infty$; the integral does not converge, despite oddness.",
+    "option_explanations": [
+     "Odd symmetry cancels only when the two halves converge.",
+     "$\\pi$ belongs to $1/(1+x^{2})$.",
+     "$\\ln 2$ is not a limit of $\\frac12\\ln(1+b^{2})$.",
+     "Correct."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int_{-\\infty}^{\\infty}x^{3}\\,dx$.",
+    "options": [
+     "$0$",
+     "it diverges",
+     "$\\frac14$",
+     "$\\infty$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "$\\int_{0}^{\\infty}x^{3}dx=\\lim\\frac{b^{4}}{4}=\\infty$, so it diverges.",
+    "option_explanations": [
+     "A symmetric limit is not the definition.",
+     "Correct.",
+     "$\\frac14$ is a missing limit step.",
+     "Divergent integrals are not assigned any value."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "$\\int_{-\\infty}^{\\infty}e^{x}\\,dx$ is",
+   "options": [
+    "$1$",
+    "$0$",
+    "divergent",
+    "$2$"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "$\\int_{-\\infty}^{0}e^{x}dx=1$ but $\\int_{0}^{\\infty}e^{x}dx=\\lim(e^{b}-1)=\\infty$, so the whole integral diverges.",
+   "option_explanations": [
+    "$1$ is only the left half.",
+    "Odd-looking cancellation does not apply; $e^{x}>0$.",
+    "Correct.",
+    "Adding $1+1$ treats the right half as convergent."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int_{-\\infty}^{\\infty}e^{-2|x|}\\,dx$.",
+    "options": [
+     "$1$",
+     "$\\frac{1}{2}$",
+     "$\\frac{1}{4}$",
+     "diverges"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Each half is $\\int_{0}^{\\infty}e^{-2x}dx=\\frac12$ (by symmetry), total $1$.",
+    "option_explanations": [
+     "Correct.",
+     "Only one half-line.",
+     "Divided by $2$ twice.",
+     "Both halves converge."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int_{-\\infty}^{\\infty}e^{-x}\\,dx$.",
+    "options": [
+     "$1$",
+     "$-1$",
+     "diverges",
+     "$0$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "$\\int_{-\\infty}^{0}e^{-x}dx=\\lim(e^{-a}\\cdot(-1)+1)$ blows up as $a\\to-\\infty$; one divergent half suffices.",
+    "option_explanations": [
+     "$1$ is only the right half.",
+     "Sign error on the antiderivative.",
+     "Correct.",
+     "No cancellation: the integrand is positive."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "$\\int_{0}^{1}\\frac{dx}{\\sqrt{1-x}}=$",
+   "options": [
+    "$2$",
+    "$\\frac{1}{2}$",
+    "$-\\frac{1}{2}$",
+    "$\\frac{3}{2}$"
+   ],
+   "correct": [
+    0
+   ],
+   "explanation": "$\\lim_{k\\to1^-}\\left[-2\\sqrt{1-x}\\right]_0^k=0+2=2$.",
+   "option_explanations": [
+    "Correct.",
+    "Missed the factor $2$ from $\\int u^{-1/2}du$.",
+    "Used $\\frac{u^{1/2}}{1/2}$ upside down as $\\frac12$ and then kept the minus from $du=-dx$.",
+    "Added $1$ to the exponent as $-\\frac12+2$, using $\\frac32$ instead of $\\frac12$."
+   ]
+  },
+  "versions": [
+   {
+    "type": "basic",
+    "question": "Evaluate $\\int_{0}^{4}\\frac{dx}{\\sqrt{4-x}}$.",
+    "answer": "The integrand is infinite at $x=4$ (right endpoint), so $\\int_{0}^{4}\\frac{dx}{\\sqrt{4-x}}=\\lim_{k\\to4^{-}}\\int_{0}^{k}(4-x)^{-1/2}dx=\\lim_{k\\to4^{-}}\\left[-2\\sqrt{4-x}\\right]_{0}^{k}=\\lim_{k\\to4^{-}}\\left(-2\\sqrt{4-k}+4\\right)=4$."
+   },
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int_{0}^{1}(1-x)^{-1/3}\\,dx$.",
+    "options": [
+     "$\\frac{2}{3}$",
+     "$-\\frac{3}{2}$",
+     "diverges",
+     "$\\frac{3}{2}$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "$\\int(1-x)^{-1/3}dx=-\\frac32(1-x)^{2/3}$; from $0$ to $1$: $0+\\frac32$.",
+    "option_explanations": [
+     "Inverted the factor $\\frac{1}{2/3}$.",
+     "Sign error from the inner derivative $-1$.",
+     "The exponent $-\\frac13>-1$, so it converges.",
+     "Correct."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "$\\int\\frac{dx}{\\sqrt{1-x}}=$",
+   "options": [
+    "$2\\sqrt{1-x}+C$",
+    "$-2\\sqrt{1-x}+C$",
+    "$-\\sqrt{1-x}+C$",
+    "$\\ln\\sqrt{1-x}+C$"
+   ],
+   "correct": [
+    1
+   ],
+   "explanation": "Let $u=1-x$, $du=-dx$: $-\\int u^{-1/2}du=-2u^{1/2}$.",
+   "option_explanations": [
+    "Missed the minus sign from $du=-dx$.",
+    "Correct.",
+    "Missed the factor $2$.",
+    "Used the log rule instead of the power rule."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Find $\\int\\frac{dx}{\\sqrt{4-x}}$.",
+    "options": [
+     "$2\\sqrt{4-x}+C$",
+     "$-2\\sqrt{4-x}+C$",
+     "$-\\frac{1}{2}\\sqrt{4-x}+C$",
+     "$\\frac{1}{2\\sqrt{4-x}}+C$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "With $u=4-x$, the integral is $-2\\sqrt{u}$.",
+    "option_explanations": [
+     "Sign error: $d(4-x)=-dx$.",
+     "Correct.",
+     "Used $\\frac{1}{2}$ instead of $2$ from the power rule.",
+     "Differentiated instead of integrating."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Find $\\int\\frac{dx}{\\sqrt{3-2x}}$.",
+    "options": [
+     "$\\sqrt{3-2x}+C$",
+     "$-2\\sqrt{3-2x}+C$",
+     "$-\\frac{1}{2}\\sqrt{3-2x}+C$",
+     "$-\\sqrt{3-2x}+C$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "$u=3-2x$, $du=-2dx$: $-\\frac12\\int u^{-1/2}du=-\\frac12\\cdot2u^{1/2}$.",
+    "option_explanations": [
+     "Missed the sign from $du=-2\\,dx$.",
+     "Forgot to divide by the inner derivative $2$.",
+     "Mixed the factors $\\frac12$ and $2$.",
+     "Correct."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "$f$ is continuous on $[a,b)$ with an infinite discontinuity at $b$. Then $\\int_{a}^{b}f(x)\\,dx$ is defined as",
+   "options": [
+    "$\\lim_{k\\to b^{-}}\\int_{a}^{k}f(x)\\,dx$",
+    "$\\lim_{k\\to b^{+}}\\int_{a}^{k}f(x)\\,dx$",
+    "$\\lim_{k\\to a^{+}}\\int_{k}^{b}f(x)\\,dx$",
+    "$\\lim_{k\\to\\infty}\\int_{a}^{k}f(x)\\,dx$"
+   ],
+   "correct": [
+    0
+   ],
+   "explanation": "Approach the bad endpoint from inside the interval, i.e. from the left.",
+   "option_explanations": [
+    "Correct.",
+    "$k\\to b^{+}$ goes outside the interval.",
+    "This is the definition for a discontinuity at $a$.",
+    "This is the definition for an infinite interval."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "$g$ blows up at $x=7$ and is continuous on $[2,7)$. Which limit defines $\\int_{2}^{7}g(x)\\,dx$?",
+    "options": [
+     "$\\lim_{t\\to2^{+}}\\int_{t}^{7}g(x)\\,dx$",
+     "$\\lim_{t\\to7^{+}}\\int_{2}^{t}g(x)\\,dx$",
+     "$\\lim_{t\\to7^{-}}\\int_{2}^{t}g(x)\\,dx$",
+     "$\\int_{2}^{7}g(x)\\,dx$ with $x=7$ substituted"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "The upper end is the troublesome one, approached from below.",
+    "option_explanations": [
+     "This is for a discontinuity at the lower limit $2$.",
+     "The variable endpoint must stay in the interval.",
+     "Correct.",
+     "Substituting an undefined value is not allowed."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "If $f$ is unbounded near its right endpoint $b$ only, the improper integral over $[a,b]$ is obtained by",
+    "options": [
+     "integrating from $k>a$, then letting $k\\to a^{+}$",
+     "replacing $b$ by $\\infty$ in the integral",
+     "splitting at the midpoint and adding",
+     "integrating up to $k<b$, then letting $k\\to b^{-}$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "Take the limit at the endpoint where $f$ blows up.",
+    "option_explanations": [
+     "That works for a discontinuity at $a$.",
+     "$b$ is finite; no infinite limit is involved.",
+     "Splitting is for interior discontinuities.",
+     "Correct."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "$f$ is continuous on $(a,b]$ with an infinite discontinuity at $a$. Then $\\int_{a}^{b}f(x)\\,dx$ is defined as",
+   "options": [
+    "$\\lim_{k\\to a^{-}}\\int_{k}^{b}f(x)\\,dx$",
+    "$\\lim_{k\\to a^{+}}\\int_{k}^{b}f(x)\\,dx$",
+    "$\\lim_{k\\to b^{-}}\\int_{a}^{k}f(x)\\,dx$",
+    "$\\lim_{k\\to-\\infty}\\int_{k}^{b}f(x)\\,dx$"
+   ],
+   "correct": [
+    1
+   ],
+   "explanation": "Approach the troublesome left endpoint from the right.",
+   "option_explanations": [
+    "$k\\to a^{-}$ leaves the interval.",
+    "Correct.",
+    "That is the definition for a right-endpoint discontinuity.",
+    "That is for an infinite interval."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "To compute $\\int_{0}^{1}\\frac{dx}{\\sqrt{x}}$ we use",
+    "options": [
+     "$\\lim_{t\\to1^{-}}\\int_{0}^{t}x^{-1/2}dx$",
+     "$\\lim_{t\\to0^{-}}\\int_{t}^{1}x^{-1/2}dx$",
+     "$\\lim_{t\\to0^{+}}\\int_{t}^{1}x^{-1/2}dx$",
+     "$\\int_{0}^{1}x^{-1/2}dx$ with $x=0$ put in"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "The integrand blows up at the lower limit $0$.",
+    "option_explanations": [
+     "The trouble is at $0$, not at $1$.",
+     "$x^{-1/2}$ is not real for $x<0$.",
+     "Correct.",
+     "Substituting $x=0$ divides by zero."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int_{0}^{1}\\frac{dx}{\\sqrt{x}}$.",
+    "options": [
+     "$2$",
+     "$\\frac{1}{2}$",
+     "$\\frac{3}{2}$",
+     "$\\frac{1}{4}$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "$\\lim_{t\\to0^+}\\left[2\\sqrt{x}\\right]_t^1=2-0=2$.",
+    "option_explanations": [
+     "Correct.",
+     "Used $\\frac{x^{1/2}}{2}$ instead of $2x^{1/2}$.",
+     "Wrote the new exponent as $\\frac32$ instead of $-\\frac12+1=\\frac12$.",
+     "Divided by $2$ twice."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "$f$ has an infinite discontinuity at $c$ with $a<c<b$. Then $\\int_{a}^{b}f(x)\\,dx$ converges if",
+   "options": [
+    "at least one of the two integrals converges",
+    "$\\int_{a}^{b}f$ evaluates to a finite number by the FTC",
+    "both $\\int_{a}^{c}f$ and $\\int_{c}^{b}f$ converge",
+    "$f(x)\\to\\infty$ from one side only"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "Definition 7.8.5 (6): it converges iff both improper pieces converge.",
+   "option_explanations": [
+    "One divergent piece makes the whole integral diverge.",
+    "The FTC cannot be applied across the asymptote.",
+    "Correct.",
+    "Behaviour from one side says nothing about convergence."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "For $\\int_{-2}^{3}\\frac{dx}{x}$ the correct first step is",
+    "options": [
+     "split into $\\int_{-2}^{0}$ and $\\int_{0}^{3}$, both improper",
+     "apply $\\ln|x|$ directly between $-2$ and $3$",
+     "evaluate only $\\int_{0}^{3}$ and double it",
+     "let $k\\to\\infty$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "The asymptote $x=0$ lies inside the interval.",
+    "option_explanations": [
+     "Correct.",
+     "Using $[\\ln|x|]_{-2}^{3}=\\ln\\frac32$ ignores the asymptote.",
+     "The two sides are not symmetric.",
+     "There is no infinite limit involved."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "If $\\int_{a}^{c}f(x)\\,dx$ converges and $\\int_{c}^{b}f(x)\\,dx$ diverges ($c$ the asymptote), then $\\int_{a}^{b}f(x)\\,dx$",
+    "options": [
+     "converges to the value of the first piece",
+     "converges, since one piece does",
+     "converges to $0$",
+     "diverges"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "Both pieces must converge.",
+    "option_explanations": [
+     "The divergent piece cannot be dropped.",
+     "Convergence requires both.",
+     "Assumed the pieces cancel to $0$; the divergent piece cannot be cancelled.",
+     "Correct."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "$\\int_{1}^{2}\\frac{dx}{1-x}$",
+   "options": [
+    "$0$",
+    "diverges",
+    "$\\ln 2$",
+    "$-\\ln 2$"
+   ],
+   "correct": [
+    1
+   ],
+   "explanation": "$-\\lim_{k\\to1^+}\\left[\\ln|1-x|\\right]_k^2=-\\lim(\\ln1-\\ln|1-k|)=-\\infty$.",
+   "option_explanations": [
+    "Using $\\ln|1-1|$ as though it were defined.",
+    "Correct.",
+    "Used the values of $\\ln|x|$ at $2$ and $1$, the antiderivative of $\\frac1x$ rather than of $\\frac{1}{1-x}$.",
+    "Same wrong antiderivative $\\ln|x|$ with the subtraction reversed."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "$\\int_{0}^{1}\\frac{dx}{x}$",
+    "options": [
+     "$1$",
+     "diverges",
+     "$0$",
+     "$\\ln 2$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "$\\lim_{k\\to0^+}[\\ln x]_k^1=0-\\ln k\\to\\infty$.",
+    "option_explanations": [
+     "$1$ would be $\\int_1^\\infty$ of $1/x^2$; here $\\ln$ is the antiderivative.",
+     "Correct.",
+     "Used $\\ln 1=0$ and ignored $\\ln 0$.",
+     "Evaluated $\\int_{1}^{2}\\frac{dx}{x}=\\ln2$, a different integral."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "$\\int_{0}^{2}\\frac{dx}{x-2}$",
+    "options": [
+     "$\\ln 2$",
+     "$-\\ln 2$",
+     "$0$",
+     "diverges"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "$\\lim_{k\\to2^-}[\\ln|x-2|]_0^k=\\ln|k-2|-\\ln2\\to-\\infty$.",
+    "option_explanations": [
+     "Used only the lower-limit value, ignoring $x=2$.",
+     "Used only the lower-limit value with a wrong sign.",
+     "Ignored the asymptote at $x=2$.",
+     "Correct."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "$\\lim_{x\\to0^{+}}\\ln x=$",
+   "options": [
+    "$-\\infty$",
+    "$0$",
+    "$+\\infty$",
+    "$1$"
+   ],
+   "correct": [
+    0
+   ],
+   "explanation": "$\\ln x$ decreases without bound as $x\\to0^{+}$.",
+   "option_explanations": [
+    "Correct.",
+    "$\\ln1=0$, not the limit at $0^+$.",
+    "$+\\infty$ is the limit as $x\\to\\infty$.",
+    "$\\ln$ is not near $1$ there."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "$\\lim_{x\\to1^{-}}\\frac{1}{x-1}=$",
+    "options": [
+     "$+\\infty$",
+     "$0$",
+     "$-\\infty$",
+     "$1$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "For $x<1$ close to $1$, $x-1$ is a small negative number.",
+    "option_explanations": [
+     "The sign is negative from the left.",
+     "The denominator tends to $0$, the quotient does not.",
+     "Correct.",
+     "No cancellation occurs."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "$\\lim_{x\\to1^{-}}\\frac{1}{1-x}=$",
+    "options": [
+     "$-\\infty$",
+     "$0$",
+     "$1$",
+     "$+\\infty$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "For $x<1$, $1-x$ is a small positive number.",
+    "option_explanations": [
+     "$1-x>0$ from the left; sign reversed.",
+     "The denominator tends to $0$.",
+     "$\\frac{1}{1-x}$ becomes $\\frac{1}{0^{+}}$ near $1$; it does not approach $1$.",
+     "Correct."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "basic",
+   "question": "Evaluate $\\int_{1}^{4}\\frac{dx}{(x-2)^{2/3}}$.",
+   "answer": "The integrand is infinite at $x=2$, inside $[1,4]$, so split: $\\int_{1}^{2}+\\int_{2}^{4}$ and test each.\n$\\int_{1}^{2}(x-2)^{-2/3}dx=\\lim_{k\\to2^{-}}\\left[3(x-2)^{1/3}\\right]_{1}^{k}=3\\left(0-(-1)\\right)=3$.\n$\\int_{2}^{4}(x-2)^{-2/3}dx=\\lim_{k\\to2^{+}}\\left[3(x-2)^{1/3}\\right]_{k}^{4}=3\\sqrt[3]{2}-0=3\\sqrt[3]{2}$.\nBoth converge, so the integral converges to $3+3\\sqrt[3]{2}$."
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int_{-1}^{3}\\frac{dx}{(x-1)^{2/3}}$.",
+    "options": [
+     "$3\\sqrt[3]{2}$",
+     "$6\\sqrt[3]{2}$",
+     "$0$",
+     "$6$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Split at $x=1$: each half is $3\\sqrt[3]{2}$ (left: $3(0-(-2)^{1/3})$, right: $3\\cdot2^{1/3}$).",
+    "option_explanations": [
+     "Only one of the two halves.",
+     "Correct.",
+     "Both pieces are positive areas ($3\\sqrt[3]{2}$ each), so they add; they do not cancel.",
+     "That would be the value of $\\int_{0}^{2}$."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int_{0}^{2}\\frac{dx}{(x-1)^{2/3}}$.",
+    "options": [
+     "$12$",
+     "$-6$",
+     "$6$",
+     "diverges"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Split at $x=1$: each half equals $3$.",
+    "option_explanations": [
+     "Doubled the correct total of the two pieces.",
+     "Subtracted the pieces' values in the wrong order; both areas are positive.",
+     "Correct.",
+     "Both improper pieces converge since $-\\frac23>-1$."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "For $\\int_{1}^{4}\\frac{dx}{(x-2)^{2/3}}$ the correct decomposition is",
+   "options": [
+    "$\\int_{1}^{2}\\frac{dx}{(x-2)^{2/3}}+\\int_{2}^{4}\\frac{dx}{(x-2)^{2/3}}$",
+    "$\\int_{1}^{3}\\frac{dx}{(x-2)^{2/3}}+\\int_{3}^{4}\\frac{dx}{(x-2)^{2/3}}$",
+    "$\\int_{1}^{2}\\frac{dx}{(x-2)^{2/3}}-\\int_{2}^{4}\\frac{dx}{(x-2)^{2/3}}$",
+    "$\\int_{1}^{4}\\frac{dx}{(x-2)^{2/3}}$, with no splitting needed"
+   ],
+   "correct": [
+    0
+   ],
+   "explanation": "Split at the point of discontinuity $x=2$.",
+   "option_explanations": [
+    "Correct.",
+    "Splitting at $3$ leaves the asymptote inside the first piece.",
+    "Pieces must be added.",
+    "The asymptote $x=2$ is inside; direct use of FTC is invalid."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Where must $\\int_{-3}^{2}\\frac{dx}{(x+1)^{2}}$ be split?",
+    "options": [
+     "at $x=0$",
+     "at $x=1$",
+     "at $x=-1$",
+     "nowhere; it is an ordinary integral"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "The integrand is unbounded at $x=-1\\in[-3,2]$.",
+    "option_explanations": [
+     "$x=0$ is not a singular point.",
+     "$x=1$ is not a singular point.",
+     "Correct.",
+     "The interior asymptote makes it improper."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which first step is valid for $\\int_{0}^{4}\\frac{dx}{(x-3)^{1/3}}$?",
+    "options": [
+     "write it as $\\int_{0}^{3}+\\int_{3}^{4}$",
+     "use $\\frac{3}{2}(x-3)^{2/3}$ at $0$ and $4$ immediately",
+     "write it as $\\int_{0}^{2}+\\int_{2}^{4}$",
+     "take $\\lim_{b\\to\\infty}$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "The point $x=3$ in $[0,4]$ is a discontinuity; split there.",
+    "option_explanations": [
+     "Correct.",
+     "Plugging limits across $x=3$ ignores the asymptote.",
+     "The split point must be the asymptote.",
+     "The interval is finite."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "$\\int_{1}^{2}\\frac{dx}{(x-2)^{2/3}}=$",
+   "options": [
+    "$-3$",
+    "$\\frac{3}{2}$",
+    "diverges",
+    "$3$"
+   ],
+   "correct": [
+    3
+   ],
+   "explanation": "$\\lim_{k\\to2^-}\\left[3(x-2)^{1/3}\\right]_1^k=0-3(-1)=3$.",
+   "option_explanations": [
+    "Sign error: $(1-2)^{1/3}=-1$ and it is subtracted.",
+    "Used the antiderivative $\\frac{(x-2)^{1/3}}{2}$.",
+    "The exponent $-\\frac23>-1$, so it converges.",
+    "Correct."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "$\\int_{1}^{9}\\frac{dx}{(x-1)^{2/3}}=$",
+    "options": [
+     "$-6$",
+     "$6$",
+     "$\\frac{2}{3}$",
+     "diverges"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "$\\left[3(x-1)^{1/3}\\right]_1^9=3\\cdot2-0=6$.",
+    "option_explanations": [
+     "Subtracted in the wrong order, giving the negative.",
+     "Correct.",
+     "Used $\\frac13(x-1)^{1/3}$, multiplying by $\\frac13$ instead of dividing by it.",
+     "The endpoint singularity is integrable ($-\\frac23>-1$)."
+    ]
+   },
+   {
+    "type": "basic",
+    "question": "Evaluate $\\int_{1}^{28}\\frac{dx}{(x-1)^{2/3}}$.",
+    "answer": "The integrand is infinite at $x=1$, the lower endpoint: $\\lim_{k\\to1^{+}}\\int_{k}^{28}(x-1)^{-2/3}dx=\\lim_{k\\to1^{+}}\\left[3(x-1)^{1/3}\\right]_{k}^{28}=3\\cdot27^{1/3}-0=9$."
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "A student evaluates $\\int_{0}^{2}\\frac{dx}{(x-1)^{2}}$ as $\\left[-\\frac{1}{x-1}\\right]_{0}^{2}=-2$. The main error is that",
+   "options": [
+    "$-\\frac{1}{x-1}$ is not an antiderivative",
+    "the integral is improper at $x=1$ and needs limits",
+    "the limits $0$ and $2$ were substituted in the wrong order",
+    "the integrand is not continuous at $x=0$"
+   ],
+   "correct": [
+    1
+   ],
+   "explanation": "The integrand is positive, so a negative value is impossible; $x=1$ is an interior asymptote.",
+   "option_explanations": [
+    "$\\left(-\\frac{1}{x-1}\\right)'=\\frac{1}{(x-1)^{2}}$, so it is an antiderivative.",
+    "Correct.",
+    "The order is right; the problem is the asymptote.",
+    "The integrand is defined and continuous at $x=0$."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Evaluating $\\int_{-1}^{1}\\frac{dx}{x^{2}}$ by the FTC gives $\\left[-\\frac{1}{x}\\right]_{-1}^{1}=-2$. The true situation is",
+    "options": [
+     "the integral equals $-2$",
+     "the integral equals $2$",
+     "the integral equals $0$",
+     "the integral diverges"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "A positive integrand cannot give a negative value; the integral diverges at $x=0$.",
+    "option_explanations": [
+     "The FTC does not apply across the asymptote.",
+     "A positive function has no negative integral, and the integral is not finite.",
+     "No cancellation: the integrand is positive.",
+     "Correct."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "For $\\int_{0}^{4}\\frac{dx}{(x-2)^{2}}$, the naive FTC computation gives $-1$. The integral is actually",
+    "options": [
+     "divergent",
+     "$-1$",
+     "$1$",
+     "$0$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Interior asymptote at $x=2$; $\\int_{0}^{2}(x-2)^{-2}dx=+\\infty$.",
+    "option_explanations": [
+     "Correct.",
+     "The integrand is positive, so no negative value.",
+     "Flipped the sign of the naive $-1$, but the integral is divergent, not $\\pm1$.",
+     "Pieces diverge to $+\\infty$."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "$\\int_{0}^{1}\\frac{dx}{(x-1)^{2}}=\\lim_{k\\to1^{-}}\\left[-\\frac{1}{x-1}\\right]_{0}^{k}$ equals",
+   "options": [
+    "$-\\infty$",
+    "$1$",
+    "$+\\infty$",
+    "$0$"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "With $k\\to1^-$, $-\\frac{1}{k-1}\\to+\\infty$ because $k-1$ is a small negative number.",
+   "option_explanations": [
+    "$k-1<0$, so $-\\frac{1}{k-1}>0$.",
+    "Took only the lower-limit term $F(0)=1$ and ignored $F(k)\\to+\\infty$.",
+    "Correct.",
+    "Ignored the blow-up at $k\\to1$."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "$\\lim_{k\\to4^{-}}\\left[-\\frac{1}{x-4}\\right]_{0}^{k}$ equals",
+    "options": [
+     "$-\\infty$",
+     "$\\frac{1}{4}$",
+     "$0$",
+     "$+\\infty$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "$-\\frac{1}{k-4}\\to+\\infty$ as $k\\to4^{-}$; the lower term is finite.",
+    "option_explanations": [
+     "$k-4<0$, so the term is positive.",
+     "That is just the finite lower-limit term.",
+     "The upper term is unbounded.",
+     "Correct."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "The integral $\\int_{0}^{4}\\frac{dx}{(x-4)^{2}}$",
+    "options": [
+     "converges to $-\\frac14$",
+     "diverges to $+\\infty$",
+     "converges to $\\frac14$",
+     "diverges to $-\\infty$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "The integrand is positive and the antiderivative $-\\frac{1}{x-4}\\to+\\infty$.",
+    "option_explanations": [
+     "Kept only $-F(0)=-\\frac14$ and ignored the blow-up at $x=4$.",
+     "Correct.",
+     "Kept only $F(0)=\\frac14$ and ignored the blow-up at $x=4$.",
+     "Positive integrands cannot diverge to $-\\infty$."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "$\\int_{0}^{\\infty}e^{-2x}\\,dx=$",
+   "options": [
+    "$2$",
+    "$-\\frac{1}{2}$",
+    "$\\frac{1}{2}$",
+    "$1$"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "$\\left[-\\frac12e^{-2x}\\right]_0^b\\to0+\\frac12$.",
+   "option_explanations": [
+    "Multiplied by $2$ instead of dividing.",
+    "Sign error: lower limit contributes $+\\frac12$.",
+    "Correct.",
+    "Forgot the factor $\\frac12$ (the value for $e^{-x}$)."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int_{0}^{\\infty}e^{-5x}\\,dx$.",
+    "options": [
+     "$\\frac{1}{5}$",
+     "$5$",
+     "$-\\frac{1}{5}$",
+     "$\\frac{1}{25}$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "$\\left[-\\frac15e^{-5x}\\right]_0^\\infty=0+\\frac15$.",
+    "option_explanations": [
+     "Correct.",
+     "Multiplied by $5$ instead of dividing.",
+     "Sign error at the lower limit.",
+     "Divided by $5$ twice."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "What is $\\int_{1}^{\\infty}e^{-3x}\\,dx$?",
+    "options": [
+     "$\\frac{1}{3}$",
+     "$-\\frac{e^{-3}}{3}$",
+     "$\\frac{e^{-3}}{3}$",
+     "$3e^{-3}$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "$\\left[-\\frac13e^{-3x}\\right]_1^\\infty=0+\\frac13e^{-3}$.",
+    "option_explanations": [
+     "Forgot that the lower limit is $1$, not $0$.",
+     "Sign error at the lower limit.",
+     "Correct.",
+     "Multiplied by $3$ instead of dividing."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "basic",
+   "question": "Evaluate $\\int_{-\\infty}^{3}\\frac{dx}{x^{2}+9}$.",
+   "answer": "$\\int\\frac{dx}{x^{2}+9}=\\frac13\\tan^{-1}\\frac{x}{3}$. Then $\\lim_{a\\to-\\infty}\\frac13\\left[\\tan^{-1}\\frac{x}{3}\\right]_{a}^{3}=\\frac13\\left(\\tan^{-1}1+\\frac{\\pi}{2}\\right)=\\frac13\\left(\\frac{\\pi}{4}+\\frac{\\pi}{2}\\right)=\\frac{\\pi}{4}$."
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int_{-\\infty}^{2}\\frac{dx}{x^{2}+4}$.",
+    "options": [
+     "$\\frac{3\\pi}{8}$",
+     "$\\frac{\\pi}{8}$",
+     "$\\frac{3\\pi}{4}$",
+     "$\\frac{\\pi}{2}$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "$\\frac12\\left(\\tan^{-1}1+\\frac{\\pi}{2}\\right)=\\frac12\\cdot\\frac{3\\pi}{4}$.",
+    "option_explanations": [
+     "Correct.",
+     "Forgot the contribution $\\frac{\\pi}{2}$ from $-\\infty$.",
+     "Forgot the factor $\\frac12$.",
+     "That is the value over the entire line."
+    ]
+   },
+   {
+    "type": "basic",
+    "question": "Evaluate $\\int_{-\\infty}^{1}\\frac{dx}{x^{2}+1}$.",
+    "answer": "$\\lim_{a\\to-\\infty}\\left[\\tan^{-1}x\\right]_{a}^{1}=\\tan^{-1}1-\\left(-\\frac{\\pi}{2}\\right)=\\frac{\\pi}{4}+\\frac{\\pi}{2}=\\frac{3\\pi}{4}$."
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "$\\int_{1}^{3}\\frac{dx}{(x-1)^{3/2}}$",
+   "options": [
+    "$-2\\sqrt{2}$",
+    "$2-\\sqrt{2}$",
+    "$2\\sqrt{2}$",
+    "diverges"
+   ],
+   "correct": [
+    3
+   ],
+   "explanation": "$\\lim_{k\\to1^+}\\left[-2(x-1)^{-1/2}\\right]_k^3=-\\sqrt2+2(k-1)^{-1/2}\\to\\infty$.",
+   "option_explanations": [
+    "Integrated to $-2\\sqrt{x-1}$ (wrong sign and exponent): its value at $3$ is $-2\\sqrt2$.",
+    "Plugged $x=2$ for the lower limit in $-2(x-1)^{-1/2}$ instead of facing the asymptote at $x=1$.",
+    "Integrated to $2\\sqrt{x-1}$, the antiderivative of $(x-1)^{-1/2}$.",
+    "Correct."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "$\\int_{0}^{2}\\frac{dx}{(x-2)^{2}}$",
+    "options": [
+     "$-\\frac12$",
+     "diverges",
+     "$\\frac12$",
+     "$1$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "$\\left[-\\frac{1}{x-2}\\right]_0^k=-\\frac{1}{k-2}-\\frac12\\to+\\infty$ as $k\\to2^-$.",
+    "option_explanations": [
+     "Kept only $-F(0)=-\\frac12$ and ignored the blow-up at $x=2$.",
+     "Correct.",
+     "Kept only $F(0)=\\frac12$ and ignored the blow-up at $x=2$.",
+     "Evaluated $-\\frac{1}{x-2}$ at the midpoint $x=1$ instead of using limits."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "$\\int_{0}^{1}\\frac{dx}{x^{3}}$",
+    "options": [
+     "$-\\frac{1}{2}$",
+     "diverges",
+     "$\\frac{1}{2}$",
+     "$1$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "$\\left[-\\frac{1}{2x^{2}}\\right]_k^1=-\\frac12+\\frac{1}{2k^{2}}\\to\\infty$ as $k\\to0^+$.",
+    "option_explanations": [
+     "Kept only $F(1)=-\\frac12$ and ignored $F(0)$, which does not exist.",
+     "Correct.",
+     "Flipped the sign of the same upper-limit term $F(1)$.",
+     "The antiderivative is unbounded at $0$."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "$\\int_{0}^{\\infty}\\frac{dx}{\\sqrt{x}}$",
+   "options": [
+    "$2$",
+    "$0$",
+    "$\\frac{1}{2}$",
+    "diverges"
+   ],
+   "correct": [
+    3
+   ],
+   "explanation": "Split at $1$: $\\int_0^1x^{-1/2}dx=2$ but $\\int_1^\\infty x^{-1/2}dx=\\infty$, so the whole integral diverges.",
+   "option_explanations": [
+    "$2$ is only the part over $(0,1]$.",
+    "Cancellation does not occur; both parts are positive.",
+    "$\\frac{1}{2}$ is a wrong antiderivative coefficient.",
+    "Correct."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "$\\int_{0}^{\\infty}\\frac{dx}{x^{2}}$",
+    "options": [
+     "diverges",
+     "$1$",
+     "$0$",
+     "$-1$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "$\\int_0^1x^{-2}dx$ already diverges.",
+    "option_explanations": [
+     "Correct.",
+     "$1$ is only the part over $[1,\\infty)$.",
+     "Positive integrand, no cancellation.",
+     "Positive integrand cannot give a negative value."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which statement about $\\int_{0}^{\\infty}\\frac{dx}{x}$ is correct?",
+    "options": [
+     "only $\\int_{1}^{\\infty}$ diverges",
+     "only $\\int_{0}^{1}$ diverges",
+     "both $\\int_{0}^{1}$ and $\\int_{1}^{\\infty}$ diverge",
+     "both $\\int_{0}^{1}$ and $\\int_{1}^{\\infty}$ converge"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "$\\ln x$ is unbounded at both $0^+$ and $\\infty$.",
+    "option_explanations": [
+     "$\\int_{0}^{1}\\frac{dx}{x}$ also diverges.",
+     "$\\int_{1}^{\\infty}\\frac{dx}{x}$ also diverges.",
+     "Correct.",
+     "Neither piece converges."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Which integral has both an infinite interval and an infinite discontinuity?",
+   "options": [
+    "$\\int_{1}^{\\infty}\\frac{dx}{x^{2}}$",
+    "$\\int_{0}^{1}\\frac{dx}{x^{2}}$",
+    "$\\int_{-\\infty}^{\\infty}\\frac{dx}{x^{2}+1}$",
+    "$\\int_{0}^{\\infty}\\frac{dx}{x}$"
+   ],
+   "correct": [
+    3
+   ],
+   "explanation": "Both an endpoint $0$ with $1/x\\to\\infty$ and an infinite upper limit.",
+   "option_explanations": [
+    "Infinite interval only; $\\frac{1}{x^{2}}$ is continuous on $[1,\\infty)$.",
+    "Discontinuity at $0$ only; the interval is finite.",
+    "Infinite interval only; $\\frac{1}{x^{2}+1}$ is continuous.",
+    "Correct."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Which one is improper in two different ways?",
+    "options": [
+     "$\\int_{0}^{4}\\frac{dx}{\\sqrt[3]{x}}$",
+     "$\\int_{0}^{\\infty}\\frac{dx}{\\sqrt{x}}$",
+     "$\\int_{1}^{\\infty}\\frac{dx}{\\sqrt[3]{x}}$",
+     "$\\int_{1}^{4}\\frac{dx}{\\sqrt[3]{x}}$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "The lower limit $0$ is a singularity and the upper limit is infinite.",
+    "option_explanations": [
+     "Only the endpoint $0$ is singular.",
+     "Correct.",
+     "Only the interval is infinite.",
+     "Ordinary integral."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "The integral $\\int_{-1}^{\\infty}\\frac{dx}{x^{2}}$ is improper because of",
+    "options": [
+     "the infinite upper limit only",
+     "the point $x=0$ only",
+     "both $x=0$ and the infinite upper limit",
+     "the lower limit $-1$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "There is an interior asymptote at $0$ and an infinite upper limit.",
+    "option_explanations": [
+     "There is also an asymptote at $x=0$.",
+     "There is also an infinite limit.",
+     "Correct.",
+     "$1/x^{2}$ is fine at $-1$."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "$\\int_{-1}^{1}x^{-2/3}\\,dx=$",
+   "options": [
+    "$6$",
+    "$-6$",
+    "$12$",
+    "diverges"
+   ],
+   "correct": [
+    0
+   ],
+   "explanation": "Split at $0$: each half is $\\lim[3x^{1/3}]=3$; total $6$.",
+   "option_explanations": [
+    "Correct.",
+    "Subtracted upper from lower in both halves.",
+    "Doubled the correct total.",
+    "Both halves converge since $-\\frac23>-1$."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int_{-8}^{8}x^{-2/3}\\,dx$.",
+    "options": [
+     "$6$",
+     "$0$",
+     "$12$",
+     "$24$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Each half: $3\\cdot8^{1/3}=6$; total $12$.",
+    "option_explanations": [
+     "Only one half.",
+     "The integrand is even and positive: no cancellation.",
+     "Correct.",
+     "Counted each half as $12$ and added them."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int_{-1}^{8}x^{-2/3}\\,dx$.",
+    "options": [
+     "$9$",
+     "$-9$",
+     "$\\frac{15}{2}$",
+     "$\\frac{3}{2}$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Left piece $=3$, right piece $=3\\cdot2=6$.",
+    "option_explanations": [
+     "Correct.",
+     "Subtracted in the wrong order on both halves.",
+     "Used $\\frac32x^{2/3}$, inverting the factor $\\frac{1}{1/3}$.",
+     "Used $\\frac{x^{1/3}}{2}$, dividing by $2$ instead of $\\frac13$."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "The region under $y=\\frac{1}{\\sqrt{x}}$ over $(0,1]$ is unbounded above. Its area is",
+   "options": [
+    "$\\frac{1}{2}$",
+    "$\\frac{3}{2}$",
+    "diverges",
+    "$2$"
+   ],
+   "correct": [
+    3
+   ],
+   "explanation": "$\\lim_{k\\to0^+}\\int_k^1x^{-1/2}dx=\\lim(2-2\\sqrt k)=2$.",
+   "option_explanations": [
+    "Used $\\frac{x^{1/2}}{2}$ instead of $2x^{1/2}$.",
+    "Used coefficient $\\frac32$ instead of $2$.",
+    "An unbounded region can still have finite area.",
+    "Correct."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Find the area under $y=x^{-1/3}$ over $(0,1]$.",
+    "options": [
+     "$\\frac{2}{3}$",
+     "$\\frac{3}{2}$",
+     "$3$",
+     "$\\infty$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "$\\left[\\frac32x^{2/3}\\right]_0^1=\\frac32$.",
+    "option_explanations": [
+     "Inverted the coefficient $\\frac{1}{2/3}$.",
+     "Correct.",
+     "Used $\\frac{1}{1/3}$, a wrong exponent.",
+     "Exponent $-\\frac13>-1$, so area is finite."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Find the area under $y=x^{-3/4}$ over $(0,1]$.",
+    "options": [
+     "$\\frac{1}{4}$",
+     "$4$",
+     "$\\frac{4}{3}$",
+     "$+\\infty$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "$\\left[4x^{1/4}\\right]_0^1=4$.",
+    "option_explanations": [
+     "Inverted the coefficient.",
+     "Correct.",
+     "Used exponent $-\\frac13$ in the power rule.",
+     "The exponent $-\\frac34>-1$ gives a finite area."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Why is $\\int_{a}^{b}f$ for $f$ unbounded at $b$ defined as $\\lim_{k\\to b^{-}}\\int_{a}^{k}f$?",
+   "options": [
+    "$f(b)$ is replaced by its limit",
+    "the interval $[a,b]$ is replaced by $[a,\\infty)$",
+    "the area is found by averaging $f$ at the endpoints",
+    "the area is first found over $[a,k]$, then $k$ is allowed to approach $b$"
+   ],
+   "correct": [
+    3
+   ],
+   "explanation": "Over $[a,k]$ the function is bounded, so the ordinary integral exists; then $k\\to b$ fills out the region.",
+   "option_explanations": [
+    "No value of $f$ at $b$ is used.",
+    "The interval stays finite.",
+    "Averaging endpoint values is not a definition of area.",
+    "Correct."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "In Figure 7.8.7, the area under an unbounded curve near $x=b$ is built by",
+    "options": [
+     "computing areas over $[a,k]$, then $k\\to b^{-}$",
+     "computing the area over $[b,\\infty)$ first, then subtracting",
+     "evaluating the antiderivative directly at $x=b$",
+     "cutting the region into infinitely many equal strips"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "The region is approached from the left through finite pieces.",
+    "option_explanations": [
+     "Correct.",
+     "The interval of integration is $[a,b]$, not $[b,\\infty)$.",
+     "The antiderivative may be undefined at $b$.",
+     "The definition uses a limit of integrals."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which idea underlies Definition 7.8.4?",
+    "options": [
+     "approximate by integrals over $[a,k]$ taking $k$ above $b$",
+     "integrate $f$ over $[a,b]$ and simply ignore the point $x=b$",
+     "use integrals over $[a,k]$ with $k<b$",
+     "add the endpoint values $f(a)$ and $f(b)$ and multiply by $b-a$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "$k$ stays inside the interval and tends to $b$.",
+    "option_explanations": [
+     "$f$ is not even defined beyond $b$ in the interval.",
+     "Ignoring $x=b$ discards the blow-up.",
+     "Correct.",
+     "Values at points do not give area."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "$\\int_{-\\infty}^{0}x\\,e^{x}\\,dx=$",
+   "options": [
+    "$1$",
+    "$0$",
+    "$\\infty$",
+    "$-1$"
+   ],
+   "correct": [
+    3
+   ],
+   "explanation": "$\\int xe^{x}dx=(x-1)e^{x}$; at $0$: $-1$; at $-\\infty$: $0$ (since $xe^{x}\\to0$).",
+   "option_explanations": [
+    "Subtracted with the wrong sign: $F(0)=-1$ taken as $+1$.",
+    "Evaluated $xe^{x}$ at $0$ instead of $(x-1)e^{x}$.",
+    "$e^{x}$ decays as $x\\to-\\infty$; converges.",
+    "Correct."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int_{-\\infty}^{0}x\\,e^{3x}\\,dx$.",
+    "options": [
+     "$\\frac{1}{9}$",
+     "$-\\frac{1}{9}$",
+     "$-\\frac{1}{3}$",
+     "$0$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "$\\int xe^{3x}dx=e^{3x}\\left(\\frac{x}{3}-\\frac19\\right)$; value $-\\frac19-0$.",
+    "option_explanations": [
+     "Wrote the second term of $\\left(\\frac{x}{3}-\\frac19\\right)e^{3x}$ with a plus sign, giving $+\\frac19$.",
+     "Correct.",
+     "Missed the second factor $\\frac13$ from the parts step.",
+     "Forgot the $-\\frac19$ term at $x=0$."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int_{-\\infty}^{0}(x+1)e^{x}\\,dx$.",
+    "options": [
+     "$-1$",
+     "$1$",
+     "$0$",
+     "$2$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "$\\int(x+1)e^{x}dx=xe^{x}$; at $0$ it is $0$; at $-\\infty$ it is $0$.",
+    "option_explanations": [
+     "Used $(x-1)e^{x}$, the antiderivative of $xe^{x}$, giving $-1$ at $0$.",
+     "Used $(x+1)e^{x}$, forgetting to subtract $\\int e^{x}dx$, giving $1$ at $0$.",
+     "Correct.",
+     "Added $\\int e^{x}dx$ instead of subtracting: $(x+2)e^{x}$ gives $2$ at $0$."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "$\\int_{0}^{\\infty}x\\,e^{-x^{2}}\\,dx=$",
+   "options": [
+    "$\\frac{1}{2}$",
+    "$1$",
+    "$-\\frac{1}{2}$",
+    "$2$"
+   ],
+   "correct": [
+    0
+   ],
+   "explanation": "With $u=-x^{2}$: $\\left[-\\frac12e^{-x^{2}}\\right]_0^\\infty=0+\\frac12$.",
+   "option_explanations": [
+    "Correct.",
+    "Forgot the factor $\\frac12$ from $du=-2x\\,dx$.",
+    "Sign error at the lower limit.",
+    "Multiplied by $2$ instead of dividing."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int_{0}^{\\infty}x\\,e^{-x^{2}/2}\\,dx$.",
+    "options": [
+     "$\\frac{1}{2}$",
+     "$\\frac{1}{4}$",
+     "$1$",
+     "$\\frac{3}{2}$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "$u=-x^2/2$, $du=-x\\,dx$: $[-e^{-x^2/2}]_0^\\infty=1$.",
+    "option_explanations": [
+     "Divided by $2$ although $du=-x\\,dx$ already matches $x\\,dx$.",
+     "Divided by $2$ twice: for the $\\frac12$ in the exponent and again for $du$.",
+     "Correct.",
+     "Added instead of subtracting limit terms."
+    ]
+   },
+   {
+    "type": "basic",
+    "question": "Evaluate $\\int_{0}^{\\infty}x\\,e^{-3x^{2}}\\,dx$.",
+    "answer": "Let $u=-3x^{2}$, $du=-6x\\,dx$. Then $\\int_{0}^{b}xe^{-3x^{2}}dx=\\left[-\\frac16e^{-3x^{2}}\\right]_{0}^{b}=\\frac16\\left(1-e^{-3b^{2}}\\right)\\to\\frac16$."
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "basic",
+   "question": "Evaluate $\\int_{1}^{\\infty}\\frac{dx}{x(x+1)}$.",
+   "answer": "$\\frac{1}{x(x+1)}=\\frac{1}{x}-\\frac{1}{x+1}$, so $\\int_{1}^{b}\\frac{dx}{x(x+1)}=\\left[\\ln\\frac{x}{x+1}\\right]_{1}^{b}=\\ln\\frac{b}{b+1}-\\ln\\frac12$. As $b\\to\\infty$, $\\ln\\frac{b}{b+1}\\to\\ln1=0$, so the value is $0-\\ln\\frac12=\\ln2$."
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int_{1}^{\\infty}\\frac{dx}{x(x+2)}$.",
+    "options": [
+     "$\\frac{\\ln3}{2}$",
+     "$\\ln3$",
+     "$\\frac{\\ln2}{2}$",
+     "$-\\frac{\\ln3}{2}$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "$\\frac{1}{x(x+2)}=\\frac12\\left(\\frac1x-\\frac1{x+2}\\right)$; $\\frac12\\left[\\ln\\frac{x}{x+2}\\right]_1^\\infty=0-\\frac12\\ln\\frac13$.",
+    "option_explanations": [
+     "Correct.",
+     "Forgot the factor $\\frac12$ in the partial fractions.",
+     "Used $x+1$ instead of $x+2$ at the lower limit.",
+     "Sign error: upper minus lower is $0-\\frac12\\ln\\frac13$."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int_{3}^{\\infty}\\frac{dx}{x^{2}-1}$.",
+    "options": [
+     "$\\ln2$",
+     "$\\frac{\\ln3}{2}$",
+     "$-\\frac{\\ln2}{2}$",
+     "$\\frac{\\ln2}{2}$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "$\\frac{1}{x^2-1}=\\frac12\\left(\\frac{1}{x-1}-\\frac{1}{x+1}\\right)$; $\\frac12\\left[\\ln\\frac{x-1}{x+1}\\right]_3^\\infty=0-\\frac12\\ln\\frac12$.",
+    "option_explanations": [
+     "Forgot the factor $\\frac12$.",
+     "Evaluated at the wrong lower limit.",
+     "Sign error at the lower limit.",
+     "Correct."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "$\\int_{e}^{\\infty}\\frac{dx}{x(\\ln x)^{2}}=$",
+   "options": [
+    "$\\frac{1}{2}$",
+    "$1$",
+    "$\\frac{1}{e}$",
+    "diverges"
+   ],
+   "correct": [
+    1
+   ],
+   "explanation": "$u=\\ln x$: $\\left[-\\frac{1}{\\ln x}\\right]_e^\\infty=0+1$.",
+   "option_explanations": [
+    "Used $-\\frac{1}{2\\ln^{2}x}$, a wrong antiderivative.",
+    "Correct.",
+    "Evaluated at $x=e$ with the wrong function.",
+    "The power $2>1$ gives convergence."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "$\\int_{e}^{\\infty}\\frac{dx}{x(\\ln x)^{3}}=$",
+    "options": [
+     "$1$",
+     "$\\frac{1}{2}$",
+     "$\\frac{1}{3}$",
+     "$\\infty$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "$u=\\ln x$: $\\left[-\\frac{1}{2(\\ln x)^{2}}\\right]_e^\\infty=\\frac12$.",
+    "option_explanations": [
+     "Forgot the factor $\\frac12$.",
+     "Correct.",
+     "Used $\\frac13$ from the exponent $3$ without lowering it.",
+     "It converges."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "$\\int_{e}^{\\infty}\\frac{dx}{x\\ln x}$",
+    "options": [
+     "$1$",
+     "$0$",
+     "$\\ln 2$",
+     "diverges"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "$[\\ln\\ln x]_e^b=\\ln\\ln b-0\\to\\infty$.",
+    "option_explanations": [
+     "Value for the squared case.",
+     "Used $\\ln\\ln e=0$ only.",
+     "No step produces $\\ln2$.",
+     "Correct."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "After finding an antiderivative $F$, the correct way to evaluate $\\int_{1}^{\\infty}f(x)\\,dx$ is",
+   "options": [
+    "compute $\\lim_{b\\to\\infty}\\left(F(b)-F(1)\\right)$",
+    "compute $F(\\infty)-F(1)$ without a limit",
+    "compute $\\lim_{b\\to\\infty}F(b)$ only",
+    "compute $F(1)-\\lim_{b\\to\\infty}F(b)$"
+   ],
+   "correct": [
+    0
+   ],
+   "explanation": "The improper integral is the limit of $\\int_{1}^{b}f=F(b)-F(1)$.",
+   "option_explanations": [
+    "Correct.",
+    "$\\infty$ is not a number you can plug in.",
+    "The lower-limit term $F(1)$ is lost.",
+    "Reversed the subtraction."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "For an integrand with infinite discontinuity at $x=0$, $\\int_{0}^{5}f(x)\\,dx=$",
+    "options": [
+     "$F(5)-F(0)$ by direct substitution",
+     "$\\lim_{k\\to0^{+}}F(k)-F(5)$",
+     "$F(5)-\\lim_{k\\to0^{+}}F(k)$",
+     "$F(5)$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Replace $F(0)$ by the one-sided limit.",
+    "option_explanations": [
+     "$F(0)$ may be undefined.",
+     "Reversed the subtraction.",
+     "Correct.",
+     "The lower limit term is lost."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which formula correctly evaluates $\\int_{-\\infty}^{3}f(x)\\,dx$ with antiderivative $F$?",
+    "options": [
+     "$F(3)-F(-\\infty)$ with no limit",
+     "$\\lim_{a\\to\\infty}F(a)-F(3)$",
+     "$\\lim_{a\\to-\\infty}F(a)$",
+     "$F(3)-\\lim_{a\\to-\\infty}F(a)$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "The lower limit is replaced by a limit.",
+    "option_explanations": [
+     "$-\\infty$ is not a number.",
+     "The limit must be at $-\\infty$ and the subtraction reversed.",
+     "The upper-limit term $F(3)$ is lost.",
+     "Correct."
+    ]
+   }
+  ]
+ }
+]

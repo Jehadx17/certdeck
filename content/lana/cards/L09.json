@@ -1,0 +1,2623 @@
+[
+  {
+    "original": {
+      "type": "mcq",
+      "question": "A proof by induction consists of which two parts?",
+      "options": [
+        "A hypothesis and a contradiction",
+        "A counterexample and a conclusion",
+        "A recursion and a termination",
+        "A base case and an inductive step"
+      ],
+      "correct": [
+        3
+      ],
+      "explanation": "Induction proves a statement by showing the starting step and then showing each step leads to the next.",
+      "option_explanations": [
+        "Contradiction belongs to a different proof technique.",
+        "Induction does not search for counterexamples.",
+        "These describe recurrences, not induction proofs.",
+        "Correct."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "Which pair of ingredients must every induction proof contain?",
+        "options": [
+          "Proof for even $n$, then proof for odd $n$",
+          "Proof for small $n$, then proof for large $n$",
+          "Proof of the first step, then proof of step $k$ leading to step $k+1$",
+          "Proof of $S(k)$, then proof of $S(k-1)$"
+        ],
+        "correct": [
+          2
+        ],
+        "explanation": "Start correctly, then show the step repeats.",
+        "option_explanations": [
+          "Splitting by parity is a case analysis, not induction.",
+          "Checking sizes separately does not link the steps.",
+          "Correct.",
+          "Induction moves forward from $k$ to $k+1$, not backward."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "To establish a statement for every integer $n \\ge 1$ by induction, what do you need?",
+        "options": [
+          "The statement at $n=1$ and at $n=2$",
+          "The statement at $n=1$ and a rule passing from $k$ to $k+1$",
+          "A rule passing from $k$ to $k+1$ and a rule from $k$ to $k-1$",
+          "The statement at $n=k$ and at $n=k+1$ for a fixed $k$"
+        ],
+        "correct": [
+          1
+        ],
+        "explanation": "Base case plus inductive step together cover every $n$ from the start value.",
+        "option_explanations": [
+          "Two checked values do not cover all $n$.",
+          "Correct.",
+          "A backward rule is not required.",
+          "This verifies only one pair of consecutive values."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "In a proof by induction, what does the **base case** establish?",
+      "options": [
+        "The statement is true for the first value of $n$",
+        "The statement is true for all $n$",
+        "$S(k)$ implies $S(k+1)$",
+        "The hypothesis holds for every $k$"
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": "The base case proves the starting step directly.",
+      "option_explanations": [
+        "Correct.",
+        "That is the final conclusion, not the base case.",
+        "That is the inductive step.",
+        "The hypothesis is only assumed, not established."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "What is the job of proving $S(1)$ when the claim is for $n \\ge 1$?",
+        "options": [
+          "It proves the claim for all larger $n$",
+          "It supplies the assumption for step $k$",
+          "It shows the very first step is correct",
+          "It replaces the inductive step"
+        ],
+        "correct": [
+          2
+        ],
+        "explanation": "Without a correct start, the chain of steps has nothing to build on.",
+        "option_explanations": [
+          "One value cannot cover all larger $n$ alone.",
+          "The assumption is the induction hypothesis.",
+          "Correct.",
+          "Both parts are required."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "The base case of an induction proof is best described as",
+        "options": [
+          "the check of the initial value of $n$",
+          "the assumption that $S(k)$ is true",
+          "the derivation of $S(k+1)$ from $S(k)$",
+          "the closed form of the sum"
+        ],
+        "correct": [
+          0
+        ],
+        "explanation": "The base case is verified directly by substitution.",
+        "option_explanations": [
+          "Correct.",
+          "That is the induction hypothesis.",
+          "That is the inductive step.",
+          "The closed form is the claim, not the base case."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "What must the **inductive step** show?",
+      "options": [
+        "$S(k)$ is true for the given $k$",
+        "$S(k+1)$ implies $S(k)$",
+        "$S(1)$ is true",
+        "If $S(k)$ is true, then $S(k+1)$ is true"
+      ],
+      "correct": [
+        3
+      ],
+      "explanation": "The inductive step passes truth from step $k$ to step $k+1$.",
+      "option_explanations": [
+        "That is assumed, not shown.",
+        "The implication goes the other way.",
+        "That is the base case.",
+        "Correct."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "In the inductive step, which direction does the reasoning go?",
+        "options": [
+          "From step $k+1$ to step $k$",
+          "From step $k$ to step $k+1$",
+          "From step $1$ to step $n$ directly",
+          "From step $k$ to step $2k$"
+        ],
+        "correct": [
+          1
+        ],
+        "explanation": "We use the $k$-th statement to prove the next one.",
+        "option_explanations": [
+          "This would assume the thing to be proved.",
+          "Correct.",
+          "Induction avoids a direct leap to $n$.",
+          "Induction advances one step at a time."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "Which task belongs to the inductive step?",
+        "options": [
+          "Using $S(k)$ to prove $S(k+1)$",
+          "Evaluating both sides at the first $n$",
+          "Showing $S(n)$ for $n=1,2,3$",
+          "Assuming $S(k+1)$ and deriving $S(k)$"
+        ],
+        "correct": [
+          0
+        ],
+        "explanation": "Truth of $S(k)$ is used to derive $S(k+1)$.",
+        "option_explanations": [
+          "Correct.",
+          "That is the base case.",
+          "Finitely many checks are not a step.",
+          "The direction is reversed."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "In the inductive step, the assumption that $S(k)$ is true is called the",
+      "options": [
+        "terminating condition",
+        "induction hypothesis",
+        "recursive equation",
+        "base assumption"
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": "The assumption of $S(k)$ is the induction hypothesis (IHT).",
+      "option_explanations": [
+        "That belongs to recurrences.",
+        "Correct.",
+        "That is the part of a recurrence that refers to smaller inputs.",
+        "This is not the standard name."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "What do we call the statement $S(k)$ that we assume while proving $S(k+1)$?",
+        "options": [
+          "Terminating value",
+          "Closed form",
+          "Induction hypothesis",
+          "Initial claim"
+        ],
+        "correct": [
+          2
+        ],
+        "explanation": "It is the hypothesis the induction step relies on.",
+        "option_explanations": [
+          "That belongs to recurrences.",
+          "The closed form is the claimed formula.",
+          "Correct.",
+          "This is not the standard name."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "Which term names the assumed truth of step $k$?",
+        "options": [
+          "S(1)",
+          "S(k+1)",
+          "T(1)",
+          "IHT"
+        ],
+        "correct": [
+          3
+        ],
+        "explanation": "IHT stands for induction hypothesis.",
+        "option_explanations": [
+          "This is the base case statement.",
+          "This is the statement to be proved.",
+          "This is a terminating value of a recurrence.",
+          "Correct."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "To prove $3^n < n!$ for $n > 6$ by induction, which statement is the base case?",
+      "options": [
+        "$S(7)$",
+        "$S(6)$",
+        "$S(1)$",
+        "$S(k+1)$"
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": "The first integer with $n>6$ is $7$.",
+      "option_explanations": [
+        "Correct.",
+        "The claim starts after 6, so 6 is not in range.",
+        "The claim is not stated for $n=1$.",
+        "That is the inductive-step target."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "A claim holds for $n \\ge 4$, namely $2^n < n!$. Which is the base case?",
+        "options": [
+          "$2^3 < 3!$",
+          "$2^4 < 4!$",
+          "$2^5 < 5!$",
+          "$2^{k+1} < (k+1)!$"
+        ],
+        "correct": [
+          1
+        ],
+        "explanation": "The base case is the smallest $n$ in range.",
+        "option_explanations": [
+          "$n=3$ is below the starting value.",
+          "Correct.",
+          "This is not the first value in range.",
+          "This is the inductive-step target."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "For the claim $n! < n^n$ with $n>1$, the base case is at $n=$",
+        "options": [
+          "$1$",
+          "$0$",
+          "$3$",
+          "$2$"
+        ],
+        "correct": [
+          3
+        ],
+        "explanation": "Strict inequality $n>1$ makes $n=2$ the first value.",
+        "option_explanations": [
+          "At $n=1$ the two sides are equal, and $n>1$ excludes it.",
+          "The claim is not stated here.",
+          "This is not the smallest valid $n$.",
+          "Correct."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "For $S(n): 1+2+\\dots+n = \\frac{n(n+1)}{2}$, what are the left and right sides of $S(1)$?",
+      "options": [
+        "$1$ and $2$",
+        "$0$ and $1$",
+        "$1$ and $1$",
+        "$2$ and $1$"
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": "At $n=1$ the sum has the single term 1.",
+      "option_explanations": [
+        "$\\frac{1\\cdot2}{2}$ equals 1, not 2.",
+        "The sum stops at $n=1$, so the left side is 1.",
+        "Correct: left is 1, right is $\\frac{1\\cdot2}{2}=1$.",
+        "The left side is just 1."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "For $S(n): 1+3+\\dots+(2n-1) = n^2$, the two sides of $S(1)$ are",
+        "options": [
+          "$1$ and $2$",
+          "$3$ and $1$",
+          "$0$ and $1$",
+          "$1$ and $1$"
+        ],
+        "correct": [
+          3
+        ],
+        "explanation": "The only term at $n=1$ is $2\\cdot1-1=1$.",
+        "option_explanations": [
+          "$1^2$ is 1.",
+          "The last term $2\\cdot1-1$ is 1, not 3.",
+          "The sum has one term, equal to 1.",
+          "Correct: $2\\cdot1-1=1$ and $1^2=1$."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "For $S(n): 1+2+2^2+\\dots+2^n = 2^{n+1}-1$, what are the two sides of $S(0)$?",
+        "options": [
+          "$1$ and $1$",
+          "$2$ and $1$",
+          "$1$ and $0$",
+          "$0$ and $1$"
+        ],
+        "correct": [
+          0
+        ],
+        "explanation": "Here the first step is $n=0$.",
+        "option_explanations": [
+          "Correct: $2^0=1$ and $2^1-1=1$.",
+          "The sum stops at $2^0=1$.",
+          "$2^{0+1}-1=1$.",
+          "The sum at $n=0$ is $2^0=1$."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "What is $S(k+1)$ for $S(n): 1+2+\\dots+n = \\frac{n(n+1)}{2}$?",
+      "options": [
+        "$1+2+\\dots+k = \\frac{(k+1)(k+2)}{2}$",
+        "$1+2+\\dots+(k+1) = \\frac{(k+1)(k+2)}{2}$",
+        "$1+2+\\dots+(k+1) = \\frac{k(k+1)}{2}$",
+        "$1+2+\\dots+(k+1) = \\frac{k(k+1)}{2}+1$"
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": "Replace every $n$ by $k+1$.",
+      "option_explanations": [
+        "The left side must also be extended.",
+        "Correct.",
+        "The right side must also use $k+1$.",
+        "Adding 1 is not substituting $n=k+1$."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "For $S(n): 1+3+\\dots+(2n-1) = n^2$, the statement $S(k+1)$ reads",
+        "options": [
+          "$1+3+\\dots+(2k+1) = k^2+1$",
+          "$1+3+\\dots+(2k-1) = (k+1)^2$",
+          "$1+3+\\dots+(2k+1) = (k+1)^2$",
+          "$1+3+\\dots+(2k+1) = k^2$"
+        ],
+        "correct": [
+          2
+        ],
+        "explanation": "Here $2(k+1)-1 = 2k+1$.",
+        "option_explanations": [
+          "The right side must be $(k+1)^2$.",
+          "The last term on the left must be $2k+1$.",
+          "Correct.",
+          "This is the right side of $S(k)$."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "For $S(n): 1+2+\\dots+2^n = 2^{n+1}-1$, the statement $S(k+1)$ reads",
+        "options": [
+          "$1+2+\\dots+2^{k+1} = 2^{k+1}-1$",
+          "$1+2+\\dots+2^{k} = 2^{k+2}-1$",
+          "$1+2+\\dots+2^{k+1} = 2^{k+2}$",
+          "$1+2+\\dots+2^{k+1} = 2^{k+2}-1$"
+        ],
+        "correct": [
+          3
+        ],
+        "explanation": "Replace $n$ by $k+1$ on both sides.",
+        "option_explanations": [
+          "The exponent on the right must increase too.",
+          "The left side must reach $2^{k+1}$.",
+          "The $-1$ is missing.",
+          "Correct."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "In proving $S(k+1)$ for $1+2+\\dots+n=\\frac{n(n+1)}{2}$, we write the left side as $(1+2+\\dots+k)+(k+1)$. What comes next?",
+      "options": [
+        "Replace the bracket by $\\frac{k(k+1)}{2}$",
+        "Replace the bracket by $\\frac{(k+1)(k+2)}{2}$",
+        "Replace $k$ by $1$",
+        "Divide the whole line by $k+1$"
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": "The bracket equals the right side of $S(k)$ by hypothesis.",
+      "option_explanations": [
+        "Correct: this is $S(k)$, the induction hypothesis.",
+        "That is the goal, not the hypothesis.",
+        "This turns the argument into the base case.",
+        "Nothing here requires dividing."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "For the odd-number sum, the left side of $S(k+1)$ is $(1+3+\\dots+(2k-1))+(2k+1)$. The bracket is replaced by",
+        "options": [
+          "$(k+1)^2$",
+          "$2k-1$",
+          "$k^2$",
+          "$k^2+1$"
+        ],
+        "correct": [
+          2
+        ],
+        "explanation": "Apply $S(k)$ to the bracket.",
+        "option_explanations": [
+          "That is the target, not the hypothesis.",
+          "That is only the last term of the bracket.",
+          "Correct: by the induction hypothesis.",
+          "The hypothesis gives exactly $k^2$."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "In the geometric sum proof, $(1+2+\\dots+2^k)+2^{k+1}$ is rewritten by replacing the bracket with",
+        "options": [
+          "$2^{k+2}-1$",
+          "$2^{k+1}-1$",
+          "$2^{k}-1$",
+          "$2^{k+1}$"
+        ],
+        "correct": [
+          1
+        ],
+        "explanation": "The hypothesis gives the value of the bracket.",
+        "option_explanations": [
+          "That is the right side of $S(k+1)$, the goal.",
+          "Correct: this is $S(k)$.",
+          "The hypothesis has exponent $k+1$.",
+          "The $-1$ is missing."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "After using the hypothesis, the odd-sum proof reaches $k^2 + (2(k+1)-1)$. This simplifies to",
+      "options": [
+        "$k^2+2k$",
+        "$(k+1)^2$",
+        "$k^2+k+1$",
+        "$(k+2)^2$"
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": "$k^2+2k+1$ is a perfect square.",
+      "option_explanations": [
+        "$2(k+1)-1 = 2k+1$, not $2k$.",
+        "Correct: $k^2+2k+1$.",
+        "The middle term should be $2k$.",
+        "That expands to $k^2+4k+4$."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "In the geometric proof, $(2^{k+1}-1)+2^{k+1}$ equals",
+        "options": [
+          "$2^{k+2}-1$",
+          "$2^{2k+2}-1$",
+          "$2^{k+2}-2$",
+          "$2^{k+1}+1$"
+        ],
+        "correct": [
+          0
+        ],
+        "explanation": "Two copies of $2^{k+1}$ make $2^{k+2}$.",
+        "option_explanations": [
+          "Correct: $2\\cdot2^{k+1}=2^{k+2}$.",
+          "Adding equal powers doubles, not squares.",
+          "Only one $-1$ is present.",
+          "The sum of two $2^{k+1}$ terms is $2^{k+2}$."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "In the triangular-sum proof, $\\frac{k(k+1)}{2}+(k+1)$ equals",
+        "options": [
+          "$\\frac{k(k+2)}{2}$",
+          "$\\frac{k(k+1)+1}{2}$",
+          "$\\frac{(k+1)(k+2)}{2}$",
+          "$\\frac{(k+1)^2}{2}$"
+        ],
+        "correct": [
+          2
+        ],
+        "explanation": "$\\frac{k(k+1)+2(k+1)}{2}=\\frac{(k+1)(k+2)}{2}$.",
+        "option_explanations": [
+          "The factor $k+1$ stays, not $k$.",
+          "The added term is $k+1$ over 1, i.e. $2(k+1)/2$.",
+          "Correct: factor out $k+1$.",
+          "That would need $+\\frac{k+1}{2}$ added, not $k+1$."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "Using $1+3+5+\\dots+(2n-1)=n^2$, the sum of the first $10$ odd numbers is",
+      "options": [
+        "$55$",
+        "$19$",
+        "$110$",
+        "$100$"
+      ],
+      "correct": [
+        3
+      ],
+      "explanation": "Sum of first $n$ odd numbers is $n^2$.",
+      "option_explanations": [
+        "That is $1+2+\\dots+10$.",
+        "That is the last odd number.",
+        "That is $10\\cdot11$.",
+        "Correct."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "What is $1+3+5+\\dots+29$?",
+        "options": [
+          "$435$",
+          "$225$",
+          "$29^2$",
+          "$210$"
+        ],
+        "correct": [
+          1
+        ],
+        "explanation": "Last term $2n-1=29$ gives $n=15$.",
+        "option_explanations": [
+          "That is $1+2+\\dots+29$.",
+          "Correct: 29 is the 15th odd number, so $15^2$.",
+          "$29^2=841$, but 29 is the 15th odd number.",
+          "That is $1+2+\\dots+20$."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "What is $1+3+5+\\dots+39$?",
+        "options": [
+          "$780$",
+          "$361$",
+          "$400$",
+          "$1521$"
+        ],
+        "correct": [
+          2
+        ],
+        "explanation": "Count the terms first, then square.",
+        "option_explanations": [
+          "That is $1+2+\\dots+39$.",
+          "That is $19^2$, one term short.",
+          "Correct: $2n-1=39$ gives $n=20$.",
+          "That is $39^2$."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "Using $1+2+2^2+\\dots+2^n=2^{n+1}-1$, what is $1+2+4+\\dots+64$?",
+      "options": [
+        "$127$",
+        "$128$",
+        "$63$",
+        "$255$"
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": "The last term $2^6$ gives $n=6$.",
+      "option_explanations": [
+        "Correct: $64=2^6$, so $2^7-1$.",
+        "That is $2^7$, missing the $-1$.",
+        "That is $2^6-1$, one term short.",
+        "That is $2^8-1$."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "What is $1+2+4+8+\\dots+512$?",
+        "options": [
+          "$1024$",
+          "$511$",
+          "$2047$",
+          "$1023$"
+        ],
+        "correct": [
+          3
+        ],
+        "explanation": "Identify the exponent of the last term.",
+        "option_explanations": [
+          "That is $2^{10}$.",
+          "That is $2^9-1$.",
+          "That is $2^{11}-1$.",
+          "Correct: $512=2^9$, so $2^{10}-1$."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "What is the value of $2^0+2^1+\\dots+2^7$?",
+        "options": [
+          "$256$",
+          "$127$",
+          "$511$",
+          "$255$"
+        ],
+        "correct": [
+          3
+        ],
+        "explanation": "Sum is $2^{n+1}-1$ with $n=7$.",
+        "option_explanations": [
+          "That is $2^8$.",
+          "That is $2^7-1$.",
+          "That is $2^9-1$.",
+          "Correct: $2^8-1$."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "Using $1+x+\\dots+x^n=\\frac{x^{n+1}-1}{x-1}$, what is $1+3+9+27+81$?",
+      "options": [
+        "$120$",
+        "$243$",
+        "$121$",
+        "$364$"
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": "Here $x=3$ and $n=4$.",
+      "option_explanations": [
+        "That is $\\frac{3^5-3}{2}$, using the wrong numerator.",
+        "That is $3^5$.",
+        "Correct: $\\frac{3^5-1}{2}$.",
+        "That is $\\frac{3^6-1}{2}$, one term too many."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "What is $1+5+25+125$?",
+        "options": [
+          "$156$",
+          "$155$",
+          "$625$",
+          "$781$"
+        ],
+        "correct": [
+          0
+        ],
+        "explanation": "$x=5$, $n=3$, so $\\frac{5^4-1}{4}$.",
+        "option_explanations": [
+          "Correct: $\\frac{5^4-1}{4}$.",
+          "That is $5^3+5^2+5$.",
+          "That is $5^4$.",
+          "That is $\\frac{5^5-1}{4}$, one term too many."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "What is $1+4+16+64+256$?",
+        "options": [
+          "$340$",
+          "$341$",
+          "$1024$",
+          "$1365$"
+        ],
+        "correct": [
+          1
+        ],
+        "explanation": "$x=4$, $n=4$.",
+        "option_explanations": [
+          "That is $4+16+64+256$.",
+          "Correct: $\\frac{4^5-1}{3}$.",
+          "That is $4^5$.",
+          "That is $\\frac{4^6-1}{3}$, one term too many."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "For $x \\ne 1$, $1+x+x^2+\\dots+x^n$ equals",
+      "options": [
+        "$\\frac{x^{n}-1}{x-1}$",
+        "$\\frac{x^{n+1}-1}{x}$",
+        "$\\frac{x^{n+1}-1}{x-1}$",
+        "$\\frac{x^{n+1}+1}{x+1}$"
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": "This is the geometric sum identity.",
+      "option_explanations": [
+        "The exponent is one too small.",
+        "The denominator is $x-1$.",
+        "Correct.",
+        "Signs are wrong in numerator and denominator."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "Which is the sum $1+x+\\dots+x^{k-1}$ (for $x \\ne 1$)?",
+        "options": [
+          "$\\frac{x^{k}-1}{x-1}$",
+          "$\\frac{x^{k-1}-1}{x-1}$",
+          "$\\frac{x^{k+1}-1}{x-1}$",
+          "$\\frac{x^{k}-1}{x+1}$"
+        ],
+        "correct": [
+          0
+        ],
+        "explanation": "Use $n=k-1$, so $n+1=k$.",
+        "option_explanations": [
+          "Correct: the formula with $n=k-1$.",
+          "The exponent should be $k$.",
+          "The exponent should be $k$.",
+          "The denominator is $x-1$."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "Which identity, valid for $x\\neq 1$, was used with $x=\\frac12$ in the recurrence examples?",
+        "options": [
+          "$1+x+\\dots+x^r=\\frac{x^{r}-1}{x-1}$",
+          "$1+x+\\dots+x^r=\\frac{x^{r+1}}{x-1}$",
+          "$1+x+\\dots+x^r=\\frac{1-x^{r+1}}{x+1}$",
+          "$1+x+\\dots+x^r=\\frac{x^{r+1}-1}{x-1}$"
+        ],
+        "correct": [
+          3
+        ],
+        "explanation": "Same geometric sum identity.",
+        "option_explanations": [
+          "The power should be $r+1$.",
+          "The $-1$ is missing.",
+          "The denominator should be $1-x$ or $x-1$.",
+          "Correct."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "In proving $3^n < n!$ for $n \\ge 7$, we write $3^{k+1} = 3^k\\cdot 3 < k!\\cdot 3 < k!\\,(k+1)$. The last inequality holds because",
+      "options": [
+        "$k < 3$ when $k\\ge7$",
+        "$3 < k+1$ when $k \\ge 7$",
+        "$k! < 3$",
+        "$3^k > k!$"
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": "Since $k\\ge 7$, $k+1\\ge 8 > 3$.",
+      "option_explanations": [
+        "This is false for $k\\ge7$.",
+        "Correct.",
+        "Factorials of $k\\ge7$ are far above 3.",
+        "This is the opposite of the hypothesis."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "To show $2^{k+1}<(k+1)!$ from $2^k<k!$ for $k \\ge 4$, which fact is used?",
+        "options": [
+          "$2 > k+1$",
+          "$2^k > k!$",
+          "$k! < 2$",
+          "$2 < k+1$"
+        ],
+        "correct": [
+          3
+        ],
+        "explanation": "$2\\cdot k! < (k+1)\\cdot k! = (k+1)!$.",
+        "option_explanations": [
+          "This is false for $k \\ge 4$.",
+          "This contradicts the hypothesis.",
+          "Factorials of $k\\ge4$ exceed 2.",
+          "Correct: true since $k\\ge4$."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "In the proof of $n! < n^n$ the step $(k+1)\\,k^k < (k+1)(k+1)^k$ relies on",
+        "options": [
+          "$k^k < (k+1)^k$",
+          "$k^k > (k+1)^k$",
+          "$k < 1$",
+          "$(k+1)^k < k^k$"
+        ],
+        "correct": [
+          0
+        ],
+        "explanation": "A larger base gives a larger power.",
+        "option_explanations": [
+          "Correct.",
+          "This is the wrong direction.",
+          "False for $k\\ge2$.",
+          "This is the wrong direction."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "For $3^n < n!$ at $n=7$, the two sides are",
+      "options": [
+        "$2187$ and $720$",
+        "$2187$ and $5040$",
+        "$729$ and $5040$",
+        "$2187$ and $40320$"
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": "$3^7=2187$ and $7!=5040$, so $2187<5040$.",
+      "option_explanations": [
+        "$7!=5040$; $720=6!$.",
+        "Correct.",
+        "$3^7=2187$; $729=3^6$.",
+        "$40320=8!$."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "For $2^n < n!$ at $n=4$, the two sides are",
+        "options": [
+          "$8$ and $24$",
+          "$16$ and $6$",
+          "$16$ and $24$",
+          "$16$ and $120$"
+        ],
+        "correct": [
+          2
+        ],
+        "explanation": "$16 < 24$.",
+        "option_explanations": [
+          "$2^4=16$.",
+          "$4!=24$.",
+          "Correct.",
+          "$120=5!$."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "For $n^2 < 2^n$ at $n=5$, the two sides are",
+        "options": [
+          "$10$ and $32$",
+          "$25$ and $32$",
+          "$25$ and $16$",
+          "$16$ and $16$"
+        ],
+        "correct": [
+          1
+        ],
+        "explanation": "$25<32$, so the base case holds.",
+        "option_explanations": [
+          "$5^2=25$.",
+          "Correct.",
+          "$2^5=32$.",
+          "These are the values at $n=4$."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "basic",
+      "question": "Prove by induction that $8^n - 3^n$ is divisible by $5$ for $n \\ge 1$.",
+      "answer": "Let $S(n)$: $8^n-3^n$ is divisible by 5.\n\nBase case $n=1$: $8-3=5$, divisible by 5. So $S(1)$ is true.\n\nInduction step: assume $S(k)$ (induction hypothesis): $8^k-3^k=5m$ for some integer $m$.\nThen $8^{k+1}-3^{k+1} = 8\\cdot 8^k - 3\\cdot 3^k = 8(8^k-3^k) + 8\\cdot3^k - 3\\cdot 3^k = 8\\cdot 5m + 5\\cdot 3^k = 5(8m+3^k)$.\nThis is divisible by 5, so $S(k+1)$ is true. By induction the claim holds for all $n\\ge1$."
+    },
+    "versions": [
+      {
+        "type": "basic",
+        "question": "Prove by induction that $6^n - 1$ is a multiple of $5$ for $n \\ge 1$.",
+        "answer": "Let $S(n)$: $6^n-1$ is a multiple of 5.\n\nBase case $n=1$: $6-1=5$. True.\n\nInduction step: assume $6^k-1=5m$. Then $6^{k+1}-1 = 6\\cdot6^k-1 = 6(6^k-1)+6-1 = 6\\cdot5m+5 = 5(6m+1)$, a multiple of 5. So $S(k+1)$ holds, and the claim is true for all $n\\ge1$."
+      },
+      {
+        "type": "basic",
+        "question": "Prove by induction that $7^n - 2^n$ is divisible by $5$ for $n \\ge 1$.",
+        "answer": "Let $S(n)$: $7^n-2^n$ is divisible by 5.\n\nBase case $n=1$: $7-2=5$. True.\n\nInduction step: assume $7^k-2^k=5m$. Then $7^{k+1}-2^{k+1} = 7\\cdot7^k-2\\cdot2^k = 7(7^k-2^k)+7\\cdot2^k-2\\cdot2^k = 35m+5\\cdot2^k = 5(7m+2^k)$. So $S(k+1)$ holds and the claim follows for all $n\\ge1$."
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "For the claim '$n^2+n$ is even for $n \\ge 1$', the induction hypothesis is",
+      "options": [
+        "$(k+1)^2+(k+1)$ is even",
+        "$1^2+1$ is even",
+        "$n^2+n$ is even for all $n$",
+        "$k^2+k$ is even"
+      ],
+      "correct": [
+        3
+      ],
+      "explanation": "The hypothesis is $S(k)$.",
+      "option_explanations": [
+        "This is the statement to be proved.",
+        "This is the base case.",
+        "This is the conclusion.",
+        "Correct."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "For the claim '$6^n-1$ is a multiple of 5', the induction hypothesis is",
+        "options": [
+          "$6^{k+1}-1$ is a multiple of 5",
+          "$6-1$ is a multiple of 5",
+          "$6^k-1$ is a multiple of 5",
+          "$6^n-1$ is a multiple of 5 for every $n$"
+        ],
+        "correct": [
+          2
+        ],
+        "explanation": "Assume the statement for $n=k$.",
+        "option_explanations": [
+          "This is the goal of the inductive step.",
+          "This is the base case.",
+          "Correct.",
+          "This is the final conclusion."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "For the claim $2^n < n!$ with $n \\ge 4$, the induction hypothesis is",
+        "options": [
+          "$2^k < k!$ for some $k \\ge 4$",
+          "$2^{k+1} < (k+1)!$",
+          "$16 < 24$",
+          "$2^n<n!$ for all $n\\ge4$"
+        ],
+        "correct": [
+          0
+        ],
+        "explanation": "Assume $S(k)$ for an arbitrary $k$ in range.",
+        "option_explanations": [
+          "Correct.",
+          "This is what must be shown.",
+          "This is the base case.",
+          "This is the conclusion."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "To prove '$n^2+n$ is even', $(k+1)^2+(k+1)$ is rewritten using the hypothesis as",
+      "options": [
+        "$(k^2+k)+2$",
+        "$(k^2+k)+(k+1)$",
+        "$(k^2+k)+2(k+1)$",
+        "$(k^2+k)+2k$"
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": "$(k+1)^2+(k+1)=k^2+3k+2=(k^2+k)+2(k+1)$.",
+      "option_explanations": [
+        "Expanding gives $k^2+3k+2$, so more than 2 is added.",
+        "The added part is $2k+2$.",
+        "Correct.",
+        "$k^2+k+2k = k^2+3k$, missing the $+2$."
+      ]
+    },
+    "versions": [
+      {
+        "type": "basic",
+        "question": "Prove by induction that $n^2+n$ is even for $n \\ge 1$.",
+        "answer": "Let $S(n)$: $n^2+n$ is even.\n\nBase case $n=1$: $1+1=2$, even. True.\n\nInduction step: assume $k^2+k$ is even (IHT). Then $(k+1)^2+(k+1)=k^2+2k+1+k+1=(k^2+k)+2(k+1)$. The first part is even by the hypothesis and the second is a multiple of 2, so the sum is even. Hence $S(k+1)$ is true and the claim holds for all $n\\ge1$."
+      },
+      {
+        "type": "mcq",
+        "question": "In $(k+1)^2+(k+1)=(k^2+k)+\\text{term}$, which term makes the identity true?",
+        "options": [
+          "$2(k+1)$",
+          "$k+1$",
+          "$2k+1$",
+          "$k^2$"
+        ],
+        "correct": [
+          0
+        ],
+        "explanation": "Expand: $k^2+3k+2-(k^2+k)=2k+2$.",
+        "option_explanations": [
+          "Correct.",
+          "The difference is $2k+2$.",
+          "The difference is $2k+2$.",
+          "The difference is linear in $k$."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "In the proof that $8^n-3^n$ is divisible by 5, $8^{k+1}-3^{k+1}=8(8^k-3^k)+X$. What is $X$?",
+      "options": [
+        "$3^k$",
+        "$5\\cdot8^k$",
+        "$8\\cdot3^k$",
+        "$5\\cdot3^k$"
+      ],
+      "correct": [
+        3
+      ],
+      "explanation": "$8\\cdot8^k-3\\cdot3^k = 8(8^k-3^k)+8\\cdot3^k-3\\cdot3^k$.",
+      "option_explanations": [
+        "Check: $8\\cdot3^k-3\\cdot3^k=5\\cdot 3^k$.",
+        "The leftover involves $3^k$, not $8^k$.",
+        "$8\\cdot3^k$ is only one of the two leftover pieces.",
+        "Correct."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "In the proof that $6^n-1$ is a multiple of 5, $6^{k+1}-1 = 6(6^k-1)+X$. What is $X$?",
+        "options": [
+          "$1$",
+          "$5$",
+          "$6$",
+          "$30$"
+        ],
+        "correct": [
+          1
+        ],
+        "explanation": "$6(6^k-1)=6^{k+1}-6$, so $X=5$.",
+        "option_explanations": [
+          "$6\\cdot6^k-1-6\\cdot6^k+6 = 5$.",
+          "Correct.",
+          "That would give $6^{k+1}$, not the needed value.",
+          "That is $6\\cdot5$, not the leftover."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "In the proof that $7^n-2^n$ is divisible by 5, $7^{k+1}-2^{k+1} = 7(7^k-2^k)+X$. What is $X$?",
+        "options": [
+          "$5\\cdot 2^k$",
+          "$2^k$",
+          "$5\\cdot7^k$",
+          "$7\\cdot2^k$"
+        ],
+        "correct": [
+          0
+        ],
+        "explanation": "$7\\cdot7^k-2\\cdot2^k = 7(7^k-2^k)+5\\cdot2^k$.",
+        "option_explanations": [
+          "Correct.",
+          "$7\\cdot2^k-2\\cdot2^k=5\\cdot2^k$.",
+          "The leftover involves $2^k$.",
+          "That leaves out the $-2\\cdot 2^k$ piece."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "Which step is NOT allowed when proving $S(k+1)$ in an induction proof?",
+      "options": [
+        "Assuming $S(k)$ is true",
+        "Assuming $S(k+1)$ is true",
+        "Splitting off the last term of the left side",
+        "Using that $k$ is at least the base value"
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": "We assume $S(k)$ and derive $S(k+1)$; assuming $S(k+1)$ is circular.",
+      "option_explanations": [
+        "This is the induction hypothesis.",
+        "Correct: that is circular.",
+        "This is a normal algebraic step.",
+        "The range of $k$ may be used."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "A student proves $S(k) \\Rightarrow S(k+1)$ but skips the base case. What can be concluded?",
+        "options": [
+          "$S(n)$ is true for all $n$",
+          "$S(n)$ is true for $n\\ge k$",
+          "$S(n)$ is false",
+          "Nothing about any specific $n$"
+        ],
+        "correct": [
+          3
+        ],
+        "explanation": "The base case is needed to start the chain.",
+        "option_explanations": [
+          "Without a start, no step is ever triggered.",
+          "No value of $S$ was established.",
+          "Failure of the proof does not make the claim false.",
+          "Correct: the chain has no starting point."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "Which argument is NOT a valid induction proof of a claim for all $n \\ge 1$?",
+        "options": [
+          "Proving $S(1)$ and $S(k)\\Rightarrow S(k+1)$",
+          "Proving $S(2)$ and $S(k)\\Rightarrow S(k+1)$ for $k \\ge 2$ together with $S(1)$",
+          "Verifying $S(n)$ for $n=1,\\dots,100$ only",
+          "Proving $S(1)$ and $S(k)\\Rightarrow S(k+1)$ for $k\\ge1$"
+        ],
+        "correct": [
+          2
+        ],
+        "explanation": "Checking many cases is not a proof for every $n$.",
+        "option_explanations": [
+          "This is the standard proof.",
+          "Together these cover all $n$.",
+          "Correct: finitely many checks do not cover all $n$.",
+          "This is the standard proof."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "basic",
+      "question": "Prove by induction that $1^2+2^2+\\dots+n^2=\\frac{n(n+1)(2n+1)}{6}$ for $n\\ge1$.",
+      "answer": "Let $S(n)$ be the claim.\n\nBase case $n=1$: left $=1$, right $=\\frac{1\\cdot2\\cdot3}{6}=1$. True.\n\nInduction step: assume $1^2+\\dots+k^2=\\frac{k(k+1)(2k+1)}{6}$ (IHT).\nThen $1^2+\\dots+k^2+(k+1)^2=\\frac{k(k+1)(2k+1)}{6}+(k+1)^2=\\frac{(k+1)\\,[k(2k+1)+6(k+1)]}{6}=\\frac{(k+1)(2k^2+7k+6)}{6}=\\frac{(k+1)(k+2)(2k+3)}{6}$.\nThis equals $\\frac{(k+1)((k+1)+1)(2(k+1)+1)}{6}$, the right side of $S(k+1)$. So the claim holds for all $n\\ge1$."
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "Assuming $\\sum_{i=1}^k i^2=\\frac{k(k+1)(2k+1)}{6}$, adding $(k+1)^2$ gives",
+        "options": [
+          "$\\frac{(k+1)(k+2)(2k+1)}{6}$",
+          "$\\frac{k(k+1)(2k+3)}{6}$",
+          "$\\frac{(k+1)(2k+1)(2k+3)}{6}$",
+          "$\\frac{(k+1)(k+2)(2k+3)}{6}$"
+        ],
+        "correct": [
+          3
+        ],
+        "explanation": "Factor out $(k+1)$: $k(2k+1)+6(k+1)=(k+2)(2k+3)$.",
+        "option_explanations": [
+          "The last factor should be $2k+3$.",
+          "The factor $k+2$ is needed, not $k$.",
+          "$2k^2+7k+6$ factors as $(k+2)(2k+3)$.",
+          "Correct."
+        ]
+      },
+      {
+        "type": "basic",
+        "question": "Prove by induction that $1^3+2^3+\\dots+n^3=\\left(\\frac{n(n+1)}{2}\\right)^2$ for $n\\ge1$.",
+        "answer": "Let $S(n)$ be the claim.\n\nBase case $n=1$: left $=1$, right $=(\\frac{1\\cdot2}{2})^2=1$. True.\n\nInduction step: assume $1^3+\\dots+k^3=\\frac{k^2(k+1)^2}{4}$ (IHT).\nThen the sum up to $k+1$ is $\\frac{k^2(k+1)^2}{4}+(k+1)^3=\\frac{(k+1)^2\\,[k^2+4(k+1)]}{4}=\\frac{(k+1)^2(k+2)^2}{4}=\\left(\\frac{(k+1)(k+2)}{2}\\right)^2$.\nThis is the right side of $S(k+1)$, so the claim holds for all $n\\ge1$."
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "Using $1^2+2^2+\\dots+n^2=\\frac{n(n+1)(2n+1)}{6}$, what is $1^2+2^2+\\dots+6^2$?",
+      "options": [
+        "$36$",
+        "$91$",
+        "$21$",
+        "$441$"
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": "Plug in $n=6$.",
+      "option_explanations": [
+        "That is $6^2$ only.",
+        "Correct: $\\frac{6\\cdot7\\cdot13}{6}$.",
+        "That is $1+2+\\dots+6$.",
+        "That is $21^2$, the sum of cubes."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "Evaluate $1^2+2^2+\\dots+8^2$.",
+        "options": [
+          "$204$",
+          "$64$",
+          "$1296$",
+          "$36$"
+        ],
+        "correct": [
+          0
+        ],
+        "explanation": "Plug in $n=8$.",
+        "option_explanations": [
+          "Correct: $\\frac{8\\cdot9\\cdot17}{6}$.",
+          "That is $8^2$ only.",
+          "That is the sum of the first 8 cubes.",
+          "That is $1+2+\\dots+8$."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "Evaluate $\\sum_{i=1}^{10} i^2$.",
+        "options": [
+          "$100$",
+          "$55$",
+          "$385$",
+          "$3025$"
+        ],
+        "correct": [
+          2
+        ],
+        "explanation": "Plug in $n=10$.",
+        "option_explanations": [
+          "That is $10^2$.",
+          "That is $\\sum i$.",
+          "Correct: $\\frac{10\\cdot11\\cdot21}{6}$.",
+          "That is $55^2$, the sum of cubes."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "Using $1^3+2^3+\\dots+n^3=\\left(\\frac{n(n+1)}{2}\\right)^2$, what is $1^3+2^3+\\dots+5^3$?",
+      "options": [
+        "$225$",
+        "$55$",
+        "$125$",
+        "$15$"
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": "$\\frac{5\\cdot6}{2}=15$, then square.",
+      "option_explanations": [
+        "Correct: $15^2$.",
+        "That is the sum of squares.",
+        "That is $5^3$ only.",
+        "That is $1+2+\\dots+5$ before squaring."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "Evaluate $1^3+2^3+\\dots+6^3$.",
+        "options": [
+          "$91$",
+          "$216$",
+          "$21$",
+          "$441$"
+        ],
+        "correct": [
+          3
+        ],
+        "explanation": "$\\frac{6\\cdot7}{2}=21$, then square.",
+        "option_explanations": [
+          "That is the sum of squares.",
+          "That is $6^3$ only.",
+          "That is $1+\\dots+6$ before squaring.",
+          "Correct: $21^2$."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "Evaluate $\\sum_{i=1}^{8} i^3$.",
+        "options": [
+          "$204$",
+          "$1296$",
+          "$512$",
+          "$36$"
+        ],
+        "correct": [
+          1
+        ],
+        "explanation": "$\\frac{8\\cdot9}{2}=36$, then square.",
+        "option_explanations": [
+          "That is the sum of squares.",
+          "Correct: $36^2$.",
+          "That is $8^3$ only.",
+          "That is $\\sum i$ before squaring."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "In $T(n)=n+T(n-1)$ for $n>1$, $T(1)=0$, the line $T(1)=0$ is called the",
+      "options": [
+        "recursive equation",
+        "induction hypothesis",
+        "terminating condition",
+        "closed form"
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": "It stops the recursion.",
+      "option_explanations": [
+        "That is $n+T(n-1)$.",
+        "That belongs to induction proofs.",
+        "Correct.",
+        "The closed form is the solved expression."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "What is the part $n+T(n-1)$ of a recurrence called?",
+        "options": [
+          "Recursive equation",
+          "Terminating condition",
+          "Base case",
+          "Summation pattern"
+        ],
+        "correct": [
+          0
+        ],
+        "explanation": "The unknown function appears on the right side.",
+        "option_explanations": [
+          "Correct.",
+          "That is the fixed value such as $T(1)=0$.",
+          "This term belongs to induction.",
+          "That appears after expanding."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "A recurrence consists of",
+        "options": [
+          "a base case and an inductive step",
+          "a hypothesis and a conclusion",
+          "a recursive equation and a terminating condition",
+          "an expansion and a summation"
+        ],
+        "correct": [
+          2
+        ],
+        "explanation": "Both parts are required to define the values.",
+        "option_explanations": [
+          "That describes an induction proof.",
+          "That describes an implication.",
+          "Correct.",
+          "Those are steps of solving it."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "What does it mean to **solve** a recurrence $T(n)$?",
+      "options": [
+        "Compute $T(1)$",
+        "Prove $T(n)$ by induction",
+        "Find the recursive equation",
+        "Find $T(n)$ as an expression in $n$"
+      ],
+      "correct": [
+        3
+      ],
+      "explanation": "Solving gives a closed form.",
+      "option_explanations": [
+        "That is given as the terminating condition.",
+        "Induction can verify a solution but is not the solving.",
+        "That is given.",
+        "Correct."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "Solving a recurrence produces",
+        "options": [
+          "a proof of the base case",
+          "a formula for $T(n)$ without $T$ on the right side",
+          "a smaller recurrence",
+          "a table of values for $n\\le 5$"
+        ],
+        "correct": [
+          1
+        ],
+        "explanation": "The result is a closed form.",
+        "option_explanations": [
+          "That is not the goal.",
+          "Correct.",
+          "The goal is to remove recursion.",
+          "A table is not a formula in $n$."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "The final answer of an iterative-method solution is",
+        "options": [
+          "an expression for $T(n)$ in terms of $n$",
+          "a value of $T(1)$",
+          "an expansion with $k$ terms",
+          "a statement $S(k+1)$"
+        ],
+        "correct": [
+          0
+        ],
+        "explanation": "Closed form in $n$.",
+        "option_explanations": [
+          "Correct.",
+          "That is given.",
+          "That is an intermediate step.",
+          "That belongs to induction."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "In the scoring game, jump $i$ earns $n-i+1$ points and the last circle earns none. With $n=4$ circles, the total is",
+      "options": [
+        "$10$",
+        "$6$",
+        "$9$",
+        "$12$"
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": "$T(4)=4+T(3)=4+3+2+T(1)=9$.",
+      "option_explanations": [
+        "That includes an extra 1 for the last circle.",
+        "That is $3+2+1$.",
+        "Correct: $4+3+2$.",
+        "That is $4\\cdot 3$."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "If $T(n)=n+T(n-1)$ for $n>1$ and $T(1)=0$, then $T(6)$ is",
+        "options": [
+          "$21$",
+          "$15$",
+          "$18$",
+          "$20$"
+        ],
+        "correct": [
+          3
+        ],
+        "explanation": "Expand down to $T(1)=0$.",
+        "option_explanations": [
+          "That is $6+5+4+3+2+1$.",
+          "That is $5+4+3+2+1$.",
+          "That is $6+5+4+3$, stopping at 3 instead of 2.",
+          "Correct: $6+5+4+3+2$."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "If $T(n)=n+T(n-1)$ for $n>1$ and $T(1)=0$, then $T(9)$ is",
+        "options": [
+          "$45$",
+          "$44$",
+          "$36$",
+          "$54$"
+        ],
+        "correct": [
+          1
+        ],
+        "explanation": "$\\frac{(9+2)(9-1)}{2}=44$.",
+        "option_explanations": [
+          "That adds an extra 1.",
+          "Correct: $9+8+\\dots+2$.",
+          "That is $8+7+\\dots+1$.",
+          "That is $T(10)$."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "In the scoring game, total points for $n$ circles satisfy",
+      "options": [
+        "$T(n)=(n-1)+T(n-1)$",
+        "$T(n)=n+T(n-1)$",
+        "$T(n)=n+T(n/2)$",
+        "$T(n)=n\\cdot T(n-1)$"
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": "First jump gives $n$, then play continues with one fewer circle.",
+      "option_explanations": [
+        "The first jump earns $n$, not $n-1$.",
+        "Correct.",
+        "Circles reduce by one each time, not half.",
+        "Points are added, not multiplied."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "Which recursive equation describes the scoring game, where the first jump scores $n$ and later jumps score one less each time?",
+        "options": [
+          "$T(n)=T(n-1)+1$",
+          "$T(n)=T(n-1)+n-1$",
+          "$T(n)=2T(n-1)+n$",
+          "$T(n)=T(n-1)+n$"
+        ],
+        "correct": [
+          3
+        ],
+        "explanation": "The first jump is worth $n$.",
+        "option_explanations": [
+          "That would give 1 point per jump.",
+          "The first jump scores $n$.",
+          "Nothing doubles in the game.",
+          "Correct."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "Which pair gives the scoring-game recurrence?",
+        "options": [
+          "$T(n)=n+T(n-1)$ for $n>1$, $T(1)=0$",
+          "$T(n)=n+T(n-1)$ for $n>1$, $T(1)=1$",
+          "$T(n)=T(n-1)$ for $n>1$, $T(1)=n$",
+          "$T(n)=n+T(n+1)$ for $n>1$, $T(1)=0$"
+        ],
+        "correct": [
+          0
+        ],
+        "explanation": "A single circle gives 0 points.",
+        "option_explanations": [
+          "Correct.",
+          "One circle has no jump, so zero points.",
+          "The recursion must add points.",
+          "Recursion must go to smaller values."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "The solution of $T(n)=n+T(n-1)$, $T(1)=0$ is",
+      "options": [
+        "$\\frac{n(n+1)}{2}$",
+        "$\\frac{n(n-1)}{2}$",
+        "$\\frac{(n+2)(n-1)}{2}$",
+        "$\\frac{(n+1)(n-2)}{2}$"
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": "The sum $2+3+\\dots+n$ equals $\\frac{n(n+1)}{2}-1$.",
+      "option_explanations": [
+        "This is the sum from 1, but the expansion stops at 2.",
+        "This sums $1$ to $n-1$.",
+        "Correct.",
+        "This does not match $T(2)=2$."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "The solution of $T(n)=(n+1)+T(n-1)$, $T(1)=0$ is",
+        "options": [
+          "$\\frac{(n+4)(n-1)}{2}$",
+          "$\\frac{(n+2)(n-1)}{2}$",
+          "$\\frac{(n+1)(n+2)}{2}$",
+          "$\\frac{(n+3)(n-1)}{2}$"
+        ],
+        "correct": [
+          0
+        ],
+        "explanation": "$\\frac{(n+1)(n+2)}{2}-3=\\frac{(n+4)(n-1)}{2}$.",
+        "option_explanations": [
+          "Correct: $3+4+\\dots+(n+1)$.",
+          "That is for $T(n)=n+T(n-1)$.",
+          "This sum starts at 1.",
+          "At $n=2$ this gives $\\frac52$, but $T(2)=3$."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "Closed form of $T(n)=n+T(n-1)$, $T(1)=0$ at $n=10$ equals",
+        "options": [
+          "$55$",
+          "$45$",
+          "$44$",
+          "$54$"
+        ],
+        "correct": [
+          3
+        ],
+        "explanation": "Use $\\frac{(n+2)(n-1)}{2}$.",
+        "option_explanations": [
+          "That is $1+2+\\dots+10$.",
+          "That is $1+\\dots+9$.",
+          "That is $T(9)$.",
+          "Correct: $\\frac{12\\cdot9}{2}$."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "basic",
+      "question": "Solve $T(n)=n+T(n-1)$ for $n>1$, $T(1)=0$, by the iterative method.",
+      "answer": "Expand: $T(n)=n+T(n-1)=n+(n-1)+T(n-2)=n+(n-1)+(n-2)+T(n-3)=\\dots=n+(n-1)+\\dots+2+T(1)$.\nThe last term before $T(1)$ is 2 because $T(2)=2+T(1)$. With $T(1)=0$: $T(n)=2+3+\\dots+n$.\nThis is $1+2+\\dots+n$ minus 1: $T(n)=-1+\\frac{n(n+1)}{2}=\\frac{n^2+n-2}{2}=\\frac{(n+2)(n-1)}{2}$."
+    },
+    "versions": [
+      {
+        "type": "basic",
+        "question": "Solve $T(n)=(n+1)+T(n-1)$ for $n>1$, $T(1)=0$, by the iterative method.",
+        "answer": "Expand: $T(n)=(n+1)+n+\\dots+3+T(1)$, since $T(2)=3+T(1)$. With $T(1)=0$, $T(n)=3+4+\\dots+(n+1)$.\nThis equals $(1+2+\\dots+(n+1))-3=\\frac{(n+1)(n+2)}{2}-3=\\frac{n^2+3n-4}{2}=\\frac{(n+4)(n-1)}{2}$."
+      },
+      {
+        "type": "basic",
+        "question": "Solve $T(n)=n+T(n-1)$ for $n>0$, $T(0)=0$, by the iterative method.",
+        "answer": "Expand: $T(n)=n+(n-1)+\\dots+1+T(0)$ since $T(1)=1+T(0)$. With $T(0)=0$: $T(n)=1+2+\\dots+n=\\frac{n(n+1)}{2}$ (proved earlier by induction)."
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "When expanding $T(n)=n+T(n-1)$ with $T(1)=0$, the last term before $T(1)$ is",
+      "options": [
+        "$1$",
+        "$0$",
+        "$2$",
+        "$n-1$"
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": "$T(2)=2+T(1)$.",
+      "option_explanations": [
+        "$T(1)$ is a stopping value, so no term 1 is added.",
+        "That is $T(1)$ itself.",
+        "Correct: because $T(2)=2+T(1)$.",
+        "That is the second term."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "When expanding $T(n)=(n+1)+T(n-1)$ with $T(1)=0$, the last term before $T(1)$ is",
+        "options": [
+          "$2$",
+          "$3$",
+          "$1$",
+          "$n$"
+        ],
+        "correct": [
+          1
+        ],
+        "explanation": "Replace $n$ by 2 in the added term.",
+        "option_explanations": [
+          "$T(2)=(2+1)+T(1)$.",
+          "Correct: because $T(2)=3+T(1)$.",
+          "$T(1)$ stops the expansion.",
+          "That is the second term."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "When expanding $T(n)=n+T(n-1)$ with $T(0)=0$, the last term before $T(0)$ is",
+        "options": [
+          "$1$",
+          "$2$",
+          "$0$",
+          "$n$"
+        ],
+        "correct": [
+          0
+        ],
+        "explanation": "Now the expansion goes all the way to $n=1$.",
+        "option_explanations": [
+          "Correct: because $T(1)=1+T(0)$.",
+          "That would stop one step early.",
+          "That is $T(0)$ itself.",
+          "That is the first term."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "Which describes the iterative method for solving a recurrence?",
+      "options": [
+        "Assume $S(k)$ and then prove $S(k+1)$",
+        "Guess a formula, then check the base case",
+        "Expand repeatedly, stop at the terminating condition, then sum the pattern",
+        "Replace $T(1)$ into every term at once"
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": "Expand, stop, find summation pattern, solve it.",
+      "option_explanations": [
+        "That is induction.",
+        "That is guess-and-verify.",
+        "Correct.",
+        "Terms are expanded step by step."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "Order the iterative method steps.",
+        "options": [
+          "Sum, expand, stop, find pattern",
+          "Expand, stop, find pattern, sum",
+          "Stop, expand, sum, find pattern",
+          "Find pattern, stop, sum, expand"
+        ],
+        "correct": [
+          1
+        ],
+        "explanation": "Terms are written out first.",
+        "option_explanations": [
+          "Nothing to sum before expanding.",
+          "Correct.",
+          "Stopping needs expansion first.",
+          "The pattern appears after expansion."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "After expanding a recurrence down to its terminating condition, the next job is to",
+        "options": [
+          "assume the result for $k$",
+          "replace $n$ by $n+1$",
+          "prove the base case",
+          "find a summation pattern and evaluate it"
+        ],
+        "correct": [
+          3
+        ],
+        "explanation": "Then use a known sum formula or prove one by induction.",
+        "option_explanations": [
+          "That is induction.",
+          "This goes the wrong way.",
+          "That belongs to induction.",
+          "Correct."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "How do we obtain $T(n-1)$ from the equation for $T(n)$?",
+      "options": [
+        "Subtract 1 from the right side",
+        "Replace $n$ by $n-1$ everywhere",
+        "Replace $n$ by $n/2$",
+        "Set $n=1$"
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": "Substitute $n-1$ for $n$.",
+      "option_explanations": [
+        "That changes the value, not the argument.",
+        "Correct.",
+        "That gives $T(n/2)$.",
+        "That gives only the terminating value."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "For $T(n)=1+T(n/2)$, how do we get the equation for $T(n/2)$?",
+        "options": [
+          "Replace $n$ by $n-2$",
+          "Replace $n$ by $2n$",
+          "Replace $T$ by $n$",
+          "Replace $n$ by $n/2$"
+        ],
+        "correct": [
+          3
+        ],
+        "explanation": "The same rule, with a new argument.",
+        "option_explanations": [
+          "That gives $T(n-2)$.",
+          "That gives $T(2n)$.",
+          "That removes the function.",
+          "Correct."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "If $S(n)=n+S(n/2)$, then $S(n/2)$ equals",
+        "options": [
+          "$\\frac n2+S(\\frac n4)$",
+          "$n+S(\\frac n4)$",
+          "$\\frac n2+S(\\frac n2)$",
+          "$\\frac n2+S(n-2)$"
+        ],
+        "correct": [
+          0
+        ],
+        "explanation": "Replace every $n$ by $n/2$.",
+        "option_explanations": [
+          "Correct.",
+          "The added term also becomes $n/2$.",
+          "The argument must also be halved.",
+          "The recursion halves, not subtracts."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "If $T(n)=1+T(n/2)$ for $n>1$, $T(1)=0$, and $n=64$, then $T(64)$ is",
+      "options": [
+        "$7$",
+        "$32$",
+        "$6$",
+        "$64$"
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": "Each halving adds 1; 64 halves to 1 in 6 steps.",
+      "option_explanations": [
+        "That counts the terminating step as well.",
+        "That is $n/2$.",
+        "Correct: $\\log_2 64$.",
+        "That is $n$."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "If $T(n)=1+T(n/2)$, $T(1)=0$, $n=1024$, then $T(1024)$ is",
+        "options": [
+          "$11$",
+          "$512$",
+          "$1023$",
+          "$10$"
+        ],
+        "correct": [
+          3
+        ],
+        "explanation": "$\\log_2 1024=10$.",
+        "option_explanations": [
+          "$1024=2^{10}$, ten halvings.",
+          "That is $n/2$.",
+          "That is $n-1$.",
+          "Correct."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "If $T(n)=1+T(n/2)$, $T(1)=0$, $n=256$, then $T(256)$ is",
+        "options": [
+          "$8$",
+          "$9$",
+          "$128$",
+          "$255$"
+        ],
+        "correct": [
+          0
+        ],
+        "explanation": "$\\log_2 256=8$.",
+        "option_explanations": [
+          "Correct.",
+          "$256=2^8$, eight halvings.",
+          "That is $n/2$.",
+          "That is $n-1$."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "The solution of $T(n)=1+T(n/2)$, $T(1)=0$ ($n$ a power of 2) is",
+      "options": [
+        "$n$",
+        "$\\frac n2$",
+        "$\\log_2 n$",
+        "$2^n$"
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": "$k$ ones are added where $k=\\log_2 n$.",
+      "option_explanations": [
+        "Only one is added per halving.",
+        "The number of halvings is logarithmic.",
+        "Correct.",
+        "The value does not grow exponentially."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "The solution of $T(n)=2+T(n/2)$, $T(1)=0$ ($n$ a power of 2) is",
+        "options": [
+          "$\\log_2 n$",
+          "$2\\log_2 n$",
+          "$2n$",
+          "$n+2$"
+        ],
+        "correct": [
+          1
+        ],
+        "explanation": "$k$ steps of $+2$.",
+        "option_explanations": [
+          "Each halving adds 2.",
+          "Correct.",
+          "Number of steps is logarithmic.",
+          "Not what the expansion gives."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "The solution of $T(n)=1+T(n/2)$, $T(1)=1$ ($n$ a power of 2) is",
+        "options": [
+          "$\\log_2 n$",
+          "$1+\\log_2 n$",
+          "$\\log_2 n - 1$",
+          "$2\\log_2 n$"
+        ],
+        "correct": [
+          1
+        ],
+        "explanation": "$T(n)=k+T(1)$.",
+        "option_explanations": [
+          "$T(1)=1$ adds an extra 1.",
+          "Correct.",
+          "The extra term is added, not subtracted.",
+          "Not what the expansion gives."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "If $n=2^k$, then $T(n/2^k)$ equals",
+      "options": [
+        "$T(1)$",
+        "$T(0)$",
+        "$T(2)$",
+        "$T(k)$"
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": "$n/2^k=1$.",
+      "option_explanations": [
+        "Correct.",
+        "$n/2^k=1$.",
+        "$n/2^k=1$.",
+        "The argument is $1$, not $k$."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "If $n$ is a power of 3, $n=3^k$, then $k$ equals",
+        "options": [
+          "$\\log_2 n$",
+          "$n/3$",
+          "$\\log_3 n$",
+          "$3n$"
+        ],
+        "correct": [
+          2
+        ],
+        "explanation": "$k$ is the exponent.",
+        "option_explanations": [
+          "The base is 3.",
+          "That is not the exponent.",
+          "Correct.",
+          "That is not the exponent."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "If $n$ is a power of 2, then the number of halvings to reach 1 is",
+        "options": [
+          "$n/2$",
+          "$2^n$",
+          "$n-1$",
+          "$\\log_2 n$"
+        ],
+        "correct": [
+          3
+        ],
+        "explanation": "$n=2^k$ means $k=\\log_2 n$.",
+        "option_explanations": [
+          "That would be far too many.",
+          "Not a count of halvings.",
+          "That counts subtractions of 1.",
+          "Correct."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "When expanding $T(n)=1+T(n/2)$ down to $T(n/2^k)$, how many 1s precede $T(n/2^k)$?",
+      "options": [
+        "$k$",
+        "$k+1$",
+        "$n$",
+        "$2^k$"
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": "Each of the $k$ expansions adds one 1.",
+      "option_explanations": [
+        "Correct.",
+        "One 1 is added per expansion, and there are $k$ expansions.",
+        "The count is logarithmic.",
+        "That is $n$."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "In $S(n)=n+S(n/2)$ expanded $k$ times, how many terms precede $S(n/2^k)$?",
+        "options": [
+          "$k-1$",
+          "$k$",
+          "$2^k$",
+          "$k+1$"
+        ],
+        "correct": [
+          1
+        ],
+        "explanation": "The terms are $n, n/2, \\dots$.",
+        "option_explanations": [
+          "Each expansion adds one term.",
+          "Correct.",
+          "That is $n$.",
+          "$k$ expansions add $k$ terms."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "In $S(n)=n+n/2+n/2^2+\\dots+S(n/2^k)$, the last term before $S(n/2^k)$ is",
+        "options": [
+          "$n/2^{k}$",
+          "$n/2^{k+1}$",
+          "$n/2^{k-2}$",
+          "$n/2^{k-1}$"
+        ],
+        "correct": [
+          3
+        ],
+        "explanation": "The $i$-th term is $n/2^{i-1}$.",
+        "option_explanations": [
+          "That is the argument of $S$.",
+          "That would be beyond the last expansion.",
+          "That is the second-last term.",
+          "Correct."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "If $S(n)=S(n/2)+n$ for $n>1$, $S(1)=0$, then $S(32)$ is",
+      "options": [
+        "$64$",
+        "$63$",
+        "$62$",
+        "$31$"
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": "$S(n)=2(n-1)$.",
+      "option_explanations": [
+        "That is $2n$, but the series stops at 2.",
+        "That includes an extra 1.",
+        "Correct: $32+16+8+4+2$.",
+        "That is $n-1$."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "If $S(n)=S(n/2)+n$ for $n>1$, $S(1)=0$, then $S(64)$ is",
+        "options": [
+          "$128$",
+          "$127$",
+          "$126$",
+          "$63$"
+        ],
+        "correct": [
+          2
+        ],
+        "explanation": "$S(n)=2(n-1)$.",
+        "option_explanations": [
+          "That is $2n$.",
+          "That includes an extra 1.",
+          "Correct: $64+32+16+8+4+2$.",
+          "That is $n-1$."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "If $S(n)=S(n/2)+n$ for $n>1$, $S(1)=0$, then $S(16)$ is",
+        "options": [
+          "$32$",
+          "$31$",
+          "$15$",
+          "$30$"
+        ],
+        "correct": [
+          3
+        ],
+        "explanation": "$S(n)=2(n-1)$.",
+        "option_explanations": [
+          "That is $2n$.",
+          "That includes an extra 1.",
+          "That is $n-1$.",
+          "Correct: $16+8+4+2$."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "The solution of $S(n)=S(n/2)+n$, $S(1)=0$, $n$ a power of 2, is",
+      "options": [
+        "$2(n-1)$",
+        "$2n$",
+        "$n\\log_2 n$",
+        "$n-1$"
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": "$n(1+\\frac12+\\dots+\\frac1{2^{k-1}})=2n\\frac{2^k-1}{2^k}$.",
+      "option_explanations": [
+        "Correct.",
+        "The terminating term does not add anything.",
+        "That is for $2S(n/2)+n$.",
+        "That is half the sum."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "The solution of $S(n)=S(n/2)+3n$, $S(1)=0$, $n$ a power of 2, is",
+        "options": [
+          "$3(n-1)$",
+          "$6(n-1)$",
+          "$3n\\log_2 n$",
+          "$6n$"
+        ],
+        "correct": [
+          1
+        ],
+        "explanation": "$3\\cdot2(n-1)$.",
+        "option_explanations": [
+          "Each term is multiplied by 3.",
+          "Correct.",
+          "That is for a doubled recursion.",
+          "The sum is $2(n-1)$ times 3."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "The solution of $S(n)=S(n/2)+n$, $S(1)=1$, $n$ a power of 2, is",
+        "options": [
+          "$2n-1$",
+          "$2n-2$",
+          "$n\\log_2 n+1$",
+          "$2n+1$"
+        ],
+        "correct": [
+          0
+        ],
+        "explanation": "$S(n)=2(n-1)+S(1)$.",
+        "option_explanations": [
+          "Correct: $2(n-1)+1$.",
+          "That leaves out the $+S(1)=1$ term.",
+          "Wrong recursion type.",
+          "That adds $3$ to $2n-2$ instead of adding only $S(1)=1$."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "Using $1+x+\\dots+x^r=\\frac{x^{r+1}-1}{x-1}$, the value of $1+\\frac12+\\frac14+\\frac18$ is",
+      "options": [
+        "$\\frac{7}{4}$",
+        "$2$",
+        "$\\frac{15}{8}$",
+        "$\\frac{31}{16}$"
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": "$x=\\frac12$, $r=3$.",
+      "option_explanations": [
+        "That omits the $\\frac18$ term.",
+        "That is the infinite sum.",
+        "Correct.",
+        "That includes an extra $\\frac1{16}$."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "Evaluate $1+\\frac12+\\frac14+\\frac18+\\frac1{16}+\\frac1{32}$.",
+        "options": [
+          "$\\frac{31}{16}$",
+          "$\\frac{63}{32}$",
+          "$2$",
+          "$\\frac{127}{64}$"
+        ],
+        "correct": [
+          1
+        ],
+        "explanation": "$x=\\frac12$, $r=5$.",
+        "option_explanations": [
+          "That omits the $\\frac1{32}$ term.",
+          "Correct.",
+          "That is the infinite sum.",
+          "That includes an extra term."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "Evaluate $1+\\frac13+\\frac19+\\frac1{27}$.",
+        "options": [
+          "$\\frac{13}{9}$",
+          "$\\frac32$",
+          "$\\frac{121}{81}$",
+          "$\\frac{40}{27}$"
+        ],
+        "correct": [
+          3
+        ],
+        "explanation": "$x=\\frac13$, $r=3$.",
+        "option_explanations": [
+          "That omits the last term.",
+          "That is the infinite sum.",
+          "That includes an extra term.",
+          "Correct."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "If $S(n)=2S(n/2)+n$ for $n>1$, $S(1)=0$, and $n=16$, then $S(16)$ is",
+      "options": [
+        "$32$",
+        "$64$",
+        "$30$",
+        "$256$"
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": "$S(n)=n\\log_2 n$.",
+      "option_explanations": [
+        "That is $2n$.",
+        "Correct: $16\\log_2 16$.",
+        "That is the value for $S(n)=S(n/2)+n$.",
+        "That is $n^2$."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "If $S(n)=2S(n/2)+n$ for $n>1$, $S(1)=0$, and $n=8$, then $S(8)$ is",
+        "options": [
+          "$24$",
+          "$16$",
+          "$14$",
+          "$64$"
+        ],
+        "correct": [
+          0
+        ],
+        "explanation": "$8\\log_2 8=24$.",
+        "option_explanations": [
+          "Correct.",
+          "That is $2n$.",
+          "That is the value for $S(n)=S(n/2)+n$.",
+          "That is $n^2$."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "If $S(n)=2S(n/2)+n$ for $n>1$, $S(1)=0$, and $n=64$, then $S(64)$ is",
+        "options": [
+          "$128$",
+          "$126$",
+          "$384$",
+          "$4096$"
+        ],
+        "correct": [
+          2
+        ],
+        "explanation": "$64\\log_2 64=384$.",
+        "option_explanations": [
+          "That is $2n$.",
+          "That is the value for $S(n)=S(n/2)+n$.",
+          "Correct.",
+          "That is $n^2$."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "Expanding $S(n)=2S(n/2)+n$ $k$ times gives",
+      "options": [
+        "$n+2^kS(n/2^k)$",
+        "$kn+S(n/2^k)$",
+        "$kn+2S(n/2^k)$",
+        "$kn+2^kS(n/2^k)$"
+      ],
+      "correct": [
+        3
+      ],
+      "explanation": "After 3 expansions: $3n+2^3S(n/2^3)$.",
+      "option_explanations": [
+        "Each expansion adds another $n$.",
+        "The coefficient of $S$ doubles each time.",
+        "The coefficient is $2^k$.",
+        "Correct."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "Expanding $S(n)=2S(n/2)+2$ $k$ times gives",
+        "options": [
+          "$2k+2^kS(n/2^k)$",
+          "$2^k+2^kS(n/2^k)$",
+          "$2^{k+1}-2+2^kS(n/2^k)$",
+          "$2^{k+1}+2^kS(n/2^k)$"
+        ],
+        "correct": [
+          2
+        ],
+        "explanation": "$S(n)=2+2S(n/2)=2+4+4S(n/4)=\\dots$",
+        "option_explanations": [
+          "The added terms double each time.",
+          "Only the last added term is shown.",
+          "Correct: $2+4+\\dots+2^k+2^kS$.",
+          "The sum $2+\\dots+2^k$ is $2^{k+1}-2$."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "Expanding $S(n)=3S(n/3)+1$ $k$ times gives",
+        "options": [
+          "$k+3^kS(n/3^k)$",
+          "$\\frac{3^k-1}{2}+S(n/3^k)$",
+          "$\\frac{3^k+1}{2}+3^kS(n/3^k)$",
+          "$\\frac{3^k-1}{2}+3^kS(n/3^k)$"
+        ],
+        "correct": [
+          3
+        ],
+        "explanation": "Geometric sum with $x=3$.",
+        "option_explanations": [
+          "The added terms triple each time.",
+          "The coefficient of $S$ is $3^k$.",
+          "The sum is $\\frac{3^k-1}{2}$.",
+          "Correct: $1+3+\\dots+3^{k-1}+3^kS$."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "basic",
+      "question": "Solve $T(n)=1+T(n-2)$ for $n>1$, $T(0)=0$, by the iterative method. Assume $n$ is even.",
+      "answer": "Expand: $T(n)=1+T(n-2)=1+1+T(n-4)=\\dots$. After $j$ expansions, $T(n)=j+T(n-2j)$. Stop when $n-2j=0$, i.e. $j=n/2$. Then $T(n)=\\frac n2+T(0)=\\frac n2$."
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "If $T(n)=2+T(n-2)$ for $n>1$, $T(0)=0$, and $n$ is even, then $T(n)$ is",
+        "options": [
+          "$n$",
+          "$\\frac n2$",
+          "$2n$",
+          "$n-2$"
+        ],
+        "correct": [
+          0
+        ],
+        "explanation": "$n/2$ expansions each adding 2.",
+        "option_explanations": [
+          "Correct: $n/2$ steps of $+2$.",
+          "Each step adds 2, not 1.",
+          "Steps number $n/2$, not $n$.",
+          "Not the total of all steps."
+        ]
+      },
+      {
+        "type": "basic",
+        "question": "Solve $T(n)=1+T(n-2)$ for $n>1$, $T(1)=0$, by the iterative method. Assume $n$ is odd.",
+        "answer": "Expand: $T(n)=j+T(n-2j)$ after $j$ expansions. Stop when $n-2j=1$, i.e. $j=\\frac{n-1}{2}$. Then $T(n)=\\frac{n-1}{2}+T(1)=\\frac{n-1}{2}$."
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "The solution of $S(n)=2S(n/2)+2$ for $n>1$, $S(1)=0$, $n$ a power of 2, is",
+      "options": [
+        "$2n$",
+        "$2n-2$",
+        "$2\\log_2 n$",
+        "$n\\log_2 n$"
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": "Check: $S(2)=2$, $S(4)=6$.",
+      "option_explanations": [
+        "The sum has $-2$ in it.",
+        "Correct: $2+4+\\dots+2^k=2^{k+1}-2$ with $2^k=n$.",
+        "The terms double, not stay constant.",
+        "That is for $2S(n/2)+n$."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "The solution of $S(n)=2S(n/2)+4$ for $n>1$, $S(1)=0$, $n$ a power of 2, is",
+        "options": [
+          "$4n$",
+          "$2n-2$",
+          "$4n-4$",
+          "$4\\log_2 n$"
+        ],
+        "correct": [
+          2
+        ],
+        "explanation": "$4(1+2+\\dots+2^{k-1})=4(n-1)$.",
+        "option_explanations": [
+          "The sum has a $-4$.",
+          "That is for $+2$.",
+          "Correct.",
+          "The terms double, not stay constant."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "If $S(n)=2S(n/2)+2$ for $n>1$, $S(1)=0$, then $S(16)$ is",
+        "options": [
+          "$30$",
+          "$32$",
+          "$8$",
+          "$62$"
+        ],
+        "correct": [
+          0
+        ],
+        "explanation": "$S(2)=2,S(4)=6,S(8)=14,S(16)=30$.",
+        "option_explanations": [
+          "Correct: $2\\cdot16-2$.",
+          "That is $2n$.",
+          "That is $2\\log_2 16$.",
+          "That is $4n-2$."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "basic",
+      "question": "Solve $S(n)=3S(n/3)+1$ for $n>1$, $S(1)=0$, by the iterative method. Assume $n$ is a power of 3.",
+      "answer": "Let $n=3^k$, so $k=\\log_3 n$. Expand: $S(n)=1+3S(n/3)=1+3(1+3S(n/9))=1+3+9S(n/9)=\\dots=1+3+3^2+\\dots+3^{k-1}+3^kS(n/3^k)$.\nSince $S(n/3^k)=S(1)=0$, $S(n)=1+3+\\dots+3^{k-1}=\\frac{3^k-1}{3-1}=\\frac{n-1}{2}$.\nCheck: $S(3)=1$, $S(9)=4$."
+    },
+    "versions": [
+      {
+        "type": "basic",
+        "question": "Solve $S(n)=2S(n/2)+1$ for $n>1$, $S(1)=0$, by the iterative method. Assume $n$ is a power of 2.",
+        "answer": "Let $n=2^k$. Expand: $S(n)=1+2S(n/2)=1+2+4S(n/4)=\\dots=1+2+\\dots+2^{k-1}+2^kS(n/2^k)$. With $S(1)=0$: $S(n)=2^k-1=n-1$.\nCheck: $S(2)=1$, $S(4)=3$."
+      },
+      {
+        "type": "mcq",
+        "question": "If $S(n)=3S(n/3)+1$ for $n>1$, $S(1)=0$, then $S(27)$ is",
+        "options": [
+          "$26$",
+          "$13$",
+          "$9$",
+          "$40$"
+        ],
+        "correct": [
+          1
+        ],
+        "explanation": "$S(3)=1$, $S(9)=4$, $S(27)=13$.",
+        "option_explanations": [
+          "That is $n-1$.",
+          "Correct: $\\frac{27-1}{2}$.",
+          "That is $27/3$.",
+          "That is $\\frac{81-1}{2}$."
+        ]
+      }
+    ]
+  }
+]

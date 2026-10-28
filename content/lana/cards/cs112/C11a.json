@@ -1,0 +1,2830 @@
+[
+  {
+    "original": {
+      "type": "mcq",
+      "question": "Circle, Rectangle and Triangle classes all need the same color and filled properties. What is the best design to avoid this redundancy?",
+      "options": [
+        "Copy the shared members into each of the three classes",
+        "Declare the shared fields static inside each shape class",
+        "Let the shapes extend a general shared class",
+        "Put all three shapes into one class with a type flag"
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": "Inheritance lets common features live in one superclass that specialized subclasses extend.",
+      "option_explanations": [
+        "copying is exactly the redundancy to avoid.",
+        "static makes the data shared by all objects, not reusable by subclasses.",
+        "Correct: inheritance removes the duplicated code.",
+        "a type flag makes one bloated class and does not reuse code."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "Teacher, Student and Staff classes repeat the same name and id members. Which redesign removes the repetition?",
+        "options": [
+          "Put name and id in a Person class they extend",
+          "Paste name and id into every class and keep them in sync",
+          "Make name and id static so all three classes see them",
+          "Merge the three classes into one class with a role string"
+        ],
+        "correct": [
+          0
+        ],
+        "explanation": "Common members belong in a superclass; the subclasses inherit them.",
+        "option_explanations": [
+          "Correct: one superclass holds the shared members.",
+          "duplicates stay and can drift apart.",
+          "static members belong to the class, so every object would share one name.",
+          "merging loses the separate behavior of each class."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "Which technique lets several classes share common properties and behaviors defined only once?",
+        "options": [
+          "Method overloading",
+          "Constructor chaining",
+          "Type casting",
+          "Class inheritance"
+        ],
+        "correct": [
+          3
+        ],
+        "explanation": "Inheritance generalizes shared features into a superclass.",
+        "option_explanations": [
+          "overloading reuses a method name with different parameters, not shared members.",
+          "chaining only orders constructor calls.",
+          "casting converts reference types, it shares nothing.",
+          "Correct: a superclass defines them once for its subclasses."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "Given `class Apple extends Fruit { }`, which statement is correct?",
+      "options": [
+        "Apple is the superclass and Fruit is the subclass",
+        "Fruit is the superclass and Apple is the subclass",
+        "Fruit and Apple are both direct subclasses of Object",
+        "Apple is the base class and Fruit is the derived class"
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": "The class after extends is the superclass; the declared class is the subclass.",
+      "option_explanations": [
+        "reverses the roles of the two classes.",
+        "Correct: extends points from the subclass to its superclass.",
+        "Apple extends Fruit, so Apple's direct parent is Fruit.",
+        "base class means superclass, so this reverses the roles."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "In `class Dog extends Animal { }`, which class is the derived (child) class?",
+        "options": [
+          "Dog",
+          "Animal",
+          "Object",
+          "Neither, they are siblings"
+        ],
+        "correct": [
+          0
+        ],
+        "explanation": "The class that appears before extends is the derived class.",
+        "option_explanations": [
+          "Correct: Dog extends Animal, so Dog is the child.",
+          "Animal is the parent (base) class.",
+          "Object is an ancestor of both, not the child here.",
+          "extends creates a parent-child link, not a sibling link."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "A programmer writes `class Car extends Vehicle`. Which description fits?",
+        "options": [
+          "Car is the parent class of Vehicle",
+          "Car and Vehicle are the same class",
+          "Vehicle is the parent class of Car",
+          "Vehicle is the extended class of Car"
+        ],
+        "correct": [
+          2
+        ],
+        "explanation": "extends makes the named class the superclass (parent).",
+        "option_explanations": [
+          "swaps parent and child.",
+          "extends creates two distinct classes in a hierarchy.",
+          "Correct: the class after extends is the parent.",
+          "the extended class is the child, so this swaps the roles."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "Which term does NOT refer to a subclass?",
+      "options": [
+        "Base class",
+        "Child class",
+        "Extended class",
+        "Derived class"
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": "Subclass = child = extended = derived class; superclass = parent = base class.",
+      "option_explanations": [
+        "Correct: base class is another name for the superclass.",
+        "child class is a subclass synonym.",
+        "extended class is a subclass synonym.",
+        "derived class is a subclass synonym."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "Which term is NOT a name for a superclass?",
+        "options": [
+          "Parent class",
+          "Base class",
+          "Superclass",
+          "Derived class"
+        ],
+        "correct": [
+          3
+        ],
+        "explanation": "A derived class is a subclass; the superclass is also called parent or base class.",
+        "option_explanations": [
+          "parent class is a superclass synonym.",
+          "base class is a superclass synonym.",
+          "this is the superclass itself.",
+          "Correct: derived class means the subclass."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "Which two terms describe the same kind of class?",
+        "options": [
+          "Base class and child class",
+          "Child class and derived class",
+          "Parent class and extended class",
+          "Superclass and derived class"
+        ],
+        "correct": [
+          1
+        ],
+        "explanation": "Child, extended and derived all mean subclass; parent and base mean superclass.",
+        "option_explanations": [
+          "mixes a superclass term with a subclass term.",
+          "Correct: both mean the subclass.",
+          "mixes a superclass term with a subclass term.",
+          "mixes a superclass term with a subclass term."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "What does a subclass NOT inherit from its superclass?",
+      "options": [
+        "Public methods",
+        "Accessible data fields",
+        "Constructors",
+        "Getter and setter methods"
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": "A subclass inherits accessible data fields and methods, but never constructors.",
+      "option_explanations": [
+        "public methods are inherited.",
+        "accessible fields are inherited.",
+        "Correct: constructors are not inherited; they are invoked with super.",
+        "getters and setters are ordinary methods, so they are inherited."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "Which superclass member is never inherited by a subclass?",
+        "options": [
+          "A constructor",
+          "A public instance method",
+          "A public static method",
+          "A public data field"
+        ],
+        "correct": [
+          0
+        ],
+        "explanation": "Only constructors are excluded from inheritance.",
+        "option_explanations": [
+          "Correct: constructors belong to their own class.",
+          "instance methods are inherited.",
+          "static methods can be inherited too.",
+          "accessible data fields are inherited."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "Which statement about superclass constructors is true?",
+        "options": [
+          "They are inherited like public methods",
+          "They are inherited when declared public",
+          "They are inherited when the subclass declares none",
+          "They are not inherited by the subclass"
+        ],
+        "correct": [
+          3
+        ],
+        "explanation": "Constructors are invoked explicitly or implicitly from the subclass, never inherited.",
+        "option_explanations": [
+          "constructors are excluded from inheritance.",
+          "public does not make a constructor inheritable.",
+          "a subclass with no constructor gets a default one, not the parent's.",
+          "Correct: no constructor is inherited, whatever its visibility."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "Which line of this program causes a compile error?\n\n```java\nclass GeometricObject {\n    private String color = \"white\";\n}\nclass Circle extends GeometricObject {\n    private double radius;\n    Circle(double radius, String color) {\n        this.radius = radius;\n        this.color = color;\n    }\n}\npublic class Main {\n    public static void main(String[] args) {\n        Circle c = new Circle(1, \"red\");\n    }\n}\n```",
+      "options": [
+        "this.radius = radius;",
+        "this.color = color;",
+        "private double radius;",
+        "Circle c = new Circle(1, \"red\");"
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": "A private field of the superclass cannot be accessed directly in the subclass; use its getter or setter.",
+      "option_explanations": [
+        "radius is Circle's own field.",
+        "Correct: color is private in GeometricObject.",
+        "declaring a private field in the subclass is fine.",
+        "the constructor call matches Circle(double, String)."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "Which statement in Manager's constructor does not compile?\n\n```java\nclass Employee {\n    private double salary;\n    public double getSalary() { return salary; }\n    public void setSalary(double s) { salary = s; }\n}\nclass Manager extends Employee {\n    private String dept;\n    Manager(String dept, double s) {\n        this.dept = dept;\n        setSalary(s);\n        salary = salary + 100;\n    }\n}\npublic class Main {\n    public static void main(String[] args) {\n        Manager m = new Manager(\"IT\", 500);\n    }\n}\n```",
+        "options": [
+          "this.dept = dept;",
+          "setSalary(s);",
+          "Manager m = new Manager(\"IT\", 500);",
+          "salary = salary + 100;"
+        ],
+        "correct": [
+          3
+        ],
+        "explanation": "salary is private in Employee, so Manager can only reach it through getSalary and setSalary.",
+        "option_explanations": [
+          "dept is Manager's own field.",
+          "calling an inherited public setter is allowed.",
+          "this call is in main and matches the constructor.",
+          "Correct: direct access to the private field salary is illegal."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "A subclass needs to read and change a private field of its superclass. How can it do that?",
+        "options": [
+          "Through the superclass's getter and setter methods",
+          "With this.field inside the subclass",
+          "With super.field inside the subclass",
+          "By redeclaring the field with the same name as private"
+        ],
+        "correct": [
+          0
+        ],
+        "explanation": "Private members are accessible only inside their own class, so subclasses must use public accessors.",
+        "option_explanations": [
+          "Correct: public getters and setters are the only access path.",
+          "this.field still names a private member of another class.",
+          "super.field is still private access.",
+          "a redeclared field is a different field, not the superclass's one."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "Which statement about a subclass and its superclass is correct?",
+      "options": [
+        "A subclass is a subset of its superclass",
+        "A subclass contains just the methods of its superclass",
+        "A subclass usually adds members",
+        "A subclass has the same members as its superclass"
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": "Despite the name, a subclass is not a subset: it inherits members and normally adds new data fields and methods.",
+      "option_explanations": [
+        "the word subclass misleads; it is not a subset.",
+        "a subclass can add new methods.",
+        "Correct: a subclass adds to what it inherits.",
+        "it can add and override members."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "Compared with the class it extends, a subclass typically contains:",
+        "options": [
+          "Fewer data fields than the superclass",
+          "More information and more methods",
+          "The overridden methods alone",
+          "The same members as the superclass"
+        ],
+        "correct": [
+          1
+        ],
+        "explanation": "Inheritance means subclass = inherited members + new members.",
+        "option_explanations": [
+          "inherited fields stay part of the object.",
+          "Correct: new fields and methods are added.",
+          "inherited and new methods are available too.",
+          "adding members is the point of subclassing."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "Why is the word 'subclass' misleading?",
+        "options": [
+          "A subclass is created before its superclass",
+          "A subclass has no constructors of its own",
+          "A subclass is smaller than its parent",
+          "A subclass normally holds more members than its parent"
+        ],
+        "correct": [
+          3
+        ],
+        "explanation": "A subclass extends the superclass, so it is generally bigger, not smaller.",
+        "option_explanations": [
+          "the superclass is defined independently of order of use.",
+          "subclasses may declare constructors.",
+          "it can be larger.",
+          "Correct: it holds inherited plus extra members."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "Inheritance is used to model which kind of relationship?",
+      "options": [
+        "has-a",
+        "uses-a",
+        "owns-a",
+        "is-a"
+      ],
+      "correct": [
+        3
+      ],
+      "explanation": "A subclass object is a specialized kind of its superclass.",
+      "option_explanations": [
+        "has-a describes a field (composition).",
+        "uses-a describes a dependency.",
+        "owns-a is a has-a style relation.",
+        "Correct: a Circle is a GeometricObject."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "Which sentence describes a valid is-a relationship for inheritance?",
+        "options": [
+          "A Rectangle is a GeometricObject",
+          "A Circle is a radius",
+          "A Person is an Employee",
+          "A Car is an Engine"
+        ],
+        "correct": [
+          0
+        ],
+        "explanation": "Use extends only when the subclass really is a kind of the superclass.",
+        "option_explanations": [
+          "Correct: Rectangle is a kind of geometric object.",
+          "radius is a property of Circle (has-a).",
+          "it is reversed: an Employee is a Person.",
+          "a Car has an Engine."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "Which pair of classes is best linked by extends?",
+        "options": [
+          "Car and Engine",
+          "Student and Person",
+          "Library and Book",
+          "Circle and double"
+        ],
+        "correct": [
+          1
+        ],
+        "explanation": "Student is-a Person; the other pairs are has-a relationships.",
+        "option_explanations": [
+          "a Car has an Engine.",
+          "Correct: a Student is a kind of Person.",
+          "a Library has Books.",
+          "a Circle has a double radius."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "Class A exists, and `class B extends A` is declared. Which declaration of C is legal Java?",
+      "options": [
+        "class C extends A, B",
+        "class C extends B extends A",
+        "class C extends B",
+        "class C extends B, A"
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": "A class has one direct superclass; a hierarchy A, B, C is built by chaining separate declarations.",
+      "option_explanations": [
+        "two superclasses are not allowed.",
+        "extends cannot be repeated in one header.",
+        "Correct: C extends only B, and B already extends A.",
+        "listing two superclasses is multiple inheritance."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "What does Java's single inheritance rule say?",
+        "options": [
+          "A class has one direct superclass",
+          "A superclass has exactly one subclass",
+          "A class has exactly one constructor",
+          "A hierarchy has exactly two levels"
+        ],
+        "correct": [
+          0
+        ],
+        "explanation": "Java forbids multiple inheritance: each class has exactly one direct superclass.",
+        "option_explanations": [
+          "Correct: one direct parent per class.",
+          "many subclasses can share one superclass.",
+          "constructors can be overloaded.",
+          "hierarchies can be as deep as needed."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "Why does this program not compile?\n\n```java\nclass A { }\nclass B { }\nclass C extends A, B { }\npublic class Main {\n    public static void main(String[] args) { new C(); }\n}\n```",
+        "options": [
+          "B must be declared before A",
+          "C needs to be declared public",
+          "A and B need constructors",
+          "extends takes a single class"
+        ],
+        "correct": [
+          3
+        ],
+        "explanation": "Java does not support multiple inheritance, so extends takes a single class.",
+        "option_explanations": [
+          "declaration order does not matter.",
+          "visibility of C is not the problem.",
+          "default constructors exist already.",
+          "Correct: multiple inheritance is not allowed."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "Which line causes a compile error?\n\n```java\nclass Shape { }\nclass Rectangle extends Shape { }\npublic class Main {\n    public static void main(String[] args) {\n        Shape s = new Rectangle();\n        Shape t = new Shape();\n        Rectangle r = new Shape();\n    }\n}\n```",
+      "options": [
+        "Shape s = new Rectangle();",
+        "Shape t = new Shape();",
+        "class Rectangle extends Shape { }",
+        "Rectangle r = new Shape();"
+      ],
+      "correct": [
+        3
+      ],
+      "explanation": "A subclass object can be assigned to a superclass variable, not the other way round.",
+      "option_explanations": [
+        "a Rectangle is a Shape, so this is legal.",
+        "same type on both sides.",
+        "a normal subclass declaration.",
+        "Correct: a Shape is not necessarily a Rectangle."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "Which statement fails to compile?\n\n```java\nclass Vehicle { }\nclass Car extends Vehicle { }\npublic class Main {\n    public static void main(String[] args) {\n        Vehicle v = new Car();\n        Object o = new Car();\n        Car c = new Object();\n    }\n}\n```",
+        "options": [
+          "Car c = new Object();",
+          "Vehicle v = new Car();",
+          "Object o = new Car();",
+          "Vehicle w = new Vehicle();"
+        ],
+        "correct": [
+          0
+        ],
+        "explanation": "The variable's type must be the same as or a superclass of the object's class.",
+        "option_explanations": [
+          "Correct: Object is not a Car.",
+          "Car is a Vehicle.",
+          "every class descends from Object.",
+          "same type on both sides."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "Why can a Circle object be stored in a GeometricObject variable but not the reverse?",
+        "options": [
+          "Superclass variables are bigger so they accept anything",
+          "Every Circle is a GeometricObject, but not every GeometricObject is a Circle",
+          "Circle has fewer members than GeometricObject",
+          "Subclass variables cannot hold any object"
+        ],
+        "correct": [
+          1
+        ],
+        "explanation": "Assignment follows the is-a direction: subclass to superclass is safe.",
+        "option_explanations": [
+          "variable size is not the rule.",
+          "Correct: is-a holds in one direction only.",
+          "a Circle has at least as many members.",
+          "subclass variables can hold subclass objects."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "In a UML class diagram, how is the inheritance relationship drawn?",
+      "options": [
+        "A line with a triangle pointing at the superclass",
+        "A line with a triangular arrowhead pointing to the subclass",
+        "A dashed line with a plain arrowhead at the subclass",
+        "A line with a diamond at the superclass end"
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": "The triangular arrow points from the subclass to the superclass.",
+      "option_explanations": [
+        "Correct: the triangle sits at the superclass end.",
+        "the arrow direction is reversed.",
+        "dashed arrows are for other relationships.",
+        "diamonds mark aggregation or composition."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "A UML diagram shows a triangular arrow from Rectangle to Shape. What does it mean?",
+        "options": [
+          "Shape extends Rectangle",
+          "Rectangle has a Shape field",
+          "Rectangle extends Shape",
+          "Rectangle and Shape are unrelated"
+        ],
+        "correct": [
+          2
+        ],
+        "explanation": "The arrow points at the superclass.",
+        "option_explanations": [
+          "reads the arrow backwards.",
+          "a field would be an association, not a triangle.",
+          "Correct: the arrow tip is at Shape, the superclass.",
+          "the arrow links them."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "A UML triangle arrow leads from Student to Person. Which Java header matches?",
+        "options": [
+          "class Person extends Student",
+          "class Student extends Person",
+          "class Student inherits Person",
+          "class Person(Student)"
+        ],
+        "correct": [
+          1
+        ],
+        "explanation": "The class at the tail of the arrow extends the class at the head.",
+        "option_explanations": [
+          "swaps subclass and superclass.",
+          "Correct: Student is the subclass.",
+          "inherits is not a Java keyword.",
+          "not valid Java syntax."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "The keyword super can be used in which two ways?",
+      "options": [
+        "To call a superclass constructor or a superclass method",
+        "To call a subclass constructor or a subclass method",
+        "To call another constructor of the same class",
+        "To refer to the object that is running the method"
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": "super refers to the superclass of the class in which it appears.",
+      "option_explanations": [
+        "Correct: super reaches the parent's constructor and methods.",
+        "that direction is reversed.",
+        "this(...) does that.",
+        "this refers to the current object."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "Inside a subclass, what does `super.show()` do?",
+        "options": [
+          "Runs the show method of the subclass",
+          "Runs the parent's show",
+          "Creates a new parent object",
+          "Calls the constructor of the parent"
+        ],
+        "correct": [
+          1
+        ],
+        "explanation": "super.method(args) invokes the superclass version of a method.",
+        "option_explanations": [
+          "that would be show() or this.show().",
+          "Correct: it names the parent's version of show.",
+          "creating objects needs new.",
+          "a constructor call is super(...) without a method name."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "Which use of the keyword super is valid?",
+        "options": [
+          "super.new(args); to build a parent object",
+          "super = parent; to point at a parent",
+          "super(args); to call a parent constructor",
+          "super class(args); to select a parent"
+        ],
+        "correct": [
+          2
+        ],
+        "explanation": "Valid forms are super(arguments) for constructors and super.method(arguments) for methods.",
+        "option_explanations": [
+          "not valid Java syntax.",
+          "super is a keyword, not a variable.",
+          "Correct: super(args) is the constructor form.",
+          "not valid Java syntax."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "Why does this program not compile?\n\n```java\nclass A {\n    A() { }\n}\nclass B extends A {\n    B() {\n        System.out.println(\"hi\");\n        super();\n    }\n}\npublic class Main {\n    public static void main(String[] args) { new B(); }\n}\n```",
+      "options": [
+        "A has no accessible no-arg constructor",
+        "println cannot be used inside a constructor",
+        "super() cannot be called without arguments",
+        "super() is not the first line"
+      ],
+      "correct": [
+        3
+      ],
+      "explanation": "Java requires a statement that uses super to appear first in the constructor.",
+      "option_explanations": [
+        "A() exists and is accessible.",
+        "println is allowed in constructors.",
+        "super() with no arguments is legal.",
+        "Correct: the super call must come first."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "Which fix makes Student compile?\n\n```java\nclass Person {\n    Person(String name) { }\n}\nclass Student extends Person {\n    Student(String name) {\n        int n = name.length();\n        super(name);\n    }\n}\npublic class Main {\n    public static void main(String[] args) { new Student(\"Ann\"); }\n}\n```",
+        "options": [
+          "Replace super(name) with Person(name)",
+          "Move super(name); up first",
+          "Remove the parameter from Student",
+          "Declare n as a field instead"
+        ],
+        "correct": [
+          1
+        ],
+        "explanation": "super(...) must be the first statement in a constructor.",
+        "option_explanations": [
+          "a constructor name cannot be called directly.",
+          "Correct: moving the call to line one satisfies the rule.",
+          "removing the parameter does not fix the order.",
+          "declaring a field does not change the position of super(name)."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "Where must a call to super(...) appear in a constructor?",
+        "options": [
+          "As the last statement",
+          "Anywhere before return",
+          "As the first statement",
+          "Inside an if block at the top"
+        ],
+        "correct": [
+          2
+        ],
+        "explanation": "Constructor calls with super or this must be the first line.",
+        "option_explanations": [
+          "not last.",
+          "not anywhere.",
+          "Correct: the first line is the required place.",
+          "not inside a block."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "Which code completes the blank so that Student calls the Person constructor?\n\n```java\nclass Person {\n    Person(String n) { System.out.println(\"Person \" + n); }\n}\nclass Student extends Person {\n    Student(String n) {\n        ______;\n        System.out.println(\"Student \" + n);\n    }\n}\n```",
+      "options": [
+        "super(n)",
+        "Person(n)",
+        "super.Person(n)",
+        "this.Person(n)"
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": "The parent constructor is invoked with super(arguments); using its name is a syntax error.",
+      "option_explanations": [
+        "Correct: super(n) is the constructor-call form.",
+        "a superclass constructor name cannot be called directly.",
+        "super.Person is not a method.",
+        "this.Person is not a method."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "Fill in the blank so that Bike passes 2 to the Vehicle constructor.\n\n```java\nclass Vehicle {\n    Vehicle(int wheels) { }\n}\nclass Bike extends Vehicle {\n    Bike() {\n        ______;\n    }\n}\n```",
+        "options": [
+          "Vehicle(2)",
+          "this(2)",
+          "super.Vehicle(2)",
+          "super(2)"
+        ],
+        "correct": [
+          3
+        ],
+        "explanation": "Use super(args) as the first line to pick the parent constructor.",
+        "option_explanations": [
+          "constructor names are not callable directly.",
+          "this(2) looks for Bike(int), which does not exist.",
+          "super.Vehicle is not a method.",
+          "Correct: super(2) invokes Vehicle(int)."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "A subclass constructor must call the parent constructor Account(String id). Which line does it?",
+        "options": [
+          "Account(id);",
+          "super.Account(id);",
+          "super(id);",
+          "extends Account(id);"
+        ],
+        "correct": [
+          2
+        ],
+        "explanation": "Calling a superclass constructor by its name is a syntax error; use super.",
+        "option_explanations": [
+          "a constructor cannot be called by name.",
+          "Account is not a method of super.",
+          "Correct: super(id) is the constructor invocation.",
+          "extends is only used in the class header."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "Why does `new B(5)` not compile?\n\n```java\nclass A {\n    A() { }\n    A(int x) { System.out.println(\"A \" + x); }\n}\nclass B extends A { }\npublic class Main {\n    public static void main(String[] args) {\n        new B(5);\n    }\n}\n```",
+      "options": [
+        "A(int) is hidden because A also has a no-arg constructor",
+        "B has no B(int) constructor",
+        "The argument 5 must be cast to A first",
+        "B needs to be declared public"
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": "Constructors are not inherited; B only has its implicit no-arg constructor.",
+      "option_explanations": [
+        "overloaded constructors do not hide each other.",
+        "Correct: B has just the default constructor.",
+        "arguments are not cast to the class.",
+        "visibility is not the problem."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "Which statement explains the error in main?\n\n```java\nclass Person {\n    Person() { }\n    Person(String name) { System.out.println(name); }\n}\nclass Teacher extends Person { }\npublic class Main {\n    public static void main(String[] args) {\n        new Teacher(\"Sam\");\n    }\n}\n```",
+        "options": [
+          "Teacher lacks a Teacher(String) constructor",
+          "Person(String) must be declared public to be inherited",
+          "new Teacher(\"Sam\") needs a cast to Person",
+          "Teacher must define a main method"
+        ],
+        "correct": [
+          0
+        ],
+        "explanation": "Each class must declare its own constructors; they are not inherited.",
+        "option_explanations": [
+          "Correct: only the default Teacher() exists.",
+          "public does not make constructors inheritable.",
+          "casts do not create constructors.",
+          "main is irrelevant."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "Class Base declares Base(int n). Class Derived extends Base declares no constructor. Which call compiles if Base also has Base()?",
+        "options": [
+          "new Derived(3)",
+          "new Derived(3, 4)",
+          "new Derived(\"x\")",
+          "new Derived()"
+        ],
+        "correct": [
+          3
+        ],
+        "explanation": "Derived only has its default no-arg constructor.",
+        "option_explanations": [
+          "Base(int) is not inherited.",
+          "no two-argument constructor exists.",
+          "no String constructor exists.",
+          "Correct: the default constructor takes no arguments."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "What is printed? (lines are separated by /)\n\n```java\nclass A {\n    public A() { System.out.println(\"A made\"); }\n}\nclass B extends A {\n    public B() { System.out.println(\"B made\"); }\n}\npublic class Main {\n    public static void main(String[] args) {\n        B b = new B();\n    }\n}\n```",
+      "options": [
+        "B made",
+        "A made / B made",
+        "B made / A made",
+        "A made"
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": "A constructor with no explicit call starts with an implicit super(), so the parent constructor runs first.",
+      "option_explanations": [
+        "forgets the implicit super() call.",
+        "Correct: the superclass constructor runs before the body of B's constructor.",
+        "reverses the order of the chain.",
+        "the subclass body still runs."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "What is the output of this program? (lines are separated by /)\n\n```java\nclass X {\n    public X() { System.out.println(\"x\"); }\n}\nclass Y extends X {\n    public Y() { System.out.println(\"y\"); }\n}\nclass Z extends Y {\n    public Z() { System.out.println(\"z\"); }\n}\npublic class Main {\n    public static void main(String[] args) {\n        new Z();\n    }\n}\n```",
+        "options": [
+          "z",
+          "z / y / x",
+          "x / z",
+          "x / y / z"
+        ],
+        "correct": [
+          3
+        ],
+        "explanation": "Constructors run from the top of the hierarchy down to the class being created.",
+        "option_explanations": [
+          "only the constructor of Z would run.",
+          "that is the reverse of constructor chaining.",
+          "Y is skipped, but every constructor in the chain runs.",
+          "Correct: X runs first, then Y, then Z."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "What is printed? (lines are separated by /)\n\n```java\nclass P {\n    public P() { System.out.println(\"P\"); }\n}\nclass Q extends P { }\npublic class Main {\n    public static void main(String[] args) {\n        new Q();\n        System.out.println(\"done\");\n    }\n}\n```",
+        "options": [
+          "P / done",
+          "done",
+          "done / P",
+          "P"
+        ],
+        "correct": [
+          0
+        ],
+        "explanation": "Q's default constructor calls P's no-arg constructor implicitly.",
+        "option_explanations": [
+          "Correct: the default constructor of Q invokes P().",
+          "ignores the inherited constructor call.",
+          "P prints during new Q(), before done.",
+          "the next println still runs."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "What problem arises when compiling this program?\n\n```java\nclass A {\n    public A(int x) { }\n}\nclass B extends A {\n    public B() { }\n}\npublic class Main {\n    public static void main(String[] args) {\n        B b = new B();\n    }\n}\n```",
+      "options": [
+        "B must override the constructor of A",
+        "A(int) is not public",
+        "B() implicitly calls A(), which does not exist",
+        "B() needs a return type"
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": "Without an explicit call, the compiler inserts super(); it fails if the superclass has no no-arg constructor.",
+      "option_explanations": [
+        "constructors are not overridden.",
+        "A(int) is declared public.",
+        "Correct: the implicit super() finds no matching constructor.",
+        "constructors have no return type."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "Why does this program fail to compile?\n\n```java\nclass Fruit {\n    public Fruit(String name) {\n        System.out.println(\"Fruit made\");\n    }\n}\nclass Apple extends Fruit { }\npublic class Main {\n    public static void main(String[] args) {\n        new Apple();\n    }\n}\n```",
+        "options": [
+          "Fruit's constructor must not print anything",
+          "Apple's default constructor needs a Fruit()",
+          "Apple needs an explicit extends Object",
+          "Fruit must be declared abstract"
+        ],
+        "correct": [
+          1
+        ],
+        "explanation": "Once a class declares any constructor, Java adds no default one; a subclass relying on the default needs a no-arg superclass constructor.",
+        "option_explanations": [
+          "printing in constructors is fine.",
+          "Correct: Fruit has no no-arg constructor.",
+          "every class already extends Object.",
+          "abstract has no bearing on this."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "Which code placed in the blank makes this compile?\n\n```java\nclass A {\n    public A(int x) { }\n}\nclass B extends A {\n    public B() { ______ }\n}\n```",
+        "options": [
+          "super(0);",
+          "super();",
+          "this(0);",
+          "A(0);"
+        ],
+        "correct": [
+          0
+        ],
+        "explanation": "B() must call an existing A constructor, and A only has A(int).",
+        "option_explanations": [
+          "Correct: A(int) exists, so super(0) matches it.",
+          "A has no no-arg constructor.",
+          "B has no B(int) constructor to call.",
+          "a constructor name cannot be called directly."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "What is printed? (lines are separated by /)\n\n```java\nclass Person {\n    public Person() { System.out.println(\"(1) Person\"); }\n}\nclass Employee extends Person {\n    public Employee() {\n        this(\"(2) Employee String\");\n        System.out.println(\"(3) Employee no-arg\");\n    }\n    public Employee(String s) { System.out.println(s); }\n}\npublic class Main extends Employee {\n    public Main() { System.out.println(\"(4) Main\"); }\n    public static void main(String[] args) {\n        new Main();\n    }\n}\n```",
+      "options": [
+        "(1) Person / (2) Employee String / (3) Employee no-arg / (4) Main",
+        "(2) Employee String / (3) Employee no-arg / (1) Person / (4) Main",
+        "(1) Person / (3) Employee no-arg / (2) Employee String / (4) Main",
+        "(4) Main / (3) Employee no-arg / (2) Employee String / (1) Person"
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": "Constructor chaining runs the top superclass first; this(...) delegates to another constructor of the same class, which calls super() implicitly.",
+      "option_explanations": [
+        "Correct: Person first, then Employee(String), then the rest of Employee(), then Main.",
+        "Employee runs before its parent Person.",
+        "the this(...) call runs before the lines that follow it, so (2) precedes (3).",
+        "that is full reverse order."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "What is the output? (lines are separated by /)\n\n```java\nclass Animal {\n    public Animal() { System.out.println(\"animal\"); }\n}\nclass Pet extends Animal {\n    public Pet() {\n        this(\"named\");\n        System.out.println(\"pet\");\n    }\n    public Pet(String n) { System.out.println(n); }\n}\nclass Dog extends Pet {\n    public Dog() { System.out.println(\"dog\"); }\n}\npublic class Main {\n    public static void main(String[] args) {\n        new Dog();\n    }\n}\n```",
+        "options": [
+          "named / pet / animal / dog",
+          "animal / pet / named / dog",
+          "animal / named / pet / dog",
+          "dog / pet / named / animal"
+        ],
+        "correct": [
+          2
+        ],
+        "explanation": "Pet() calls this(\"named\"), whose constructor first runs Animal() implicitly; then the rest of Pet() runs, then Dog's body.",
+        "option_explanations": [
+          "Pet's lines would run before Animal.",
+          "this(...) runs before pet is printed.",
+          "Correct: chain order is Animal, Pet(String), rest of Pet(), Dog.",
+          "the order is fully reversed."
+        ]
+      },
+      {
+        "type": "basic",
+        "question": "Trace the program below and write the exact output, then explain the order in one sentence.\n\n```java\nclass Person {\n    public Person() { System.out.println(\"(1) Person\"); }\n}\nclass Employee extends Person {\n    public Employee() {\n        this(\"(2) Employee String\");\n        System.out.println(\"(3) Employee no-arg\");\n    }\n    public Employee(String s) { System.out.println(s); }\n}\npublic class Main extends Employee {\n    public Main() { System.out.println(\"(4) Main\"); }\n    public static void main(String[] args) {\n        new Main();\n    }\n}\n```",
+        "answer": "Output, one per line: (1) Person, (2) Employee String, (3) Employee no-arg, (4) Main.\n\nOrder: new Main() runs Main() whose implicit super() goes to Employee(); Employee() starts with this(\"...\"), which jumps to Employee(String); that constructor's implicit super() runs Person() first and prints (1), then Employee(String) prints (2), control returns to Employee() which prints (3), and finally Main's body prints (4)."
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "The compiler treats `public A(double d) { /* statements */ }`, which has no explicit constructor call, as if it began with:",
+      "options": [
+        "super(d);",
+        "super();",
+        "this();",
+        "this(d);"
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": "If neither this(...) nor super(...) is written, the compiler inserts super() as the first statement.",
+      "option_explanations": [
+        "no arguments are passed automatically.",
+        "Correct: the no-arg super() is added automatically.",
+        "this() is never added implicitly.",
+        "this(d) is never added implicitly."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "If a constructor does not invoke this(...) or super(...) explicitly, what does the compiler do?",
+        "options": [
+          "It adds super() as the first line",
+          "It skips the superclass constructor",
+          "It calls the superclass constructor with the same arguments",
+          "It calls another constructor of the same class"
+        ],
+        "correct": [
+          0
+        ],
+        "explanation": "super() is inserted as the first statement.",
+        "option_explanations": [
+          "Correct: an implicit super() starts the constructor.",
+          "the superclass constructor is always invoked.",
+          "arguments are never forwarded implicitly.",
+          "that is what this(...) does explicitly."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "Which two constructors behave identically?",
+        "options": [
+          "`public B() { }` and `public B() { this(); }`",
+          "`public B(int x) { }` and `public B(int x) { super(x); }`",
+          "`public B() { }` and `public B() { super(0); }`",
+          "`public B() { }` and `public B() { super(); }`"
+        ],
+        "correct": [
+          3
+        ],
+        "explanation": "An empty constructor gets an implicit super().",
+        "option_explanations": [
+          "this() inside B() would call itself.",
+          "super(x) passes an argument the implicit call never passes.",
+          "super(0) needs a parent constructor with an int.",
+          "Correct: the empty body gets super() added."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "Which pair correctly describes this and super?",
+      "options": [
+        "this refers to the parent class, super refers to the current class",
+        "both refer to the parent class",
+        "this refers to the current class, super refers to its parent class",
+        "both refer to the current class"
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": "this = same class; super = parent class. Both work on data fields, methods and constructors.",
+      "option_explanations": [
+        "the two roles are swapped.",
+        "this is not the parent.",
+        "Correct: this is the same class, super is the superclass.",
+        "super is not the current class."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "In a constructor, where must this(...) or super(...) be placed?",
+        "options": [
+          "On the last line",
+          "On the first line",
+          "Directly after the field declarations",
+          "Right before the first return"
+        ],
+        "correct": [
+          1
+        ],
+        "explanation": "A constructor call with this or super is required to be the first statement.",
+        "option_explanations": [
+          "not last.",
+          "Correct: first line is the rule.",
+          "position relative to fields is irrelevant.",
+          "constructors do not need return."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "A subclass has its own field radius and inherits a method getArea() from its parent. Which expression names the parent's version of getArea()?",
+        "options": [
+          "this.getArea()",
+          "super.radius",
+          "getArea.super()",
+          "super.getArea()"
+        ],
+        "correct": [
+          3
+        ],
+        "explanation": "this refers to the current class, super to the parent; both can qualify methods.",
+        "option_explanations": [
+          "this.getArea() selects the current class's version.",
+          "super.radius names a field, not a method.",
+          "not valid Java syntax.",
+          "Correct: super.getArea() selects the parent's method."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "Why does this program not compile?\n\n```java\nclass A {\n    A() { }\n}\nclass B extends A {\n    B() { }\n    B(int x) {\n        this();\n        super();\n    }\n}\npublic class Main {\n    public static void main(String[] args) { new B(1); }\n}\n```",
+      "options": [
+        "B() must be declared before B(int)",
+        "this() and super() both want to be first",
+        "this() cannot call a constructor without parameters",
+        "A must declare B as a friend class"
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": "A constructor may start with exactly one of this(...) or super(...); each must be the first statement.",
+      "option_explanations": [
+        "declaration order is irrelevant.",
+        "Correct: two constructor calls cannot both come first.",
+        "this() is a legal call to B().",
+        "Java has no friend classes."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "What is wrong with the Child() constructor?\n\n```java\nclass Base {\n    Base() { }\n}\nclass Child extends Base {\n    Child(String s) { }\n    Child() {\n        super();\n        this(\"x\");\n    }\n}\npublic class Main {\n    public static void main(String[] args) { new Child(); }\n}\n```",
+        "options": [
+          "It calls both super() and this(String)",
+          "It calls a constructor with a String argument",
+          "It does not return a value",
+          "It has the same name as the class"
+        ],
+        "correct": [
+          0
+        ],
+        "explanation": "A constructor cannot contain both super(...) and this(...); one must be first and the other cannot follow.",
+        "option_explanations": [
+          "Correct: two explicit constructor calls are not allowed.",
+          "calling Child(String) is legal on its own.",
+          "constructors never return values.",
+          "constructors must share the class name."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "Which constructor body is legal in a subclass whose parent has a no-arg constructor and which also has Sub(int)?",
+        "options": [
+          "this(5); super();",
+          "super(); this(5);",
+          "this(5);",
+          "super(); super();"
+        ],
+        "correct": [
+          2
+        ],
+        "explanation": "A constructor makes one explicit constructor call at most, and it must be first.",
+        "option_explanations": [
+          "a second call after this(5) is illegal.",
+          "this(5) cannot come after super().",
+          "Correct: a single this(...) call is allowed.",
+          "super() cannot be written twice."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "What is printed? (lines are separated by /)\n\n```java\nclass A {\n    void show() { System.out.println(\"A\"); }\n}\nclass B extends A {\n    void show() {\n        super.show();\n        System.out.println(\"B\");\n    }\n}\npublic class Main {\n    public static void main(String[] args) { new B().show(); }\n}\n```",
+      "options": [
+        "A / B",
+        "B",
+        "B / A",
+        "A"
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": "super.show() runs the parent's version first, then the rest of B's show prints B.",
+      "option_explanations": [
+        "Correct: parent version, then B's own line.",
+        "skips the super call.",
+        "reverses the order of the statements.",
+        "omits B's own println."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "What is the output? (lines are separated by /)\n\n```java\nclass Logger {\n    void log(String m) { System.out.println(\"log: \" + m); }\n}\nclass TimedLogger extends Logger {\n    void log(String m) {\n        System.out.println(\"time\");\n        super.log(m);\n    }\n}\npublic class Main {\n    public static void main(String[] args) { new TimedLogger().log(\"go\"); }\n}\n```",
+        "options": [
+          "log: go / time",
+          "time / log: go",
+          "log: go",
+          "time"
+        ],
+        "correct": [
+          1
+        ],
+        "explanation": "TimedLogger prints first, then super.log runs the parent version.",
+        "option_explanations": [
+          "super.log is after the first println.",
+          "Correct: statement order inside the override decides it.",
+          "the override also prints time.",
+          "the parent version is also called."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "What is printed? (lines are separated by /)\n\n```java\nclass A {\n    void show() { System.out.println(\"A\"); }\n}\nclass B extends A {\n    void show() {\n        System.out.println(\"B\");\n        super.show();\n        System.out.println(\"B2\");\n    }\n}\npublic class Main {\n    public static void main(String[] args) { new B().show(); }\n}\n```",
+        "options": [
+          "A / B / B2",
+          "B / B2",
+          "B / A / B2",
+          "B / A"
+        ],
+        "correct": [
+          2
+        ],
+        "explanation": "Statements run in order; super.show() contributes A in the middle.",
+        "option_explanations": [
+          "parent's call is not first here.",
+          "super.show() is skipped.",
+          "Correct: B, then parent's A, then B2.",
+          "the last println still runs."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "What happens when this program runs?\n\n```java\nclass A {\n    public String toString() { return \"A\"; }\n}\nclass B extends A {\n    public String toString() {\n        return toString() + \"B\";\n    }\n}\npublic class Main {\n    public static void main(String[] args) {\n        System.out.println(new B());\n    }\n}\n```",
+      "options": [
+        "It prints AB",
+        "It prints B",
+        "It does not compile",
+        "A StackOverflowError is thrown"
+      ],
+      "correct": [
+        3
+      ],
+      "explanation": "Inside the override, toString() calls itself endlessly; super.toString() is needed to reach the parent version.",
+      "option_explanations": [
+        "AB would need super.toString().",
+        "the call never returns, so nothing is returned.",
+        "the code is valid Java.",
+        "Correct: the method calls itself recursively without end."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "What happens when this program runs?\n\n```java\nclass Shape {\n    void draw() { System.out.println(\"shape\"); }\n}\nclass Square extends Shape {\n    void draw() {\n        draw();\n        System.out.println(\"square\");\n    }\n}\npublic class Main {\n    public static void main(String[] args) { new Square().draw(); }\n}\n```",
+        "options": [
+          "It crashes with StackOverflowError",
+          "It prints shape and then square",
+          "It prints square only",
+          "It fails to compile"
+        ],
+        "correct": [
+          0
+        ],
+        "explanation": "draw() calls itself instead of super.draw(), so the recursion never stops.",
+        "option_explanations": [
+          "Correct: the override calls itself forever.",
+          "that needs super.draw().",
+          "the first statement is a recursive call.",
+          "calling a method of the same class is legal."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "In an overriding method, why is `super.` necessary to run the parent's version?",
+        "options": [
+          "Without it the parent's version cannot be inherited",
+          "Without it Java picks the version with fewer parameters",
+          "Without it the call selects the same overriding method again",
+          "Without it the method becomes static"
+        ],
+        "correct": [
+          2
+        ],
+        "explanation": "An unqualified call goes to the subclass version, so use super.method() to refer to the parent's.",
+        "option_explanations": [
+          "inheritance happens regardless.",
+          "parameter counts play no role.",
+          "Correct: the plain call refers to the overriding method itself.",
+          "super does not change static-ness."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "What is printed? (lines are separated by /)\n\n```java\nclass GeometricObject {\n    String name() { return \"shape\"; }\n}\nclass Circle extends GeometricObject {\n    void print() {\n        System.out.println(name());\n        System.out.println(super.name());\n    }\n}\npublic class Main {\n    public static void main(String[] args) { new Circle().print(); }\n}\n```",
+      "options": [
+        "shape / compile error",
+        "shape / shape",
+        "compile error",
+        "shape"
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": "When the subclass does not override a method, super. is optional because the method is inherited.",
+      "option_explanations": [
+        "super.name() compiles too.",
+        "Correct: both calls reach the inherited method.",
+        "neither call is an error.",
+        "both lines print."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "What is the output? (lines are separated by /)\n\n```java\nclass Account {\n    int getBalance() { return 40; }\n}\nclass Savings extends Account {\n    void show() {\n        System.out.println(super.getBalance() + 1);\n        System.out.println(getBalance() + 2);\n    }\n}\npublic class Main {\n    public static void main(String[] args) { new Savings().show(); }\n}\n```",
+        "options": [
+          "41 / 42",
+          "41 / 41",
+          "40 / 40",
+          "42 / 42"
+        ],
+        "correct": [
+          0
+        ],
+        "explanation": "getBalance is inherited and not overridden, so getBalance() and super.getBalance() give the same 40.",
+        "option_explanations": [
+          "Correct: 40 plus 1, then 40 plus 2.",
+          "the second expression adds 2.",
+          "the two additions are not ignored.",
+          "the first expression adds 1."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "A subclass does not override getDateCreated(). Which statement is true about `getDateCreated()` versus `super.getDateCreated()` in it?",
+        "options": [
+          "The first fails to compile",
+          "The second fails to compile",
+          "They return different values",
+          "Both call the same inherited method"
+        ],
+        "correct": [
+          3
+        ],
+        "explanation": "super is needed only when the subclass overrides the method and the parent version is wanted.",
+        "option_explanations": [
+          "inherited methods can be called without a qualifier.",
+          "super.method() is always valid for a parent method.",
+          "one method gives one result.",
+          "Correct: the method is simply inherited."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "To override a method, the subclass method must have:",
+      "options": [
+        "The same name but a different parameter list",
+        "An incompatible return type",
+        "The same signature and return type",
+        "The same name and a static modifier"
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": "Overriding redefines the implementation with identical signature and return type.",
+      "option_explanations": [
+        "that is overloading.",
+        "an incompatible return type is a compile error, not an override.",
+        "Correct: signature and return type must both match.",
+        "static methods are hidden, not overridden."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "Which method in class B overrides `public double area()` of its superclass A?",
+        "options": [
+          "public double area() in B",
+          "public double area(int s) in B",
+          "public int area() in B",
+          "public static double area() in B"
+        ],
+        "correct": [
+          0
+        ],
+        "explanation": "Same name, same parameter list, same return type.",
+        "option_explanations": [
+          "Correct: it repeats the exact signature and return type.",
+          "a parameter changes the signature (overloading).",
+          "int differs from double in the return type.",
+          "static methods are hidden."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "Which statement best defines method overriding?",
+        "options": [
+          "Declaring several methods with one name in one class",
+          "Providing a new implementation of an inherited method in the subclass",
+          "Calling the parent's method with super",
+          "Making a method inaccessible to subclasses"
+        ],
+        "correct": [
+          1
+        ],
+        "explanation": "Overriding replaces an inherited instance method's body in a subclass.",
+        "option_explanations": [
+          "that defines overloading.",
+          "Correct: same method, new body in the subclass.",
+          "super.method() just calls the original.",
+          "that describes private access."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "Why does this program not compile?\n\n```java\nclass A {\n    public void p(double i) { System.out.println(i); }\n}\nclass B extends A {\n    @Override\n    public void p(int i) { System.out.println(i * 2); }\n}\npublic class Main {\n    public static void main(String[] args) { new B().p(5); }\n}\n```",
+      "options": [
+        "p(int) is not an override of p(double)",
+        "@Override can only be used on static methods",
+        "B must repeat the parameter type double",
+        "A's p method must be declared final"
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": "@Override asks the compiler to check that the method really overrides; p(int) overloads p(double).",
+      "option_explanations": [
+        "Correct: the signatures differ, so there is nothing to override.",
+        "@Override is for instance methods.",
+        "repeating double would make it an override, but the annotation itself is fine otherwise.",
+        "final would stop overriding altogether."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "Which statement is true about the program?\n\n```java\nclass Printer {\n    public void print(String s) { System.out.println(s); }\n}\nclass Fancy extends Printer {\n    @Override\n    public void print(String s, int times) { System.out.println(s + times); }\n}\npublic class Main {\n    public static void main(String[] args) { new Fancy().print(\"a\", 2); }\n}\n```",
+        "options": [
+          "It prints a2",
+          "It does not compile",
+          "It prints a2 because overriding allows extra parameters",
+          "It compiles but @Override is ignored"
+        ],
+        "correct": [
+          1
+        ],
+        "explanation": "@Override on a method with a different parameter list is a compile error.",
+        "option_explanations": [
+          "compilation stops before it runs.",
+          "Correct: print(String, int) is not an override, so @Override is an error.",
+          "extra parameters make an overload, not an override.",
+          "the annotation is checked by the compiler."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "What is the purpose of the @Override annotation?",
+        "options": [
+          "It speeds up calls to the method",
+          "It lets a private superclass method be redefined",
+          "It makes the compiler check for a real override",
+          "It stops subclasses from overriding the method again"
+        ],
+        "correct": [
+          2
+        ],
+        "explanation": "It catches mistakes such as a mistyped name or parameter list.",
+        "option_explanations": [
+          "it has no effect on speed.",
+          "private methods cannot be overridden.",
+          "Correct: the compiler checks that an override really exists.",
+          "final does that."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "What is printed?\n\n```java\nclass A {\n    private void who() { System.out.println(\"A\"); }\n    void call() { who(); }\n}\nclass B extends A {\n    void who() { System.out.println(\"B\"); }\n}\npublic class Main {\n    public static void main(String[] args) { new B().call(); }\n}\n```",
+      "options": [
+        "B",
+        "A",
+        "A / B",
+        "Compile error"
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": "A private method is not inherited and cannot be overridden; B.who() is an unrelated method.",
+      "option_explanations": [
+        "B's who() is not an override.",
+        "Correct: call() uses A's own private who().",
+        "only one println runs.",
+        "the code is legal."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "What does this program print?\n\n```java\nclass Cat {\n    private String sound() { return \"meow\"; }\n    String speak() { return sound(); }\n}\nclass Lion extends Cat {\n    String sound() { return \"roar\"; }\n}\npublic class Main {\n    public static void main(String[] args) { System.out.println(new Lion().speak()); }\n}\n```",
+        "options": [
+          "meow",
+          "roar",
+          "meowroar",
+          "It does not compile"
+        ],
+        "correct": [
+          0
+        ],
+        "explanation": "sound() in Cat is private, so Lion's sound() does not override it.",
+        "option_explanations": [
+          "Correct: speak() calls Cat's private sound().",
+          "roar would need an override.",
+          "only one string is returned.",
+          "same-name methods are allowed."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "A method is private in the superclass. A subclass declares a method with the same signature. How are the two methods related?",
+        "options": [
+          "The subclass method overrides the private one",
+          "The subclass method overloads the private one",
+          "They are completely unrelated",
+          "The program fails to compile"
+        ],
+        "correct": [
+          2
+        ],
+        "explanation": "A private method is not accessible outside its class, so it cannot be overridden.",
+        "option_explanations": [
+          "overriding needs accessibility.",
+          "overloading needs a different parameter list.",
+          "Correct: private methods are invisible to subclasses.",
+          "the declaration is legal."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "What is printed? (lines are separated by /)\n\n```java\nclass A {\n    static void hi() { System.out.println(\"A\"); }\n}\nclass B extends A {\n    static void hi() { System.out.println(\"B\"); }\n}\npublic class Main {\n    public static void main(String[] args) {\n        A x = new B();\n        x.hi();\n        B.hi();\n        A.hi();\n    }\n}\n```",
+      "options": [
+        "B / B / A",
+        "B / B / B",
+        "A / A / A",
+        "A / B / A"
+      ],
+      "correct": [
+        3
+      ],
+      "explanation": "Static methods are hidden, not overridden, so the declared type of the variable decides.",
+      "option_explanations": [
+        "that would be overriding.",
+        "A.hi() runs A's version.",
+        "B.hi() runs B's version.",
+        "Correct: x is declared as A, so x.hi() runs A.hi()."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "What is the output? (lines are separated by /)\n\n```java\nclass Tool {\n    static String name() { return \"tool\"; }\n}\nclass Saw extends Tool {\n    static String name() { return \"saw\"; }\n}\npublic class Main {\n    public static void main(String[] args) {\n        Tool t = new Saw();\n        System.out.println(t.name());\n        System.out.println(Saw.name());\n    }\n}\n```",
+        "options": [
+          "tool / saw",
+          "saw / saw",
+          "tool / tool",
+          "saw / tool"
+        ],
+        "correct": [
+          0
+        ],
+        "explanation": "t is declared as Tool, so the static call is resolved to Tool.name().",
+        "option_explanations": [
+          "Correct: declared type picks the static method.",
+          "there is no dynamic binding for static methods.",
+          "Saw.name() is Saw's own version.",
+          "the order is not swapped."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "A static method of the superclass is redefined in a subclass. What happens?",
+        "options": [
+          "The superclass method is overridden",
+          "The superclass method is hidden",
+          "The program fails to compile",
+          "The superclass method is removed from the subclass"
+        ],
+        "correct": [
+          1
+        ],
+        "explanation": "A static method can be inherited but not overridden; redefining it hides the original.",
+        "option_explanations": [
+          "static methods are not overridden.",
+          "Correct: hiding, not overriding.",
+          "the redefinition is legal.",
+          "it is hidden, not deleted: A.hi() still works."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "What is printed? (lines are separated by /)\n\n```java\npublic class Main {\n    public static void main(String[] args) {\n        A a = new A();\n        a.p(10);\n        a.p(10.0);\n    }\n}\nclass B {\n    public void p(double i) { System.out.println(i * 2); }\n}\nclass A extends B {\n    @Override\n    public void p(double i) { System.out.println(i); }\n}\n```",
+      "options": [
+        "10.0 / 10.0",
+        "10 / 10.0",
+        "20.0 / 20.0",
+        "10.0 / 20.0"
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": "A overrides p(double), so both calls run A's version; the int 10 is widened to double.",
+      "option_explanations": [
+        "Correct: the override prints i as a double both times.",
+        "10 would need an int overload.",
+        "the parent's i * 2 is replaced by the override.",
+        "both calls use the same method."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "What is printed? (lines are separated by /)\n\n```java\npublic class Main {\n    public static void main(String[] args) {\n        A a = new A();\n        a.p(10);\n        a.p(10.0);\n    }\n}\nclass B {\n    public void p(double i) { System.out.println(i * 2); }\n}\nclass A extends B {\n    public void p(int i) { System.out.println(i); }\n}\n```",
+        "options": [
+          "10.0 / 20.0",
+          "10 / 20.0",
+          "10 / 10.0",
+          "20.0 / 20.0"
+        ],
+        "correct": [
+          1
+        ],
+        "explanation": "p(int) in A overloads p(double) from B, so p(10) picks the int version and p(10.0) the inherited double version.",
+        "option_explanations": [
+          "10 selects the int version, which prints an int.",
+          "Correct: the int argument finds p(int); the double argument uses B's p(double).",
+          "10.0 would pick the inherited version, which doubles it.",
+          "the int version does not double."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "What is the output? (lines are separated by /)\n\n```java\npublic class Main {\n    public static void main(String[] args) {\n        Kid k = new Kid();\n        k.show(3);\n        k.show(3.0);\n    }\n}\nclass Parent {\n    public void show(double d) { System.out.println(d + 1); }\n}\nclass Kid extends Parent {\n    public void show(int d) { System.out.println(d + 100); }\n}\n```",
+        "options": [
+          "4.0 / 4.0",
+          "103 / 103.0",
+          "103 / 4.0",
+          "4.0 / 103"
+        ],
+        "correct": [
+          2
+        ],
+        "explanation": "show(int) overloads show(double); show(3) matches the int version exactly, show(3.0) uses the inherited one.",
+        "option_explanations": [
+          "the int overload wins for show(3).",
+          "show(3.0) is not an int call.",
+          "Correct: int argument to the new overload, double argument to the inherited method.",
+          "the order is swapped."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "Which feature belongs to overriding but NOT to overloading?",
+      "options": [
+        "The methods share one name",
+        "The methods can both exist in a subclass",
+        "The method may differ in its body",
+        "The parameter list matches the superclass method"
+      ],
+      "correct": [
+        3
+      ],
+      "explanation": "Overriding keeps the signature and return type; overloading changes the parameter list.",
+      "option_explanations": [
+        "both share a name.",
+        "an overloaded method can also be in the subclass.",
+        "bodies differ in both cases.",
+        "Correct: overriding requires an identical parameter list."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "Which is TRUE about overloading?",
+        "options": [
+          "Methods have the same name but different parameter lists",
+          "Methods have the same name and the same parameters",
+          "It requires the same return type",
+          "It requires a subclass"
+        ],
+        "correct": [
+          0
+        ],
+        "explanation": "Overloading works in the same class or between parent and child, as long as parameters differ.",
+        "option_explanations": [
+          "Correct: different parameters is the defining feature.",
+          "that is overriding.",
+          "return type does not matter.",
+          "it can happen within a single class."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "A method in class B has the same name as a method in its superclass A, with parameters (int) in B and (double) in A. This is:",
+        "options": [
+          "Overriding",
+          "Overloading",
+          "Hiding",
+          "Shadowing"
+        ],
+        "correct": [
+          1
+        ],
+        "explanation": "Different parameter lists give overloading, even across a parent and child.",
+        "option_explanations": [
+          "overriding needs the same signature.",
+          "Correct: the parameter lists differ.",
+          "hiding applies to static methods and fields.",
+          "shadowing is about local names."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "Why does this program not compile?\n\n```java\nclass A {\n    public void p() { }\n}\nclass B extends A {\n    void p() { }\n}\npublic class Main {\n    public static void main(String[] args) { new B().p(); }\n}\n```",
+      "options": [
+        "B needs a constructor with p",
+        "An overriding method must be static",
+        "B.p() has weaker access than A.p()",
+        "void methods cannot be overridden"
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": "An override must use the same or a more accessible modifier than the superclass method.",
+      "option_explanations": [
+        "constructors are not involved.",
+        "static methods are not overridden.",
+        "Correct: default access is weaker than public.",
+        "return type void is allowed."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "What is the compile error in this program?\n\n```java\nclass Pet {\n    protected void feed() { }\n}\nclass Fish extends Pet {\n    private void feed() { }\n}\npublic class Main {\n    public static void main(String[] args) { }\n}\n```",
+        "options": [
+          "Fish must also declare feed() static",
+          "feed() cannot be declared protected",
+          "Pet needs a constructor before feed()",
+          "private is narrower than protected"
+        ],
+        "correct": [
+          3
+        ],
+        "explanation": "The subclass modifier must be the same as or wider than in the superclass.",
+        "option_explanations": [
+          "static is unrelated.",
+          "protected is a legal modifier here.",
+          "constructors are not involved.",
+          "Correct: narrowing access is not permitted in an override."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "A superclass method is declared public. Which modifier may an overriding method in the subclass use?",
+        "options": [
+          "protected",
+          "public",
+          "private",
+          "no modifier"
+        ],
+        "correct": [
+          1
+        ],
+        "explanation": "The overriding method cannot narrow access, so only public keeps it legal.",
+        "option_explanations": [
+          "protected is weaker than public.",
+          "Correct: public equals the original access.",
+          "private is the narrowest access.",
+          "default access is weaker than public."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "Which line in this program causes the compile error?\n\n```java\nclass A {\n    double f() { return 1.5; }\n}\nclass B extends A {\n    int f() { return 2; }\n}\npublic class Main {\n    public static void main(String[] args) { System.out.println(new B().f()); }\n}\n```",
+      "options": [
+        "int f() { return 2; }",
+        "double f() { return 1.5; }",
+        "class B extends A {",
+        "System.out.println(new B().f());"
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": "A method with the same signature must have the same return type to override.",
+      "option_explanations": [
+        "Correct: int f() clashes with double f() of the parent.",
+        "the parent method is fine.",
+        "the class header is fine.",
+        "the call is fine once B compiles."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "Why does this program fail to compile?\n\n```java\nclass Reader {\n    String read() { return \"r\"; }\n}\nclass FileReader2 extends Reader {\n    void read() { }\n}\npublic class Main {\n    public static void main(String[] args) { }\n}\n```",
+        "options": [
+          "read() needs to be declared public",
+          "read() returns void while the parent's read() returns String",
+          "Reader should be declared final",
+          "String cannot be returned from a method"
+        ],
+        "correct": [
+          1
+        ],
+        "explanation": "Same signature, so it tries to override, but the return types differ.",
+        "option_explanations": [
+          "access modifiers match (both default).",
+          "Correct: the return types do not match.",
+          "final is not needed.",
+          "methods can return String."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "The superclass has `int size()`. Which subclass method overrides it?",
+        "options": [
+          "long size()",
+          "void size()",
+          "int size()",
+          "int size(int n)"
+        ],
+        "correct": [
+          2
+        ],
+        "explanation": "An override repeats the signature and return type exactly.",
+        "option_explanations": [
+          "long differs in return type.",
+          "void differs in return type.",
+          "Correct: same name, parameters and return type.",
+          "an extra parameter makes it an overload."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "If a class declaration has no extends clause, what is its superclass?",
+      "options": [
+        "java.lang.Class",
+        "java.lang.Object",
+        "java.util.Object",
+        "It has no superclass"
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": "Every class descends from Object; with no extends, Object is the superclass.",
+      "option_explanations": [
+        "Class describes classes, it is not the root.",
+        "Correct: Object is the root of the hierarchy.",
+        "Object is in java.lang, not java.util.",
+        "every class has Object as an ancestor."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "`public class Circle { }` is equivalent to which declaration?",
+        "options": [
+          "public class Circle extends Object { }",
+          "public class Circle extends Class { }",
+          "public class Circle implements Object { }",
+          "public class Circle extends Circle { }"
+        ],
+        "correct": [
+          0
+        ],
+        "explanation": "Omitting extends means extending Object.",
+        "option_explanations": [
+          "Correct: Object is added automatically.",
+          "Class is not the implicit superclass.",
+          "Object is a class, not an interface.",
+          "a class cannot extend itself."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "Which statement about the Object class is true?",
+        "options": [
+          "Only classes without extends inherit from it",
+          "Only classes that override toString inherit from it",
+          "Only classes in java.lang inherit from it",
+          "Each Java class descends from it"
+        ],
+        "correct": [
+          3
+        ],
+        "explanation": "Object is the root of every class hierarchy.",
+        "option_explanations": [
+          "classes with extends still reach Object through their ancestors.",
+          "overriding is not a condition.",
+          "package does not matter.",
+          "Correct: all classes are descendants of Object."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "What does the default toString() inherited from Object return?",
+      "options": [
+        "The values of all data fields",
+        "The class name only",
+        "The class name, an @ sign, and a hexadecimal number",
+        "The decimal address of the object only"
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": "By default toString() gives ClassName@hexNumber, which is rarely informative.",
+      "option_explanations": [
+        "field values need an override.",
+        "the @ and number are included.",
+        "Correct: the format is Name@hex.",
+        "the number is hexadecimal and follows the name."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "A class Loan does not override toString(). Which output could `System.out.println(new Loan());` produce?",
+        "options": [
+          "Loan@15037e5",
+          "Loan: 15037e5",
+          "Loan[15037e5]",
+          "15037e5@Loan"
+        ],
+        "correct": [
+          0
+        ],
+        "explanation": "The default is the class name, @, then the hash in hex.",
+        "option_explanations": [
+          "Correct: that matches ClassName@hex.",
+          "no colon form.",
+          "no bracket form.",
+          "the order is class name first."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "Which is the default text for `System.out.println(o)` when o is an object of class A (no toString override)?",
+        "options": [
+          "A object",
+          "A(1b6d3586)",
+          "1b6d3586",
+          "A@1b6d3586"
+        ],
+        "correct": [
+          3
+        ],
+        "explanation": "Default output is the class name, @ and a hexadecimal number.",
+        "option_explanations": [
+          "no such wording.",
+          "no parenthesis form.",
+          "the class name is part of it.",
+          "Correct: it fits ClassName@hex."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "What is printed? (lines are separated by /)\n\n```java\nclass A {\n    @Override\n    public String toString() { return \"Class A\"; }\n}\npublic class Main {\n    public static void main(String[] args) {\n        A o = new A();\n        System.out.println(o);\n        System.out.println(o.toString());\n    }\n}\n```",
+      "options": [
+        "Class A / Class A",
+        "A@15db9742 / Class A",
+        "Class A / A@15db9742",
+        "A@15db9742 / A@15db9742"
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": "println(object) is equivalent to println(object.toString()), so the override is used both times.",
+      "option_explanations": [
+        "Correct: both forms call the overridden toString().",
+        "println(o) also uses toString().",
+        "o.toString() is the override.",
+        "the override replaces the default."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "What is the output? (lines are separated by /)\n\n```java\nclass Pt {\n    int x = 3;\n    public String toString() { return \"(\" + x + \")\"; }\n}\npublic class Main {\n    public static void main(String[] args) {\n        Pt p = new Pt();\n        System.out.println(p.toString());\n        System.out.println(p);\n        System.out.println(\"p=\" + p);\n    }\n}\n```",
+        "options": [
+          "(3) / Pt@1 / p=Pt@1",
+          "(3) / (3) / p=(3)",
+          "(3) / (3) / p=3",
+          "3 / (3) / p=(3)"
+        ],
+        "correct": [
+          1
+        ],
+        "explanation": "Printing an object or concatenating it to a String implicitly calls toString().",
+        "option_explanations": [
+          "println(p) calls toString().",
+          "Correct: toString() is applied in all three places.",
+          "concatenation also calls toString().",
+          "toString() returns the parenthesised form."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "What is printed? (lines are separated by /)\n\n```java\nclass Pt {\n    int x = 3;\n}\npublic class Main {\n    public static void main(String[] args) {\n        Pt p = new Pt();\n        String s = p.toString();\n        System.out.println(s.startsWith(\"Pt@\"));\n        System.out.println(s.equals(\"\" + p));\n    }\n}\n```",
+        "options": [
+          "false / true",
+          "true / false",
+          "true / true",
+          "false / false"
+        ],
+        "correct": [
+          2
+        ],
+        "explanation": "Without an override, toString() is Pt@hex, and concatenation uses the same value.",
+        "option_explanations": [
+          "the default does start with Pt@.",
+          "concatenation applies toString(), so the strings are equal.",
+          "Correct: default form begins with the class name and @, and string concatenation calls it.",
+          "both comparisons hold."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "What is printed?\n\n```java\nclass GeometricObject {\n    public String toString() { return \"color: white\"; }\n}\nclass Circle extends GeometricObject {\n    double radius = 2;\n    @Override\n    public String toString() { return super.toString() + \" radius: \" + radius; }\n}\npublic class Main {\n    public static void main(String[] args) {\n        System.out.println(new Circle());\n    }\n}\n```",
+      "options": [
+        "radius: 2.0",
+        "color: white",
+        "GeometricObject@1b6d3586",
+        "color: white radius: 2.0"
+      ],
+      "correct": [
+        3
+      ],
+      "explanation": "super.toString() returns the parent's text, which the override extends with its own information.",
+      "option_explanations": [
+        "the parent's part is included.",
+        "the radius part is appended.",
+        "the parent's toString is overridden, not default.",
+        "Correct: parent's string followed by the radius."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "What is the output?\n\n```java\nclass Vehicle {\n    public String toString() { return \"vehicle\"; }\n}\nclass Truck extends Vehicle {\n    int load = 5;\n    public String toString() { return load + \" \" + super.toString(); }\n}\npublic class Main {\n    public static void main(String[] args) {\n        System.out.println(new Truck());\n    }\n}\n```",
+        "options": [
+          "5 vehicle",
+          "vehicle 5",
+          "vehicle",
+          "5"
+        ],
+        "correct": [
+          0
+        ],
+        "explanation": "The concatenation order in the override decides the output: load first, then the parent's text.",
+        "option_explanations": [
+          "Correct: load, a space, then the parent's string.",
+          "the parent's text comes after the load.",
+          "the load is included.",
+          "the parent's text is included."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "What is printed?\n\n```java\nclass Base {\n    public String toString() { return \"base\"; }\n}\nclass Mid extends Base {\n    public String toString() { return super.toString() + \"-mid\"; }\n}\nclass Top extends Mid {\n    public String toString() { return super.toString() + \"-top\"; }\n}\npublic class Main {\n    public static void main(String[] args) {\n        System.out.println(new Top());\n    }\n}\n```",
+        "options": [
+          "top-mid-base",
+          "base-mid-top",
+          "base-top",
+          "mid-top"
+        ],
+        "correct": [
+          1
+        ],
+        "explanation": "Each super.toString() reaches one level up, building the text from the top ancestor down.",
+        "option_explanations": [
+          "the order is reversed.",
+          "Correct: Top asks Mid, Mid asks Base.",
+          "Mid's part is included.",
+          "Base's part is included."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "Which header correctly overrides Object's toString() method?",
+      "options": [
+        "public string toString()",
+        "public void toString()",
+        "public String toString()",
+        "String toString()"
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": "Object.toString() is public and returns String; an override cannot narrow the access.",
+      "option_explanations": [
+        "string is not the Java type String.",
+        "the return type must be String.",
+        "Correct: public access and String return type.",
+        "default access is weaker than public."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "A class wants to replace the text produced by println(obj). Which method should it define?",
+        "options": [
+          "public String print()",
+          "public String toString()",
+          "public static String toString()",
+          "public String toString(int n)"
+        ],
+        "correct": [
+          1
+        ],
+        "explanation": "println(obj) invokes toString(), so that is the method to override.",
+        "option_explanations": [
+          "print() is never called by println(obj).",
+          "Correct: an instance toString() with no parameters.",
+          "a static method cannot replace the instance toString(); it does not even compile.",
+          "an extra parameter makes an overload."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "Which statement will not compile in a class that extends Object?",
+        "options": [
+          "String toString() { return \"x\"; }",
+          "public String toString() { return \"x\"; }",
+          "public String toString() { return super.toString(); }",
+          "@Override public String toString() { return \"\"; }"
+        ],
+        "correct": [
+          0
+        ],
+        "explanation": "Dropping public narrows access compared with Object.toString().",
+        "option_explanations": [
+          "Correct: default access is weaker than public.",
+          "a normal override.",
+          "calling super is fine.",
+          "the annotation matches a real override."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "What is printed?\n\n```java\nclass A {\n    void p() { System.out.println(\"A\"); }\n}\nclass B extends A {\n    void p() { System.out.println(\"B\"); }\n}\npublic class Main {\n    public static void main(String[] args) {\n        A x = new B();\n        x.p();\n    }\n}\n```",
+      "options": [
+        "A",
+        "B",
+        "A / B",
+        "Compile error"
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": "The call is checked against the declared type A, but execution starts from the actual type B (dynamic binding).",
+      "option_explanations": [
+        "the declared type does not pick the version.",
+        "Correct: the actual type B supplies the method that runs.",
+        "only one println runs.",
+        "p() exists in A, so the call compiles."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "What is the output? (lines are separated by /)\n\n```java\nclass Animal {\n    String sound() { return \"...\"; }\n}\nclass Dog extends Animal {\n    String sound() { return \"woof\"; }\n}\nclass Cat extends Animal {\n    String sound() { return \"meow\"; }\n}\npublic class Main {\n    public static void main(String[] args) {\n        Animal a = new Dog();\n        System.out.println(a.sound());\n        a = new Cat();\n        System.out.println(a.sound());\n    }\n}\n```",
+        "options": [
+          "... / ...",
+          "woof / woof",
+          "woof / meow",
+          "meow / woof"
+        ],
+        "correct": [
+          2
+        ],
+        "explanation": "The method that runs depends on the actual object each time, not on the declared type Animal.",
+        "option_explanations": [
+          "the parent's version is overridden by both.",
+          "the variable is reassigned to a Cat.",
+          "Correct: the variable holds a Dog first, then a Cat.",
+          "the order follows the assignments."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "What is printed? (lines are separated by /)\n\n```java\nclass A {\n    void p() { System.out.println(\"A\"); }\n}\nclass B extends A {\n    void p() { System.out.println(\"B\"); }\n}\nclass C extends B { }\npublic class Main {\n    public static void main(String[] args) {\n        A x = new C();\n        x.p();\n        Object o = new C();\n        System.out.println(o instanceof A);\n    }\n}\n```",
+        "options": [
+          "A / true",
+          "B / false",
+          "A / false",
+          "B / true"
+        ],
+        "correct": [
+          3
+        ],
+        "explanation": "C inherits B's p(); execution begins at the actual type C and finds B's version. A C object is also an A.",
+        "option_explanations": [
+          "the actual type decides, not the declared A.",
+          "a C is an A through B.",
+          "both facts differ.",
+          "Correct: C does not override p, so B's version is found."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "Which line causes a compile error?\n\n```java\nclass A {\n    void p() { }\n}\nclass B extends A {\n    void q() { }\n}\npublic class Main {\n    public static void main(String[] args) {\n        A x = new B();\n        x.p();\n        x.q();\n    }\n}\n```",
+      "options": [
+        "x.q();",
+        "x.p();",
+        "A x = new B();",
+        "void q() { }"
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": "A method call must be defined in the declared type (or its ancestors); A has no q().",
+      "option_explanations": [
+        "Correct: the declared type A does not have q().",
+        "p() is defined in A.",
+        "a B object may be stored in an A variable.",
+        "declaring q in B is legal."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "What happens when this program is compiled?\n\n```java\nclass Shape { }\nclass Circle extends Shape {\n    double getRadius() { return 1; }\n}\npublic class Main {\n    public static void main(String[] args) {\n        Shape s = new Circle();\n        System.out.println(s.getRadius());\n    }\n}\n```",
+        "options": [
+          "It prints 1.0",
+          "Compile error at s.getRadius()",
+          "It prints 1",
+          "Runtime exception when s is used"
+        ],
+        "correct": [
+          1
+        ],
+        "explanation": "The compiler checks the declared type Shape, which lacks getRadius(), even though the object is a Circle.",
+        "option_explanations": [
+          "the call never compiles.",
+          "Correct: the compile-time check uses the declared type.",
+          "the call never compiles.",
+          "it fails earlier, at compile time."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "Which statement in main fails to compile?\n\n```java\nclass Item {\n    public String toString() { return \"item\"; }\n    int price() { return 3; }\n}\npublic class Main {\n    public static void main(String[] args) {\n        Object o = new Item();\n        System.out.println(o.toString());\n        System.out.println(o.price());\n    }\n}\n```",
+        "options": [
+          "System.out.println(o.toString());",
+          "Object o = new Item();",
+          "System.out.println(o.price());",
+          "int price() { return 3; }"
+        ],
+        "correct": [
+          2
+        ],
+        "explanation": "Object declares toString() but not price(), so o.price() is rejected.",
+        "option_explanations": [
+          "toString() is defined in Object.",
+          "every class is an Object.",
+          "Correct: price() is not a member of Object.",
+          "declaring price is legal."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "A call such as x.m() compiles only if m is defined in:",
+      "options": [
+        "The declared type of x or its superclasses",
+        "The actual type of x or one of its subclasses",
+        "The actual type of x and nowhere else",
+        "Any class in the program"
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": "The compiler uses the declared type; at run time execution starts from the actual type.",
+      "option_explanations": [
+        "Correct: the compiler looks at the declared type's hierarchy.",
+        "that is run-time information.",
+        "the compiler does not know the actual type.",
+        "the method must be reachable from the declared type."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "At run time, which version of an overridden instance method m() runs for the variable x?",
+        "options": [
+          "The one defined in the declared type of x",
+          "The one found by searching from the actual type of the object",
+          "The one defined in Object",
+          "The one with the fewest parameters"
+        ],
+        "correct": [
+          1
+        ],
+        "explanation": "Dynamic binding: execution starts from the actual type.",
+        "option_explanations": [
+          "the declared type is used only for compile checking.",
+          "Correct: search begins in the object's real class.",
+          "Object's version applies only when nothing overrides it.",
+          "parameter count is irrelevant."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "Which statement correctly describes how Java handles `Parent p = new Child(); p.show();`?",
+        "options": [
+          "It compiles using Child and executes starting from Parent",
+          "It compiles and executes using Parent",
+          "It compiles using Parent and executes starting from Child",
+          "It compiles and executes using Child"
+        ],
+        "correct": [
+          2
+        ],
+        "explanation": "Compile time uses the declared type; run time starts from the actual type.",
+        "option_explanations": [
+          "the two roles are reversed.",
+          "the run starts from Child.",
+          "Correct: compile uses Parent, run begins at Child.",
+          "the compile check uses the declared type Parent."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "What is printed? (lines are separated by /)\n\n```java\nclass Circle {\n    private double radius;\n    public Circle(double radius) { this.radius = radius; }\n    public double getRadius() { return radius; }\n    public double getArea() { return radius * radius * Math.PI; }\n}\nclass Cylinder extends Circle {\n    private double length;\n    Cylinder(double radius, double length) {\n        super(radius);\n        this.length = length;\n    }\n    @Override\n    public double getArea() { return super.getArea() * length; }\n}\npublic class Main {\n    public static void main(String[] args) {\n        Cylinder c = new Cylinder(1, 2);\n        System.out.println(c.getArea());\n        System.out.println(c.getRadius());\n    }\n}\n```",
+      "options": [
+        "6.283185307179586 / 1.0",
+        "3.141592653589793 / 1.0",
+        "6.283185307179586 / 2.0",
+        "3.141592653589793 / 2.0"
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": "Cylinder's getArea multiplies the parent's area (PI) by length 2; getRadius is inherited and returns 1.0.",
+      "option_explanations": [
+        "Correct: PI times 2, then the inherited radius.",
+        "the override multiplies by length.",
+        "length is not the radius.",
+        "neither is right."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "What is the output? (lines are separated by /)\n\n```java\nclass Box {\n    private int side;\n    public Box(int side) { this.side = side; }\n    public int getSide() { return side; }\n    public int area() { return side * side; }\n}\nclass Prism extends Box {\n    private int height;\n    Prism(int side, int height) {\n        super(side);\n        this.height = height;\n    }\n    @Override\n    public int area() { return super.area() + height; }\n}\npublic class Main {\n    public static void main(String[] args) {\n        Prism p = new Prism(3, 4);\n        System.out.println(p.area());\n        System.out.println(p.getSide());\n    }\n}\n```",
+        "options": [
+          "12 / 3",
+          "13 / 3",
+          "9 / 4",
+          "13 / 4"
+        ],
+        "correct": [
+          1
+        ],
+        "explanation": "super.area() is 9, plus height 4 gives 13; getSide() is inherited and returns 3.",
+        "option_explanations": [
+          "the height is added.",
+          "Correct: 9 + 4 and the inherited side.",
+          "getSide returns the side, not the height.",
+          "the second call returns the side."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "Why does Wide not compile?\n\n```java\nclass Circle {\n    private double radius;\n    public Circle(double radius) { this.radius = radius; }\n    public double getArea() { return radius * radius * Math.PI; }\n}\nclass Wide extends Circle {\n    private double length;\n    Wide(double radius, double length) {\n        super(radius);\n        this.length = length;\n    }\n    public double getVolume() { return radius * length; }\n}\npublic class Main {\n    public static void main(String[] args) {\n        System.out.println(new Wide(1, 2).getVolume());\n    }\n}\n```",
+        "options": [
+          "The constructor must not call super(radius)",
+          "getVolume must be overridden from Circle",
+          "length must be declared public",
+          "radius is private in Circle"
+        ],
+        "correct": [
+          3
+        ],
+        "explanation": "Private members are not accessible in subclasses; a getter such as getRadius() is needed.",
+        "option_explanations": [
+          "the super call is correct.",
+          "getVolume is a new method.",
+          "length is accessed only inside Wide.",
+          "Correct: access to the private field radius is illegal."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "What is printed? (lines are separated by /)\n\n```java\nclass A {\n    void a() { System.out.println(\"a\"); }\n}\nclass B extends A {\n    void b() { System.out.println(\"b\"); }\n}\nclass C extends B { }\npublic class Main {\n    public static void main(String[] args) {\n        C c = new C();\n        c.a();\n        c.b();\n    }\n}\n```",
+      "options": [
+        "b",
+        "Compile error",
+        "a / b",
+        "a"
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": "Inheritance is transitive: C inherits from B, which inherits from A.",
+      "option_explanations": [
+        "a() is available too.",
+        "both methods are inherited.",
+        "Correct: C has both a() and b().",
+        "b() is also available."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "What is the output? (lines are separated by /)\n\n```java\nclass Person {\n    String name = \"Sam\";\n    String hello() { return \"hi \" + name; }\n}\nclass Employee extends Person { }\nclass Manager extends Employee { }\npublic class Main {\n    public static void main(String[] args) {\n        Manager m = new Manager();\n        System.out.println(m.hello());\n        Person p = m;\n        System.out.println(p.name);\n    }\n}\n```",
+        "options": [
+          "hi Sam / null",
+          "hi null / Sam",
+          "Compile error",
+          "hi Sam / Sam"
+        ],
+        "correct": [
+          3
+        ],
+        "explanation": "Manager inherits through Employee all the way from Person, and may be assigned to a Person variable.",
+        "option_explanations": [
+          "the field is initialised in Person.",
+          "the field is initialised in Person.",
+          "both lines are legal.",
+          "Correct: the members come from Person two levels up."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "Classes A, B and C form the chain C extends B extends A. Which statement is true?",
+        "options": [
+          "A C object is also a B and an A",
+          "A C object is a B but not an A",
+          "A C object inherits only from B",
+          "A C object is not a B"
+        ],
+        "correct": [
+          0
+        ],
+        "explanation": "The is-a relationship carries along the whole chain.",
+        "option_explanations": [
+          "Correct: is-a is transitive.",
+          "A is an ancestor of C through B.",
+          "C also gets what B inherited.",
+          "C directly extends B."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "basic",
+      "question": "Write class Student that extends Person. Person has a constructor Person(String name) and a method getName(). Student adds a field major, a constructor Student(String name, String major) that reuses Person's constructor, and an overridden toString() that returns the name followed by the major, reusing getName().",
+      "answer": "```java\nclass Student extends Person {\n    private String major;\n\n    public Student(String name, String major) {\n        super(name);          // first statement\n        this.major = major;\n    }\n\n    @Override\n    public String toString() {\n        return getName() + \" - \" + major;\n    }\n}\n```\nsuper(name) must come first; getName() is inherited so super. is optional; the private name field is reached only through the getter."
+    },
+    "versions": [
+      {
+        "type": "basic",
+        "question": "Write class Manager that extends Employee. Employee has Employee(String id) and a method getId(). Manager adds a field dept, a constructor Manager(String id, String dept) that calls the parent constructor, and an overridden toString() returning \"id: dept\" built from getId() and dept.",
+        "answer": "```java\nclass Manager extends Employee {\n    private String dept;\n\n    public Manager(String id, String dept) {\n        super(id);\n        this.dept = dept;\n    }\n\n    @Override\n    public String toString() {\n        return getId() + \": \" + dept;\n    }\n}\n```"
+      },
+      {
+        "type": "basic",
+        "question": "Class Account has a constructor Account(double balance) and method getBalance(). Write class Savings extending it, with a field rate, a constructor Savings(double balance, double rate), and an overridden toString() that starts with super.toString() and then appends the rate.",
+        "answer": "```java\nclass Savings extends Account {\n    private double rate;\n\n    public Savings(double balance, double rate) {\n        super(balance);\n        this.rate = rate;\n    }\n\n    @Override\n    public String toString() {\n        return super.toString() + \" rate: \" + rate;\n    }\n}\n```\nsuper.toString() is needed because plain toString() would call the same method again."
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "basic",
+      "question": "Draw the UML class diagram, as text, for class Circle that extends GeometricObject. GeometricObject has private color (String) and filled (boolean), a no-arg constructor, getColor(): String and setColor(color: String): void. Circle adds private radius (double), a constructor Circle(radius: double), and getArea(): double. Show visibility signs and the inheritance arrow.",
+      "answer": "```\n        GeometricObject\n-color: String\n-filled: boolean\n+GeometricObject()\n+getColor(): String\n+setColor(color: String): void\n            ^\n            |   (line with triangular arrowhead pointing to the superclass)\n          Circle\n-radius: double\n+Circle(radius: double)\n+getArea(): double\n```\n- means private, + means public; the triangle points from the subclass to the superclass. Circle does not repeat the inherited color, filled or getColor()."
+    },
+    "versions": [
+      {
+        "type": "basic",
+        "question": "Draw the UML diagram as text for Student extends Person. Person: private name (String), constructor Person(name: String), getName(): String. Student: private major (String), constructor Student(name: String, major: String), getMajor(): String.",
+        "answer": "```\n         Person\n-name: String\n+Person(name: String)\n+getName(): String\n            ^\n            |  (triangular arrowhead at Person)\n         Student\n-major: String\n+Student(name: String, major: String)\n+getMajor(): String\n```"
+      },
+      {
+        "type": "basic",
+        "question": "Draw the UML diagram as text for Rectangle extends GeometricObject. GeometricObject has -color: String and +getColor(): String. Rectangle has -width: double, -height: double, +Rectangle(width: double, height: double), +getArea(): double.",
+        "answer": "```\n      GeometricObject\n-color: String\n+getColor(): String\n            ^\n            |  (triangular arrowhead at GeometricObject)\n        Rectangle\n-width: double\n-height: double\n+Rectangle(width: double, height: double)\n+getArea(): double\n```"
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "basic",
+      "question": "Trace this program and write the exact output line by line, naming the constructor that runs at each step.\n\n```java\nclass Person {\n    public Person() { System.out.println(\"(1) Person\"); }\n}\nclass Employee extends Person {\n    public Employee() {\n        this(\"(2) Employee String\");\n        System.out.println(\"(3) Employee no-arg\");\n    }\n    public Employee(String s) { System.out.println(s); }\n}\npublic class Main extends Employee {\n    public Main() { System.out.println(\"(4) Main\"); }\n    public static void main(String[] args) { new Main(); }\n}\n```",
+      "answer": "(1) Person\n(2) Employee String\n(3) Employee no-arg\n(4) Main\n\nnew Main() -> Main() implicitly calls super() -> Employee() starts with this(\"...\") -> Employee(String) implicitly calls super() -> Person() prints (1); Employee(String) prints (2); back in Employee() prints (3); finally Main() prints (4)."
+    },
+    "versions": [
+      {
+        "type": "basic",
+        "question": "Trace this program and write the exact output line by line, naming the constructor that runs at each step.\n\n```java\nclass Vehicle {\n    public Vehicle() { System.out.println(\"vehicle\"); }\n    public Vehicle(int n) { System.out.println(\"vehicle \" + n); }\n}\nclass Car extends Vehicle {\n    public Car() {\n        this(4);\n        System.out.println(\"car\");\n    }\n    public Car(int wheels) {\n        super(wheels);\n        System.out.println(\"car \" + wheels);\n    }\n}\npublic class Main {\n    public static void main(String[] args) { new Car(); }\n}\n```",
+        "answer": "vehicle 4\ncar 4\ncar\n\nnew Car() -> Car() calls this(4) -> Car(int) calls super(4) -> Vehicle(int) prints \"vehicle 4\"; Car(int) prints \"car 4\"; back in Car() prints \"car\". Vehicle() is never called."
+      },
+      {
+        "type": "mcq",
+        "question": "What is the exact output? (lines are separated by /)\n\n```java\nclass Base {\n    public Base() { System.out.println(\"base\"); }\n}\nclass Mid extends Base {\n    public Mid() {\n        this(\"m\");\n        System.out.println(\"mid\");\n    }\n    public Mid(String s) { System.out.println(s); }\n}\nclass Leaf extends Mid {\n    public Leaf() { System.out.println(\"leaf\"); }\n}\npublic class Main {\n    public static void main(String[] args) { new Leaf(); }\n}\n```",
+        "options": [
+          "m / mid / base / leaf",
+          "base / m / mid / leaf",
+          "base / mid / m / leaf",
+          "leaf / mid / m / base"
+        ],
+        "correct": [
+          1
+        ],
+        "explanation": "Leaf() calls Mid(), which delegates to Mid(String); that runs Base() first.",
+        "option_explanations": [
+          "Mid's lines cannot come before Base.",
+          "Correct: Base, Mid(String), rest of Mid(), Leaf.",
+          "this(\"m\") runs before mid is printed.",
+          "the order is fully reversed."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "basic",
+      "question": "This program does not compile. Explain why, then give two different ways to fix it.\n\n```java\nclass Fruit {\n    public Fruit(String name) {\n        System.out.println(\"Fruit's constructor is invoked\");\n    }\n}\nclass Apple extends Fruit { }\n```",
+      "answer": "Apple has no constructor, so the compiler adds a default Apple() that starts with an implicit super(). Fruit has an explicit constructor, so it has no no-arg constructor, and super() fails.\n\nFix 1: add a no-arg constructor to Fruit: public Fruit() { }.\nFix 2: give Apple a constructor that calls the existing one: public Apple() { super(\"apple\"); }."
+    },
+    "versions": [
+      {
+        "type": "basic",
+        "question": "This program does not compile. Explain why, then give two different fixes.\n\n```java\nclass Shape {\n    public Shape(String label) { }\n}\nclass Square extends Shape {\n    public Square() { }\n}\n```",
+        "answer": "Square() has no explicit call, so the compiler inserts super(), but Shape only has Shape(String) and no no-arg constructor.\n\nFix 1: add public Shape() { } to Shape.\nFix 2: change Square() to call super(\"square\") as its first statement."
+      },
+      {
+        "type": "basic",
+        "question": "Class Pet has only the constructor Pet(String name). Class Dog extends Pet and declares no constructor. Explain the compile error and write the smallest change to Dog that fixes it.",
+        "answer": "Dog gets a default constructor that implicitly calls super(), but Pet has no no-arg constructor.\n\nFix: give Dog a constructor that calls Pet's: public Dog() { super(\"dog\"); }  (or add a no-arg Pet() constructor)."
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "In this code, how is B.calc related to A.calc?\n\n```java\nclass A {\n    public int calc(int x) { return x; }\n}\nclass B extends A {\n    public int calc(int x, int y) { return x + y; }\n}\n```",
+      "options": [
+        "B.calc overloads A.calc",
+        "B.calc overrides A.calc",
+        "B.calc hides A.calc",
+        "B.calc is not allowed"
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": "Same name with a different parameter list is overloading; B now has both versions.",
+      "option_explanations": [
+        "Correct: the parameter lists differ.",
+        "overriding needs identical parameters.",
+        "hiding is for static methods.",
+        "the declaration is legal."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "In this code, how is Dog.eat related to Animal.eat?\n\n```java\nclass Animal {\n    public void eat(String food) { }\n}\nclass Dog extends Animal {\n    @Override\n    public void eat(String food) { }\n}\n```",
+        "options": [
+          "Dog.eat overloads Animal.eat",
+          "Dog.eat overrides Animal.eat",
+          "Dog.eat is unrelated to Animal.eat",
+          "Dog.eat hides Animal.eat"
+        ],
+        "correct": [
+          1
+        ],
+        "explanation": "Same name, parameters and return type in a subclass means overriding.",
+        "option_explanations": [
+          "overloading changes the parameters.",
+          "Correct: the signatures are identical.",
+          "they are related through inheritance.",
+          "hiding is for static methods."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "Class Parent has `void show(int a)`. Which subclass method overloads it?",
+        "options": [
+          "void show(int a)",
+          "int show(int a)",
+          "void show(String a)",
+          "public void show(int a)"
+        ],
+        "correct": [
+          2
+        ],
+        "explanation": "Overloading keeps the name but changes the parameter list.",
+        "option_explanations": [
+          "that repeats the signature (override).",
+          "that repeats the signature with a different return type (error).",
+          "Correct: the parameter type differs.",
+          "that repeats the signature with a wider access (override)."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "How many constructors run when `new Faculty()` is executed, if Faculty extends Employee, Employee extends Person, and each declares only a no-arg constructor?",
+      "options": [
+        "Three, one per class",
+        "One, only Faculty's",
+        "Two, Faculty's and Employee's",
+        "Three, but only if each calls super()"
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": "Constructing an instance invokes every constructor along the inheritance chain (constructor chaining).",
+      "option_explanations": [
+        "Correct: Person, Employee and Faculty constructors all run.",
+        "the parent constructors run too.",
+        "Person's constructor runs as well.",
+        "super() is added implicitly."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "Class C extends B, B extends A, and only C is instantiated with new C(). Which statement is correct?",
+        "options": [
+          "Only C's constructor runs",
+          "A, B and C constructors all run, A first",
+          "Constructors run starting with C and moving up",
+          "Only the constructors with explicit super calls run"
+        ],
+        "correct": [
+          1
+        ],
+        "explanation": "Constructor chaining runs from the top ancestor down to the class being created.",
+        "option_explanations": [
+          "the ancestors' constructors always execute.",
+          "Correct: the chain starts at the root of the hierarchy.",
+          "the order is top-down, not bottom-up.",
+          "implicit super() calls run too."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "What is this process of running every superclass constructor along the inheritance chain called?",
+        "options": [
+          "Constructor overloading",
+          "Constructor overriding",
+          "Constructor hiding",
+          "Constructor chaining"
+        ],
+        "correct": [
+          3
+        ],
+        "explanation": "Constructing an instance invokes all superclass constructors along the chain.",
+        "option_explanations": [
+          "overloading means several constructors in one class.",
+          "constructors cannot be overridden.",
+          "hiding is not a constructor concept.",
+          "Correct: that is the term for the chain of calls."
+        ]
+      }
+    ]
+  }
+]

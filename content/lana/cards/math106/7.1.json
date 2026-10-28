@@ -1,0 +1,1316 @@
+[
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Which list gives the three basic approaches for evaluating an unfamiliar integral?",
+   "options": [
+    "Technology, tables, numerical estimation",
+    "Tables, transformation methods, limit tests",
+    "Technology, tables, transformation methods",
+    "Technology, graphing, transformation methods"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "The three approaches are technology (CAS), tables, and transformation methods that convert an unfamiliar integral into a familiar one.",
+   "option_explanations": [
+    "Numerical estimation is not one of the three approaches.",
+    "Limit tests belong to series, not to integral evaluation.",
+    "Correct.",
+    "Graphing does not evaluate an integral exactly."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Turning an unfamiliar integral into a familiar one by $u$-substitution or algebraic manipulation is called which approach?",
+    "options": [
+     "Transformation methods",
+     "Technology",
+     "Tables",
+     "Riemann sums"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Transformation methods convert unfamiliar integrals into familiar ones.",
+    "option_explanations": [
+     "Correct.",
+     "Technology means CAS programs such as Mathematica, Maple, Sage.",
+     "Tables list ready-made antiderivatives; they do not convert integrals.",
+     "Riemann sums define the integral; they are not a conversion method."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Before CAS programs were developed, scientists relied heavily on which approach for difficult integrals arising in applications?",
+    "options": [
+     "Handheld graphing calculators",
+     "Transformation methods such as substitution",
+     "Open source Sage programs",
+     "Tables of integrals"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "Tables such as the CRC Standard Mathematical Tables and Formulas were the main resource before CAS.",
+    "option_explanations": [
+     "Calculators are a technology approach, not what scientists relied on before CAS.",
+     "Transformation methods are a separate approach, not the pre-CAS tool.",
+     "Sage is a CAS, so it came after the tables.",
+     "Correct."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Which of these is a transformation method for an integral?",
+   "options": [
+    "Looking it up in the CRC tables",
+    "$u$-substitution",
+    "Entering it into Mathematica",
+    "Using a Riemann sum with $n=100$"
+   ],
+   "correct": [
+    1
+   ],
+   "explanation": "$u$-substitution and algebraic manipulation of the integrand transform an integral into a familiar form.",
+   "option_explanations": [
+    "That is the tables approach.",
+    "Correct.",
+    "That is the technology approach.",
+    "That only approximates the value."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Rewriting $\\frac{x+1}{x}$ as $1+\\frac{1}{x}$ before integrating is an example of which approach?",
+    "options": [
+     "Technology, a CAS method",
+     "Tables, a lookup method",
+     "Substitution, a change of variable",
+     "Algebraic manipulation, a transformation method"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "Algebraic manipulation of the integrand is one of the transformation methods.",
+    "option_explanations": [
+     "No software is involved in this rewriting.",
+     "No formula is looked up; the integrand is changed.",
+     "No new variable is introduced.",
+     "Correct."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which of these changes an integral into a different integral that is easier to recognise?",
+    "options": [
+     "Reading a value off a table",
+     "Replacing $\\sqrt{x}$ by $u$ and $dx$ by $2u\\,du$",
+     "Calling a CAS command",
+     "Using the midpoint rule"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "A substitution rewrites the integral in a new variable.",
+    "option_explanations": [
+     "This evaluates directly without changing the integral.",
+     "Correct.",
+     "The CAS returns an antiderivative; it does not change the integral.",
+     "This estimates the number numerically."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "In the formula $\\int u^{r}\\,du=\\frac{u^{r+1}}{r+1}+C$, which value of $r$ must be excluded?",
+   "options": [
+    "$r=-1$",
+    "$r=0$",
+    "$r=1$",
+    "$r=-2$"
+   ],
+   "correct": [
+    0
+   ],
+   "explanation": "At $r=-1$ the denominator $r+1$ is zero; that case is $\\int du/u=\\ln|u|+C$.",
+   "option_explanations": [
+    "Correct.",
+    "For $r=0$ the formula gives $u+C$, which is fine.",
+    "For $r=1$ the formula gives $u^2/2+C$, which is fine.",
+    "For $r=-2$ the formula gives $-1/u+C$, which is fine."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Which formula covers $\\int \\frac{1}{x^{1}}\\,dx$, the case the power rule cannot handle?",
+    "options": [
+     "$\\frac{x^{0}}{0}+C$",
+     "$\\frac{1}{x}+C$",
+     "$\\ln|x|+C$",
+     "$\\ln x^{2}+C$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "The exponent $r=-1$ is handled by $\\int du/u=\\ln|u|+C$.",
+    "option_explanations": [
+     "This divides by zero.",
+     "Differentiating gives $-1/x^2$.",
+     "Correct.",
+     "This has derivative $2/x$."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int \\frac{1}{\\sqrt[3]{x}}\\,dx$.",
+    "options": [
+     "$\\frac{2 x^{\\frac{2}{3}}}{3}+C$",
+     "$\\frac{3 x^{\\frac{2}{3}}}{2}+C$",
+     "$\\frac{3}{2 x^{\\frac{4}{3}}}+C$",
+     "$\\ln{\\left(x \\right)}+C$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "With $r=-1/3\\neq -1$, $\\int x^{-1/3}dx=\\frac{x^{2/3}}{2/3}+C$.",
+    "option_explanations": [
+     "Multiplied by $r+1$ instead of dividing by it.",
+     "Correct.",
+     "Subtracted 1 from the exponent instead of adding.",
+     "Used the $\\ln$ rule, valid only for $r=-1$."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Which is the correct formula for $\\int \\tan u\\,du$?",
+   "options": [
+    "$\\ln|\\cos u|+C$",
+    "$\\sec^{2}u+C$",
+    "$-\\ln|\\sin u|+C$",
+    "$-\\ln|\\cos u|+C$"
+   ],
+   "correct": [
+    3
+   ],
+   "explanation": "Differentiating $-\\ln|\\cos u|$ gives $\\sin u/\\cos u=\\tan u$.",
+   "option_explanations": [
+    "Sign error: its derivative is $-\\tan u$.",
+    "This is the derivative of $\\tan u$, not an antiderivative.",
+    "This is mixed up with the cotangent formula.",
+    "Correct."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int \\tan{\\left(4 x \\right)}\\,dx$.",
+    "options": [
+     "$\\frac{\\ln{\\left(\\left|{\\cos{\\left(4 x \\right)}}\\right| \\right)}}{4}+C$",
+     "$- \\ln{\\left(\\left|{\\cos{\\left(4 x \\right)}}\\right| \\right)}+C$",
+     "$- \\frac{\\ln{\\left(\\left|{\\cos{\\left(4 x \\right)}}\\right| \\right)}}{4}+C$",
+     "$\\frac{\\ln{\\left(\\left|{\\sin{\\left(4 x \\right)}}\\right| \\right)}}{4}+C$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Use $\\int\\tan u\\,du=-\\ln|\\cos u|+C$ with $u=4x$, $du=4\\,dx$.",
+    "option_explanations": [
+     "Dropped the minus sign of the tangent formula.",
+     "Forgot the factor $1/4$ from $u=4x$.",
+     "Correct.",
+     "Used the cotangent formula."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int \\cot{\\left(3 x \\right)}\\,dx$.",
+    "options": [
+     "$\\frac{\\ln{\\left(\\left|{\\sin{\\left(3 x \\right)}}\\right| \\right)}}{3}+C$",
+     "$- \\frac{\\ln{\\left(\\left|{\\sin{\\left(3 x \\right)}}\\right| \\right)}}{3}+C$",
+     "$\\ln{\\left(\\left|{\\sin{\\left(3 x \\right)}}\\right| \\right)}+C$",
+     "$- \\frac{\\ln{\\left(\\left|{\\cos{\\left(3 x \\right)}}\\right| \\right)}}{3}+C$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Use $\\int\\cot u\\,du=\\ln|\\sin u|+C$ with $u=3x$.",
+    "option_explanations": [
+     "Correct.",
+     "Used a minus sign; only the tangent formula has one.",
+     "Forgot the factor $1/3$ from $u=3x$.",
+     "Used the tangent formula."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Which is the correct formula for $\\int \\csc^{2}u\\,du$?",
+   "options": [
+    "$-\\cot u+C$",
+    "$\\cot u+C$",
+    "$-\\csc u+C$",
+    "$\\tan u+C$"
+   ],
+   "correct": [
+    0
+   ],
+   "explanation": "Since $\\frac{d}{du}\\cot u=-\\csc^2u$, the antiderivative is $-\\cot u$.",
+   "option_explanations": [
+    "Correct.",
+    "Sign error: the derivative of $\\cot u$ is $-\\csc^2u$.",
+    "This is the antiderivative of $\\csc u\\cot u$.",
+    "This is the antiderivative of $\\sec^2u$."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int \\csc^{2}{\\left(2 x \\right)}\\,dx$.",
+    "options": [
+     "$\\frac{\\cot{\\left(2 x \\right)}}{2}+C$",
+     "$- \\cot{\\left(2 x \\right)}+C$",
+     "$- \\frac{\\cot{\\left(2 x \\right)}}{2}+C$",
+     "$- \\frac{\\csc{\\left(2 x \\right)}}{2}+C$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "$\\int\\csc^2u\\,du=-\\cot u+C$ with $u=2x$.",
+    "option_explanations": [
+     "Sign error: the formula has a minus sign.",
+     "Forgot the factor $1/2$.",
+     "Correct.",
+     "Used the $\\csc u\\cot u$ formula."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int \\tan{\\left(5 x \\right)} \\sec{\\left(5 x \\right)}\\,dx$.",
+    "options": [
+     "$- \\frac{\\sec{\\left(5 x \\right)}}{5}+C$",
+     "$\\sec{\\left(5 x \\right)}+C$",
+     "$\\frac{\\tan^{2}{\\left(5 x \\right)}}{10}+C$",
+     "$\\frac{\\sec{\\left(5 x \\right)}}{5}+C$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "$\\int\\sec u\\tan u\\,du=\\sec u+C$ with $u=5x$.",
+    "option_explanations": [
+     "Added a minus sign that belongs to the cosecant formula.",
+     "Forgot the factor $1/5$.",
+     "Treated $\\sec$ as a constant factor.",
+     "Correct."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Which is the correct formula for $\\int \\operatorname{sech}u\\tanh u\\,du$?",
+   "options": [
+    "$\\operatorname{sech}u+C$",
+    "$-\\operatorname{sech}u+C$",
+    "$\\tanh u+C$",
+    "$-\\operatorname{csch}u+C$"
+   ],
+   "correct": [
+    1
+   ],
+   "explanation": "Unlike $\\sec u\\tan u$, the hyperbolic version carries a minus sign: $-\\operatorname{sech}u$.",
+   "option_explanations": [
+    "Sign error: the derivative of $\\operatorname{sech}u$ is $-\\operatorname{sech}u\\tanh u$.",
+    "Correct.",
+    "This is the antiderivative of $\\operatorname{sech}^2u$.",
+    "This is the antiderivative of $\\operatorname{csch}u\\coth u$ with signs mixed."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int \\tanh{\\left(3 x \\right)} \\operatorname{sech}{\\left(3 x \\right)}\\,dx$.",
+    "options": [
+     "$\\frac{\\operatorname{sech}{\\left(3 x \\right)}}{3}+C$",
+     "$- \\operatorname{sech}{\\left(3 x \\right)}+C$",
+     "$- \\frac{\\operatorname{sech}{\\left(3 x \\right)}}{3}+C$",
+     "$- \\frac{\\operatorname{csch}{\\left(3 x \\right)}}{3}+C$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "$\\int\\operatorname{sech}u\\tanh u\\,du=-\\operatorname{sech}u+C$.",
+    "option_explanations": [
+     "Missing the minus sign of the hyperbolic formula.",
+     "Forgot the factor $1/3$.",
+     "Correct.",
+     "Used the cosecant-type function."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int \\operatorname{csch}^{2}{\\left(x \\right)}\\,dx$.",
+    "options": [
+     "$\\coth{\\left(x \\right)}+C$",
+     "$- \\tanh{\\left(x \\right)}+C$",
+     "$- \\operatorname{csch}{\\left(x \\right)}+C$",
+     "$- \\coth{\\left(x \\right)}+C$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "$\\int\\operatorname{csch}^2u\\,du=-\\coth u+C$.",
+    "option_explanations": [
+     "Sign error: the derivative of $\\coth x$ is $-\\operatorname{csch}^2x$.",
+     "Used the tanh function.",
+     "Used the $\\operatorname{csch}u\\coth u$ formula.",
+     "Correct."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Evaluate $\\int \\frac{1}{\\sqrt{16 - x^{2}}}\\,dx$.",
+   "options": [
+    "$\\sin^{-1}{\\left(\\frac{x}{4} \\right)}+C$",
+    "$\\sin^{-1}{\\left(x \\right)}+C$",
+    "$\\frac{\\tan^{-1}{\\left(\\frac{x}{4} \\right)}}{4}+C$",
+    "$\\frac{\\sin^{-1}{\\left(\\frac{x}{4} \\right)}}{4}+C$"
+   ],
+   "correct": [
+    0
+   ],
+   "explanation": "Use $\\int\\frac{du}{\\sqrt{a^2-u^2}}=\\sin^{-1}\\frac{u}{a}+C$ with $a=4$.",
+   "option_explanations": [
+    "Correct.",
+    "Dropped the $a=4$ inside the argument.",
+    "Used the $\\tan^{-1}$ formula.",
+    "Added a factor $1/a$ that only the $\\tan^{-1}$ formula has."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int \\frac{1}{\\sqrt{7 - x^{2}}}\\,dx$.",
+    "options": [
+     "$\\sin^{-1}{\\left(\\frac{x}{7} \\right)}+C$",
+     "$\\frac{\\sqrt{7} \\sin^{-1}{\\left(\\frac{\\sqrt{7} x}{7} \\right)}}{7}+C$",
+     "$\\sinh^{-1}{\\left(\\frac{\\sqrt{7} x}{7} \\right)}+C$",
+     "$\\sin^{-1}{\\left(\\frac{\\sqrt{7} x}{7} \\right)}+C$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "Here $a^2=7$, so $a=\\sqrt7$ in $\\sin^{-1}(u/a)$.",
+    "option_explanations": [
+     "Used $a=7$ instead of $a=\\sqrt7$.",
+     "Added a factor $1/a$ that belongs to the $\\tan^{-1}$ formula.",
+     "Used the $\\sinh^{-1}$ formula for $a^2+u^2$.",
+     "Correct."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int \\frac{1}{\\sqrt{25 - x^{2}}}\\,dx$.",
+    "options": [
+     "$\\sin^{-1}{\\left(\\frac{x}{25} \\right)}+C$",
+     "$\\sin^{-1}{\\left(\\frac{x}{5} \\right)}+C$",
+     "$\\frac{\\tan^{-1}{\\left(\\frac{x}{5} \\right)}}{5}+C$",
+     "$\\frac{\\sin^{-1}{\\left(\\frac{x}{5} \\right)}}{5}+C$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "$a^2=25$ gives $a=5$.",
+    "option_explanations": [
+     "Used $a=25$ instead of $a=5$.",
+     "Correct.",
+     "Used the $\\tan^{-1}$ formula.",
+     "Added a factor $1/a$."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Evaluate $\\int \\frac{1}{4 x^{2} + 9}\\,dx$.",
+   "options": [
+    "$\\frac{\\tan^{-1}{\\left(\\frac{2 x}{3} \\right)}}{3}+C$",
+    "$\\tan^{-1}{\\left(\\frac{2 x}{3} \\right)}+C$",
+    "$\\frac{\\tan^{-1}{\\left(\\frac{x}{3} \\right)}}{3}+C$",
+    "$\\frac{\\tan^{-1}{\\left(\\frac{2 x}{3} \\right)}}{6}+C$"
+   ],
+   "correct": [
+    3
+   ],
+   "explanation": "Let $u=2x$, $a=3$: $\\frac12\\int\\frac{du}{3^2+u^2}=\\frac12\\cdot\\frac13\\tan^{-1}\\frac u3$.",
+   "option_explanations": [
+    "Used $1/a$ with $a=3$ and forgot the $1/2$ from $u=2x$.",
+    "Forgot the constant factor in front of $\\tan^{-1}$.",
+    "Ignored the $2$ in $u=2x$.",
+    "Correct."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int \\frac{1}{25 x^{2} + 4}\\,dx$.",
+    "options": [
+     "$\\frac{\\tan^{-1}{\\left(\\frac{5 x}{2} \\right)}}{2}+C$",
+     "$\\frac{\\tan^{-1}{\\left(\\frac{5 x}{2} \\right)}}{10}+C$",
+     "$\\tan^{-1}{\\left(\\frac{5 x}{2} \\right)}+C$",
+     "$\\frac{\\tan^{-1}{\\left(\\frac{x}{2} \\right)}}{2}+C$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Let $u=5x$, $a=2$: $\\frac15\\cdot\\frac12\\tan^{-1}\\frac{5x}{2}$.",
+    "option_explanations": [
+     "Used $1/a$ and forgot the $1/5$ from $u=5x$.",
+     "Correct.",
+     "Forgot every constant factor.",
+     "Ignored the $5$ in $u=5x$."
+    ]
+   },
+   {
+    "type": "basic",
+    "question": "Evaluate $\\int \\frac{dx}{25+9x^{2}}$.",
+    "answer": "Let $u=3x$, so $du=3\\,dx$ and $a=5$.\n$\\int\\frac{dx}{25+9x^2}=\\frac13\\int\\frac{du}{5^2+u^2}=\\frac13\\cdot\\frac15\\tan^{-1}\\frac u5+C$\n$=\\frac1{15}\\tan^{-1}\\frac{3x}{5}+C$."
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Which of these equals $\\int \\frac{du}{\\sqrt{a^{2}+u^{2}}}$ for $a>0$?",
+   "options": [
+    "$\\sin^{-1}\\frac{u}{a}+C$",
+    "$\\frac1a\\tan^{-1}\\frac ua+C$",
+    "$\\ln\\left(u+\\sqrt{a^{2}+u^{2}}\\right)+C$",
+    "$\\ln\\left(u+\\sqrt{u^{2}-a^{2}}\\right)+C$"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "It is $\\sinh^{-1}\\frac ua+C=\\ln\\left(u+\\sqrt{a^2+u^2}\\right)+C$.",
+   "option_explanations": [
+    "This is the formula for $\\sqrt{a^2-u^2}$.",
+    "This is the formula for $a^2+u^2$ without the root.",
+    "Correct.",
+    "This is the $\\cosh^{-1}$ form, with a minus under the root."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int \\frac{1}{\\sqrt{x^{2} + 4}}\\,dx$.",
+    "options": [
+     "$\\sin^{-1}{\\left(\\frac{x}{2} \\right)}+C$",
+     "$\\sinh^{-1}{\\left(\\frac{x}{2} \\right)}+C$",
+     "$\\cosh^{-1}{\\left(\\frac{x}{2} \\right)}+C$",
+     "$\\frac{\\tan^{-1}{\\left(\\frac{x}{2} \\right)}}{2}+C$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "$\\int\\frac{du}{\\sqrt{a^2+u^2}}=\\sinh^{-1}\\frac ua+C$ with $a=2$.",
+    "option_explanations": [
+     "Used the $\\sin^{-1}$ formula for $a^2-u^2$.",
+     "Correct.",
+     "Used the $\\cosh^{-1}$ formula for $u^2-a^2$.",
+     "Used the $\\tan^{-1}$ formula."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int \\frac{1}{\\sqrt{x^{2} - 9}}\\,dx$.",
+    "options": [
+     "$\\sinh^{-1}{\\left(\\frac{x}{3} \\right)}+C$",
+     "$\\sin^{-1}{\\left(\\frac{x}{3} \\right)}+C$",
+     "$\\frac{\\sec^{-1}{\\left(\\frac{x}{3} \\right)}}{3}+C$",
+     "$\\cosh^{-1}{\\left(\\frac{x}{3} \\right)}+C$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "$\\int\\frac{du}{\\sqrt{u^2-a^2}}=\\cosh^{-1}\\frac ua+C$ for $a<u$.",
+    "option_explanations": [
+     "Used the $\\sinh^{-1}$ formula for $a^2+u^2$.",
+     "Used the $\\sin^{-1}$ formula.",
+     "Used the $\\sec^{-1}$ formula that has $u$ outside the root.",
+     "Correct."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Evaluate $\\int \\frac{1}{25 - x^{2}}\\,dx$.",
+   "options": [
+    "$\\frac{\\ln{\\left(\\left|{\\frac{x + 5}{x - 5}}\\right| \\right)}}{5}+C$",
+    "$\\frac{\\ln{\\left(\\left|{\\frac{x - 5}{x + 5}}\\right| \\right)}}{10}+C$",
+    "$\\frac{\\ln{\\left(\\left|{\\frac{x + 5}{x - 5}}\\right| \\right)}}{10}+C$",
+    "$\\frac{\\tan^{-1}{\\left(\\frac{x}{5} \\right)}}{5}+C$"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "For $|u|<a$: $\\int\\frac{du}{a^2-u^2}=\\frac1{2a}\\ln\\left|\\frac{a+u}{a-u}\\right|+C$, $a=5$.",
+   "option_explanations": [
+    "Used $1/a$ instead of $1/(2a)$.",
+    "Inverted the ratio, flipping the sign.",
+    "Correct.",
+    "Used the $\\tan^{-1}$ formula for $a^2+u^2$."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int \\frac{1}{16 - x^{2}}\\,dx$.",
+    "options": [
+     "$\\frac{\\ln{\\left(\\left|{\\frac{x + 4}{x - 4}}\\right| \\right)}}{8}+C$",
+     "$\\frac{\\ln{\\left(\\left|{\\frac{x + 4}{x - 4}}\\right| \\right)}}{4}+C$",
+     "$\\frac{\\ln{\\left(\\left|{\\frac{x - 4}{x + 4}}\\right| \\right)}}{8}+C$",
+     "$\\frac{\\tan^{-1}{\\left(\\frac{x}{4} \\right)}}{4}+C$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Use $\\frac1{2a}\\ln\\left|\\frac{a+u}{a-u}\\right|$ with $a=4$.",
+    "option_explanations": [
+     "Correct.",
+     "Used $1/a$ instead of $1/(2a)$.",
+     "Inverted the ratio.",
+     "Used the $\\tan^{-1}$ formula."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int \\frac{1}{9 - 4 x^{2}}\\,dx$.",
+    "options": [
+     "$\\frac{\\ln{\\left(\\left|{\\frac{2 x + 3}{2 x - 3}}\\right| \\right)}}{12}+C$",
+     "$\\frac{\\ln{\\left(\\left|{\\frac{2 x + 3}{2 x - 3}}\\right| \\right)}}{6}+C$",
+     "$\\frac{\\ln{\\left(\\left|{\\frac{2 x - 3}{2 x + 3}}\\right| \\right)}}{12}+C$",
+     "$\\frac{\\ln{\\left(\\left|{\\frac{x + 3}{x - 3}}\\right| \\right)}}{12}+C$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "$u=2x$, $a=3$: $\\frac12\\cdot\\frac1{6}\\ln\\left|\\frac{3+2x}{3-2x}\\right|$.",
+    "option_explanations": [
+     "Correct.",
+     "Used $1/(2a)$ but forgot the $1/2$ from $u=2x$.",
+     "Inverted the ratio.",
+     "Ignored the $2$ in $u=2x$."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Evaluate $\\int \\frac{1}{x \\sqrt{x^{2} - 9}}\\,dx$ for $x>3$.",
+   "options": [
+    "$\\sec^{-1}{\\left(\\frac{x}{3} \\right)}+C$",
+    "$\\cosh^{-1}{\\left(\\frac{x}{3} \\right)}+C$",
+    "$\\frac{\\sec^{-1}{\\left(\\frac{x}{3} \\right)}}{3}+C$",
+    "$\\frac{\\sin^{-1}{\\left(\\frac{3}{x} \\right)}}{3}+C$"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "For $0<a<|u|$: $\\int\\frac{du}{u\\sqrt{u^2-a^2}}=\\frac1a\\sec^{-1}\\left|\\frac ua\\right|+C$, $a=3$.",
+   "option_explanations": [
+    "Forgot the factor $1/a$.",
+    "Used the $\\cosh^{-1}$ formula that has no $u$ in front.",
+    "Correct.",
+    "Wrong inverse function; this is the $\\sin^{-1}$ of $a/u$ with a sign slip."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int \\frac{1}{x \\sqrt{x^{2} - 16}}\\,dx$ for $x>4$.",
+    "options": [
+     "$\\sec^{-1}{\\left(\\frac{x}{4} \\right)}+C$",
+     "$\\frac{\\sec^{-1}{\\left(\\frac{x}{16} \\right)}}{16}+C$",
+     "$\\cosh^{-1}{\\left(\\frac{x}{4} \\right)}+C$",
+     "$\\frac{\\sec^{-1}{\\left(\\frac{x}{4} \\right)}}{4}+C$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "$a^2=16$, $a=4$: $\\frac14\\sec^{-1}\\frac x4$.",
+    "option_explanations": [
+     "Forgot the factor $1/a$.",
+     "Used $a=16$ instead of $a=4$.",
+     "Used the $\\cosh^{-1}$ formula.",
+     "Correct."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int \\frac{1}{x \\sqrt{x^{2} - 1}}\\,dx$ for $x>1$.",
+    "options": [
+     "$\\cosh^{-1}{\\left(x \\right)}+C$",
+     "$\\sec^{-1}{\\left(x \\right)}+C$",
+     "$\\sin^{-1}{\\left(x \\right)}+C$",
+     "$- \\sec^{-1}{\\left(x \\right)}+C$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "With $a=1$: $\\int\\frac{dx}{x\\sqrt{x^2-1}}=\\sec^{-1}x+C$.",
+    "option_explanations": [
+     "Used the $\\cosh^{-1}$ formula that has no $x$ in front.",
+     "Correct.",
+     "Used the $\\sin^{-1}$ formula.",
+     "Sign error."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Evaluate $\\int x \\sec^{2}{\\left(x^{2} \\right)}\\,dx$.",
+   "options": [
+    "$\\tan{\\left(x^{2} \\right)}+C$",
+    "$2 \\tan{\\left(x^{2} \\right)}+C$",
+    "$\\frac{\\tan{\\left(x^{2} \\right)}}{2}+C$",
+    "$\\frac{x^{2} \\tan{\\left(x^{2} \\right)}}{2}+C$"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "$u=x^2$, $du=2x\\,dx$: $\\frac12\\int\\sec^2u\\,du$.",
+   "option_explanations": [
+    "Forgot the factor $1/2$ from $du=2x\\,dx$.",
+    "Multiplied by $2$ instead of dividing.",
+    "Correct.",
+    "Left a stray $x^2$ factor."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int x \\cos{\\left(x^{2} \\right)}\\,dx$.",
+    "options": [
+     "$\\sin{\\left(x^{2} \\right)}+C$",
+     "$- \\frac{\\sin{\\left(x^{2} \\right)}}{2}+C$",
+     "$\\frac{x^{2} \\sin{\\left(x^{2} \\right)}}{2}+C$",
+     "$\\frac{\\sin{\\left(x^{2} \\right)}}{2}+C$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "$u=x^2$, $du=2x\\,dx$.",
+    "option_explanations": [
+     "Forgot the factor $1/2$.",
+     "Sign error.",
+     "Left a stray $x^2$.",
+     "Correct."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int x \\operatorname{sech}^{2}{\\left(x^{2} \\right)}\\,dx$.",
+    "options": [
+     "$\\tanh{\\left(x^{2} \\right)}+C$",
+     "$\\frac{\\tanh{\\left(x^{2} \\right)}}{2}+C$",
+     "$- \\frac{\\coth{\\left(x^{2} \\right)}}{2}+C$",
+     "$\\frac{\\operatorname{sech}{\\left(x^{2} \\right)}}{2}+C$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "$u=x^2$, $\\frac12\\int\\operatorname{sech}^2u\\,du=\\frac12\\tanh u$.",
+    "option_explanations": [
+     "Forgot the factor $1/2$.",
+     "Correct.",
+     "Used the $\\operatorname{csch}^2$ formula.",
+     "Wrong function."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Evaluate $\\int \\frac{\\sin{\\left(3 x \\right)}}{\\cos{\\left(3 x \\right)} + 2}\\,dx$.",
+   "options": [
+    "$- \\frac{\\ln{\\left(\\cos{\\left(3 x \\right)} + 2 \\right)}}{3}+C$",
+    "$\\frac{\\ln{\\left(\\cos{\\left(3 x \\right)} + 2 \\right)}}{3}+C$",
+    "$- \\ln{\\left(\\cos{\\left(3 x \\right)} + 2 \\right)}+C$",
+    "$- \\frac{\\ln{\\left(\\left|{\\sin{\\left(3 x \\right)}}\\right| \\right)}}{3}+C$"
+   ],
+   "correct": [
+    0
+   ],
+   "explanation": "$u=2+\\cos3x$, $du=-3\\sin3x\\,dx$: $-\\frac13\\int\\frac{du}u$. Note $2+\\cos3x>0$.",
+   "option_explanations": [
+    "Correct.",
+    "Sign error: $du=-3\\sin3x\\,dx$.",
+    "Forgot the factor $1/3$.",
+    "Substituted for the wrong part."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int \\frac{\\cos{\\left(2 x \\right)}}{\\sin{\\left(2 x \\right)} + 3}\\,dx$.",
+    "options": [
+     "$\\ln{\\left(\\sin{\\left(2 x \\right)} + 3 \\right)}+C$",
+     "$- \\frac{\\ln{\\left(\\sin{\\left(2 x \\right)} + 3 \\right)}}{2}+C$",
+     "$\\frac{\\ln{\\left(\\sin{\\left(2 x \\right)} + 3 \\right)}}{2}+C$",
+     "$\\frac{\\ln{\\left(\\cos{\\left(2 x \\right)} + 3 \\right)}}{2}+C$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "$u=3+\\sin2x$, $du=2\\cos2x\\,dx$.",
+    "option_explanations": [
+     "Forgot the factor $1/2$.",
+     "Sign error: $du=+2\\cos2x\\,dx$.",
+     "Correct.",
+     "Differentiated the wrong function."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int \\frac{\\sin{\\left(\\frac{x}{2} \\right)}}{5 - \\cos{\\left(\\frac{x}{2} \\right)}}\\,dx$.",
+    "options": [
+     "$2 \\ln{\\left(5 - \\cos{\\left(\\frac{x}{2} \\right)} \\right)}+C$",
+     "$\\frac{\\ln{\\left(5 - \\cos{\\left(\\frac{x}{2} \\right)} \\right)}}{2}+C$",
+     "$- 2 \\ln{\\left(5 - \\cos{\\left(\\frac{x}{2} \\right)} \\right)}+C$",
+     "$2 \\ln{\\left(\\cos{\\left(\\frac{x}{2} \\right)} + 5 \\right)} + x+C$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "$u=5-\\cos\\frac x2$, $du=\\frac12\\sin\\frac x2\\,dx$.",
+    "option_explanations": [
+     "Correct.",
+     "Divided by $1/2$ incorrectly.",
+     "Sign error: $du=\\frac12\\sin\\frac x2dx$.",
+     "Wrong: a stray extra term $x$ appears, so its derivative has an extra $1$."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Evaluate $\\int e^{x} \\sinh{\\left(e^{x} \\right)}\\,dx$.",
+   "options": [
+    "$2 \\left(\\sinh{\\left(e^{x} \\right)}\\right)+C$",
+    "$- \\cosh{\\left(e^{x} \\right)}+C$",
+    "$e^{x} \\cosh{\\left(e^{x} \\right)}+C$",
+    "$\\cosh{\\left(e^{x} \\right)}+C$"
+   ],
+   "correct": [
+    3
+   ],
+   "explanation": "$u=e^x$, $du=e^x\\,dx$, $\\int\\sinh u\\,du=\\cosh u+C$.",
+   "option_explanations": [
+    "Wrong: this is twice the antiderivative (a spurious factor 2).",
+    "Sign error; $\\int\\sinh u\\,du=+\\cosh u$.",
+    "Left the factor $e^x$.",
+    "Correct."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int e^{x} \\cosh{\\left(e^{x} \\right)}\\,dx$.",
+    "options": [
+     "$\\cosh{\\left(e^{x} \\right)} + x+C$",
+     "$\\sinh{\\left(e^{x} \\right)}+C$",
+     "$- \\sinh{\\left(e^{x} \\right)}+C$",
+     "$e^{x} \\sinh{\\left(e^{x} \\right)}+C$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "$u=e^x$: $\\int\\cosh u\\,du=\\sinh u+C$.",
+    "option_explanations": [
+     "Wrong: a stray extra term $x$ appears, so its derivative has an extra $1$.",
+     "Correct.",
+     "Sign error.",
+     "Left the factor $e^x$."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int e^{\\sinh{\\left(x \\right)}} \\cosh{\\left(x \\right)}\\,dx$.",
+    "options": [
+     "$\\frac{e^{\\cosh{\\left(x \\right)}}}{2}+C$",
+     "$e^{\\sinh{\\left(x \\right)}} \\cosh{\\left(x \\right)}+C$",
+     "$e^{\\sinh{\\left(x \\right)}} \\sinh{\\left(x \\right)}+C$",
+     "$e^{\\sinh{\\left(x \\right)}}+C$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "$u=\\sinh x$, $du=\\cosh x\\,dx$.",
+    "option_explanations": [
+     "Wrong: this is only half of the antiderivative (a spurious factor $\\frac12$).",
+     "Left the factor $\\cosh x$.",
+     "Wrong factor.",
+     "Correct."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Evaluate $\\int e^{\\tan{\\left(x \\right)}} \\sec^{2}{\\left(x \\right)}\\,dx$.",
+   "options": [
+    "$e^{\\tan{\\left(x \\right)}} \\sec^{2}{\\left(x \\right)}+C$",
+    "$e^{\\tan{\\left(x \\right)}}+C$",
+    "$e^{\\tan{\\left(x \\right)}} \\tan{\\left(x \\right)}+C$",
+    "$e^{\\sec^{2}{\\left(x \\right)}}+C$"
+   ],
+   "correct": [
+    1
+   ],
+   "explanation": "$u=\\tan x$, $du=\\sec^2x\\,dx$.",
+   "option_explanations": [
+    "Left the integrand unchanged.",
+    "Correct.",
+    "Wrong antiderivative.",
+    "Substituted the wrong function."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int \\frac{e^{\\tan^{-1}{\\left(x \\right)}}}{x^{2} + 1}\\,dx$.",
+    "options": [
+     "$e^{\\tan^{-1}{\\left(x \\right)}}+C$",
+     "$e^{\\tan^{-1}{\\left(x \\right)}} \\tan^{-1}{\\left(x \\right)}+C$",
+     "$\\frac{e^{\\tan^{-1}{\\left(x \\right)}}}{x^{2} + 1}+C$",
+     "$\\frac{\\tan^{-1}{\\left(e^{x} \\right)}}{2}+C$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "$u=\\tan^{-1}x$, $du=\\frac{dx}{1+x^2}$.",
+    "option_explanations": [
+     "Correct.",
+     "Wrong antiderivative.",
+     "Left the factor $1/(1+x^2)$.",
+     "Wrong: this is only half of the antiderivative (a spurious factor $\\frac12$)."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int e^{\\sin{\\left(x \\right)}} \\cos{\\left(x \\right)}\\,dx$.",
+    "options": [
+     "$2 \\left(e^{\\cos{\\left(x \\right)}}\\right)+C$",
+     "$- e^{\\sin{\\left(x \\right)}}+C$",
+     "$e^{\\sin{\\left(x \\right)}}+C$",
+     "$e^{\\sin{\\left(x \\right)}} \\sin{\\left(x \\right)}+C$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "$u=\\sin x$, $du=\\cos x\\,dx$.",
+    "option_explanations": [
+     "Wrong: this is twice the antiderivative (a spurious factor 2).",
+     "Sign error.",
+     "Correct.",
+     "Wrong antiderivative."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Evaluate $\\int \\frac{e^{x}}{\\sqrt{e^{2 x} + 4}}\\,dx$.",
+   "options": [
+    "$\\sin^{-1}{\\left(\\frac{e^{x}}{2} \\right)}+C$",
+    "$\\sinh^{-1}{\\left(\\frac{e^{x}}{2} \\right)}+C$",
+    "$\\sinh^{-1}{\\left(e^{x} \\right)}+C$",
+    "$\\frac{\\tan^{-1}{\\left(\\frac{e^{x}}{2} \\right)}}{2}+C$"
+   ],
+   "correct": [
+    1
+   ],
+   "explanation": "$u=e^x$, $a=2$: $\\int\\frac{du}{\\sqrt{a^2+u^2}}=\\sinh^{-1}\\frac ua$.",
+   "option_explanations": [
+    "Used the $\\sin^{-1}$ formula.",
+    "Correct.",
+    "Used $a=1$ instead of $a=2$.",
+    "Used the $\\tan^{-1}$ formula."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int \\frac{e^{x}}{\\sqrt{e^{2 x} + 9}}\\,dx$.",
+    "options": [
+     "$\\sinh^{-1}{\\left(\\frac{e^{x}}{9} \\right)}+C$",
+     "$\\cosh^{-1}{\\left(\\frac{e^{x}}{3} \\right)}+C$",
+     "$\\sin^{-1}{\\left(\\frac{e^{x}}{3} \\right)}+C$",
+     "$\\sinh^{-1}{\\left(\\frac{e^{x}}{3} \\right)}+C$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "$u=e^x$, $a=3$.",
+    "option_explanations": [
+     "Used $a=9$.",
+     "Used the $\\cosh^{-1}$ formula.",
+     "Used the $\\sin^{-1}$ formula.",
+     "Correct."
+    ]
+   },
+   {
+    "type": "basic",
+    "question": "Evaluate $\\int \\frac{e^{x}}{\\sqrt{16+e^{2x}}}\\,dx$.",
+    "answer": "Let $u=e^x$, $du=e^x\\,dx$, $a=4$.\n$\\int\\frac{du}{\\sqrt{4^2+u^2}}=\\sinh^{-1}\\frac u4+C$\n$=\\sinh^{-1}\\frac{e^x}{4}+C=\\ln\\left(e^x+\\sqrt{16+e^{2x}}\\right)+C$."
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Evaluate $\\int \\sin{\\left(5 x \\right)} \\cos^{5}{\\left(5 x \\right)}\\,dx$.",
+   "options": [
+    "$- \\frac{\\cos^{6}{\\left(5 x \\right)}}{30}+C$",
+    "$\\frac{\\cos^{6}{\\left(5 x \\right)}}{30}+C$",
+    "$- \\frac{\\cos^{6}{\\left(5 x \\right)}}{6}+C$",
+    "$- \\frac{\\cos^{6}{\\left(5 x \\right)}}{5}+C$"
+   ],
+   "correct": [
+    0
+   ],
+   "explanation": "$u=\\cos5x$, $du=-5\\sin5x\\,dx$: $-\\frac15\\cdot\\frac{u^6}6$.",
+   "option_explanations": [
+    "Correct.",
+    "Sign error: $du=-5\\sin5x\\,dx$.",
+    "Forgot the factor $1/5$.",
+    "Divided by $5$ but forgot to divide by $6$."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int \\sin^{3}{\\left(2 x \\right)} \\cos{\\left(2 x \\right)}\\,dx$.",
+    "options": [
+     "$\\frac{\\sin^{4}{\\left(2 x \\right)}}{8}+C$",
+     "$\\frac{\\sin^{4}{\\left(2 x \\right)}}{4}+C$",
+     "$\\frac{\\sin^{4}{\\left(2 x \\right)}}{2}+C$",
+     "$- \\frac{\\sin^{4}{\\left(2 x \\right)}}{8}+C$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "$u=\\sin2x$, $du=2\\cos2x\\,dx$.",
+    "option_explanations": [
+     "Correct.",
+     "Forgot the factor $1/2$.",
+     "Multiplied by $2$ instead of dividing.",
+     "Sign error."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int \\sin{\\left(\\frac{x}{3} \\right)} \\cos^{2}{\\left(\\frac{x}{3} \\right)}\\,dx$.",
+    "options": [
+     "$\\frac{\\cos^{3}{\\left(\\frac{x}{3} \\right)}}{2}+C$",
+     "$- \\frac{\\cos^{3}{\\left(\\frac{x}{3} \\right)}}{9}+C$",
+     "$- \\cos^{3}{\\left(\\frac{x}{3} \\right)}+C$",
+     "$- \\frac{\\cos^{3}{\\left(\\frac{x}{3} \\right)}}{3}+C$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "$u=\\cos\\frac x3$, $du=-\\frac13\\sin\\frac x3dx$: $-3\\cdot\\frac{u^3}3$.",
+    "option_explanations": [
+     "Wrong: this is only half of the antiderivative (a spurious factor $\\frac12$).",
+     "Divided by $3$ instead of multiplying.",
+     "Correct.",
+     "Forgot to multiply by $3$."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Evaluate $\\int \\frac{\\cos{\\left(\\ln{\\left(x \\right)} \\right)}}{x}\\,dx$.",
+   "options": [
+    "$- \\sin{\\left(\\ln{\\left(x \\right)} \\right)}+C$",
+    "$\\frac{\\sin{\\left(\\ln{\\left(x \\right)} \\right)}}{x}+C$",
+    "$\\ln{\\left(x \\right)} \\cos{\\left(\\ln{\\left(x \\right)} \\right)}+C$",
+    "$\\sin{\\left(\\ln{\\left(x \\right)} \\right)}+C$"
+   ],
+   "correct": [
+    3
+   ],
+   "explanation": "$u=\\ln x$, $du=dx/x$.",
+   "option_explanations": [
+    "Sign error.",
+    "Left $1/x$.",
+    "Wrong antiderivative.",
+    "Correct."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int \\frac{\\sin{\\left(\\ln{\\left(x \\right)} \\right)}}{x}\\,dx$.",
+    "options": [
+     "$\\frac{\\cos{\\left(\\ln{\\left(x \\right)} \\right)}}{2}+C$",
+     "$- \\cos{\\left(\\ln{\\left(x \\right)} \\right)}+C$",
+     "$- \\frac{\\cos{\\left(\\ln{\\left(x \\right)} \\right)}}{x}+C$",
+     "$\\ln{\\left(x \\right)} \\sin{\\left(\\ln{\\left(x \\right)} \\right)}+C$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "$u=\\ln x$.",
+    "option_explanations": [
+     "Wrong: this is only half of the antiderivative (a spurious factor $\\frac12$).",
+     "Correct.",
+     "Left $1/x$.",
+     "Wrong antiderivative."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int \\frac{1}{x \\ln{\\left(x \\right)}}\\,dx$.",
+    "options": [
+     "$\\frac{\\ln{\\left(x \\right)}^{2}}{2}+C$",
+     "$\\ln{\\left(x \\right)}+C$",
+     "$\\ln{\\left(\\left|{\\ln{\\left(x \\right)}}\\right| \\right)}+C$",
+     "$\\frac{1}{\\ln{\\left(x \\right)}}+C$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "$u=\\ln x$: $\\int\\frac{du}u=\\ln|u|$.",
+    "option_explanations": [
+     "Used the power rule on $u^{-1}$.",
+     "Dropped the outer logarithm.",
+     "Correct.",
+     "Wrong antiderivative."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Evaluate $\\int \\left(4 - 2 x\\right)^{3}\\,dx$.",
+   "options": [
+    "$\\frac{\\left(4 - 2 x\\right)^{4}}{8}+C$",
+    "$- \\frac{\\left(4 - 2 x\\right)^{4}}{4}+C$",
+    "$- \\left(4 - 2 x\\right)^{4}+C$",
+    "$- \\frac{\\left(4 - 2 x\\right)^{4}}{8}+C$"
+   ],
+   "correct": [
+    3
+   ],
+   "explanation": "$u=4-2x$, $du=-2\\,dx$: $-\\frac12\\cdot\\frac{u^4}4$.",
+   "option_explanations": [
+    "Sign error: $du=-2\\,dx$.",
+    "Divided by $2$ instead of by $2\\cdot4$... ($u^4/4$ without the $1/2$).",
+    "Forgot both denominators.",
+    "Correct."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int \\left(3 x + 1\\right)^{4}\\,dx$.",
+    "options": [
+     "$\\frac{\\left(3 x + 1\\right)^{5}}{5}+C$",
+     "$\\frac{\\left(3 x + 1\\right)^{5}}{15}+C$",
+     "$\\frac{\\left(3 x + 1\\right)^{5}}{3}+C$",
+     "$\\left(3 x + 1\\right)^{5}+C$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "$u=3x+1$: $\\frac13\\cdot\\frac{u^5}5$.",
+    "option_explanations": [
+     "Forgot the factor $1/3$.",
+     "Correct.",
+     "Forgot the $1/5$.",
+     "Forgot both."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int \\left(5 - x\\right)^{6}\\,dx$.",
+    "options": [
+     "$- \\frac{\\left(5 - x\\right)^{7}}{7}+C$",
+     "$\\frac{\\left(5 - x\\right)^{7}}{7}+C$",
+     "$- \\left(5 - x\\right)^{7}+C$",
+     "$- \\frac{\\left(5 - x\\right)^{5}}{5}+C$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "$u=5-x$, $du=-dx$.",
+    "option_explanations": [
+     "Correct.",
+     "Sign error: $du=-dx$.",
+     "Forgot to divide by $7$.",
+     "Lowered the exponent."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Evaluate $\\int 5^{x}\\,dx$.",
+   "options": [
+    "$5^{x}+C$",
+    "$5^{x} \\ln{\\left(5 \\right)}+C$",
+    "$\\frac{5^{x}}{\\ln{\\left(5 \\right)}}+C$",
+    "$\\frac{5^{x + 1}}{x + 1}+C$"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "$\\int b^u\\,du=\\frac{b^u}{\\ln b}+C$.",
+   "option_explanations": [
+    "Treated it like $e^x$.",
+    "Multiplied by $\\ln5$ instead of dividing.",
+    "Correct.",
+    "Applied the power rule."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int 2^{3 x}\\,dx$.",
+    "options": [
+     "$\\frac{2^{3 x}}{3 \\ln{\\left(2 \\right)}}+C$",
+     "$\\frac{2^{3 x}}{\\ln{\\left(2 \\right)}}+C$",
+     "$\\frac{2^{3 x}}{3}+C$",
+     "$3 \\cdot 2^{3 x} \\ln{\\left(2 \\right)}+C$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "$u=3x$: $\\frac13\\cdot\\frac{2^u}{\\ln2}$.",
+    "option_explanations": [
+     "Correct.",
+     "Forgot the factor $1/3$.",
+     "Forgot to divide by $\\ln2$.",
+     "Multiplied by $3\\ln 2$ instead of dividing."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int 10^{- x}\\,dx$.",
+    "options": [
+     "$\\frac{10^{- x}}{\\ln{\\left(10 \\right)}}+C$",
+     "$- 10^{- x}+C$",
+     "$- \\frac{10^{1 - x}}{1 - x}+C$",
+     "$- \\frac{10^{- x}}{\\ln{\\left(10 \\right)}}+C$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "$u=-x$, $du=-dx$.",
+    "option_explanations": [
+     "Sign error from $u=-x$.",
+     "Forgot to divide by $\\ln10$.",
+     "Applied the power rule.",
+     "Correct."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "To evaluate $\\int \\frac{dx}{\\sqrt{9-4x^{2}}}$ with the table formulas, which substitution should come first?",
+   "options": [
+    "$u=9-4x^{2}$",
+    "$u=2x$",
+    "$u=x^{2}$",
+    "$u=\\sqrt{9-4x^{2}}$"
+   ],
+   "correct": [
+    1
+   ],
+   "explanation": "With $u=2x$ the integral becomes $\\frac12\\int\\frac{du}{\\sqrt{3^2-u^2}}$, a $\\sin^{-1}$ form.",
+   "option_explanations": [
+    "Its differential $-8x\\,dx$ does not appear in the integrand.",
+    "Correct.",
+    "There is no $x\\,dx$ to absorb.",
+    "Its differential $\\frac{-4x}{\\sqrt{\\cdot}}dx$ does not appear."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "To use a table formula on $\\int \\frac{x\\,dx}{1+x^{4}}$, which substitution turns it into $\\int\\frac{du}{a^2+u^2}$?",
+    "options": [
+     "$u=x$",
+     "$u=1+x^{4}$",
+     "$u=x^{4}$",
+     "$u=x^{2}$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "With $u=x^2$, $du=2x\\,dx$ and the integral is $\\frac12\\int\\frac{du}{1+u^2}$.",
+    "option_explanations": [
+     "This leaves $x^4$ unchanged, with no matching table form.",
+     "Its differential $4x^3dx$ does not appear.",
+     "Its differential $4x^3dx$ does not appear.",
+     "Correct."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which substitution makes $\\int \\frac{e^{x}\\,dx}{9+e^{2x}}$ match a table formula?",
+    "options": [
+     "$u=9+e^{2x}$",
+     "$u=e^{x}$",
+     "$u=e^{2x}$",
+     "$u=x$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "With $u=e^x$, $du=e^xdx$ gives $\\int\\frac{du}{3^2+u^2}$.",
+    "option_explanations": [
+     "Its differential $2e^{2x}dx$ does not appear.",
+     "Correct.",
+     "Its differential $2e^{2x}dx$ does not appear.",
+     "This changes nothing."
+    ]
+   }
+  ]
+ }
+]

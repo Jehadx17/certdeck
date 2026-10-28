@@ -1,0 +1,1045 @@
+[
+ {
+  "original": {
+   "type": "mcq",
+   "question": "In Method 2 for $\\int_a^b f(g(x))g'(x)\\,dx$ with $u=g(x)$, the new limits of integration are",
+   "options": [
+    "$u=g(a)$ and $u=g(b)$",
+    "$u=a$ and $u=b$",
+    "$u=g'(a)$ and $u=g'(b)$",
+    "$u=g^{-1}(a)$ and $u=g^{-1}(b)$"
+   ],
+   "correct": [
+    0
+   ],
+   "explanation": "Since $u=g(x)$, the point $x=a$ corresponds to $u=g(a)$ and $x=b$ to $u=g(b)$.",
+   "option_explanations": [
+    "Correct.",
+    "The $x$-limits were left unchanged.",
+    "$g'$ only appears in $du$; the limits use $g$ itself.",
+    "$u$ is found by applying $g$, not its inverse."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "After substituting $u=g(x)$ in $\\int_a^b f(g(x))g'(x)\\,dx$, the integral in $u$ runs from",
+    "options": [
+     "$a$ to $b$",
+     "$g(b)$ to $g(a)$",
+     "$g'(a)$ to $g'(b)$",
+     "$g(a)$ to $g(b)$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "Each $x$-limit is pushed through $u=g(x)$.",
+    "option_explanations": [
+     "Forgot to convert the limits.",
+     "Limits swapped.",
+     "Used the derivative instead of $g$.",
+     "Correct."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "With $u=x^2+1$, the $x$-limits $1$ and $3$ become $u$-limits",
+    "options": [
+     "$u=1$ and $u=3$",
+     "$u=2$ and $u=10$",
+     "$u=2$ and $u=6$",
+     "$u=2$ and $u=4$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "$u(1)=1^2+1=2$ and $u(3)=3^2+1=10$.",
+    "option_explanations": [
+     "Limits not converted.",
+     "Correct.",
+     "Used $g'(x)=2x$ instead of $g(x)$.",
+     "Used $x+1$ instead of $x^2+1$."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Which description fits Method 1 for a definite integral by substitution?",
+   "options": [
+    "Change the limits to $g(a)$ and $g(b)$, then integrate in $u$",
+    "Return to $x$, then use the original limits",
+    "Insert the original limits into the $u$-antiderivative directly",
+    "Differentiate first, then insert the original limits"
+   ],
+   "correct": [
+    1
+   ],
+   "explanation": "In Method 1 you integrate by substitution, return to $x$, and then evaluate between $x=a$ and $x=b$; the limits are not modified.",
+   "option_explanations": [
+    "This describes Method 2.",
+    "Correct.",
+    "Original $x$-limits cannot go into a function of $u$.",
+    "Differentiating does not give the integral."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "In Method 1 the $x$-limits of integration are",
+    "options": [
+     "replaced by the values of $u$ at the endpoints",
+     "put into the $u$-antiderivative without changing",
+     "replaced by their derivatives",
+     "kept as they are, with the antiderivative written in $x$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "Method 1 finds $\\int f(g(x))g'(x)\\,dx$ as a function of $x$ and then evaluates it from $a$ to $b$.",
+    "option_explanations": [
+     "That is Method 2.",
+     "The limits and the variable would not match.",
+     "Limits are never differentiated.",
+     "Correct."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which procedure needs no change in the $x$-limits?",
+    "options": [
+     "Integrating by substitution first and evaluating the result in $x$",
+     "Substituting and converting the limits to the $u$-values",
+     "Evaluating a $u$-antiderivative at $x=a$ and $x=b$",
+     "Substituting and keeping a mix of $x$ and $u$ in the integrand"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "The procedure that finds the indefinite integral first (Method 1) leaves the $x$-limits alone.",
+    "option_explanations": [
+     "Correct.",
+     "The limits are converted here.",
+     "The variable does not match the limits.",
+     "The integral must be entirely in one variable."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "The substitution formula $\\int_a^b f(g(x))g'(x)\\,dx=\\int_{g(a)}^{g(b)}f(u)\\,du$ holds when",
+   "options": [
+    "$g$ is increasing on $[a,b]$ and $f$ is continuous on $[a,b]$",
+    "$g'$ and $f'$ are both continuous on $[a,b]$",
+    "$g'$ is continuous on $[a,b]$ and $f$ is continuous on the values of $g$",
+    "$g$ is one-to-one on $[a,b]$ and $f$ is differentiable"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "Theorem 5.9.1: $g'$ continuous on $[a,b]$, and $f$ continuous on an interval containing all values $g(x)$, $a\\le x\\le b$.",
+   "option_explanations": [
+    "Monotonicity of $g$ is not the stated condition.",
+    "Nothing is assumed about $f'$.",
+    "Correct.",
+    "One-to-one is not required."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Theorem 5.9.1 (substitution in a definite integral) assumes",
+    "options": [
+     "$f$ continuous on $[a,b]$, $g$ strictly increasing",
+     "$f'$ and $g'$ continuous on $[a,b]$",
+     "$g$ one-to-one on $[a,b]$, $f$ differentiable",
+     "$f$ continuous where $g$ takes values, $g'$ continuous on $[a,b]$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "The two hypotheses are continuity of $g'$ on $[a,b]$ and continuity of $f$ on the interval containing the values of $g$.",
+    "option_explanations": [
+     "The requirement is on the range of $g$, not monotonic $g$.",
+     "$f'$ is not involved.",
+     "Neither condition is the stated one.",
+     "Correct."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "To rewrite $\\int_a^b f(g(x))g'(x)\\,dx$ as $\\int_{g(a)}^{g(b)}f(u)\\,du$ one needs",
+    "options": [
+     "$g$ and $f$ both increasing",
+     "$g'$ continuous on $[a,b]$ and $f$ continuous on the range of $g$",
+     "$f'$ continuous on $[a,b]$ and $g$ differentiable",
+     "$g$ one-to-one and $f$ bounded"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Theorem 5.9.1 requires $g'$ continuous on $[a,b]$ and $f$ continuous on an interval containing $g(x)$ for $a\\le x\\le b$.",
+    "option_explanations": [
+     "Monotonicity is not the condition.",
+     "Correct.",
+     "Continuity of $f$, not of $f'$, is needed.",
+     "Neither guarantees the formula."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Using $u=x^2+1$, the integral $\\int_0^2 x(x^2+1)^3\\,dx$ becomes",
+   "options": [
+    "$\\int_{1}^{5}u^3 du$",
+    "$\\int_{0}^{2}u^3 du$",
+    "$\\frac{1}{2}\\int_{1}^{5}u^3 du$",
+    "$2\\int_{1}^{5}u^3 du$"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "$du=2x\\,dx$ gives $x\\,dx=\\tfrac12du$, and the limits become $u=1$ and $u=5$.",
+   "option_explanations": [
+    "Lost the factor $\\tfrac12$ from $x\\,dx=\\tfrac12du$.",
+    "Neither the limits nor the factor $\\tfrac12$ were handled.",
+    "Correct.",
+    "Multiplied by $2$ instead of dividing by $2$."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "With $u=x^3+2$, the integral $\\int_0^1 x^2(x^3+2)^4\\,dx$ becomes",
+    "options": [
+     "$\\frac13\\int_{2}^{3}u^4 du$",
+     "$\\frac13\\int_{0}^{1}u^4 du$",
+     "$3\\int_{2}^{3}u^4 du$",
+     "$\\frac13\\int_{2}^{4}u^4 du$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "$du=3x^2\\,dx$ so the integral is $\\tfrac13\\int u^4du$ with $u$ from $2$ to $3$.",
+    "option_explanations": [
+     "Correct.",
+     "Limits not converted.",
+     "Multiplied by $3$ instead of dividing.",
+     "Upper limit taken as $1+3$ rather than $1^3+2$."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "With $u=\\cos x$, the integral $\\int_0^{\\pi/2}\\sin x\\cos^2x\\,dx$ becomes",
+    "options": [
+     "$\\int_{1}^{0}u^2 du$",
+     "$\\int_{0}^{\\pi/2}u^2 du$",
+     "$\\int_{0}^{1}u^2 du$",
+     "$\\int_{0}^{1}u^3 du$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "$du=-\\sin x\\,dx$ and $u$ runs from $\\cos0=1$ to $\\cos\\frac\\pi2=0$; flipping the limits absorbs the minus sign.",
+    "option_explanations": [
+     "Dropped the minus sign from $du=-\\sin x\\,dx$.",
+     "Limits not converted.",
+     "Correct.",
+     "Wrong power: $\\cos^2x$ gives $u^2$."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Evaluate $\\int_{0}^{\\pi/8} \\sin^4 2x\\cos 2x\\,dx$.",
+   "options": [
+    "$\\frac{\\sqrt{2}}{80}$",
+    "$\\frac{1}{5}$",
+    "$\\frac{1}{10}$",
+    "$\\frac{1}{32}$"
+   ],
+   "correct": [
+    0
+   ],
+   "explanation": "With $u=\\sin2x$: $\\tfrac12\\int_0^{1/\\sqrt2}u^4du=\\tfrac1{10}\\left(\\tfrac1{\\sqrt2}\\right)^5=\\tfrac{\\sqrt2}{80}$.",
+   "option_explanations": [
+    "Correct.",
+    "Forgot the factor $\\tfrac12$ and used $u=1$ as the upper limit.",
+    "Used $u=1$ as the upper limit instead of $\\sin\\frac\\pi4=\\frac1{\\sqrt2}$.",
+    "Integrated $u^4$ as $u^4/4$."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int_{0}^{\\pi/6} \\sin^3 3x\\cos 3x\\,dx$.",
+    "options": [
+     "$\\frac{1}{4}$",
+     "$\\frac{1}{36}$",
+     "$\\frac{\\pi^{4}}{15552}$",
+     "$\\frac{1}{12}$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "$u=\\sin3x$ runs from $0$ to $1$, so $\\tfrac13\\int_0^1u^3du=\\tfrac1{12}$.",
+    "option_explanations": [
+     "Forgot the factor $\\tfrac13$.",
+     "Divided by $3$ twice.",
+     "Did not convert the limits ($x=\\pi/6$ used in $u$).",
+     "Correct."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int_{0}^{\\pi/3} \\cos^3 x\\sin x\\,dx$.",
+    "options": [
+     "$\\frac{1}{16}$",
+     "$\\frac{15}{64}$",
+     "$\\frac{1}{4}$",
+     "$\\frac{1}{64}$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "With $u=\\cos x$: $-\\int_1^{1/2}u^3du=\\tfrac14\\left(1-\\tfrac1{16}\\right)=\\tfrac{15}{64}$.",
+    "option_explanations": [
+     "Evaluated $u^4$ (not $u^4/4$) at $u=\\tfrac12$ only.",
+     "Correct.",
+     "Limits $u=1\\to0$ misused.",
+     "Evaluated the antiderivative at the lower limit only."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "For $\\int_2^5(2x-5)(x-3)^9\\,dx$ with $u=x-3$, the factor $2x-5$ becomes",
+   "options": [
+    "$2u-5$",
+    "$2u+1$",
+    "$2u-11$",
+    "$2u+11$"
+   ],
+   "correct": [
+    1
+   ],
+   "explanation": "$x=u+3$, so $2x-5=2(u+3)-5=2u+1$.",
+   "option_explanations": [
+    "Left $2x-5$ as it was.",
+    "Correct.",
+    "Used $x=u-3$.",
+    "Sign error on the constant: $2(u+3)+5$."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "If $u=x+2$, the factor $3x-1$ in the integrand is rewritten as",
+    "options": [
+     "$3u-1$",
+     "$3u+5$",
+     "$3u-5$",
+     "$3u-7$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "$x=u-2$, so $3x-1=3(u-2)-1=3u-7$.",
+    "option_explanations": [
+     "Did not substitute for $x$.",
+     "Used $x=u+2$.",
+     "Sign error on the constant: $3(u-2)+1$.",
+     "Correct."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "If $u=x-1$, the leftover factor $4x+3$ becomes",
+    "options": [
+     "$4u+7$",
+     "$4u+3$",
+     "$4u-1$",
+     "$4u+1$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "$x=u+1$, so $4x+3=4(u+1)+3=4u+7$.",
+    "option_explanations": [
+     "Correct.",
+     "Did not replace $x$.",
+     "Used $x=u-1$.",
+     "Sign error: $4(u+1)-3$."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "basic",
+   "question": "Evaluate $\\int_2^4 (3x-2)(x-2)^4\\,dx$ by substitution, changing the limits.",
+   "answer": "Let $u=x-2$, so $x=u+2$, $du=dx$ and $3x-2=3u+4$. Limits: $x=2\\to u=0$, $x=4\\to u=2$. Then $\\int_0^2(3u+4)u^4\\,du=\\int_0^2(3u^5+4u^4)\\,du=\\left[\\frac{u^6}{2}+\\frac{4u^5}{5}\\right]_0^2=32+\\frac{128}{5}=\\frac{288}{5}$."
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int_{1}^{3} (2x+1)(x-1)^3\\,dx$.",
+    "options": [
+     "$\\frac{64}{5}$",
+     "$\\frac{84}{5}$",
+     "$\\frac{124}{5}$",
+     "$\\frac{32}{5}$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "$u=x-1$, $2x+1=2u+3$, limits $0$ to $2$: $\\int_0^2(2u^4+3u^3)du$... gives $\\tfrac{64}{5}+12=\\tfrac{124}{5}$.",
+    "option_explanations": [
+     "Dropped the constant: replaced $2x+1$ by $2u$.",
+     "Used $2u+1$ and did not shift the constant.",
+     "Correct.",
+     "Lost the factor $2$ in $2u^4$ and dropped the $3u^3$ term."
+    ]
+   },
+   {
+    "type": "basic",
+    "question": "Evaluate $\\int_3^5 (x+1)(x-3)^6\\,dx$.",
+    "answer": "Let $u=x-3$, so $x+1=u+4$, $du=dx$; limits $u=0$ to $u=2$. Then $\\int_0^2(u+4)u^6\\,du=\\left[\\frac{u^8}{8}+\\frac{4u^7}{7}\\right]_0^2=32+\\frac{512}{7}=\\frac{736}{7}$."
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Evaluate $\\int_{1}^{3} \\frac{dx}{5-x}$.",
+   "options": [
+    "$-\\ln 2$",
+    "$\\ln 3$",
+    "$\\ln \\frac{3}{2}$",
+    "$\\ln 2$"
+   ],
+   "correct": [
+    3
+   ],
+   "explanation": "$u=5-x$, $du=-dx$, limits $4\\to2$: $-\\int_4^2\\frac{du}{u}=\\ln4-\\ln2=\\ln2$.",
+   "option_explanations": [
+    "Missed the minus from $du=-dx$.",
+    "Took $\\ln|x|$ at the limits instead of $\\ln|5-x|$.",
+    "Subtracted $\\ln3-\\ln2$ using wrong $u$-values.",
+    "Correct."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int_{0}^{2} \\frac{dx}{3-x}$.",
+    "options": [
+     "$-\\ln 3$",
+     "$\\ln 3$",
+     "$\\ln 2$",
+     "$\\ln \\frac{3}{2}$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "$u=3-x$ runs from $3$ to $1$, so $-\\int_3^1\\frac{du}{u}=\\ln3-\\ln1=\\ln3$.",
+    "option_explanations": [
+     "Dropped the sign from $du=-dx$.",
+     "Correct.",
+     "Used $\\ln$ of the upper $x$-limit.",
+     "Subtracted $\\ln3-\\ln2$ using wrong $u$-values."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int_{1}^{4} \\frac{dx}{6-x}$.",
+    "options": [
+     "$-\\ln \\frac{5}{2}$",
+     "$\\ln 5$",
+     "$\\ln \\frac{5}{2}$",
+     "$\\ln 4$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "$u=6-x$, limits $5\\to2$: $-[\\ln u]_5^2=\\ln5-\\ln2=\\ln\\frac52$.",
+    "option_explanations": [
+     "Missed the minus from $du=-dx$.",
+     "Forgot to subtract $\\ln2$.",
+     "Correct.",
+     "Used $x$-limits in $\\ln$ without converting."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "basic",
+   "question": "Evaluate $\\int_0^{\\ln 8} e^x(1+e^x)^{1/2}\\,dx$.",
+   "answer": "Let $u=1+e^x$, so $du=e^x\\,dx$. Limits: $x=0\\to u=1+e^0=2$, $x=\\ln8\\to u=1+8=9$. Then $\\int_2^9u^{1/2}\\,du=\\frac23\\left[u^{3/2}\\right]_2^9=\\frac23\\left(27-2\\sqrt2\\right)=18-\\frac{4\\sqrt2}{3}$."
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int_{0}^{\\ln 2} e^x(1+e^x)^2\\,dx$.",
+    "options": [
+     "$\\frac{19}{3}$",
+     "$\\frac{7}{3}$",
+     "$\\frac{19}{2}$",
+     "$\\frac{19}{9}$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "$u=1+e^x$ runs from $2$ to $3$: $\\int_2^3u^2du=\\frac{27-8}{3}=\\frac{19}{3}$.",
+    "option_explanations": [
+     "Correct.",
+     "Used $u(\\ln2)=2$ and $u(0)=1$, dropping the $+1$.",
+     "Integrated $u^2$ as $u^3/2$.",
+     "Integrated $u^2$ as $u^3/9$."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int_{0}^{\\ln 3} e^x(1+e^x)^{1/2}\\,dx$.",
+    "options": [
+     "$\\frac{14}{3}$",
+     "$\\frac{32}{3} - \\frac{8 \\sqrt{2}}{3}$",
+     "$\\frac{16}{3} - \\frac{4 \\sqrt{2}}{3}$",
+     "$- \\frac{4 \\sqrt{2}}{3} + 2 \\sqrt{3}$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "$u=1+e^x$ from $2$ to $4$: $\\frac23(4^{3/2}-2^{3/2})=\\frac23(8-2\\sqrt2)$.",
+    "option_explanations": [
+     "Used $u(0)=1$ instead of $1+e^0=2$.",
+     "Wrong constant: $\\frac43$ instead of $\\frac23$.",
+     "Correct.",
+     "Used $u(\\ln3)=3$, forgetting the $+1$."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Evaluate $\\int_{1}^{2} x e^{x^2}\\,dx$.",
+   "options": [
+    "$- \\frac{e}{2} + \\frac{e^{4}}{2}$",
+    "$- e + e^{4}$",
+    "$- \\frac{e}{2} + \\frac{e^{2}}{2}$",
+    "$- \\frac{e}{4} + \\frac{e^{4}}{4}$"
+   ],
+   "correct": [
+    0
+   ],
+   "explanation": "$u=x^2$ from $1$ to $4$: $\\tfrac12\\int_1^4e^udu=\\tfrac12(e^4-e)$.",
+   "option_explanations": [
+    "Correct.",
+    "Forgot the factor $\\tfrac12$.",
+    "Limits not converted (used $1$ and $2$ for $u$).",
+    "Divided by $2$ twice."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int_{0}^{\\sqrt2} x e^{-x^2}\\,dx$.",
+    "options": [
+     "$1 - e^{-2}$",
+     "$- \\frac{1}{2} + \\frac{1}{2 e^{2}}$",
+     "$\\frac{1}{2} - \\frac{1}{2 e^{\\sqrt{2}}}$",
+     "$\\frac{1}{2} - \\frac{1}{2 e^{2}}$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "$u=-x^2$, $x\\,dx=-\\tfrac12du$, limits $0\\to-2$: $-\\tfrac12[e^u]_0^{-2}=\\tfrac12(1-e^{-2})$.",
+    "option_explanations": [
+     "Forgot the factor $\\tfrac12$.",
+     "Sign error: $du=-2x\\,dx$ gives a minus that flips the limits.",
+     "Did not convert the limit ($u=-x^2$ at $x=\\sqrt2$ is $-2$).",
+     "Correct."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int_{0}^{1} x e^{3x^2}\\,dx$.",
+    "options": [
+     "$- \\frac{1}{3} + \\frac{e^{3}}{3}$",
+     "$- \\frac{1}{6} + \\frac{e^{3}}{6}$",
+     "$- \\frac{1}{6} + \\frac{e}{6}$",
+     "$- \\frac{1}{2} + \\frac{e^{3}}{2}$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "$u=3x^2$, $x\\,dx=\\tfrac16du$, limits $0$ to $3$: $\\tfrac16(e^3-1)$.",
+    "option_explanations": [
+     "Forgot the $2$ in $du=6x\\,dx$.",
+     "Correct.",
+     "Limits not converted.",
+     "Inverted the constant factor (used $\\tfrac12$ instead of $\\tfrac16$)."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Evaluate $\\int_{1}^{5} \\sqrt{2x-1}\\,dx$.",
+   "options": [
+    "$\\frac{52}{3}$",
+    "$\\frac{26}{3}$",
+    "$\\frac{13}{3}$",
+    "$- \\frac{1}{3} + \\frac{5 \\sqrt{5}}{3}$"
+   ],
+   "correct": [
+    1
+   ],
+   "explanation": "$u=2x-1$ from $1$ to $9$: $\\tfrac12\\cdot\\tfrac23[u^{3/2}]_1^9=\\tfrac13(27-1)=\\tfrac{26}3$.",
+   "option_explanations": [
+    "Forgot the factor $\\tfrac12$.",
+    "Correct.",
+    "Integrated $u^{1/2}$ as $u^{3/2}/3$ (missing the factor $2$).",
+    "Did not convert the limits."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int_{0}^{4} \\sqrt{3x+4}\\,dx$.",
+    "options": [
+     "$\\frac{112}{3}$",
+     "$\\frac{112}{27}$",
+     "$- \\frac{16}{9} + \\frac{16 \\sqrt{3}}{3}$",
+     "$\\frac{112}{9}$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "$u=3x+4$ from $4$ to $16$: $\\tfrac13\\cdot\\tfrac23(64-8)=\\tfrac{112}{9}$.",
+    "option_explanations": [
+     "Forgot the factor $\\tfrac13$.",
+     "Divided by $3$ twice.",
+     "Upper limit $u=12$ instead of $16$ (forgot to add $4$ after multiplying).",
+     "Correct."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int_{2}^{5} \\sqrt{x-1}\\,dx$.",
+    "options": [
+     "$\\frac{14}{3}$",
+     "$\\frac{7}{3}$",
+     "$- \\frac{4 \\sqrt{2}}{3} + \\frac{10 \\sqrt{5}}{3}$",
+     "$\\frac{28}{3}$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "$u=x-1$ from $1$ to $4$: $\\tfrac23(8-1)=\\tfrac{14}{3}$.",
+    "option_explanations": [
+     "Correct.",
+     "Integrated $u^{1/2}$ as $u^{3/2}/3$, missing the factor $2$.",
+     "Limits not converted.",
+     "Doubled the result."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Evaluate $\\int_{0}^{\\pi/4} \\tan^3x\\sec^2x\\,dx$.",
+   "options": [
+    "$\\frac{1}{3}$",
+    "$\\frac{\\pi^{4}}{1024}$",
+    "$\\frac{1}{4}$",
+    "$\\frac{3}{4}$"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "$u=\\tan x$ from $0$ to $1$: $\\int_0^1u^3du=\\tfrac14$.",
+   "option_explanations": [
+    "Integrated $u^3$ as $u^3/3$.",
+    "Limits not converted ($x=\\pi/4$ used in $u$).",
+    "Correct.",
+    "Multiplied by $3$ instead of dividing."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int_{0}^{\\pi/4} \\tan^2x\\sec^2x\\,dx$.",
+    "options": [
+     "$\\frac{1}{2}$",
+     "$\\frac{\\pi^{3}}{192}$",
+     "$\\frac{1}{9}$",
+     "$\\frac{1}{3}$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "$u=\\tan x$ from $0$ to $1$: $\\int_0^1u^2du=\\tfrac13$.",
+    "option_explanations": [
+     "Integrated $u^2$ as $u^3/2$.",
+     "Limits not converted.",
+     "Divided by $3$ twice.",
+     "Correct."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int_{0}^{\\pi/2} \\cos x\\sqrt{1+\\sin x}\\,dx$.",
+    "options": [
+     "$\\frac{4 \\sqrt{2}}{3}$",
+     "$- \\frac{2}{3} + \\frac{4 \\sqrt{2}}{3}$",
+     "$- \\frac{4}{3} + \\frac{8 \\sqrt{2}}{3}$",
+     "$- \\frac{1}{3} + \\frac{2 \\sqrt{2}}{3}$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "$u=1+\\sin x$ from $1$ to $2$: $\\tfrac23(2^{3/2}-1)$.",
+    "option_explanations": [
+     "Lower limit: used $u(0)=0$ instead of $1$.",
+     "Correct.",
+     "Wrong constant: $\\tfrac43$ instead of $\\tfrac23$.",
+     "Used $\\tfrac13$ instead of $\\tfrac23$ after integrating $u^{1/2}$."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Evaluate $\\int_{0}^{\\pi} 6\\cos\\frac x3\\,dx$.",
+   "options": [
+    "$18$",
+    "$\\sqrt{3}$",
+    "$9 \\sqrt{3}$",
+    "$9$"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "$u=x/3$, $dx=3du$: $18\\int_0^{\\pi/3}\\cos u\\,du=18\\sin\\frac\\pi3=9\\sqrt3$.",
+   "option_explanations": [
+    "Took $\\sin\\frac\\pi3$ as $1$.",
+    "Divided by $3$ instead of multiplying.",
+    "Correct.",
+    "Used $\\cos\\frac\\pi3$ instead of $\\sin\\frac\\pi3$ at the end."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int_{0}^{\\pi/2} 4\\sin\\frac x2\\,dx$.",
+    "options": [
+     "$8 - 4 \\sqrt{2}$",
+     "$4 - 2 \\sqrt{2}$",
+     "$2 \\sqrt{2}$",
+     "$-8 + 4 \\sqrt{2}$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "$u=x/2$: $8\\int_0^{\\pi/4}\\sin u\\,du=8\\left(1-\\tfrac{\\sqrt2}{2}\\right)=8-4\\sqrt2$.",
+    "option_explanations": [
+     "Correct.",
+     "Forgot that $dx=2\\,du$.",
+     "Evaluated only at the upper limit and forgot $dx=2\\,du$.",
+     "Sign reversed after integrating $\\sin$."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int_{0}^{\\pi/6} 2\\cos3x\\,dx$.",
+    "options": [
+     "$2$",
+     "$\\frac{2}{9}$",
+     "$\\frac{2}{3}$",
+     "$0$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "$u=3x$ from $0$ to $\\frac\\pi2$: $\\tfrac23\\int_0^{\\pi/2}\\cos u\\,du=\\tfrac23$.",
+    "option_explanations": [
+     "Forgot the factor $\\tfrac13$.",
+     "Divided by $3$ twice.",
+     "Correct.",
+     "Used $u=3x$ with upper limit $\\pi$ instead of $\\pi/2$."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Evaluate $\\int_{0}^{1} \\frac{x}{\\sqrt{4-x^2}}\\,dx$.",
+   "options": [
+    "$2 - \\sqrt{3}$",
+    "$-2 + \\sqrt{3}$",
+    "$4 - 2 \\sqrt{3}$",
+    "$1 - \\frac{\\sqrt{3}}{2}$"
+   ],
+   "correct": [
+    0
+   ],
+   "explanation": "$u=4-x^2$ from $4$ to $3$: $-\\tfrac12\\int_4^3u^{-1/2}du=\\left[\\sqrt u\\right]_3^4=2-\\sqrt3$.",
+   "option_explanations": [
+    "Correct.",
+    "Sign error: $du=-2x\\,dx$ not accounted for.",
+    "Forgot the factor $\\tfrac12$ in $x\\,dx=-\\tfrac12du$.",
+    "Divided by $2$ twice."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int_{0}^{2} \\frac{x}{\\sqrt{x^2+5}}\\,dx$.",
+    "options": [
+     "$6 - 2 \\sqrt{5}$",
+     "$-3 + \\sqrt{5}$",
+     "$\\frac{3}{2} - \\frac{\\sqrt{5}}{2}$",
+     "$3 - \\sqrt{5}$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "$u=x^2+5$ from $5$ to $9$: $\\tfrac12\\int_5^9u^{-1/2}du=\\sqrt9-\\sqrt5$.",
+    "option_explanations": [
+     "Forgot the factor $\\tfrac12$.",
+     "Reversed the order of the limits.",
+     "Divided by $2$ twice.",
+     "Correct."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int_{0}^{3} \\frac{x}{\\sqrt{25-x^2}}\\,dx$.",
+    "options": [
+     "$-1$",
+     "$1$",
+     "$\\frac{4}{5}$",
+     "$\\frac{1}{2}$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "$u=25-x^2$ from $25$ to $16$: $\\left[-\\sqrt u\\right]$ gives $5-4=1$.",
+    "option_explanations": [
+     "Sign error from $du=-2x\\,dx$.",
+     "Correct.",
+     "Divided $\\sqrt{25-9}=4$ by $5$ instead of subtracting $4$ from $5$.",
+     "Divided by $2$ twice."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Evaluate $\\int_{0}^{1} \\frac{x}{(x+1)^3}\\,dx$.",
+   "options": [
+    "$\\frac{7}{8}$",
+    "$\\frac{1}{8}$",
+    "$\\frac{1}{2}$",
+    "$- \\frac{3}{8}$"
+   ],
+   "correct": [
+    1
+   ],
+   "explanation": "$u=x+1$, $x=u-1$, limits $1$ to $2$: $\\int_1^2(u^{-2}-u^{-3})du=\\tfrac12-\\tfrac38=\\tfrac18$.",
+   "option_explanations": [
+    "Replaced $x$ by $u+1$ instead of $u-1$.",
+    "Correct.",
+    "Dropped the $-u^{-3}$ term.",
+    "Dropped the $u^{-2}$ term."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int_{0}^{1} \\frac{x}{(x+2)^3}\\,dx$.",
+    "options": [
+     "$\\frac{11}{36}$",
+     "$\\frac{1}{6}$",
+     "$- \\frac{5}{36}$",
+     "$\\frac{1}{36}$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "$u=x+2$, $x=u-2$, limits $2$ to $3$: $\\int_2^3(u^{-2}-2u^{-3})du=\\tfrac16-\\tfrac5{36}\\to\\tfrac1{36}$.",
+    "option_explanations": [
+     "Used $x=u+2$.",
+     "Kept only the $u^{-2}$ term.",
+     "Kept only the $-2u^{-3}$ term.",
+     "Correct."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int_{0}^{2} \\frac{x}{(x+1)^3}\\,dx$.",
+    "options": [
+     "$\\frac{2}{9}$",
+     "$\\frac{10}{9}$",
+     "$\\frac{2}{3}$",
+     "$- \\frac{4}{9}$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "$u=x+1$ from $1$ to $3$: $\\int_1^3(u^{-2}-u^{-3})du=\\tfrac23-\\tfrac49=\\tfrac29$.",
+    "option_explanations": [
+     "Correct.",
+     "Used $x=u+1$.",
+     "Dropped the $-u^{-3}$ term.",
+     "Dropped the $u^{-2}$ term."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Evaluate $\\int_{0}^{\\ln 2} e^x(5-2e^x)\\,dx$.",
+   "options": [
+    "$\\frac{7}{2}$",
+    "$-2$",
+    "$2$",
+    "$10$"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "$u=e^x$ from $1$ to $2$: $\\int_1^2(5-2u)du=5-3=2$.",
+   "option_explanations": [
+    "Integrated $-2u$ as $-u^2/2$ (lost the factor $2$).",
+    "Subtracted the antiderivative values in the wrong order.",
+    "Correct.",
+    "Used only $5u$ at $u=2$."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int_{0}^{\\ln 3} e^x(4-e^x)\\,dx$.",
+    "options": [
+     "$-4$",
+     "$12$",
+     "$\\frac{15}{2}$",
+     "$4$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "$u=e^x$ from $1$ to $3$: $\\int_1^3(4-u)du=8-4=4$.",
+    "option_explanations": [
+     "Subtracted the antiderivative values in the wrong order.",
+     "Sign error: $4u+u^2/2$.",
+     "Limits taken as $u=0$ to $3$.",
+     "Correct."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int_{0}^{\\ln 4} e^x(1+3e^x)\\,dx$.",
+    "options": [
+     "$28$",
+     "$\\frac{51}{2}$",
+     "$\\frac{5}{2}$",
+     "$48$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "$u=e^x$ from $1$ to $4$: $\\int_1^4(1+3u)du=3+\\tfrac{45}{2}=\\tfrac{51}{2}$.",
+    "option_explanations": [
+     "Limits taken as $u=0$ to $4$.",
+     "Correct.",
+     "Evaluated the antiderivative at the lower limit only.",
+     "Integrated $3u$ as $3u^2$ (forgot to halve)."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Evaluate $\\int_{0}^{\\ln 2} \\frac{e^x}{1+e^x}\\,dx$.",
+   "options": [
+    "$\\ln 3$",
+    "$\\ln 2$",
+    "$\\ln \\frac{3}{2}$",
+    "$\\ln \\frac{2}{3}$"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "$u=1+e^x$ from $2$ to $3$: $[\\ln u]_2^3=\\ln\\frac32$.",
+   "option_explanations": [
+    "Forgot to subtract the lower value $\\ln2$.",
+    "Forgot the $+1$ in $u=1+e^x$ at the endpoints.",
+    "Correct.",
+    "Reversed the limits."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int_{0}^{\\ln 3} \\frac{e^x}{3+e^x}\\,dx$.",
+    "options": [
+     "$\\ln \\frac{3}{2}$",
+     "$\\ln 6$",
+     "$\\ln \\frac{2}{3}$",
+     "$\\ln 3$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "$u=3+e^x$ from $4$ to $6$: $\\ln6-\\ln4=\\ln\\frac32$.",
+    "option_explanations": [
+     "Correct.",
+     "Forgot to subtract the lower value.",
+     "Reversed the limits.",
+     "Forgot the $+3$ in $u=3+e^x$."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int_{0}^{\\ln 4} \\frac{e^x}{2+e^x}\\,dx$.",
+    "options": [
+     "$\\ln 6$",
+     "$-\\ln 2$",
+     "$\\ln 2$",
+     "$\\ln 4$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "$u=2+e^x$ from $3$ to $6$: $\\ln6-\\ln3=\\ln2$.",
+    "option_explanations": [
+     "Forgot to subtract the lower value.",
+     "Reversed the limits.",
+     "Correct.",
+     "Forgot the $+2$ in $u=2+e^x$."
+    ]
+   }
+  ]
+ }
+]

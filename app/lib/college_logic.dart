@@ -149,7 +149,8 @@ Triage plan(Scope s, int minutes) {
   int tier(Json c) => !isNew(c) && s.recall(c) < .9 ? 0 : 1;
   int better(Json a, Json b) {
     final t = tier(a) - tier(b);
-    return t != 0 ? t : ratio(b).compareTo(ratio(a));
+    final r = ratio(b).compareTo(ratio(a));
+    return t != 0 ? t : r != 0 ? r : _shuffled(a, b);
   }
 
   final by = <String, List<Json>>{};
@@ -244,15 +245,24 @@ class SprintSession implements StudyQueue {
   }
 }
 
+/// Equal-value cards (e.g. a word list) come in a fixed random order: card ids are random uuids, so sorting by id
+/// shuffles them without reshuffling between sessions.
+int _shuffled(Json a, Json b) => '${a['id']}'.compareTo('${b['id']}');
+
 /// Queue for compressed/long mode: due cards (with the assessment's scheduler) plus new cards paced so everything
 /// is introduced 2 days before the date (practice exam + final review), best expected marks first, cut to the time.
 List<Json> pacedQueue(Scope s, int minutes) {
+  int byValue(Json a, Json b) {
+    final v = s.value(b).compareTo(s.value(a));
+    return v != 0 ? v : _shuffled(a, b);
+  }
+
   final now = nowMs();
   final due = s.cards.where((c) => !isNew(c) && dueOf(c) <= now).toList();
-  final news = s.cards.where(isNew).toList()..sort((a, b) => s.value(b).compareTo(s.value(a)));
+  final news = s.cards.where(isNew).toList()..sort(byValue);
   final d = s.days;
   final perDay = d == null ? 20 : (news.length / max(1, d - 2)).ceil();
-  final pick = [...due, ...news.take(perDay)]..sort((a, b) => s.value(b).compareTo(s.value(a)));
+  final pick = [...due, ...news.take(perDay)]..sort(byValue);
   final out = <Json>[];
   var used = 0.0;
   for (final c in pick) {

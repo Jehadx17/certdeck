@@ -1,0 +1,1926 @@
+[
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Combine $\\frac{3}{x-1}+\\frac{2}{x+2}$ into a single fraction.",
+   "options": [
+    "$\\dfrac{5}{(x-1)(x+2)}$",
+    "$\\dfrac{5x+4}{(x-1)(x+2)}$",
+    "$\\dfrac{5x+1}{(x-1)(x+2)}$",
+    "$\\dfrac{6}{(x-1)(x+2)}$"
+   ],
+   "correct": [
+    1
+   ],
+   "explanation": "Use the common denominator $(x-1)(x+2)$: $\\frac ab+\\frac cd=\\frac{ad+bc}{bd}$.",
+   "option_explanations": [
+    "adds the numerators only.",
+    "Correct: $3(x+2)+2(x-1)=5x+4$.",
+    "cross-multiplies the wrong way: $3(x-1)+2(x+2)$.",
+    "multiplies the numerators."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Which single fraction equals $\\frac{4}{x-3}+\\frac{1}{x+2}$?",
+    "options": [
+     "$\\dfrac{5x}{(x-3)(x+2)}$",
+     "$\\dfrac{5}{(x-3)(x+2)}$",
+     "$\\dfrac{4}{(x-3)(x+2)}$",
+     "$\\dfrac{5x+5}{(x-3)(x+2)}$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "Multiply each numerator by the other denominator and add.",
+    "option_explanations": [
+     "drops the constant term of the numerator.",
+     "adds numerators.",
+     "keeps only the first numerator.",
+     "Correct: $4(x+2)+(x-3)=5x+5$."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Combine $\\frac{2}{x+1}-\\frac{3}{x-4}$.",
+    "options": [
+     "$\\dfrac{-x-11}{(x+1)(x-4)}$",
+     "$\\dfrac{-x-5}{(x+1)(x-4)}$",
+     "$\\dfrac{-1}{(x+1)(x-4)}$",
+     "$\\dfrac{5x-11}{(x+1)(x-4)}$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Numerator: $2(x-4)-3(x+1)$.",
+    "option_explanations": [
+     "Correct: $2(x-4)-3(x+1)=-x-11$.",
+     "uses $-3(x-4)$.",
+     "subtracts numerators.",
+     "sign error on the second term."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Which of these is a proper rational function?",
+   "options": [
+    "$\\dfrac{x^{3}}{x^{2}+1}$",
+    "$\\dfrac{x^{2}+1}{x^{2}-4}$",
+    "$\\dfrac{x^{2}+3}{x^{3}-1}$",
+    "$\\dfrac{x^{4}-1}{x^{3}+2}$"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "Proper means $\\deg P<\\deg Q$.",
+   "option_explanations": [
+    "degree 3 over degree 2.",
+    "equal degrees count as improper.",
+    "Correct: numerator degree $2<3$.",
+    "numerator degree is larger."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Identify the proper rational function.",
+    "options": [
+     "$\\dfrac{x^{2}+x}{x^{2}+1}$",
+     "$\\dfrac{x^{5}}{x^{4}-1}$",
+     "$\\dfrac{x^{3}+2}{x^{3}-8}$",
+     "$\\dfrac{5x}{x^{2}+x+1}$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "Compare the degrees.",
+    "option_explanations": [
+     "equal degree.",
+     "degree $5>4$.",
+     "equal degree.",
+     "Correct: degree $1<2$."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which fraction can be decomposed into partial fractions as it stands?",
+    "options": [
+     "$\\dfrac{2x-1}{x^{3}+4x}$",
+     "$\\dfrac{x^{3}+1}{x^{3}-x}$",
+     "$\\dfrac{x^{4}+1}{x^{2}-9}$",
+     "$\\dfrac{x^{2}-2}{x^{2}+5}$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Only proper fractions are decomposed directly.",
+    "option_explanations": [
+     "Correct: degree $1<3$.",
+     "equal degrees.",
+     "degree 4 over 2.",
+     "equal degrees."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "The first step for $\\int\\frac{x^{3}+1}{x^{2}-4}\\,dx$ is to",
+   "options": [
+    "write $\\frac{A}{x-2}+\\frac{B}{x+2}$ and solve for $A,B$",
+    "complete the square in $x^{2}-4$",
+    "divide $x^{3}+1$ by $x^{2}-4$ to get a quotient plus a proper fraction",
+    "cancel $x^{2}$ from top and bottom"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "Long division makes the remaining fraction proper.",
+   "option_explanations": [
+    "decomposition needs a proper fraction.",
+    "it already factors.",
+    "Correct: numerator degree $\\ge$ denominator degree.",
+    "cannot cancel terms of a sum."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Before using partial fractions on $\\int\\frac{2x^{4}-x}{x^{2}+1}\\,dx$ one must",
+    "options": [
+     "factor the numerator as $x(2x^{3}-1)$",
+     "perform long division",
+     "set $u=x^{2}+1$ and integrate term by term",
+     "write $\\frac{Ax+B}{x^{2}+1}$ at once"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "The degree of the numerator exceeds that of the denominator.",
+    "option_explanations": [
+     "does not reduce the degree.",
+     "Correct: $4\\ge2$.",
+     "$u$ does not absorb the numerator.",
+     "this form is only for proper fractions."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "What should be done first with $\\frac{x^{2}+x}{x^{2}-1}$?",
+    "options": [
+     "assume the form $\\frac{A}{x-1}+\\frac{B}{x+1}$ directly",
+     "divide to get $1+\\frac{x+1}{x^{2}-1}$",
+     "integrate it with the $\\tan^{-1}$ formula for a quadratic denominator",
+     "use $\\frac{Ax+B}{x^{2}-1}$ since the numerator has degree 2"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Improper fractions are divided first.",
+    "option_explanations": [
+     "that would force a missing polynomial part.",
+     "Correct: equal degrees give an improper fraction.",
+     "no sum of squares appears.",
+     "the factor $x^2-1$ is reducible."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "The partial fraction form of $\\frac{3x+5}{(x-2)(x+3)}$ is",
+   "options": [
+    "$\\dfrac{A}{x-2}+\\dfrac{B}{(x+3)^{2}}$",
+    "$\\dfrac{A}{x-2}+\\dfrac{Bx+C}{x+3}$",
+    "$\\dfrac{A}{x-2}+\\dfrac{B}{x+3}+\\dfrac{C}{x}$",
+    "$\\dfrac{A}{x-2}+\\dfrac{B}{x+3}$"
+   ],
+   "correct": [
+    3
+   ],
+   "explanation": "Each non-repeated linear factor contributes one term $\\frac{A}{ax+b}$.",
+   "option_explanations": [
+    "squares a factor that is not repeated.",
+    "quadratic-style numerator for a linear factor.",
+    "adds a term for a factor that is not in the denominator.",
+    "Correct: one constant over each linear factor."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Write the form of the decomposition of $\\frac{x+1}{(x-1)(x+4)(x-6)}$.",
+    "options": [
+     "$\\dfrac{A}{x-1}+\\dfrac{B}{x+4}+\\dfrac{C}{x-6}$",
+     "$\\dfrac{A}{x-1}+\\dfrac{B}{x+4}+\\dfrac{C}{x-6}+\\dfrac{D}{x}$",
+     "$\\dfrac{Ax+B}{x-1}+\\dfrac{C}{x+4}+\\dfrac{D}{x-6}$",
+     "$\\dfrac{A}{x-1}+\\dfrac{B}{(x+4)^{2}}+\\dfrac{C}{x-6}$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Linear factor rule with $m=1$.",
+    "option_explanations": [
+     "Correct: three distinct linear factors.",
+     "adds a term for a factor $x$ that is not in the denominator.",
+     "unnecessary $x$ term.",
+     "a square appears with no repeated factor."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "For $\\frac{7}{x^{2}-9}$ the first step gives which decomposition form?",
+    "options": [
+     "$\\dfrac{Ax+B}{x^{2}-9}$",
+     "$\\dfrac{A}{x^{2}-9}$",
+     "$\\dfrac{A}{x-3}+\\dfrac{B}{x+3}$",
+     "$\\dfrac{A}{x-3}+\\dfrac{B}{x+9}$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Factor the denominator completely, then apply the linear factor rule.",
+    "option_explanations": [
+     "the quadratic is reducible.",
+     "must factor first.",
+     "Correct: $x^2-9=(x-3)(x+3)$.",
+     "mis-factors."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "The form of $\\frac{x+2}{(x-1)^{2}(x+3)}$ is",
+   "options": [
+    "$\\dfrac{A}{(x-1)^{2}}+\\dfrac{B}{x+3}$",
+    "$\\dfrac{A}{x-1}+\\dfrac{B}{x+3}$",
+    "$\\dfrac{Ax+B}{(x-1)^{2}}+\\dfrac{C}{x+3}$",
+    "$\\dfrac{A}{x-1}+\\dfrac{B}{(x-1)^{2}}+\\dfrac{C}{x+3}$"
+   ],
+   "correct": [
+    3
+   ],
+   "explanation": "A factor $(ax+b)^{m}$ gives $m$ terms with powers $1,\\dots,m$.",
+   "option_explanations": [
+    "omits the first-power term.",
+    "one term for a repeated factor.",
+    "uses a quadratic-style numerator.",
+    "Correct: $m=2$ gives two terms for $x-1$."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Which form is right for $\\frac{1}{x(x-4)^{3}}$?",
+    "options": [
+     "$\\dfrac{A}{x}+\\dfrac{B}{x-4}+\\dfrac{C}{(x-4)^{2}}+\\dfrac{D}{(x-4)^{3}}$",
+     "$\\dfrac{A}{x}+\\dfrac{B}{(x-4)^{3}}$",
+     "$\\dfrac{A}{x}+\\dfrac{B}{x-4}+\\dfrac{C}{(x-4)^{2}}$",
+     "$\\dfrac{A}{x}+\\dfrac{Bx+C}{(x-4)^{3}}$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "$m=3$ gives three terms.",
+    "option_explanations": [
+     "Correct: three terms for the cube.",
+     "only the top power.",
+     "stops at the square.",
+     "wrong numerator type."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Decomposition form of $\\frac{5}{(2x+1)^{2}(x-3)}$:",
+    "options": [
+     "$\\dfrac{A}{(2x+1)^{2}}+\\dfrac{B}{x-3}$",
+     "$\\dfrac{A}{2x+1}+\\dfrac{B}{x-3}$",
+     "$\\dfrac{A}{2x+1}+\\dfrac{B}{(2x+1)^{2}}+\\dfrac{C}{x-3}$",
+     "$\\dfrac{Ax+B}{(2x+1)^{2}}+\\dfrac{C}{x-3}$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Same rule with $ax+b=2x+1$.",
+    "option_explanations": [
+     "missing term.",
+     "ignores the square.",
+     "Correct: two terms for $(2x+1)^2$.",
+     "wrong numerator type."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Which is the decomposition form of $\\frac{4}{x^{2}(x-5)}$?",
+   "options": [
+    "$\\dfrac{Ax+B}{x^{2}}+\\dfrac{C}{x-5}$",
+    "$\\dfrac{A}{x}+\\dfrac{B}{x^{2}}+\\dfrac{C}{x-5}$",
+    "$\\dfrac{A}{x^{2}}+\\dfrac{B}{x-5}$",
+    "$\\dfrac{A}{x}+\\dfrac{B}{x-5}$"
+   ],
+   "correct": [
+    1
+   ],
+   "explanation": "$x^{2}$ is not irreducible since $x^{2}=x\\cdot x$.",
+   "option_explanations": [
+    "treats $x^2$ as an irreducible quadratic.",
+    "Correct: $x^2=x\\cdot x$ is a repeated linear factor.",
+    "omits $\\frac Ax$.",
+    "ignores the square."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Decomposition form of $\\frac{x+1}{x^{3}(x+2)}$:",
+    "options": [
+     "$\\dfrac{A}{x^{3}}+\\dfrac{B}{x+2}$",
+     "$\\dfrac{A}{x}+\\dfrac{B}{x^{2}}+\\dfrac{C}{x^{3}}+\\dfrac{D}{x+2}$",
+     "$\\dfrac{Ax^{2}+Bx+C}{x^{3}}+\\dfrac{D}{x+2}$",
+     "$\\dfrac{A}{x}+\\dfrac{B}{x+2}$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Repeated linear factor rule.",
+    "option_explanations": [
+     "omits lower powers.",
+     "Correct: three terms for $x^3$.",
+     "lumps the powers into one fraction.",
+     "ignores multiplicity."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which form fits $\\frac{2x}{x^{2}(x+1)^{2}}$?",
+    "options": [
+     "$\\dfrac{A}{x^{2}}+\\dfrac{B}{(x+1)^{2}}$",
+     "$\\dfrac{Ax+B}{x^{2}}+\\dfrac{Cx+D}{(x+1)^{2}}$",
+     "$\\dfrac{A}{x}+\\dfrac{B}{x+1}$",
+     "$\\dfrac{A}{x}+\\dfrac{B}{x^{2}}+\\dfrac{C}{x+1}+\\dfrac{D}{(x+1)^{2}}$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "Each repeated linear factor has its own run of terms.",
+    "option_explanations": [
+     "only top powers.",
+     "wrong numerators.",
+     "ignores multiplicity.",
+     "Correct: two terms for each square."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "The form of $\\frac{1}{(x-1)(x^{2}+4)}$ is",
+   "options": [
+    "$\\dfrac{A}{x-1}+\\dfrac{Bx+C}{x^{2}+4}$",
+    "$\\dfrac{A}{x-1}+\\dfrac{B}{x^{2}+4}+\\dfrac{C}{(x^{2}+4)^{2}}$",
+    "$\\dfrac{A}{x-1}+\\dfrac{Bx+C}{(x^{2}+4)^{2}}$",
+    "$\\dfrac{A}{x-1}+\\dfrac{B}{x-2}+\\dfrac{C}{x+2}$"
+   ],
+   "correct": [
+    0
+   ],
+   "explanation": "Quadratic factor rule with $m=1$.",
+   "option_explanations": [
+    "Correct: an irreducible quadratic gets a linear numerator.",
+    "constant numerators, and a squared factor that does not occur.",
+    "wrong power.",
+    "factors $x^2+4$ over the reals."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Decomposition form of $\\frac{2x}{(x+3)(x^{2}+x+1)}$:",
+    "options": [
+     "$\\dfrac{A}{x+3}+\\dfrac{B}{x^{2}+x+1}$",
+     "$\\dfrac{Ax+B}{x+3}+\\dfrac{C}{x+1}$",
+     "$\\dfrac{A}{x+3}+\\dfrac{Bx+C}{x^{2}+x+1}$",
+     "$\\dfrac{A}{x+3}+\\dfrac{B}{x}+\\dfrac{C}{x+1}$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Linear factor: constant. Irreducible quadratic: $Bx+C$.",
+    "option_explanations": [
+     "constant numerator.",
+     "linear numerator on the linear factor, and the quadratic broken up.",
+     "Correct: $b^2-4ac=-3<0$, so irreducible.",
+     "invents factors."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which form suits $\\frac{1}{x(x^{2}+9)}$?",
+    "options": [
+     "$\\dfrac{A}{x}+\\dfrac{B}{x^{2}+9}$",
+     "$\\dfrac{A}{x}+\\dfrac{B}{x-3}+\\dfrac{C}{x+3}$",
+     "$\\dfrac{Ax+B}{x}+\\dfrac{C}{x^{2}+9}$",
+     "$\\dfrac{A}{x}+\\dfrac{Bx+C}{x^{2}+9}$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "$x^{2}+9$ has no real factors.",
+    "option_explanations": [
+     "constant numerator.",
+     "treats $x^2+9$ as a difference of squares.",
+     "numerators swapped.",
+     "Correct: irreducible quadratic."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "The form of $\\frac{1}{x(x^{2}+1)^{2}}$ is",
+   "options": [
+    "$\\dfrac{A}{x}+\\dfrac{Bx+C}{x^{2}+1}+\\dfrac{Dx+E}{(x^{2}+1)^{2}}$",
+    "$\\dfrac{A}{x}+\\dfrac{Bx+C}{(x^{2}+1)^{2}}$",
+    "$\\dfrac{A}{x}+\\dfrac{B}{x^{2}+1}+\\dfrac{C}{(x^{2}+1)^{2}}$",
+    "$\\dfrac{A}{x}+\\dfrac{Bx+C}{x^{2}+1}+\\dfrac{Dx+E}{x^{2}+1}$"
+   ],
+   "correct": [
+    0
+   ],
+   "explanation": "Quadratic factor rule with $m=2$.",
+   "option_explanations": [
+    "Correct: two terms for the squared quadratic.",
+    "only the top power.",
+    "constant numerators.",
+    "repeats the first power."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Form for $\\frac{1}{(x^{2}+4)^{2}}$:",
+    "options": [
+     "$\\dfrac{Ax+B}{(x^{2}+4)^{2}}$",
+     "$\\dfrac{A}{x^{2}+4}+\\dfrac{B}{(x^{2}+4)^{2}}$",
+     "$\\dfrac{Ax+B}{x^{2}+4}+\\dfrac{Cx+D}{(x^{2}+4)^{2}}$",
+     "$\\dfrac{Ax+B}{x^{2}+4}+\\dfrac{C}{(x^{2}+4)^{2}}$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Each power gets a linear numerator.",
+    "option_explanations": [
+     "one term.",
+     "constant numerators.",
+     "Correct: $m=2$.",
+     "second numerator should be linear."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which is the form of $\\frac{x-1}{(x+2)(x^{2}+3)^{2}}$?",
+    "options": [
+     "$\\dfrac{A}{x+2}+\\dfrac{Bx+C}{(x^{2}+3)^{2}}$",
+     "$\\dfrac{A}{x+2}+\\dfrac{Bx+C}{x^{2}+3}+\\dfrac{Dx+E}{(x^{2}+3)^{2}}$",
+     "$\\dfrac{Ax+B}{x+2}+\\dfrac{Cx+D}{x^{2}+3}+\\dfrac{Ex+F}{(x^{2}+3)^{2}}$",
+     "$\\dfrac{A}{x+2}+\\dfrac{B}{x^{2}+3}+\\dfrac{C}{(x^{2}+3)^{2}}$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Combine the two rules.",
+    "option_explanations": [
+     "omits the first power.",
+     "Correct: one term for $x+2$, two for the squared quadratic.",
+     "linear numerator on a linear factor.",
+     "constant numerators."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "How many unknown constants appear in the decomposition of $\\frac{1}{x^{2}(x^{2}+1)(x-3)}$?",
+   "options": [
+    "$3$",
+    "$5$",
+    "$4$",
+    "$6$"
+   ],
+   "correct": [
+    1
+   ],
+   "explanation": "Sum the constants required by each factor.",
+   "option_explanations": [
+    "counts factors.",
+    "Correct: $x^2$: 2, $x^2+1$: 2, $x-3$: 1.",
+    "treats $x^2$ as one term.",
+    "counts $x^2$ as a quadratic factor with two constants."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "For $\\frac{1}{(x-1)^{3}(x^{2}+4)^{2}}$ the number of constants in the decomposition is",
+    "options": [
+     "$5$",
+     "$6$",
+     "$8$",
+     "$7$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "Linear power $m$: $m$ constants. Quadratic power $m$: $2m$ constants.",
+    "option_explanations": [
+     "counts $(x^2+4)^2$ as 2.",
+     "gives one constant per term.",
+     "counts 4 for the cube.",
+     "Correct: 3 for $(x-1)^3$ and 4 for $(x^2+4)^2$."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "How many constants must be found for $\\frac{3}{x(x+1)(x^{2}+x+1)}$?",
+    "options": [
+     "$4$",
+     "$3$",
+     "$5$",
+     "$6$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "The quadratic factor contributes $B$ and $C$.",
+    "option_explanations": [
+     "Correct: 1 + 1 + 2.",
+     "counts one constant per factor.",
+     "counts the cubic as 3.",
+     "doubles every factor."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "The complete factorization of $x^{3}-4x$ into linear and irreducible quadratic factors is",
+   "options": [
+    "$x(x^{2}-4)$",
+    "$x(x-2)^{2}$",
+    "$x(x-2)(x+2)$",
+    "$x^{2}(x-4)$"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "Factor completely before choosing the form.",
+   "option_explanations": [
+    "$x^2-4$ is reducible.",
+    "squares one factor.",
+    "Correct: $x^2-4$ factors further.",
+    "wrong factoring."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Factor $x^{3}+x$ completely over the reals.",
+    "options": [
+     "$x(x+1)(x^{2}-x+1)$",
+     "$x(x-1)(x+1)$",
+     "$(x+1)(x^{2}-x)$",
+     "$x(x^{2}+1)$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "Take out $x$; the leftover has no real roots.",
+    "option_explanations": [
+     "that is $x^{4}+x$, from treating $x^3+1$ as the sum of cubes.",
+     "that is $x^3-x$.",
+     "does not expand to $x^3+x$.",
+     "Correct: $x^2+1$ is irreducible."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which is the complete factorization of $x^{4}-1$?",
+    "options": [
+     "$(x-1)(x+1)(x^{2}+1)$",
+     "$(x^{2}-1)(x^{2}+1)$",
+     "$(x-1)^{2}(x+1)^{2}$",
+     "$(x-1)(x+1)(x^{2}-1)$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Difference of squares twice.",
+    "option_explanations": [
+     "Correct: $x^2-1$ splits and $x^2+1$ stays.",
+     "$x^2-1$ is reducible.",
+     "expands to $(x^2-1)^2$.",
+     "repeats a factor."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "In $\\frac{5x+1}{(x-3)(x+2)}=\\frac{A}{x-3}+\\frac{B}{x+2}$, the value of $A$ is",
+   "options": [
+    "$\\dfrac{9}{5}$",
+    "$-\\dfrac{16}{5}$",
+    "$\\dfrac{16}{5}$",
+    "$16$"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "Multiply by $(x-3)(x+2)$ and set $x=3$.",
+   "option_explanations": [
+    "that is $B$.",
+    "sign error.",
+    "Correct: set $x=3$: $5A=16$.",
+    "forgets to divide by $5$."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "For $\\frac{2x-7}{(x-1)(x+4)}=\\frac{A}{x-1}+\\frac{B}{x+4}$, find $A$.",
+    "options": [
+     "$3$",
+     "$-1$",
+     "$1$",
+     "$-5$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Substitute $x=1$ after clearing fractions.",
+    "option_explanations": [
+     "that is $B$.",
+     "Correct: $x=1$: $5A=-5$.",
+     "sign error.",
+     "forgets to divide by 5."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Given $\\frac{3x+8}{(x+1)(x-2)}=\\frac{A}{x+1}+\\frac{B}{x-2}$, the constant $B$ equals",
+    "options": [
+     "$-\\dfrac{5}{3}$",
+     "$\\dfrac{14}{3}$",
+     "$14$",
+     "$\\dfrac{5}{3}$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Set $x=2$.",
+    "option_explanations": [
+     "that is $A$.",
+     "Correct: $x=2$: $3B=14$.",
+     "forgets to divide by $3$.",
+     "sign and root mix-up."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Evaluate $\\int\\frac{dx}{x^{2}-3x-4}$.",
+   "options": [
+    "\\frac15\\ln|x-4|+C",
+    "\\ln\\left|\\frac{x-4}{x+1}\\right|+C",
+    "\\frac15\\ln\\left|(x-4)(x+1)\\right|+C",
+    "\\frac15\\ln\\left|\\frac{x-4}{x+1}\\right|+C"
+   ],
+   "correct": [
+    3
+   ],
+   "explanation": "$A=\\frac15$, $B=-\\frac15$.",
+   "option_explanations": [
+    "keeps only one partial fraction.",
+    "forgets $\\frac15$.",
+    "adds the logs instead of subtracting.",
+    "Correct: $\\frac{1}{(x-4)(x+1)}=\\frac{1/5}{x-4}-\\frac{1/5}{x+1}$."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Find $\\int\\frac{dx}{x^{2}-x-6}$.",
+    "options": [
+     "\\frac15\\ln\\left|\\frac{x-3}{x+2}\\right|+C",
+     "\\frac15\\ln|x+2|-\\ln|x-3|+C",
+     "5\\ln\\left|\\frac{x-3}{x+2}\\right|+C",
+     "\\frac15\\ln\\left|(x-3)(x+2)\\right|+C"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Factor, decompose, integrate.",
+    "option_explanations": [
+     "Correct: $(x-3)(x+2)$, $A=\\frac15$, $B=-\\frac15$.",
+     "applies the factor $\\frac15$ to only one term.",
+     "multiplies by 5.",
+     "adds instead of subtracts."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which is an antiderivative of $\\frac{1}{x^{2}+2x-8}$?",
+    "options": [
+     "\\frac16\\ln\\left|\\frac{x+4}{x-2}\\right|+C",
+     "\\frac18\\ln\\left|\\frac{x-2}{x+4}\\right|+C",
+     "\\frac16\\ln\\left|\\frac{x-2}{x+4}\\right|+C",
+     "\\ln\\left|\\frac{x-2}{x+4}\\right|+C"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "$\\frac{1}{(x-2)(x+4)}=\\frac{1/6}{x-2}-\\frac{1/6}{x+4}$.",
+    "option_explanations": [
+     "inverted.",
+     "uses the constant term as the factor.",
+     "Correct: $(x-2)(x+4)$, $A=\\frac16$, $B=-\\frac16$.",
+     "forgets $\\frac16$."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "basic",
+   "question": "Evaluate $\\int\\frac{3x-1}{(x-3)(x+4)}\\,dx$.",
+   "answer": "Write $\\frac{3x-1}{(x-3)(x+4)}=\\frac{A}{x-3}+\\frac{B}{x+4}$, so $3x-1=A(x+4)+B(x-3)$. Setting $x=3$: $8=7A$, $A=\\frac87$. Setting $x=-4$: $-13=-7B$, $B=\\frac{13}{7}$. Hence $\\int=\\frac87\\ln|x-3|+\\frac{13}{7}\\ln|x+4|+C$."
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int\\frac{5x+7}{(x-1)(x+3)}\\,dx$.",
+    "options": [
+     "2\\ln|x-1|+3\\ln|x+3|+C",
+     "3\\ln|x-1|-2\\ln|x+3|+C",
+     "5\\ln|(x-1)(x+3)|+C",
+     "3\\ln|x-1|+2\\ln|x+3|+C"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "Substitute the roots to get $A=3$, $B=2$.",
+    "option_explanations": [
+     "swaps $A$ and $B$.",
+     "sign error in $B$.",
+     "treats the numerator as a derivative.",
+     "Correct: $x=1$: $12=4A$; $x=-3$: $-8=-4B$."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Find $\\int\\frac{x+10}{(x-2)(x+1)}\\,dx$.",
+    "options": [
+     "4\\ln|x-2|-3\\ln|x+1|+C",
+     "4\\ln|x-2|+3\\ln|x+1|+C",
+     "3\\ln|x-2|-4\\ln|x+1|+C",
+     "12\\ln|x-2|-9\\ln|x+1|+C"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "$A=4$, $B=-3$.",
+    "option_explanations": [
+     "Correct: $x=2$: $12=3A$; $x=-1$: $9=-3B$.",
+     "sign error in $B$.",
+     "swaps the constants.",
+     "does not divide by the other factor."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Multiplying out $4x+7=A(x+1)+B(x-2)$ and equating coefficients gives",
+   "options": [
+    "$A+B=4,\\ A+2B=7$",
+    "$A+B=7,\\ A-2B=4$",
+    "$A+B=4,\\ A-2B=7$",
+    "$A-B=4,\\ A+2B=7$"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "Collect $x$ and constant terms: $(A+B)x+(A-2B)$.",
+   "option_explanations": [
+    "sign error on $-2B$.",
+    "swaps the right-hand sides.",
+    "Correct: $x$: $A+B$; constants: $A-2B$.",
+    "signs mixed up."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Equating coefficients in $3x-5=A(x-1)+B(x+3)$ yields the system",
+    "options": [
+     "$A+B=3,\\ A+3B=-5$",
+     "$A+B=3,\\ -A+3B=-5$",
+     "$A+B=-5,\\ -A+3B=3$",
+     "$A-B=3,\\ -A+3B=-5$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Expand to $(A+B)x+(-A+3B)$.",
+    "option_explanations": [
+     "forgets the sign of $-A$.",
+     "Correct: constants: $-A+3B$.",
+     "swaps sides.",
+     "wrong $x$ coefficient."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "For $6x+1=A(x-3)+B(x+1)$ the coefficient equations are",
+    "options": [
+     "$A+B=6,\\ 3A+B=1$",
+     "$A+B=6,\\ -3A+B=1$",
+     "$A+B=1,\\ -3A+B=6$",
+     "$A+B=6,\\ -3A-B=1$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "The constant term is $-3A+B$.",
+    "option_explanations": [
+     "sign error.",
+     "Correct: constants: $-3A+B$.",
+     "swapped sides.",
+     "sign error on $B$."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "In $x+3=Ax(x-1)+B(x-1)+Cx^{2}$ (from $\\frac{x+3}{x^{2}(x-1)}$), what is $A$?",
+   "options": [
+    "$4$",
+    "$-3$",
+    "$0$",
+    "$-4$"
+   ],
+   "correct": [
+    3
+   ],
+   "explanation": "No substitution isolates $A$; equate the coefficients of $x^{2}$.",
+   "option_explanations": [
+    "takes $A=C$.",
+    "that is $B$.",
+    "forgets $A$ is determined by the $x^2$ coefficient.",
+    "Correct: $x=0$: $B=-3$; $x=1$: $C=4$; $x^2$ coefficients: $A+C=0$."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "For $6x-4=Ax(x-2)+B(x-2)+Cx^{2}$ the value of $A$ is",
+    "options": [
+     "$-2$",
+     "$2$",
+     "$-4$",
+     "$6$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "$C=2$ from $x=2$; then $A=-C$.",
+    "option_explanations": [
+     "Correct: $x=2$: $C=2$; $A+C=0$.",
+     "takes $A=C$.",
+     "confuses with the constant term.",
+     "reads off the $x$ coefficient."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "If $2x+3=Ax(x+1)+B(x+1)+Cx^{2}$, then $A$ equals",
+    "options": [
+     "$1$",
+     "$3$",
+     "$-1$",
+     "$-3$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "$B=3$ at $x=0$, $C=1$ at $x=-1$.",
+    "option_explanations": [
+     "takes $A=C$.",
+     "that is $B$.",
+     "Correct: $x=-1$: $C=1$; $A+C=0$.",
+     "sign mix-up."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Evaluate $\\int\\frac{5}{(x-1)^{2}}\\,dx$.",
+   "options": [
+    "5\\ln|(x-1)^{2}|+C",
+    "\\frac{5}{(x-1)^{2}}+C",
+    "-\\frac{10}{(x-1)^{3}}+C",
+    "-\\frac{5}{x-1}+C"
+   ],
+   "correct": [
+    3
+   ],
+   "explanation": "Power rule, not logarithm.",
+   "option_explanations": [
+    "uses the log rule for a squared denominator.",
+    "is the integrand itself, not an antiderivative.",
+    "differentiates instead of integrating.",
+    "Correct: $\\int u^{-2}du=-u^{-1}$."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Find $\\int\\frac{3}{(x+2)^{3}}\\,dx$.",
+    "options": [
+     "-\\frac{3}{2(x+2)^{2}}+C",
+     "\\frac{3}{2(x+2)^{2}}+C",
+     "-\\frac{3}{(x+2)^{2}}+C",
+     "3\\ln|x+2|+C"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Raise the exponent and divide by it.",
+    "option_explanations": [
+     "Correct: $\\int u^{-3}du=-\\frac12u^{-2}$.",
+     "sign error.",
+     "forgets the $\\frac12$.",
+     "uses the log rule."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Find $\\int\\frac{-2}{x^{2}}\\,dx$.",
+    "options": [
+     "-\\frac{2}{x}+C",
+     "-2\\ln|x^{2}|+C",
+     "\\frac{2}{x}+C",
+     "\\frac{4}{x^{3}}+C"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "The $\\frac{B}{x^{2}}$ term gives $-\\frac{B}{x}$.",
+    "option_explanations": [
+     "sign error.",
+     "uses the log rule for a squared power.",
+     "Correct: $\\int x^{-2}dx=-x^{-1}$.",
+     "differentiates."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Evaluate $\\int\\frac{5}{2x+3}\\,dx$.",
+   "options": [
+    "5\\ln|2x+3|+C",
+    "\\frac52\\ln|2x+3|+C",
+    "10\\ln|2x+3|+C",
+    "\\frac52\\ln|x|+C"
+   ],
+   "correct": [
+    1
+   ],
+   "explanation": "Divide by the coefficient of $x$.",
+   "option_explanations": [
+    "forgets the inner derivative $2$.",
+    "Correct: $\\int\\frac{du}{u}$ with $du=2dx$.",
+    "multiplies by $2$ instead of dividing.",
+    "drops the linear expression inside."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Find $\\int\\frac{6}{3x-1}\\,dx$.",
+    "options": [
+     "6\\ln|3x-1|+C",
+     "2\\ln|3x-1|+C",
+     "18\\ln|3x-1|+C",
+     "2\\ln|x-1|+C"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "$u=3x-1$, $du=3\\,dx$.",
+    "option_explanations": [
+     "forgets the factor 3.",
+     "Correct: $\\frac63=2$.",
+     "multiplies by 3.",
+     "alters the inside."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which equals $\\int\\frac{8}{4x+5}\\,dx$?",
+    "options": [
+     "\\frac85\\ln|4x+5|+C",
+     "32\\ln|4x+5|+C",
+     "\\frac12\\ln|4x+5|+C",
+     "2\\ln|4x+5|+C"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "Divide the numerator by the coefficient of $x$.",
+    "option_explanations": [
+     "divides by the constant 5 instead of the coefficient 4.",
+     "multiplies by 4.",
+     "inverts the factor.",
+     "Correct: $\\frac84=2$."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Evaluate $\\int\\frac{x+3}{x^{2}(x-1)}\\,dx$.",
+   "options": [
+    "4\\ln\\left|\\frac{x-1}{x}\\right|+\\frac3x+C",
+    "4\\ln\\left|\\frac{x-1}{x}\\right|-\\frac3x+C",
+    "4\\ln\\left|\\frac{x}{x-1}\\right|+\\frac3x+C",
+    "4\\ln\\left|\\frac{x-1}{x}\\right|-3\\ln|x|+C"
+   ],
+   "correct": [
+    0
+   ],
+   "explanation": "Decompose as $\\frac{A}{x}+\\frac{B}{x^{2}}+\\frac{C}{x-1}$ with $A=-4$, $B=-3$, $C=4$.",
+   "option_explanations": [
+    "Correct: $-\\frac4x-\\frac3{x^2}+\\frac4{x-1}$.",
+    "integrates $-\\frac{3}{x^2}$ with the wrong sign.",
+    "inverted logarithm.",
+    "uses the log rule on $\\frac{1}{x^2}$."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Find $\\int\\frac{6x-4}{x^{2}(x-2)}\\,dx$ for $x>2$.",
+    "options": [
+     "2\\ln\\left|\\frac{x-2}{x}\\right|+\\frac2x+C",
+     "2\\ln\\left|\\frac{x}{x-2}\\right|-\\frac2x+C",
+     "2\\ln\\left|\\frac{x-2}{x}\\right|-\\frac2x+C",
+     "2\\ln\\left|\\frac{x-2}{x}\\right|-2\\ln|x|+C"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "$A=-2$, $B=2$, $C=2$.",
+    "option_explanations": [
+     "sign error.",
+     "inverted log.",
+     "Correct: $-\\frac2x+\\frac2{x^2}+\\frac2{x-2}$.",
+     "log rule on $x^{-2}$."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which is $\\int\\frac{2x+3}{x^{2}(x+1)}\\,dx$ on $x>0$?",
+    "options": [
+     "\\ln\\left|\\frac{x+1}{x}\\right|+\\frac3x+C",
+     "\\ln\\left|\\frac{x}{x+1}\\right|-\\frac3x+C",
+     "\\ln|x(x+1)|-\\frac3x+C",
+     "\\ln\\left|\\frac{x+1}{x}\\right|-\\frac3x+C"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "$A=-1$, $B=3$, $C=1$.",
+    "option_explanations": [
+     "sign error.",
+     "inverted.",
+     "adds logs.",
+     "Correct: $-\\frac1x+\\frac3{x^2}+\\frac1{x+1}$."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "basic",
+   "question": "Evaluate $\\int\\frac{2x^{2}+3}{x(x-1)^{2}}\\,dx$.",
+   "answer": "Write $\\frac{2x^{2}+3}{x(x-1)^{2}}=\\frac Ax+\\frac B{x-1}+\\frac C{(x-1)^{2}}$, so $2x^{2}+3=A(x-1)^{2}+Bx(x-1)+Cx$. Setting $x=0$: $A=3$; setting $x=1$: $C=5$; equating $x^{2}$ coefficients: $A+B=2$, so $B=-1$. Then $\\int=3\\ln|x|-\\ln|x-1|-\\frac{5}{x-1}+C$."
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int\\frac{x^{2}+2}{x(x+1)^{2}}\\,dx$ for $x>0$.",
+    "options": [
+     "2\\ln|x|-\\ln|x+1|+\\frac{3}{x+1}+C",
+     "2\\ln|x|-\\ln|x+1|-\\frac{3}{x+1}+C",
+     "2\\ln|x|+\\ln|x+1|+\\frac{3}{x+1}+C",
+     "2\\ln|x|-\\ln|x+1|+3\\ln|x+1|+C"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "$A=2$, $C=-3$, $B=-1$.",
+    "option_explanations": [
+     "Correct: $\\frac2x-\\frac1{x+1}-\\frac3{(x+1)^2}$.",
+     "sign error on the last term.",
+     "sign error on $B$.",
+     "log rule on the squared term."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Find $\\int\\frac{x^{2}+x+4}{x(x-2)^{2}}\\,dx$ for $x>2$.",
+    "options": [
+     "\\ln|x|+\\frac{5}{x-2}+C",
+     "\\ln|x|+5\\ln|x-2|+C",
+     "\\ln|x|-\\frac{5}{x-2}+C",
+     "\\ln|x|-\\frac{5}{(x-2)^{2}}+C"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "$A=1$, $C=5$, and $B=0$.",
+    "option_explanations": [
+     "sign error.",
+     "log rule on a squared term.",
+     "Correct: $\\frac1x+\\frac5{(x-2)^2}$ ($B=0$).",
+     "forgets to lower the power on integrating."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Factor $2x^{3}-x^{2}+2x-1$ by grouping.",
+   "options": [
+    "$(2x+1)(x^{2}+1)$",
+    "$(2x-1)(x^{2}+1)$",
+    "$(2x-1)(x^{2}-1)$",
+    "$(x-1)(2x^{2}+x)$"
+   ],
+   "correct": [
+    1
+   ],
+   "explanation": "Group as $x^{2}(2x-1)+(2x-1)$.",
+   "option_explanations": [
+    "sign error in the first factor.",
+    "Correct: $x^2(2x-1)+(2x-1)$.",
+    "sign error in the second factor.",
+    "does not expand back."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Which factorization of $5x^{3}+x^{2}+5x+1$ is correct?",
+    "options": [
+     "$(5x-1)(x^{2}+1)$",
+     "$(5x+1)(x^{2}+1)$",
+     "$(5x+1)(x^{2}-1)$",
+     "$(x+1)(5x^{2}+1)$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Group the first two and the last two terms.",
+    "option_explanations": [
+     "wrong sign.",
+     "Correct: $x^2(5x+1)+(5x+1)$.",
+     "wrong sign in the quadratic.",
+     "does not expand back."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Factor $3x^{3}+2x^{2}+3x+2$.",
+    "options": [
+     "$(3x-2)(x^{2}+1)$",
+     "$(3x+2)(x^{2}+3)$",
+     "$(x+1)(3x^{2}+2)$",
+     "$(3x+2)(x^{2}+1)$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "Common factor $3x+2$.",
+    "option_explanations": [
+     "wrong sign.",
+     "wrong second factor.",
+     "does not expand back.",
+     "Correct: $x^2(3x+2)+(3x+2)$."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "basic",
+   "question": "Evaluate $\\int\\frac{3x}{(x-1)(x^{2}+6)}\\,dx$.",
+   "answer": "Write $\\frac{3x}{(x-1)(x^{2}+6)}=\\frac A{x-1}+\\frac{Bx+C}{x^{2}+6}$, so $3x=A(x^{2}+6)+(Bx+C)(x-1)$. Setting $x=1$: $A=\\frac37$. Equating $x^{2}$ coefficients: $A+B=0$, $B=-\\frac37$; constants: $6A-C=0$, $C=\\frac{18}{7}$. Then $\\int=\\frac37\\ln|x-1|-\\frac3{14}\\ln(x^{2}+6)+\\frac{3\\sqrt6}{7}\\tan^{-1}\\frac{x}{\\sqrt6}+C$."
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int\\frac{x+5}{(x-1)(x^{2}+4)}\\,dx$ for $x>1$.",
+    "options": [
+     "\\frac65\\ln|x-1|-\\frac35\\ln(x^{2}+4)-\\frac1{10}\\tan^{-1}\\frac x2+C",
+     "\\frac65\\ln|x-1|-\\frac35\\ln(x^{2}+4)-\\frac15\\tan^{-1}\\frac x2+C",
+     "\\frac65\\ln|x-1|-\\frac65\\ln(x^{2}+4)-\\frac1{10}\\tan^{-1}\\frac x2+C",
+     "\\frac65\\ln|x-1|+\\frac35\\ln(x^{2}+4)+\\frac1{10}\\tan^{-1}\\frac x2+C"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "$A=\\frac65$, $B=-\\frac65$, $C=-\\frac15$.",
+    "option_explanations": [
+     "Correct: $\\frac{6/5}{x-1}+\\frac{-\\frac65x-\\frac15}{x^2+4}$.",
+     "forgets the $\\frac12$ from $\\frac1a$.",
+     "forgets the $\\frac12$ in $\\int\\frac{2x}{x^2+4}$.",
+     "wrong signs for $B$ and $C$."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Find $\\int\\frac{4x}{(x+1)(x^{2}+1)}\\,dx$ for $x>0$.",
+    "options": [
+     "-2\\ln|x+1|+2\\ln(x^{2}+1)+C",
+     "2\\ln|x+1|+\\ln(x^{2}+1)+2\\tan^{-1}x+C",
+     "-2\\ln|x+1|+\\ln(x^{2}+1)+2\\tan^{-1}x+C",
+     "-2\\ln|x+1|+\\ln(x^{2}+1)+\\tan^{-1}x+C"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "$4x=A(x^{2}+1)+(Bx+C)(x+1)$.",
+    "option_explanations": [
+     "drops the arctangent term.",
+     "sign error on $A$.",
+     "Correct: $A=-2$, $B=C=2$.",
+     "halves $C$."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Evaluate $\\int\\frac{4x+6}{x^{2}+9}\\,dx$.",
+   "options": [
+    "4\\ln(x^{2}+9)+2\\tan^{-1}\\frac x3+C",
+    "2\\ln(x^{2}+9)+6\\tan^{-1}\\frac x3+C",
+    "2\\ln(x^{2}+9)+\\frac23\\tan^{-1}\\frac x3+C",
+    "2\\ln(x^{2}+9)+2\\tan^{-1}\\frac x3+C"
+   ],
+   "correct": [
+    3
+   ],
+   "explanation": "Split off the derivative of $x^{2}+9$.",
+   "option_explanations": [
+    "forgets that $\\frac{2x}{x^2+9}$ needs a $2$ from $4x$.",
+    "forgets $\\frac1a$.",
+    "divides $6$ by $9$.",
+    "Correct: $2\\int\\frac{2x}{x^2+9}+6\\cdot\\frac13\\tan^{-1}\\frac x3$."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Find $\\int\\frac{6x+10}{x^{2}+25}\\,dx$.",
+    "options": [
+     "3\\ln(x^{2}+25)+2\\tan^{-1}\\frac x5+C",
+     "6\\ln(x^{2}+25)+10\\tan^{-1}\\frac x5+C",
+     "3\\ln(x^{2}+25)+10\\tan^{-1}\\frac x5+C",
+     "3\\ln(x^{2}+25)+\\frac{2}{5}\\tan^{-1}\\frac x5+C"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Log part from $6x$, arctangent part from $10$.",
+    "option_explanations": [
+     "Correct: $3\\int\\frac{2x}{x^2+25}+10\\cdot\\frac15\\tan^{-1}\\frac x5$.",
+     "misses the $2$ in the logarithm and forgets $\\frac1a$.",
+     "forgets $\\frac1a$.",
+     "divides by 25."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which is $\\int\\frac{2x+12}{x^{2}+36}\\,dx$?",
+    "options": [
+     "\\ln(x^{2}+36)+12\\tan^{-1}\\frac x6+C",
+     "2\\ln(x^{2}+36)+2\\tan^{-1}\\frac x6+C",
+     "\\ln(x^{2}+36)+2\\tan^{-1}\\frac x6+C",
+     "\\ln(x^{2}+36)+\\frac13\\tan^{-1}\\frac x6+C"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "$\\frac{2x}{x^{2}+36}$ integrates to $\\ln(x^{2}+36)$.",
+    "option_explanations": [
+     "forgets $\\frac1a$.",
+     "doubles the log.",
+     "Correct: $12\\cdot\\frac16=2$.",
+     "divides 12 by 36."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Dividing $2x^{3}+x^{2}-5x+3$ by $x^{2}-1$ gives",
+   "options": [
+    "quotient $2x+1$, remainder $-5x+3$",
+    "quotient $2x+1$, remainder $-3x+4$",
+    "quotient $2x-1$, remainder $-3x+4$",
+    "quotient $2x$, remainder $x^{2}-3x+3$"
+   ],
+   "correct": [
+    1
+   ],
+   "explanation": "Subtract $(2x+1)(x^{2}-1)$ from the numerator.",
+   "option_explanations": [
+    "does not subtract the product.",
+    "Correct: $(2x+1)(x^2-1)=2x^3+x^2-2x-1$.",
+    "sign error in the quotient.",
+    "stops after one step."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "The long division $(x^{4}+x^{2}+2)\\div(x^{2}+2)$ gives",
+    "options": [
+     "quotient $x^{2}-1$, remainder $2$",
+     "quotient $x^{2}-1$, remainder $4$",
+     "quotient $x^{2}+1$, remainder $4$",
+     "quotient $x^{2}$, remainder $2$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Remainder $=x^{4}+x^{2}+2-(x^{4}+x^{2}-2)=4$.",
+    "option_explanations": [
+     "wrong remainder.",
+     "Correct: $(x^2-1)(x^2+2)=x^4+x^2-2$.",
+     "wrong quotient.",
+     "ignores the $x^2$ term."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Dividing $x^{3}+4x-1$ by $x^{2}-x+1$, the quotient and remainder are",
+    "options": [
+     "$x+1$ and $4x-1$",
+     "$x-1$ and $4x-2$",
+     "$x$ and $x^{2}+3x-1$",
+     "$x+1$ and $4x-2$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "Remainder: $x^{3}+4x-1-(x^{3}+1)=4x-2$.",
+    "option_explanations": [
+     "subtracts $x^3$ only.",
+     "wrong quotient.",
+     "stops early.",
+     "Correct: $(x+1)(x^2-x+1)=x^3+1$."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "basic",
+   "question": "Evaluate $\\int\\frac{2x^{3}-x^{2}-4x+5}{x^{2}-x-2}\\,dx$.",
+   "answer": "Long division: $2x^{3}-x^{2}-4x+5=(2x+1)(x^{2}-x-2)+(x+7)$. So the integrand is $2x+1+\\frac{x+7}{(x-2)(x+1)}$. Write $\\frac{x+7}{(x-2)(x+1)}=\\frac{A}{x-2}+\\frac B{x+1}$: $x=2$ gives $A=3$; $x=-1$ gives $B=-2$. Hence $\\int=x^{2}+x+3\\ln|x-2|-2\\ln|x+1|+C$."
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int\\frac{x^{3}+2x}{x^{2}-1}\\,dx$ for $x>1$.",
+    "options": [
+     "\\frac{x^{2}}{2}+\\frac32\\ln|x^{2}-1|+C",
+     "\\frac{x^{2}}{2}+3\\ln|x^{2}-1|+C",
+     "\\frac{x^{2}}{2}-\\frac32\\ln|x^{2}-1|+C",
+     "\\frac{x^{4}}{4}+\\frac32\\ln|x^{2}-1|+C"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Divide first: quotient $x$, remainder $3x$.",
+    "option_explanations": [
+     "Correct: $x+\\frac{3x}{x^2-1}$ and $\\frac{3x}{x^2-1}=\\frac{3/2}{x-1}+\\frac{3/2}{x+1}$.",
+     "forgets the $\\frac12$.",
+     "sign error.",
+     "integrates the numerator termwise."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Find $\\int\\frac{x^{2}+3x+1}{x^{2}+x}\\,dx$ for $x>0$.",
+    "options": [
+     "x+\\ln|x|-2\\ln|x+1|+C",
+     "x+2\\ln|x|+\\ln|x+1|+C",
+     "x+\\ln|x|+\\ln|x+1|+C",
+     "\\frac{x^{2}}{2}+\\ln|x|+\\ln|x+1|+C"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Quotient $1$, remainder $2x+1$.",
+    "option_explanations": [
+     "wrong sign and size of $B$.",
+     "wrong $A$.",
+     "Correct: $1+\\frac{2x+1}{x(x+1)}=1+\\frac1x+\\frac1{x+1}$.",
+     "integrates the quotient $1$ as $\\frac{x^{2}}{2}$."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Which is the integrand $\\frac{x^{2}+3}{x^{2}-1}$ rewritten before partial fractions?",
+   "options": [
+    "$1+\\dfrac{3}{x^{2}-1}$",
+    "$1+\\dfrac{2}{x^{2}-1}$",
+    "$x+\\dfrac{4}{x^{2}-1}$",
+    "$1+\\dfrac{4}{x^{2}-1}$"
+   ],
+   "correct": [
+    3
+   ],
+   "explanation": "$x^{2}+3=(x^{2}-1)+4$.",
+   "option_explanations": [
+    "uses $3$ as the remainder.",
+    "wrong remainder.",
+    "wrong quotient.",
+    "Correct: quotient $1$, remainder $4$."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "After division, $\\frac{x^{3}+3}{x^{2}+1}$ equals",
+    "options": [
+     "$x+\\dfrac{3-x}{x^{2}+1}$",
+     "$x+\\dfrac{3+x^{2}}{x^{2}+1}$",
+     "$x+1+\\dfrac{2-x}{x^{2}+1}$",
+     "$x^{2}+\\dfrac{3-x}{x^{2}+1}$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Subtract $x(x^{2}+1)$ from the numerator.",
+    "option_explanations": [
+     "Correct: $x^3+3=x(x^2+1)+(3-x)$.",
+     "the division is not finished: $x^{2}$ stays in the numerator.",
+     "adds a spurious 1 to the quotient.",
+     "wrong quotient."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which expression equals $\\frac{x^{3}+4x-1}{x^{2}-x+1}$?",
+    "options": [
+     "$x+1+\\dfrac{4x-1}{x^{2}-x+1}$",
+     "$x-1+\\dfrac{4x-2}{x^{2}-x+1}$",
+     "$x+1+\\dfrac{4x-2}{x^{2}-x+1}$",
+     "$x+\\dfrac{4x-1}{x^{2}-x+1}$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Quotient $x+1$, remainder $4x-2$.",
+    "option_explanations": [
+     "wrong remainder.",
+     "wrong quotient.",
+     "Correct: from the long division.",
+     "incomplete division."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "In $\\frac{x^{2}+3}{(x-2)(x^{2}+1)}=\\frac{A}{x-2}+\\frac{Bx+C}{x^{2}+1}$, the value of $A$ is",
+   "options": [
+    "$\\frac57$",
+    "$\\frac75$",
+    "$7$",
+    "$\\frac{3}{5}$"
+   ],
+   "correct": [
+    1
+   ],
+   "explanation": "Cover $x-2$ and put $x=2$ in the rest.",
+   "option_explanations": [
+    "inverted fraction.",
+    "Correct: set $x=2$: $A=\\frac{7}{5}$.",
+    "forgets to divide by $x^2+1=5$.",
+    "uses the constant 3 instead of $x^2+3$."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "For $\\frac{2x^{2}-x+1}{(x+1)(x^{2}+4)}=\\frac{A}{x+1}+\\frac{Bx+C}{x^{2}+4}$, what is $A$?",
+    "options": [
+     "$\\frac{5}{4}$",
+     "$\\frac45$",
+     "$-\\frac45$",
+     "$\\frac{2}{5}$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Substitute $x=-1$ after covering $x+1$.",
+    "option_explanations": [
+     "inverted.",
+     "Correct: $x=-1$: $\\frac{2+1+1}{1+4}$.",
+     "wrong sign: puts $x=1$ in the numerator sign.",
+     "drops the $-x$ and $+1$ contributions."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Given $\\frac{3x+2}{(x-1)(x^{2}+2)}=\\frac{A}{x-1}+\\frac{Bx+C}{x^{2}+2}$, find $A$.",
+    "options": [
+     "$\\frac35$",
+     "$5$",
+     "$\\frac{2}{3}$",
+     "$\\frac53$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "$A=\\frac{3(1)+2}{1+2}$.",
+    "option_explanations": [
+     "inverted.",
+     "forgets $x^2+2=3$.",
+     "uses only the constant term 2.",
+     "Correct: $x=1$: $\\frac{5}{3}$."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "For $x+5=A(x^{2}+4)+(Bx+C)(x-1)$, comparing coefficients of $x$ gives",
+   "options": [
+    "$C-B=1$",
+    "$B+C=1$",
+    "$B-C=1$",
+    "$A+C=1$"
+   ],
+   "correct": [
+    0
+   ],
+   "explanation": "Expand $(Bx+C)(x-1)=Bx^{2}+(C-B)x-C$.",
+   "option_explanations": [
+    "Correct: $(Bx+C)(x-1)$ contributes $-B+C$ to $x$; $A(x^2+4)$ contributes none.",
+    "sign error on $-Bx$.",
+    "sign error on $Cx$.",
+    "mixes in $A$, which has no $x$ term."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "If $3x-1=A(x^{2}+1)+(Bx+C)(x+2)$, the $x$-coefficients give",
+    "options": [
+     "$B+2C=3$",
+     "$2B+C=-1$",
+     "$2B+C=3$",
+     "$A+2B=3$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Expand the product and read the $x$ term.",
+    "option_explanations": [
+     "swaps the roles of $B$ and $C$.",
+     "uses the constant instead.",
+     "Correct: $(Bx+C)(x+2)=Bx^2+(2B+C)x+2C$.",
+     "includes $A$, which has no $x$ term."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "From $x^{2}-x+2=A(x^{2}+1)+(Bx+C)(x-1)$, comparing constant terms gives",
+    "options": [
+     "$A+C=2$",
+     "$A-B=2$",
+     "$A-C=-1$",
+     "$A-C=2$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "The constant term of $(Bx+C)(x-1)$ is $-C$.",
+    "option_explanations": [
+     "sign error on $-C$.",
+     "uses $B$ instead of $C$.",
+     "uses the $x$ coefficient.",
+     "Correct: constants: $A\\cdot1+C\\cdot(-1)$."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Which denominator factor needs a numerator of the form $Bx+C$ in its partial fraction?",
+   "options": [
+    "$x^{2}+1$",
+    "$x^{2}-2x-3$",
+    "$x^{2}-4x+4$",
+    "$x^{2}-5x+6$"
+   ],
+   "correct": [
+    0
+   ],
+   "explanation": "Only an irreducible quadratic needs a linear numerator.",
+   "option_explanations": [
+    "Correct: irreducible quadratic.",
+    "factors as $(x-3)(x+1)$.",
+    "equals $(x-2)^2$.",
+    "factors as $(x-2)(x-3)$."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Pick the factor that stays as a quadratic with numerator $Bx+C$.",
+    "options": [
+     "$x^{2}-9$",
+     "$x^{2}+2x+1$",
+     "$x^{2}+x+1$",
+     "$x^{2}-x-6$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Check $b^{2}-4ac<0$.",
+    "option_explanations": [
+     "factors as $(x-3)(x+3)$.",
+     "equals $(x+1)^2$.",
+     "Correct: discriminant $-3<0$.",
+     "factors as $(x-3)(x+2)$."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which factor yields a term $\\frac{Bx+C}{\\cdot}$?",
+    "options": [
+     "$x^{2}-3x-4$",
+     "$x^{2}+4$",
+     "$x^{2}-6x+9$",
+     "$x^{2}-3x+2$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "It has no real roots.",
+    "option_explanations": [
+     "factors as $(x-4)(x+1)$.",
+     "Correct: discriminant $-16<0$.",
+     "equals $(x-3)^2$.",
+     "factors as $(x-1)(x-2)$."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "The partial fraction decomposition of $\\frac{x+7}{(x-1)(x+3)}$ is",
+   "options": [
+    "$\\dfrac{2}{x-1}+\\dfrac{1}{x+3}$",
+    "$\\dfrac{2}{x-1}-\\dfrac{1}{x+3}$",
+    "$\\dfrac{1}{x-1}+\\dfrac{2}{x+3}$",
+    "$\\dfrac{-2}{x-1}+\\dfrac{1}{x+3}$"
+   ],
+   "correct": [
+    1
+   ],
+   "explanation": "$x=1$ gives $A=2$; $x=-3$ gives $B=-1$.",
+   "option_explanations": [
+    "sign error on $B$.",
+    "Correct: $A=2$, $B=-1$.",
+    "swapped constants.",
+    "both signs reversed."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Decompose $\\frac{4x-1}{x(x-1)}$.",
+    "options": [
+     "$\\dfrac3x+\\dfrac1{x-1}$",
+     "$-\\dfrac1x+\\dfrac3{x-1}$",
+     "$\\dfrac1x-\\dfrac3{x-1}$",
+     "$\\dfrac1x+\\dfrac3{x-1}$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "$x=0$ gives $A=1$; $x=1$ gives $B=3$.",
+    "option_explanations": [
+     "swapped constants.",
+     "sign error on $A$.",
+     "sign error on $B$.",
+     "Correct: $A=1$, $B=3$."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which equals $\\frac{7x-1}{(x-1)(x+2)}$?",
+    "options": [
+     "$\\dfrac{2}{x-1}+\\dfrac{5}{x+2}$",
+     "$\\dfrac{5}{x-1}+\\dfrac{2}{x+2}$",
+     "$\\dfrac{2}{x-1}-\\dfrac{5}{x+2}$",
+     "$\\dfrac{3}{x-1}+\\dfrac{4}{x+2}$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "$x=1$ gives $A=2$; $x=-2$ gives $B=5$.",
+    "option_explanations": [
+     "Correct: $A=2$, $B=5$.",
+     "swapped constants.",
+     "sign error.",
+     "constants sum to 7 but fail at $x=1$."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Evaluate $\\int_{2}^{3}\\frac{dx}{x^{2}-1}$.",
+   "options": [
+    "$\\ln\\frac32$",
+    "$\\ln\\frac23$",
+    "$\\frac12\\ln\\frac32$",
+    "$\\frac12\\ln 2$"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "Use $\\frac1{x^2-1}=\\frac12\\left(\\frac1{x-1}-\\frac1{x+1}\\right)$.",
+   "option_explanations": [
+    "forgets the $\\frac12$.",
+    "forgets the $\\frac12$ and inverts the ratio.",
+    "Correct: $\\frac12\\ln\\left|\\frac{x-1}{x+1}\\right|$ from 2 to 3: $\\frac12(\\ln\\frac12-\\ln\\frac13)$.",
+    "evaluates only part of the endpoints."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Compute $\\int_{3}^{5}\\frac{dx}{x^{2}-x-2}$.",
+    "options": [
+     "$\\frac13\\ln\\frac52$",
+     "$\\frac13\\ln\\frac12$",
+     "$\\frac13\\ln\\frac{3}{2}$",
+     "$\\frac13\\ln2$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "$\\frac1{(x-2)(x+1)}=\\frac13\\left(\\frac1{x-2}-\\frac1{x+1}\\right)$.",
+    "option_explanations": [
+     "takes the ratio of the endpoints instead of evaluating the logarithm.",
+     "inverts the ratio.",
+     "arithmetic slip in endpoint values.",
+     "Correct: $\\frac13\\ln\\left|\\frac{x-2}{x+1}\\right|$ from 3 to 5: $\\frac13(\\ln\\frac12-\\ln\\frac14)$."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "What is $\\int_{4}^{6}\\frac{dx}{x^{2}-9}$?",
+    "options": [
+     "$\\frac16\\ln\\frac73$",
+     "$\\frac13\\ln\\frac73$",
+     "$\\frac16\\ln\\frac37$",
+     "$\\frac16\\ln\\frac{2}{1}$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Partial fractions with $\\frac{1}{6}$.",
+    "option_explanations": [
+     "Correct: $\\frac16\\ln\\left|\\frac{x-3}{x+3}\\right|$ from 4 to 6: $\\frac16(\\ln\\frac13-\\ln\\frac17)$.",
+     "uses $\\frac13$ instead of $\\frac1{2a}=\\frac16$.",
+     "inverts the ratio.",
+     "uses wrong endpoint values."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Why may we substitute a root of the denominator, such as $x=1$, into $3x=A(x^{2}+6)+(Bx+C)(x-1)$?",
+   "options": [
+    "Each root makes the original fraction zero",
+    "The remaining terms are always constants",
+    "The equation holds identically, for every real $x$",
+    "Roots are the only values the equation is true for"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "Clearing denominators gives a polynomial identity.",
+   "option_explanations": [
+    "the fraction is undefined there.",
+    "they are not.",
+    "Correct: it is an identity.",
+    "it is true for all $x$."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "The cleared-denominator equation in partial fractions can be tested at any $x$ because",
+    "options": [
+     "the denominators vanish there",
+     "both sides are the same polynomial",
+     "only roots give valid equations",
+     "the constants adjust to each $x$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "It is an identity, not a condition on $x$.",
+    "option_explanations": [
+     "they do not matter after clearing.",
+     "Correct: a polynomial identity.",
+     "any value does.",
+     "the constants are fixed."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Putting $x=-2$ in an equation obtained by clearing denominators is legitimate since",
+    "options": [
+     "$-2$ must be a root of the numerator",
+     "it is true for all values of $x$",
+     "the fractions are defined at $x=-2$",
+     "the equation only has a few solutions"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "The equation is an identity.",
+    "option_explanations": [
+     "no such requirement.",
+     "Correct: an identity.",
+     "not needed after clearing.",
+     "it has infinitely many."
+    ]
+   }
+  ]
+ }
+]

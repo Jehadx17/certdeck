@@ -1,0 +1,3214 @@
+[
+  {
+    "original": {
+      "type": "mcq",
+      "question": "What is printed?\n\n```java\nclass Circle {\n  double radius;\n  Circle() { radius = 1.0; }\n  Circle(double r) { radius = r; }\n}\npublic class Main {\n  public static void main(String[] args) {\n    Circle c1 = new Circle();\n    Circle c2 = new Circle(5);\n    c1.radius = 3;\n    System.out.println(c1.radius + \" \" + c2.radius);\n  }\n}\n```",
+      "options": [
+        "3.0 3.0",
+        "3.0 5.0",
+        "1.0 5.0",
+        "3.0 1.0"
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": "An instance variable belongs to one object, so changing it in one object never affects another object of the same class.",
+      "option_explanations": [
+        "Treats radius as shared, as if it were static.",
+        "Correct: c1 and c2 each have their own radius; only c1's radius was changed.",
+        "Forgets the assignment c1.radius = 3 changed c1.",
+        "Assumes c2 also fell back to the default radius."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "Two Box objects are created and fields are modified as shown. What is printed?\n\n```java\nclass Box {\n  int side;\n  Box(int s) { side = s; }\n}\npublic class Main {\n  public static void main(String[] args) {\n    Box a = new Box(4);\n    Box b = new Box(9);\n    b.side = a.side + 1;\n    a.side = 0;\n    System.out.println(a.side + \" \" + b.side);\n  }\n}\n```",
+        "options": [
+          "0 0",
+          "4 5",
+          "0 9",
+          "0 5"
+        ],
+        "correct": [
+          3
+        ],
+        "explanation": "An instance variable belongs to one object, so changing it in one object never affects another object of the same class.",
+        "option_explanations": [
+          "Assumes setting a.side also overwrote b.side.",
+          "Ignores the later assignment a.side = 0.",
+          "Ignores the assignment b.side = a.side + 1.",
+          "Correct: b.side was set to 4 + 1 = 5 before a.side was set to 0; the two fields are separate."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "What does this program print?\n\n```java\nclass Dog {\n  int age = 2;\n}\npublic class Main {\n  public static void main(String[] args) {\n    Dog d1 = new Dog();\n    Dog d2 = new Dog();\n    d1.age += 5;\n    d2.age++;\n    System.out.println(d1.age + \" \" + d2.age);\n  }\n}\n```",
+        "options": [
+          "7 3",
+          "7 8",
+          "8 8",
+          "2 2"
+        ],
+        "correct": [
+          0
+        ],
+        "explanation": "An instance variable belongs to one object, so changing it in one object never affects another object of the same class.",
+        "option_explanations": [
+          "Correct: d1.age is 2 + 5 = 7 and d2.age is 2 + 1 = 3, each in its own memory location.",
+          "Accumulates d2's increment onto d1's value, as if age were shared.",
+          "Treats age as one shared variable that ends at 8.",
+          "Thinks neither update took effect."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "What is printed?\n\n```java\nclass Circle {\n  double radius;\n  static int numberOfObjects = 0;\n  Circle(double r) { radius = r; numberOfObjects++; }\n}\npublic class Main {\n  public static void main(String[] args) {\n    Circle a = new Circle(1);\n    Circle b = new Circle(2);\n    Circle c = new Circle(3);\n    System.out.println(a.numberOfObjects + \" \" + Circle.numberOfObjects);\n  }\n}\n```",
+      "options": [
+        "1 3",
+        "0 3",
+        "3 3",
+        "3 0"
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": "A static variable has a single copy shared by all objects of the class, so every object (and the class name) sees the same value.",
+      "option_explanations": [
+        "Thinks an object reference shows only its own constructor call.",
+        "Thinks the counter is not changed through a object reference.",
+        "Correct: numberOfObjects is static: one shared counter incremented by all three constructors, and a.numberOfObjects is the same variable as Circle.numberOfObjects.",
+        "Thinks the class name shows a different value than an object."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "What does this program print?\n\n```java\nclass Ticket {\n  static int next = 100;\n  int id;\n  Ticket() { id = next; next += 5; }\n}\npublic class Main {\n  public static void main(String[] args) {\n    Ticket t1 = new Ticket();\n    Ticket t2 = new Ticket();\n    System.out.println(t1.id + \" \" + t2.id + \" \" + Ticket.next);\n  }\n}\n```",
+        "options": [
+          "100 100 105",
+          "105 110 110",
+          "100 105 110",
+          "100 105 105"
+        ],
+        "correct": [
+          2
+        ],
+        "explanation": "A static variable has a single copy shared by all objects of the class, so every object (and the class name) sees the same value.",
+        "option_explanations": [
+          "Thinks each Ticket starts again from its own copy of next.",
+          "Assigns the already-incremented value to each id.",
+          "Correct: next is shared: t1 takes 100 (next becomes 105), t2 takes 105 (next becomes 110).",
+          "Loses the second increment of next."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "What is printed?\n\n```java\nclass Counter {\n  static int total;\n  int mine;\n  void hit() { total++; mine++; }\n}\npublic class Main {\n  public static void main(String[] args) {\n    Counter x = new Counter();\n    Counter y = new Counter();\n    x.hit(); x.hit(); y.hit();\n    System.out.println(x.mine + \" \" + y.mine + \" \" + Counter.total);\n  }\n}\n```",
+        "options": [
+          "2 1 3",
+          "3 3 3",
+          "2 1 2",
+          "3 3 0"
+        ],
+        "correct": [
+          0
+        ],
+        "explanation": "A static variable has a single copy shared by all objects of the class, so every object (and the class name) sees the same value.",
+        "option_explanations": [
+          "Correct: mine is per object (x: 2, y: 1) while total is one shared variable that counted all 3 calls.",
+          "Treats both fields as static.",
+          "Misses one of the three hit() calls in the shared total.",
+          "Treats mine as shared and total as untouched."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "What happens when this code is compiled and run?\n\n```java\nclass Circle {\n  double radius = 1;\n  static double unit() { return radius * 2; }\n}\npublic class Main {\n  public static void main(String[] args) { System.out.println(Circle.unit()); }\n}\n```",
+      "options": [
+        "Prints 2.0",
+        "Prints 0.0",
+        "Runtime exception",
+        "Compile error"
+      ],
+      "correct": [
+        3
+      ],
+      "explanation": "A static method is not tied to any object, so it cannot use instance variables or this directly.",
+      "option_explanations": [
+        "Assumes the field's initial value 1 is used.",
+        "Assumes an unset field defaults to 0.",
+        "Thinks the problem only appears while running.",
+        "Correct: unit() is static but uses the instance variable radius, which needs an object."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "What happens with this code?\n\n```java\nclass Account {\n  int balance = 50;\n  static void show() { System.out.println(balance); }\n}\npublic class Main {\n  public static void main(String[] args) { Account.show(); }\n}\n```",
+        "options": [
+          "Prints 50",
+          "Compile error",
+          "Prints 0",
+          "Throws a NullPointerException"
+        ],
+        "correct": [
+          1
+        ],
+        "explanation": "A static method is not tied to any object, so it cannot use instance variables or this directly.",
+        "option_explanations": [
+          "Assumes the initializer value is visible to the static method.",
+          "Correct: show() is static, so it has no Account object whose balance it could read.",
+          "Assumes balance defaults to 0 without an object.",
+          "Expects a runtime failure because no object exists."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "What is the result of compiling and running this code?\n\n```java\nclass Util {\n  int base = 3;\n  static int twice() { return this.base * 2; }\n}\npublic class Main {\n  public static void main(String[] args) { System.out.println(Util.twice()); }\n}\n```",
+        "options": [
+          "Compile error",
+          "Prints 6",
+          "Prints 3",
+          "Prints 0"
+        ],
+        "correct": [
+          0
+        ],
+        "explanation": "A static method is not tied to any object, so it cannot use instance variables or this directly.",
+        "option_explanations": [
+          "Correct: A static method has no current object, so this cannot be used inside it.",
+          "Assumes this.base is read from a default object.",
+          "Assumes this.base simply returns the field value.",
+          "Assumes this gives a default object with zero values."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "What happens when this program is compiled?\n\n```java\npublic class Main {\n  void greet() { System.out.println(\"hi\"); }\n  public static void main(String[] args) {\n    greet();\n  }\n}\n```",
+      "options": [
+        "It prints hi",
+        "It prints nothing",
+        "Compile error",
+        "Runtime exception"
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": "main is static, so it can call only static members directly; instance members need an object reference.",
+      "option_explanations": [
+        "Assumes methods in the same class can always be called directly.",
+        "Assumes the call is silently skipped.",
+        "Correct: greet() is an instance method, and main has no object to call it on.",
+        "Thinks the missing object is only noticed at run time."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "What happens when this program is compiled?\n\n```java\npublic class Main {\n  int count = 0;\n  public static void main(String[] args) {\n    count++;\n    System.out.println(count);\n  }\n}\n```",
+        "options": [
+          "Prints 1",
+          "Compile error",
+          "Prints 0",
+          "Throws a NullPointerException"
+        ],
+        "correct": [
+          1
+        ],
+        "explanation": "main is static, so it can call only static members directly; instance members need an object reference.",
+        "option_explanations": [
+          "Assumes count++ works on the field directly.",
+          "Correct: count is an instance variable, but main is static and has no Main object.",
+          "Assumes the field stays at its default 0.",
+          "Expects the missing object to show up at run time."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "What is the result?\n\n```java\npublic class Main {\n  static int twice(int x) { return 2 * x; }\n  int thrice(int x) { return 3 * x; }\n  public static void main(String[] args) {\n    System.out.println(twice(4) + thrice(2));\n  }\n}\n```",
+        "options": [
+          "14",
+          "8",
+          "Runtime exception",
+          "Compile error"
+        ],
+        "correct": [
+          3
+        ],
+        "explanation": "main is static, so it can call only static members directly; instance members need an object reference.",
+        "option_explanations": [
+          "Adds 8 and 6 as if both calls were legal.",
+          "Counts only the static call.",
+          "Thinks the error is detected only when the call executes.",
+          "Correct: thrice is an instance method called from static main without an object; twice is fine."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "`MathBox` has `static int square(int x)` and an instance method `int cube(int x)`. Which statement, written in another class's main method, compiles?",
+      "options": [
+        "int r = MathBox.cube(3);",
+        "int r = square(3);",
+        "int r = MathBox.square(3);",
+        "int r = new MathBox.square(3);"
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": "Static methods are invoked through the class name without creating an object; instance methods need an object.",
+      "option_explanations": [
+        "cube is an instance method, so it needs an object, not the class name.",
+        "square is not in scope here without the class name.",
+        "Correct: square is static, so MathBox.square(3) needs no object.",
+        "new cannot be applied to a method call like this."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "A class `Util` declares `static int twice(int n)` and `int half(int n)`. Which call compiles inside `main` of a different class?",
+        "options": [
+          "Util.twice(8)",
+          "Util.half(8)",
+          "twice(8)",
+          "new Util.twice(8)"
+        ],
+        "correct": [
+          0
+        ],
+        "explanation": "Static methods are invoked through the class name without creating an object; instance methods need an object.",
+        "option_explanations": [
+          "Correct: twice is static, so it is called with the class name.",
+          "half needs an Util object.",
+          "twice is not visible by its simple name in another class.",
+          "new does not create anything when followed by a method name."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "Which one of these lines can run without first creating a `Gadget` object, if `Gadget` has `static void reset()` and `void use()`?",
+        "options": [
+          "Gadget.use();",
+          "use();",
+          "Gadget.reset;",
+          "Gadget.reset();"
+        ],
+        "correct": [
+          3
+        ],
+        "explanation": "Static methods are invoked through the class name without creating an object; instance methods need an object.",
+        "option_explanations": [
+          "use is an instance method.",
+          "use is not visible by its simple name from another class.",
+          "A method call needs parentheses.",
+          "Correct: reset is static, so the class name is enough."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "Which declaration defines a class constant shared by all objects of the class?",
+      "options": [
+        "static double RATE = 0.05;",
+        "final static double RATE = 0.05;",
+        "final double RATE = 0.05;",
+        "private double RATE = 0.05;"
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": "Constants in a class are shared by all objects, so they are declared final static.",
+      "option_explanations": [
+        "static alone is a shared variable that can still be changed.",
+        "Correct: final makes the value fixed and static makes it one copy for the whole class.",
+        "final alone makes a separate constant inside every object.",
+        "private alone is an ordinary instance variable that can change."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "Math.PI is a constant of the Math class. Which modifier combination fits a constant like it?",
+        "options": [
+          "static only",
+          "final only",
+          "public only",
+          "static and final"
+        ],
+        "correct": [
+          3
+        ],
+        "explanation": "Constants in a class are shared by all objects, so they are declared final static.",
+        "option_explanations": [
+          "It would be shared but changeable.",
+          "It would be fixed but one copy per object.",
+          "Visibility says nothing about sharing or fixing the value.",
+          "Correct: static shares it among all instances and final stops it from being changed."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "Which field declaration is the best way to declare the constant `MAX_SIZE = 100` for a class?",
+        "options": [
+          "final int MAX_SIZE = 100;",
+          "static int MAX_SIZE = 100;",
+          "static final int MAX_SIZE = 100;",
+          "int MAX_SIZE = 100;"
+        ],
+        "correct": [
+          2
+        ],
+        "explanation": "Constants in a class are shared by all objects, so they are declared final static.",
+        "option_explanations": [
+          "Every object would hold its own copy.",
+          "The value could be reassigned.",
+          "Correct: Using static final gives one unchangeable copy for the whole class.",
+          "It is an ordinary changeable instance variable."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "Which statement about static variables is correct?",
+      "options": [
+        "All objects read and write one copy",
+        "Every object keeps its own separate copy",
+        "A copy exists only after the first method call",
+        "Each object may hold a different value at the same time"
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": "Instance variables belong to one specific object; static variables are shared by all instances of the class.",
+      "option_explanations": [
+        "Correct: A static variable lives in one common memory location.",
+        "That describes an instance variable.",
+        "Static variables exist for the class regardless of method calls.",
+        "Different values per object is the instance-variable behavior."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "In which situation is an instance variable the right choice?",
+        "options": [
+          "All objects must count shared totals together",
+          "A value must be read without creating any object",
+          "Each object needs its own value",
+          "One constant is used by every object"
+        ],
+        "correct": [
+          2
+        ],
+        "explanation": "Instance variables belong to one specific object; static variables are shared by all instances of the class.",
+        "option_explanations": [
+          "A shared total needs a static variable.",
+          "Using a field without any object requires static.",
+          "Correct: Instance variables hold per-object state stored in a different memory location for each object.",
+          "A shared constant is declared final static."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "Which pair correctly matches the member kind with how it is used?",
+        "options": [
+          "Instance method: called on the class name; static method: needs an object",
+          "Both kinds must be called on an object",
+          "Both kinds are called on the class name only",
+          "Instance method: called on an object; static method: not tied to an instance"
+        ],
+        "correct": [
+          3
+        ],
+        "explanation": "Instance variables belong to one specific object; static variables are shared by all instances of the class.",
+        "option_explanations": [
+          "The two kinds are swapped.",
+          "Static methods do not need an object.",
+          "Instance methods do need an object.",
+          "Correct: Instance methods are invoked by an instance, static methods are not tied to a specific instance."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "What happens when this code is compiled?\n\n```java\npublic class Main {\n  public static void main(String[] args) {\n    final double PI = 3.14;\n    PI = 3.14159;\n    System.out.println(PI);\n  }\n}\n```",
+      "options": [
+        "Prints 3.14159",
+        "Prints 3.14",
+        "Runtime exception",
+        "Compile error"
+      ],
+      "correct": [
+        3
+      ],
+      "explanation": "A final variable is a constant: it can be assigned once and any later assignment is a compile error.",
+      "option_explanations": [
+        "Assumes the newer value replaces the old one.",
+        "Assumes the second assignment is ignored.",
+        "Assumes the check happens only when running.",
+        "Correct: PI is final, so the second assignment is rejected."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "What happens when this program is compiled and run?\n\n```java\nclass Circle {\n  static final double PI = 3.14159;\n}\npublic class Main {\n  public static void main(String[] args) {\n    System.out.println(Circle.PI);\n    Circle.PI = 3;\n  }\n}\n```",
+        "options": [
+          "Prints 3.14159 and then ends normally",
+          "Compile error",
+          "Prints 3.14159 and then throws an exception",
+          "Prints 3.0"
+        ],
+        "correct": [
+          1
+        ],
+        "explanation": "A final variable is a constant: it can be assigned once and any later assignment is a compile error.",
+        "option_explanations": [
+          "Assumes a static field can always be reassigned.",
+          "Correct: PI is static final, so `Circle.PI = 3;` does not compile.",
+          "Thinks the assignment fails only at run time.",
+          "Assumes the new value 3 is printed."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "What is the outcome of this code?\n\n```java\npublic class Main {\n  public static void main(String[] args) {\n    final int MAX = 10;\n    MAX++;\n    System.out.println(MAX);\n  }\n}\n```",
+        "options": [
+          "It prints 11",
+          "It prints 10",
+          "It does not compile",
+          "It throws an exception at run time"
+        ],
+        "correct": [
+          2
+        ],
+        "explanation": "A final variable is a constant: it can be assigned once and any later assignment is a compile error.",
+        "option_explanations": [
+          "Assumes the increment is allowed once.",
+          "Assumes the increment is silently ignored.",
+          "Correct: MAX++ is an assignment to a final variable.",
+          "Thinks final is enforced only at run time."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "basic",
+      "question": "Trace this program and write what it prints.\n\n```java\nclass Ticket {\n  private static int count = 0;\n  private int number;\n  Ticket() { count++; number = count * 10; }\n  int getNumber() { return number; }\n  static int getCount() { return count; }\n}\npublic class Main {\n  public static void main(String[] args) {\n    Ticket a = new Ticket();\n    Ticket b = new Ticket();\n    Ticket c = new Ticket();\n    System.out.println(a.getNumber());\n    System.out.println(c.getNumber());\n    System.out.println(Ticket.getCount());\n  }\n}\n```",
+      "answer": "10, 30, 3. Each constructor increments the shared static count (1, 2, 3) and sets number = count * 10 at that moment: a gets 10, b gets 20, c gets 30. getCount() reads the single shared count, which is 3."
+    },
+    "versions": [
+      {
+        "type": "basic",
+        "question": "Trace the program and give the three printed lines.\n\n```java\nclass Order {\n  private static int made = 0;\n  private int id;\n  Order() { made += 2; id = made; }\n  int getId() { return id; }\n  static int getMade() { return made; }\n}\npublic class Main {\n  public static void main(String[] args) {\n    Order a = new Order();\n    Order b = new Order();\n    System.out.println(a.getId());\n    System.out.println(b.getId());\n    System.out.println(Order.getMade());\n  }\n}\n```",
+        "answer": "2, 4, 4. made is shared: the first constructor sets it to 2 (a.id = 2), the second to 4 (b.id = 4). getMade() returns the shared 4."
+      },
+      {
+        "type": "basic",
+        "question": "A class `Seat` has a static field `taken` starting at 0 and an instance field `no`. The constructor does `taken++; no = taken;`. After `new Seat()` is executed four times with the objects saved in s1..s4, what are s1.no, s4.no and Seat.taken?",
+        "answer": "s1.no = 1, s4.no = 4, Seat.taken = 4. no is per object and captures the shared counter at construction time; taken is one shared variable."
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "A field is declared with no access modifier. Which classes can access it?",
+      "options": [
+        "Every class in every package",
+        "Every class in the same package",
+        "Only the declaring class",
+        "Only subclasses, wherever they are"
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": "With no modifier (default/package access), a member or class is visible to any class in the same package.",
+      "option_explanations": [
+        "That is public.",
+        "Correct: No modifier means package-private (default) access.",
+        "That is private.",
+        "That is closer to protected, and even then default also admits unrelated classes in the package."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "Which access level applies to a class member when you write no modifier at all?",
+        "options": [
+          "Package access",
+          "Public access",
+          "Private access",
+          "Protected access"
+        ],
+        "correct": [
+          0
+        ],
+        "explanation": "With no modifier (default/package access), a member or class is visible to any class in the same package.",
+        "option_explanations": [
+          "Correct: The default is visible within the same package only.",
+          "Public must be written explicitly.",
+          "Private must be written explicitly.",
+          "Protected must be written explicitly."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "`class Helper` (no modifier) is in package `util`. A class in package `app` tries to use it. What happens?",
+        "options": [
+          "It is accessible from package app as well",
+          "It works only if app's class is a subclass",
+          "It is not accessible from package app",
+          "It works but with a warning"
+        ],
+        "correct": [
+          2
+        ],
+        "explanation": "With no modifier (default/package access), a member or class is visible to any class in the same package.",
+        "option_explanations": [
+          "Without public, visibility ends at the package.",
+          "Package access does not extend to subclasses in other packages.",
+          "Correct: Default access restricts visibility to the declaring package.",
+          "Access errors are compile errors, not warnings."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "What happens when this code is compiled and run?\n\n```java\nclass Circle {\n  private double radius = 2;\n  double getRadius() { return radius; }\n}\npublic class Main {\n  public static void main(String[] args) {\n    Circle c = new Circle();\n    System.out.println(c.radius);\n  }\n}\n```",
+      "options": [
+        "Compile error",
+        "Prints 2.0",
+        "Prints 0.0",
+        "Runtime exception"
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": "A private member can be used only inside the class that declares it; other classes must use public accessor methods.",
+      "option_explanations": [
+        "Correct: radius is private to Circle, so Main cannot read it directly.",
+        "Assumes fields are readable from any class.",
+        "Assumes inaccessible fields read as default values.",
+        "Thinks access is checked only at run time."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "What happens with this program?\n\n```java\nclass Account {\n  private int pin = 1234;\n  private int secret() { return pin; }\n}\npublic class Main {\n  public static void main(String[] args) {\n    Account a = new Account();\n    System.out.println(a.secret());\n  }\n}\n```",
+        "options": [
+          "Prints 1234",
+          "Compile error",
+          "Prints 0",
+          "Throws an exception while running"
+        ],
+        "correct": [
+          1
+        ],
+        "explanation": "A private member can be used only inside the class that declares it; other classes must use public accessor methods.",
+        "option_explanations": [
+          "Assumes methods in another class are callable.",
+          "Correct: secret() is private in Account, so Main cannot call it.",
+          "Assumes the private value is hidden as 0.",
+          "Believes the restriction is a run-time check."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "What is printed?\n\n```java\nclass Account {\n  private int pin = 1234;\n  int getPin() { return pin; }\n}\npublic class Main {\n  public static void main(String[] args) {\n    Account a = new Account();\n    System.out.println(a.getPin());\n  }\n}\n```",
+        "options": [
+          "Nothing, it does not compile",
+          "0",
+          "An exception is thrown",
+          "1234"
+        ],
+        "correct": [
+          3
+        ],
+        "explanation": "A private member can be used only inside the class that declares it; other classes must use public accessor methods.",
+        "option_explanations": [
+          "Thinks reading a private field through a method is also blocked.",
+          "Thinks a private value is hidden as 0.",
+          "Assumes private data cannot be obtained.",
+          "Correct: pin is private, but getPin() has package access and returns it, so reading it through the method is legal."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "What happens when this code is compiled?\n\n```java\npublic class Main {\n  public static void main(String[] args) {\n    private int x = 5;\n    System.out.println(x);\n  }\n}\n```",
+      "options": [
+        "Compile error",
+        "Prints 5",
+        "Prints 0",
+        "Runtime exception"
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": "private applies only to class members; public and private on a local variable are errors, and a top-level class cannot be private.",
+      "option_explanations": [
+        "Correct: Visibility modifiers cannot be used on local variables.",
+        "Assumes modifiers are allowed anywhere.",
+        "Assumes the variable is just unusable.",
+        "Assumes this is detected only when running."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "What is the result of compiling this method?\n\n```java\npublic class Main {\n  static void f() {\n    public double rate = 0.5;\n    System.out.println(rate);\n  }\n  public static void main(String[] args) { f(); }\n}\n```",
+        "options": [
+          "It prints 0.5",
+          "It prints 0.0",
+          "Compile error",
+          "It throws an exception when called"
+        ],
+        "correct": [
+          2
+        ],
+        "explanation": "private applies only to class members; public and private on a local variable are errors, and a top-level class cannot be private.",
+        "option_explanations": [
+          "Assumes public is harmless on a local.",
+          "Assumes the local is not initialized.",
+          "Correct: public cannot modify a local variable.",
+          "Assumes the problem only occurs in f()'s execution."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "What happens when this file is compiled?\n\n```java\nprivate class Helper { }\npublic class Main {\n  public static void main(String[] args) { System.out.println(\"x\"); }\n}\n```",
+        "options": [
+          "It compiles and prints x",
+          "It compiles with a warning only",
+          "It does not compile",
+          "It compiles, but Helper cannot be used"
+        ],
+        "correct": [
+          2
+        ],
+        "explanation": "private applies only to class members; public and private on a local variable are errors, and a top-level class cannot be private.",
+        "option_explanations": [
+          "Assumes private is allowed on any declaration.",
+          "Java reports this as an error, not a warning.",
+          "Correct: a top-level class can be public or package-private; private is for members only, so the declaration is rejected.",
+          "The declaration itself is rejected, not only its later use."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "Consider the code. Class B can access ...\n\n```java\npackage p1;\npublic class A {\n  private int x;\n  protected int y;\n  int z;\n  public int ma2() { return 0; }\n}\n\npackage p2;\npublic class B extends A {\n  // code is not shown\n}\n```",
+      "options": [
+        "y and ma2()",
+        "All members of A",
+        "y, z and ma2()",
+        "ma2() alone"
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": "A subclass in another package can access the inherited public and protected members, but not default (package) or private members.",
+      "option_explanations": [
+        "Correct: y is protected and ma2() is public; x is private and z has package access, which stops at package p1.",
+        "Private x and package z are still hidden from B.",
+        "z has default access, so it cannot cross packages.",
+        "protected y is also available to a subclass."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "`class A` in package `p1` has `private int a; protected int b; int c; public int d()`. `class B extends A` is in package `p2`. Which members can B use?",
+        "options": [
+          "a, b and d()",
+          "b, c and d()",
+          "b and d()",
+          "d() only"
+        ],
+        "correct": [
+          2
+        ],
+        "explanation": "A subclass in another package can access the inherited public and protected members, but not default (package) or private members.",
+        "option_explanations": [
+          "a is private to A.",
+          "c is package-private and p2 is a different package.",
+          "Correct: protected and public members are accessible to subclasses in other packages.",
+          "b is protected and subclasses can use it."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "A class in another package extends `A`. A has the members `private int k`, `protected int m`, `int n` and `public int p`. Which of them are NOT accessible to the subclass?",
+        "options": [
+          "k and m",
+          "k and n",
+          "m and n",
+          "only k"
+        ],
+        "correct": [
+          1
+        ],
+        "explanation": "A subclass in another package can access the inherited public and protected members, but not default (package) or private members.",
+        "option_explanations": [
+          "m is protected, so it is available.",
+          "Correct: private k is hidden from everyone outside A, and default n is limited to p1.",
+          "m is available, so it is not in the blocked set.",
+          "n has package access and is blocked as well."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "Which access modifiers let a subclass in a different package use an inherited member?",
+      "options": [
+        "public, protected and default",
+        "public only",
+        "public, protected and private",
+        "public and protected"
+      ],
+      "correct": [
+        3
+      ],
+      "explanation": "Access grows from private (declaring class only) to default (same package) to protected (same package plus subclasses) to public (everywhere).",
+      "option_explanations": [
+        "Default access ends at the package border.",
+        "Protected also works for subclasses.",
+        "Private is never visible outside the class.",
+        "Correct: Protected extends package access to subclasses outside the package."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "Which is the only modifier that blocks an unrelated class in the same package?",
+        "options": [
+          "default",
+          "private",
+          "protected",
+          "public"
+        ],
+        "correct": [
+          1
+        ],
+        "explanation": "Access grows from private (declaring class only) to default (same package) to protected (same package plus subclasses) to public (everywhere).",
+        "option_explanations": [
+          "Default allows the same package.",
+          "Correct: Default, protected and public all allow classes in the same package; private is limited to the declaring class.",
+          "Protected includes the same package.",
+          "Public allows everyone."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "An unrelated class in another package (not a subclass) can use a member only if it is declared:",
+        "options": [
+          "protected",
+          "default",
+          "public",
+          "private"
+        ],
+        "correct": [
+          2
+        ],
+        "explanation": "Access grows from private (declaring class only) to default (same package) to protected (same package plus subclasses) to public (everywhere).",
+        "option_explanations": [
+          "Protected reaches subclasses, not unrelated classes.",
+          "Default is limited to its own package.",
+          "Correct: Only public reaches every package.",
+          "Private is limited to the declaring class."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "Why should data fields be declared private?",
+      "options": [
+        "To protect the data and ease maintenance",
+        "To make the fields faster to read",
+        "To let every subclass in any package change them",
+        "To avoid writing constructors"
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": "Declaring data fields private (data field encapsulation) protects the data from direct modification and makes the class easier to maintain.",
+      "option_explanations": [
+        "Correct: Clients go through public getters and setters, which can validate values.",
+        "Speed is not the purpose.",
+        "Opposite: private blocks direct changes from outside.",
+        "Constructors are still needed."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "A class keeps `radius` private and offers `setRadius`. What does that design achieve?",
+        "options": [
+          "The radius becomes a compile-time constant",
+          "Other classes can read radius without any method",
+          "Changes to radius pass through code that can check them",
+          "Radius is stored once for all objects"
+        ],
+        "correct": [
+          2
+        ],
+        "explanation": "Declaring data fields private (data field encapsulation) protects the data from direct modification and makes the class easier to maintain.",
+        "option_explanations": [
+          "That is final, not private.",
+          "Direct access is what private prevents.",
+          "Correct: Encapsulation lets the setter validate input before changing the field.",
+          "Sharing across objects is static."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "What is data field encapsulation?",
+        "options": [
+          "Making all fields static so objects share them",
+          "Making fields private, access via methods",
+          "Putting every field in a single array",
+          "Declaring fields without any modifier"
+        ],
+        "correct": [
+          1
+        ],
+        "explanation": "Declaring data fields private (data field encapsulation) protects the data from direct modification and makes the class easier to maintain.",
+        "option_explanations": [
+          "Static is about sharing, not hiding.",
+          "Correct: Fields are hidden and reached only through getters and setters.",
+          "Arrays have nothing to do with hiding fields.",
+          "No modifier gives package access, not hiding."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "Which is the correct getter for a private `double radius` field?",
+      "options": [
+        "public void getRadius()",
+        "public double getRadius(double radius)",
+        "public double radius()",
+        "public double getRadius()"
+      ],
+      "correct": [
+        3
+      ],
+      "explanation": "A getter has the form public returnType getPropertyName(); a boolean getter is public boolean isPropertyName().",
+      "option_explanations": [
+        "void would return nothing.",
+        "A getter takes no parameters.",
+        "The name should begin with get.",
+        "Correct: A getter returns the field's type and takes no parameters."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "A class has `private boolean full;`. Which accessor follows the lecture's convention?",
+        "options": [
+          "public boolean getFull()",
+          "public boolean isFull()",
+          "public void isFull()",
+          "public boolean full()"
+        ],
+        "correct": [
+          1
+        ],
+        "explanation": "A getter has the form public returnType getPropertyName(); a boolean getter is public boolean isPropertyName().",
+        "option_explanations": [
+          "get is the convention for non-boolean types.",
+          "Correct: For boolean properties the getter is named isPropertyName.",
+          "The getter must return the boolean.",
+          "The method name should start with is."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "Which declaration is a proper accessor for `private int score;`?",
+        "options": [
+          "public int score()",
+          "public void getScore()",
+          "public int getScore()",
+          "public int getScore(int s)"
+        ],
+        "correct": [
+          2
+        ],
+        "explanation": "A getter has the form public returnType getPropertyName(); a boolean getter is public boolean isPropertyName().",
+        "option_explanations": [
+          "The name needs the get prefix.",
+          "void cannot return the value.",
+          "Correct: It returns the property and is named getPropertyName.",
+          "A getter has no parameters."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "Which is the correct setter for a private `double radius` field?",
+      "options": [
+        "public void setRadius(double newRadius)",
+        "public double setRadius()",
+        "public void setRadius()",
+        "public double setRadius(double newRadius)"
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": "A setter has the form public void setPropertyName(dataType propertyValue).",
+      "option_explanations": [
+        "Correct: A setter returns nothing and takes the new value as a parameter.",
+        "It must take the new value and not return one.",
+        "Without a parameter it cannot supply the new value.",
+        "A setter returns void."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "Which method lets clients change the private field `int age` from outside the class?",
+        "options": [
+          "public int setAge()",
+          "private void setAge(int a)",
+          "public int getAge(int a)",
+          "public void setAge(int a)"
+        ],
+        "correct": [
+          3
+        ],
+        "explanation": "A setter has the form public void setPropertyName(dataType propertyValue).",
+        "option_explanations": [
+          "No parameter means no new value.",
+          "private hides it from clients.",
+          "That is a getter by name.",
+          "Correct: A public mutator with a parameter of the field's type does it."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "What is another name for a setter method?",
+        "options": [
+          "Accessor",
+          "Constructor",
+          "Mutator",
+          "Initializer"
+        ],
+        "correct": [
+          2
+        ],
+        "explanation": "A setter has the form public void setPropertyName(dataType propertyValue).",
+        "option_explanations": [
+          "Accessors are the getters.",
+          "A constructor creates objects.",
+          "Correct: get methods are accessors and set methods are mutators.",
+          "Initializer is not the lecture's term."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "What is printed?\n\n```java\nclass Circle {\n  private double radius = 1.0;\n  public void setRadius(double newRadius) {\n    radius = (newRadius >= 0) ? newRadius : 0;\n  }\n  public double getRadius() { return radius; }\n}\npublic class Main {\n  public static void main(String[] args) {\n    Circle c = new Circle();\n    c.setRadius(-4);\n    System.out.print(c.getRadius() + \" \");\n    c.setRadius(2.5);\n    System.out.println(c.getRadius());\n  }\n}\n```",
+      "options": [
+        "0.0 2.5",
+        "-4.0 2.5",
+        "1.0 2.5",
+        "0.0 0.0"
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": "Setters can validate values before storing them, which is a main benefit of keeping fields private.",
+      "option_explanations": [
+        "Correct: The ternary stores 0 for the negative -4 and 2.5 for the valid value.",
+        "Ignores the validation.",
+        "Thinks an invalid value leaves the default.",
+        "Thinks the second call also gets rejected."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "What does this code print?\n\n```java\nclass Temp {\n  private int deg = 20;\n  public void setDeg(int d) { deg = (d <= 100) ? d : 100; }\n  public int getDeg() { return deg; }\n}\npublic class Main {\n  public static void main(String[] args) {\n    Temp t = new Temp();\n    t.setDeg(250);\n    System.out.print(t.getDeg() + \" \");\n    t.setDeg(-7);\n    System.out.println(t.getDeg());\n  }\n}\n```",
+        "options": [
+          "250 -7",
+          "100 100",
+          "100 20",
+          "100 -7"
+        ],
+        "correct": [
+          3
+        ],
+        "explanation": "Setters can validate values before storing them, which is a main benefit of keeping fields private.",
+        "option_explanations": [
+          "Ignores the cap.",
+          "Applies the cap to every value.",
+          "Thinks the rejected-looking value keeps the old one.",
+          "Correct: 250 is capped to 100 by the ternary; -7 is below 100 so it is stored unchanged."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "What is printed?\n\n```java\nclass Score {\n  private int pts;\n  public void setPts(int p) { if (p > 0) pts = p; }\n  public int getPts() { return pts; }\n}\npublic class Main {\n  public static void main(String[] args) {\n    Score s = new Score();\n    s.setPts(8);\n    s.setPts(-3);\n    s.setPts(0);\n    System.out.println(s.getPts());\n  }\n}\n```",
+        "options": [
+          "0",
+          "8",
+          "-3",
+          "The code does not compile"
+        ],
+        "correct": [
+          1
+        ],
+        "explanation": "Setters can validate values before storing them, which is a main benefit of keeping fields private.",
+        "option_explanations": [
+          "Thinks the last call reset it.",
+          "Correct: Only positive values are stored; -3 and 0 are rejected, so pts stays 8.",
+          "Thinks the negative value was stored.",
+          "The code is valid."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "In a UML class diagram, the sign in front of `-radius: double` means the member is:",
+      "options": [
+        "public",
+        "protected",
+        "private",
+        "static"
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": "UML visibility: - means private, + means public, # means protected.",
+      "option_explanations": [
+        "+ is public.",
+        "# is protected.",
+        "Correct: A minus sign is the private modifier.",
+        "static is shown by underlining."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "In UML, a member written as `+getArea(): double` is:",
+        "options": [
+          "private",
+          "public",
+          "protected",
+          "package-private"
+        ],
+        "correct": [
+          1
+        ],
+        "explanation": "UML visibility: - means private, + means public, # means protected.",
+        "option_explanations": [
+          "- is private.",
+          "Correct: The plus sign stands for public.",
+          "# is protected.",
+          "Default has no symbol."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "Which UML symbol marks a protected member?",
+        "options": [
+          "#",
+          "+",
+          "-",
+          "*"
+        ],
+        "correct": [
+          0
+        ],
+        "explanation": "UML visibility: - means private, + means public, # means protected.",
+        "option_explanations": [
+          "Correct: The hash sign is protected.",
+          "+ is public.",
+          "- is private.",
+          "There is no star in UML visibility."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "How is a static variable such as `numberOfObjects` marked in a UML class diagram?",
+      "options": [
+        "It is written in italics",
+        "It is prefixed with a plus sign",
+        "It is enclosed in brackets",
+        "It is underlined"
+      ],
+      "correct": [
+        3
+      ],
+      "explanation": "In a UML class diagram, static members are shown underlined.",
+      "option_explanations": [
+        "Italics are not the static marker.",
+        "A plus sign shows public.",
+        "Brackets are not UML for static.",
+        "Correct: Underlining denotes static members."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "In a Circle UML diagram one field name is underlined. What does that tell you about it?",
+        "options": [
+          "It is private",
+          "It is declared static",
+          "It is final only",
+          "It is the constructor"
+        ],
+        "correct": [
+          1
+        ],
+        "explanation": "In a UML class diagram, static members are shown underlined.",
+        "option_explanations": [
+          "private is shown by a minus sign.",
+          "Correct: An underlined member is a class (static) member.",
+          "Constants are not marked with underline unless they are static.",
+          "Constructors are listed in the third compartment."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "Which members of a class are underlined in its UML diagram?",
+        "options": [
+          "static members",
+          "private members",
+          "public members",
+          "inherited members"
+        ],
+        "correct": [
+          0
+        ],
+        "explanation": "In a UML class diagram, static members are shown underlined.",
+        "option_explanations": [
+          "Correct: Underlining is reserved for static members.",
+          "private is -.",
+          "public is +.",
+          "Inheritance is shown with arrows, not underlining."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "What does the UML entry `-radius: double` describe?",
+      "options": [
+        "A public field named radius of type double",
+        "A private field named radius of type double",
+        "A private method named radius returning double",
+        "A private field named double of type radius"
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": "A UML member is written as sign name: type; methods list parameters in parentheses followed by the return type.",
+      "option_explanations": [
+        "- is private not public.",
+        "Correct: Format is visibility, name, then the type after the colon.",
+        "No parentheses means a field.",
+        "Name comes before the colon."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "What does `+getArea(): double` describe?",
+        "options": [
+          "A public field of type double",
+          "A private method returning double",
+          "A public method taking a double parameter",
+          "A public method with no parameters returning double"
+        ],
+        "correct": [
+          3
+        ],
+        "explanation": "A UML member is written as sign name: type; methods list parameters in parentheses followed by the return type.",
+        "option_explanations": [
+          "Parentheses mark a method.",
+          "+ means public.",
+          "Parameters would appear inside the parentheses.",
+          "Correct: Empty parentheses mean no parameters; the type after the colon is the return type."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "What does `+setRadius(radius: double): void` describe?",
+        "options": [
+          "A public method with one double parameter that returns nothing",
+          "A public method with no parameter that returns double",
+          "A private method with one double parameter",
+          "A public field of type void"
+        ],
+        "correct": [
+          0
+        ],
+        "explanation": "A UML member is written as sign name: type; methods list parameters in parentheses followed by the return type.",
+        "option_explanations": [
+          "Correct: The parameter is inside the parentheses and void is the return type.",
+          "The parameter and return type are mixed up.",
+          "+ means public.",
+          "Parentheses mean a method, not a field."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "What is printed?\n\n```java\npublic class Main {\n  static void bump(int n) { n = n + 10; }\n  public static void main(String[] args) {\n    int x = 5;\n    bump(x);\n    System.out.println(x);\n  }\n}\n```",
+      "options": [
+        "5",
+        "15",
+        "10",
+        "0"
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": "A primitive argument is passed by value: the method works on a copy, so the caller's variable is unchanged.",
+      "option_explanations": [
+        "Correct: bump changes only its own copy n.",
+        "Thinks the method changed the caller's x.",
+        "Adds 10 to a value that is not x.",
+        "Thinks x is reset."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "What does this program print?\n\n```java\npublic class Main {\n  static void change(double v, int k) { v = v * 2; k = k - 1; }\n  public static void main(String[] args) {\n    double a = 1.5; int b = 4;\n    change(a, b);\n    System.out.println(a + \" \" + b);\n  }\n}\n```",
+        "options": [
+          "3.0 3",
+          "1.5 3",
+          "1.5 4",
+          "3.0 4"
+        ],
+        "correct": [
+          2
+        ],
+        "explanation": "A primitive argument is passed by value: the method works on a copy, so the caller's variable is unchanged.",
+        "option_explanations": [
+          "Both parameters wrongly change the caller.",
+          "Only the int parameter wrongly changes.",
+          "Correct: v and k are copies; a and b in main keep their values.",
+          "Only the double parameter wrongly changes."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "What is printed by the two println calls?\n\n```java\npublic class Main {\n  static int bump(int n) { n = n + 10; return n; }\n  public static void main(String[] args) {\n    int x = 5;\n    bump(x);\n    System.out.println(x);\n    x = bump(x);\n    System.out.println(x);\n  }\n}\n```",
+        "options": [
+          "15 then 15",
+          "5 then 15",
+          "5 then 5",
+          "15 then 5"
+        ],
+        "correct": [
+          1
+        ],
+        "explanation": "A primitive argument is passed by value: the method works on a copy, so the caller's variable is unchanged.",
+        "option_explanations": [
+          "Thinks the first call changed x.",
+          "Correct: The first call discards the returned value, so x stays 5; the second assigns the return value to x.",
+          "Thinks the second assignment has no effect.",
+          "Reverses the two effects."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "What is printed?\n\n```java\nclass Circle {\n  double radius;\n  Circle(double r) { radius = r; }\n}\npublic class Main {\n  static void grow(Circle c) { c.radius = c.radius + 1; }\n  public static void main(String[] args) {\n    Circle c = new Circle(2);\n    grow(c);\n    System.out.println(c.radius);\n  }\n}\n```",
+      "options": [
+        "2.0",
+        "1.0",
+        "0.0",
+        "3.0"
+      ],
+      "correct": [
+        3
+      ],
+      "explanation": "An object argument passes a copy of the reference, so the method can change the object the caller sees (pass-by-sharing).",
+      "option_explanations": [
+        "Thinks the object was copied.",
+        "Treats the change as relative to a default radius.",
+        "Thinks the field was reset.",
+        "Correct: c in grow and c in main refer to the same Circle object, so the change is visible."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "What does this program print?\n\n```java\nclass Pt { int x; Pt(int x) { this.x = x; } }\npublic class Main {\n  static void shift(Pt p, int d) { p.x += d; d = 0; }\n  public static void main(String[] args) {\n    Pt p = new Pt(7);\n    int d = 3;\n    shift(p, d);\n    System.out.println(p.x + \" \" + d);\n  }\n}\n```",
+        "options": [
+          "10 0",
+          "7 3",
+          "7 0",
+          "10 3"
+        ],
+        "correct": [
+          3
+        ],
+        "explanation": "An object argument passes a copy of the reference, so the method can change the object the caller sees (pass-by-sharing).",
+        "option_explanations": [
+          "Thinks the primitive was also changed.",
+          "Thinks the object was copied and the primitive changed.",
+          "Thinks neither the object nor the int changed incorrectly.",
+          "Correct: p.x is changed through the shared reference; the int d is a copy so d = 0 does not affect main."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "What is printed?\n\n```java\nclass Tank { int level = 10; }\npublic class Main {\n  static void fill(Tank t) { t.level *= 2; }\n  public static void main(String[] args) {\n    Tank a = new Tank();\n    Tank b = a;\n    fill(b);\n    fill(a);\n    System.out.println(a.level + \" \" + b.level);\n  }\n}\n```",
+        "options": [
+          "20 40",
+          "40 40",
+          "40 20",
+          "10 40"
+        ],
+        "correct": [
+          1
+        ],
+        "explanation": "An object argument passes a copy of the reference, so the method can change the object the caller sees (pass-by-sharing).",
+        "option_explanations": [
+          "Thinks a and b see different objects.",
+          "Thinks the object was copied, so the change to p.x is lost.",
+          "Thinks the object was copied (p.x lost) while d = 0 reached main.",
+          "Thinks only one of the calls reached it."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "What is printed?\n\n```java\nclass Circle {\n  double radius;\n  Circle(double r) { radius = r; }\n}\npublic class Main {\n  static void swapIn(Circle c) { c = new Circle(99); }\n  public static void main(String[] args) {\n    Circle c = new Circle(2);\n    swapIn(c);\n    System.out.println(c.radius);\n  }\n}\n```",
+      "options": [
+        "99.0",
+        "0.0",
+        "2.0",
+        "Nothing, it throws an exception"
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": "Reassigning a parameter changes only the local copy of the reference; the caller's variable still refers to the original object.",
+      "option_explanations": [
+        "Thinks the caller's reference was changed.",
+        "Thinks the object was cleared.",
+        "Correct: c = new Circle(99) rebinds the method's own copy of the reference.",
+        "Nothing here is null."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "What does this program print?\n\n```java\nclass Tag { String name; Tag(String n) { name = n; } }\npublic class Main {\n  static void rename(Tag t) {\n    t.name = \"B\";\n    t = new Tag(\"C\");\n    t.name = \"D\";\n  }\n  public static void main(String[] args) {\n    Tag t = new Tag(\"A\");\n    rename(t);\n    System.out.println(t.name);\n  }\n}\n```",
+        "options": [
+          "B",
+          "A",
+          "C",
+          "D"
+        ],
+        "correct": [
+          0
+        ],
+        "explanation": "Reassigning a parameter changes only the local copy of the reference; the caller's variable still refers to the original object.",
+        "option_explanations": [
+          "Correct: t.name = \"B\" changes the shared object; after t = new Tag(\"C\") the method's t points to a different object, so later changes do not reach main's object.",
+          "Thinks the first change did not happen.",
+          "Thinks the reassignment replaced main's variable.",
+          "Thinks the last assignment reached main's object."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "What is printed?\n\n```java\nclass Box { int v; Box(int v) { this.v = v; } }\npublic class Main {\n  static void swap(Box a, Box b) { Box t = a; a = b; b = t; }\n  public static void main(String[] args) {\n    Box p = new Box(1), q = new Box(2);\n    swap(p, q);\n    System.out.println(p.v + \" \" + q.v);\n  }\n}\n```",
+        "options": [
+          "2 1",
+          "1 2",
+          "1 1",
+          "2 2"
+        ],
+        "correct": [
+          1
+        ],
+        "explanation": "Reassigning a parameter changes only the local copy of the reference; the caller's variable still refers to the original object.",
+        "option_explanations": [
+          "Thinks the swap reached main.",
+          "Correct: swap exchanges only local copies of the references; p and q still point to their original objects.",
+          "Thinks one reference was overwritten.",
+          "Thinks both references were overwritten."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "What does the lecture call passing an object's reference as an argument?",
+      "options": [
+        "Pass-by-copy",
+        "Pass-by-sharing",
+        "Pass-by-name",
+        "Pass-by-clone"
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": "Primitive arguments use pass-by-value; for a reference type the value passed is the reference to the object (pass-by-sharing).",
+      "option_explanations": [
+        "The reference is copied, but the lecture calls this pass-by-sharing, not pass-by-copy.",
+        "Correct: The value passed is the reference, so both variables share the object.",
+        "Pass-by-name is a different mechanism that Java does not use.",
+        "Java does not clone arguments; the object itself is shared."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "When you pass a Circle object to a method, what is copied into the parameter?",
+        "options": [
+          "The reference to the object",
+          "The whole object with its fields",
+          "Only the object's first field",
+          "Nothing, the parameter starts empty"
+        ],
+        "correct": [
+          0
+        ],
+        "explanation": "Primitive arguments use pass-by-value; for a reference type the value passed is the reference to the object (pass-by-sharing).",
+        "option_explanations": [
+          "Correct: Only the reference value is copied.",
+          "The object is not duplicated.",
+          "Fields are not copied individually.",
+          "The parameter receives the reference."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "Which pairing of argument kind and passing style is right?",
+        "options": [
+          "int: pass-by-sharing; Circle: pass-by-value",
+          "int and Circle: pass-by-sharing",
+          "int and Circle: pass-by-clone",
+          "int: pass-by-value; Circle: pass-by-sharing"
+        ],
+        "correct": [
+          3
+        ],
+        "explanation": "Primitive arguments use pass-by-value; for a reference type the value passed is the reference to the object (pass-by-sharing).",
+        "option_explanations": [
+          "Swapped.",
+          "Primitives are not shared.",
+          "Java does not clone arguments.",
+          "Correct: Primitives pass their value, objects pass the reference."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "What happens when this program runs?\n\n```java\nclass Circle {\n  double radius = 1;\n  double getArea() { return radius * radius * 3; }\n}\npublic class Main {\n  public static void main(String[] args) {\n    Circle[] arr = new Circle[3];\n    System.out.println(arr[0].getArea());\n  }\n}\n```",
+      "options": [
+        "Prints 3.0",
+        "Prints 0.0",
+        "Compile error",
+        "NullPointerException"
+      ],
+      "correct": [
+        3
+      ],
+      "explanation": "An array of objects holds references that are null by default; each element must be created with new before it can be used.",
+      "option_explanations": [
+        "Assumes the elements are Circle objects with defaults.",
+        "Assumes an area of zero for missing objects.",
+        "The code is legal Java.",
+        "Correct: new Circle[3] creates only three null references, no Circle objects."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "What happens when this program runs?\n\n```java\nclass Item { int qty = 5; }\npublic class Main {\n  public static void main(String[] args) {\n    Item[] shelf = new Item[2];\n    shelf[0] = new Item();\n    System.out.println(shelf[0].qty);\n    System.out.println(shelf[1].qty);\n  }\n}\n```",
+        "options": [
+          "Prints 5 and then throws NullPointerException",
+          "Prints 5 and 5",
+          "Prints 5 and 0",
+          "Compile error"
+        ],
+        "correct": [
+          0
+        ],
+        "explanation": "An array of objects holds references that are null by default; each element must be created with new before it can be used.",
+        "option_explanations": [
+          "Correct: Only shelf[0] was assigned an Item; shelf[1] is still null.",
+          "Assumes all elements were filled.",
+          "Assumes an empty slot reads as 0.",
+          "The code compiles."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "What is printed?\n\n```java\nclass Item { int qty = 5; }\npublic class Main {\n  public static void main(String[] args) {\n    Item[] shelf = new Item[2];\n    System.out.println(shelf[0] == null);\n    System.out.println(shelf.length);\n  }\n}\n```",
+        "options": [
+          "false then 2",
+          "true then 0",
+          "true then 2",
+          "An exception is thrown"
+        ],
+        "correct": [
+          2
+        ],
+        "explanation": "An array of objects holds references that are null by default; each element must be created with new before it can be used.",
+        "option_explanations": [
+          "Thinks elements are created automatically.",
+          "Thinks the length counts only created objects.",
+          "Correct: The slot is null and the array length is 2 even though no Item exists.",
+          "Comparing with null is safe."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "What is printed?\n\n```java\npublic class Main {\n  public static void main(String[] args) {\n    int[] a = new int[3];\n    String[] s = new String[3];\n    System.out.println(a[0] + \" \" + s[0]);\n  }\n}\n```",
+      "options": [
+        "0 0",
+        "null null",
+        "0 null",
+        "0 \"\""
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": "Array elements get default values: 0 for numbers, false for boolean, null for object references.",
+      "option_explanations": [
+        "Thinks String elements default to 0.",
+        "Thinks int elements default to null.",
+        "Correct: int elements default to 0 and String (an object) elements default to null.",
+        "Thinks String elements are empty strings."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "What does this print?\n\n```java\npublic class Main {\n  public static void main(String[] args) {\n    boolean[] f = new boolean[2];\n    Integer[] n = new Integer[2];\n    System.out.println(f[1] + \" \" + n[1]);\n  }\n}\n```",
+        "options": [
+          "false null",
+          "false false",
+          "true null",
+          "null null"
+        ],
+        "correct": [
+          0
+        ],
+        "explanation": "Array elements get default values: 0 for numbers, false for boolean, null for object references.",
+        "option_explanations": [
+          "Correct: boolean elements default to false; Integer elements are references, so they are null.",
+          "Treats the wrapper elements as booleans.",
+          "Thinks boolean defaults to true.",
+          "Thinks primitive arrays hold null."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "What is printed?\n\n```java\npublic class Main {\n  public static void main(String[] args) {\n    double[] d = new double[2];\n    Object[] o = new Object[2];\n    System.out.println(d[0] + \" \" + o[0]);\n  }\n}\n```",
+        "options": [
+          "0 null",
+          "0.0 0.0",
+          "null null",
+          "0.0 null"
+        ],
+        "correct": [
+          3
+        ],
+        "explanation": "Array elements get default values: 0 for numbers, false for boolean, null for object references.",
+        "option_explanations": [
+          "Prints the double default without its decimal part; it is 0.0, not 0.",
+          "Uses the double default for the Object element too; object elements are null.",
+          "Primitive elements are not null.",
+          "Correct: double elements default to 0.0 and Object elements to null."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "Which code creates an array holding three separate, usable Circle objects?",
+      "options": [
+        "Circle[] a = new Circle[3]();",
+        "Circle[] a = new Circle[3]; a[0].radius = 5;",
+        "Circle[] a = new Circle[3]; for (int i = 0; i < 3; i++) a[i] = new Circle();",
+        "Circle[] a = new Circle(3);"
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": "An array of objects needs two steps: create the array, then create each object with new and store it in an element.",
+      "option_explanations": [
+        "The parentheses after the brackets are a syntax error.",
+        "It compiles but a[0] is null, so it throws a NullPointerException.",
+        "Correct: The loop creates one Circle per element after the array exists.",
+        "It calls a constructor taking an int and assigns a Circle to an array."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "To fill an array `Item[] items = new Item[5];` with usable objects you must:",
+        "options": [
+          "assign new Item() to each element",
+          "do nothing, new Item[5] already created them",
+          "call items.new()",
+          "set items.length to 5 again"
+        ],
+        "correct": [
+          0
+        ],
+        "explanation": "An array of objects needs two steps: create the array, then create each object with new and store it in an element.",
+        "option_explanations": [
+          "Correct: The array only holds references until each element is assigned an object.",
+          "It only creates null references.",
+          "That is not Java syntax.",
+          "Length is fixed and does not create objects."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "Fill the blank so every element refers to its own new object.\n\n```java\nCircle[] c = new Circle[4];\nfor (int i = 0; i < c.length; i++)\n  ________;\n```",
+        "options": [
+          "c[i].new Circle()",
+          "c = new Circle()",
+          "new Circle(c[i])",
+          "c[i] = new Circle()"
+        ],
+        "correct": [
+          3
+        ],
+        "explanation": "An array of objects needs two steps: create the array, then create each object with new and store it in an element.",
+        "option_explanations": [
+          "Not valid syntax.",
+          "Assigns a Circle to the array variable.",
+          "Creates an object but discards it.",
+          "Correct: Each element receives a new object."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "In `circleArray[1].getArea()`, how many levels of referencing are involved?",
+      "options": [
+        "One",
+        "Two",
+        "Three",
+        "Zero"
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": "An array of objects is an array of reference variables, so circleArray[1].getArea() follows two references: the array, then the object.",
+      "option_explanations": [
+        "Forgets the array reference.",
+        "Correct: circleArray refers to the array, and circleArray[1] refers to the Circle.",
+        "Adds a third level that does not exist.",
+        "Objects are always reached through references."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "`Circle[] circleArray = new Circle[10];` What does the variable `circleArray[1]` itself hold?",
+        "options": [
+          "A reference to a Circle object",
+          "A copy of a Circle object",
+          "The area of a circle",
+          "An int index"
+        ],
+        "correct": [
+          0
+        ],
+        "explanation": "An array of objects is an array of reference variables, so circleArray[1].getArea() follows two references: the array, then the object.",
+        "option_explanations": [
+          "Correct: Elements of an object array are reference variables.",
+          "Objects are not stored inline.",
+          "Nothing computes an area.",
+          "The index is not stored."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "Which statement about arrays is right?",
+        "options": [
+          "An array is a primitive value",
+          "An object array stores the objects inside it",
+          "An array is itself an object",
+          "Array variables hold the elements directly"
+        ],
+        "correct": [
+          2
+        ],
+        "explanation": "An array of objects is an array of reference variables, so circleArray[1].getArea() follows two references: the array, then the object.",
+        "option_explanations": [
+          "Arrays are objects.",
+          "Elements are references to objects stored elsewhere.",
+          "Correct: The array variable refers to an array object; elements of an object array are references.",
+          "Array variables hold a reference to the array."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "What is printed?\n\n```java\nclass Circle {\n  double radius;\n  Circle(double r) { radius = r; }\n  double getArea() { return radius * radius * 3; }\n}\npublic class Main {\n  public static void main(String[] args) {\n    Circle[] cs = new Circle[3];\n    for (int i = 0; i < cs.length; i++)\n      cs[i] = new Circle(i + 1);\n    double total = 0;\n    for (int i = 0; i < cs.length; i++)\n      total += cs[i].getArea();\n    System.out.println(total);\n  }\n}\n```",
+      "options": [
+        "14.0",
+        "42.0",
+        "12.0",
+        "6.0"
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": "Loop through the array, create each object first, then call methods on each element.",
+      "option_explanations": [
+        "Sums the squared radii and leaves out the factor 3.",
+        "Correct: Radii 1, 2, 3 give areas 3, 12, 27 and the sum is 42.",
+        "Sums the area of one circle.",
+        "Sums the radii."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "What does this program print?\n\n```java\nclass Rect {\n  int w, h;\n  Rect(int w, int h) { this.w = w; this.h = h; }\n  int area() { return w * h; }\n}\npublic class Main {\n  public static void main(String[] args) {\n    Rect[] rs = new Rect[4];\n    for (int i = 0; i < rs.length; i++)\n      rs[i] = new Rect(i, 2);\n    int sum = 0;\n    for (Rect r : rs) sum += r.area();\n    System.out.println(sum);\n  }\n}\n```",
+        "options": [
+          "12",
+          "6",
+          "0",
+          "8"
+        ],
+        "correct": [
+          0
+        ],
+        "explanation": "Loop through the array, create each object first, then call methods on each element.",
+        "option_explanations": [
+          "Correct: Widths 0,1,2,3 times height 2 give 0+2+4+6 = 12.",
+          "Sums widths only.",
+          "Treats area as zero.",
+          "Misses part of the loop."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "What is printed?\n\n```java\nclass Rect {\n  int w, h;\n  Rect(int w, int h) { this.w = w; this.h = h; }\n  int area() { return w * h; }\n}\npublic class Main {\n  public static void main(String[] args) {\n    Rect[] rs = new Rect[3];\n    for (int i = 0; i < rs.length; i++)\n      rs[i] = new Rect(2, 3);\n    rs[1].w = 10;\n    System.out.println(rs[0].area() + \" \" + rs[1].area());\n  }\n}\n```",
+        "options": [
+          "6 6",
+          "30 30",
+          "6 30",
+          "6 12"
+        ],
+        "correct": [
+          2
+        ],
+        "explanation": "Loop through the array, create each object first, then call methods on each element.",
+        "option_explanations": [
+          "Thinks the change affects all elements.",
+          "Thinks the change affects element 0 instead.",
+          "Correct: Each element is a separate Rect; setting w = 10 on rs[1] gives 10 * 3 = 30 and rs[0] stays 2 * 3 = 6.",
+          "Misses the height factor."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "What is printed?\n\n```java\nclass Circle {\n  double radius = 1;\n}\npublic class Main {\n  public static void main(String[] args) {\n    Circle[] cs = new Circle[3];\n    Circle one = new Circle();\n    for (int i = 0; i < cs.length; i++) cs[i] = one;\n    cs[0].radius = 7;\n    System.out.println(cs[2].radius);\n  }\n}\n```",
+      "options": [
+        "1.0",
+        "7.0",
+        "0.0",
+        "7"
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": "Several array elements can hold the same reference; a change made through one element is seen through the others.",
+      "option_explanations": [
+        "Thinks each element has its own copy.",
+        "Correct: All three elements refer to the one Circle object.",
+        "Thinks the assignment to cs[0] was lost and the value reset to 0.0.",
+        "Prints a double so a decimal point appears."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "What does this program print?\n\n```java\nclass Circle {\n  double radius = 1;\n}\npublic class Main {\n  public static void main(String[] args) {\n    Circle[] cs = new Circle[3];\n    for (int i = 0; i < cs.length; i++) cs[i] = new Circle();\n    cs[0].radius = 7;\n    System.out.println(cs[2].radius);\n  }\n}\n```",
+        "options": [
+          "7.0",
+          "0.0",
+          "3.0",
+          "1.0"
+        ],
+        "correct": [
+          3
+        ],
+        "explanation": "Several array elements can hold the same reference; a change made through one element is seen through the others.",
+        "option_explanations": [
+          "Thinks the elements share one object.",
+          "Thinks the new Circle objects start at 0.0 instead of 1.0.",
+          "Mistakes the number of array elements for the radius.",
+          "Correct: Each element refers to its own Circle, so changing cs[0] leaves cs[2] at 1.0."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "What is printed?\n\n```java\nclass Dot { int v = 0; }\npublic class Main {\n  public static void main(String[] args) {\n    Dot[] ds = new Dot[2];\n    Dot d = new Dot();\n    ds[0] = d;\n    ds[1] = d;\n    ds[1].v = 4;\n    ds[0].v++;\n    System.out.println(d.v + \" \" + ds[0].v + \" \" + ds[1].v);\n  }\n}\n```",
+        "options": [
+          "1 1 4",
+          "4 5 5",
+          "5 4 5",
+          "5 5 5"
+        ],
+        "correct": [
+          3
+        ],
+        "explanation": "Several array elements can hold the same reference; a change made through one element is seen through the others.",
+        "option_explanations": [
+          "Treats the elements as copies.",
+          "Treats ds[0] as a separate copy.",
+          "Mixes up which element changed.",
+          "Correct: ds[0], ds[1] and d are one Dot: 4 is set, then incremented to 5."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "What is an immutable object?",
+      "options": [
+        "An object whose contents cannot change after creation",
+        "An object that cannot be created with new",
+        "An object whose class has only static members",
+        "An object that is stored in a final array"
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": "An immutable object cannot be changed after it is created, and its class is an immutable class.",
+      "option_explanations": [
+        "Correct: Once built, its data stays the same.",
+        "Immutable objects are created normally.",
+        "Static members are unrelated.",
+        "Arrays are unrelated."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "If the set method is removed from Circle, whose radius is private, the class becomes:",
+        "options": [
+          "abstract",
+          "static",
+          "immutable",
+          "final"
+        ],
+        "correct": [
+          2
+        ],
+        "explanation": "An immutable object cannot be changed after it is created, and its class is an immutable class.",
+        "option_explanations": [
+          "Abstract is about instantiation.",
+          "Static refers to members.",
+          "Correct: radius is private and nothing can change it after construction.",
+          "final is a separate modifier."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "Which description matches an immutable class?",
+        "options": [
+          "It has no constructor",
+          "Instances keep the same values for their entire lifetime",
+          "It has only public data fields",
+          "It can be instantiated just once"
+        ],
+        "correct": [
+          1
+        ],
+        "explanation": "An immutable object cannot be changed after it is created, and its class is an immutable class.",
+        "option_explanations": [
+          "It still needs constructors.",
+          "Correct: Objects are unchangeable once created.",
+          "Public fields could be changed.",
+          "Any number of instances are allowed."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "`Student` has only private fields and no mutators. What is printed?\n\n```java\nclass BirthDate {\n  private int year;\n  BirthDate(int y) { year = y; }\n  void setYear(int y) { year = y; }\n  int getYear() { return year; }\n}\nclass Student {\n  private int id;\n  private BirthDate birthDate;\n  Student(int id, int y) { this.id = id; birthDate = new BirthDate(y); }\n  BirthDate getBirthDate() { return birthDate; }\n}\npublic class Main {\n  public static void main(String[] args) {\n    Student s = new Student(1, 1970);\n    s.getBirthDate().setYear(2010);\n    System.out.println(s.getBirthDate().getYear());\n  }\n}\n```",
+      "options": [
+        "1970",
+        "2010",
+        "0",
+        "Compile error"
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": "Private fields and no mutators are not enough: a getter that returns a reference to a mutable object lets callers change it.",
+      "option_explanations": [
+        "Assumes private fields cannot change.",
+        "Correct: getBirthDate() hands out the BirthDate object, which has a public setYear.",
+        "Assumes the change creates a default.",
+        "The program compiles."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "What does this program print?\n\n```java\nclass Name {\n  private String first;\n  Name(String f) { first = f; }\n  void setFirst(String f) { first = f; }\n  String getFirst() { return first; }\n}\nclass Badge {\n  private Name owner;\n  Badge(String n) { owner = new Name(n); }\n  Name getOwner() { return owner; }\n}\npublic class Main {\n  public static void main(String[] args) {\n    Badge b = new Badge(\"Sam\");\n    Name n = b.getOwner();\n    n.setFirst(\"Max\");\n    System.out.println(b.getOwner().getFirst());\n  }\n}\n```",
+        "options": [
+          "Sam",
+          "null",
+          "Max",
+          "Compile error"
+        ],
+        "correct": [
+          2
+        ],
+        "explanation": "Private fields and no mutators are not enough: a getter that returns a reference to a mutable object lets callers change it.",
+        "option_explanations": [
+          "Thinks Badge protected its data.",
+          "Thinks the name was cleared.",
+          "Correct: Badge exposes its Name object through getOwner(), and Name has a setter.",
+          "The code is valid Java."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "Why can a class with private fields and no setters still be mutable?",
+        "options": [
+          "Private fields can be changed from other classes",
+          "Constructors can be called twice",
+          "Static methods copy the fields",
+          "A getter may return a reference to a mutable field object"
+        ],
+        "correct": [
+          3
+        ],
+        "explanation": "Private fields and no mutators are not enough: a getter that returns a reference to a mutable object lets callers change it.",
+        "option_explanations": [
+          "Private blocks direct access.",
+          "A constructor runs once per object.",
+          "Static methods are irrelevant.",
+          "Correct: The caller can modify the returned object, changing the owner's state indirectly."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "Which set of rules makes a class immutable?",
+      "options": [
+        "Public fields and a constructor",
+        "Private fields and no mutators only",
+        "Private fields, no mutators, no getters returning mutable object references",
+        "Static fields and public getters"
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": "For a class to be immutable: all data fields private, no mutators, and no accessor that returns a reference to a mutable data field object.",
+      "option_explanations": [
+        "Public fields can be changed.",
+        "Missing the reference-leak condition.",
+        "Correct: All three conditions are required.",
+        "Static fields do not give immutability."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "A class has private fields, no setters, but `public Date getBirth()` returns its own Date field. Is it immutable?",
+        "options": [
+          "No, getBirth() returns a mutable object",
+          "Yes, no setters exist",
+          "Yes, the field is private",
+          "Only if the class is static"
+        ],
+        "correct": [
+          0
+        ],
+        "explanation": "For a class to be immutable: all data fields private, no mutators, and no accessor that returns a reference to a mutable data field object.",
+        "option_explanations": [
+          "Correct: returning a reference to a mutable Date lets callers change it, which breaks immutability.",
+          "Setters are not the only route to changing the object.",
+          "Private does not stop changes through a returned reference.",
+          "Classes are not made immutable by static."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "Which feature is NOT required for an immutable class?",
+        "options": [
+          "Private data fields",
+          "Declaring the class public",
+          "No mutator methods",
+          "No accessor returning a mutable object"
+        ],
+        "correct": [
+          1
+        ],
+        "explanation": "For a class to be immutable: all data fields private, no mutators, and no accessor that returns a reference to a mutable data field object.",
+        "option_explanations": [
+          "That is required.",
+          "Correct: Visibility of the class itself is not part of the conditions.",
+          "That is required.",
+          "That is required."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "What happens when this program runs?\n\n```java\npublic class Main {\n  static void show() { System.out.println(limit); }\n  public static void main(String[] args) { show(); }\n  static int limit = 8;\n}\n```",
+      "options": [
+        "Compile error",
+        "Prints 8",
+        "Prints 0",
+        "Runtime exception"
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": "Instance and static variables are visible in the whole class, wherever they are declared in it.",
+      "option_explanations": [
+        "Thinks use before declaration fails for fields.",
+        "Correct: A static variable's scope is the entire class, even if declared after the method that uses it.",
+        "Thinks the initializer has not run.",
+        "Thinks scope is checked at run time."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "What is printed?\n\n```java\npublic class Main {\n  int a = 4;\n  int b = a * 2;\n  public static void main(String[] args) {\n    System.out.println(new Main().b);\n  }\n}\n```",
+        "options": [
+          "0",
+          "4",
+          "Compile error",
+          "8"
+        ],
+        "correct": [
+          3
+        ],
+        "explanation": "Instance and static variables are visible in the whole class, wherever they are declared in it.",
+        "option_explanations": [
+          "Thinks b is not initialized.",
+          "Prints a instead.",
+          "The code compiles.",
+          "Correct: a is initialized to 4 first, then b = a * 2 = 8."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "What is the scope of an instance variable?",
+        "options": [
+          "The entire class",
+          "Only the constructor",
+          "From its declaration to the end of the nearest block",
+          "Only the method where it is assigned"
+        ],
+        "correct": [
+          0
+        ],
+        "explanation": "Instance and static variables are visible in the whole class, wherever they are declared in it.",
+        "option_explanations": [
+          "Correct: It can be declared anywhere inside the class and used everywhere in it.",
+          "Constructors are not the limit.",
+          "That is a local variable.",
+          "Assignment does not limit it."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "What happens when this code is compiled?\n\n```java\npublic class Main {\n  public static void main(String[] args) {\n    for (int i = 0; i < 3; i++) {\n      int sq = i * i;\n    }\n    System.out.println(sq);\n  }\n}\n```",
+      "options": [
+        "Compile error",
+        "Prints 4",
+        "Prints 0",
+        "Prints 0 1 4"
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": "A local variable's scope starts at its declaration and ends at the end of the block that contains it.",
+      "option_explanations": [
+        "Correct: sq is declared inside the loop body and is out of scope after the closing brace.",
+        "Assumes the last value survives.",
+        "Assumes it defaults to 0.",
+        "Assumes it prints each value."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "What is printed?\n\n```java\npublic class Main {\n  public static void main(String[] args) {\n    if (true) {\n      int k = 4;\n    }\n    int k = 9;\n    System.out.println(k);\n  }\n}\n```",
+        "options": [
+          "4",
+          "9",
+          "Compile error",
+          "13"
+        ],
+        "correct": [
+          1
+        ],
+        "explanation": "A local variable's scope starts at its declaration and ends at the end of the block that contains it.",
+        "option_explanations": [
+          "Thinks the first k survives.",
+          "Correct: The first k ended with its block, so declaring k again afterwards is legal.",
+          "Thinks redeclaration is a clash.",
+          "Thinks the values combine."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "What is the result of compiling this program?\n\n```java\npublic class Main {\n  public static void main(String[] args) {\n    int total = 0;\n    for (int i = 0; i < 3; i++) total += i;\n    System.out.println(i);\n  }\n}\n```",
+        "options": [
+          "Prints 3",
+          "Prints 2",
+          "Prints 0",
+          "Compile error"
+        ],
+        "correct": [
+          3
+        ],
+        "explanation": "A local variable's scope starts at its declaration and ends at the end of the block that contains it.",
+        "option_explanations": [
+          "Counts one past the last index.",
+          "Prints the last index.",
+          "Assumes it defaults to 0.",
+          "Correct: i belongs to the for loop only and cannot be used after it."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "What happens when this code is compiled?\n\n```java\npublic class Main {\n  public static void main(String[] args) {\n    int x;\n    System.out.println(x);\n  }\n}\n```",
+      "options": [
+        "Compile error",
+        "Prints 0",
+        "Prints null",
+        "Runtime exception"
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": "A local variable must be initialized explicitly before use, while fields get default values.",
+      "option_explanations": [
+        "Correct: The compiler rejects reading a local variable that has not been assigned.",
+        "Thinks locals default to 0.",
+        "Thinks locals default to null.",
+        "Thinks it is checked at run time."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "What is the outcome of this program?\n\n```java\npublic class Main {\n  public static void main(String[] args) {\n    String s;\n    int n = 3;\n    if (n > 5) s = \"big\";\n    System.out.println(s);\n  }\n}\n```",
+        "options": [
+          "Prints null",
+          "Prints big",
+          "Compile error",
+          "Prints an empty line"
+        ],
+        "correct": [
+          2
+        ],
+        "explanation": "A local variable must be initialized explicitly before use, while fields get default values.",
+        "option_explanations": [
+          "Thinks it defaults to null.",
+          "Thinks the branch always runs.",
+          "Correct: s may not be assigned on every path, so it is not definitely initialized.",
+          "Thinks it defaults to an empty string."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "What is printed?\n\n```java\npublic class Main {\n  static int x;\n  public static void main(String[] args) {\n    System.out.println(x);\n  }\n}\n```",
+        "options": [
+          "Compile error",
+          "null",
+          "0",
+          "Runtime exception"
+        ],
+        "correct": [
+          2
+        ],
+        "explanation": "A local variable must be initialized explicitly before use, while fields get default values.",
+        "option_explanations": [
+          "Confuses a field with a local.",
+          "int is never null.",
+          "Correct: x is a static field, and fields receive default values (0 for int).",
+          "No exception is thrown."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "What is printed?\n\n```java\nclass Circle {\n  private double radius = 1.0;\n  void setRadius(double radius) { radius = radius; }\n  double getRadius() { return radius; }\n}\npublic class Main {\n  public static void main(String[] args) {\n    Circle c = new Circle();\n    c.setRadius(5);\n    System.out.println(c.getRadius());\n  }\n}\n```",
+      "options": [
+        "1.0",
+        "5.0",
+        "0.0",
+        "Compile error"
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": "Inside a method, a parameter hides a field of the same name; this.field is needed to reach the field.",
+      "option_explanations": [
+        "Correct: radius = radius assigns the parameter to itself, so the field keeps 1.0.",
+        "Assumes the field is set.",
+        "Assumes the field was cleared.",
+        "The code is legal."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "What does this program print?\n\n```java\nclass Cat {\n  int lives = 9;\n  Cat(int lives) { lives = lives - 1; }\n}\npublic class Main {\n  public static void main(String[] args) {\n    System.out.println(new Cat(3).lives);\n  }\n}\n```",
+        "options": [
+          "2",
+          "3",
+          "8",
+          "9"
+        ],
+        "correct": [
+          3
+        ],
+        "explanation": "Inside a method, a parameter hides a field of the same name; this.field is needed to reach the field.",
+        "option_explanations": [
+          "Assumes the field is set.",
+          "Prints the argument.",
+          "Mixes in the default.",
+          "Correct: lives = lives - 1 changes only the parameter, so the field keeps 9."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "What is printed?\n\n```java\nclass Cat {\n  int lives = 9;\n  Cat(int lives) { this.lives = lives - 1; }\n}\npublic class Main {\n  public static void main(String[] args) {\n    System.out.println(new Cat(3).lives);\n  }\n}\n```",
+        "options": [
+          "9",
+          "2",
+          "3",
+          "8"
+        ],
+        "correct": [
+          1
+        ],
+        "explanation": "Inside a method, a parameter hides a field of the same name; this.field is needed to reach the field.",
+        "option_explanations": [
+          "Thinks the field keeps its initializer.",
+          "Correct: this.lives refers to the field, so it receives 3 - 1 = 2.",
+          "Prints the argument.",
+          "Subtracts from the initializer."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "With f1 and f2 two objects of class F, in `f2.setI(45)` which executes `this.i = i`, what does `this` refer to?",
+      "options": [
+        "The object f2",
+        "The object f1",
+        "The class F",
+        "The parameter i"
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": "this is a reference to the object itself, the one on which the method or constructor is running.",
+      "option_explanations": [
+        "Correct: this is the object the method was invoked on.",
+        "f1 is another object.",
+        "this is an object, not a class.",
+        "The parameter is not an object reference."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "Which of these is a common use of the this keyword?",
+        "options": [
+          "Declaring a static method",
+          "Importing a class from a package",
+          "Referring to a hidden data field of the object",
+          "Creating a new array"
+        ],
+        "correct": [
+          2
+        ],
+        "explanation": "this is a reference to the object itself, the one on which the method or constructor is running.",
+        "option_explanations": [
+          "Static uses a different keyword.",
+          "Imports use import.",
+          "Correct: this.radius distinguishes the field from a parameter with the same name.",
+          "Arrays use new."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "A second common use of `this` is to:",
+        "options": [
+          "Call a method of the parent class",
+          "Call another constructor of the same class",
+          "Create a copy of the class",
+          "Skip the constructor"
+        ],
+        "correct": [
+          1
+        ],
+        "explanation": "this is a reference to the object itself, the one on which the method or constructor is running.",
+        "option_explanations": [
+          "That uses super.",
+          "Correct: this(...) invokes an overloaded constructor of the same class.",
+          "Not what this means.",
+          "Constructors are never skipped."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "What is printed?\n\n```java\nclass Circle {\n  private double radius;\n  Circle(double radius) { this.radius = radius; System.out.print(\"A \"); }\n  Circle() { this(1.0); System.out.print(\"B \"); }\n  double get() { return radius; }\n}\npublic class Main {\n  public static void main(String[] args) {\n    Circle c = new Circle();\n    System.out.println(c.get());\n  }\n}\n```",
+      "options": [
+        "A B 1.0",
+        "B A 1.0",
+        "B 1.0",
+        "A 1.0"
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": "this(...) calls another constructor of the same class; the called constructor's body runs first.",
+      "option_explanations": [
+        "Correct: Circle() calls this(1.0), so the one-argument constructor prints A before the rest of Circle() prints B.",
+        "Reverses the order.",
+        "Ignores the other constructor's print.",
+        "Ignores the print in the default constructor."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "What does this program print?\n\n```java\nclass Car {\n  int doors; String color;\n  Car(int d, String c) { doors = d; color = c; System.out.print(\"two-arg \"); }\n  Car(String c) { this(4, c); System.out.print(\"one-arg \"); }\n  Car() { this(\"red\"); System.out.print(\"no-arg \"); }\n}\npublic class Main {\n  public static void main(String[] args) {\n    Car c = new Car();\n    System.out.println(c.doors + c.color);\n  }\n}\n```",
+        "options": [
+          "no-arg one-arg two-arg 4red",
+          "two-arg 4red",
+          "two-arg one-arg no-arg 4red",
+          "no-arg 4red"
+        ],
+        "correct": [
+          2
+        ],
+        "explanation": "this(...) calls another constructor of the same class; the called constructor's body runs first.",
+        "option_explanations": [
+          "Reverses the order of the chain.",
+          "Skips the delegating constructors.",
+          "Correct: Car() calls Car(String), which calls Car(int, String); output appears from the innermost call outwards.",
+          "Prints only the starting one."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "What is printed?\n\n```java\nclass Box {\n  int w, h;\n  Box(int w, int h) { this.w = w; this.h = h; }\n  Box(int s) { this(s, s); }\n  Box() { this(2); }\n}\npublic class Main {\n  public static void main(String[] args) {\n    Box b = new Box();\n    System.out.println(b.w * b.h);\n  }\n}\n```",
+        "options": [
+          "2",
+          "4",
+          "8",
+          "0"
+        ],
+        "correct": [
+          1
+        ],
+        "explanation": "this(...) calls another constructor of the same class; the called constructor's body runs first.",
+        "option_explanations": [
+          "Prints one dimension.",
+          "Correct: Box() -> Box(2) -> Box(2, 2), so w * h = 4.",
+          "Doubles it.",
+          "Thinks fields are default."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "What happens when this code is compiled?\n\n```java\nclass Circle {\n  private double radius;\n  Circle(double radius) { this.radius = radius; }\n  Circle() {\n    System.out.println(\"default\");\n    this(1.0);\n  }\n}\npublic class Main {\n  public static void main(String[] args) { new Circle(); }\n}\n```",
+      "options": [
+        "Prints default",
+        "Runs with no output",
+        "Runtime exception",
+        "Compile error"
+      ],
+      "correct": [
+        3
+      ],
+      "explanation": "A call to this(...) must be the first statement in a constructor and cannot be used elsewhere.",
+      "option_explanations": [
+        "Assumes order does not matter.",
+        "Assumes the output is lost.",
+        "Thinks the problem occurs at run time.",
+        "Correct: this(1.0) is not the first statement in the constructor."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "What is the result of compiling this class?\n\n```java\nclass Circle {\n  private double radius;\n  Circle(double radius) { this.radius = radius; }\n  void reset() { this(1.0); }\n}\npublic class Main {\n  public static void main(String[] args) { new Circle(3).reset(); }\n}\n```",
+        "options": [
+          "It compiles and resets the radius",
+          "It compiles and throws at run time",
+          "It compiles but this(1.0) is ignored",
+          "Compile error"
+        ],
+        "correct": [
+          3
+        ],
+        "explanation": "A call to this(...) must be the first statement in a constructor and cannot be used elsewhere.",
+        "option_explanations": [
+          "Assumes a method can call a constructor.",
+          "Assumes a run-time failure.",
+          "Assumes the statement is skipped.",
+          "Correct: this(...) can appear only as the first line of a constructor, not in a normal method."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "What happens when this code is compiled?\n\n```java\nclass Box {\n  int w, h;\n  Box(int w, int h) { this.w = w; this.h = h; }\n  Box(int s) {\n    int area = s * s;\n    this(s, s);\n  }\n}\npublic class Main {\n  public static void main(String[] args) { new Box(2); }\n}\n```",
+        "options": [
+          "It compiles and creates a 2 by 2 box",
+          "Compile error",
+          "It prints 4",
+          "It throws a run-time exception"
+        ],
+        "correct": [
+          1
+        ],
+        "explanation": "A call to this(...) must be the first statement in a constructor and cannot be used elsewhere.",
+        "option_explanations": [
+          "Assumes the extra local is harmless.",
+          "Correct: A statement before this(s, s) breaks the first-statement rule.",
+          "Nothing is printed here.",
+          "The failure is at compile time."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "What happens when this code is compiled?\n\n```java\nclass F {\n  int i = 5;\n  static void show() { System.out.println(this.i); }\n}\npublic class Main {\n  public static void main(String[] args) { F.show(); }\n}\n```",
+      "options": [
+        "Prints 5",
+        "Prints 0",
+        "Compile error",
+        "NullPointerException"
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": "static methods have no current object, so this cannot be used in them.",
+      "option_explanations": [
+        "Assumes this.i is readable.",
+        "Assumes a default of 0.",
+        "Correct: show() is static, and this does not exist there.",
+        "Assumes this is null."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "What is the result?\n\n```java\npublic class Main {\n  int n = 4;\n  public static void main(String[] args) {\n    System.out.println(this.n);\n  }\n}\n```",
+        "options": [
+          "Compile error",
+          "It prints 4",
+          "It prints 0",
+          "It throws NullPointerException"
+        ],
+        "correct": [
+          0
+        ],
+        "explanation": "static methods have no current object, so this cannot be used in them.",
+        "option_explanations": [
+          "Correct: main is static, so it has no this reference.",
+          "Assumes the field value is visible.",
+          "Assumes the default.",
+          "Assumes this is null."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "Which method can legally use `this`?",
+        "options": [
+          "A static method",
+          "An instance method",
+          "The static main method",
+          "A static method of another class"
+        ],
+        "correct": [
+          1
+        ],
+        "explanation": "static methods have no current object, so this cannot be used in them.",
+        "option_explanations": [
+          "No current object.",
+          "Correct: Only instance code runs on an object.",
+          "main is static.",
+          "Still static."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "What is printed?\n\n```java\nclass F {\n  private int i = 5;\n  private static double k = 0;\n  void setI(int i) { this.i = i; }\n  static void setK(double k) { F.k = k; }\n  static double getK() { return k; }\n  int getI() { return i; }\n}\npublic class Main {\n  public static void main(String[] args) {\n    F f1 = new F(), f2 = new F();\n    f1.setI(10); f2.setI(45);\n    F.setK(2.5);\n    System.out.println(f1.getI() + \" \" + f2.getI() + \" \" + F.getK());\n  }\n}\n```",
+      "options": [
+        "45 45 2.5",
+        "10 10 2.5",
+        "10 45 0.0",
+        "10 45 2.5"
+      ],
+      "correct": [
+        3
+      ],
+      "explanation": "A static field is reached with the class name (F.k) when a parameter hides it; this cannot be used because there is no object.",
+      "option_explanations": [
+        "Treats i as shared.",
+        "Treats i as shared with the first value.",
+        "Thinks the static setter did not work.",
+        "Correct: Each object keeps its own i; k is static and is set through F.k = k."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "What is printed?\n\n```java\nclass F {\n  private static double k = 0;\n  static void setK(double k) { k = k; }\n  static double getK() { return k; }\n}\npublic class Main {\n  public static void main(String[] args) {\n    F.setK(7);\n    System.out.println(F.getK());\n  }\n}\n```",
+        "options": [
+          "0.0",
+          "7.0",
+          "7",
+          "Compile error"
+        ],
+        "correct": [
+          0
+        ],
+        "explanation": "A static field is reached with the class name (F.k) when a parameter hides it; this cannot be used because there is no object.",
+        "option_explanations": [
+          "Correct: k = k assigns the parameter to itself; the static field is not changed.",
+          "Assumes the field is set.",
+          "Prints the integer form.",
+          "The code is legal."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "In `static void setK(double k)` the parameter hides the static field k. How do you assign the field?",
+        "options": [
+          "this.k = k;",
+          "k = k;",
+          "static k = k;",
+          "F.k = k;"
+        ],
+        "correct": [
+          3
+        ],
+        "explanation": "A static field is reached with the class name (F.k) when a parameter hides it; this cannot be used because there is no object.",
+        "option_explanations": [
+          "this does not exist in a static method.",
+          "Assigns the parameter to itself.",
+          "Not valid Java.",
+          "Correct: Use the class name to reach the field."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "What is printed?\n\n```java\nimport java.util.Random;\npublic class Main {\n  public static void main(String[] args) {\n    Random r1 = new Random(3);\n    Random r2 = new Random(3);\n    System.out.println(r1.nextInt(1000) + \" \" + r2.nextInt(1000));\n    System.out.println(r1.nextInt(1000) == r2.nextInt(1000));\n  }\n}\n```",
+      "options": [
+        "734 660, then true",
+        "734 734, then true",
+        "734 734, then false",
+        "734 734, then 660"
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": "Two Random objects created with the same seed generate identical sequences of numbers.",
+      "option_explanations": [
+        "Thinks the second object continues the first's sequence.",
+        "Correct: Seed 3 gives 734 first for both; the second pair is 660 and 660, so the comparison is true.",
+        "Thinks the second pair differs.",
+        "Misreads the boolean as a number."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "What do the two lines print?\n\n```java\nimport java.util.Random;\npublic class Main {\n  public static void main(String[] args) {\n    Random a = new Random(3);\n    Random b = new Random(3);\n    a.nextInt(1000);\n    System.out.println(a.nextInt(1000) == b.nextInt(1000));\n    System.out.println(a.nextInt(1000) == b.nextInt(1000));\n  }\n}\n```",
+        "options": [
+          "true then true",
+          "true then false",
+          "false then false",
+          "false then true"
+        ],
+        "correct": [
+          2
+        ],
+        "explanation": "Two Random objects created with the same seed generate identical sequences of numbers.",
+        "option_explanations": [
+          "Assumes same seed means always equal.",
+          "Assumes the first compare matches.",
+          "Correct: a is one number ahead of b, so the aligned values never match here (a: 660, b: 734; then a: 210, b: 660).",
+          "Assumes the second compare matches."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "What is printed?\n\n```java\nimport java.util.Random;\npublic class Main {\n  public static void main(String[] args) {\n    Random a = new Random(5);\n    Random b = new Random(5);\n    boolean same = true;\n    for (int i = 0; i < 20; i++)\n      if (a.nextInt(100) != b.nextInt(100)) same = false;\n    System.out.println(same);\n    Random c = new Random(5);\n    Random d = new Random(6);\n    System.out.println(c.nextInt(1000) + \" \" + d.nextInt(1000));\n  }\n}\n```",
+        "options": [
+          "true, then 487 611",
+          "true, then 487 487",
+          "false, then 487 611",
+          "true, then 611 611"
+        ],
+        "correct": [
+          0
+        ],
+        "explanation": "Two Random objects created with the same seed generate identical sequences of numbers.",
+        "option_explanations": [
+          "Correct: Same seed gives the same sequence; different seeds give different sequences.",
+          "Thinks different seeds give the same number.",
+          "Thinks same seed can differ.",
+          "Thinks different seeds give the same number."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "Which values can `r.nextInt(6)` return?",
+      "options": [
+        "1, 2, 3, 4, 5, 6",
+        "0, 1, 2, 3, 4, 5, 6",
+        "1, 2, 3, 4, 5",
+        "0, 1, 2, 3, 4, 5"
+      ],
+      "correct": [
+        3
+      ],
+      "explanation": "nextInt(n) returns a random int from 0 up to n - 1 (n exclusive).",
+      "option_explanations": [
+        "Shifts the range up by one.",
+        "Includes the bound itself.",
+        "Drops both ends.",
+        "Correct: The bound is exclusive and the range starts at 0."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "Which call returns a random int between 0 and 99, inclusive?",
+        "options": [
+          "r.nextInt(99)",
+          "r.nextInt(100)",
+          "r.nextInt(101)",
+          "r.nextInt() % 100"
+        ],
+        "correct": [
+          1
+        ],
+        "explanation": "nextInt(n) returns a random int from 0 up to n - 1 (n exclusive).",
+        "option_explanations": [
+          "That gives 0 to 98.",
+          "Correct: nextInt(100) yields 0 to 99.",
+          "That gives 0 to 100.",
+          "That can be negative."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "What is the largest value `new Random().nextInt(10)` can return?",
+        "options": [
+          "10",
+          "11",
+          "9",
+          "0"
+        ],
+        "correct": [
+          2
+        ],
+        "explanation": "nextInt(n) returns a random int from 0 up to n - 1 (n exclusive).",
+        "option_explanations": [
+          "Includes the bound.",
+          "Beyond the range.",
+          "Correct: The upper bound 10 is excluded.",
+          "That is the smallest value."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "Which statement about `nextDouble()` of the Random class is correct?",
+      "options": [
+        "It returns a double from 0.0 up to but not including 1.0",
+        "It returns a double from 0.0 to 1.0 including 1.0",
+        "It returns a double between 0 and 100",
+        "It returns an int"
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": "Random provides nextInt(), nextInt(n), nextLong(), nextDouble(), nextFloat() and nextBoolean(); the decimals are in [0.0, 1.0).",
+      "option_explanations": [
+        "Correct: The upper limit is exclusive.",
+        "1.0 is excluded.",
+        "The range is 0.0 to 1.0.",
+        "The return type is double."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "Which method returns a random true or false?",
+        "options": [
+          "nextInt(2)",
+          "nextDouble()",
+          "nextBoolean()",
+          "nextLong()"
+        ],
+        "correct": [
+          2
+        ],
+        "explanation": "Random provides nextInt(), nextInt(n), nextLong(), nextDouble(), nextFloat() and nextBoolean(); the decimals are in [0.0, 1.0).",
+        "option_explanations": [
+          "That returns an int.",
+          "That returns a double.",
+          "Correct: nextBoolean() returns a boolean.",
+          "That returns a long."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "What does the no-argument constructor `new Random()` use as its seed?",
+        "options": [
+          "The number 0",
+          "The current time",
+          "The number 1",
+          "The size of the array"
+        ],
+        "correct": [
+          1
+        ],
+        "explanation": "Random provides nextInt(), nextInt(n), nextLong(), nextDouble(), nextFloat() and nextBoolean(); the decimals are in [0.0, 1.0).",
+        "option_explanations": [
+          "The no-argument constructor uses the current time, not a fixed value or an unrelated quantity.",
+          "Correct: Random() uses the current time, so each run produces different numbers.",
+          "The no-argument constructor uses the current time, not a fixed value or an unrelated quantity.",
+          "The no-argument constructor uses the current time, not a fixed value or an unrelated quantity."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "What is printed?\n\n```java\nimport java.util.Date;\npublic class Main {\n  public static void main(String[] args) {\n    Date d = new Date(0);\n    System.out.println(d.getTime());\n    d.setTime(5000);\n    System.out.println(d.getTime());\n    Date e = new Date(2000L);\n    System.out.println(e.getTime() < d.getTime());\n  }\n}\n```",
+      "options": [
+        "0, 5000, false (one per line)",
+        "1970, 5000, true (one per line)",
+        "0, 5000, true (one per line)",
+        "0, 0, true (one per line)"
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": "Date stores a time as milliseconds since January 1, 1970, GMT; getTime() returns it and setTime(long) changes it.",
+      "option_explanations": [
+        "Gets the comparison reversed.",
+        "Thinks getTime returns a year.",
+        "Correct: new Date(0) is the starting moment; after setTime(5000) it holds 5000, and 2000 is less than 5000.",
+        "Thinks setTime had no effect."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "What does this program print?\n\n```java\nimport java.util.Date;\npublic class Main {\n  public static void main(String[] args) {\n    Date a = new Date(1000L);\n    Date b = new Date(4500L);\n    System.out.println(b.getTime() - a.getTime());\n    a.setTime(b.getTime() + 500);\n    System.out.println(a.getTime());\n  }\n}\n```",
+        "options": [
+          "3500 then 5000",
+          "3500 then 4500",
+          "4500 then 5000",
+          "1000 then 5000"
+        ],
+        "correct": [
+          0
+        ],
+        "explanation": "Date stores a time as milliseconds since January 1, 1970, GMT; getTime() returns it and setTime(long) changes it.",
+        "option_explanations": [
+          "Correct: 4500 - 1000 = 3500, and setTime(4500 + 500) makes a.getTime() 5000.",
+          "Forgets the +500.",
+          "Doesn't subtract the start.",
+          "Thinks setTime was ignored."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "What is printed?\n\n```java\nimport java.util.Date;\npublic class Main {\n  public static void main(String[] args) {\n    Date d = new Date();\n    long now = d.getTime();\n    System.out.println(now > 0);\n    d.setTime(0);\n    System.out.println(d.getTime() < now);\n  }\n}\n```",
+        "options": [
+          "true then false",
+          "false then true",
+          "false then false",
+          "true then true"
+        ],
+        "correct": [
+          3
+        ],
+        "explanation": "Date stores a time as milliseconds since January 1, 1970, GMT; getTime() returns it and setTime(long) changes it.",
+        "option_explanations": [
+          "Compares the wrong direction.",
+          "Thinks the current time is not positive.",
+          "Thinks the current time is not positive and 0 is not earlier than it.",
+          "Correct: The current time is a large positive number of ms since 1970, and 0 is less than it."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "What does `new java.util.Date()` create?",
+      "options": [
+        "A Date for January 1, 1970",
+        "A Date for the current date and time",
+        "A Date with no time set",
+        "A Date for midnight today"
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": "java.util.Date: Date() is the current time; Date(elapseTime) takes milliseconds since January 1, 1970, GMT; toString() gives the date and time as text.",
+      "option_explanations": [
+        "That is time 0.",
+        "Correct: The no-argument constructor uses the current time.",
+        "The time is set.",
+        "Not midnight."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "In `new Date(elapseTime)`, what is the unit and starting point of `elapseTime`?",
+        "options": [
+          "Milliseconds since January 1, 1970, GMT",
+          "Seconds since January 1, 1970, GMT",
+          "Milliseconds since midnight",
+          "Days since January 1, 1970"
+        ],
+        "correct": [
+          0
+        ],
+        "explanation": "java.util.Date: Date() is the current time; Date(elapseTime) takes milliseconds since January 1, 1970, GMT; toString() gives the date and time as text.",
+        "option_explanations": [
+          "Correct: The long value counts milliseconds from the epoch.",
+          "The unit is milliseconds, not seconds.",
+          "The starting point is January 1, 1970, GMT, not midnight.",
+          "The unit is milliseconds, not days."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "Which call returns the date and time as readable text such as `Sun Mar 09 13:50:19 EST 2003`?",
+        "options": [
+          "date.getTime()",
+          "date.setTime(0)",
+          "date.text()",
+          "date.toString()"
+        ],
+        "correct": [
+          3
+        ],
+        "explanation": "java.util.Date: Date() is the current time; Date(elapseTime) takes milliseconds since January 1, 1970, GMT; toString() gives the date and time as text.",
+        "option_explanations": [
+          "That returns a long.",
+          "That sets the time.",
+          "No such method.",
+          "Correct: toString() returns a String."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "Which package contains the `Point2D` class used in the lecture?",
+      "options": [
+        "java.util",
+        "java.awt.point",
+        "javafx.geometry",
+        "javafx.shape"
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": "Point2D is in the javafx.geometry package and represents a point in a two-dimensional plane; its toString prints Point2D [x = ..., y = ...].",
+      "option_explanations": [
+        "java.util has Date and Random.",
+        "Not a real package for this class.",
+        "Correct: Point2D is part of JavaFX geometry.",
+        "Not a real package for this class."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "For a point with x = 1.5 and y = 5.5, which string does `p1.toString()` produce?",
+        "options": [
+          "Point2D [x = 1.5, y = 5.5]",
+          "(1.5, 5.5)",
+          "Point2D(1.5, 5.5)",
+          "[1.5][5.5]"
+        ],
+        "correct": [
+          0
+        ],
+        "explanation": "Point2D is in the javafx.geometry package and represents a point in a two-dimensional plane; its toString prints Point2D [x = ..., y = ...].",
+        "option_explanations": [
+          "Correct: The lecture's output shows this format.",
+          "The lecture's output uses square brackets with x = and y = labels, not this form.",
+          "The lecture's output uses square brackets with x = and y = labels, not this form.",
+          "The lecture's output uses square brackets with x = and y = labels, not this form."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "What does a Point2D object represent?",
+        "options": [
+          "A date and time",
+          "A point in a two-dimensional plane",
+          "A random number source",
+          "A circle with a radius"
+        ],
+        "correct": [
+          1
+        ],
+        "explanation": "Point2D is in the javafx.geometry package and represents a point in a two-dimensional plane; its toString prints Point2D [x = ..., y = ...].",
+        "option_explanations": [
+          "That is Date.",
+          "Correct: It is a JavaFX class for 2D points.",
+          "That is Random.",
+          "That is Circle."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "Which keywords for blanks A and B make the call `Student.getCount()` print the total number of students?\n\n```java\nclass Student {\n  private String name;\n  private ____A____ int count = 0;\n  Student(String n) { name = n; count++; }\n  ____B____ int getCount() { return count; }\n}\n// main: new Student(\"a\"); new Student(\"b\"); System.out.println(Student.getCount());\n```",
+      "options": [
+        "A: static, B: static",
+        "A: (nothing), B: static",
+        "A: static, B: (nothing)",
+        "A: final, B: static"
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": "A counter shared by all objects must be static, and a method that is called with the class name and reads it must also be static.",
+      "option_explanations": [
+        "Correct: count must be one shared variable and getCount must be callable without an object.",
+        "Each object would have its own count, and a static method cannot read it.",
+        "The instance method cannot be called with the class name.",
+        "A final field cannot be incremented."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "Fill the blanks so that every `Counter` object shares one `total`, and `Counter.total()` works without an object.\n\n```java\nclass Counter {\n  ____A____ int total = 0;\n  Counter() { total++; }\n  ____B____ int total() { return total; }\n}\n```",
+        "options": [
+          "A: final, B: static",
+          "A: static, B: (nothing)",
+          "A: static, B: static",
+          "A: (nothing), B: (nothing)"
+        ],
+        "correct": [
+          2
+        ],
+        "explanation": "A counter shared by all objects must be static, and a method that is called with the class name and reads it must also be static.",
+        "option_explanations": [
+          "A final variable cannot be incremented.",
+          "An instance method needs an object.",
+          "Correct: Both the shared variable and the class-level method are static.",
+          "total would be per object and the class-name call would not compile."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "What is the correct way to write a method `count()` that can be called as `Item.count()` and returns the static field `made`?",
+        "options": [
+          "int count() { return made; }",
+          "final int count() { return made; }",
+          "static int count() { return this.made; }",
+          "static int count() { return made; }"
+        ],
+        "correct": [
+          3
+        ],
+        "explanation": "A counter shared by all objects must be static, and a method that is called with the class name and reads it must also be static.",
+        "option_explanations": [
+          "Not callable with the class name.",
+          "final does not make it class-level.",
+          "this is not allowed in a static method.",
+          "Correct: A static method is called with the class name and may use static fields."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "basic",
+      "question": "Write a Java class `Point` that is immutable: it has int x and y set by a constructor, with getters.",
+      "answer": "```java\npublic class Point {\n  private final int x;\n  private final int y;\n  public Point(int x, int y) { this.x = x; this.y = y; }\n  public int getX() { return x; }\n  public int getY() { return y; }\n}\n```\nFields are private, there are no setters, and getters return only primitive values, so no reference to a mutable object leaks."
+    },
+    "versions": [
+      {
+        "type": "basic",
+        "question": "Write an immutable class `Money` with a private double amount set only in the constructor and a getter. Explain why it is immutable.",
+        "answer": "```java\npublic class Money {\n  private double amount;\n  public Money(double amount) { this.amount = amount; }\n  public double getAmount() { return amount; }\n}\n```\nThe field is private, there is no mutator, and the getter returns a primitive, so nothing outside can change the object after creation."
+      },
+      {
+        "type": "basic",
+        "question": "A class `Person` has `private String name;` and `private Date birth;` with only getters. Its `getBirth()` returns the `birth` field. Is Person immutable? How could that be fixed?",
+        "answer": "Not immutable: getBirth() returns a reference to a mutable Date, so a caller can call setTime on it. A fix is to return a new Date copy (new Date(birth.getTime())) or not expose the Date."
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "basic",
+      "question": "Write a class `Employee` with a private instance variable `name`, a private static variable `count` that counts the employees created, a constructor, and a static getter `getCount()`. Then draw the UML class diagram as text.",
+      "answer": "```java\npublic class Employee {\n  private String name;\n  private static int count = 0;\n  public Employee(String name) { this.name = name; count++; }\n  public static int getCount() { return count; }\n}\n```\nUML:\nEmployee\n-name: String\n-count: int   (underlined, static)\n+Employee(name: String)\n+getCount(): int   (underlined, static)"
+    },
+    "versions": [
+      {
+        "type": "basic",
+        "question": "Write a class `Room` with private `number`, a private static `rooms` counter incremented in the constructor, and a static getter. Show its UML text with visibility signs and mark the static members.",
+        "answer": "```java\npublic class Room {\n  private int number;\n  private static int rooms = 0;\n  public Room(int number) { this.number = number; rooms++; }\n  public static int getRooms() { return rooms; }\n}\n```\nUML:\nRoom\n-number: int\n-rooms: int   (underlined)\n+Room(number: int)\n+getRooms(): int   (underlined)"
+      },
+      {
+        "type": "basic",
+        "question": "Draw as text the UML class diagram for a class Circle having the private field radius (double), the private static field numberOfObjects (int), two public constructors, and public getRadius, setRadius(radius: double): void and getNumberOfObjects methods. Mark static members.",
+        "answer": "Circle\n-radius: double\n-numberOfObjects: int   (underlined, static)\n+Circle()\n+Circle(radius: double)\n+getRadius(): double\n+setRadius(radius: double): void\n+getNumberOfObjects(): int   (underlined, static)"
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "basic",
+      "question": "Write a setter `setRadius` for a private double radius that stores 0 when the given value is negative. Use the conditional operator.",
+      "answer": "```java\npublic void setRadius(double newRadius) {\n  radius = (newRadius >= 0) ? newRadius : 0;\n}\n```"
+    },
+    "versions": [
+      {
+        "type": "basic",
+        "question": "Write a setter `setSpeed(int s)` for a private int speed that never lets speed exceed 120. Use the conditional operator.",
+        "answer": "```java\npublic void setSpeed(int s) {\n  speed = (s <= 120) ? s : 120;\n}\n```"
+      },
+      {
+        "type": "basic",
+        "question": "Write a setter `setAge(int a)` that stores the age only when it is between 0 and 150, otherwise leaves the field unchanged.",
+        "answer": "```java\npublic void setAge(int a) {\n  if (a >= 0 && a <= 150) age = a;\n}\n```"
+      }
+    ]
+  }
+]

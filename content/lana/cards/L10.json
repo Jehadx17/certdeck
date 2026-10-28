@@ -1,0 +1,3523 @@
+[
+  {
+    "original": {
+      "type": "mcq",
+      "question": "A country has 10,000 cars and gives each a plate made only of decimal digits. What is the fewest digits per plate that allows a unique plate for every car?",
+      "options": [
+        "3",
+        "5",
+        "4",
+        "10,000"
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": "$k$ digits give $10^k$ plates; $10^3=1000$ is too few, $10^4=10{,}000$ is enough.",
+      "option_explanations": [
+        "$10^3=1000$ plates, fewer than 10,000 cars.",
+        "$10^5$ plates would work but is not the fewest.",
+        "Correct: $10^4 = 10{,}000$ plates.",
+        "Digits needed is the exponent, not the number of cars."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "A system must label 50,000 users with unique codes written only with decimal digits. What is the minimum code length?",
+        "options": [
+          "5",
+          "4",
+          "6",
+          "50,000"
+        ],
+        "correct": [
+          0
+        ],
+        "explanation": "A length-$k$ digit code has $10^k$ possibilities, so we need $10^k \\ge 50{,}000$.",
+        "option_explanations": [
+          "Correct: $10^5=100{,}000 \\ge 50{,}000$.",
+          "$10^4=10{,}000$ codes is too few.",
+          "$10^6$ codes works but a shorter length already suffices.",
+          "Length is the exponent, not the number of users."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "Serial numbers use only digits 0-9 and 1,000,000 items need distinct serials. What is the smallest length that works?",
+        "options": [
+          "5",
+          "7",
+          "1,000,000",
+          "6"
+        ],
+        "correct": [
+          3
+        ],
+        "explanation": "Need $10^k \\ge 1{,}000{,}000$, so $k=6$.",
+        "option_explanations": [
+          "$10^5=100{,}000$ is too few.",
+          "$10^7$ works but is not the smallest.",
+          "The length is the exponent, not the item count.",
+          "Correct: $10^6 = 1{,}000{,}000$ serials."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "Which situation calls for the **product rule**?",
+      "options": [
+        "Picking one fruit from three separate trays",
+        "Building a two-letter word where each position is filled in turn",
+        "Choosing one applicant from disjoint groups",
+        "Counting members of the union of two disjoint sets"
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": "The product rule applies when a single outcome is built from choices that all take part in every count.",
+      "option_explanations": [
+        "Only one tray is used per outcome, so this is the sum rule.",
+        "Correct: every position contributes to each outcome, so multiply.",
+        "One group is used per outcome, which is the sum rule.",
+        "Disjoint union is the sum rule."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "An outcome is made of several independent selections, all of which must be made. Which rule counts the outcomes?",
+        "options": [
+          "Addition of the numbers of choices",
+          "Subtraction of the overlap",
+          "Division by the number of selections",
+          "Multiplication of the numbers of choices"
+        ],
+        "correct": [
+          3
+        ],
+        "explanation": "When every selection is part of each outcome, the numbers of choices are multiplied.",
+        "option_explanations": [
+          "Addition is for choosing from just one set.",
+          "Subtracting overlap is inclusion-exclusion for overlapping sets.",
+          "Dividing is not used for ordered independent choices.",
+          "Correct: product rule."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "To count 3-digit codes, one digit at a time, which rule is used?",
+        "options": [
+          "Sum rule: $10+10+10$",
+          "Product rule: $10 \\cdot 10 \\cdot 10$",
+          "Inclusion-exclusion: $10+10-10$",
+          "Pigeonhole: $\\lceil 3/10 \\rceil$"
+        ],
+        "correct": [
+          1
+        ],
+        "explanation": "Each code needs all three digits, so choices multiply.",
+        "option_explanations": [
+          "Adding would give 30, treating each position as a separate alternative.",
+          "Correct: all three positions are filled for every code.",
+          "There is no overlap to subtract.",
+          "Pigeonhole gives guarantees, not total counts."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "When does the **sum rule** apply?",
+      "options": [
+        "Each outcome is taken from exactly one of several separate sets",
+        "Each outcome uses a choice from every set",
+        "The sets share many elements",
+        "The order of the selections matters"
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": "The sum rule adds counts when an outcome depends on just one set (the sets being disjoint).",
+      "option_explanations": [
+        "Correct: add the set sizes.",
+        "That is the product rule.",
+        "Overlapping sets need inclusion-exclusion.",
+        "Order matters in permutations, not the sum rule."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "A shop has 12 red pens, 8 blue pens and 5 green pens, and you buy one pen. Which count of choices is right?",
+        "options": [
+          "480",
+          "20",
+          "25",
+          "13"
+        ],
+        "correct": [
+          2
+        ],
+        "explanation": "One pen comes from a single colour, so add: $12+8+5=25$.",
+        "option_explanations": [
+          "$12\\cdot 8\\cdot 5=480$ multiplies, which is the product rule.",
+          "$12+8=20$ leaves out the green pens.",
+          "Correct: $12+8+5=25$.",
+          "$8+5=13$ leaves out the red pens."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "An office has 14 chairs, 6 stools and 9 benches. In how many ways can you pick one seat?",
+        "options": [
+          "756",
+          "29",
+          "20",
+          "15"
+        ],
+        "correct": [
+          1
+        ],
+        "explanation": "A single seat is of one type, so add: $14+6+9=29$.",
+        "option_explanations": [
+          "$14\\cdot6\\cdot9=756$ multiplies, wrong rule.",
+          "Correct: $14+6+9=29$.",
+          "$14+6=20$ leaves out the benches.",
+          "$6+9=15$ leaves out the chairs."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "How many two-letter words can be formed from the letters a, b, c if letters may repeat?",
+      "options": [
+        "6",
+        "5",
+        "3",
+        "9"
+      ],
+      "correct": [
+        3
+      ],
+      "explanation": "Each of the 2 positions has 3 choices: $3\\cdot 3=9$.",
+      "option_explanations": [
+        "$3\\cdot 2=6$ forbids repeats.",
+        "$3+2=5$ adds instead of multiplying.",
+        "$3$ counts only one position.",
+        "Correct: $3\\cdot3=9$."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "How many 3-letter words can be formed from {x, y} if letters may repeat?",
+        "options": [
+          "6",
+          "5",
+          "8",
+          "2"
+        ],
+        "correct": [
+          2
+        ],
+        "explanation": "Three positions, 2 choices each: $2^3=8$.",
+        "option_explanations": [
+          "$2\\cdot3=6$ multiplies base by length.",
+          "$2+3=5$ adds base and length.",
+          "Correct: $2\\cdot2\\cdot2=8$.",
+          "$2$ counts one position."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "How many 4-letter words can be formed from {p, q, r} if letters may repeat?",
+        "options": [
+          "81",
+          "12",
+          "64",
+          "7"
+        ],
+        "correct": [
+          0
+        ],
+        "explanation": "Four positions, 3 choices each: $3^4=81$.",
+        "option_explanations": [
+          "Correct: $3^4=81$.",
+          "$3\\cdot4=12$ multiplies base by length.",
+          "$4^3=64$ swaps base and exponent.",
+          "$3+4=7$ adds base and length."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "How many two-letter words use two different letters from a to z?",
+      "options": [
+        "650",
+        "676",
+        "52",
+        "325"
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": "26 choices for the first letter, 25 remaining for the second: $26\\cdot25=650$.",
+      "option_explanations": [
+        "Correct: $26\\cdot 25=650$.",
+        "$26\\cdot26=676$ allows repeated letters.",
+        "$26+26=52$ adds.",
+        "$325$ halves 650, ignoring that order matters."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "How many 2-digit strings (digits 0-9) have two different digits?",
+        "options": [
+          "100",
+          "19",
+          "90",
+          "45"
+        ],
+        "correct": [
+          2
+        ],
+        "explanation": "First digit has 10 options, second has 9: $10\\cdot 9=90$.",
+        "option_explanations": [
+          "$10\\cdot10=100$ allows repeats.",
+          "$10+9=19$ adds.",
+          "Correct: $10\\cdot9=90$.",
+          "$45$ halves 90, ignoring order."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "From the 5 vowels, how many ordered pairs of two different vowels exist?",
+        "options": [
+          "25",
+          "10",
+          "9",
+          "20"
+        ],
+        "correct": [
+          3
+        ],
+        "explanation": "$5\\cdot 4=20$ ordered pairs.",
+        "option_explanations": [
+          "$5\\cdot5=25$ allows repeats.",
+          "$10$ ignores order.",
+          "$9$ adds 5 and 4.",
+          "Correct: $5\\cdot4=20$."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "A plate has four capital letters followed by three digits. How many plates are possible?",
+      "options": [
+        "$26^3\\cdot 10^4$",
+        "$26^4\\cdot 10^3$",
+        "$26^4+10^3$",
+        "$36^7$"
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": "Four letter positions with 26 choices each and three digit positions with 10 choices each, multiplied.",
+      "option_explanations": [
+        "Exponents are swapped between letters and digits.",
+        "Correct.",
+        "Adds the two blocks instead of multiplying.",
+        "Treats every position as one of 36 symbols."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "A code is three capital letters followed by two digits. How many codes exist?",
+        "options": [
+          "$26^2\\cdot 10^3$",
+          "$26^3+10^2$",
+          "$26^3\\cdot 10^2$",
+          "$36^5$"
+        ],
+        "correct": [
+          2
+        ],
+        "explanation": "Multiply the choices of all five positions.",
+        "option_explanations": [
+          "Exponents swapped.",
+          "Sum instead of product.",
+          "Correct.",
+          "Allows letters in digit positions."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "A product key is two capital letters followed by four digits. How many keys exist?",
+        "options": [
+          "$26^4\\cdot 10^2$",
+          "$26^2+10^4$",
+          "$36^6$",
+          "$26^2\\cdot 10^4$"
+        ],
+        "correct": [
+          3
+        ],
+        "explanation": "Two letter positions and four digit positions, multiplied.",
+        "option_explanations": [
+          "Exponents swapped.",
+          "Sum instead of product.",
+          "Allows any symbol anywhere.",
+          "Correct."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "Compared with the count of plates shaped L L L L N N N, the count of plates shaped N N N L L L L is",
+      "options": [
+        "larger by a factor of $26/10$",
+        "the same",
+        "smaller by a factor of $10/26$",
+        "larger by a factor of $26$"
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": "Multiplication is commutative, so the product of the same position counts is unchanged.",
+      "option_explanations": [
+        "The two orders have identical factors, so no such ratio arises.",
+        "Correct: same factors, same product.",
+        "The factors multiply to the same value either way.",
+        "The ratio of the counts is 1, not 26."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "A password has two digits and three letters. Does the number of passwords depend on whether the digits come first or last?",
+        "options": [
+          "No, it is $10^2\\cdot 26^3$ either way",
+          "Yes, digits first gives more",
+          "Yes, letters first gives more",
+          "Yes, the count is $10^2+26^3$ for digits first"
+        ],
+        "correct": [
+          0
+        ],
+        "explanation": "The same position counts are multiplied whatever the arrangement of position types.",
+        "option_explanations": [
+          "Correct.",
+          "Moving the digits does not change the product of choices.",
+          "Moving the letters does not change the product of choices.",
+          "Position counts are multiplied, not added."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "Plates of the form N L N L N L L use 3 digit and 4 letter positions. Their number is",
+        "options": [
+          "$10^4\\cdot 26^3$",
+          "$10^3+26^4$",
+          "$10\\cdot 26\\cdot 7$",
+          "$10^3\\cdot 26^4$"
+        ],
+        "correct": [
+          3
+        ],
+        "explanation": "Only how many positions of each type matter, not their order.",
+        "option_explanations": [
+          "Exponents swapped.",
+          "Adds blocks.",
+          "That multiplies the two symbol counts by the 7 positions, which is not how the product rule works.",
+          "Correct."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "How many 10-character passwords use only capital letters or digits?",
+      "options": [
+        "$36^{10}$",
+        "$26^{10}+10^{10}$",
+        "$36\\cdot 10$",
+        "$26^{10}\\cdot 10^{10}$"
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": "Each position has $26+10=36$ choices (sum rule), and the ten positions multiply.",
+      "option_explanations": [
+        "Correct.",
+        "That counts all-letter passwords plus all-digit passwords only.",
+        "Multiplies the symbol count by the length.",
+        "Multiplies two block counts, as if each had its own ten positions."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "How many 8-character passwords use lowercase letters or digits?",
+        "options": [
+          "$26^8+10^8$",
+          "$36^8$",
+          "$36\\cdot 8$",
+          "$26^8\\cdot 10^8$"
+        ],
+        "correct": [
+          1
+        ],
+        "explanation": "36 choices per position, 8 positions.",
+        "option_explanations": [
+          "Counts only all-letter or all-digit strings.",
+          "Correct.",
+          "Multiplies symbol count by length.",
+          "Double-counts positions."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "How many 6-character passwords use capital letters or lowercase letters?",
+        "options": [
+          "$26^6+26^6$",
+          "$52\\cdot 6$",
+          "$52^6$",
+          "$26^6\\cdot 26^6$"
+        ],
+        "correct": [
+          2
+        ],
+        "explanation": "$26+26=52$ choices per position, 6 positions.",
+        "option_explanations": [
+          "Counts only single-case strings.",
+          "Symbol count times length.",
+          "Correct.",
+          "Squares the single-case count."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "A password character may be an uppercase letter, a lowercase letter or a digit. How many choices does one position have?",
+      "options": [
+        "6,760",
+        "62",
+        "36",
+        "52"
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": "One position uses only one kind of character, so add: $26+26+10=62$.",
+      "option_explanations": [
+        "$26\\cdot 26\\cdot 10=6{,}760$ multiplies the kinds, which is not valid for one position.",
+        "Correct: $26+26+10$.",
+        "Leaves out the lowercase letters.",
+        "Leaves out the digits."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "A symbol is a lowercase letter, a digit, or one of 8 special marks. How many choices does a position have?",
+        "options": [
+          "44",
+          "2,080",
+          "36",
+          "18"
+        ],
+        "correct": [
+          0
+        ],
+        "explanation": "Add the disjoint kinds: $26+10+8=44$.",
+        "option_explanations": [
+          "Correct: $26+10+8$.",
+          "$26\\cdot10\\cdot8$ multiplies.",
+          "$26+10=36$ leaves out the special marks.",
+          "$10+8=18$ leaves out the letters."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "A character may be a capital letter or one of 9 special symbols or a digit. How many choices per position?",
+        "options": [
+          "2,340",
+          "36",
+          "45",
+          "35"
+        ],
+        "correct": [
+          2
+        ],
+        "explanation": "$26+9+10=45$.",
+        "option_explanations": [
+          "Multiplies instead of adding.",
+          "$26+10=36$ leaves out the symbols.",
+          "Correct: $26+9+10$.",
+          "$26+9=35$ leaves out the digits."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "How many binary numbers have exactly 5 binary digits (leading zeros allowed)?",
+      "options": [
+        "10",
+        "25",
+        "16",
+        "32"
+      ],
+      "correct": [
+        3
+      ],
+      "explanation": "Each of 5 positions is 0 or 1: $2^5=32$.",
+      "option_explanations": [
+        "$2\\cdot5=10$ multiplies base by length.",
+        "$5^2=25$ swaps base and exponent.",
+        "$2^4=16$ uses one position too few.",
+        "Correct: $2^5$."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "How many binary strings of length 8 are there?",
+        "options": [
+          "16",
+          "64",
+          "256",
+          "128"
+        ],
+        "correct": [
+          2
+        ],
+        "explanation": "$2^8=256$.",
+        "option_explanations": [
+          "$2\\cdot 8=16$ multiplies.",
+          "$2^6=64$ drops two positions.",
+          "Correct: $2^8$.",
+          "$2^7=128$ drops one position."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "How many binary strings of length 6 exist?",
+        "options": [
+          "64",
+          "12",
+          "36",
+          "32"
+        ],
+        "correct": [
+          0
+        ],
+        "explanation": "$2^6=64$.",
+        "option_explanations": [
+          "Correct: $2^6$.",
+          "$2\\cdot6=12$ multiplies.",
+          "$6^2=36$ swaps base and exponent.",
+          "$2^5=32$ drops one position."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "How many 5-digit binary numbers start with 0 and end with 1?",
+      "options": [
+        "16",
+        "4",
+        "32",
+        "8"
+      ],
+      "correct": [
+        3
+      ],
+      "explanation": "First and last digits are fixed; the 3 middle digits give $1\\cdot2\\cdot2\\cdot2\\cdot1=2^3=8$.",
+      "option_explanations": [
+        "$2^4=16$ fixes only one end.",
+        "$2^2=4$ fixes one position too many.",
+        "$2^5=32$ ignores both conditions.",
+        "Correct: $2^3=8$."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "How many 8-digit binary numbers start with 1 and end with 0?",
+        "options": [
+          "128",
+          "64",
+          "32",
+          "256"
+        ],
+        "correct": [
+          1
+        ],
+        "explanation": "Two fixed ends leave 6 free positions: $2^6=64$.",
+        "option_explanations": [
+          "$2^7$ fixes only one end.",
+          "Correct: $2^6$.",
+          "$2^5$ fixes three positions.",
+          "$2^8$ fixes none."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "How many 6-digit binary strings start with 1 and end with 0?",
+        "options": [
+          "32",
+          "8",
+          "64",
+          "16"
+        ],
+        "correct": [
+          3
+        ],
+        "explanation": "Four free middle positions: $2^4=16$.",
+        "option_explanations": [
+          "$2^5$ fixes only one end.",
+          "$2^3$ fixes three positions.",
+          "$2^6$ fixes none.",
+          "Correct: $2^4$."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "A tray holds 5 apples, another 9 oranges, another 7 avocados. In how many ways can one fruit be picked?",
+      "options": [
+        "315",
+        "21",
+        "14",
+        "45"
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": "One fruit comes from one tray, so add: $5+9+7=21$.",
+      "option_explanations": [
+        "$5\\cdot 9\\cdot 7=315$ multiplies.",
+        "Correct: $5+9+7$.",
+        "$5+9=14$ misses avocados.",
+        "$5\\cdot 9=45$ misses avocados and multiplies."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "A bag has 6 apples, 4 pears and 8 plums. How many ways to take one piece of fruit?",
+        "options": [
+          "18",
+          "192",
+          "10",
+          "24"
+        ],
+        "correct": [
+          0
+        ],
+        "explanation": "Add: $6+4+8=18$.",
+        "option_explanations": [
+          "Correct: $6+4+8$.",
+          "$6\\cdot4\\cdot8=192$ multiplies.",
+          "$6+4=10$ misses plums.",
+          "$6\\cdot 4=24$ misses plums and multiplies."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "Three shelves hold 11 novels, 7 atlases and 3 comics. In how many ways can you choose one book?",
+        "options": [
+          "231",
+          "18",
+          "21",
+          "77"
+        ],
+        "correct": [
+          2
+        ],
+        "explanation": "Add: $11+7+3=21$.",
+        "option_explanations": [
+          "$11\\cdot7\\cdot3=231$ multiplies.",
+          "$11+7=18$ misses comics.",
+          "Correct: $11+7+3$.",
+          "$11\\cdot 7=77$ misses comics and multiplies."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "An applicant pool has 19 from CS, 13 from IS and 17 from SE, with no duplicates. How many ways can the company hire one?",
+      "options": [
+        "4,199",
+        "49",
+        "36",
+        "32"
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": "Sum rule: $19+13+17=49$.",
+      "option_explanations": [
+        "$19\\cdot13\\cdot17=4199$ multiplies.",
+        "Correct: $19+13+17$.",
+        "$19+17=36$ leaves out IS.",
+        "$19+13=32$ leaves out SE."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "A firm has 8 applicants from Law, 11 from Finance and 6 from Audit, none appearing twice. How many ways can one be hired?",
+        "options": [
+          "528",
+          "19",
+          "17",
+          "25"
+        ],
+        "correct": [
+          3
+        ],
+        "explanation": "Sum rule: $8+11+6=25$.",
+        "option_explanations": [
+          "$8\\cdot11\\cdot6=528$ multiplies.",
+          "$8+11=19$ leaves out Audit.",
+          "$11+6=17$ leaves out Law.",
+          "Correct: $8+11+6$."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "From 23 junior, 15 mid-level and 12 senior candidates, all distinct, how many ways exist to pick one to hire?",
+        "options": [
+          "4,140",
+          "38",
+          "50",
+          "35"
+        ],
+        "correct": [
+          2
+        ],
+        "explanation": "Sum rule: $23+15+12=50$.",
+        "option_explanations": [
+          "$23\\cdot15\\cdot12=4140$ multiplies.",
+          "$23+15=38$ leaves out seniors.",
+          "Correct: $23+15+12$.",
+          "$23+12=35$ leaves out mid-level."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "The 49 distinct applicants are all eligible. In how many ways can two be chosen as (first, second), order mattering?",
+      "options": [
+        "$49\\cdot 48$",
+        "$49\\cdot 49$",
+        "$49+48$",
+        "$\\frac{49\\cdot 48}{2}$"
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": "49 choices for the first, 48 remaining for the second (product rule).",
+      "option_explanations": [
+        "Correct.",
+        "This lets the same person be chosen twice.",
+        "Adding applies to alternatives, not successive choices.",
+        "Dividing by 2 ignores the order."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "From 35 distinct applicants, how many ordered pairs (first, second) can be selected?",
+        "options": [
+          "1190",
+          "1225",
+          "69",
+          "595"
+        ],
+        "correct": [
+          0
+        ],
+        "explanation": "$35\\cdot34$ since the second must differ from the first.",
+        "option_explanations": [
+          "Correct: $35\\cdot 34$.",
+          "$35\\cdot35$ lets one person fill both slots.",
+          "$35+34$ adds.",
+          "Dividing by 2 would ignore order."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "A club of 20 members picks a president and then a secretary, who must be a different person. How many outcomes?",
+        "options": [
+          "400",
+          "39",
+          "380",
+          "190"
+        ],
+        "correct": [
+          2
+        ],
+        "explanation": "$20\\cdot19=380$ outcomes.",
+        "option_explanations": [
+          "$20\\cdot20$ allows one person to hold both posts.",
+          "$20+19$ adds.",
+          "Correct: $20\\cdot 19$.",
+          "Dividing by 2 treats the posts as unordered."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "How many passwords of length 5 to 8 can be made from uppercase letters, lowercase letters and digits?",
+      "options": [
+        "$62^5\\cdot 62^6\\cdot 62^7\\cdot 62^8$",
+        "$62^8$",
+        "$4\\cdot 62^5$",
+        "$62^5+62^6+62^7+62^8$"
+      ],
+      "correct": [
+        3
+      ],
+      "explanation": "Each length is counted by the product rule ($62^k$), and the separate lengths are added.",
+      "option_explanations": [
+        "The lengths are alternatives, so they add, not multiply.",
+        "This counts only length 8.",
+        "This treats all lengths like length 5.",
+        "Correct."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "How many passwords of length 3 to 5 use only lowercase letters and digits?",
+        "options": [
+          "$36^3\\cdot 36^4\\cdot 36^5$",
+          "$36^3+36^4+36^5$",
+          "$36^5$",
+          "$3\\cdot 36^3$"
+        ],
+        "correct": [
+          1
+        ],
+        "explanation": "Per length $36^k$, then add across lengths.",
+        "option_explanations": [
+          "Lengths are alternatives so they add.",
+          "Correct.",
+          "Counts only length 5.",
+          "Counts only 3 times the shortest."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "How many strings of length 2 to 4 use only digits?",
+        "options": [
+          "$10^2\\cdot10^3\\cdot10^4$",
+          "$10^4$",
+          "$10^2+10^3+10^4$",
+          "$3\\cdot10^2$"
+        ],
+        "correct": [
+          2
+        ],
+        "explanation": "Add $10^2$, $10^3$ and $10^4$.",
+        "option_explanations": [
+          "Lengths are alternatives, so add.",
+          "Counts only length 4.",
+          "Correct.",
+          "Counts only 3 times the shortest."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "How many 5-character strings of capital letters and digits contain at least one digit?",
+      "options": [
+        "$36^5$",
+        "$26^5\\cdot10$",
+        "$10^5$",
+        "$36^5-26^5$"
+      ],
+      "correct": [
+        3
+      ],
+      "explanation": "All strings minus those with no digit: $36^5-26^5=48{,}584{,}800$.",
+      "option_explanations": [
+        "This counts every string, including all-letter ones.",
+        "That counts 6-character strings (five letters then one digit), not 5-character strings with a digit.",
+        "This counts all-digit strings only.",
+        "Correct: all minus no-digit strings."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "How many 4-character strings of lowercase letters and digits contain at least one letter?",
+        "options": [
+          "$36^4$",
+          "$36^4-10^4$",
+          "$26\\cdot 36^3$",
+          "$26^4$"
+        ],
+        "correct": [
+          1
+        ],
+        "explanation": "Subtract the all-digit strings: $36^4-10^4=1{,}669{,}616$.",
+        "option_explanations": [
+          "Includes the all-digit strings.",
+          "Correct.",
+          "Counts only strings that start with a letter.",
+          "Counts all-letter strings only."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "How many 6-digit decimal strings contain at least one 7?",
+        "options": [
+          "$10^6-9^6$",
+          "$10^6$",
+          "$6\\cdot10^5$",
+          "$9^6$"
+        ],
+        "correct": [
+          0
+        ],
+        "explanation": "All minus those with no 7: $10^6-9^6=468{,}559$.",
+        "option_explanations": [
+          "Correct.",
+          "Includes strings without a 7.",
+          "Overcounts strings with several 7s.",
+          "Counts only strings with no 7."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "basic",
+      "question": "How many passwords of length 3 or 4, made of capital letters and digits, contain at least one digit?",
+      "answer": "Use correct = all - wrong for each length, then add (sum rule).\nLength 3: all = $36^3 = 46,656$, no digit = $26^3 = 17,576$, so $29,080$.\nLength 4: all = $36^4 = 1,679,616$, no digit = $26^4 = 456,976$, so $1,222,640$.\nTotal = 29,080 + 1,222,640 = 1,251,720."
+    },
+    "versions": [
+      {
+        "type": "basic",
+        "question": "How many passwords of length 2 or 3, using capital letters and digits, contain at least one digit?",
+        "answer": "For each length subtract the all-letter strings from all strings, then add.\nLength 2: $36^2-26^2 = 1296 - 676 = 620$.\nLength 3: $36^3-26^3 = 46656 - 17576 = 29080$.\nTotal = 620 + 29080 = 29,700."
+      },
+      {
+        "type": "basic",
+        "question": "Count the passwords of length 4 or 5 over capital letters and digits that contain at least one digit.",
+        "answer": "Length 4: $36^4-26^4 = 1,679,616 - 456,976 = 1,222,640$.\nLength 5: $36^5-26^5 = 60,466,176 - 11,881,376 = 48,584,800$.\nBy the sum rule the total is 1,222,640 + 48,584,800 = 49,807,440."
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "There are 17 CS graduates and 13 IS graduates, and 3 graduated in both. In how many ways can one candidate be chosen?",
+      "options": [
+        "30",
+        "24",
+        "33",
+        "27"
+      ],
+      "correct": [
+        3
+      ],
+      "explanation": "$|A\\cup B| = 17+13-3 = 27$.",
+      "option_explanations": [
+        "$17+13=30$ counts the 3 twice.",
+        "$17+13-2\\cdot3=24$ removes them twice.",
+        "$17+13+3=33$ adds the overlap again.",
+        "Correct: the 3 double graduates are counted once."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "A school has 25 maths students and 18 physics students; 6 take both. How many different students are there in total?",
+        "options": [
+          "37",
+          "43",
+          "31",
+          "49"
+        ],
+        "correct": [
+          0
+        ],
+        "explanation": "$25+18-6=37$.",
+        "option_explanations": [
+          "Correct: $25+18-6$.",
+          "$25+18=43$ counts the 6 twice.",
+          "$25+18-2\\cdot 6=31$ removes them twice.",
+          "$25+18+6=49$ adds the overlap."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "40 employees speak French and 22 speak Spanish, with 9 speaking both. How many speak at least one of the two?",
+        "options": [
+          "62",
+          "53",
+          "44",
+          "71"
+        ],
+        "correct": [
+          1
+        ],
+        "explanation": "$40+22-9=53$.",
+        "option_explanations": [
+          "$40+22=62$ double-counts the 9.",
+          "Correct: $40+22-9$.",
+          "$40+22-2\\cdot9=44$ subtracts twice.",
+          "$40+22+9=71$ adds the overlap."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "The principle of inclusion-exclusion for two sets states $|A\\cup B| =$",
+      "options": [
+        "$|A|+|B|+|A\\cap B|$",
+        "$|A|\\cdot|B|-|A\\cap B|$",
+        "$|A|+|B|-|A\\cap B|$",
+        "$|A|+|B|-|A\\cup B|$"
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": "The common elements are counted in both sizes, so one copy is subtracted.",
+      "option_explanations": [
+        "Adding the intersection counts it three times.",
+        "Sizes are added, not multiplied.",
+        "Correct.",
+        "Subtracting the union is circular."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "Which expression gives the number of elements in at least one of two sets A and B?",
+        "options": [
+          "$|A|\\cdot|B|$",
+          "$|A|+|B|-|A\\cap B|$",
+          "$|A|+|B|-|A|\\cdot|B|$",
+          "$|A\\cap B|-|A|-|B|$"
+        ],
+        "correct": [
+          1
+        ],
+        "explanation": "Add the sizes, then remove the double-counted intersection.",
+        "option_explanations": [
+          "Multiplying sizes gives ordered pairs.",
+          "Correct.",
+          "The correction is the intersection size, not a product.",
+          "Wrong signs; this is negative in general."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "Fill in: the size of a union of two sets equals the sum of the sizes minus",
+        "options": [
+          "the size of the intersection",
+          "the size of the union",
+          "the product of the sizes",
+          "the size of the larger set"
+        ],
+        "correct": [
+          0
+        ],
+        "explanation": "Elements in both sets are counted twice in the sum.",
+        "option_explanations": [
+          "Correct.",
+          "The union is what we are computing.",
+          "A product is not a correction term.",
+          "Dropping a whole set removes too much."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "If A and B are disjoint, then $|A\\cup B|$ equals",
+      "options": [
+        "$|A|-|B|$",
+        "$|A|\\cdot|B|$",
+        "$|A|+|B|$",
+        "$\\max(|A|,|B|)$"
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": "$|A\\cap B|=0$, so inclusion-exclusion reduces to the sum rule.",
+      "option_explanations": [
+        "Sizes are added, not subtracted.",
+        "Multiplication counts pairs.",
+        "Correct.",
+        "Union is larger than either set unless one is empty."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "Two sets share no elements and have sizes 14 and 9. Their union has how many elements?",
+        "options": [
+          "5",
+          "126",
+          "14",
+          "23"
+        ],
+        "correct": [
+          3
+        ],
+        "explanation": "No overlap, so $14+9=23$.",
+        "option_explanations": [
+          "$14-9$ treats it as a difference.",
+          "$14\\cdot9$ counts pairs.",
+          "The union includes both sets.",
+          "Correct: $14+9$."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "When the intersection of two finite sets is empty, inclusion-exclusion becomes",
+        "options": [
+          "the product rule",
+          "a subtraction of sizes",
+          "the sum rule",
+          "a pigeonhole bound"
+        ],
+        "correct": [
+          2
+        ],
+        "explanation": "With $|A\\cap B|=0$ the formula is just $|A|+|B|$.",
+        "option_explanations": [
+          "Product rule multiplies independent choices.",
+          "There is nothing to subtract.",
+          "Correct.",
+          "Pigeonhole is a different principle."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "A store lists 101 sweet items and 87 sour items, with 23 on both lists. How many different items can be chosen?",
+      "options": [
+        "165",
+        "188",
+        "142",
+        "211"
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": "$101+87-23=165$.",
+      "option_explanations": [
+        "Correct.",
+        "$101+87=188$ counts the shared items twice.",
+        "$101+87-2\\cdot 23=142$ subtracts twice.",
+        "$101+87+23=211$ adds the shared items again."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "A menu has 64 spicy dishes and 58 vegetarian dishes; 15 dishes are both. How many distinct dishes are there?",
+        "options": [
+          "122",
+          "92",
+          "137",
+          "107"
+        ],
+        "correct": [
+          3
+        ],
+        "explanation": "$64+58-15=107$.",
+        "option_explanations": [
+          "$64+58=122$ double-counts.",
+          "$64+58-2\\cdot15=92$ subtracts twice.",
+          "$64+58+15=137$ adds overlap.",
+          "Correct."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "A library has 140 fiction and 95 history titles with 31 listed under both. How many different titles does it list?",
+        "options": [
+          "235",
+          "204",
+          "173",
+          "266"
+        ],
+        "correct": [
+          1
+        ],
+        "explanation": "$140+95-31=204$.",
+        "option_explanations": [
+          "$140+95=235$ double-counts the shared titles.",
+          "Correct.",
+          "$140+95-2\\cdot31=173$ subtracts twice.",
+          "$140+95+31=266$ adds overlap."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "From the 165 distinct items, how many ordered pairs (item 1, item 2) of different items exist?",
+      "options": [
+        "27225",
+        "329",
+        "13530",
+        "27060"
+      ],
+      "correct": [
+        3
+      ],
+      "explanation": "165 choices, then 164: $165\\cdot164$.",
+      "option_explanations": [
+        "$165\\cdot 165$ allows the same item twice.",
+        "$165+164$ adds.",
+        "Halving ignores order.",
+        "Correct: $165\\cdot164=27{,}060$."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "A catalogue has 107 distinct dishes. In how many ways can a starter and then a different second dish be chosen?",
+        "options": [
+          "11449",
+          "11342",
+          "213",
+          "5671"
+        ],
+        "correct": [
+          1
+        ],
+        "explanation": "$107\\cdot106$.",
+        "option_explanations": [
+          "$107\\cdot107$ allows the same dish.",
+          "Correct: $107\\cdot106=11{,}342$.",
+          "$107+106$ adds.",
+          "Halving ignores order."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "A shelf lists 204 distinct titles. How many ordered pairs of two different titles are there?",
+        "options": [
+          "41412",
+          "41616",
+          "407",
+          "20706"
+        ],
+        "correct": [
+          0
+        ],
+        "explanation": "$204\\cdot203$.",
+        "option_explanations": [
+          "Correct: $204\\cdot203=41{,}412$.",
+          "$204\\cdot204$ allows repeats.",
+          "$204+203$ adds.",
+          "Halving ignores order."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "How many binary strings of length 7 start with 0 or end with 1?",
+      "options": [
+        "128",
+        "64",
+        "96",
+        "112"
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": "$|A|=|B|=2^6=64$ and $|A\\cap B|=2^5=32$, so $64+64-32=96$.",
+      "option_explanations": [
+        "$128=2^7$ counts all strings.",
+        "$64+64-64$ is wrong: the overlap is 32.",
+        "Correct: $64+64-32$.",
+        "$64+64-16$ takes the overlap as $2^4$."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "How many binary strings of length 8 start with 1 or end with 0?",
+        "options": [
+          "256",
+          "192",
+          "128",
+          "224"
+        ],
+        "correct": [
+          1
+        ],
+        "explanation": "$|A|=|B|=2^7=128$, $|A\\cap B|=2^6=64$: $128+128-64=192$.",
+        "option_explanations": [
+          "$256$ counts all strings.",
+          "Correct: $128+128-64$.",
+          "$128+128-128$ takes overlap as $2^7$.",
+          "$128+128-32$ takes overlap as $2^5$."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "How many binary strings of length 6 start with 1 or end with 0?",
+        "options": [
+          "64",
+          "32",
+          "56",
+          "48"
+        ],
+        "correct": [
+          3
+        ],
+        "explanation": "$32+32-16=48$.",
+        "option_explanations": [
+          "$64=2^6$ counts all strings.",
+          "$32+32-32$ takes the overlap as $2^5$.",
+          "$32+32-8$ takes overlap as $2^3$.",
+          "Correct: $32+32-16$."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "Of 100 people, 50 have a home and 60 have a car; 20 have both. How many have neither?",
+      "options": [
+        "30",
+        "20",
+        "10",
+        "40"
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": "Union $=50+60-20=90$; neither $=100-90=10$.",
+      "option_explanations": [
+        "$100-50-20$ wrongly mixes in the overlap.",
+        "$20$ is the number with both.",
+        "Correct.",
+        "$100-60$ ignores the home owners."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "In a group of 200, 120 own a phone and 90 own a laptop; 40 own both. How many own neither?",
+        "options": [
+          "30",
+          "50",
+          "40",
+          "80"
+        ],
+        "correct": [
+          0
+        ],
+        "explanation": "Union $=120+90-40=170$; neither $=200-170=30$.",
+        "option_explanations": [
+          "Correct.",
+          "$200-120-30$ is not derived from the union.",
+          "$40$ is the number with both.",
+          "$200-120$ ignores the laptop owners."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "Of 80 students, 45 drink tea and 38 drink coffee; 15 drink both. How many drink neither?",
+        "options": [
+          "12",
+          "27",
+          "15",
+          "35"
+        ],
+        "correct": [
+          0
+        ],
+        "explanation": "Union $=45+38-15=68$; neither $=80-68=12$.",
+        "option_explanations": [
+          "Correct.",
+          "$80-45-8$ is not derived from the union.",
+          "$15$ is the number who drink both.",
+          "$80-45$ ignores the coffee drinkers."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "For three sets, $|A\\cup B\\cup C| =$",
+      "options": [
+        "$|A|+|B|+|C|-|A\\cap B|-|B\\cap C|-|C\\cap A|-|A\\cap B\\cap C|$",
+        "$|A|+|B|+|C|-|A\\cap B\\cap C|$",
+        "$|A|+|B|+|C|-|A\\cap B|-|B\\cap C|-|C\\cap A|+|A\\cap B\\cap C|$",
+        "$|A|+|B|+|C|+|A\\cap B|+|B\\cap C|+|C\\cap A|$"
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": "Subtract the pairwise overlaps, then add the triple overlap back (it was removed once too often).",
+      "option_explanations": [
+        "The triple intersection is added back, not subtracted.",
+        "The pairwise overlaps must also be subtracted.",
+        "Correct.",
+        "The overlaps must be subtracted, not added."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "Which formula counts elements lying in at least one of A, B, C?",
+        "options": [
+          "Sum of the three sizes, plus the three pairwise intersections, minus the triple intersection",
+          "Sum of the three sizes, minus the three pairwise intersections, minus the triple intersection",
+          "Sum of the three sizes, minus the triple intersection only",
+          "Sum of the three sizes, minus the three pairwise intersections, plus the triple intersection"
+        ],
+        "correct": [
+          3
+        ],
+        "explanation": "Alternating signs: singles +, pairs -, triple +.",
+        "option_explanations": [
+          "Signs on the pairs and triple are reversed.",
+          "The triple intersection needs a plus sign.",
+          "Pairwise overlaps must be removed too.",
+          "Correct."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "In the three-set union formula, the term $|A\\cap B\\cap C|$ appears with sign",
+        "options": [
+          "minus",
+          "plus",
+          "times 2",
+          "zero"
+        ],
+        "correct": [
+          1
+        ],
+        "explanation": "An element in all three sets is counted 3 times, removed 3 times by the pairs, so it needs to be added once.",
+        "option_explanations": [
+          "Subtracting leaves such elements uncounted ($3-3-1=-1$).",
+          "Correct.",
+          "No factor of 2 appears in the formula.",
+          "It is not dropped."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "A and B are disjoint but both intersect C. Then $|A\\cup B\\cup C| =$",
+      "options": [
+        "$|A|+|B|+|C|+|A\\cap C|+|B\\cap C|$",
+        "$|A|+|B|+|C|-|A\\cap C|$",
+        "$|A|+|B|+|C|-|A\\cap C|-|B\\cap C|$",
+        "$|A|+|B|+|C|$"
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": "$A\\cap B=\\emptyset$ forces $A\\cap B\\cap C=\\emptyset$, so those terms vanish.",
+      "option_explanations": [
+        "The overlaps with C are added instead of subtracted.",
+        "This leaves out the overlap $|B\\cap C|$.",
+        "Correct.",
+        "Overlaps with C still need removing."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "If $A\\cap B=\\emptyset$, which term in the three-set formula is automatically 0 besides $|A\\cap B|$?",
+        "options": [
+          "$|A\\cap C|$",
+          "$|B\\cap C|$",
+          "$|C|$",
+          "$|A\\cap B\\cap C|$"
+        ],
+        "correct": [
+          3
+        ],
+        "explanation": "The triple intersection lies inside $A\\cap B$, which is empty.",
+        "option_explanations": [
+          "$A\\cap C$ can be nonempty.",
+          "$B\\cap C$ can be nonempty.",
+          "C is a nonempty set in general.",
+          "Correct."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "Sets A, B are disjoint, |A|=10, |B|=8, |C|=9, |A∩C|=3, |B∩C|=2. Find $|A\\cup B\\cup C|$.",
+        "options": [
+          "27",
+          "22",
+          "24",
+          "25"
+        ],
+        "correct": [
+          1
+        ],
+        "explanation": "$10+8+9-3-2=22$.",
+        "option_explanations": [
+          "$10+8+9=27$ subtracts no overlap.",
+          "Correct: $10+8+9-3-2$.",
+          "$27-3=24$ forgets $|B\\cap C|$.",
+          "$27-2=25$ forgets $|A\\cap C|$."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "Given $|A|=10$, $|B|=12$, $|C|=8$, $|A\\cap B|=3$, $|B\\cap C|=2$, $|C\\cap A|=4$, $|A\\cap B\\cap C|=1$, find $|A\\cup B\\cup C|$.",
+      "options": [
+        "22",
+        "30",
+        "20",
+        "24"
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": "$10+12+8-3-2-4+1=22$.",
+      "option_explanations": [
+        "Correct.",
+        "30 skips all the overlaps.",
+        "20 subtracts the triple intersection instead of adding it.",
+        "24 adds the triple intersection three times instead of once."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "Given $|A|=15$, $|B|=9$, $|C|=11$, $|A\\cap B|=4$, $|B\\cap C|=3$, $|C\\cap A|=5$, $|A\\cap B\\cap C|=2$, find $|A\\cup B\\cup C|$.",
+        "options": [
+          "35",
+          "21",
+          "29",
+          "25"
+        ],
+        "correct": [
+          3
+        ],
+        "explanation": "$15+9+11-4-3-5+2=25$.",
+        "option_explanations": [
+          "35 skips all the overlaps.",
+          "21 subtracts the triple intersection instead of adding it.",
+          "29 adds the triple intersection three times instead of once.",
+          "Correct."
+        ]
+      },
+      {
+        "type": "basic",
+        "question": "Three student clubs have $|A|=30$, $|B|=25$, $|C|=20$, with $|A\\cap B|=10$, $|B\\cap C|=8$, $|C\\cap A|=6$ and $|A\\cap B\\cap C|=4$. How many students are in at least one club?",
+        "answer": "Use $|A\\cup B\\cup C| = |A|+|B|+|C|-|A\\cap B|-|B\\cap C|-|C\\cap A|+|A\\cap B\\cap C|$.\n$=30+25+20-10-8-6+4 = 75-24+4 = 55$."
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "The pigeonhole principle says that when n items are placed in m boxes with n > m,",
+      "options": [
+        "some box holds at least two items",
+        "every box holds at least one item",
+        "every box holds at most two items",
+        "exactly one box holds two items"
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": "If no box had two items, we could have at most m items.",
+      "option_explanations": [
+        "Correct.",
+        "Boxes may be empty.",
+        "Some box may hold many more than two.",
+        "Several boxes may hold two or more."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "Eleven letters are put into ten pigeonholes. Which statement must be true?",
+        "options": [
+          "Each pigeonhole contains a letter",
+          "Some pigeonhole contains two or more letters",
+          "No pigeonhole contains three letters",
+          "Exactly one pigeonhole is empty"
+        ],
+        "correct": [
+          1
+        ],
+        "explanation": "Eleven exceeds ten, so some hole repeats.",
+        "option_explanations": [
+          "Holes can stay empty.",
+          "Correct.",
+          "All 11 could go into a single hole.",
+          "Nothing forces any hole to be empty."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "Which is the correct conclusion of the pigeonhole principle for n = 25 objects in m = 24 bins?",
+        "options": [
+          "Every bin has exactly one object",
+          "Two bins are empty",
+          "At least one bin has 2 or more objects",
+          "At least one bin has 3 or more objects"
+        ],
+        "correct": [
+          2
+        ],
+        "explanation": "$n>m$ guarantees a bin with a repeat; nothing stronger follows.",
+        "option_explanations": [
+          "Objects can pile up, leaving bins empty.",
+          "Bins need not be empty.",
+          "Correct.",
+          "Only the generalized form could give 3, and $\\lceil 25/24\\rceil=2$."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "For which values of (items n, boxes m) does the pigeonhole principle guarantee a box with two or more items?",
+      "options": [
+        "(9, 9)",
+        "(10, 9)",
+        "(8, 9)",
+        "(9, 10)"
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": "It needs $n>m$.",
+      "option_explanations": [
+        "With $n=m$ each item can take its own box.",
+        "Correct: $10>9$.",
+        "With $n<m$ some boxes stay empty and nothing repeats.",
+        "Fewer items than boxes."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "In which case can 12 items be placed with no two in the same box?",
+        "options": [
+          "12 boxes",
+          "11 boxes",
+          "10 boxes",
+          "9 boxes"
+        ],
+        "correct": [
+          0
+        ],
+        "explanation": "Only $m \\ge n$ allows all items to be separate.",
+        "option_explanations": [
+          "Correct: one item per box.",
+          "With 11 boxes, $12>11$ forces a repeat.",
+          "With 10 boxes, $12>10$ forces a repeat.",
+          "With 9 boxes, $12>9$ forces a repeat."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "Which statement about the condition in the pigeonhole principle is correct?",
+        "options": [
+          "n < m forces a repeat",
+          "n = m forces exactly one empty box",
+          "n = m does not force any repeat",
+          "n > m forces every box to be non-empty"
+        ],
+        "correct": [
+          2
+        ],
+        "explanation": "Equality allows one item per box.",
+        "option_explanations": [
+          "Fewer items than boxes can all be separate.",
+          "With $n=m$ the items can fill all boxes.",
+          "Correct.",
+          "Boxes can remain empty."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "How many friends guarantee that at least two share a birth month?",
+      "options": [
+        "12",
+        "24",
+        "11",
+        "13"
+      ],
+      "correct": [
+        3
+      ],
+      "explanation": "There are 12 months, so $n>12$ gives $n\\ge13$.",
+      "option_explanations": [
+        "With 12 friends each could have a different month.",
+        "24 is more than needed.",
+        "11 friends cannot even cover all months.",
+        "Correct."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "What is the least number of people that guarantees two of them were born in the same month?",
+        "options": [
+          "12",
+          "6",
+          "13",
+          "24"
+        ],
+        "correct": [
+          2
+        ],
+        "explanation": "$m=12$, need $n>m$.",
+        "option_explanations": [
+          "12 people can have 12 different months.",
+          "6 is half of 12.",
+          "Correct.",
+          "24 would give a pair of repeats but is more than needed."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "A class must contain at least how many students to be sure two share a first letter of their given name (26 letters)?",
+        "options": [
+          "27",
+          "26",
+          "52",
+          "13"
+        ],
+        "correct": [
+          0
+        ],
+        "explanation": "$m=26$ letters, so $n\\ge27$.",
+        "option_explanations": [
+          "Correct.",
+          "26 students could use all 26 letters once.",
+          "52 is more than needed.",
+          "13 is half of 26."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "At least how many students make a repeated birth date certain (366 possible dates including 29 February)?",
+      "options": [
+        "366",
+        "365",
+        "733",
+        "367"
+      ],
+      "correct": [
+        3
+      ],
+      "explanation": "$m=366$, need $n>366$, so $n\\ge 367$.",
+      "option_explanations": [
+        "366 students could all have different dates.",
+        "365 can't cover all dates.",
+        "733 is about twice the number needed.",
+        "Correct."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "Ignoring leap years (365 dates), how many people guarantee two share a birth date?",
+        "options": [
+          "365",
+          "366",
+          "364",
+          "730"
+        ],
+        "correct": [
+          1
+        ],
+        "explanation": "$n>365$.",
+        "option_explanations": [
+          "365 people could have all different dates.",
+          "Correct.",
+          "364 people could too.",
+          "730 is far more than needed."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "A deck has 13 ranks. How many cards must be drawn to be sure two share a rank?",
+        "options": [
+          "13",
+          "12",
+          "26",
+          "14"
+        ],
+        "correct": [
+          3
+        ],
+        "explanation": "$n>13$.",
+        "option_explanations": [
+          "13 cards could all have different ranks.",
+          "12 can be all different.",
+          "26 is more than needed.",
+          "Correct."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "How many students guarantee that two were born on the same day of the week?",
+      "options": [
+        "7",
+        "8",
+        "14",
+        "6"
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": "7 weekdays, so $n>7$.",
+      "option_explanations": [
+        "7 students may cover all seven days.",
+        "Correct.",
+        "14 is more than needed.",
+        "6 cannot even use every weekday."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "To be certain two people share a day-of-month of birth (1 to 31), you need at least",
+        "options": [
+          "32 people",
+          "31 people",
+          "30 people",
+          "62 people"
+        ],
+        "correct": [
+          0
+        ],
+        "explanation": "$n>31$.",
+        "option_explanations": [
+          "Correct.",
+          "31 people may have different days.",
+          "30 people may as well.",
+          "62 is double what is needed."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "How many whole numbers must be chosen to ensure two share the same last digit?",
+        "options": [
+          "10",
+          "9",
+          "11",
+          "20"
+        ],
+        "correct": [
+          2
+        ],
+        "explanation": "10 possible last digits, so $n>10$.",
+        "option_explanations": [
+          "10 numbers could end in 0 through 9.",
+          "9 numbers can all differ.",
+          "Correct.",
+          "20 is more than needed."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "A basket has socks in two colors, many of each. What is the fewest socks to pick to be certain of a matching pair?",
+      "options": [
+        "2",
+        "3",
+        "4",
+        "5"
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": "$m=2$ colors, so $n>2$.",
+      "option_explanations": [
+        "Two socks might differ in color.",
+        "Correct.",
+        "4 is more than needed.",
+        "5 is more than needed."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "A drawer has socks in three colors. How many must you take out to be sure of two of the same color?",
+        "options": [
+          "3",
+          "6",
+          "7",
+          "4"
+        ],
+        "correct": [
+          3
+        ],
+        "explanation": "$m=3$, $n\\ge4$.",
+        "option_explanations": [
+          "3 socks could be one of each color.",
+          "6 is more than needed.",
+          "7 is more than needed.",
+          "Correct."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "Socks of five colors lie in a bag, many of each. The smallest number you must draw to be certain of a same-color pair is",
+        "options": [
+          "5",
+          "10",
+          "6",
+          "4"
+        ],
+        "correct": [
+          2
+        ],
+        "explanation": "$m=5$, $n\\ge6$.",
+        "option_explanations": [
+          "5 draws could all differ.",
+          "10 is more than needed.",
+          "Correct.",
+          "4 draws could all differ."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "It takes at least 10 socks to be certain of a same-colored pair. How many colors are there?",
+      "options": [
+        "9",
+        "10",
+        "11",
+        "5"
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": "$n=m+1$ so $m=n-1=9$.",
+      "option_explanations": [
+        "Correct.",
+        "10 colors would need 11 socks.",
+        "11 colors would need 12.",
+        "5 colors would need 6."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "You need to pick 15 socks to guarantee a pair of one color. How many colors exist?",
+        "options": [
+          "14",
+          "15",
+          "16",
+          "7"
+        ],
+        "correct": [
+          0
+        ],
+        "explanation": "$m=15-1$.",
+        "option_explanations": [
+          "Correct.",
+          "15 colors would need 16 socks.",
+          "16 colors would need 17.",
+          "7 colors would need 8."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "Exactly 7 socks are enough to guarantee a pair of equal color and 6 are not. The number of colors is",
+        "options": [
+          "7",
+          "8",
+          "6",
+          "3"
+        ],
+        "correct": [
+          2
+        ],
+        "explanation": "$m+1=7$.",
+        "option_explanations": [
+          "7 colors would need 8 socks.",
+          "8 colors would need 9.",
+          "Correct.",
+          "3 colors would need 4."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "If 28 pigeons are placed in 9 boxes, what is the largest number of pigeons that some box must contain at least?",
+      "options": [
+        "3",
+        "5",
+        "2",
+        "4"
+      ],
+      "correct": [
+        3
+      ],
+      "explanation": "$\\lceil 28/9\\rceil = \\lceil 3.11\\rceil = 4$.",
+      "option_explanations": [
+        "3 is $\\lfloor 28/9\\rfloor$; the ceiling is needed.",
+        "5 rounds up too far.",
+        "2 is only the basic pigeonhole bound.",
+        "Correct."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "Among 50 friends, at least how many must share a birth month?",
+        "options": [
+          "4",
+          "5",
+          "6",
+          "2"
+        ],
+        "correct": [
+          1
+        ],
+        "explanation": "$\\lceil 50/12\\rceil = \\lceil 4.17\\rceil = 5$.",
+        "option_explanations": [
+          "4 is the floor of $50/12$.",
+          "Correct.",
+          "6 is too large.",
+          "2 is only the basic bound."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "41 books go onto 6 shelves. Some shelf must hold at least how many books?",
+        "options": [
+          "6",
+          "8",
+          "7",
+          "2"
+        ],
+        "correct": [
+          2
+        ],
+        "explanation": "$\\lceil 41/6\\rceil = \\lceil 6.83\\rceil = 7$.",
+        "option_explanations": [
+          "6 is the floor of $41/6$.",
+          "8 rounds up too far.",
+          "Correct.",
+          "2 is only the basic bound."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "basic",
+      "question": "A basket has 100 socks of five colors, 20 of each. What is the fewest socks you must pick to be sure of 4 socks of the same color (2 for you and 2 for your brother)?",
+      "answer": "Boxes are the $m=5$ colors. We need some color with at least 4 socks, so $\\lceil n/5\\rceil \\ge 4$, which means $n/5 > 3$, i.e. $n \\ge 16$.\nCheck: 15 socks can be 3 of each color (no color has 4), and 16 socks force a color with at least 4.\nAnswer: 16 (not 20; 20 is more than needed)."
+    },
+    "versions": [
+      {
+        "type": "basic",
+        "question": "A bag holds 6 colors of socks, 30 of each color. Find the fewest socks to draw to be sure of 3 of the same color.",
+        "answer": "Colors are boxes, $m=6$. The worst case without 3 of a color is 2 of each color: $6\\cdot2=12$ socks.\nSo one more sock forces 3 of a color: $n = 6\\cdot2+1 = 13$.\nEquivalent: $\\lceil n/6\\rceil\\ge3 \\Rightarrow n/6>2 \\Rightarrow n\\ge13$.\nAnswer: 13."
+      },
+      {
+        "type": "basic",
+        "question": "A box has 4 colors of socks, many of each. How many socks must be drawn to be sure of 5 of the same color?",
+        "answer": "Worst case with no color reaching 5: 4 of each color, $4\\cdot4=16$ socks.\nThe next sock forces 5 of one color: $16+1=17$.\nCheck with $\\lceil n/4\\rceil\\ge5 \\Rightarrow n/4>4 \\Rightarrow n\\ge17$.\nAnswer: 17."
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "A lab has 20 computers. At most how many students can use it at once so that no three share a computer?",
+      "options": [
+        "41",
+        "60",
+        "20",
+        "40"
+      ],
+      "correct": [
+        3
+      ],
+      "explanation": "If each computer has at most 2 students, the maximum is $20\\cdot2=40$; with 41, some computer would get $\\lceil41/20\\rceil=3$.",
+      "option_explanations": [
+        "41 forces some computer to take three students.",
+        "60 allows three per computer.",
+        "20 allows only one per computer.",
+        "Correct."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "A bus has 15 rows of seats. At most how many passengers can board so that no row holds three or more?",
+        "options": [
+          "31",
+          "30",
+          "45",
+          "15"
+        ],
+        "correct": [
+          1
+        ],
+        "explanation": "Two per row: $15\\cdot2=30$; 31 would force $\\lceil31/15\\rceil=3$.",
+        "option_explanations": [
+          "31 forces some row to hold three.",
+          "Correct.",
+          "45 allows three per row.",
+          "15 allows only one per row."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "12 tables are in a hall. At most how many guests can sit so that no table has four or more?",
+        "options": [
+          "36",
+          "37",
+          "48",
+          "12"
+        ],
+        "correct": [
+          0
+        ],
+        "explanation": "Three per table: $12\\cdot3=36$; 37 would force $\\lceil37/12\\rceil=4$.",
+        "option_explanations": [
+          "Correct.",
+          "37 forces some table to hold four.",
+          "48 allows four per table.",
+          "12 allows one per table."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "From 5 students, three are chosen to be 1st, 2nd and 3rd in a race. Which count applies?",
+      "options": [
+        "$C(5,3)$",
+        "$5^3$",
+        "$C(5,2)$",
+        "$P(5,3)$"
+      ],
+      "correct": [
+        3
+      ],
+      "explanation": "Positions are assigned, so order matters.",
+      "option_explanations": [
+        "$C(5,3)$ ignores who comes first.",
+        "$5^3$ allows repeats.",
+        "$C(5,2)$ chooses the wrong number of students.",
+        "Correct: ordered selection."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "From 9 students, 4 are chosen to form a study group. Which count applies?",
+        "options": [
+          "$C(9,4)$",
+          "$P(9,4)$",
+          "$9^4$",
+          "$C(9,5)\\cdot 4!$"
+        ],
+        "correct": [
+          0
+        ],
+        "explanation": "No roles are assigned, so order does not matter.",
+        "option_explanations": [
+          "Correct: unordered selection.",
+          "$P(9,4)$ counts different orders as different.",
+          "$9^4$ allows repeats.",
+          "This multiplies by orderings."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "From 12 runners, 3 receive gold, silver and bronze. The number of outcomes is",
+        "options": [
+          "$C(12,3)$",
+          "$P(12,3)$",
+          "$12^3$",
+          "$C(12,9)$"
+        ],
+        "correct": [
+          1
+        ],
+        "explanation": "Medals are distinct, so order matters.",
+        "option_explanations": [
+          "$C(12,3)$ ignores which medal each gets.",
+          "Correct: ordered selection.",
+          "$12^3$ allows one runner to win several.",
+          "$C(12,9)$ equals $C(12,3)$, still unordered."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "Evaluate $P(8,3)$.",
+      "options": [
+        "56",
+        "24",
+        "336",
+        "40320"
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": "$P(8,3)=8\\cdot7\\cdot6=336$.",
+      "option_explanations": [
+        "56 is $C(8,3)$.",
+        "24 is $8\\cdot 3$.",
+        "Correct.",
+        "40320 is $8!$ with no division."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "Compute $P(9,4)$.",
+        "options": [
+          "126",
+          "3024",
+          "36",
+          "362880"
+        ],
+        "correct": [
+          1
+        ],
+        "explanation": "$P(9,4)=9\\cdot8\\cdot7\\cdot6=3024$.",
+        "option_explanations": [
+          "126 is $C(9,4)$.",
+          "Correct.",
+          "36 is $9\\cdot4$.",
+          "362880 is $9!$."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "What is $P(7,5)$?",
+        "options": [
+          "2520",
+          "21",
+          "5040",
+          "35"
+        ],
+        "correct": [
+          0
+        ],
+        "explanation": "$P(7,5)=7\\cdot6\\cdot5\\cdot4\\cdot3=2520$.",
+        "option_explanations": [
+          "Correct.",
+          "21 is $C(7,5)$.",
+          "5040 is $7!=P(7,7)$.",
+          "35 is $7\\cdot5$."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "What is $P(n,0)$?",
+      "options": [
+        "0",
+        "$n$",
+        "1",
+        "$n!$"
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": "Choosing nothing is one way, so $P(n,0)=\\frac{n!}{n!}=1$.",
+      "option_explanations": [
+        "Choosing zero items is one (empty) arrangement, not none.",
+        "$P(n,1)=n$, not $P(n,0)$.",
+        "Correct.",
+        "$P(n,n)=n!$, not $P(n,0)$."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "Evaluate $P(9,9)$.",
+        "options": [
+          "1",
+          "9",
+          "81",
+          "362880"
+        ],
+        "correct": [
+          3
+        ],
+        "explanation": "$P(n,n)=\\frac{n!}{0!}=n!$, so $P(9,9)=9!=362880$.",
+        "option_explanations": [
+          "$P(9,0)=1$.",
+          "$P(9,1)=9$.",
+          "81 is $9^2$.",
+          "Correct."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "Which equals $P(n,1)$?",
+        "options": [
+          "1",
+          "$n!$",
+          "$n$",
+          "$n-1$"
+        ],
+        "correct": [
+          2
+        ],
+        "explanation": "One position has $n$ choices.",
+        "option_explanations": [
+          "$P(n,0)=1$.",
+          "$P(n,n)=n!$.",
+          "Correct.",
+          "Not the count of one position."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "In how many orders can you shake hands, one by one, with five guests?",
+      "options": [
+        "120",
+        "25",
+        "5",
+        "24"
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": "$P(5,5)=5!=120$.",
+      "option_explanations": [
+        "Correct.",
+        "25 is $5^2$.",
+        "5 counts the first choice only.",
+        "24 is $4!$."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "Six visitors arrive and you greet them one at a time. How many greeting orders are there?",
+        "options": [
+          "36",
+          "120",
+          "6",
+          "720"
+        ],
+        "correct": [
+          3
+        ],
+        "explanation": "$6!=720$.",
+        "option_explanations": [
+          "36 is $6^2$.",
+          "120 is $5!$.",
+          "6 counts the first choice only.",
+          "Correct."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "Four runners cross a finish line one after another. How many finishing orders exist (no ties)?",
+        "options": [
+          "16",
+          "24",
+          "6",
+          "4"
+        ],
+        "correct": [
+          1
+        ],
+        "explanation": "$4!=24$.",
+        "option_explanations": [
+          "16 is $4^2$.",
+          "Correct.",
+          "6 is $3!$.",
+          "4 is the first place only."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "In how many ways can the letters {q, i, u, e, o} be arranged so that \"qu\" stay together in that order?",
+      "options": [
+        "120",
+        "48",
+        "12",
+        "24"
+      ],
+      "correct": [
+        3
+      ],
+      "explanation": "Treat \"qu\" as one letter: 4 objects, $4!=24$.",
+      "option_explanations": [
+        "120 ignores the restriction.",
+        "48 also allows \"uq\".",
+        "12 halves the correct count.",
+        "Correct."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "In how many ways can {s, t, a, r, e} be arranged so that \"st\" stays together in that order?",
+        "options": [
+          "120",
+          "24",
+          "48",
+          "60"
+        ],
+        "correct": [
+          1
+        ],
+        "explanation": "\"st\" is one object plus three letters: $4!=24$.",
+        "option_explanations": [
+          "120 ignores the restriction.",
+          "Correct.",
+          "48 also allows \"ts\".",
+          "60 is half of 120."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "Six distinct letters {a, b, c, d, e, f} are arranged. In how many ways does \"ab\" appear together in this order?",
+        "options": [
+          "120",
+          "720",
+          "240",
+          "60"
+        ],
+        "correct": [
+          0
+        ],
+        "explanation": "\"ab\" as one block: $5!=120$.",
+        "option_explanations": [
+          "Correct.",
+          "720 ignores the restriction.",
+          "240 also allows \"ba\".",
+          "60 is $\\frac{5!}{2}$."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "basic",
+      "question": "Arrange the five letters {q, i, u, e, o}. In how many ways (a) do q and u stay together as \"qu\" or \"uq\"? (b) do q and u stay separated?",
+      "answer": "(a) Glue q and u into one block: 4 objects give $4!=24$ arrangements, and the block can be \"qu\" or \"uq\" (2 ways): $24\\cdot2=48$.\n(b) Separated = all - together = $5! - 48 = 120-48 = 72$."
+    },
+    "versions": [
+      {
+        "type": "basic",
+        "question": "Arrange the six letters {a, b, c, d, e, f}. In how many ways do b and c stay adjacent (in either order), and in how many do they stay apart?",
+        "answer": "Adjacent: treat b,c as a block: $5!=120$ arrangements of the 5 objects, times 2 orders inside the block: $240$.\nApart: all - adjacent $= 6! - 240 = 720-240 = 480$."
+      },
+      {
+        "type": "basic",
+        "question": "Seven distinct letters are arranged in a row. How many arrangements put two chosen letters x and y next to each other (either order), and how many do not?",
+        "answer": "Adjacent: block of x,y plus 5 other letters = 6 objects: $6!=720$, times 2 internal orders: $1440$.\nNot adjacent: $7!-1440 = 5040-1440 = 3600$."
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "Among 10 friends, Anas is the best. In how many orders can you visit six friends if Anas is always first?",
+      "options": [
+        "151200",
+        "60480",
+        "15120",
+        "126"
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": "Anas fills slot 1; the other five slots come from the remaining 9: $P(9,5)=15120$.",
+      "option_explanations": [
+        "$P(10,6)=151200$ ignores that Anas is fixed.",
+        "$P(9,6)$ fills six slots after Anas.",
+        "Correct.",
+        "$C(9,5)=126$ ignores order."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "Of 9 friends, Zaid is always visited first. In how many orders can you visit five friends in total?",
+        "options": [
+          "15120",
+          "1680",
+          "6720",
+          "70"
+        ],
+        "correct": [
+          1
+        ],
+        "explanation": "Four more slots from the other 8 friends: $P(8,4)=1680$.",
+        "option_explanations": [
+          "$P(9,5)=15120$ ignores that Zaid is fixed.",
+          "Correct.",
+          "$P(8,5)$ fills five slots after Zaid.",
+          "$C(8,4)=70$ ignores order."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "From 12 people, the host is always seated first among 6 chairs in a row. How many seatings of 6 people are there?",
+        "options": [
+          "665280",
+          "332640",
+          "462",
+          "55440"
+        ],
+        "correct": [
+          3
+        ],
+        "explanation": "Five seats are filled from the other 11: $P(11,5)=55440$.",
+        "option_explanations": [
+          "$P(12,6)=665280$ does not fix the host.",
+          "$P(11,6)$ fills six seats after the host.",
+          "$C(11,5)=462$ ignores order.",
+          "Correct."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "basic",
+      "question": "In how many ways can the letters of \"neutral\" be arranged so that the three vowels stay together?",
+      "answer": "Letters: n, e, u, t, r, a, l (7 distinct). Vowels: e, u, a.\nGlue the vowels into a block: block + 4 consonants = 5 objects, $5!=120$ arrangements.\nInside the block the 3 vowels can be ordered in $3!=6$ ways.\nTotal $=120\\cdot6=720$."
+    },
+    "versions": [
+      {
+        "type": "basic",
+        "question": "In how many ways can the letters of \"course\" be arranged so that the three vowels o, u, e stay together?",
+        "answer": "6 distinct letters: vowels o, u, e and consonants c, r, s.\nBlock of vowels + 3 consonants = 4 objects: $4!=24$.\nOrder inside the block: $3!=6$.\nTotal $=24\\cdot6=144$."
+      },
+      {
+        "type": "mcq",
+        "question": "In how many ways can the letters of \"triangle\" be arranged so that the three vowels i, a, e stay together?",
+        "options": [
+          "40320",
+          "720",
+          "4320",
+          "1440"
+        ],
+        "correct": [
+          2
+        ],
+        "explanation": "Block + 5 consonants = 6 objects ($6!$), times $3!$ orders inside the block: $720\\cdot6=4320$.",
+        "option_explanations": [
+          "40320 is $8!$ and ignores the restriction.",
+          "720 forgets the order inside the block.",
+          "Correct.",
+          "1440 allows only 2 orders inside the block."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "Evaluate $C(8,3)$.",
+      "options": [
+        "56",
+        "336",
+        "28",
+        "24"
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": "$C(8,3)=\\frac{8\\cdot7\\cdot6}{3\\cdot2\\cdot1}=56$.",
+      "option_explanations": [
+        "Correct.",
+        "336 is $P(8,3)$, which counts orderings.",
+        "28 is $C(8,2)$.",
+        "24 is $8\\cdot3$."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "Compute $C(10,4)$.",
+        "options": [
+          "210",
+          "5040",
+          "120",
+          "40"
+        ],
+        "correct": [
+          0
+        ],
+        "explanation": "$C(10,4)=\\frac{10\\cdot9\\cdot8\\cdot7}{4!}=210$.",
+        "option_explanations": [
+          "Correct.",
+          "5040 is $P(10,4)$.",
+          "120 is $C(10,3)$.",
+          "40 is $10\\cdot4$."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "What is $C(12,2)$?",
+        "options": [
+          "132",
+          "24",
+          "66",
+          "220"
+        ],
+        "correct": [
+          2
+        ],
+        "explanation": "$C(12,2)=\\frac{12\\cdot11}{2}=66$.",
+        "option_explanations": [
+          "132 is $P(12,2)$.",
+          "24 is $12\\cdot2$.",
+          "Correct.",
+          "220 is $C(12,3)$."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "What is $C(n,n)$?",
+      "options": [
+        "$n$",
+        "0",
+        "$n!$",
+        "1"
+      ],
+      "correct": [
+        3
+      ],
+      "explanation": "There is exactly one way to take all $n$ elements.",
+      "option_explanations": [
+        "$C(n,1)=n$.",
+        "Taking all elements is one way, not zero.",
+        "$P(n,n)=n!$.",
+        "Correct."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "What is $C(n,0)$?",
+        "options": [
+          "$n$",
+          "1",
+          "0",
+          "$n-1$"
+        ],
+        "correct": [
+          1
+        ],
+        "explanation": "There is one way to take no elements: the empty selection.",
+        "option_explanations": [
+          "$C(n,1)=n$.",
+          "Correct.",
+          "Choosing nothing counts as one way.",
+          "Not a value of $C(n,0)$."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "Which equals $C(n,1)$?",
+        "options": [
+          "1",
+          "$n!$",
+          "$n$",
+          "$n-1$"
+        ],
+        "correct": [
+          2
+        ],
+        "explanation": "Choosing one element out of $n$ gives $n$ ways.",
+        "option_explanations": [
+          "$C(n,0)=1$.",
+          "$n!$ is $P(n,n)$.",
+          "Correct.",
+          "Choosing one has $n$ options, not $n-1$."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "From 20 students, 11 are selected for a football team (no roles). How many ways?",
+      "options": [
+        "$P(20,11)$",
+        "$P(20,9)$",
+        "$20^{11}$",
+        "$C(20,11)$"
+      ],
+      "correct": [
+        3
+      ],
+      "explanation": "Forming a team is a collection, so order is irrelevant: $C(20,11)=167{,}960$.",
+      "option_explanations": [
+        "$P(20,11)$ would also count orders.",
+        "$P(20,9)$ arranges only 9 students.",
+        "Allows repeated students.",
+        "Correct."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "A coach picks 4 of 15 players for a relay squad with no assigned legs. How many squads exist?",
+        "options": [
+          "32760",
+          "1365",
+          "50625",
+          "5460"
+        ],
+        "correct": [
+          1
+        ],
+        "explanation": "Unordered selection: $C(15,4)=1365$.",
+        "option_explanations": [
+          "32760 is $P(15,4)$, ordering the legs.",
+          "Correct.",
+          "50625 allows repeats.",
+          "5460 multiplies by 4 for no reason."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "How many ways to choose 3 of 10 volunteers to form a committee?",
+        "options": [
+          "120",
+          "720",
+          "1000",
+          "360"
+        ],
+        "correct": [
+          0
+        ],
+        "explanation": "$C(10,3)=120$.",
+        "option_explanations": [
+          "Correct.",
+          "720 is $P(10,3)$.",
+          "1000 allows repeats.",
+          "360 multiplies by 3 for no reason."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "From 20 students, 11 receive prizes 1st through 11th. In how many ways?",
+      "options": [
+        "$C(20,11)$",
+        "$20^{11}$",
+        "$P(20,9)$",
+        "$P(20,11)$"
+      ],
+      "correct": [
+        3
+      ],
+      "explanation": "The prizes are distinct, so order matters: $P(20,11)=6{,}704{,}425{,}728{,}000$.",
+      "option_explanations": [
+        "$C(20,11)$ ignores which prize each student gets.",
+        "$20^{11}$ lets one student win several prizes.",
+        "$P(20,9)$ arranges only 9 students.",
+        "Correct."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "Out of 15 contestants, 4 get 1st, 2nd, 3rd and 4th place. Number of ways?",
+        "options": [
+          "32760",
+          "1365",
+          "50625",
+          "2730"
+        ],
+        "correct": [
+          0
+        ],
+        "explanation": "$P(15,4)=15\\cdot14\\cdot13\\cdot12=32760$.",
+        "option_explanations": [
+          "Correct.",
+          "1365 is $C(15,4)$, ignoring the places.",
+          "50625 is $15^4$, letting a contestant take several places.",
+          "2730 is $P(15,3)$, filling only 3 places."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "12 different chairs are assigned to 12 of 20 students, one student per chair. How many assignments?",
+        "options": [
+          "$C(20,12)$",
+          "$P(20,12)$",
+          "$20^{12}$",
+          "$P(20,8)$"
+        ],
+        "correct": [
+          1
+        ],
+        "explanation": "Chairs differ, so order matters: $P(20,12)$.",
+        "option_explanations": [
+          "$C(20,12)$ ignores which chair each student gets.",
+          "Correct.",
+          "$20^{12}$ lets a student take several chairs.",
+          "$P(20,8)$ fills only 8 chairs."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "From 11 men and 9 women, how many committees have 7 men and 5 women?",
+      "options": [
+        "125,970",
+        "456",
+        "41,580",
+        "25,147,584,000"
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": "Choose the men and the women separately and multiply: $C(11,7)\\cdot C(9,5)=330\\cdot126=41{,}580$.",
+      "option_explanations": [
+        "$C(20,12)=125{,}970$ ignores the gender split.",
+        "456 adds the two counts instead of multiplying.",
+        "Correct.",
+        "This counts ordered selections."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "A panel needs 4 of 8 men and 3 of 6 women. How many panels are possible?",
+        "options": [
+          "3,432",
+          "1,400",
+          "90",
+          "201,600"
+        ],
+        "correct": [
+          1
+        ],
+        "explanation": "$C(8,4)\\cdot C(6,3)=70\\cdot20=1{,}400$.",
+        "option_explanations": [
+          "$C(14,7)=3{,}432$ ignores the gender split.",
+          "Correct.",
+          "90 adds the two counts.",
+          "This counts ordered selections."
+        ]
+      },
+      {
+        "type": "basic",
+        "question": "A club has 9 boys and 7 girls. How many ways to choose a team of 5 boys and 2 girls?",
+        "answer": "Choose boys and girls independently, then multiply (product rule).\n$C(9,5)=126$ and $C(7,2)=21$.\nTotal $=126\\cdot21 = 2646$."
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "Which value equals $C(10,3)$?",
+      "options": [
+        "$C(10,7)$",
+        "$C(10,6)$",
+        "$P(10,3)$",
+        "$C(7,3)$"
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": "$C(n,r)=C(n,n-r)$: choosing 3 to take equals choosing 7 to leave out.",
+      "option_explanations": [
+        "Correct.",
+        "$C(10,6)$ pairs with $C(10,4)$.",
+        "$P(10,3)$ counts ordered selections.",
+        "$C(7,3)$ chooses from a different set size."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "Which equals $C(15,4)$?",
+        "options": [
+          "$C(15,10)$",
+          "$C(11,4)$",
+          "$C(15,11)$",
+          "$P(15,4)$"
+        ],
+        "correct": [
+          2
+        ],
+        "explanation": "$C(n,r)=C(n,n-r)$.",
+        "option_explanations": [
+          "$C(15,10)=C(15,5)$.",
+          "$C(11,4)$ draws from only 11 objects.",
+          "Correct.",
+          "$P(15,4)$ counts orderings."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "Evaluate $C(30,28)$ using the symmetry $C(n,r)=C(n,n-r)$.",
+        "options": [
+          "870",
+          "30",
+          "28",
+          "435"
+        ],
+        "correct": [
+          3
+        ],
+        "explanation": "$C(30,28)=C(30,2)=\\frac{30\\cdot29}{2}=435$.",
+        "option_explanations": [
+          "870 is $P(30,2)$.",
+          "30 is $C(30,1)$.",
+          "28 is just the lower index, not the count.",
+          "Correct."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "Which identity relates permutations and combinations?",
+      "options": [
+        "$P(n,r)=C(n,r)/r!$",
+        "$P(n,r)=C(n,r)\\cdot n!$",
+        "$P(n,r)=C(n,r)\\cdot r!$",
+        "$P(n,r)=C(n,r)+r!$"
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": "Select $r$ elements ($C(n,r)$), then arrange them ($r!$), and multiply.",
+      "option_explanations": [
+        "Division would give a number smaller than $C(n,r)$.",
+        "The arrangement factor is $r!$, not $n!$.",
+        "Correct.",
+        "The two steps multiply."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "Given $C(9,4)=126$, find $P(9,4)$.",
+        "options": [
+          "3024",
+          "1134",
+          "$\\frac{21}{4}$",
+          "756"
+        ],
+        "correct": [
+          0
+        ],
+        "explanation": "$P(9,4)=C(9,4)\\cdot4!=126\\cdot24=3024$.",
+        "option_explanations": [
+          "Correct.",
+          "1134 multiplies by 9.",
+          "$\\frac{126}{24}=\\frac{21}{4}$ divides by $4!$ instead of multiplying.",
+          "756 multiplies by $3!$."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "Given $C(7,3)=35$, find $P(7,3)$.",
+        "options": [
+          "245",
+          "840",
+          "105",
+          "210"
+        ],
+        "correct": [
+          3
+        ],
+        "explanation": "$P(7,3)=C(7,3)\\cdot3!=35\\cdot6=210$.",
+        "option_explanations": [
+          "245 multiplies by 7.",
+          "840 multiplies by $4!$.",
+          "105 multiplies by 3.",
+          "Correct."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "How many 5-letter words with no repeated letter can be formed from the 26 letters?",
+      "options": [
+        "11,881,376",
+        "7,893,600",
+        "65,780",
+        "403,291,461,126,605,635,584,000,000"
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": "$C(26,5)\\cdot5!=P(26,5)=26\\cdot25\\cdot24\\cdot23\\cdot22=7{,}893{,}600$.",
+      "option_explanations": [
+        "$26^5=11{,}881{,}376$ allows repeats.",
+        "Correct.",
+        "$C(26,5)=65{,}780$ ignores the order of letters.",
+        "$26!$ arranges all 26 letters."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "How many 4-letter words without repeated letters are there over the 26 letters?",
+        "options": [
+          "456,976",
+          "14,950",
+          "7,893,600",
+          "358,800"
+        ],
+        "correct": [
+          3
+        ],
+        "explanation": "$C(26,4)\\cdot4!=26\\cdot25\\cdot24\\cdot23=358{,}800$.",
+        "option_explanations": [
+          "$26^4=456{,}976$ allows repeats.",
+          "$C(26,4)=14{,}950$ ignores the order.",
+          "$P(26,5)$ is for 5-letter words.",
+          "Correct."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "How many 6-letter words with all letters different can be made from the alphabet of 26?",
+        "options": [
+          "308,915,776",
+          "165,765,600",
+          "230,230",
+          "7,893,600"
+        ],
+        "correct": [
+          1
+        ],
+        "explanation": "$P(26,6)=26\\cdot25\\cdot24\\cdot23\\cdot22\\cdot21=165{,}765{,}600$.",
+        "option_explanations": [
+          "$26^6=308{,}915{,}776$ allows repeats.",
+          "Correct.",
+          "$C(26,6)=230{,}230$ ignores the order.",
+          "$P(26,5)$ is for 5-letter words."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "basic",
+      "question": "How many 8-letter words (no repeated letter) use 3 of the 5 vowels and 5 of the 21 consonants?",
+      "answer": "Select, then arrange.\nChoose the vowels: $C(5,3)=10$. Choose the consonants: $C(21,5)=20,349$.\nBy the product rule the choice of letters: $10\\cdot20,349=203,490$.\nArrange the 8 chosen letters: $8!=40320$.\nTotal $= 8,204,716,800$."
+    },
+    "versions": [
+      {
+        "type": "basic",
+        "question": "How many 6-letter words with no repeated letter use 2 vowels (of 5) and 4 consonants (of 21)?",
+        "answer": "Choose: $C(5,2)=10$ and $C(21,4)=5,985$, giving $59,850$ letter sets.\nArrange the 6 chosen letters: $6!=720$.\nTotal $= 43,092,000$."
+      },
+      {
+        "type": "mcq",
+        "question": "How many 7-letter words with no repeated letter contain exactly 4 vowels (of 5) and 3 consonants (of 21)?",
+        "options": [
+          "33,516,000",
+          "6,650",
+          "957,600",
+          "3,315,312,000"
+        ],
+        "correct": [
+          0
+        ],
+        "explanation": "Choose $C(5,4)\\cdot C(21,3)=5\\cdot1330$, then arrange 7 letters: $7!$. Total $=33{,}516{,}000$.",
+        "option_explanations": [
+          "Correct.",
+          "This forgets to arrange the letters.",
+          "This arranges vowels and consonants separately, missing interleavings.",
+          "This ignores the vowel/consonant restriction."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "How many 10-letter words with no repeated letter have vowels in all even positions and consonants in all odd positions?",
+      "options": [
+        "2,441,880",
+        "3,628,800",
+        "293,025,600",
+        "14,400"
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": "Vowels: all five, arranged $5!$. Consonants: $C(21,5)\\cdot5!$. Total $5!\\cdot20{,}349\\cdot5!=293{,}025{,}600$.",
+      "option_explanations": [
+        "This arranges only one of the two groups.",
+        "$10!$ ignores the restriction and the consonant choice.",
+        "Correct.",
+        "$5!\\cdot5!$ arranges both groups but never chooses which consonants are used."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "How many 8-letter words with no repeated letter have vowels in the four even positions and consonants in the four odd positions?",
+        "options": [
+          "143,640",
+          "17,236,800",
+          "40,320",
+          "718,200"
+        ],
+        "correct": [
+          1
+        ],
+        "explanation": "Vowels: $C(5,4)\\cdot4!=120$. Consonants: $C(21,4)\\cdot4!=5985\\cdot24$. Product $=17{,}236{,}800$.",
+        "option_explanations": [
+          "This arranges only the consonants.",
+          "Correct.",
+          "$8!$ ignores the restriction.",
+          "This does not arrange the consonants."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "How many 6-letter words with no repeated letter have 3 vowels in even positions and 3 consonants in odd positions?",
+        "options": [
+          "7,980",
+          "720",
+          "79,800",
+          "478,800"
+        ],
+        "correct": [
+          3
+        ],
+        "explanation": "Vowels: $P(5,3)=60$. Consonants: $P(21,3)=7980$. Product $=478{,}800$.",
+        "option_explanations": [
+          "This arranges only the consonants.",
+          "$6!$ ignores the restriction.",
+          "This chooses the vowels ($C(5,3)=10$) but does not arrange them.",
+          "Correct."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "basic",
+      "question": "In how many ways can 3 distinct red cars and 5 distinct white cars park in a line so that no two red cars are adjacent?",
+      "answer": "Line up the 5 white cars: $5!=120$ ways. They create 6 gaps (before, between, after).\nPut the red cars in 3 different gaps: choose gaps $C(6,3)=20$, then order the red cars $3!=6$: $20\\cdot6=120$.\nProduct rule: $120\\cdot120 = 14{,}400$."
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "In how many ways can 2 distinct red cars and 4 distinct white cars line up so that no two red cars are adjacent?",
+        "options": [
+          "720",
+          "48",
+          "480",
+          "240"
+        ],
+        "correct": [
+          2
+        ],
+        "explanation": "White cars: $4!=24$; 5 gaps, choose 2 and order the reds: $C(5,2)\\cdot2!=20$. Total $480$.",
+        "option_explanations": [
+          "720 ignores the non-adjacency rule.",
+          "This ignores the gap choice.",
+          "Correct.",
+          "This forgets to order the red cars."
+        ]
+      },
+      {
+        "type": "basic",
+        "question": "In how many ways can 3 distinct red cars and 4 distinct white cars park in a line so that no two red cars are adjacent?",
+        "answer": "White cars: $4!=24$. They leave 5 gaps.\nReds: choose 3 gaps $C(5,3)=10$ and order them $3!=6$, giving 60.\nTotal $=24\\cdot60 = 1440$."
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "How many 9-bit binary numbers contain exactly four 1s?",
+      "options": [
+        "126",
+        "3024",
+        "512",
+        "36"
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": "Choose which 4 of the 9 positions hold 1s: $C(9,4)=126$; the rest are 0.",
+      "option_explanations": [
+        "Correct.",
+        "3024 is $P(9,4)$, ordering identical 1s.",
+        "512 counts all 9-bit strings.",
+        "This multiplies length by the number of 1s."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "How many 8-bit strings have exactly three 1s?",
+        "options": [
+          "56",
+          "336",
+          "256",
+          "24"
+        ],
+        "correct": [
+          0
+        ],
+        "explanation": "Choose positions for the 1s: $C(8,3)=56$.",
+        "option_explanations": [
+          "Correct.",
+          "336 is $P(8,3)$.",
+          "256 counts all 8-bit strings.",
+          "This multiplies length by the number of 1s."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "How many 10-bit strings contain exactly six 1s?",
+        "options": [
+          "151200",
+          "1024",
+          "210",
+          "60"
+        ],
+        "correct": [
+          2
+        ],
+        "explanation": "Positions for the 1s: $C(10,6)=210$.",
+        "option_explanations": [
+          "151200 is $P(10,6)$.",
+          "1024 counts all 10-bit strings.",
+          "Correct.",
+          "This multiplies length by the number of 1s."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "To count $P(n,r)$ by selecting first and arranging later, the steps are",
+      "options": [
+        "arrange $n$ items, choose $r$ of them, add the counts",
+        "choose $r$ items, arrange them, divide the counts",
+        "arrange $r$ items, choose $n$ of them, multiply the counts",
+        "choose $r$ items, arrange them, multiply the counts"
+      ],
+      "correct": [
+        3
+      ],
+      "explanation": "Selecting gives $C(n,r)$, arranging gives $r!$, and the product rule gives $C(n,r)\\cdot r!=P(n,r)$.",
+      "option_explanations": [
+        "Counts of consecutive steps are multiplied, not added.",
+        "Steps are multiplied, not divided.",
+        "The selection is of $r$ from $n$, not $n$ from $r$.",
+        "Correct."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "Counting arrangements by 'select then arrange' uses which operation on the two counts?",
+        "options": [
+          "Addition",
+          "Multiplication",
+          "Division",
+          "Subtraction"
+        ],
+        "correct": [
+          1
+        ],
+        "explanation": "For each selection, all its arrangements are possible, so the product rule applies.",
+        "option_explanations": [
+          "The two steps both happen, so they are not added.",
+          "Correct.",
+          "Nothing is divided out here.",
+          "Nothing is subtracted here."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "Words of 4 letters without repeats are counted as $C(26,4)\\cdot$ what?",
+        "options": [
+          "$26!$",
+          "$4$",
+          "$4!$",
+          "$22!$"
+        ],
+        "correct": [
+          2
+        ],
+        "explanation": "Each chosen set of 4 letters has $4!$ arrangements.",
+        "option_explanations": [
+          "$26!$ arranges all letters.",
+          "4 counts only the first placement.",
+          "Correct.",
+          "$22!$ arranges the letters left out."
+        ]
+      }
+    ]
+  },
+  {
+    "original": {
+      "type": "mcq",
+      "question": "Which statement defines a **permutation**?",
+      "options": [
+        "A collection where order is ignored",
+        "A union of two sets",
+        "A subset of a power set",
+        "An ordered arrangement of items"
+      ],
+      "correct": [
+        3
+      ],
+      "explanation": "In a permutation, the order of items is counted.",
+      "option_explanations": [
+        "That describes a combination.",
+        "That is not a counting arrangement.",
+        "That is not the definition.",
+        "Correct."
+      ]
+    },
+    "versions": [
+      {
+        "type": "mcq",
+        "question": "What property separates a combination from a permutation?",
+        "options": [
+          "Items may be repeated",
+          "Order of items is not counted",
+          "Order of items is counted",
+          "Fewer items are chosen"
+        ],
+        "correct": [
+          1
+        ],
+        "explanation": "A combination is a selection; permutations also order the selection.",
+        "option_explanations": [
+          "Neither requires repetition.",
+          "Correct.",
+          "That describes a permutation.",
+          "The number chosen can be the same."
+        ]
+      },
+      {
+        "type": "mcq",
+        "question": "For $r \\ge 2$ and $r\\le n$, how does $C(n,r)$ compare with $P(n,r)$?",
+        "options": [
+          "It is smaller",
+          "It is larger",
+          "It is equal",
+          "It is double"
+        ],
+        "correct": [
+          0
+        ],
+        "explanation": "$P(n,r)=C(n,r)\\cdot r!$ and $r!>1$ for $r\\ge2$.",
+        "option_explanations": [
+          "Correct.",
+          "$P$ is the larger count.",
+          "They are equal only for $r\\le1$.",
+          "$C(n,r)$ is smaller than $P(n,r)$, not larger, so it cannot be double."
+        ]
+      }
+    ]
+  }
+]

@@ -1,0 +1,2913 @@
+[
+ {
+  "original": {
+   "type": "mcq",
+   "question": "According to the lecture, which of these is a valid set of integers?",
+   "options": [
+    "$\\{7, 2, cat\\}$",
+    "$2, 3, -2, 5$",
+    "$\\{2, 3, -2, 5\\}$",
+    "$(2, 3, -2, 5)$"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "A set is a collection of elements of the same type enclosed in **{ and }**; order and repetition do not matter.",
+   "option_explanations": [
+    "Mixes integers with an animal, so the elements are not of the same type.",
+    "The braces are missing, so the lecture does not count it as a set.",
+    "Correct: integers of one type enclosed in braces.",
+    "Parentheses are not set notation; a set uses braces."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Which of the following is written correctly as a set of animals?",
+    "options": [
+     "$cat, horse, cow$",
+     "$[cat, horse, cow]$",
+     "$\\{cat, 7, cow\\}$",
+     "$\\{cat, horse, cow\\}$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "Set elements are listed between braces and should be of a similar type.",
+    "option_explanations": [
+     "No braces around the elements.",
+     "Square brackets are not set notation.",
+     "The 7 is not an animal, so the elements are not of a similar type.",
+     "Correct: same-type elements inside braces."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "The lecture says $\\{7, 2, cat\\}$ is neither a set of integers nor a set of animals. What is the problem with it?",
+    "options": [
+     "Its elements are not in order",
+     "Its elements are of different types",
+     "It has an odd number of elements",
+     "It contains no repeated element"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "In the lecture a set holds elements of a similar type; ordering and repetition are irrelevant.",
+    "option_explanations": [
+     "Order does not matter in a set.",
+     "Correct: 7 and 2 are integers but cat is an animal.",
+     "A set may have any number of elements.",
+     "Repetition is allowed but never required."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "How are the sets $\\{7, 1, 3, 3\\}$ and $\\{1, 3, 7\\}$ related?",
+   "options": [
+    "$\\{7,1,3,3\\} = \\{1,3,7\\}$",
+    "$\\{1,3,7\\} \\subset \\{7,1,3,3\\}$",
+    "$\\{7,1,3,3\\} \\ne \\{1,3,7\\}$",
+    "$\\{7,1,3,3\\} \\supset \\{1,3,7\\}$"
+   ],
+   "correct": [
+    0
+   ],
+   "explanation": "Two sets are equal when they have the same distinct elements; repeated elements are not counted and order is ignored.",
+   "option_explanations": [
+    "Correct: both contain exactly 1, 3 and 7.",
+    "Both have the same elements, so neither is a proper subset of the other.",
+    "Repetition and order are ignored, so the sets are the same.",
+    "The extra 3 is not counted, so the left set is not larger."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Which statement about $\\{5, 2, 2, 9\\}$ and $\\{9, 5, 2\\}$ is true?",
+    "options": [
+     "They are the same set",
+     "The first one is a proper superset",
+     "They differ in cardinality",
+     "They are different sets"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Repeated elements are counted once and the order of listing is irrelevant.",
+    "option_explanations": [
+     "Correct: both contain 2, 5 and 9.",
+     "The repeated 2 does not add a new element.",
+     "Both have cardinality 3.",
+     "Same distinct elements means equal sets."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which pair of sets is **not** equal?",
+    "options": [
+     "$\\{1, 2, 3\\}$ and $\\{3, 2, 1\\}$",
+     "$\\{1, 2\\}$ and $\\{1, 2, 3\\}$",
+     "$\\{4, 4, 5\\}$ and $\\{5, 4\\}$",
+     "$\\{6, 7\\}$ and $\\{6, 7, 7, 7\\}$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Equality of sets depends only on which distinct elements they contain.",
+    "option_explanations": [
+     "Same elements in a different order are equal.",
+     "Correct: 3 is in the second set but not the first.",
+     "The repeated 4 is ignored, so these are equal.",
+     "The repeated 7s are ignored, so these are equal."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Which statement is true?",
+   "options": [
+    "$-4 \\in \\{2, 4, 8\\}$",
+    "$4 \\notin \\{-4, 4, 0\\}$",
+    "$\\{2\\} \\in \\{1, 2, 3\\}$",
+    "$0 \\in \\{-1, 0, 1\\}$"
+   ],
+   "correct": [
+    3
+   ],
+   "explanation": "$x \\in A$ means $x$ is an element of $A$; $x \\notin A$ means it is not.",
+   "option_explanations": [
+    "-4 is not listed; only positive 4 is.",
+    "4 is listed, so $4 \\in$ the set.",
+    "The elements are numbers; the set $\\{2\\}$ is not one of them.",
+    "Correct: 0 is listed in the set."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Which statement is false?",
+    "options": [
+     "$-19 \\in \\{2, 7, 19, 0, -19, 5\\}$",
+     "$dog \\notin \\{cat, horse, cow\\}$",
+     "$-19 \\notin \\{2, 7, 19, 0, -19, 5\\}$",
+     "$3 \\notin \\{2, 7, 19, 0, -19\\}$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "$\\in$ says an element is in a set and $\\notin$ says it is not.",
+    "option_explanations": [
+     "True: -19 appears in the set.",
+     "True: dog is not listed.",
+     "Correct: -19 is listed, so claiming it is absent is false.",
+     "True: 3 is not listed."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Let $S = \\{a, \\{b\\}, c\\}$. Which statement is true?",
+    "options": [
+     "$\\{b\\} \\in S$",
+     "$b \\in S$",
+     "$\\{a\\} \\in S$",
+     "$c \\notin S$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Membership looks only at the listed elements themselves; a set can itself be an element.",
+    "option_explanations": [
+     "Correct: the set $\\{b\\}$ is one of the three elements.",
+     "b sits inside the element $\\{b\\}$, not directly in S.",
+     "a is an element, but the set $\\{a\\}$ is not listed.",
+     "c is listed, so $c \\in S$."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Which set has no elements?",
+   "options": [
+    "$\\{0\\}$",
+    "$\\{\\emptyset\\}$",
+    "$\\{\\{\\}\\}$",
+    "$\\{\\}$"
+   ],
+   "correct": [
+    3
+   ],
+   "explanation": "The empty (null) set $\\emptyset = \\{\\}$ has no elements.",
+   "option_explanations": [
+    "It contains the element 0.",
+    "It contains one element, the empty set.",
+    "Same as $\\{\\emptyset\\}$: one element.",
+    "Correct: nothing is listed between the braces."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "The symbol $\\emptyset$ denotes which set?",
+    "options": [
+     "$\\{0\\}$",
+     "$\\{\\emptyset\\}$",
+     "$\\{\\}$",
+     "$U$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "$\\emptyset = \\{\\}$, the set with no elements.",
+    "option_explanations": [
+     "This set contains the number 0.",
+     "This set has one element.",
+     "Correct.",
+     "$U$ is the universal set, containing all elements."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Another name the lecture gives the empty set is:",
+    "options": [
+     "Unit set",
+     "Null set",
+     "Universal set",
+     "Zero set"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "The empty set $\\emptyset$ is also called the **null set**.",
+    "option_explanations": [
+     "A unit set has exactly one element.",
+     "Correct.",
+     "The universal set contains all elements.",
+     "Not a term used for $\\emptyset$; $\\{0\\}$ has an element."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Which could be a universal set for $\\{7, 5, -9, 1\\}$?",
+   "options": [
+    "$Z^+$",
+    "$Z^-$",
+    "$Z$",
+    "The even integers"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "A universal set must contain every element of the sets drawn from it.",
+   "option_explanations": [
+    "-9 is not a positive integer.",
+    "7, 5 and 1 are positive.",
+    "Correct: all four are integers.",
+    "7, 5, -9 and 1 are odd."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Which could serve as the universal set for $\\{-3.4, -2, -1.5\\}$?",
+    "options": [
+     "$Z^-$",
+     "$R^-$",
+     "$Z$",
+     "$R^+$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "$U$ must contain all elements of the set; here they are negative reals.",
+    "option_explanations": [
+     "-3.4 and -1.5 are not integers.",
+     "Correct: all three are negative real numbers.",
+     "-3.4 and -1.5 are not integers.",
+     "The elements are negative."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which could serve as the universal set for $\\{2, 4.5, 7\\}$?",
+    "options": [
+     "$R^+$",
+     "$Z^+$",
+     "$N$",
+     "$R^-$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "$U$ must contain all elements of the set drawn from it.",
+    "option_explanations": [
+     "Correct: all three are positive reals.",
+     "4.5 is not an integer.",
+     "4.5 is not a natural number.",
+     "The elements are positive."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Which set is $Z^-$ in the lecture?",
+   "options": [
+    "$\\{0, -1, -2, \\dots\\}$",
+    "$\\{\\dots, -1, 0, 1, \\dots\\}$",
+    "$\\{1, 2, 3, \\dots\\}$",
+    "$\\{-1, -2, -3, \\dots\\}$"
+   ],
+   "correct": [
+    3
+   ],
+   "explanation": "$Z^-$ is the set of negative integers; 0 is neither positive nor negative.",
+   "option_explanations": [
+    "0 is not negative, so it is not in $Z^-$.",
+    "This is $Z$, all integers.",
+    "This is $Z^+$ (and $N$).",
+    "Correct."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "In the lecture, $N$ is which set?",
+    "options": [
+     "$\\{0, 1, 2, \\dots\\}$",
+     "$\\{\\dots, -1, 0, 1, \\dots\\}$",
+     "$\\{0, 2, 4, \\dots\\}$",
+     "$\\{1, 2, 3, \\dots\\}$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "The lecture defines the natural numbers as $N = \\{1, 2, 3, \\dots\\}$.",
+    "option_explanations": [
+     "The lecture's $N$ starts at 1, not 0.",
+     "This is $Z$.",
+     "These are the non-negative even integers.",
+     "Correct."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which symbol denotes the set of all real numbers?",
+    "options": [
+     "$Z$",
+     "$N$",
+     "$R$",
+     "$Q$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "$R$ is the reals, $Z$ the integers, $N$ the naturals, $Q$ the rationals.",
+    "option_explanations": [
+     "$Z$ is the integers.",
+     "$N$ is the natural numbers.",
+     "Correct.",
+     "$Q$ is the rational numbers."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "What is $|\\{5, 3, 3, 2, 2, 7, 7, 7\\}|$?",
+   "options": [
+    "$4$",
+    "$8$",
+    "$3$",
+    "$7$"
+   ],
+   "correct": [
+    0
+   ],
+   "explanation": "Cardinality $|A|$ is the number of **distinct** elements of $A$.",
+   "option_explanations": [
+    "Correct: 5, 3, 2, 7.",
+    "Counts repeated elements.",
+    "Misses one of the distinct values.",
+    "Takes the largest element instead of counting."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Find $|A|$ for $A = \\{9, 9, 1, 4, 1, 4, 4\\}$.",
+    "options": [
+     "$7$",
+     "$3$",
+     "$4$",
+     "$9$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "$|A|$ counts distinct elements only.",
+    "option_explanations": [
+     "Counts every listed entry including repeats.",
+     "Correct: 9, 1, 4.",
+     "Over-counts the distinct values.",
+     "Takes the largest element instead of counting."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "If $B = \\{a, b, a, c, b, d\\}$, then $|B|$ equals:",
+    "options": [
+     "$6$",
+     "$4$",
+     "$5$",
+     "$3$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Cardinality ignores repetition.",
+    "option_explanations": [
+     "Counts repeated letters.",
+     "Correct: a, b, c, d.",
+     "Counts one repeat.",
+     "Misses one distinct letter."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Which set has infinite cardinality?",
+   "options": [
+    "$\\{x \\in Z \\mid x > 5\\}$",
+    "$\\{x \\in N \\mid x < 5\\}$",
+    "$\\{x \\in Z^+ \\mid x \\le 100\\}$",
+    "$\\{x \\in Z \\mid -5 < x < 5\\}$"
+   ],
+   "correct": [
+    0
+   ],
+   "explanation": "A set with infinitely many elements is an infinite set; its cardinality is infinite.",
+   "option_explanations": [
+    "Correct: 6, 7, 8, ... never ends.",
+    "This is $\\{1,2,3,4\\}$.",
+    "This has 100 elements.",
+    "This is $\\{-4,\\dots,4\\}$, 9 elements."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Which of these sets is finite?",
+    "options": [
+     "$Z^-$",
+     "$\\{x \\in R \\mid 0 < x < 1\\}$",
+     "$\\{x \\in Z^- \\mid x > -50\\}$",
+     "$\\{x \\in Z \\mid x < 3\\}$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "A set is infinite when it has infinitely many elements, even if they lie in a bounded range.",
+    "option_explanations": [
+     "All negative integers: infinite.",
+     "Infinitely many reals lie between 0 and 1.",
+     "Correct: -1 through -49, 49 elements.",
+     "Contains 2, 1, 0, -1, ... without end."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Let $A = \\{x \\in Z \\mid x \\text{ is even and positive}\\}$. What is $|A|$?",
+    "options": [
+     "$0$",
+     "$1$",
+     "$2$",
+     "Infinite"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "$A = \\{2, 4, 6, \\dots\\}$ is an infinite set, so its cardinality is infinite.",
+    "option_explanations": [
+     "A has elements such as 2 and 4.",
+     "A has more than one element.",
+     "2 is the smallest element, not the count.",
+     "Correct."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Which set equals $\\{x \\in Z^+ \\mid x \\ge 5\\}$?",
+   "options": [
+    "$\\{6, 7, 8, \\dots\\}$",
+    "$\\{1, 2, 3, 4, 5\\}$",
+    "$\\{1, 2, 3, 4\\}$",
+    "$\\{5, 6, 7, \\dots\\}$"
+   ],
+   "correct": [
+    3
+   ],
+   "explanation": "$\\{x \\mid \\text{condition}\\}$ is the set of all $x$ satisfying the condition.",
+   "option_explanations": [
+    "$\\ge$ includes 5 itself.",
+    "These satisfy $x \\le 5$, not $x \\ge 5$.",
+    "These satisfy $x < 5$.",
+    "Correct."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "List the set $\\{x \\in N \\mid x \\le 3\\}$.",
+    "options": [
+     "$\\{0, 1, 2, 3\\}$",
+     "$\\{1, 2, 3\\}$",
+     "$\\{1, 2\\}$",
+     "$\\{3, 4, 5, \\dots\\}$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Set-builder notation collects every $x$ in the given set that meets the condition.",
+    "option_explanations": [
+     "0 is not in the lecture's $N$.",
+     "Correct.",
+     "$\\le$ includes 3.",
+     "These satisfy $x \\ge 3$."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which roster form equals $\\{x \\in Z \\mid -2 \\le x < 2\\}$?",
+    "options": [
+     "$\\{-2, -1, 0, 1\\}$",
+     "$\\{-2, -1, 0, 1, 2\\}$",
+     "$\\{-1, 0, 1\\}$",
+     "$\\{-1, 0, 1, 2\\}$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Read each inequality carefully: $\\le$ includes the endpoint, $<$ excludes it.",
+    "option_explanations": [
+     "Correct.",
+     "$x < 2$ excludes 2.",
+     "$-2 \\le x$ includes -2.",
+     "Endpoints are swapped."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Which set equals $S = \\{x \\in N \\mid x - 5 \\notin N\\}$?",
+   "options": [
+    "$\\{1, 2, 3, 4\\}$",
+    "$\\{6, 7, 8, \\dots\\}$",
+    "$\\{1, 2, 3, 4, 5\\}$",
+    "$\\{5, 6, 7, \\dots\\}$"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "$x - 5 \\notin N$ means $x - 5 < 1$, so $x < 6$; with $N = \\{1,2,3,\\dots\\}$ this gives five elements.",
+   "option_explanations": [
+    "For $x = 5$, $x - 5 = 0 \\notin N$, so 5 belongs.",
+    "For these, $x - 5 \\in N$.",
+    "Correct.",
+    "Mostly values where $x - 5 \\in N$."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "List $\\{x \\in N \\mid x - 3 \\notin N\\}$.",
+    "options": [
+     "$\\{0, 1, 2, 3\\}$",
+     "$\\{4, 5, 6, \\dots\\}$",
+     "$\\{3, 4, 5, \\dots\\}$",
+     "$\\{1, 2, 3\\}$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "$x - 3 \\notin N$ means $x - 3 < 1$, i.e. $x \\le 3$.",
+    "option_explanations": [
+     "0 is not in the lecture's $N$.",
+     "These give $x - 3 \\in N$.",
+     "From 4 on, $x - 3 \\in N$.",
+     "Correct."
+    ]
+   },
+   {
+    "type": "basic",
+    "question": "Describe $S = \\{x \\in N \\mid x - 4 \\notin N\\}$ in words and list its elements.",
+    "answer": "In words: S is the set of natural numbers which, after subtracting 4, are no longer natural numbers.\n\nElements: $N = \\{1, 2, 3, \\dots\\}$, so $x - 4 \\notin N$ means $x - 4 < 1$, i.e. $x < 5$.\n\nThe natural numbers below 5 are 1, 2, 3, 4. So $S = \\{1, 2, 3, 4\\}$.\n\nCheck: for $x \\ge 5$, $x - 4 \\ge 1$ lies in $N$, so 5, 6, 7, ... are excluded."
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Which set equals $S = \\{x \\mid x > 0 \\wedge x < 0\\}$?",
+   "options": [
+    "$\\emptyset$",
+    "$\\{0\\}$",
+    "$R^+$",
+    "$\\{x \\mid x \\ne 0\\}$"
+   ],
+   "correct": [
+    0
+   ],
+   "explanation": "No number is both positive and negative, so the condition is never satisfied.",
+   "option_explanations": [
+    "Correct.",
+    "0 is not greater than 0.",
+    "Positive reals fail $x < 0$.",
+    "That set uses OR, not AND."
+   ]
+  },
+  "versions": [
+   {
+    "type": "basic",
+    "question": "Describe $S = \\{x \\mid x \\ge 0 \\wedge x \\le 0\\}$ in words and list its elements.",
+    "answer": "In words: S is the set of numbers that are both non-negative and non-positive.\n\nA number with $x \\ge 0$ and $x \\le 0$ must equal 0, and 0 satisfies both.\n\nSo $S = \\{0\\}$, a set with exactly one element (it is not empty and cannot have ten elements)."
+   },
+   {
+    "type": "mcq",
+    "question": "Which set equals $\\{x \\in Z \\mid x > 3 \\wedge x < 4\\}$?",
+    "options": [
+     "$\\{3, 4\\}$",
+     "$\\{3\\}$",
+     "$\\emptyset$",
+     "$\\{4\\}$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "$\\wedge$ requires both conditions; no integer lies strictly between 3 and 4.",
+    "option_explanations": [
+     "Both endpoints are excluded by the strict inequalities.",
+     "3 fails $x > 3$.",
+     "Correct.",
+     "4 fails $x < 4$."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Let $S = \\{n \\in Z^+ \\mid \\sqrt{n} \\notin Z\\}$ (positive integers that are not perfect squares). Which number is **not** in $S$?",
+   "options": [
+    "$15$",
+    "$16$",
+    "$8$",
+    "$2$"
+   ],
+   "correct": [
+    1
+   ],
+   "explanation": "S contains every positive integer except the perfect squares 1, 4, 9, 16, 25, ...",
+   "option_explanations": [
+    "$\\sqrt{15}$ is not an integer, so 15 is in S.",
+    "Correct: $\\sqrt{16} = 4$ is an integer.",
+    "$\\sqrt{8}$ is not an integer, so 8 is in S.",
+    "$\\sqrt{2}$ is not an integer, so 2 is in S."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "For $S = \\{n \\in Z^+ \\mid \\sqrt{n} \\notin Z\\}$, which number belongs to $S$?",
+    "options": [
+     "$9$",
+     "$12$",
+     "$25$",
+     "$1$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "S is the positive integers with the perfect squares removed.",
+    "option_explanations": [
+     "$\\sqrt{9} = 3$.",
+     "Correct: $\\sqrt{12}$ is not an integer.",
+     "$\\sqrt{25} = 5$.",
+     "$\\sqrt{1} = 1$."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which lists the five smallest elements of $\\{n \\in Z^+ \\mid \\sqrt{n} \\notin Z\\}$?",
+    "options": [
+     "$\\{1, 2, 3, 5, 6\\}$",
+     "$\\{2, 3, 5, 7, 11\\}$",
+     "$\\{2, 3, 5, 6, 7\\}$",
+     "$\\{1, 4, 9, 16, 25\\}$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Remove the perfect squares 1, 4, 9, ... from the positive integers.",
+    "option_explanations": [
+     "1 is a perfect square.",
+     "These are primes; 6 is missing.",
+     "Correct.",
+     "These are exactly the excluded perfect squares."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Which set equals $\\{x \\in Z \\mid -x \\in Z\\}$?",
+   "options": [
+    "$Z^-$",
+    "$Z^+$",
+    "$\\{0\\}$",
+    "$Z$"
+   ],
+   "correct": [
+    3
+   ],
+   "explanation": "The negative of any integer is an integer, so every integer satisfies the condition.",
+   "option_explanations": [
+    "Positive integers and 0 also satisfy it.",
+    "Negative integers and 0 also satisfy it.",
+    "0 satisfies it, but so does every other integer.",
+    "Correct."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Which set equals $\\{x \\in N \\mid -x \\in N\\}$?",
+    "options": [
+     "$\\emptyset$",
+     "$Z^+$",
+     "$Z^-$",
+     "$\\{0\\}$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "For $x \\in N$, $-x$ is negative and $N$ has no negative numbers.",
+    "option_explanations": [
+     "Correct.",
+     "$-1, -2, \\dots$ are not positive integers.",
+     "x must come from $N$, which has no negatives.",
+     "0 is not in the lecture's $N$."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which set equals $\\{x \\in Z \\mid -x \\in Z^+\\}$?",
+    "options": [
+     "$Z^+$",
+     "$Z^-$",
+     "$Z$",
+     "$N$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "$-x > 0$ exactly when $x < 0$.",
+    "option_explanations": [
+     "Then $-x$ would be negative.",
+     "Correct.",
+     "Non-negative x give $-x \\notin Z^+$.",
+     "$N$ is the positive integers, which give negative $-x$."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "What does $A \\subseteq B$ mean?",
+   "options": [
+    "Every element of $A$ is in $B$",
+    "Every element of $B$ is in $A$",
+    "Some element of $A$ is in $B$",
+    "The set $A$ is an element of $B$"
+   ],
+   "correct": [
+    0
+   ],
+   "explanation": "$A \\subseteq B$ when all elements of $A$ are also elements of $B$; B may have more.",
+   "option_explanations": [
+    "Correct.",
+    "That describes $B \\subseteq A$.",
+    "Sharing one element is not enough.",
+    "That is $A \\in B$, membership."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "The statement $B \\supseteq A$ is equivalent to:",
+    "options": [
+     "$B \\subseteq A$",
+     "$A \\in B$",
+     "$A \\subseteq B$",
+     "$B \\in A$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "B is a superset of A exactly when A is a subset of B.",
+    "option_explanations": [
+     "Direction reversed.",
+     "Confuses subset with membership.",
+     "Correct.",
+     "Confuses superset with membership."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which statement is true?",
+    "options": [
+     "$\\{2, 3\\} \\subseteq \\{3, 3, 3\\}$",
+     "$\\{7, 5, 2\\} \\subseteq \\{2\\}$",
+     "$\\{2, 3, 4\\} \\subseteq \\{4, 3, 5\\}$",
+     "$\\{3, 3, 3, 3\\} \\subseteq \\{2, 3\\}$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "Check that every distinct element on the left appears on the right.",
+    "option_explanations": [
+     "2 is not in the right set.",
+     "7 and 5 are not in $\\{2\\}$.",
+     "2 is not in the right set.",
+     "Correct: the left set is $\\{3\\}$."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Which statement holds for **every** set $A$?",
+   "options": [
+    "$\\emptyset \\subseteq A$",
+    "$\\emptyset \\in A$",
+    "$A \\subset A$",
+    "$\\{A\\} \\subseteq A$"
+   ],
+   "correct": [
+    0
+   ],
+   "explanation": "$\\emptyset$ is a subset of every set, including itself.",
+   "option_explanations": [
+    "Correct.",
+    "Holds only if $\\emptyset$ is listed as an element of A.",
+    "A set is not a proper subset of itself.",
+    "A is generally not an element of itself."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Which statement is false?",
+    "options": [
+     "$\\emptyset \\subseteq \\emptyset$",
+     "$\\{3, 4\\} \\subseteq \\{3, 4\\}$",
+     "$\\emptyset \\subseteq \\{0\\}$",
+     "$\\{3, 4\\} \\subset \\{3, 4\\}$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "Every set is a subset of itself, but not a proper subset of itself.",
+    "option_explanations": [
+     "True: $\\emptyset$ is a subset of every set.",
+     "True: $A \\subseteq A$ always.",
+     "True: $\\emptyset$ is a subset of every set.",
+     "Correct: a set is never a proper subset of itself."
+    ]
+   },
+   {
+    "type": "basic",
+    "question": "Decide whether each statement is true and justify: (a) $\\emptyset \\subseteq \\{0\\}$ (b) $\\{1,1,1\\} \\subseteq \\{1,1\\}$ (c) $\\{1,1,1\\} = \\{1,1\\}$ (d) $\\{x+1 \\mid x \\in N\\} \\not\\subseteq \\{x \\mid x \\in N\\}$",
+    "answer": "(a) True. The empty set is a subset of every set.\n\n(b) True. Repetition is not counted, so both sets are $\\{1\\}$, and every set is a subset of itself.\n\n(c) True. Both sets are $\\{1\\}$.\n\n(d) False. $\\{x+1 \\mid x \\in N\\} = \\{2, 3, 4, \\dots\\}$, and every element of it is a natural number, so it **is** a subset of $N$."
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "If $A \\subseteq B$ and $B \\subseteq A$, which must be true?",
+   "options": [
+    "$A \\subset B$",
+    "$A \\cap B = \\emptyset$",
+    "$A = B$",
+    "$A \\in B$"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "Mutual inclusion means A and B have exactly the same elements.",
+   "option_explanations": [
+    "$B \\subseteq A$ rules out B having extra elements.",
+    "They share all elements.",
+    "Correct.",
+    "Subset is not membership."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "To prove two sets $A$ and $B$ are equal, it is enough to show:",
+    "options": [
+     "$A \\subseteq B$",
+     "$A \\subseteq B$ and $B \\subseteq A$",
+     "$A \\cap B \\ne \\emptyset$",
+     "$|A| = |B|$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "$A = B$ exactly when each set is a subset of the other.",
+    "option_explanations": [
+     "B could still have extra elements.",
+     "Correct.",
+     "Sharing elements does not make sets equal.",
+     "$\\{1\\}$ and $\\{2\\}$ have equal size but differ."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which statement is true?",
+    "options": [
+     "$\\{1, 1, 1\\} \\subset \\{1, 1\\}$",
+     "$\\{1, 1, 1\\} = \\{1, 1\\}$",
+     "$\\{1\\} \\in \\{1, 1\\}$",
+     "$|\\{1, 1, 1\\}| = 3$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Both sets have the single distinct element 1, so each is a subset of the other and they are equal.",
+    "option_explanations": [
+     "Equal sets are not proper subsets.",
+     "Correct.",
+     "The element is 1, not the set $\\{1\\}$.",
+     "Repetition is not counted; the cardinality is 1."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Which statement is true?",
+   "options": [
+    "$\\{2, 3, 4\\} \\subset \\{4, 3, 5, 7, 2\\}$",
+    "$\\{2, 3, 4\\} \\subset \\{4, 2, 2, 3\\}$",
+    "$\\{2, 3, 4\\} \\subset \\{2, 3\\}$",
+    "$\\{2, 3, 4\\} \\subset \\{2, 3, 5, 7\\}$"
+   ],
+   "correct": [
+    0
+   ],
+   "explanation": "$A \\subset B$ means $A \\subseteq B$ and B has some element not in A.",
+   "option_explanations": [
+    "Correct: all of 2, 3, 4 are on the right, and 5, 7 are extra.",
+    "The two sets are equal.",
+    "4 is not in $\\{2, 3\\}$.",
+    "4 is not on the right."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "$A \\subset B$ is equivalent to which statement?",
+    "options": [
+     "$(A \\subseteq B) \\vee (A \\ne B)$",
+     "$(A \\subseteq B) \\wedge (A = B)$",
+     "$(B \\subseteq A) \\wedge (A \\ne B)$",
+     "$(A \\subseteq B) \\wedge (A \\ne B)$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "A proper subset is a subset that is not equal to the whole set.",
+    "option_explanations": [
+     "OR would allow sets that are not subsets.",
+     "This describes equal sets.",
+     "Direction reversed.",
+     "Correct."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "For a non-empty set $A$, which is true?",
+    "options": [
+     "$A \\subset A$",
+     "$\\emptyset \\in A$",
+     "$\\emptyset \\subset A$",
+     "$A \\subset \\emptyset$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "$\\emptyset \\subseteq A$ always, and $A$ has an element not in $\\emptyset$, so the inclusion is proper.",
+    "option_explanations": [
+     "A is not a proper subset of itself.",
+     "$\\emptyset$ need not be an element of A.",
+     "Correct.",
+     "$\\emptyset$ has no elements."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Which statement is true?",
+   "options": [
+    "Every subset is a proper subset",
+    "Each set is a proper subset of itself",
+    "Every proper subset is a subset",
+    "$\\emptyset$ is a proper subset of $\\emptyset$"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "$\\subset$ is a special case of $\\subseteq$; equal sets are subsets of each other but not proper subsets.",
+   "option_explanations": [
+    "$A \\subseteq A$ but $A \\not\\subset A$.",
+    "$A = A$, so the inclusion is not proper.",
+    "Correct.",
+    "$\\emptyset = \\emptyset$, so not proper."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "If $A \\subset B$, which must hold?",
+    "options": [
+     "$A \\subseteq B$",
+     "$B \\subseteq A$",
+     "$|A| = |B|$",
+     "$A \\in B$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Every proper subset is also a subset.",
+    "option_explanations": [
+     "Correct.",
+     "B has an element not in A.",
+     "B has more elements than A.",
+     "Subset is not membership."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which statement is false?",
+    "options": [
+     "Every proper subset is a subset",
+     "Each set is a subset of itself",
+     "$\\emptyset$ is a subset of $\\emptyset$",
+     "Every subset is a proper subset"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "A subset equal to the whole set is not proper.",
+    "option_explanations": [
+     "True: $\\subset$ implies $\\subseteq$.",
+     "True: $A \\subseteq A$.",
+     "True: $\\emptyset$ is a subset of every set.",
+     "Correct: $A \\subseteq A$ yet $A \\not\\subset A$."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Let $A = \\{x + 1 \\mid x \\in N\\}$. Which relation holds?",
+   "options": [
+    "$A = N$",
+    "$A \\subset N$",
+    "$N \\subset A$",
+    "$A \\cap N = \\emptyset$"
+   ],
+   "correct": [
+    1
+   ],
+   "explanation": "$A = \\{2, 3, 4, \\dots\\}$: all its elements are natural numbers and 1 is missing.",
+   "option_explanations": [
+    "1 is in N but not in A.",
+    "Correct.",
+    "1 is in N but not in A.",
+    "A and N share 2, 3, ..."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Let $A = \\{2x \\mid x \\in N\\}$. Which relation holds?",
+    "options": [
+     "$A = N$",
+     "$A \\subset N$",
+     "$N \\subset A$",
+     "$A \\cap N = \\emptyset$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "$A = \\{2, 4, 6, \\dots\\}$ lies inside N, and odd numbers are missing from A.",
+    "option_explanations": [
+     "Odd numbers like 1 are not in A.",
+     "Correct.",
+     "1 is in N but not in A.",
+     "A and N share 2, 4, ..."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Let $A = \\{x - 1 \\mid x \\in N\\}$. Which relation holds?",
+    "options": [
+     "$A \\subset N$",
+     "$A = N$",
+     "$N \\subset A$",
+     "$A \\cap N = \\emptyset$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "$A = \\{0, 1, 2, \\dots\\}$ contains all of N plus 0.",
+    "option_explanations": [
+     "0 is in A but not in N.",
+     "0 is in A but not in N.",
+     "Correct.",
+     "They share 1, 2, 3, ..."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "How many subsets does $\\{4, 2, 3\\}$ have?",
+   "options": [
+    "$8$",
+    "$6$",
+    "$7$",
+    "$9$"
+   ],
+   "correct": [
+    0
+   ],
+   "explanation": "A set with $|A|$ elements has $2^{|A|}$ subsets, counting $\\emptyset$ and the set itself.",
+   "option_explanations": [
+    "Correct: $2^3$.",
+    "$2 \\cdot 3$ instead of $2^3$.",
+    "Forgets the empty set.",
+    "$3^2$ instead of $2^3$."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "How many subsets does $\\{a, b, c, d, e\\}$ have?",
+    "options": [
+     "$10$",
+     "$31$",
+     "$25$",
+     "$32$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "Number of subsets $= 2^{|A|}$.",
+    "option_explanations": [
+     "$2 \\cdot 5$.",
+     "Forgets the empty set.",
+     "$5^2$.",
+     "Correct: $2^5$."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "How many subsets does $\\{1, 1, 2, 3, 4, 5, 6\\}$ have?",
+    "options": [
+     "$128$",
+     "$63$",
+     "$12$",
+     "$64$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "Repetition is not counted, so $|A| = 6$ and there are $2^6$ subsets.",
+    "option_explanations": [
+     "Counts the repeated 1, using $2^7$.",
+     "Forgets the empty set.",
+     "$2 \\cdot 6$.",
+     "Correct: $2^6$."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "basic",
+   "question": "List all subsets of $\\{1, 3, 5, 7\\}$ and state how many there are.",
+   "answer": "Group the subsets by size:\n\n- 0 elements: $\\emptyset$\n- 1 element: $\\{1\\}, \\{3\\}, \\{5\\}, \\{7\\}$\n- 2 elements: $\\{1,3\\}, \\{1,5\\}, \\{1,7\\}, \\{3,5\\}, \\{3,7\\}, \\{5,7\\}$\n- 3 elements: $\\{1,3,5\\}, \\{1,3,7\\}, \\{1,5,7\\}, \\{3,5,7\\}$\n- 4 elements: $\\{1,3,5,7\\}$\n\nTotal: $1 + 4 + 6 + 4 + 1 = 16 = 2^4$."
+  },
+  "versions": [
+   {
+    "type": "basic",
+    "question": "Use the binary-number method to list all subsets of $\\{a, b, c\\}$ (digits for a, b, c from left to right).",
+    "answer": "$|A| = 3$, so there are $2^3 = 8$ binary strings; 1 means the element is present, 0 absent.\n\n- 000 → $\\emptyset$\n- 001 → $\\{c\\}$\n- 010 → $\\{b\\}$\n- 011 → $\\{b, c\\}$\n- 100 → $\\{a\\}$\n- 101 → $\\{a, c\\}$\n- 110 → $\\{a, b\\}$\n- 111 → $\\{a, b, c\\}$\n\nThese 8 sets are all the subsets."
+   },
+   {
+    "type": "mcq",
+    "question": "Which set is **not** a subset of $\\{5, 7, 8\\}$?",
+    "options": [
+     "$\\{8, 5\\}$",
+     "$\\{5, 6\\}$",
+     "$\\emptyset$",
+     "$\\{7\\}$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "A subset can only use elements of the original set; $\\emptyset$ is always a subset.",
+    "option_explanations": [
+     "Order does not matter; 8 and 5 are both in the set.",
+     "Correct: 6 is not in $\\{5, 7, 8\\}$.",
+     "$\\emptyset$ is a subset of every set.",
+     "7 is in the set."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "For $A = \\{5, 7, 8\\}$ with binary digits assigned to 5, 7, 8 from left to right, which subset does $101$ represent?",
+   "options": [
+    "$\\{5, 8\\}$",
+    "$\\{7\\}$",
+    "$\\{5, 7\\}$",
+    "$\\{7, 8\\}$"
+   ],
+   "correct": [
+    0
+   ],
+   "explanation": "Each binary digit marks one element as present (1) or absent (0).",
+   "option_explanations": [
+    "Correct: 5 present, 7 absent, 8 present.",
+    "Reads the 1s and 0s backwards.",
+    "This is 110.",
+    "This is 011."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "With digits for 5, 7, 8 from left to right, which subset of $\\{5, 7, 8\\}$ is encoded by $011$?",
+    "options": [
+     "$\\{5\\}$",
+     "$\\{5, 7\\}$",
+     "$\\{7, 8\\}$",
+     "$\\{8\\}$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "A 1 means the element in that position is in the subset.",
+    "option_explanations": [
+     "Reads the 0s as present.",
+     "This is 110.",
+     "Correct.",
+     "This is 001."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "For $\\{a, b, c, d\\}$ with one digit per element from left to right, the string $1010$ encodes which subset?",
+    "options": [
+     "$\\{b, d\\}$",
+     "$\\{a, b\\}$",
+     "$\\{a, c\\}$",
+     "$\\{c, d\\}$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Positions with a 1 give the elements present.",
+    "option_explanations": [
+     "These are the 0 positions.",
+     "This is 1100.",
+     "Correct: positions 1 and 3.",
+     "This is 0011."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "What is $\\mathcal{P}(\\emptyset)$?",
+   "options": [
+    "$\\emptyset$",
+    "$\\{\\emptyset\\}$",
+    "$\\{\\emptyset, \\{\\emptyset\\}\\}$",
+    "$\\{0\\}$"
+   ],
+   "correct": [
+    1
+   ],
+   "explanation": "The only subset of $\\emptyset$ is $\\emptyset$ itself, so $\\mathcal{P}(\\emptyset)$ has one element.",
+   "option_explanations": [
+    "$\\emptyset$ itself is a subset, so the power set is not empty.",
+    "Correct.",
+    "This is $\\mathcal{P}(\\{\\emptyset\\})$.",
+    "0 is not a subset of $\\emptyset$."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "What is $|\\mathcal{P}(\\emptyset)|$?",
+    "options": [
+     "$1$",
+     "$0$",
+     "$2$",
+     "Undefined"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "$|\\mathcal{P}(A)| = 2^{|A|} = 2^0 = 1$.",
+    "option_explanations": [
+     "Correct.",
+     "$\\emptyset$ has itself as a subset.",
+     "This is $2^1$, for a one-element set.",
+     "$2^0$ is defined and equals 1."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "The empty set has how many subsets?",
+    "options": [
+     "None",
+     "Two",
+     "Infinitely many",
+     "Exactly one"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "$\\emptyset \\subseteq \\emptyset$, and nothing else is a subset of it.",
+    "option_explanations": [
+     "$\\emptyset$ is a subset of every set, including itself.",
+     "Two would need a one-element set.",
+     "$2^0 = 1$.",
+     "Correct: $\\emptyset$ itself."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "What is $|A|$ for $A = \\{\\{1,2\\}, \\{3,4\\}, \\emptyset, \\{5,6,1\\}\\}$?",
+   "options": [
+    "$6$",
+    "$4$",
+    "$3$",
+    "$7$"
+   ],
+   "correct": [
+    1
+   ],
+   "explanation": "Each inner set counts as one element, including $\\emptyset$.",
+   "option_explanations": [
+    "Counts the distinct numbers inside the inner sets.",
+    "Correct.",
+    "Ignores $\\emptyset$ as an element.",
+    "Counts every number written inside."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Find $|\\{\\{a\\}, \\{a, b\\}, \\{b, c, d\\}\\}|$.",
+    "options": [
+     "$4$",
+     "$6$",
+     "$2$",
+     "$3$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "The elements are the three inner sets.",
+    "option_explanations": [
+     "Counts the distinct letters.",
+     "Counts every letter written.",
+     "Misses one inner set.",
+     "Correct."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Find $|\\{\\emptyset, \\{\\emptyset\\}, \\{1, \\emptyset\\}\\}|$.",
+    "options": [
+     "$3$",
+     "$1$",
+     "$2$",
+     "$4$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "$\\emptyset$, $\\{\\emptyset\\}$ and $\\{1, \\emptyset\\}$ are three different elements.",
+    "option_explanations": [
+     "Correct.",
+     "Treats the three as one empty thing.",
+     "Ignores $\\emptyset$ as an element.",
+     "Counts the inner items too."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Which statement is true?",
+   "options": [
+    "$\\{\\emptyset\\} = \\emptyset$",
+    "$|\\{\\emptyset\\}| = 0$",
+    "$|\\{\\emptyset\\}| = 1$",
+    "$\\emptyset \\notin \\{\\emptyset\\}$"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "$\\{\\emptyset\\}$ is a set with one element, the empty set; it is not itself empty.",
+   "option_explanations": [
+    "One side has an element and the other has none.",
+    "It has one element.",
+    "Correct.",
+    "$\\emptyset$ is its only element."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "The set $\\{\\emptyset\\}$ is the same as:",
+    "options": [
+     "$\\{\\}$",
+     "$\\emptyset$",
+     "$\\{\\{\\}\\}$",
+     "$\\{0\\}$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "$\\emptyset = \\{\\}$, so $\\{\\emptyset\\} = \\{\\{\\}\\}$, a one-element set.",
+    "option_explanations": [
+     "This is empty; $\\{\\emptyset\\}$ has one element.",
+     "This is empty.",
+     "Correct.",
+     "The element 0 is not the empty set."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which of these sets is empty?",
+    "options": [
+     "$\\{\\emptyset\\}$",
+     "$\\{\\}$",
+     "$\\{\\{\\}\\}$",
+     "$\\{0\\}$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Only a set with nothing between its braces is empty.",
+    "option_explanations": [
+     "It contains $\\emptyset$.",
+     "Correct.",
+     "It contains $\\{\\}$.",
+     "It contains 0."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Which is an element of $\\mathcal{P}(\\{2, 3, 4\\})$?",
+   "options": [
+    "$\\{2, 4\\}$",
+    "$\\{2, 5\\}$",
+    "$\\{2, 3, 4, 5\\}$",
+    "$\\{\\{2\\}, \\{4\\}\\}$"
+   ],
+   "correct": [
+    0
+   ],
+   "explanation": "$\\mathcal{P}(A)$ is the set of all subsets of A.",
+   "option_explanations": [
+    "Correct: a subset of $\\{2,3,4\\}$.",
+    "5 is not in the set.",
+    "5 is not in the set.",
+    "Its elements are sets, not elements of the original set."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Which is **not** an element of $\\mathcal{P}(\\{a, b\\})$?",
+    "options": [
+     "$\\emptyset$",
+     "$\\{a\\}$",
+     "$\\{a, b\\}$",
+     "$\\{\\{a\\}\\}$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "$\\mathcal{P}(\\{a,b\\}) = \\{\\emptyset, \\{a\\}, \\{b\\}, \\{a,b\\}\\}$.",
+    "option_explanations": [
+     "$\\emptyset$ is a subset of every set.",
+     "A one-element subset.",
+     "Every set is a subset of itself.",
+     "Correct: its element $\\{a\\}$ is not in $\\{a, b\\}$."
+    ]
+   },
+   {
+    "type": "basic",
+    "question": "Write $\\mathcal{P}(\\{x, y, z\\})$ and its cardinality.",
+    "answer": "List every subset:\n\n$\\mathcal{P}(\\{x,y,z\\}) = \\{\\emptyset, \\{x\\}, \\{y\\}, \\{z\\}, \\{x,y\\}, \\{x,z\\}, \\{y,z\\}, \\{x,y,z\\}\\}$\n\n$|\\mathcal{P}(\\{x,y,z\\})| = 2^3 = 8$."
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "If $|A| = n$, then $|\\mathcal{P}(A)|$ equals:",
+   "options": [
+    "$2n$",
+    "$n^2$",
+    "$2^n$",
+    "$2^n - 1$"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "Each element is either in or out of a subset, giving $2 \\cdot 2 \\cdots 2 = 2^n$ subsets.",
+   "option_explanations": [
+    "Adds instead of multiplying the two choices.",
+    "Squares n instead of raising 2 to n.",
+    "Correct.",
+    "Leaves out the empty set."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "If $|A| = 7$, what is $|\\mathcal{P}(A)|$?",
+    "options": [
+     "$128$",
+     "$14$",
+     "$49$",
+     "$127$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "$|\\mathcal{P}(A)| = 2^{|A|}$.",
+    "option_explanations": [
+     "Correct: $2^7$.",
+     "$2 \\cdot 7$.",
+     "$7^2$.",
+     "Forgets the empty set."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "If $|\\mathcal{P}(A)| = 64$, what is $|A|$?",
+    "options": [
+     "$32$",
+     "$6$",
+     "$8$",
+     "$7$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "$2^{|A|} = 64$ gives $|A| = 6$.",
+    "option_explanations": [
+     "Halves 64 instead of taking $\\log_2$.",
+     "Correct.",
+     "Takes $\\sqrt{64}$.",
+     "Off by one: $2^7 = 128$."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Which set is $\\mathcal{P}(\\{\\{1\\}, \\{2\\}\\})$?",
+   "options": [
+    "$\\{\\emptyset, \\{1\\}, \\{2\\}, \\{1, 2\\}\\}$",
+    "$\\{\\{\\{1\\}\\}, \\{\\{2\\}\\}, \\{\\{1\\},\\{2\\}\\}\\}$",
+    "$\\{\\emptyset, \\{1\\}, \\{2\\}, \\{\\{1\\},\\{2\\}\\}\\}$",
+    "$\\{\\emptyset, \\{\\{1\\}\\}, \\{\\{2\\}\\}, \\{\\{1\\},\\{2\\}\\}\\}$"
+   ],
+   "correct": [
+    3
+   ],
+   "explanation": "The elements are $\\{1\\}$ and $\\{2\\}$, so each subset is a set containing some of those sets.",
+   "option_explanations": [
+    "This is $\\mathcal{P}(\\{1, 2\\})$; the elements are sets, not numbers.",
+    "Leaves out $\\emptyset$.",
+    "$\\{1\\}$ is an element, but a subset must be $\\{\\{1\\}\\}$.",
+    "Correct."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "What is $|\\mathcal{P}(A)|$ for $A = \\{\\{1,2\\}, \\emptyset, \\{5,6,1\\}\\}$?",
+    "options": [
+     "$16$",
+     "$32$",
+     "$8$",
+     "$4$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "$|A| = 3$ (three inner sets), so $|\\mathcal{P}(A)| = 2^3$.",
+    "option_explanations": [
+     "Uses the 4 distinct numbers: $2^4$.",
+     "Uses the 5 numbers written: $2^5$.",
+     "Correct.",
+     "Ignores $\\emptyset$ as an element: $2^2$."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "What is $\\mathcal{P}(\\{\\emptyset\\})$?",
+    "options": [
+     "$\\{\\emptyset\\}$",
+     "$\\{\\emptyset, \\{\\emptyset\\}\\}$",
+     "$\\{\\{\\emptyset\\}\\}$",
+     "$\\emptyset$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "A one-element set has two subsets: $\\emptyset$ and itself.",
+    "option_explanations": [
+     "This is $\\mathcal{P}(\\emptyset)$.",
+     "Correct.",
+     "Leaves out $\\emptyset$.",
+     "A power set always contains $\\emptyset$."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "In a Venn diagram, how is the universal set $U$ drawn?",
+   "options": [
+    "As a circle",
+    "As a triangle",
+    "As a shaded oval",
+    "As a rectangle"
+   ],
+   "correct": [
+    3
+   ],
+   "explanation": "U is a rectangle and each set is a circle inside it; size and position are relative.",
+   "option_explanations": [
+    "Circles represent the sets inside U.",
+    "Not used in Venn diagrams.",
+    "Shading marks the result of an operation.",
+    "Correct."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "A Venn diagram shows circle $B$ drawn entirely inside circle $A$, inside $U$. What does it depict?",
+    "options": [
+     "$B \\subseteq A$",
+     "$A \\subseteq B$",
+     "$A \\cap B = \\emptyset$",
+     "$A = U$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "A circle inside another shows a subset relation.",
+    "option_explanations": [
+     "Correct.",
+     "Direction reversed.",
+     "Nested circles overlap completely.",
+     "A is a circle, not the whole rectangle."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Two circles $A$ and $B$ inside $U$ that do not overlap depict:",
+    "options": [
+     "$A \\cup B = U$",
+     "$A \\subseteq B$",
+     "$A \\cap B = \\emptyset$",
+     "$A = B$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Non-overlapping circles have no common region, i.e. the sets are disjoint.",
+    "option_explanations": [
+     "The rectangle has area outside both circles.",
+     "A is not drawn inside B.",
+     "Correct.",
+     "Equal sets would be the same circle."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "What is $\\{2,3,4\\} \\cup \\{3,4,5\\}$?",
+   "options": [
+    "$\\{2,3,4,5\\}$",
+    "$\\{3,4\\}$",
+    "$\\{2,5\\}$",
+    "$\\{2,3,4\\}$"
+   ],
+   "correct": [
+    0
+   ],
+   "explanation": "$A \\cup B$ contains all elements in A, in B, or in both, listed once.",
+   "option_explanations": [
+    "Correct.",
+    "This is the intersection.",
+    "This leaves out the common elements.",
+    "Leaves out 5 from the second set."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Find $\\{1, 6, 8\\} \\cup \\{6, 9\\}$.",
+    "options": [
+     "$\\{6\\}$",
+     "$\\{1, 6, 8, 9\\}$",
+     "$\\{1, 8, 9\\}$",
+     "$\\{1, 8\\}$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Union combines both sets; common elements appear once.",
+    "option_explanations": [
+     "This is the intersection.",
+     "Correct.",
+     "Drops the shared element 6.",
+     "This is $A - B$."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Find $\\{a, c\\} \\cup \\{b, c, e\\}$.",
+    "options": [
+     "$\\{c\\}$",
+     "$\\{a, b, e\\}$",
+     "$\\{a, c, e\\}$",
+     "$\\{a, b, c, e\\}$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "Union contains everything from either set.",
+    "option_explanations": [
+     "This is the intersection.",
+     "Drops the shared element c.",
+     "Misses b.",
+     "Correct."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Which expression defines $A \\cup B$?",
+   "options": [
+    "$\\{x \\mid (x \\in A) \\wedge (x \\in B)\\}$",
+    "$\\{x \\mid (x \\in A) \\wedge (x \\notin B)\\}$",
+    "$\\{x \\mid (x \\notin A) \\vee (x \\notin B)\\}$",
+    "$\\{x \\mid (x \\in A) \\vee (x \\in B)\\}$"
+   ],
+   "correct": [
+    3
+   ],
+   "explanation": "Union is like logical OR: in A, or in B, or both.",
+   "option_explanations": [
+    "This is $A \\cap B$.",
+    "This is $A - B$.",
+    "This is the complement of $A \\cap B$.",
+    "Correct."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Which expression defines $A \\cap B$?",
+    "options": [
+     "$\\{x \\mid (x \\in A) \\vee (x \\in B)\\}$",
+     "$\\{x \\mid (x \\in A) \\wedge (x \\notin B)\\}$",
+     "$\\{x \\mid (x \\in A) \\wedge (x \\in B)\\}$",
+     "$\\{x \\mid (x \\notin A) \\wedge (x \\notin B)\\}$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Intersection is like logical AND.",
+    "option_explanations": [
+     "This is $A \\cup B$.",
+     "This is $A - B$.",
+     "Correct.",
+     "This is the complement of $A \\cup B$."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which expression defines $A - B$?",
+    "options": [
+     "$\\{x \\mid (x \\in A) \\wedge (x \\notin B)\\}$",
+     "$\\{x \\mid (x \\notin A) \\wedge (x \\in B)\\}$",
+     "$\\{x \\mid (x \\in A) \\vee (x \\notin B)\\}$",
+     "$\\{x \\mid (x \\in A) \\wedge (x \\in B)\\}$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "$A - B$ keeps the elements of A that are not in B.",
+    "option_explanations": [
+     "Correct.",
+     "This is $B - A$.",
+     "This is $A \\cup B^c$.",
+     "This is $A \\cap B$."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "For any set $A$, $A \\cup U$ equals:",
+   "options": [
+    "$A$",
+    "$U$",
+    "$\\emptyset$",
+    "$A^c$"
+   ],
+   "correct": [
+    1
+   ],
+   "explanation": "U already contains every element of A.",
+   "option_explanations": [
+    "That is $A \\cap U$.",
+    "Correct.",
+    "U is non-empty in the union.",
+    "No complement is taken; U absorbs A."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "For any set $A$, $A \\cup \\emptyset$ equals:",
+    "options": [
+     "$A$",
+     "$\\emptyset$",
+     "$U$",
+     "$A^c$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "$\\emptyset$ adds nothing to A (identity law).",
+    "option_explanations": [
+     "Correct.",
+     "That is $A \\cap \\emptyset$.",
+     "That is $A \\cup U$.",
+     "No complement is taken."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "For any set $A$, $A \\cup A$ equals:",
+    "options": [
+     "$\\emptyset$",
+     "$A$",
+     "$U$",
+     "$\\{A\\}$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Repeated elements are not counted (idempotent law).",
+    "option_explanations": [
+     "That is $A - A$.",
+     "Correct.",
+     "That is $A \\cup A^c$.",
+     "This is a set whose single element is A."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "What is $\\{2,3,4\\} \\cap \\{3,4,5\\}$?",
+   "options": [
+    "$\\{2,3,4,5\\}$",
+    "$\\{2, 3, 4\\}$",
+    "$\\{3, 4, 5\\}$",
+    "$\\{3,4\\}$"
+   ],
+   "correct": [
+    3
+   ],
+   "explanation": "$A \\cap B$ contains only the elements common to A and B.",
+   "option_explanations": [
+    "This is the union.",
+    "This is the first set; 2 is not in the second.",
+    "5 is not in the first set.",
+    "Correct."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Find $\\{1, 5, 9, 12\\} \\cap \\{5, 12, 20\\}$.",
+    "options": [
+     "$\\{1, 9, 20\\}$",
+     "$\\{1, 5, 9, 12, 20\\}$",
+     "$\\{5, 12\\}$",
+     "$\\{5, 12, 20\\}$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Intersection keeps only common elements.",
+    "option_explanations": [
+     "These are the elements in exactly one set.",
+     "This is the union.",
+     "Correct.",
+     "This is the second set; 20 is not in the first."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Find $\\{goat, cow\\} \\cap \\{camel\\}$.",
+    "options": [
+     "$\\{goat, cow, camel\\}$",
+     "$\\{camel\\}$",
+     "$\\emptyset$",
+     "$\\{goat, cow\\}$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Sets with no common element have an empty intersection.",
+    "option_explanations": [
+     "This is the union.",
+     "camel is not in the first set.",
+     "Correct.",
+     "goat and cow are not in the second set."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Sets $A$ and $B$ are called disjoint when:",
+   "options": [
+    "$A \\cup B = \\emptyset$",
+    "$A \\cap B = \\emptyset$",
+    "$A \\subseteq B$",
+    "$A - B = \\emptyset$"
+   ],
+   "correct": [
+    1
+   ],
+   "explanation": "Disjoint sets have no element in common.",
+   "option_explanations": [
+    "That forces both sets to be empty.",
+    "Correct.",
+    "A subset shares all its elements.",
+    "That means $A \\subseteq B$."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Which pair of sets is disjoint?",
+    "options": [
+     "$\\{1, 3, 5\\}$ and $\\{2, 4, 6\\}$",
+     "$\\{1, 2\\}$ and $\\{2, 3\\}$",
+     "$\\{a, b\\}$ and $\\{b, a\\}$",
+     "$\\{0\\}$ and $\\{0, 1\\}$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Disjoint means the intersection is empty.",
+    "option_explanations": [
+     "Correct.",
+     "They share 2.",
+     "They are equal.",
+     "They share 0."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "If $A \\cap B = \\emptyset$, then $A$ and $B$ are called:",
+    "options": [
+     "Complementary",
+     "Identical",
+     "Universal",
+     "Disjoint"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "Two sets with an empty intersection are disjoint.",
+    "option_explanations": [
+     "Complements also need $A \\cup B = U$.",
+     "Non-empty identical sets share elements.",
+     "Not a relation between two sets.",
+     "Correct."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "For any set $A$, $A \\cap U$ equals:",
+   "options": [
+    "$U$",
+    "$\\emptyset$",
+    "$A^c$",
+    "$A$"
+   ],
+   "correct": [
+    3
+   ],
+   "explanation": "Every element of A is in U, so the common part is A (identity law).",
+   "option_explanations": [
+    "That is $A \\cup U$.",
+    "A and U share all of A.",
+    "No complement is taken.",
+    "Correct."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "For any set $A$, $A \\cap \\emptyset$ equals:",
+    "options": [
+     "$\\{0\\}$",
+     "$\\emptyset$",
+     "$A \\cup \\emptyset$",
+     "$\\{\\emptyset\\}$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "$\\emptyset$ has nothing in common with any set (domination law).",
+    "option_explanations": [
+     "$\\emptyset$ contains no 0.",
+     "Correct.",
+     "That equals A; the operation here is $\\cap$.",
+     "This set has one element."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "What is $\\emptyset \\cap \\emptyset$?",
+    "options": [
+     "$\\{\\emptyset\\}$",
+     "$U$",
+     "$\\emptyset$",
+     "$\\{0\\}$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "$A \\cap A = A$, so $\\emptyset \\cap \\emptyset = \\emptyset$.",
+    "option_explanations": [
+     "This set has one element.",
+     "Nothing is common to two empty sets.",
+     "Correct.",
+     "0 is not in $\\emptyset$."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Let $U = \\{1, 2, \\dots, 8\\}$ and $A = \\{2, 3, 5\\}$. What is $A^c$?",
+   "options": [
+    "$\\{1, 4, 6, 7, 8\\}$",
+    "$\\{2, 3, 5\\}$",
+    "$\\{1, 4, 6, 7\\}$",
+    "$\\{4, 6, 7, 8\\}$"
+   ],
+   "correct": [
+    0
+   ],
+   "explanation": "$A^c$ contains all elements of U that are not in A.",
+   "option_explanations": [
+    "Correct.",
+    "This is A itself.",
+    "Misses 8.",
+    "Misses 1."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Let $A = \\{x \\mid x \\text{ is even}\\}$ and $U = Z$. What is $A^c$?",
+    "options": [
+     "$\\{x \\in Z \\mid x \\text{ is odd}\\}$",
+     "$\\emptyset$",
+     "$\\{x \\in Z \\mid x \\text{ is even}\\}$",
+     "$Z$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Complement is taken relative to U; the integers not even are odd.",
+    "option_explanations": [
+     "Correct.",
+     "Odd integers are outside A.",
+     "This is A itself.",
+     "This is U."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Let $A = \\{1, 2, 3, 4, \\dots\\}$ and $U = N$. What is $A^c$?",
+    "options": [
+     "$\\{1, 2, 3, \\dots\\}$",
+     "$\\emptyset$",
+     "$\\{0\\}$",
+     "$Z^-$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "A is all of U, so nothing is left outside it.",
+    "option_explanations": [
+     "This is A itself.",
+     "Correct.",
+     "0 is not in the lecture's $N$, so it is not in U.",
+     "Negative numbers are not in U."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "For any set $A$, $A \\cap A^c$ equals:",
+   "options": [
+    "$A \\cup A^c$",
+    "$\\{\\emptyset\\}$",
+    "$A^c$",
+    "$\\emptyset$"
+   ],
+   "correct": [
+    3
+   ],
+   "explanation": "Inside and outside of A have nothing in common (complement law).",
+   "option_explanations": [
+    "That is U, not the common part.",
+    "This set has one element.",
+    "A has no element of $A^c$.",
+    "Correct."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "For any set $A$, $(A^c)^c$ equals:",
+    "options": [
+     "$A^c$",
+     "$A \\cup A^c$",
+     "$A$",
+     "$A \\cap A^c$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Two complements cancel, like double negation.",
+    "option_explanations": [
+     "The second complement undoes the first.",
+     "That set is U.",
+     "Correct.",
+     "That set is empty."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "What is $\\emptyset^c$?",
+    "options": [
+     "$U^c$",
+     "$U$",
+     "$\\{\\emptyset\\}$",
+     "$\\{0\\}$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "$\\emptyset$ has nothing, so its complement has everything; likewise $U^c = \\emptyset$.",
+    "option_explanations": [
+     "That is the empty set, the complement of U.",
+     "Correct.",
+     "Complement is taken within U.",
+     "U is not just $\\{0\\}$."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Let $A = \\{x \\mid (x \\in Z^+) \\vee (x \\in Z^-)\\}$ and $U = Z$. What is $A^c$?",
+   "options": [
+    "$\\emptyset$",
+    "$Z$",
+    "$\\{0\\}$",
+    "$Z^-$"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "A holds every positive and every negative integer; only 0 is outside it.",
+   "option_explanations": [
+    "0 is in U but not in A.",
+    "This is U.",
+    "Correct.",
+    "Negative integers are in A."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Let $A = Z^+$ and $U = Z$. Which set is $A^c$?",
+    "options": [
+     "$\\{x \\in Z \\mid x \\le 0\\}$",
+     "$Z^-$",
+     "$\\{x \\in Z \\mid x \\ge 0\\}$",
+     "$\\emptyset$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Removing the positive integers from Z leaves 0 and the negatives.",
+    "option_explanations": [
+     "Correct.",
+     "Leaves out 0, which is not positive.",
+     "Contains the positive integers.",
+     "0 and the negatives remain."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Let $A = \\{x \\in Z \\mid x \\ge 0\\}$ and $U = Z$. Which set is $A^c$?",
+    "options": [
+     "$\\{x \\in Z \\mid x \\le 0\\}$",
+     "$Z^+$",
+     "$\\{0\\}$",
+     "$Z^-$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "The integers not $\\ge 0$ are exactly the negative integers.",
+    "option_explanations": [
+     "0 is in A, so it is not in $A^c$.",
+     "These are in A.",
+     "0 is in A.",
+     "Correct."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Let $A = \\{2, 3, 9\\}$ and $B = \\{2, 5, 6, 7\\}$. What is $A - B$?",
+   "options": [
+    "$\\{3, 9\\}$",
+    "$\\{5, 6, 7\\}$",
+    "$\\{2, 3, 9\\}$",
+    "$\\{3, 5, 6, 7, 9\\}$"
+   ],
+   "correct": [
+    0
+   ],
+   "explanation": "$A - B$ removes from A every element that is also in B.",
+   "option_explanations": [
+    "Correct.",
+    "This is $B - A$.",
+    "This is A unchanged; 2 must be removed.",
+    "These are elements in exactly one set."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Let $A = \\{4, 8, 12, 16\\}$ and $B = \\{8, 16, 24\\}$. Find $A - B$.",
+    "options": [
+     "$\\{4, 8, 12, 16\\}$",
+     "$\\{8, 16, 24\\}$",
+     "$\\{4, 12, 24\\}$",
+     "$\\{4, 12\\}$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "Delete the common elements of A and B from A.",
+    "option_explanations": [
+     "This is A; the common elements were not removed.",
+     "This is B.",
+     "These are elements in exactly one set.",
+     "Correct."
+    ]
+   },
+   {
+    "type": "basic",
+    "question": "Let $A = \\{3, 6, 9, 12\\}$ and $B = \\{6, 12, 18\\}$. Find $A - B$ and $B - A$, and say whether they are equal.",
+    "answer": "Common elements: $A \\cap B = \\{6, 12\\}$.\n\n$A - B$: remove 6 and 12 from A, giving $\\{3, 9\\}$.\n\n$B - A$: remove 6 and 12 from B, giving $\\{18\\}$.\n\n$\\{3, 9\\} \\ne \\{18\\}$, which shows that in general $A - B \\ne B - A$."
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "For any set $A$, $U - A$ equals:",
+   "options": [
+    "$A$",
+    "$A^c$",
+    "$\\emptyset$",
+    "$U$"
+   ],
+   "correct": [
+    1
+   ],
+   "explanation": "Deleting A from U leaves exactly the elements outside A.",
+   "option_explanations": [
+    "The elements of A are the ones removed.",
+    "Correct.",
+    "Only $A^c$ remains, which need not be empty.",
+    "Elements of A are removed from U."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "For any set $A$, $A - A$ equals:",
+    "options": [
+     "$\\{A\\}$",
+     "$\\{\\emptyset\\}$",
+     "$\\emptyset$",
+     "$A^c$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Every element of A is deleted from A.",
+    "option_explanations": [
+     "This set has A as an element; everything was deleted.",
+     "This set has one element.",
+     "Correct.",
+     "That is $U - A$."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "For any set $A$, $\\emptyset - A$ equals:",
+    "options": [
+     "$\\{0\\}$",
+     "$A^c$",
+     "$\\emptyset$",
+     "$\\{\\emptyset\\}$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "$\\emptyset$ has nothing to delete, so it stays empty; also $A - \\emptyset = A$.",
+    "option_explanations": [
+     "0 is not in $\\emptyset$, so it cannot remain.",
+     "That is $U - A$.",
+     "Correct.",
+     "This set has one element."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Let $A = \\{x \\mid x \\text{ is an even integer}\\}$ and $B = Z$. What is $A - B$?",
+   "options": [
+    "$\\{x \\in Z \\mid x \\text{ is odd}\\}$",
+    "$\\{x \\in Z \\mid x \\text{ is even}\\}$",
+    "$\\{0\\}$",
+    "$\\emptyset$"
+   ],
+   "correct": [
+    3
+   ],
+   "explanation": "Every even integer is also in B, so all of A is deleted.",
+   "option_explanations": [
+    "This is $B - A$.",
+    "This is A, but all of A lies in B.",
+    "0 is even and in B, so it is removed too.",
+    "Correct."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Let $A = \\{X, Y\\}$ and $B = \\{b, c\\}$. What is $A - B$?",
+    "options": [
+     "$\\emptyset$",
+     "$\\{X, Y\\}$",
+     "$\\{b, c\\}$",
+     "$\\{X, Y, b, c\\}$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "With no common elements nothing is deleted, so $A - B = A$.",
+    "option_explanations": [
+     "Nothing in A is also in B.",
+     "Correct.",
+     "This is $B - A$.",
+     "This is $A \\cup B$."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Let $A = Z$ and $B = Z^+$. What is $B - A$?",
+    "options": [
+     "$\\emptyset$",
+     "$Z^-$",
+     "$\\{x \\in Z \\mid x \\le 0\\}$",
+     "$Z^+$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Every positive integer is an integer, so all of B is deleted.",
+    "option_explanations": [
+     "Correct.",
+     "Not an element of B at all.",
+     "This is $A - B$.",
+     "All of B lies in A and is removed."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Which expression equals $A - B$?",
+   "options": [
+    "$A \\cup B^c$",
+    "$A^c \\cap B$",
+    "$A \\cap B^c$",
+    "$A \\cap B$"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "$A - B = A \\cap B^c$ (definition of \\\"$-$\\\").",
+   "option_explanations": [
+    "Includes everything outside B too.",
+    "This is $B - A$.",
+    "Correct.",
+    "This is the common part."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Which expression equals $A - B$?",
+    "options": [
+     "$A - (A \\cup B)$",
+     "$A - (A \\cap B)$",
+     "$(A \\cup B) - A$",
+     "$B - (A \\cap B)$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Removing B from A only removes the part of A that lies in B.",
+    "option_explanations": [
+     "This is always $\\emptyset$.",
+     "Correct.",
+     "This is $B - A$.",
+     "This is $B - A$."
+    ]
+   },
+   {
+    "type": "basic",
+    "question": "Is $(A - B) \\subseteq A$ always true? Explain and give two examples.",
+    "answer": "Yes. Every $x \\in A - B$ satisfies $(x \\in A) \\wedge (x \\notin B)$, so in particular $x \\in A$. Hence $(A - B) \\subseteq A$.\n\nExample 1: $A = \\{1, 2, 3\\}$, $B = \\{2, 5\\}$. $A - B = \\{1, 3\\} \\subseteq A$.\n\nExample 2: $A = \\{X, Y\\}$, $B = \\{b, c\\}$. $A - B = \\{X, Y\\} = A$, and $A \\subseteq A$."
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Which law is $A \\cup (B \\cap C) = (A \\cup B) \\cap (A \\cup C)$?",
+   "options": [
+    "Distributive law",
+    "Associative law",
+    "Commutative law",
+    "De Morgan's law"
+   ],
+   "correct": [
+    0
+   ],
+   "explanation": "Distributing one operation over the other is the distributive law.",
+   "option_explanations": [
+    "Correct.",
+    "Associative regroups the same operation.",
+    "Commutative swaps order.",
+    "De Morgan's law involves complements."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "$A \\cap \\emptyset = \\emptyset$ is the name of which law?",
+    "options": [
+     "Identity law",
+     "Complement law",
+     "Idempotent law",
+     "Domination law"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "Domination: $A \\cup U = U$ and $A \\cap \\emptyset = \\emptyset$.",
+    "option_explanations": [
+     "Identity is $A \\cap U = A$, $A \\cup \\emptyset = A$.",
+     "Complement is $A \\cap A^c = \\emptyset$.",
+     "Idempotent is $A \\cap A = A$.",
+     "Correct."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "$A \\cap U = A$ is the name of which law?",
+    "options": [
+     "Domination law",
+     "Idempotent law",
+     "Identity law",
+     "Complement law"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Identity: $A \\cap U = A$ and $A \\cup \\emptyset = A$.",
+    "option_explanations": [
+     "Domination is $A \\cup U = U$, $A \\cap \\emptyset = \\emptyset$.",
+     "Idempotent is $A \\cap A = A$.",
+     "Correct.",
+     "Complement is $A \\cup A^c = U$."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "$A \\cup A = A$ is the name of which law?",
+   "options": [
+    "Identity law",
+    "Idempotent law",
+    "Domination law",
+    "Commutative law"
+   ],
+   "correct": [
+    1
+   ],
+   "explanation": "Idempotent: $A \\cup A = A$ and $A \\cap A = A$.",
+   "option_explanations": [
+    "Identity involves $U$ or $\\emptyset$.",
+    "Correct.",
+    "Domination involves $U$ or $\\emptyset$.",
+    "Commutative swaps two different sets."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "$A \\cap B = B \\cap A$ is the name of which law?",
+    "options": [
+     "Commutative law",
+     "Associative law",
+     "Distributive law",
+     "Idempotent law"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Swapping the order of operands is the commutative law.",
+    "option_explanations": [
+     "Correct.",
+     "Associative regroups three sets.",
+     "Distributive mixes $\\cup$ and $\\cap$.",
+     "Idempotent is $A \\cap A = A$."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "$A \\cup (B \\cup C) = (A \\cup B) \\cup C$ is the name of which law?",
+    "options": [
+     "Commutative law",
+     "Distributive law",
+     "Domination law",
+     "Associative law"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "Regrouping with the same operation is the associative law.",
+    "option_explanations": [
+     "Commutative swaps order rather than grouping.",
+     "Distributive mixes $\\cup$ and $\\cap$.",
+     "Domination involves $U$ or $\\emptyset$.",
+     "Correct."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "By De Morgan's law, $\\overline{A \\cup B}$ equals:",
+   "options": [
+    "$\\overline{A} \\cup \\overline{B}$",
+    "$A \\cap B$",
+    "$\\overline{A \\cap B}$",
+    "$\\overline{A} \\cap \\overline{B}$"
+   ],
+   "correct": [
+    3
+   ],
+   "explanation": "The complement of a union is the intersection of the complements.",
+   "option_explanations": [
+    "Forgets to switch $\\cup$ to $\\cap$.",
+    "Drops the complements.",
+    "Switches the operation but keeps the complement outside.",
+    "Correct."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "By De Morgan's law, $\\overline{A \\cap B}$ equals:",
+    "options": [
+     "$\\overline{A} \\cup \\overline{B}$",
+     "$\\overline{A} \\cap \\overline{B}$",
+     "$A \\cup B$",
+     "$\\overline{A \\cup B}$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "The complement of an intersection is the union of the complements.",
+    "option_explanations": [
+     "Correct.",
+     "Forgets to switch $\\cap$ to $\\cup$.",
+     "Drops the complements.",
+     "Switches the operation but keeps the complement outside."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which set equals $\\overline{A \\cup B \\cup C}$?",
+    "options": [
+     "$\\overline{A} \\cup \\overline{B} \\cup \\overline{C}$",
+     "$\\overline{A} \\cap \\overline{B} \\cup \\overline{C}$",
+     "$\\overline{A} \\cap \\overline{B} \\cap \\overline{C}$",
+     "$A \\cap B \\cap C$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Applying De Morgan's law twice, with associativity, turns every $\\cup$ into $\\cap$.",
+    "option_explanations": [
+     "Forgets to switch the operations.",
+     "Switches only one of the two unions.",
+     "Correct.",
+     "Drops the complements."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Let $A = \\{1, 2, 3\\}$, $B = \\{2, 4\\}$, $C = \\{3, 4, 5\\}$. What is $A \\cap (B \\cup C)$?",
+   "options": [
+    "$\\{1, 2, 3\\}$",
+    "$\\{2, 3\\}$",
+    "$\\{1, 2, 3, 4, 5\\}$",
+    "$\\{2, 3, 4, 5\\}$"
+   ],
+   "correct": [
+    1
+   ],
+   "explanation": "$B \\cup C = \\{2,3,4,5\\}$, and its common part with A is $\\{2,3\\}$; this equals $(A \\cap B) \\cup (A \\cap C)$.",
+   "option_explanations": [
+    "This is A alone; 1 is in neither B nor C.",
+    "Correct.",
+    "This is $A \\cup B \\cup C$.",
+    "This is $B \\cup C$; the intersection with A was skipped."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Let $A = \\{1, 2, 3, 4\\}$, $B = \\{2, 5\\}$, $C = \\{4, 5, 6\\}$. What is $A \\cup (B \\cap C)$?",
+    "options": [
+     "$\\{4, 5\\}$",
+     "$\\{5\\}$",
+     "$\\{1, 2, 3, 4, 5\\}$",
+     "$\\{1, 2, 3, 4\\}$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "$B \\cap C = \\{5\\}$, then union with A adds 5.",
+    "option_explanations": [
+     "This is $(A \\cup B) \\cap C$; the grouping is wrong.",
+     "This is only $B \\cap C$.",
+     "Correct.",
+     "Forgets to add $B \\cap C$."
+    ]
+   },
+   {
+    "type": "basic",
+    "question": "Let $U = \\{1, 2, \\dots, 8\\}$, $A = \\{1, 2, 3, 4\\}$, $B = \\{3, 4, 5, 6\\}$. Compute $\\overline{A \\cup B}$ and $\\overline{A} \\cap \\overline{B}$ and compare.",
+    "answer": "$A \\cup B = \\{1, 2, 3, 4, 5, 6\\}$, so $\\overline{A \\cup B} = \\{7, 8\\}$.\n\n$\\overline{A} = \\{5, 6, 7, 8\\}$ and $\\overline{B} = \\{1, 2, 7, 8\\}$, so $\\overline{A} \\cap \\overline{B} = \\{7, 8\\}$.\n\nBoth equal $\\{7, 8\\}$, as De Morgan's law predicts."
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "basic",
+   "question": "Using set laws, prove $\\overline{A \\cup B \\cup C} = \\overline{A} \\cap \\overline{B} \\cap \\overline{C}$.",
+   "answer": "$\\overline{A \\cup B \\cup C} = \\overline{A \\cup (B \\cup C)}$ (associative law)\n\n$= \\overline{A} \\cap \\overline{B \\cup C}$ (De Morgan's law)\n\n$= \\overline{A} \\cap (\\overline{B} \\cap \\overline{C})$ (De Morgan's law)\n\n$= \\overline{A} \\cap \\overline{B} \\cap \\overline{C}$ (associative law)"
+  },
+  "versions": [
+   {
+    "type": "basic",
+    "question": "Prove $\\overline{A \\cap B} = \\overline{A} \\cup \\overline{B}$ with a set membership table.",
+    "answer": "Use 1 for \"in the set\" and 0 for \"not in the set\".\n\n| A | B | $A \\cap B$ | $\\overline{A \\cap B}$ | $\\overline{A}$ | $\\overline{B}$ | $\\overline{A} \\cup \\overline{B}$ |\n|---|---|---|---|---|---|---|\n| 0 | 0 | 0 | 1 | 1 | 1 | 1 |\n| 0 | 1 | 0 | 1 | 1 | 0 | 1 |\n| 1 | 0 | 0 | 1 | 0 | 1 | 1 |\n| 1 | 1 | 1 | 0 | 0 | 0 | 0 |\n\nThe columns for $\\overline{A \\cap B}$ and $\\overline{A} \\cup \\overline{B}$ are identical, so the sets are equal."
+   },
+   {
+    "type": "basic",
+    "question": "Using set laws, show that $(A - B) \\cap (B - C) = \\emptyset$.",
+    "answer": "$(A - B) \\cap (B - C) = (A \\cap B^c) \\cap (B \\cap C^c)$ (definition of \"$-$\")\n\n$= (A \\cap C^c) \\cap (B \\cap B^c)$ (commutative and associative laws)\n\n$= (A \\cap C^c) \\cap \\emptyset$ (complement law)\n\n$= \\emptyset$ (domination law)"
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "In a set membership table, the column for $A \\cup B$ is filled in like which logical connective?",
+   "options": [
+    "$\\wedge$",
+    "$\\neg$",
+    "$\\rightarrow$",
+    "$\\vee$"
+   ],
+   "correct": [
+    3
+   ],
+   "explanation": "In membership tables $\\cup$ acts like $\\vee$, $\\cap$ like $\\wedge$, and complement like $\\neg$.",
+   "option_explanations": [
+    "$\\wedge$ matches $\\cap$.",
+    "$\\neg$ matches complement.",
+    "Implication has no direct set operation here.",
+    "Correct."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "In a membership table row with $A = 0$ and $B = 1$, what are the entries for $A \\cup B$, $A \\cap B$, $\\overline{A}$ (in that order)?",
+    "options": [
+     "1, 1, 1",
+     "1, 0, 1",
+     "0, 0, 1",
+     "1, 0, 0"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "1 means in the set; $\\cup$ is OR, $\\cap$ is AND, complement flips the bit.",
+    "option_explanations": [
+     "$A \\cap B$ needs both to be 1.",
+     "Correct.",
+     "$A \\cup B$ is 1 since B is 1.",
+     "$\\overline{A}$ flips A = 0 to 1."
+    ]
+   },
+   {
+    "type": "basic",
+    "question": "Use a set membership table to show $A \\cup (A \\cap B) = A$.",
+    "answer": "| A | B | $A \\cap B$ | $A \\cup (A \\cap B)$ |\n|---|---|---|---|\n| 0 | 0 | 0 | 0 |\n| 0 | 1 | 0 | 0 |\n| 1 | 0 | 0 | 1 |\n| 1 | 1 | 1 | 1 |\n\nThe column for $A \\cup (A \\cap B)$ is 0, 0, 1, 1, the same as the column for A, so $A \\cup (A \\cap B) = A$."
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "basic",
+   "question": "Prove $(A - B) \\cup (B - A) = (A \\cup B) - (A \\cap B)$ with a set membership table.",
+   "answer": "| A | B | $A - B$ | $B - A$ | LHS | $A \\cup B$ | $A \\cap B$ | RHS |\n|---|---|---|---|---|---|---|---|\n| 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |\n| 0 | 1 | 0 | 1 | 1 | 1 | 0 | 1 |\n| 1 | 0 | 1 | 0 | 1 | 1 | 0 | 1 |\n| 1 | 1 | 0 | 0 | 0 | 1 | 1 | 0 |\n\n$A - B$ is 1 when A = 1 and B = 0; LHS is the OR of the two difference columns; RHS is 1 when $A \\cup B$ is 1 and $A \\cap B$ is 0. The LHS and RHS columns match, so the identity holds."
+  },
+  "versions": [
+   {
+    "type": "basic",
+    "question": "Use a set membership table to verify $A - B = A \\cap B^c$.",
+    "answer": "| A | B | $A - B$ | $B^c$ | $A \\cap B^c$ |\n|---|---|---|---|---|\n| 0 | 0 | 0 | 1 | 0 |\n| 0 | 1 | 0 | 0 | 0 |\n| 1 | 0 | 1 | 1 | 1 |\n| 1 | 1 | 0 | 0 | 0 |\n\n$A - B$ is 1 exactly when x is in A and not in B. The columns for $A - B$ and $A \\cap B^c$ are identical, so the sets are equal."
+   },
+   {
+    "type": "mcq",
+    "question": "Let $A = \\{1, 2, 3, 4\\}$ and $B = \\{3, 4, 5\\}$. What is $(A - B) \\cup (B - A)$?",
+    "options": [
+     "$\\{1, 2, 5\\}$",
+     "$\\{3, 4\\}$",
+     "$\\{1, 2\\}$",
+     "$\\{1, 2, 3, 4, 5\\}$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "$(A - B) \\cup (B - A)$ holds the elements in exactly one of the sets, i.e. $(A \\cup B) - (A \\cap B)$.",
+    "option_explanations": [
+     "Correct: $\\{1,2\\} \\cup \\{5\\}$.",
+     "This is $A \\cap B$.",
+     "This is only $A - B$.",
+     "This is $A \\cup B$."
+    ]
+   }
+  ]
+ }
+]

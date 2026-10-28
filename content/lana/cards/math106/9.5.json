@@ -1,0 +1,1659 @@
+[
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Let $\\sum a_k$ and $\\sum b_k$ have nonnegative terms with $a_k\\le b_k$ for all $k$. Which statement is valid?",
+   "options": [
+    "If $\\sum b_k$ diverges, then $\\sum a_k$ diverges",
+    "If $\\sum b_k$ converges, then $\\sum a_k$ converges",
+    "If $\\sum a_k$ converges, then $\\sum b_k$ converges",
+    "If $\\sum a_k$ diverges, then $\\sum b_k$ converges"
+   ],
+   "correct": [
+    1
+   ],
+   "explanation": "The bigger series converging forces the smaller one to converge (Theorem 9.5.1(a)).",
+   "option_explanations": [
+    "Mistake: a larger series diverging says nothing about the smaller one.",
+    "Correct.",
+    "Mistake: a smaller series converging says nothing about the bigger one.",
+    "Mistake: a bigger series over a divergent one must also diverge, not converge."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "For $0\\le u_k\\le w_k$, which implication always holds?",
+    "options": [
+     "$\\sum u_k$ converges $\\Rightarrow$ $\\sum w_k$ converges",
+     "$\\sum w_k$ diverges $\\Rightarrow$ $\\sum u_k$ diverges",
+     "$\\sum u_k$ diverges $\\Rightarrow$ $\\sum w_k$ diverges",
+     "$\\sum w_k$ diverges $\\Rightarrow$ $\\sum u_k$ converges"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "If the smaller series diverges, the bigger one does too (Theorem 9.5.1(b)).",
+    "option_explanations": [
+     "Mistake: the smaller series converging does not control the bigger.",
+     "Mistake: the bigger series diverging does not control the smaller.",
+     "Correct.",
+     "Mistake: no such conclusion about the smaller series is possible."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Both series have nonnegative terms and the bigger series converges. What follows for the smaller series?",
+    "options": [
+     "It converges",
+     "It diverges",
+     "Nothing can be said",
+     "It has the same sum"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Convergence passes down from the bigger series to the smaller one.",
+    "option_explanations": [
+     "Correct.",
+     "Mistake: opposite of the theorem.",
+     "Mistake: the test does decide in this direction.",
+     "Mistake: only the convergence is inherited, not the sum."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Suppose $0\\le a_k\\le b_k$ and $\\sum b_k$ diverges. What does the Comparison Test say about $\\sum a_k$?",
+   "options": [
+    "It converges",
+    "It diverges",
+    "Nothing is decided",
+    "It converges to $\\sum b_k$"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "The test only gives information when the bigger series converges or the smaller one diverges.",
+   "option_explanations": [
+    "Mistake: treats the divergent bigger series as a bound that forces convergence.",
+    "Mistake: the smaller series may converge.",
+    "Correct.",
+    "Mistake: a divergent series has no sum."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "We have $\\frac1{k^2+1}\\le\\frac1k$ and $\\sum\\frac1k$ diverges. What does this comparison tell us about $\\sum\\frac1{k^2+1}$?",
+    "options": [
+     "It diverges",
+     "It converges",
+     "It converges to $1$",
+     "It tells us nothing"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "The smaller series lies below a divergent one, so no conclusion follows from this comparison.",
+    "option_explanations": [
+     "Mistake: the bigger series diverging does not force the smaller one to diverge.",
+     "Mistake: not justified by this comparison.",
+     "Mistake: invents a sum.",
+     "Correct."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "If $0\\le a_k\\le\\dfrac1{\\sqrt k}$ for all $k$ and $\\sum\\dfrac1{\\sqrt k}$ diverges, then $\\sum a_k$",
+    "options": [
+     "is undecided by this comparison",
+     "diverges",
+     "converges",
+     "converges since $a_k\\to0$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "A divergent bigger series gives no information about a smaller series.",
+    "option_explanations": [
+     "Correct.",
+     "Mistake: only a divergent smaller series implies the bigger diverges.",
+     "Mistake: the comparison does not give that.",
+     "Mistake: terms tending to $0$ is not a convergence test."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Which comparison correctly decides $\\displaystyle\\sum_{k=1}^{\\infty}\\frac1{k^2+3}$?",
+   "options": [
+    "Terms below those of $\\sum\\frac1{k^2}$, so converges",
+    "Terms below those of $\\sum\\frac1k$, so diverges",
+    "Terms below those of $\\sum\\frac1{k^2}$, so diverges",
+    "Terms below those of $\\sum\\frac1{k+3}$, so diverges"
+   ],
+   "correct": [
+    0
+   ],
+   "explanation": "$\\frac1{k^2+3}\\le\\frac1{k^2}$ and $\\sum\\frac1{k^2}$ is a convergent $p$-series ($p=2$).",
+   "option_explanations": [
+    "Correct.",
+    "Mistake: being below a divergent series proves nothing.",
+    "Mistake: being below a convergent series gives convergence, not divergence.",
+    "Mistake: being below a divergent series proves nothing."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "How is $\\displaystyle\\sum_{k=1}^{\\infty}\\frac1{k^3+k}$ decided by the Comparison Test?",
+    "options": [
+     "Terms exceed those of $\\sum\\frac1{k^3}$; diverges",
+     "Terms are below those of $\\sum\\frac1{k^3}$; converges",
+     "Terms are below those of $\\sum\\frac1k$; diverges",
+     "Terms are below those of $\\sum\\frac1{k}$; converges"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "$\\frac1{k^3+k}\\le\\frac1{k^3}$ and $\\sum k^{-3}$ converges ($p=3$).",
+    "option_explanations": [
+     "Mistake: the inequality is reversed; adding $k$ makes the terms smaller.",
+     "Correct.",
+     "Mistake: below a divergent series proves nothing.",
+     "Mistake: $\\sum1/k$ diverges, so it cannot give convergence."
+    ]
+   },
+   {
+    "type": "basic",
+    "question": "Use the Comparison Test to decide $\\displaystyle\\sum_{k=1}^{\\infty}\\frac{1}{2^k+1}$.",
+    "answer": "Since $2^k+1>2^k$, we have $0<\\frac1{2^k+1}<\\frac1{2^k}=\\left(\\frac12\\right)^k$ for all $k\\ge1$. The bigger series $\\sum(\\frac12)^k$ is a convergent geometric series ($r=\\frac12$, $|r|<1$), so $\\sum\\frac1{2^k+1}$ **converges**."
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Decide $\\displaystyle\\sum_{k=1}^{\\infty}\\frac1{3k-1}$ by comparison.",
+   "options": [
+    "Converges, being below $\\sum\\frac1{3k}$",
+    "Diverges, being below $\\sum\\frac1{3k}$",
+    "Diverges, since terms exceed those of $\\sum\\frac{1}{3k}$",
+    "Converges, being below $\\sum\\frac1{k^2}$"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "$3k-1<3k$, so $\\frac1{3k-1}>\\frac1{3k}$, and $\\sum\\frac1{3k}=\\frac13\\sum\\frac1k$ diverges.",
+   "option_explanations": [
+    "Mistake: the terms are above, not below, and a divergent comparison cannot give convergence.",
+    "Mistake: the inequality is reversed, so it proves nothing.",
+    "Correct.",
+    "Mistake: the terms are not below $1/k^2$."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Which argument shows that $\\displaystyle\\sum_{k=1}^{\\infty}\\frac{1}{2k+5}$ diverges?",
+    "options": [
+     "$\\frac1{2k+5}\\le\\frac1{2k}$, and $\\sum\\frac1{2k}$ diverges",
+     "$\\frac1{2k+5}\\ge\\frac1{7k}$, and $\\sum\\frac1{7k}$ diverges",
+     "$\\frac1{2k+5}\\ge\\frac1{k^2}$, and $\\sum\\frac1{k^2}$ converges",
+     "$\\frac1{2k+5}\\le\\frac{1}{k}$, and $\\sum\\frac1k$ diverges"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "For $k\\ge1$, $2k+5\\le7k$, so $\\frac1{2k+5}\\ge\\frac1{7k}$, and the smaller series diverges.",
+    "option_explanations": [
+     "Mistake: terms below a divergent series prove nothing.",
+     "Correct.",
+     "Mistake: terms above a convergent series prove nothing.",
+     "Mistake: terms below a divergent series prove nothing."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which comparison shows $\\displaystyle\\sum_{k=1}^{\\infty}\\frac{1}{\\sqrt k+1}$ diverges?",
+    "options": [
+     "$\\frac1{\\sqrt k+1}\\ge\\frac1{2\\sqrt k}$, and $\\sum\\frac1{2\\sqrt k}$ diverges",
+     "$\\frac1{\\sqrt k+1}\\le\\frac1{\\sqrt k}$, and $\\sum\\frac1{\\sqrt k}$ diverges",
+     "$\\frac1{\\sqrt k+1}\\ge\\frac1{k^2}$, and $\\sum\\frac1{k^2}$ converges",
+     "$\\frac1{\\sqrt k+1}\\le\\frac{1}{k}$, and $\\sum\\frac1k$ diverges"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "For $k\\ge1$, $\\sqrt k+1\\le2\\sqrt k$, so the terms are at least those of the divergent $\\sum\\frac1{2\\sqrt k}$.",
+    "option_explanations": [
+     "Correct.",
+     "Mistake: terms below a divergent series prove nothing.",
+     "Mistake: terms above a convergent series prove nothing.",
+     "Mistake: being below a divergent series proves nothing."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "By the informal principle on constant terms, which simpler series does $\\displaystyle\\sum\\frac1{k^{3/2}+4}$ resemble, and what does that suggest?",
+   "options": [
+    "$\\sum\\frac1{k^{3/2}}$, which converges",
+    "$\\sum\\frac1{k^{3/2}}$, which diverges",
+    "$\\sum\\frac14$, which diverges",
+    "$\\sum\\frac1{k^{1/2}}$, which diverges"
+   ],
+   "correct": [
+    0
+   ],
+   "explanation": "Deleting the constant $4$ in the denominator leaves a $p$-series with $p=\\frac32>1$.",
+   "option_explanations": [
+    "Correct.",
+    "Mistake: $p=\\frac32>1$ converges.",
+    "Mistake: removes the $k$-term instead of the constant.",
+    "Mistake: changes the exponent."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "What does the principle on constants in the denominator suggest for $\\displaystyle\\sum_{k=1}^{\\infty}\\frac{1}{\\sqrt k+3}$?",
+    "options": [
+     "Converges, like $\\sum\\frac1{\\sqrt{k}}$",
+     "Diverges, like $\\sum\\frac1{\\sqrt k}$",
+     "Diverges, like $\\sum\\frac13$",
+     "Converges, like $\\sum\\frac{1}{3\\sqrt{k}}$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Dropping the constant gives $\\sum k^{-1/2}$, a $p$-series with $p=\\frac12\\le1$, so divergence is suggested.",
+    "option_explanations": [
+     "Mistake: $p=\\frac12\\le1$ diverges.",
+     "Correct.",
+     "Mistake: drops the $\\sqrt k$ rather than the constant.",
+     "Mistake: a constant multiple of a divergent series diverges."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which simpler series is suggested for $\\displaystyle\\sum\\frac{2}{k^3+10}$, and what is the verdict?",
+    "options": [
+     "$\\sum\\frac2{k^3}$, converges",
+     "$\\sum\\frac{1}{5}$, diverges",
+     "$\\sum\\frac{2}{k}$, diverges",
+     "$\\sum\\frac2{k^3}$, diverges"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Discarding $10$ gives $2k^{-3}$ with $p=3>1$.",
+    "option_explanations": [
+     "Correct.",
+     "Mistake: drops the $k^3$ term and keeps the constant.",
+     "Mistake: changes the exponent.",
+     "Mistake: $p=3>1$ converges."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Use the leading terms of the polynomials to judge $\\displaystyle\\sum_{k=1}^{\\infty}\\frac{4k+1}{k^3+2k}$.",
+   "options": [
+    "Diverges, like $\\sum\\frac4k$",
+    "Converges, like $\\sum\\frac4{k^2}$",
+    "Diverges, like $\\sum 4k$",
+    "Diverges, like $\\sum 2$"
+   ],
+   "correct": [
+    1
+   ],
+   "explanation": "The ratio of leading terms is $\\frac{4k}{k^3}=\\frac4{k^2}$, a convergent $p$-series ($p=2$).",
+   "option_explanations": [
+    "Mistake: cancels the wrong power and gets $k^{-1}$.",
+    "Correct.",
+    "Mistake: inverts the ratio of degrees.",
+    "Mistake: uses the wrong leading terms: $4k/2k$."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Judge $\\displaystyle\\sum_{k=1}^{\\infty}\\frac{5k^2-3}{2k^4+k}$ by its leading terms.",
+    "options": [
+     "Diverges, like $\\sum\\frac5{2k^2}$",
+     "Diverges, like $\\sum\\frac5{2}$",
+     "Converges, like $\\sum\\frac{5}{2k^2}$",
+     "Converges, like $\\sum\\frac{5}{2k^6}$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Leading terms give $\\frac{5k^2}{2k^4}=\\frac5{2k^2}$, a constant times a convergent $p$-series.",
+    "option_explanations": [
+     "Mistake: right comparison series, but $p=2$ converges.",
+     "Mistake: divides the coefficients but ignores the powers.",
+     "Correct.",
+     "Mistake: multiplies the powers instead of dividing."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "What do the leading terms suggest for $\\displaystyle\\sum_{k=1}^{\\infty}\\frac{3k+2}{k^2+1}$?",
+    "options": [
+     "Converges, like $\\sum\\frac3{k^2}$",
+     "Diverges, like $\\sum\\frac3{k}$",
+     "Converges, like $\\sum\\frac{3}{k}$",
+     "Diverges, like $\\sum 3k$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "$\\frac{3k}{k^2}=\\frac3k$, a constant times the harmonic series.",
+    "option_explanations": [
+     "Mistake: uses $k^2$ without cancelling.",
+     "Correct.",
+     "Mistake: right series, but it diverges.",
+     "Mistake: inverts the powers."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Which pair $(a_k,b_k)$ does NOT satisfy the Comparison Test's requirement of nonnegative terms?",
+   "options": [
+    "$a_k=\\frac1{k^2}$, $b_k=\\frac1k$",
+    "$a_k=\\frac1{3^k}$, $b_k=\\frac1{2^k}$",
+    "$a_k=\\frac{\\sin k}{k^2}$, $b_k=\\frac1{k^2}$",
+    "$a_k=\\frac1{k+1}$, $b_k=\\frac1k$"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "$\\sin k$ is negative for some $k$, so $\\sum a_k$ has terms of both signs.",
+   "option_explanations": [
+    "Mistake: all terms are positive.",
+    "Mistake: all terms are positive.",
+    "Correct.",
+    "Mistake: all terms are positive."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "For which of these does the Comparison Test not apply as stated?",
+    "options": [
+     "$\\sum\\frac{\\cos(k\\pi)}{2^k}$ compared with $\\sum\\frac1{2^k}$",
+     "$\\sum\\frac{1}{4^k}$ compared with $\\sum\\frac1{3^k}$",
+     "$\\sum\\frac{1}{k^3}$ compared with $\\sum\\frac1{k^2}$",
+     "$\\sum\\frac1{k+5}$ compared with $\\sum\\frac1{k}$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "$\\cos(k\\pi)=(-1)^k$ makes the terms negative half the time.",
+    "option_explanations": [
+     "Correct.",
+     "Mistake: positive terms, smaller below larger.",
+     "Mistake: positive terms.",
+     "Mistake: positive terms."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "A student compares $\\sum\\frac{(-1)^k}{k^2}$ with $\\sum\\frac1{k^2}$ using the Comparison Test. The flaw is that",
+    "options": [
+     "$\\frac1{k^2}$ is not decreasing",
+     "the series being tested has terms of both signs",
+     "$\\sum\\frac1{k^2}$ diverges",
+     "the denominators are equal"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "The test needs nonnegative terms in both series.",
+    "option_explanations": [
+     "Mistake: $1/k^2$ is decreasing, and that is irrelevant.",
+     "Correct.",
+     "Mistake: $\\sum1/k^2$ converges.",
+     "Mistake: unrelated to the hypotheses."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "basic",
+   "question": "Use the Comparison Test to decide whether $\\displaystyle\\sum_{k=1}^{\\infty}\\frac{1}{2^k+k}$ converges.",
+   "answer": "Since $2^k+k>2^k$, $0<\\frac1{2^k+k}<\\frac1{2^k}$ for all $k\\ge1$. $\\sum\\frac1{2^k}$ is geometric with $r=\\frac12$, so it converges. By the Comparison Test the smaller series $\\sum\\frac1{2^k+k}$ **converges**."
+  },
+  "versions": [
+   {
+    "type": "basic",
+    "question": "Decide by comparison whether $\\displaystyle\\sum_{k=1}^{\\infty}\\frac{1}{k^2+2k}$ converges.",
+    "answer": "For $k\\ge1$, $k^2+2k>k^2$, so $0<\\frac1{k^2+2k}<\\frac1{k^2}$. $\\sum\\frac1{k^2}$ is a $p$-series with $p=2>1$, so it converges. Hence $\\sum\\frac1{k^2+2k}$ **converges**."
+   },
+   {
+    "type": "mcq",
+    "question": "To decide $\\displaystyle\\sum_{k=1}^{\\infty}\\frac{2}{3k+1}$ by comparison, a suitable series with smaller terms is",
+    "options": [
+     "$\\sum\\frac{1}{2k}$, which diverges",
+     "$\\sum\\frac{2}{3k^2}$, which converges",
+     "$\\sum\\frac{2}{3k}$, which diverges",
+     "$\\sum\\frac{2}{3^k}$, which converges"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Since $3k+1\\le4k$, $\\frac2{3k+1}\\ge\\frac2{4k}=\\frac1{2k}$, and $\\sum\\frac1{2k}$ diverges.",
+    "option_explanations": [
+     "Correct.",
+     "Mistake: terms are not above those of a convergent series; and being above a convergent series proves nothing.",
+     "Mistake: $\\frac2{3k}$ is bigger than $\\frac2{3k+1}$, so it cannot be the smaller series.",
+     "Mistake: not comparable in the needed direction."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "A positive-term series has $\\rho=\\lim_{k\\to\\infty}\\dfrac{u_{k+1}}{u_k}=\\dfrac35$. The Ratio Test says the series",
+   "options": [
+    "diverges",
+    "converges to $\\frac35$",
+    "may either converge or diverge",
+    "converges"
+   ],
+   "correct": [
+    3
+   ],
+   "explanation": "If $\\rho<1$ the series converges (Theorem 9.5.5(a)).",
+   "option_explanations": [
+    "Mistake: divergence requires $\\rho>1$.",
+    "Mistake: $\\rho$ is not the sum.",
+    "Mistake: undecided only when $\\rho=1$.",
+    "Correct."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "For a series with positive terms, $\\lim\\frac{u_{k+1}}{u_k}=\\frac53$. The Ratio Test concludes it",
+    "options": [
+     "converges",
+     "is undecided",
+     "diverges",
+     "converges to $\\frac35$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "$\\rho>1$ (or $\\infty$) means divergence.",
+    "option_explanations": [
+     "Mistake: convergence requires $\\rho<1$.",
+     "Mistake: undecided only when $\\rho=1$.",
+     "Correct.",
+     "Mistake: $\\rho$ is not a sum."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "If the Ratio Test limit is $\\rho=0.4$ for a positive-term series, then the series",
+    "options": [
+     "diverges",
+     "has sum $0.4$",
+     "is undecided",
+     "converges"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "Any $\\rho<1$ gives convergence.",
+    "option_explanations": [
+     "Mistake: divergence requires $\\rho>1$.",
+     "Mistake: $\\rho$ is not the sum.",
+     "Mistake: undecided only when $\\rho=1$.",
+     "Correct."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "The Ratio Test gives $\\rho=1$ for $\\sum\\frac1k$ and for $\\sum\\frac1{k^2}$. What does this show?",
+   "options": [
+    "Both series diverge",
+    "Both series converge",
+    "The test cannot decide either",
+    "The series have the same sum"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "One diverges and one converges although both give $\\rho=1$, so $\\rho=1$ is inconclusive.",
+   "option_explanations": [
+    "Mistake: $\\sum1/k^2$ converges.",
+    "Mistake: $\\sum1/k$ diverges.",
+    "Correct.",
+    "Mistake: they have different behaviour."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "If the Ratio Test limit equals $1$, the correct reaction is to",
+    "options": [
+     "conclude convergence",
+     "conclude divergence",
+     "try another test",
+     "take $1$ as the sum"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Case (c) of the theorem: the series may converge or diverge.",
+    "option_explanations": [
+     "Mistake: $\\rho<1$ is needed.",
+     "Mistake: $\\rho>1$ is needed.",
+     "Correct.",
+     "Mistake: $\\rho$ is not a sum."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "What does a Ratio Test value $\\rho=1$ imply?",
+    "options": [
+     "The series converges slowly",
+     "The test is inconclusive",
+     "The series sums to $1$",
+     "The terms are constant"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "With $\\rho=1$ the series may converge or diverge.",
+    "option_explanations": [
+     "Mistake: speed of convergence is not implied.",
+     "Correct.",
+     "Mistake: $\\rho$ is not a sum.",
+     "Mistake: not implied."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "basic",
+   "question": "Use the Ratio Test to decide whether $\\displaystyle\\sum_{k=1}^{\\infty}\\frac{3^k}{k!}$ converges.",
+   "answer": "$u_k=\\frac{3^k}{k!}>0$, $u_{k+1}=\\frac{3^{k+1}}{(k+1)!}$. Then $\\frac{u_{k+1}}{u_k}=\\frac{3^{k+1}}{(k+1)!}\\cdot\\frac{k!}{3^k}=\\frac{3}{k+1}\\to0$. Since $\\rho=0<1$, the series **converges**."
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "The Ratio Test applied to $\\displaystyle\\sum_{k=1}^{\\infty}\\frac{4^k}{k!}$ gives",
+    "options": [
+     "$\\rho=4$, diverges",
+     "$\\rho=1$, inconclusive",
+     "$\\rho=\\frac14$, converges",
+     "$\\rho=0$, converges"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "$\\frac{u_{k+1}}{u_k}=\\frac{4}{k+1}\\to0<1$.",
+    "option_explanations": [
+     "Mistake: stops at the factor $4$ and ignores $\\frac1{k+1}$.",
+     "Mistake: treats $\\frac{4}{k+1}$ like $\\frac{k}{k+1}$.",
+     "Mistake: inverts the ratio factor.",
+     "Correct."
+    ]
+   },
+   {
+    "type": "basic",
+    "question": "Does $\\displaystyle\\sum_{k=1}^{\\infty}\\frac{10^k}{k!}$ converge? Apply the Ratio Test.",
+    "answer": "$\\frac{u_{k+1}}{u_k}=\\frac{10^{k+1}}{(k+1)!}\\cdot\\frac{k!}{10^k}=\\frac{10}{k+1}\\to0$. $\\rho=0<1$, so the series **converges**."
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "The Ratio Test applied to $\\displaystyle\\sum_{k=1}^{\\infty}\\frac{k}{3^k}$ gives $\\rho=$",
+   "options": [
+    "$1$",
+    "$3$",
+    "$\\dfrac13$",
+    "$\\dfrac19$"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "$\\frac{(k+1)/3^{k+1}}{k/3^k}=\\frac{k+1}{3k}\\to\\frac13<1$: converges.",
+   "option_explanations": [
+    "Mistake: only the factor $\\frac{k+1}{k}$ is kept.",
+    "Mistake: inverts the factor $\\frac13$.",
+    "Correct.",
+    "Mistake: squares the factor $\\frac13$."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "What is $\\displaystyle\\lim_{k\\to\\infty}\\frac{u_{k+1}}{u_k}$ for $u_k=\\frac{k}{5^k}$?",
+    "options": [
+     "$\\dfrac15$",
+     "$5$",
+     "$1$",
+     "$0$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "$\\frac{k+1}{5k}\\to\\frac15$.",
+    "option_explanations": [
+     "Correct.",
+     "Mistake: inverts the factor $\\frac15$.",
+     "Mistake: only $\\frac{k+1}{k}\\to1$ is kept.",
+     "Mistake: treats the polynomial factor as decisive."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "The Ratio Test limit for $\\displaystyle\\sum_{k=1}^{\\infty}\\frac{k^2}{2^k}$ is",
+    "options": [
+     "$2$",
+     "$1$",
+     "$\\dfrac14$",
+     "$\\dfrac12$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "$\\frac{(k+1)^2}{2^{k+1}}\\cdot\\frac{2^k}{k^2}=\\frac12\\left(\\frac{k+1}{k}\\right)^2\\to\\frac12$.",
+    "option_explanations": [
+     "Mistake: inverts the ratio.",
+     "Mistake: drops the factor $\\frac12$.",
+     "Mistake: squares $\\frac12$ instead of $\\frac{k+1}{k}$.",
+     "Correct."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "For $\\displaystyle\\sum_{k=1}^{\\infty}\\frac{k^k}{k!}$ the Ratio Test gives",
+   "options": [
+    "$\\rho=e$, diverges",
+    "$\\rho=e$, converges",
+    "$\\rho=1$, inconclusive",
+    "$\\rho=\\frac1e$, converges"
+   ],
+   "correct": [
+    0
+   ],
+   "explanation": "$\\frac{(k+1)^{k+1}}{(k+1)!}\\cdot\\frac{k!}{k^k}=\\left(1+\\frac1k\\right)^k\\to e>1$.",
+   "option_explanations": [
+    "Correct.",
+    "Mistake: $e>1$ means divergence.",
+    "Mistake: the limit is $e$, not $1$.",
+    "Mistake: inverts the ratio."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "The Ratio Test applied to $\\displaystyle\\sum_{k=1}^{\\infty}\\frac{k!}{k^k}$ gives $\\rho=\\tfrac1e$. The conclusion is",
+    "options": [
+     "diverges",
+     "inconclusive",
+     "converges",
+     "converges to $\\frac1e$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "$\\left(\\frac{k}{k+1}\\right)^k\\to e^{-1}<1$.",
+    "option_explanations": [
+     "Mistake: divergence requires $\\rho>1$.",
+     "Mistake: undecided only when $\\rho=1$.",
+     "Correct.",
+     "Mistake: $\\rho$ is not the sum."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Apply the Ratio Test to $\\displaystyle\\sum_{k=1}^{\\infty}\\frac{3^k\\,k!}{k^k}$.",
+    "options": [
+     "$\\rho=\\frac3e$, converges",
+     "$\\rho=\\frac3e$, diverges",
+     "$\\rho=3e$, diverges",
+     "$\\rho=3$, diverges"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "$\\rho=3\\left(\\frac{k}{k+1}\\right)^k\\to\\frac3e\\approx1.10>1$.",
+    "option_explanations": [
+     "Mistake: $\\frac3e>1$.",
+     "Correct.",
+     "Mistake: uses $e$ instead of $e^{-1}$ in the limit.",
+     "Mistake: ignores the $e^{-1}$ factor."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Apply the Ratio Test to $\\displaystyle\\sum_{k=3}^{\\infty}\\frac{(2k)!}{4^k}$.",
+   "options": [
+    "$\\rho=\\dfrac14$, converges",
+    "$\\rho=0$, converges",
+    "$\\rho=\\infty$, diverges",
+    "$\\rho=1$, inconclusive"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "$\\frac{(2k+2)!}{4^{k+1}}\\cdot\\frac{4^k}{(2k)!}=\\frac{(2k+2)(2k+1)}{4}\\to\\infty$.",
+   "option_explanations": [
+    "Mistake: keeps only the factor $\\frac14$.",
+    "Mistake: treats the factorial ratio as vanishing.",
+    "Correct.",
+    "Mistake: expects $(2k+2)!/(2k)!\\to1$."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Ratio Test for $\\displaystyle\\sum_{k=1}^{\\infty}\\frac{(2k)!}{9^k}$:",
+    "options": [
+     "$\\rho=\\frac19$, converges",
+     "$\\rho=\\infty$, diverges",
+     "$\\rho=0$, converges",
+     "$\\rho=1$, inconclusive"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "$\\frac{(2k+2)(2k+1)}{9}\\to\\infty$.",
+    "option_explanations": [
+     "Mistake: keeps only the factor $\\frac19$.",
+     "Correct.",
+     "Mistake: treats the factorial ratio as vanishing.",
+     "Mistake: expects the factorial ratio to tend to $1$."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "For $\\displaystyle\\sum_{k=1}^{\\infty}\\frac{k!}{(2k)!}$ the Ratio Test limit is",
+    "options": [
+     "$0$",
+     "$\\infty$",
+     "$\\dfrac12$",
+     "$1$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "$\\frac{(k+1)!}{(2k+2)!}\\cdot\\frac{(2k)!}{k!}=\\frac{k+1}{(2k+2)(2k+1)}=\\frac1{2(2k+1)}\\to0$, so it converges.",
+    "option_explanations": [
+     "Correct.",
+     "Mistake: inverts the ratio.",
+     "Mistake: cancels $(k+1)$ against $(2k+2)$ but forgets $(2k+1)$.",
+     "Mistake: expects factorials to cancel completely."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "The Ratio Test gives $\\rho=1$ for $\\displaystyle\\sum_{k=1}^{\\infty}\\frac1{2k+1}$. The sensible next step is",
+   "options": [
+    "conclude it converges since $\\rho\\le1$",
+    "Integral Test: $\\int_1^\\infty\\frac{dx}{2x+1}$ diverges",
+    "conclude it diverges since $\\rho=1$",
+    "Divergence Test: $u_k\\not\\to0$"
+   ],
+   "correct": [
+    1
+   ],
+   "explanation": "$\\int_1^\\infty\\frac{dx}{2x+1}=\\lim\\frac12\\ln(2x+1)\\big|_1^b=\\infty$, so the series diverges.",
+   "option_explanations": [
+    "Mistake: $\\rho=1$ does not imply convergence.",
+    "Correct.",
+    "Mistake: $\\rho=1$ does not imply divergence.",
+    "Mistake: $u_k\\to0$, so the Divergence Test is inconclusive."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "For $\\sum\\frac1{3k-1}$ the Ratio Test limit is $1$. Which follow-up settles it?",
+    "options": [
+     "Ratio Test again",
+     "Comparison with $\\sum\\frac1{3k}$: diverges",
+     "Divergence Test: diverges",
+     "Comparison with $\\sum\\frac1{k^2}$: converges"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "$\\frac1{3k-1}>\\frac1{3k}$ and $\\sum\\frac1{3k}$ diverges.",
+    "option_explanations": [
+     "Mistake: repeating the test gives the same value.",
+     "Correct.",
+     "Mistake: $u_k\\to0$, so the test is inconclusive.",
+     "Mistake: the terms are not below $\\frac1{k^2}$."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "The Ratio Test gives $\\rho=1$ for $\\displaystyle\\sum_{k=1}^{\\infty}\\frac1{(k+4)^2}$. Which follow-up settles it?",
+    "options": [
+     "Integral Test: $\\int_1^\\infty\\frac{dx}{(x+4)^2}$ converges",
+     "Divergence Test: $u_k\\not\\to0$",
+     "Conclude divergence from $\\rho=1$",
+     "Comparison with $\\sum\\frac1k$: diverges"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "$\\int_1^\\infty(x+4)^{-2}dx=\\frac15$, finite, so the series converges.",
+    "option_explanations": [
+     "Correct.",
+     "Mistake: $u_k\\to0$.",
+     "Mistake: $\\rho=1$ does not imply divergence.",
+     "Mistake: being below a divergent series proves nothing."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "For $u_k=\\dfrac{5^k}{k!}$, the quotient $\\dfrac{u_{k+1}}{u_k}$ simplifies to",
+   "options": [
+    "$\\dfrac{5}{k}$",
+    "$5(k+1)$",
+    "$\\dfrac{5}{k+1}$",
+    "$\\dfrac{k+1}{5}$"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "$\\frac{5^{k+1}}{(k+1)!}\\cdot\\frac{k!}{5^k}=\\frac{5}{k+1}$, using $(k+1)!=(k+1)k!$.",
+   "option_explanations": [
+    "Mistake: forgets that $(k+1)!=(k+1)\\,k!$.",
+    "Mistake: multiplies by the factorial ratio instead of dividing.",
+    "Correct.",
+    "Mistake: inverts the quotient."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "If $u_k=\\dfrac{k!}{7^k}$, then $\\dfrac{u_{k+1}}{u_k}=$",
+    "options": [
+     "$\\dfrac{7}{k+1}$",
+     "$\\dfrac{k}{7}$",
+     "$7(k+1)$",
+     "$\\dfrac{k+1}{7}$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "$\\frac{(k+1)!}{7^{k+1}}\\cdot\\frac{7^k}{k!}=\\frac{k+1}{7}$.",
+    "option_explanations": [
+     "Mistake: inverts the quotient.",
+     "Mistake: uses $k$ instead of $k+1$.",
+     "Mistake: multiplies instead of dividing by $7$.",
+     "Correct."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "If $u_k=\\dfrac{2^k}{(k+1)!}$, then $\\dfrac{u_{k+1}}{u_k}=$",
+    "options": [
+     "$\\dfrac{2}{k+2}$",
+     "$\\dfrac{2}{k+1}$",
+     "$\\dfrac{2}{(k+1)!}$",
+     "$2(k+2)$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "$\\frac{2^{k+1}}{(k+2)!}\\cdot\\frac{(k+1)!}{2^k}=\\frac{2}{k+2}$.",
+    "option_explanations": [
+     "Correct.",
+     "Mistake: shifts the factorial incorrectly.",
+     "Mistake: does not cancel the factorials.",
+     "Mistake: multiplies by the factorial ratio."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Ratio Test for $\\displaystyle\\sum_{k=1}^{\\infty}\\frac{4^k}{k^2}$:",
+   "options": [
+    "$\\rho=\\frac14$, converges",
+    "$\\rho=1$, inconclusive",
+    "$\\rho=4$, converges",
+    "$\\rho=4$, diverges"
+   ],
+   "correct": [
+    3
+   ],
+   "explanation": "$\\frac{4^{k+1}}{(k+1)^2}\\cdot\\frac{k^2}{4^k}=4\\left(\\frac{k}{k+1}\\right)^2\\to4>1$.",
+   "option_explanations": [
+    "Mistake: inverts the factor $4$.",
+    "Mistake: the polynomial factor tends to $1$, but $4$ remains.",
+    "Mistake: $4>1$ means divergence.",
+    "Correct."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "What does the Ratio Test show for $\\displaystyle\\sum_{k=1}^{\\infty}\\frac{7^k}{k^3}$?",
+    "options": [
+     "Diverges, $\\rho=7$",
+     "Converges, $\\rho=7$",
+     "Converges, $\\rho=\\frac17$",
+     "Inconclusive, $\\rho=1$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "$7\\left(\\frac{k}{k+1}\\right)^3\\to7>1$.",
+    "option_explanations": [
+     "Correct.",
+     "Mistake: $7>1$ means divergence.",
+     "Mistake: inverts the factor $7$.",
+     "Mistake: the cube tends to $1$, but the factor $7$ remains."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "The Ratio Test limit for $\\displaystyle\\sum_{k=1}^{\\infty}\\frac{k^{10}}{2^{k}}$ is",
+    "options": [
+     "$2$",
+     "$10$",
+     "$1$",
+     "$\\dfrac12$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "$\\frac12\\left(\\frac{k+1}{k}\\right)^{10}\\to\\frac12$, so it converges.",
+    "option_explanations": [
+     "Mistake: inverts the factor $\\frac12$.",
+     "Mistake: takes the exponent as the limit.",
+     "Mistake: keeps only the polynomial factor.",
+     "Correct."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Which series is the most natural candidate for the Ratio Test?",
+   "options": [
+    "$\\sum\\dfrac{1}{k^2+1}$",
+    "$\\sum\\dfrac{1}{\\sqrt{k}+3}$",
+    "$\\sum\\dfrac{7^k}{k!}$",
+    "$\\sum\\dfrac{2k+1}{k^3}$"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "Factorials and exponentials make the quotient $u_{k+1}/u_k$ simplify nicely.",
+   "option_explanations": [
+    "Mistake: a rational term is better handled by comparison.",
+    "Mistake: a rational term is better handled by comparison.",
+    "Correct.",
+    "Mistake: a rational term is better handled by comparison."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "For which series does $\\frac{u_{k+1}}{u_k}$ cancel almost completely?",
+    "options": [
+     "$\\sum\\dfrac{1}{k^3+k}$",
+     "$\\sum\\dfrac{k!}{5^k}$",
+     "$\\sum\\dfrac{1}{\\sqrt{k}+2}$",
+     "$\\sum\\dfrac{3}{k+7}$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "With factorials and exponentials, the quotient reduces to $\\frac{k+1}{5}$.",
+    "option_explanations": [
+     "Mistake: the quotient is a messy rational expression.",
+     "Correct.",
+     "Mistake: the quotient is a messy radical expression.",
+     "Mistake: the quotient tends to $1$, which is uninformative."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "A series with terms $\\dfrac{(2k)!}{3^k}$ is best attacked with",
+    "options": [
+     "Comparison with a $p$-series",
+     "the Integral Test",
+     "the Divergence Test only",
+     "the Ratio Test"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "Factorials and exponentials in $u_k$ suggest the Ratio Test.",
+    "option_explanations": [
+     "Mistake: there is no obvious $p$-series to compare.",
+     "Mistake: an antiderivative of $(2x)!/3^x$ is not available.",
+     "Mistake: it is possible but the test is not the natural tool.",
+     "Correct."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "For positive terms, $\\rho=\\lim_{k\\to\\infty}\\sqrt[k]{u_k}=2$. The Root Test says the series",
+   "options": [
+    "converges",
+    "may converge or diverge",
+    "converges to $2$",
+    "diverges"
+   ],
+   "correct": [
+    3
+   ],
+   "explanation": "$\\rho>1$ gives divergence (Theorem 9.5.6(b)).",
+   "option_explanations": [
+    "Mistake: convergence needs $\\rho<1$.",
+    "Mistake: undecided only when $\\rho=1$.",
+    "Mistake: $\\rho$ is not the sum.",
+    "Correct."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "A positive-term series has $\\lim\\sqrt[k]{u_k}=\\frac13$. The Root Test shows that it",
+    "options": [
+     "diverges",
+     "is undecided",
+     "sums to $\\frac13$",
+     "converges"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "$\\rho<1$ gives convergence.",
+    "option_explanations": [
+     "Mistake: divergence needs $\\rho>1$.",
+     "Mistake: undecided only when $\\rho=1$.",
+     "Mistake: $\\rho$ is not the sum.",
+     "Correct."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "If $\\lim_{k\\to\\infty}(u_k)^{1/k}=\\infty$ for a positive-term series, the series",
+    "options": [
+     "diverges",
+     "converges",
+     "is undecided",
+     "has sum $0$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "$\\rho=\\infty$ gives divergence.",
+    "option_explanations": [
+     "Correct.",
+     "Mistake: convergence needs $\\rho<1$.",
+     "Mistake: undecided only when $\\rho=1$.",
+     "Mistake: terms are not small."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Root Test for $\\displaystyle\\sum_{k=1}^{\\infty}\\left(\\frac{5k+1}{2k+3}\\right)^{k}$:",
+   "options": [
+    "$\\rho=\\frac52$, converges",
+    "$\\rho=\\frac25$, converges",
+    "$\\rho=\\frac52$, diverges",
+    "$\\rho=1$, inconclusive"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "$\\sqrt[k]{u_k}=\\frac{5k+1}{2k+3}\\to\\frac52>1$.",
+   "option_explanations": [
+    "Mistake: $\\frac52>1$ means divergence.",
+    "Mistake: inverts the ratio of leading coefficients.",
+    "Correct.",
+    "Mistake: the limit is $\\frac52$, not $1$."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "What does the Root Test show for $\\displaystyle\\sum_{k=1}^{\\infty}\\left(\\frac{k}{2k+1}\\right)^{k}$?",
+    "options": [
+     "Diverges, $\\rho=\\frac12$",
+     "Converges, $\\rho=\\frac12$",
+     "Converges, $\\rho=2$",
+     "Inconclusive, $\\rho=1$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "$\\frac{k}{2k+1}\\to\\frac12<1$.",
+    "option_explanations": [
+     "Mistake: $\\frac12<1$ means convergence.",
+     "Correct.",
+     "Mistake: inverts the ratio.",
+     "Mistake: the limit is $\\frac12$, not $1$."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Apply the Root Test to $\\displaystyle\\sum_{k=1}^{\\infty}\\left(\\frac{3k+1}{5k-2}\\right)^{k}$.",
+    "options": [
+     "$\\rho=\\frac35$, converges",
+     "$\\rho=\\frac53$, diverges",
+     "$\\rho=\\frac35$, diverges",
+     "$\\rho=1$, inconclusive"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "$\\frac{3k+1}{5k-2}\\to\\frac35<1$.",
+    "option_explanations": [
+     "Correct.",
+     "Mistake: inverts the ratio.",
+     "Mistake: $\\frac35<1$ means convergence.",
+     "Mistake: the limit is $\\frac35$, not $1$."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Root Test for $\\displaystyle\\sum_{k=1}^{\\infty}\\frac{1}{(\\ln(k+2))^{k}}$:",
+   "options": [
+    "$\\rho=0$, converges",
+    "$\\rho=\\infty$, diverges",
+    "$\\rho=1$, inconclusive",
+    "$\\rho=0$, diverges"
+   ],
+   "correct": [
+    0
+   ],
+   "explanation": "$\\sqrt[k]{u_k}=\\frac1{\\ln(k+2)}\\to0<1$.",
+   "option_explanations": [
+    "Correct.",
+    "Mistake: inverts the limit of $\\ln(k+2)$.",
+    "Mistake: the limit is $0$, not $1$.",
+    "Mistake: $\\rho=0<1$ means convergence."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "What does the Root Test show for $\\displaystyle\\sum_{k=1}^{\\infty}\\left(\\frac{\\ln(k+1)}{k}\\right)^{k}$?",
+    "options": [
+     "Diverges, $\\rho=\\infty$",
+     "Inconclusive, $\\rho=1$",
+     "Converges, $\\rho=e^{-1}$",
+     "Converges, $\\rho=0$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "$\\frac{\\ln(k+1)}{k}\\to0<1$.",
+    "option_explanations": [
+     "Mistake: inverts the quotient.",
+     "Mistake: the quotient does not tend to $1$.",
+     "Mistake: confuses with $(k/(k+1))^k$.",
+     "Correct."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Root Test for $\\displaystyle\\sum_{k=1}^{\\infty}\\left(\\frac{k}{k+1}\\right)^{k^2}$:",
+    "options": [
+     "$\\rho=1$, inconclusive",
+     "$\\rho=e$, diverges",
+     "$\\rho=e^{-1}$, converges",
+     "$\\rho=0$, converges"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "$\\sqrt[k]{u_k}=\\left(\\frac{k}{k+1}\\right)^k=\\left(1+\\frac1k\\right)^{-k}\\to e^{-1}<1$.",
+    "option_explanations": [
+     "Mistake: the base tends to $1$ but the exponent $k$ matters.",
+     "Mistake: sign slip in the exponent.",
+     "Correct.",
+     "Mistake: the limit is not $0$."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Root Test for $\\displaystyle\\sum_{k=1}^{\\infty}\\left(\\frac{k}{3}\\right)^{k}$:",
+   "options": [
+    "$\\rho=\\frac13$, converges",
+    "$\\rho=\\infty$, diverges",
+    "$\\rho=1$, inconclusive",
+    "$\\rho=3$, diverges"
+   ],
+   "correct": [
+    1
+   ],
+   "explanation": "$\\sqrt[k]{u_k}=\\frac k3\\to\\infty$.",
+   "option_explanations": [
+    "Mistake: drops $k$.",
+    "Correct.",
+    "Mistake: not $1$.",
+    "Mistake: inverts the denominator and drops $k$."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "What does the Root Test show for $\\displaystyle\\sum_{k=1}^{\\infty}\\left(\\frac{k}{10}\\right)^{k}$?",
+    "options": [
+     "Converges, $\\rho=\\frac1{10}$",
+     "Converges, $\\rho=0$",
+     "Diverges, $\\rho=\\infty$",
+     "Diverges, $\\rho=10$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "$\\frac{k}{10}\\to\\infty$.",
+    "option_explanations": [
+     "Mistake: drops $k$.",
+     "Mistake: treats $\\frac k{10}$ as small.",
+     "Correct.",
+     "Mistake: takes the denominator as the limit."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Apply the Root Test to $\\displaystyle\\sum_{k=1}^{\\infty}\\frac{(2k)^k}{5^k}$.",
+    "options": [
+     "$\\rho=\\frac25$, converges",
+     "$\\rho=\\infty$, diverges",
+     "$\\rho=\\frac52$, diverges",
+     "$\\rho=1$, inconclusive"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "$\\sqrt[k]{u_k}=\\frac{2k}{5}\\to\\infty$.",
+    "option_explanations": [
+     "Mistake: drops $k$.",
+     "Correct.",
+     "Mistake: inverts and drops $k$.",
+     "Mistake: not $1$."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Which test most directly decides $\\displaystyle\\sum_{k=1}^{\\infty}\\left(\\frac{2k+1}{5k-2}\\right)^{k}$?",
+   "options": [
+    "Ratio Test",
+    "Root Test",
+    "Integral Test",
+    "Divergence Test"
+   ],
+   "correct": [
+    1
+   ],
+   "explanation": "The general term is a $k$-th power, so $\\sqrt[k]{u_k}$ is immediate.",
+   "option_explanations": [
+    "Mistake: the quotient is messy here.",
+    "Correct.",
+    "Mistake: no usable antiderivative.",
+    "Mistake: $u_k\\to0$, so it is inconclusive."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "For $\\displaystyle\\sum_{k=2}^{\\infty}\\frac{1}{(\\ln k)^{k}}$ the most convenient test is",
+    "options": [
+     "Root Test",
+     "Ratio Test",
+     "Integral Test",
+     "Comparison with $\\sum\\frac1k$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "A $k$-th power in the denominator makes $\\sqrt[k]{u_k}=\\frac1{\\ln k}$.",
+    "option_explanations": [
+     "Correct.",
+     "Mistake: the quotient is messy.",
+     "Mistake: no usable antiderivative.",
+     "Mistake: no valid inequality to $1/k$ follows."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "When $u_k$ is a whole expression raised to the power $k$, the convenient choice is",
+    "options": [
+     "Ratio Test",
+     "Divergence Test",
+     "Root Test",
+     "Integral Test"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "$\\sqrt[k]{(\\cdot)^k}$ removes the power.",
+    "option_explanations": [
+     "Mistake: not the natural tool.",
+     "Mistake: only detects divergence.",
+     "Correct.",
+     "Mistake: not the natural tool."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "For $\\sum\\frac1k$ we get $\\sqrt[k]{u_k}=k^{-1/k}\\to1$. What does the Root Test conclude?",
+   "options": [
+    "The series converges",
+    "The series diverges",
+    "The test is inconclusive",
+    "The series sums to $1$"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "With $\\rho=1$ the test fails (and indeed $\\sum1/k$ diverges while $\\sum1/k^2$, also with $\\rho=1$, converges).",
+   "option_explanations": [
+    "Mistake: needs $\\rho<1$.",
+    "Mistake: needs $\\rho>1$.",
+    "Correct.",
+    "Mistake: $\\rho$ is not a sum."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "The Root Test value for $\\sum\\frac1{k^2}$ is $\\rho=1$. What is learned?",
+    "options": [
+     "It converges",
+     "It diverges",
+     "Nothing; another test is needed",
+     "It sums to $1$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Case (c): $\\rho=1$ is inconclusive.",
+    "option_explanations": [
+     "Mistake: needs $\\rho<1$.",
+     "Mistake: needs $\\rho>1$.",
+     "Correct.",
+     "Mistake: $\\rho$ is not a sum."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "If $\\lim\\sqrt[k]{u_k}=1$, which statement is certain?",
+    "options": [
+     "The series diverges",
+     "The series converges",
+     "Further testing is required",
+     "$u_k\\to1$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "The Root Test gives no verdict at $\\rho=1$.",
+    "option_explanations": [
+     "Mistake: needs $\\rho>1$.",
+     "Mistake: needs $\\rho<1$.",
+     "Correct.",
+     "Mistake: unrelated."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "For $u_k=\\dfrac{k^k}{k!}$, the quotient $\\dfrac{u_{k+1}}{u_k}$ simplifies to",
+   "options": [
+    "$\\left(1+\\dfrac1k\\right)^{k+1}$",
+    "$(k+1)\\left(1+\\dfrac1k\\right)^{k}$",
+    "$1+\\dfrac1k$",
+    "$\\left(1+\\dfrac1k\\right)^{k}$"
+   ],
+   "correct": [
+    3
+   ],
+   "explanation": "$\\frac{(k+1)^{k+1}}{(k+1)k!}\\cdot\\frac{k!}{k^k}=\\frac{(k+1)^k}{k^k}$.",
+   "option_explanations": [
+    "Mistake: forgets to cancel the factor $(k+1)$ from $(k+1)!$.",
+    "Mistake: fails to cancel $(k+1)$ with the factorial.",
+    "Mistake: keeps only the extra factor.",
+    "Correct."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "For $u_k=\\dfrac{(k!)^2}{(2k)!}$, the Ratio Test limit is",
+    "options": [
+     "$\\dfrac14$",
+     "$4$",
+     "$\\dfrac12$",
+     "$1$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "$\\frac{(k+1)^2}{(2k+2)(2k+1)}=\\frac{k+1}{2(2k+1)}\\to\\frac14$, so the series converges.",
+    "option_explanations": [
+     "Correct.",
+     "Mistake: inverts the quotient.",
+     "Mistake: cancels $(k+1)$ with $(2k+2)$ only.",
+     "Mistake: expects factorials to cancel."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "The Ratio Test for $\\displaystyle\\sum_{k=1}^{\\infty}\\frac{2^k\\,k!}{k^k}$ gives $\\rho=$",
+    "options": [
+     "$2e$",
+     "$\\dfrac{2}{e}$",
+     "$2$",
+     "$\\dfrac{e}{2}$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "$2\\left(\\frac{k}{k+1}\\right)^k\\to\\frac2e\\approx0.74<1$, so it converges.",
+    "option_explanations": [
+     "Mistake: uses $e$ instead of $e^{-1}$.",
+     "Correct.",
+     "Mistake: ignores the limit $e^{-1}$.",
+     "Mistake: inverts the result."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "basic",
+   "question": "Use the Root Test to decide whether $\\displaystyle\\sum_{k=1}^{\\infty}\\left(\\frac{3k+2}{2k+1}\\right)^{k}$ converges.",
+   "answer": "$u_k>0$ and $\\sqrt[k]{u_k}=\\frac{3k+2}{2k+1}\\to\\frac32=\\rho$. Since $\\rho=\\frac32>1$, the series **diverges**."
+  },
+  "versions": [
+   {
+    "type": "basic",
+    "question": "Apply the Root Test to $\\displaystyle\\sum_{k=1}^{\\infty}\\left(\\frac{4k+1}{7k+5}\\right)^{k}$.",
+    "answer": "$\\sqrt[k]{u_k}=\\frac{4k+1}{7k+5}\\to\\frac47=\\rho<1$, so the series **converges**."
+   },
+   {
+    "type": "mcq",
+    "question": "Root Test for $\\displaystyle\\sum_{k=1}^{\\infty}\\left(\\frac{2k+3}{k+1}\\right)^{k}$:",
+    "options": [
+     "$\\rho=2$, diverges",
+     "$\\rho=\\frac12$, converges",
+     "$\\rho=3$, diverges",
+     "$\\rho=2$, converges"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "$\\frac{2k+3}{k+1}\\to2>1$.",
+    "option_explanations": [
+     "Correct.",
+     "Mistake: inverts the ratio.",
+     "Mistake: takes the constant terms' ratio.",
+     "Mistake: $2>1$ means divergence."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "basic",
+   "question": "Use the Ratio Test to decide whether $\\displaystyle\\sum_{k=1}^{\\infty}\\frac{k^k}{k!}$ converges.",
+   "answer": "$\\frac{u_{k+1}}{u_k}=\\frac{(k+1)^{k+1}}{(k+1)!}\\cdot\\frac{k!}{k^k}=\\frac{(k+1)^k}{k^k}=\\left(1+\\frac1k\\right)^k\\to e$. Since $\\rho=e>1$, the series **diverges**."
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "The Ratio Test applied to $\\displaystyle\\sum_{k=1}^{\\infty}\\frac{k}{4^{k}}$ yields",
+    "options": [
+     "convergence, since $\\rho=\\frac14$",
+     "divergence, since $\\rho=4$",
+     "nothing, since $\\rho=1$",
+     "divergence, since $\\rho=\\frac14$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "$\\frac{k+1}{4k}\\to\\frac14<1$.",
+    "option_explanations": [
+     "Correct.",
+     "Mistake: inverts the factor.",
+     "Mistake: ignores the factor $\\frac14$.",
+     "Mistake: $\\frac14<1$ means convergence."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "A series has $u_k>0$ and $\\dfrac{u_{k+1}}{u_k}=\\dfrac{k+1}{3k}$. The Ratio Test shows",
+    "options": [
+     "divergence",
+     "no conclusion",
+     "convergence",
+     "a sum of $\\frac13$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "$\\rho=\\frac13<1$.",
+    "option_explanations": [
+     "Mistake: needs $\\rho>1$.",
+     "Mistake: needs $\\rho=1$.",
+     "Correct.",
+     "Mistake: $\\rho$ is not a sum."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Use the Root Test on $\\displaystyle\\sum_{k=1}^{\\infty}\\left(\\frac{3k+2}{2k-1}\\right)^{k}$.",
+   "options": [
+    "$\\rho=\\frac23$, converges",
+    "$\\rho=\\frac32$, converges",
+    "$\\rho=1$, inconclusive",
+    "$\\rho=\\frac32$, diverges"
+   ],
+   "correct": [
+    3
+   ],
+   "explanation": "$\\sqrt[k]{u_k}=\\frac{3k+2}{2k-1}\\to\\frac32>1$, so the series diverges.",
+   "option_explanations": [
+    "Mistake: inverted the ratio.",
+    "Mistake: $\\rho>1$ means divergence.",
+    "Mistake: $\\rho\\ne1$.",
+    "Correct."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Root Test for $\\displaystyle\\sum_{k=1}^{\\infty}\\left(\\frac{5k-1}{3k+4}\\right)^{k}$:",
+    "options": [
+     "$\\rho=\\frac53$, diverges",
+     "$\\rho=\\frac35$, converges",
+     "$\\rho=\\frac53$, converges",
+     "$\\rho=1$, inconclusive"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "$\\rho=\\frac53>1$ so it diverges.",
+    "option_explanations": [
+     "Correct.",
+     "Mistake: inverted.",
+     "Mistake: $\\rho>1$ diverges.",
+     "Mistake: $\\rho\\ne1$."
+    ]
+   },
+   {
+    "type": "basic",
+    "question": "Decide $\\displaystyle\\sum_{k=1}^{\\infty}\\left(\\frac{4k+1}{3k-2}\\right)^{k}$ by the Root Test.",
+    "answer": "$u_k>0$ for $k\\ge1$ and $\\sqrt[k]{u_k}=\\frac{4k+1}{3k-2}\\to\\frac43=\\rho>1$, so the series **diverges**."
+   }
+  ]
+ }
+]

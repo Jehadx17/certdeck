@@ -1,0 +1,2107 @@
+[
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Which expression is an infinite series in the sense of Definition 9.3.1?",
+   "options": [
+    "$u_1,u_2,u_3,\\dots,u_k,\\dots$",
+    "$u_1+u_2+u_3+\\dots+u_k+\\dots$",
+    "$u_1+u_2+\\dots+u_n$",
+    "$\\lim_{k\\to+\\infty}u_k$"
+   ],
+   "correct": [
+    1
+   ],
+   "explanation": "An infinite series is $\\sum_{k=1}^{\\infty}u_k=u_1+u_2+\\dots+u_k+\\dots$; the $u_k$ are its terms.",
+   "option_explanations": [
+    "A list of terms is a sequence, not a sum.",
+    "Correct: the sum of infinitely many terms.",
+    "A finite sum is a partial sum.",
+    "A limit of the terms is a number or $\\pm\\infty$, not a sum."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "The notation $\\sum_{k=1}^{\\infty}u_k$ stands for",
+    "options": [
+     "the list $u_1,u_2,u_3,\\dots$",
+     "$u_1+u_2+u_3+\\dots$ with no end",
+     "the single number $u_k$",
+     "the product $u_1u_2u_3\\cdots$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "The series is the (formal) sum of all terms.",
+    "option_explanations": [
+     "That is the sequence $\\{u_k\\}$.",
+     "Correct.",
+     "$k$ is an index.",
+     "$\\Sigma$ means addition."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "In the series $\\sum_{k=1}^{\\infty}u_k$ the numbers $u_1,u_2,u_3,\\dots$ are called",
+    "options": [
+     "the partial sums of the series",
+     "the ratios of the series",
+     "the limits of the series",
+     "the terms of the series"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "$u_k$ is the $k$th term; $s_n$ is the $n$th partial sum.",
+    "option_explanations": [
+     "Partial sums are $s_n=u_1+\\dots+u_n$.",
+     "Ratios belong to geometric series.",
+     "Only the sum $S$ is a limit.",
+     "Correct."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "For the series $\\sum_{k=1}^{\\infty}\\dfrac{k}{k^2+1}$, what is the term $u_3$?",
+   "options": [
+    "$\\dfrac{3}{10}$",
+    "$\\dfrac{3}{9}$",
+    "$\\dfrac{1}{2}+\\dfrac25+\\dfrac3{10}$",
+    "$\\dfrac{3}{4}$"
+   ],
+   "correct": [
+    0
+   ],
+   "explanation": "Substitute $k=3$: $\\frac{3}{9+1}=\\frac3{10}$.",
+   "option_explanations": [
+    "Correct.",
+    "Dropped the $+1$.",
+    "That is the partial sum $s_3$.",
+    "Used the denominator $k+1$ only."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "The series $\\sum_{k=1}^{\\infty}\\dfrac{3}{k(k+1)}$ has fourth term $u_4$ equal to",
+    "options": [
+     "$\\dfrac{3}{16}$",
+     "$\\dfrac{3}{12}$",
+     "$\\dfrac{3}{20}$",
+     "$\\dfrac{3}{25}$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "$u_4=\\frac{3}{4\\cdot5}=\\frac3{20}$.",
+    "option_explanations": [
+     "Used $k^2$.",
+     "Used $k=3$.",
+     "Correct.",
+     "Used $(k+1)^2$."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "What is $u_4$ in the series $\\sum_{k=1}^{\\infty}\\dfrac{k^2}{k+2}$?",
+    "options": [
+     "$\\dfrac{4}{6}$",
+     "$\\dfrac{9}{5}$",
+     "$\\dfrac83$",
+     "$\\dfrac{16}{4}$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Substitute $k=4$: $\\frac{16}{6}=\\frac83$.",
+    "option_explanations": [
+     "Forgot to square the numerator.",
+     "Used $k=3$.",
+     "Correct: $\\frac{16}{6}$.",
+     "Dropped the $+2$."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "The repeating decimal $0.444\\dots$ can be written as which infinite series?",
+   "options": [
+    "$\\dfrac4{10}+\\dfrac4{10^2}+\\dfrac4{10^3}+\\dots$",
+    "$\\dfrac4{10}+\\dfrac8{10^2}+\\dfrac{12}{10^3}+\\dots$",
+    "$\\dfrac4{10}+\\dfrac4{20}+\\dfrac4{30}+\\dots$",
+    "$4+\\dfrac4{10}+\\dfrac4{100}+\\dots$"
+   ],
+   "correct": [
+    0
+   ],
+   "explanation": "Each new decimal digit adds $4/10^k$, as for $0.333\\dots=\\frac3{10}+\\frac3{10^2}+\\dots$.",
+   "option_explanations": [
+    "Correct.",
+    "Numerators grow instead of staying $4$.",
+    "Denominators grow linearly, not as powers of $10$.",
+    "First term should be $\\frac4{10}$."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "The decimal $0.777\\dots$ equals which sum?",
+    "options": [
+     "$7+\\dfrac{7}{10}+\\dfrac{7}{10^2}+\\dots$",
+     "$\\dfrac{7}{10}+\\dfrac{7}{100}+\\dfrac{7}{200}+\\dots$",
+     "$\\dfrac{7}{10}+\\dfrac{14}{100}+\\dfrac{21}{1000}+\\dots$",
+     "$\\dfrac{7}{10}+\\dfrac{7}{10^2}+\\dfrac{7}{10^3}+\\dots$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "The $k$th digit contributes $7/10^k$.",
+    "option_explanations": [
+     "Starts at $7$, not $0.7$.",
+     "Denominators are not powers of $10$.",
+     "Numerators should stay $7$.",
+     "Correct."
+    ]
+   },
+   {
+    "type": "basic",
+    "question": "Express $0.272727\\dots$ as a geometric series and find its sum as a fraction.",
+    "answer": "$0.272727\\dots=\\frac{27}{100}+\\frac{27}{100^2}+\\frac{27}{100^3}+\\dots$, a geometric series with first term $\\frac{27}{100}$ and ratio $r=\\frac1{100}$. Since $|r|<1$, the sum is $\\frac{27/100}{1-1/100}=\\frac{27/100}{99/100}=\\frac{27}{99}=\\frac3{11}$."
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "For the series $\\dfrac3{10}+\\dfrac3{10^2}+\\dots$, the partial sum $s_n=\\dfrac3{10}+\\dots+\\dfrac3{10^n}$ has the closed form",
+   "options": [
+    "$\\dfrac13\\left(1+\\dfrac{1}{10^n}\\right)$",
+    "$\\dfrac13\\left(1-\\dfrac{1}{10^n}\\right)$",
+    "$\\dfrac{3}{10}\\left(1-\\dfrac{1}{10^n}\\right)$",
+    "$\\dfrac13\\left(1-\\dfrac{1}{10^{n+1}}\\right)$"
+   ],
+   "correct": [
+    1
+   ],
+   "explanation": "Multiply $s_n$ by $\\frac1{10}$ and subtract: $\\frac9{10}s_n=\\frac3{10}\\left(1-\\frac1{10^n}\\right)$, so $s_n=\\frac13(1-10^{-n})\\to\\frac13$.",
+   "option_explanations": [
+    "Sign error after subtracting $\\frac1{10}s_n$ from $s_n$.",
+    "Correct.",
+    "Forgot to divide by $\\frac9{10}$.",
+    "Exponent should be $n$."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "The partial sums of $\\dfrac6{10}+\\dfrac6{10^2}+\\dfrac6{10^3}+\\dots$ are $s_n=$",
+    "options": [
+     "$\\dfrac13\\left(1-\\dfrac1{10^n}\\right)$",
+     "$\\dfrac23\\left(1-\\dfrac1{10^n}\\right)$",
+     "$\\dfrac23\\left(1+\\dfrac1{10^n}\\right)$",
+     "$\\dfrac6{10}\\left(1-\\dfrac1{10^n}\\right)$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "$s_n=\\frac{6}{10}\\cdot\\frac{1-10^{-n}}{9/10}=\\frac23(1-10^{-n})$, tending to $\\frac23$.",
+    "option_explanations": [
+     "Used the sum for $0.333\\dots$.",
+     "Correct.",
+     "Sign error.",
+     "Forgot to divide by $\\frac9{10}$."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Using $s_n=\\dfrac19\\left(1-\\dfrac1{10^n}\\right)$ for $0.111\\dots$, the sum of the series is",
+    "options": [
+     "$\\dfrac{1}{10}$",
+     "$1$",
+     "$0$",
+     "$\\dfrac19$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "$\\lim s_n=\\frac19(1-0)=\\frac19$.",
+    "option_explanations": [
+     "Took the first term.",
+     "Dropped the factor $\\frac19$.",
+     "Took $\\frac{1}{10^n}$ as the limit.",
+     "Correct."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "The $n$th partial sum of a series $\\sum u_k$ is",
+   "options": [
+    "$s_n=u_1+u_2+\\dots+u_n$",
+    "$s_n=u_n$",
+    "$s_n=u_1\\cdot u_2\\cdots u_n$",
+    "$s_n=\\lim_{k\\to\\infty}u_k$"
+   ],
+   "correct": [
+    0
+   ],
+   "explanation": "$s_n$ adds the first $n$ terms; $\\{s_n\\}$ is the sequence of partial sums.",
+   "option_explanations": [
+    "Correct.",
+    "That is the $n$th term.",
+    "Partial sums add.",
+    "Not a partial sum."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "For $\\sum_{k=1}^{\\infty}(2k-1)$ the partial sum $s_4$ is",
+    "options": [
+     "$7$",
+     "$9$",
+     "$16$",
+     "$10$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "$s_4=1+3+5+7=16$.",
+    "option_explanations": [
+     "That is the term $u_4$.",
+     "Stopped after $1+3+5$.",
+     "Correct: $1+3+5+7$.",
+     "Used $1+2+3+4$ (sum of term numbers)."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "For $\\sum_{k=1}^{\\infty}\\dfrac1{2^k}$, the partial sum $s_3$ equals",
+    "options": [
+     "$\\dfrac18$",
+     "$\\dfrac34$",
+     "$\\dfrac78$",
+     "$1$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "$s_3=\\frac12+\\frac14+\\frac18=\\frac78$.",
+    "option_explanations": [
+     "That is $u_3$.",
+     "That is $s_2$.",
+     "Correct: $\\frac12+\\frac14+\\frac18$.",
+     "That is the sum of the whole series."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "The sum of a series is defined as",
+   "options": [
+    "the limit of its partial sums",
+    "the limit of its terms as $k\\to\\infty$",
+    "the sum of its first several terms",
+    "the largest of its partial sums"
+   ],
+   "correct": [
+    0
+   ],
+   "explanation": "$S=\\lim_{n\\to\\infty}s_n$ when this limit exists.",
+   "option_explanations": [
+    "Correct.",
+    "Terms tending to $0$ is not the same as the sum.",
+    "A finite sum is only an approximation.",
+    "Partial sums need not have a largest value."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "The partial sums of a series are $s_n=4-\\dfrac1n$. The series",
+    "options": [
+     "diverges",
+     "converges to $-1$",
+     "converges to $3$",
+     "converges to $4$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "$S=\\lim(4-\\frac1n)=4$.",
+    "option_explanations": [
+     "$\\{s_n\\}$ converges.",
+     "Took the coefficient of $\\frac1n$.",
+     "Used $s_1$.",
+     "Correct."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "If the partial sums of a series satisfy $s_n=\\dfrac{2n}{n+1}$, then the sum of the series is",
+    "options": [
+     "$1$",
+     "$2$",
+     "$\\dfrac12$",
+     "$+\\infty$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "$\\lim\\frac{2n}{n+1}=2$.",
+    "option_explanations": [
+     "Took $s_1$.",
+     "Correct.",
+     "Inverted.",
+     "$s_n$ is bounded."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "A series has partial sums $s_n=n^2$. Which statement is correct?",
+   "options": [
+    "The series converges to the sum $0$",
+    "The series diverges",
+    "The series converges to the sum $1$",
+    "The series has the sum $+\\infty$ and converges"
+   ],
+   "correct": [
+    1
+   ],
+   "explanation": "A series with divergent partial sums has no sum.",
+   "option_explanations": [
+    "Partial sums grow.",
+    "Correct.",
+    "That is $s_1$.",
+    "Convergence requires a finite limit."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "The sequence of partial sums of a series is $s_n=(-1)^n$. The series",
+    "options": [
+     "converges to $0$",
+     "converges to $1$",
+     "converges to $-1$",
+     "diverges"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "A divergent sequence of partial sums means a divergent series.",
+    "option_explanations": [
+     "Averaged $\\pm1$.",
+     "Used even $n$.",
+     "Used odd $n$.",
+     "Correct: $\\{s_n\\}$ oscillates."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "If $s_n=\\dfrac{1}{n}$ are the partial sums of a series, then the series",
+    "options": [
+     "converges to $0$",
+     "diverges",
+     "converges to $1$",
+     "has no sum"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "$S=\\lim s_n=0$.",
+    "option_explanations": [
+     "Correct.",
+     "$\\frac1n\\to0$.",
+     "That is $s_1$.",
+     "It has the sum $0$."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Which object is a sum rather than a succession?",
+   "options": [
+    "$\\left\\{\\dfrac1{2^k}\\right\\}_{k=1}^{\\infty}$",
+    "$\\dfrac12,\\dfrac14,\\dfrac18,\\dots$",
+    "$\\sum_{k=1}^{\\infty}\\dfrac1{2^k}$",
+    "$\\{s_n\\}_{n=1}^{\\infty}$"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "A sequence is a succession; a series is a sum.",
+   "option_explanations": [
+    "A sequence: a succession of terms.",
+    "A list of terms (sequence).",
+    "Correct: a series.",
+    "A sequence of partial sums."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "The words sequence and series differ in that",
+    "options": [
+     "a series is finite and a sequence is infinite",
+     "a series has a limit and a sequence does not",
+     "a series is a sum of terms and a sequence is a list",
+     "they mean the same thing in mathematics"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Keep the distinction: sequence = succession, series = sum.",
+    "option_explanations": [
+     "Both are infinite here.",
+     "Both may converge or diverge.",
+     "Correct.",
+     "They must be kept distinct."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which of these is a series?",
+    "options": [
+     "$1-1+1-1+\\dots$",
+     "$1,-1,1,-1,\\dots$",
+     "$\\{(-1)^{k+1}\\}$",
+     "$\\lim_{k\\to\\infty}(-1)^{k+1}$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Plus signs between the terms make it a series.",
+    "option_explanations": [
+     "Correct: terms added together.",
+     "A sequence.",
+     "A sequence.",
+     "A limit that does not exist."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "What can be said about the series $1-1+1-1+1-1+\\dots$?",
+   "options": [
+    "It converges to $0$ because the terms cancel in pairs",
+    "It converges to $1$ because the first partial sum is $1$",
+    "It converges to $\\dfrac12$ because the partial sums average to $\\frac12$",
+    "It diverges, as $s_n$ is $1,0,1,0,\\dots$"
+   ],
+   "correct": [
+    3
+   ],
+   "explanation": "Partial sums $1,0,1,0,\\dots$ diverge, so the series has no sum.",
+   "option_explanations": [
+    "Rearranging infinitely many terms is not allowed.",
+    "Partial sums keep alternating.",
+    "A limit must exist, not an average.",
+    "Correct."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "The series $3-3+3-3+\\dots$",
+    "options": [
+     "converges to $0$, since the terms cancel",
+     "diverges, since $s_n$ is $3,0,3,0,\\dots$",
+     "converges to $3$, since the first partial sum is $s_1=3$",
+     "converges to $\\dfrac32$, the average of $s_n$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "The sequence of partial sums $3,0,3,0,\\dots$ has no limit.",
+    "option_explanations": [
+     "Cancellation is only valid for finite sums.",
+     "Correct.",
+     "$s_2=0$.",
+     "Averages are not limits."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "What is the sequence of partial sums of $-2+2-2+2-\\dots$?",
+    "options": [
+     "$-2,-4,-6,-8,\\dots$, which diverges",
+     "$-2,0,-2,0,\\dots$, which diverges",
+     "$0,0,0,\\dots$, which converges to $0$",
+     "$-2,2,-2,2,\\dots$, which diverges"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "$s_1=-2$, $s_2=0$, $s_3=-2$, $s_4=0$, so the series diverges.",
+    "option_explanations": [
+     "Added $-2$ each time.",
+     "Correct.",
+     "Pairs cancel only if grouped.",
+     "That lists the terms, not the partial sums."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Why is it wrong to say that $1-1+1-1+\\dots$ has sum $0$ because the terms cancel?",
+   "options": [
+    "The terms $1$ and $-1$ do not cancel",
+    "Series with negative terms have no sum",
+    "The sum is $1$ by grouping the terms as $1+(-1+1)+\\dots$",
+    "Finite-sum rules can fail for series"
+   ],
+   "correct": [
+    3
+   ],
+   "explanation": "The sum is defined as the limit of partial sums, and here that limit does not exist.",
+   "option_explanations": [
+    "They do cancel in any finite sum.",
+    "Many do.",
+    "Grouping gives different answers, which shows the problem.",
+    "Correct."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "A student groups $1-1+1-1+\\dots$ as $(1-1)+(1-1)+\\dots=0$. What is the flaw?",
+    "options": [
+     "Regrouping infinitely many terms need not preserve the sum",
+     "$1-1\\ne0$",
+     "Series cannot contain parentheses",
+     "The series actually equals $2$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Only the limit of the partial sums defines the sum, and $s_n=1,0,1,0,\\dots$ has none.",
+    "option_explanations": [
+     "Correct.",
+     "It is $0$.",
+     "Not the issue.",
+     "It has no sum."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which method correctly decides whether $1-1+1-1+\\dots$ converges?",
+    "options": [
+     "Pair the terms and add",
+     "Check that the terms are bounded",
+     "Take the limit of $s_n$",
+     "Cancel terms of opposite sign"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Definition 9.3.2 is used directly.",
+    "option_explanations": [
+     "Gives $0$ but ignores the definition.",
+     "Bounded terms do not guarantee convergence.",
+     "Correct.",
+     "Only valid for finite sums."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "What are $a$ and $r$ for the geometric series $\\dfrac3{10}+\\dfrac3{10^2}+\\dfrac3{10^3}+\\dots$?",
+   "options": [
+    "$a=3,\\ r=\\dfrac1{10}$",
+    "$a=\\dfrac3{10},\\ r=\\dfrac3{10}$",
+    "$a=\\dfrac3{10},\\ r=\\dfrac1{10}$",
+    "$a=\\dfrac1{10},\\ r=3$"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "Each term is $\\frac1{10}$ of the previous one, starting at $\\frac3{10}$.",
+   "option_explanations": [
+    "First term is $\\frac3{10}$.",
+    "The ratio is the factor between consecutive terms.",
+    "Correct.",
+    "Values swapped."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "The series $\\dfrac12-\\dfrac14+\\dfrac18-\\dfrac1{16}+\\dots$ is geometric with",
+    "options": [
+     "$a=\\dfrac12,\\ r=-\\dfrac12$",
+     "$a=\\dfrac12,\\ r=\\dfrac12$",
+     "$a=-\\dfrac12,\\ r=\\dfrac12$",
+     "$a=1,\\ r=-\\dfrac12$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "The ratio $-\\frac12$ comes from $\\frac{-1/4}{1/2}$.",
+    "option_explanations": [
+     "Correct.",
+     "Missed the alternating sign.",
+     "Wrong sign on the first term.",
+     "First term is $\\frac12$."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "For $5+\\dfrac53+\\dfrac59+\\dfrac5{27}+\\dots$, the ratio $r$ is",
+    "options": [
+     "$3$",
+     "$\\dfrac53$",
+     "$5$",
+     "$\\dfrac13$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "$r=\\frac{5/3}{5}=\\frac13$.",
+    "option_explanations": [
+     "Inverted.",
+     "That is the second term.",
+     "That is $a$.",
+     "Correct."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "By Theorem 9.3.3, the geometric series $\\sum_{k=0}^\\infty ar^k$ ($a\\ne0$) converges if and only if",
+   "options": [
+    "$r<1$",
+    "$|r|<1$",
+    "$|r|\\le1$",
+    "$r>0$"
+   ],
+   "correct": [
+    1
+   ],
+   "explanation": "For $|r|<1$ the sum is $\\frac{a}{1-r}$.",
+   "option_explanations": [
+    "Includes $r\\le-1$, where it diverges.",
+    "Correct.",
+    "At $|r|=1$ it diverges.",
+    "Positive large $r$ diverges."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "For which ratio does the geometric series $\\sum ar^k$ diverge?",
+    "options": [
+     "$r=-\\dfrac9{10}$",
+     "$r=-1$",
+     "$r=0.99$",
+     "$r=\\dfrac{1}{100}$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Divergence occurs when $|r|\\ge1$.",
+    "option_explanations": [
+     "$|r|<1$: converges.",
+     "Correct: partial sums alternate $a,0,a,0$.",
+     "$|r|<1$: converges.",
+     "$|r|<1$: converges."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which geometric series converges?",
+    "options": [
+     "$\\sum_{k=0}^\\infty 6\\left(\\dfrac54\\right)^k$",
+     "$\\sum_{k=0}^\\infty 6\\left(-1\\right)^k$",
+     "$\\sum_{k=0}^\\infty 6$",
+     "$\\sum_{k=0}^\\infty 6\\left(-\\dfrac45\\right)^k$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "Convergence requires $|r|<1$.",
+    "option_explanations": [
+     "$r=\\frac54>1$.",
+     "$r=-1$.",
+     "$r=1$.",
+     "Correct."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Which value of $r$ makes $\\sum_{k=0}^\\infty 3r^k$ diverge?",
+   "options": [
+    "$r=-\\dfrac{3}{2}$",
+    "$r=-\\dfrac12$",
+    "$r=\\dfrac23$",
+    "$r=0.1$"
+   ],
+   "correct": [
+    0
+   ],
+   "explanation": "Diverges when $|r|\\ge1$.",
+   "option_explanations": [
+    "Correct: $|r|>1$.",
+    "$|r|<1$.",
+    "$|r|<1$.",
+    "$|r|<1$."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "The geometric series with ratio $r=1$ and first term $a=2$",
+    "options": [
+     "converges to $2$",
+     "converges to $0$",
+     "diverges",
+     "converges to $\\dfrac{2}{1-1}$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "For $r=1$, $s_n=(n+1)a$ grows without bound.",
+    "option_explanations": [
+     "Only the first term.",
+     "Terms do not shrink.",
+     "Correct: $s_n=2(n+1)\\to\\infty$.",
+     "Division by zero is undefined."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Why does the geometric series with $r=-1$ diverge?",
+    "options": [
+     "Its terms grow without bound",
+     "Its partial sums tend to $\\infty$",
+     "Its $s_n$ are $a,0,a,0,\\dots$",
+     "Its ratio exceeds $1$ in absolute value"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "$s_n$ alternates between $a$ and $0$, so has no limit.",
+    "option_explanations": [
+     "Terms stay $\\pm a$.",
+     "They stay bounded.",
+     "Correct.",
+     "$r=-1$ has $|r|=1$."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Find $\\sum_{k=0}^{\\infty}\\dfrac{5}{4^k}$.",
+   "options": [
+    "$\\dfrac{20}{3}$",
+    "$\\dfrac{5}{4}$",
+    "$\\dfrac{25}{4}$",
+    "$\\dfrac{5}{3}$"
+   ],
+   "correct": [
+    0
+   ],
+   "explanation": "Geometric with $a=5$, $r=\\frac14$: $\\frac{a}{1-r}=\\frac{20}3$.",
+   "option_explanations": [
+    "Correct: $\\frac{5}{1-1/4}$.",
+    "Used $\\frac{a}{r}$.",
+    "That is $s_1=5+\\frac54$.",
+    "Used denominator $4-1$ without the factor."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "The series $\\sum_{k=0}^{\\infty}\\dfrac{7}{3^k}$ has sum",
+    "options": [
+     "$\\dfrac{21}{4}$",
+     "$\\dfrac{7}{3}$",
+     "$\\dfrac{28}{3}$",
+     "$\\dfrac{21}{2}$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "$\\frac{7}{1-1/3}=\\frac{21}{2}$.",
+    "option_explanations": [
+     "Used $1+r$ in the denominator.",
+     "Used $\\frac ar$.",
+     "Used $r=\\frac14$.",
+     "Correct."
+    ]
+   },
+   {
+    "type": "basic",
+    "question": "Find the sum of $\\sum_{k=0}^{\\infty}2\\left(\\dfrac15\\right)^k$ and state why it converges.",
+    "answer": "It is geometric with $a=2$ and $r=\\frac15$. Since $|r|=\\frac15<1$ it converges and the sum is $\\frac{a}{1-r}=\\frac{2}{1-\\frac15}=\\frac{2}{4/5}=\\frac52$."
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Determine the behaviour of $\\sum_{k=1}^{\\infty}3^{2k}5^{1-k}$.",
+   "options": [
+    "Converges to $\\dfrac{45}{4}$: geometric with $r=\\dfrac15$",
+    "Diverges: it is geometric with $r=\\dfrac95$",
+    "Converges to $\\dfrac{9}{1-9/5}$: geometric with $r=\\dfrac95$",
+    "Converges to $0$ because $5^{1-k}\\to0$"
+   ],
+   "correct": [
+    1
+   ],
+   "explanation": "$3^{2k}5^{1-k}=9\\left(\\frac95\\right)^{k-1}$ and $|r|=\\frac95>1$.",
+   "option_explanations": [
+    "Ignored the factor $3^{2k}=9^k$.",
+    "Correct.",
+    "A ratio above $1$ gives divergence.",
+    "The $9^k$ growth dominates."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "The series $\\sum_{k=1}^{\\infty}2^{2k}3^{1-k}$",
+    "options": [
+     "converges, with $r=\\dfrac13$",
+     "diverges, with $r=\\dfrac43$",
+     "converges, with $r=\\dfrac34$",
+     "converges, with $r=\\dfrac23$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "$2^{2k}3^{1-k}=4\\left(\\frac43\\right)^{k-1}$, so $|r|>1$.",
+    "option_explanations": [
+     "Ignored $4^k$.",
+     "Correct: $4\\left(\\frac43\\right)^{k-1}$.",
+     "Inverted the ratio.",
+     "Used $2^k$ rather than $4^k$."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Find $\\sum_{k=1}^{\\infty}2^{k}\\,5^{1-k}$.",
+    "options": [
+     "$\\dfrac{2}{3}$",
+     "$\\dfrac{5}{3}$",
+     "$\\infty$",
+     "$\\dfrac{10}{3}$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "$2^k5^{1-k}=2\\left(\\frac25\\right)^{k-1}$, sum $\\frac{2}{1-2/5}=\\frac{10}3$.",
+    "option_explanations": [
+     "Took $a=\\frac25$.",
+     "Took $a=1$.",
+     "$|r|=\\frac25<1$, so it converges.",
+     "Correct: $a=2$, $r=\\frac25$."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Find $\\sum_{k=1}^{\\infty}\\left(-\\dfrac34\\right)^{k-1}$.",
+   "options": [
+    "$\\dfrac47$",
+    "$4$",
+    "$\\dfrac37$",
+    "$\\dfrac14$"
+   ],
+   "correct": [
+    0
+   ],
+   "explanation": "A geometric series $\\sum_{k=1}^\\infty ar^{k-1}$ with $|r|<1$ has sum $\\frac{a}{1-r}$.",
+   "option_explanations": [
+    "Correct: $a=1$, $r=-\\frac34$, so $\\frac{1}{1+3/4}$.",
+    "Dropped the sign of $r$: $\\frac{1}{1-3/4}$.",
+    "Inverted the ratio, using $r=-\\frac43$.",
+    "Computed $1-r$ with $r=\\frac34$ but forgot to divide."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "The sum of $\\sum_{k=1}^{\\infty}(-1)^{k-1}\\dfrac{7}{6^{k-1}}$ is",
+    "options": [
+     "$\\dfrac{42}{5}$",
+     "$7$",
+     "$6$",
+     "$\\dfrac67$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Here $a=7$ and $r=-\\frac16$, so the sum is $\\frac{7}{7/6}=6$.",
+    "option_explanations": [
+     "Dropped the sign: $r=+\\frac16$.",
+     "Took only the first term.",
+     "Correct: $\\frac{7}{1+1/6}$.",
+     "Inverted the result."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Find $\\sum_{k=1}^{\\infty}\\left(\\dfrac23\\right)^{k-1}$.",
+    "options": [
+     "$\\dfrac35$",
+     "$2$",
+     "$3$",
+     "$\\dfrac13$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "$a=1$, $r=\\frac23$, so the sum is $\\frac{1}{1-\\frac23}=3$.",
+    "option_explanations": [
+     "Used $1+r$ in the denominator.",
+     "Took the second term $\\frac23$ as $a$.",
+     "Correct: $\\frac{1}{1-2/3}$.",
+     "Stopped at $1-r$."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Find $\\sum_{k=1}^{\\infty}\\left(\\dfrac13\\right)^k$.",
+   "options": [
+    "$\\dfrac12$",
+    "$\\dfrac32$",
+    "$\\dfrac13$",
+    "$1$"
+   ],
+   "correct": [
+    0
+   ],
+   "explanation": "When the index starts at $1$ the first term is $ar=\\frac13$, not $a=1$: sum $=\\frac{\\text{first term}}{1-r}$.",
+   "option_explanations": [
+    "Correct: first term $\\frac13$, so $\\frac{1/3}{1-1/3}$.",
+    "Used $a=1$ although the series starts at $k=1$.",
+    "Took the first term.",
+    "Used $\\frac{1}{3}\\cdot3$."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "The sum of $\\sum_{k=1}^{\\infty}\\left(\\dfrac25\\right)^k$ is",
+    "options": [
+     "$\\dfrac53$",
+     "$\\dfrac25$",
+     "$\\dfrac{4}{15}$",
+     "$\\dfrac23$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "First term $\\frac25$: $\\frac{2/5}{3/5}=\\frac23$.",
+    "option_explanations": [
+     "Used $a=1$: $\\frac{1}{1-2/5}$.",
+     "Took the first term.",
+     "Used the second term as $a$.",
+     "Correct."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Find $\\sum_{k=2}^{\\infty}\\left(\\dfrac12\\right)^k$.",
+    "options": [
+     "$2$",
+     "$\\dfrac12$",
+     "$1$",
+     "$\\dfrac14$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Start term is $\\frac14$; divide by $1-\\frac12$.",
+    "option_explanations": [
+     "Used the formula for $k=0$.",
+     "Correct: first term $\\frac14$, so $\\frac{1/4}{1/2}$.",
+     "Used the first term $\\frac12$ as if the series started at $k=1$.",
+     "Took the first term."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "How do $\\sum_{k=0}^{\\infty}\\left(\\frac12\\right)^k$ and $\\sum_{k=1}^{\\infty}\\left(\\frac12\\right)^k$ compare?",
+   "options": [
+    "Both converge, with the same sum $2$",
+    "Both converge, with sums $2$ and $1$",
+    "Only the first one converges",
+    "Both converge, with sums $1$ and $2$"
+   ],
+   "correct": [
+    1
+   ],
+   "explanation": "Changing the starting index does not affect convergence, but it changes the sum.",
+   "option_explanations": [
+    "Dropping the first term $1$ lowers the sum.",
+    "Correct.",
+    "Convergence does not depend on the starting index.",
+    "Reversed: the one starting at $k=0$ has the extra term."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Changing the starting index of an infinite series",
+    "options": [
+     "does not affect the sum of the series",
+     "changes convergent series into divergent ones",
+     "is allowed only for geometric series",
+     "leaves convergence unchanged"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "Removing finitely many terms changes the value of a convergent sum but not whether it converges.",
+    "option_explanations": [
+     "It removes or adds terms.",
+     "Convergence is unaffected.",
+     "True for any series.",
+     "Correct."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "If $\\sum_{k=0}^{\\infty}u_k$ converges, then $\\sum_{k=1}^{\\infty}u_k$",
+    "options": [
+     "converges too",
+     "diverges instead",
+     "has the same sum",
+     "converges only if $u_0=0$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Dropping a single term does not change convergence.",
+    "option_explanations": [
+     "Correct.",
+     "Only one term is removed.",
+     "The sum differs by $u_0$.",
+     "Not required."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "The nth partial sum of $\\sum_{k=0}^{\\infty}ar^k$ ($r\\ne1$) is",
+   "options": [
+    "$s_n=\\dfrac{a\\left(1-r^{n}\\right)}{1-r}$",
+    "$s_n=\\dfrac{a}{1-r}$",
+    "$s_n=\\dfrac{a\\left(1-r^{n+1}\\right)}{1-r}$",
+    "$s_n=a\\,r^{n+1}$"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "Multiply $s_n$ by $r$ and subtract: $(1-r)s_n=a-ar^{n+1}$.",
+   "option_explanations": [
+    "Exponent should be $n+1$ since there are $n+1$ terms.",
+    "That is the sum of the series, not $s_n$.",
+    "Correct.",
+    "That is not a partial sum."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "For $3+6+12+24+\\dots$ ($a=3$, $r=2$), the partial sum $s_4=3+6+12+24+48$ equals",
+    "options": [
+     "$45$",
+     "$96$",
+     "$93$",
+     "$31$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "$s_4=\\frac{a(1-r^5)}{1-r}=\\frac{3(1-32)}{-1}=93$.",
+    "option_explanations": [
+     "Used $2^4$ in the formula: $\\frac{3(1-2^4)}{1-2}$.",
+     "Used $3\\cdot2^5$.",
+     "Correct: $\\frac{3(1-2^5)}{1-2}$.",
+     "Used $\\frac{1-2^5}{1-2}$ without the factor $3$."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "The partial sum $s_5=\\sum_{k=0}^{5}2\\left(\\dfrac13\\right)^k$ equals",
+    "options": [
+     "$\\dfrac{728}{243}$",
+     "$3$",
+     "$\\dfrac{242}{81}$",
+     "$\\dfrac{728}{729}$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "$s_5=\\frac{2\\left(1-3^{-6}\\right)}{2/3}=3\\cdot\\frac{728}{729}=\\frac{728}{243}$.",
+    "option_explanations": [
+     "Correct: $3\\left(1-\\frac1{729}\\right)$.",
+     "That is the full sum of the series.",
+     "Used $r^5$ instead of $r^6$.",
+     "Forgot the factor $\\frac{a}{1-r}=3$."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "When deriving $s_n=\\dfrac{a-ar^{n+1}}{1-r}$ we multiply $s_n$ by $r$ and subtract. The result is",
+   "options": [
+    "$s_n-rs_n=a-ar^{n}$",
+    "$s_n+rs_n=a+ar^{n+1}$",
+    "$s_n-rs_n=ar-ar^{n+1}$",
+    "$s_n-rs_n=a-ar^{n+1}$"
+   ],
+   "correct": [
+    3
+   ],
+   "explanation": "$rs_n=ar+ar^2+\\dots+ar^{n+1}$, so subtracting leaves only $a-ar^{n+1}$.",
+   "option_explanations": [
+    "Last term of $rs_n$ is $ar^{n+1}$.",
+    "We subtract, not add.",
+    "The first term $a$ stays.",
+    "Correct: middle terms cancel."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "For $|r|<1$, why does $\\lim s_n=\\dfrac{a}{1-r}$?",
+    "options": [
+     "$a\\to0$ as $n\\to+\\infty$",
+     "$r^{n+1}\\to0$ as $n\\to+\\infty$",
+     "$r^{n+1}\\to1$ as $n\\to+\\infty$",
+     "$r^{n+1}\\to\\infty$ as $n\\to+\\infty$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "$s_n=\\frac{a}{1-r}(1-r^{n+1})\\to\\frac{a}{1-r}$.",
+    "option_explanations": [
+     "$a$ is a fixed constant.",
+     "Correct.",
+     "That happens only for $r=1$.",
+     "That happens for $|r|>1$."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Why does $\\sum ar^k$ diverge when $r>1$?",
+    "options": [
+     "$r^{n+1}\\to0$, so $s_n\\to0$",
+     "$r^{n+1}$ increases without bound, so $s_n$ does",
+     "$r^{n+1}$ oscillates, so $s_n$ oscillates",
+     "$s_n=(n+1)a$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "For $r<-1$, $r^{n+1}$ oscillates with growing size; for $r>1$ it grows.",
+    "option_explanations": [
+     "That is the case $|r|<1$.",
+     "Correct.",
+     "That is the case $r<-1$.",
+     "That is the case $r=1$."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "For which $x$ does $1+x+x^2+x^3+\\dots$ converge?",
+   "options": [
+    "$|x|\\le1$",
+    "$x<1$",
+    "$0<x<1$",
+    "$|x|<1$"
+   ],
+   "correct": [
+    3
+   ],
+   "explanation": "Geometric with $a=1$, $r=x$: converges to $\\frac1{1-x}$ for $|x|<1$.",
+   "option_explanations": [
+    "At $x=\\pm1$ it diverges.",
+    "Includes $x\\le-1$.",
+    "Also converges for $-1<x\\le0$.",
+    "Correct."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "The series $\\sum_{k=0}^{\\infty}\\left(\\dfrac{x}{3}\\right)^k$ converges for",
+    "options": [
+     "$|x|<3$",
+     "$|x|<1$",
+     "$|x|<\\dfrac13$",
+     "$x<3$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "$r=\\frac x3$, so $|r|<1$ means $|x|<3$.",
+    "option_explanations": [
+     "Correct.",
+     "Used $r=x$.",
+     "Inverted the ratio.",
+     "Also needs $x>-3$."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "The sum of $\\sum_{k=0}^{\\infty}(2x)^k$ at $x=\\dfrac14$ is",
+    "options": [
+     "$\\dfrac43$",
+     "$\\dfrac12$",
+     "$2$",
+     "$1$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "$r=2x=\\frac12$, so the sum is $\\frac1{1-1/2}=2$.",
+    "option_explanations": [
+     "Used $r=\\frac14$.",
+     "Gave the ratio $r=\\frac12$ itself.",
+     "Correct: $\\frac{1}{1-1/2}$.",
+     "Took the first term."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Partial fractions of $\\dfrac{1}{k(k+1)}$ give",
+   "options": [
+    "$\\dfrac1k+\\dfrac1{k+1}$",
+    "$\\dfrac1{k+1}-\\dfrac1k$",
+    "$\\dfrac1k-\\dfrac1{k+1}$",
+    "$\\dfrac12\\left(\\dfrac1k-\\dfrac1{k+1}\\right)$"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "$\\frac{1}{k(k+1)}=\\frac Ak+\\frac B{k+1}$ forces $A=1$, $B=-1$.",
+   "option_explanations": [
+    "Sign error: $B=-1$, not $+1$.",
+    "Reversed the signs.",
+    "Correct: $A=1$, $B=-1$.",
+    "The factor $\\frac12$ belongs to $\\frac1{k(k+2)}$."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Partial fractions of $\\dfrac{1}{k(k+2)}$ give",
+    "options": [
+     "$\\dfrac12\\left(\\dfrac1k-\\dfrac1{k+2}\\right)$",
+     "$\\dfrac1k-\\dfrac1{k+2}$",
+     "$\\dfrac1k+\\dfrac1{k+2}$",
+     "$\\dfrac12\\left(\\dfrac1{k+2}-\\dfrac1k\\right)$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "$A=\\frac12$, $B=-\\frac12$.",
+    "option_explanations": [
+     "Correct.",
+     "Missed the factor $\\frac12$.",
+     "Wrong sign for $B$.",
+     "Reversed the signs."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Partial fractions of $\\dfrac{1}{k(k+3)}$ give",
+    "options": [
+     "$\\dfrac1k-\\dfrac1{k+3}$",
+     "$3\\left(\\dfrac1k-\\dfrac1{k+3}\\right)$",
+     "$\\dfrac13\\left(\\dfrac1k+\\dfrac1{k+3}\\right)$",
+     "$\\dfrac13\\left(\\dfrac1k-\\dfrac1{k+3}\\right)$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "$A=\\frac13$, $B=-\\frac13$.",
+    "option_explanations": [
+     "Missed the factor $\\frac13$.",
+     "Multiplied by $3$ instead of dividing.",
+     "Wrong sign for $B$.",
+     "Correct."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "For $\\sum_{k=1}^{\\infty}\\dfrac{1}{k(k+1)}$, the partial sum $s_n$ equals",
+   "options": [
+    "$1-\\dfrac1n$",
+    "$1-\\dfrac1{n+1}$",
+    "$\\dfrac1{n+1}$",
+    "$1+\\dfrac1{n+1}$"
+   ],
+   "correct": [
+    1
+   ],
+   "explanation": "$s_n=\\left(1-\\frac12\\right)+\\left(\\frac12-\\frac13\\right)+\\dots+\\left(\\frac1n-\\frac1{n+1}\\right)=1-\\frac1{n+1}$.",
+   "option_explanations": [
+    "Last leftover is $\\frac1{n+1}$.",
+    "Correct: telescoping.",
+    "Forgot the leading $1$.",
+    "Sign of the leftover term."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "The sum $\\sum_{k=1}^{\\infty}\\dfrac{1}{k(k+1)}$ is",
+    "options": [
+     "$\\dfrac12$",
+     "$1$",
+     "$0$",
+     "$\\infty$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "$s_n=1-\\frac1{n+1}\\to1$.",
+    "option_explanations": [
+     "Took the first term.",
+     "Correct.",
+     "Thought the terms cancel entirely.",
+     "Compared to the harmonic series."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "The series $\\sum_{k=1}^{\\infty}\\dfrac{3}{k(k+1)}$ has sum",
+    "options": [
+     "$1$",
+     "$\\dfrac32$",
+     "$\\dfrac13$",
+     "$3$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "$3\\cdot\\sum\\frac1{k(k+1)}=3\\cdot1$.",
+    "option_explanations": [
+     "Forgot the factor $3$.",
+     "Took the first term.",
+     "Divided by $3$.",
+     "Correct."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Find $\\sum_{k=1}^{\\infty}\\dfrac{1}{k(k+2)}$.",
+   "options": [
+    "$\\dfrac34$",
+    "$1$",
+    "$\\dfrac12$",
+    "$\\dfrac32$"
+   ],
+   "correct": [
+    0
+   ],
+   "explanation": "Terms $\\frac1{k}$ and $\\frac1{k+2}$ leave $1+\\frac12$ uncancelled, so the sum is $\\frac12\\cdot\\frac32=\\frac34$.",
+   "option_explanations": [
+    "Correct: $\\frac12\\left(1+\\frac12\\right)$.",
+    "Used the $\\frac1{k(k+1)}$ result.",
+    "Kept only the first leftover term.",
+    "Forgot the factor $\\frac12$."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "The series $\\sum_{k=1}^{\\infty}\\dfrac{1}{(k+1)(k+2)}$ sums to",
+    "options": [
+     "$1$",
+     "$\\dfrac16$",
+     "$\\dfrac12$",
+     "$\\dfrac14$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "$\\frac1{k+1}-\\frac1{k+2}$ telescopes to $\\frac12$.",
+    "option_explanations": [
+     "Used $\\frac1{k(k+1)}$.",
+     "Took the first term.",
+     "Correct.",
+     "Halved the first term's sum."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Find $\\sum_{k=1}^{\\infty}\\dfrac{1}{k(k+3)}$.",
+    "options": [
+     "$\\dfrac13$",
+     "$\\dfrac{11}{6}$",
+     "$\\dfrac{11}{18}$",
+     "$1$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Three terms $1,\\frac12,\\frac13$ remain uncancelled.",
+    "option_explanations": [
+     "Kept only $\\frac13\\cdot1$.",
+     "Forgot the factor $\\frac13$.",
+     "Correct: $\\frac13\\left(1+\\frac12+\\frac13\\right)$.",
+     "Used the $\\frac1{k(k+1)}$ result."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "basic",
+   "question": "Find the sum of $\\sum_{k=1}^{\\infty}\\dfrac{2}{k(k+1)}$ by finding $s_n$.",
+   "answer": "Partial fractions: $\\frac{2}{k(k+1)}=\\frac2k-\\frac2{k+1}$.\n$s_n=\\left(2-1\\right)+\\left(1-\\frac23\\right)+\\dots+\\left(\\frac2n-\\frac2{n+1}\\right)=2-\\frac2{n+1}$.\nAs $n\\to\\infty$, $s_n\\to2$, so the sum is $2$."
+  },
+  "versions": [
+   {
+    "type": "basic",
+    "question": "Use partial fractions and $s_n$ to find $\\sum_{k=1}^{\\infty}\\dfrac{1}{k(k+2)}$.",
+    "answer": "$\\frac1{k(k+2)}=\\frac12\\left(\\frac1k-\\frac1{k+2}\\right)$.\n$s_n=\\frac12\\left(1+\\frac12-\\frac1{n+1}-\\frac1{n+2}\\right)$.\nAs $n\\to\\infty$: $s_n\\to\\frac12\\cdot\\frac32=\\frac34$."
+   },
+   {
+    "type": "basic",
+    "question": "Find $\\sum_{k=1}^{\\infty}\\dfrac{4}{k(k+1)}$ by telescoping.",
+    "answer": "$\\frac4{k(k+1)}=\\frac4k-\\frac4{k+1}$, so $s_n=4-\\frac4{n+1}\\to4$. The sum is $4$."
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Which method suits $\\sum_{k=1}^{\\infty}\\dfrac{1}{k(k+5)}$?",
+   "options": [
+    "Partial fractions",
+    "Geometric series formula",
+    "Harmonic series comparison",
+    "Alternating sign pairing"
+   ],
+   "correct": [
+    0
+   ],
+   "explanation": "Products of linear factors in the denominator split into differences that telescope.",
+   "option_explanations": [
+    "Correct.",
+    "Not of the form $ar^k$.",
+    "It is not $\\sum\\frac1k$.",
+    "No sign alternation."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Which method suits $\\sum_{k=0}^{\\infty}\\dfrac{4}{7^k}$?",
+    "options": [
+     "Partial fractions and telescoping",
+     "Telescoping partial sums",
+     "Harmonic series comparison",
+     "Geometric formula"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "Constant ratio $\\frac17$ between consecutive terms.",
+    "option_explanations": [
+     "No product of factors in the denominator.",
+     "Terms do not cancel.",
+     "It is not $\\sum\\frac1k$.",
+     "Correct: $a=4$, $r=\\frac17$."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "A series is telescoping when",
+    "options": [
+     "each term is a constant multiple of the previous one",
+     "most terms in $s_n$ cancel in pairs",
+     "the terms have alternating signs",
+     "the partial sums form an increasing sequence"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Only a few terms survive in $s_n$, which makes its limit easy.",
+    "option_explanations": [
+     "That describes geometric series.",
+     "Correct.",
+     "That is an alternating series.",
+     "Not enough to make $s_n$ collapse."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "The harmonic series is",
+   "options": [
+    "$\\sum_{k=1}^{\\infty}\\dfrac1{k^2}$",
+    "$\\sum_{k=1}^{\\infty}\\dfrac1k$",
+    "$\\sum_{k=1}^{\\infty}\\dfrac{(-1)^k}{k}$",
+    "$\\sum_{k=1}^{\\infty}\\dfrac1{2^k}$"
+   ],
+   "correct": [
+    1
+   ],
+   "explanation": "$1+\\frac12+\\frac13+\\dots$",
+   "option_explanations": [
+    "That is a $p$-series with $p=2$.",
+    "Correct.",
+    "That is the alternating harmonic series.",
+    "That is geometric."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Which series is the harmonic series?",
+    "options": [
+     "$1+\\dfrac12+\\dfrac14+\\dfrac18+\\dots$",
+     "$1+\\dfrac14+\\dfrac19+\\dfrac1{16}+\\dots$",
+     "$1-\\dfrac12+\\dfrac13-\\dfrac14+\\dots$",
+     "$1+\\dfrac12+\\dfrac13+\\dfrac14+\\dots$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "Terms are $\\frac1k$ for $k=1,2,3,\\dots$",
+    "option_explanations": [
+     "Geometric with $r=\\frac12$.",
+     "Squares in the denominators.",
+     "Alternating signs.",
+     "Correct."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Does $\\sum_{k=1}^{\\infty}\\dfrac1k$ converge?",
+    "options": [
+     "No, $s_n$ is unbounded",
+     "Yes, because $\\frac1k\\to0$ as $k\\to\\infty$",
+     "Yes, it converges with sum $2$",
+     "No, because it is geometric with $r=1$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "$s_{2^n}>\\frac{n+1}2$, so $s_n$ is unbounded.",
+    "option_explanations": [
+     "Correct.",
+     "Terms going to $0$ is not enough.",
+     "Invented sum.",
+     "It is not geometric."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Which statement about $\\sum 1/k$ is true?",
+   "options": [
+    "its terms tend to $0$ so the series converges",
+    "its terms do not tend to $0$ as $k$ grows",
+    "its terms tend to $0$ yet it diverges",
+    "its partial sums are all bounded above"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "Terms $\\to0$ does not imply convergence.",
+   "option_explanations": [
+    "Not implied.",
+    "They do.",
+    "Correct.",
+    "They are unbounded."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "The partial sums of the harmonic series are",
+    "options": [
+     "increasing and bounded",
+     "oscillating",
+     "increasing and unbounded",
+     "decreasing to $0$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Each term is positive, and $s_{2^n}>\\frac{n+1}2$.",
+    "option_explanations": [
+     "Would give convergence.",
+     "All terms are positive.",
+     "Correct.",
+     "They increase."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "If positive-term partial sums $s_n$ are increasing and unbounded, then the series",
+    "options": [
+     "diverges",
+     "converges to $0$",
+     "converges to the largest term",
+     "oscillates"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Increasing and bounded would give convergence; unbounded gives divergence.",
+    "option_explanations": [
+     "Correct.",
+     "Sums are positive.",
+     "No largest term.",
+     "Increasing sums cannot oscillate."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "For the harmonic series, $s_4=1+\\frac12+\\frac13+\\frac14$ satisfies",
+   "options": [
+    "$s_4<1$",
+    "$s_4=2$",
+    "$s_4<\\dfrac32$",
+    "$s_4>\\dfrac32$"
+   ],
+   "correct": [
+    3
+   ],
+   "explanation": "$s_4=\\frac{25}{12}\\approx2.08$, and $\\frac13+\\frac14>\\frac12$.",
+   "option_explanations": [
+    "It exceeds $1$ already.",
+    "$s_4=\\frac{25}{12}$.",
+    "$\\frac{25}{12}>\\frac32$.",
+    "Correct: $s_4=\\frac{25}{12}$."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Grouping $\\frac13+\\frac14$ and $\\frac15+\\dots+\\frac18$ in the harmonic series, each group is",
+    "options": [
+     "exactly $\\dfrac12$",
+     "more than $\\dfrac12$",
+     "less than $\\dfrac12$",
+     "equal to $\\dfrac14$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "$\\frac13+\\frac14>\\frac14+\\frac14=\\frac12$ and $\\frac15+\\dots+\\frac18>4\\cdot\\frac18=\\frac12$.",
+    "option_explanations": [
+     "Strictly more.",
+     "Correct: each term is at least the last one.",
+     "Wrong direction.",
+     "Not the sum."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "For the harmonic series, which bound is proved in the notes?",
+    "options": [
+     "$s_{2^n}<\\dfrac{n+1}2$",
+     "$s_{2^n}>\\dfrac{n+1}2$",
+     "$s_{n}>\\dfrac{n+1}2$",
+     "$s_{2^n}>n+1$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Adding $n$ groups, each more than $\\frac12$, to $1+\\frac12$.",
+    "option_explanations": [
+     "Wrong direction.",
+     "Correct.",
+     "Only for $n=2^m$.",
+     "Too large."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Which of these series diverges?",
+   "options": [
+    "$\\sum_{k=0}^{\\infty}\\left(\\dfrac{5}{7}\\right)^k$",
+    "$\\sum_{k=1}^{\\infty}\\dfrac{1}{k(k+1)}$",
+    "$\\sum_{k=0}^{\\infty}\\left(-\\dfrac{2}{3}\\right)^k$",
+    "$\\sum_{k=0}^{\\infty}\\left(\\dfrac{7}{5}\\right)^k$"
+   ],
+   "correct": [
+    3
+   ],
+   "explanation": "A geometric series with $|r|\\ge1$ diverges.",
+   "option_explanations": [
+    "$|r|<1$, converges.",
+    "Telescopes to $1$.",
+    "$|r|<1$, converges.",
+    "Correct: $r=\\frac75>1$."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Which of these series converges?",
+    "options": [
+     "$\\sum_{k=0}^{\\infty}\\dfrac{3}{2^k}$",
+     "$\\sum_{k=1}^{\\infty}\\dfrac{3}{k}$",
+     "$\\sum_{k=0}^{\\infty}3\\cdot2^k$",
+     "$\\sum_{k=0}^{\\infty}3(-1)^k$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Only the geometric series with $|r|<1$ converges.",
+    "option_explanations": [
+     "Correct: $r=\\frac12$, sum $6$.",
+     "Three times the harmonic series.",
+     "Geometric with $r=2$.",
+     "Partial sums alternate between $3$ and $0$."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which of these series has a sum?",
+    "options": [
+     "$\\sum_{k=1}^{\\infty}\\dfrac{2}{k}$",
+     "$\\sum_{k=0}^{\\infty}2\\cdot9^k$",
+     "$\\sum_{k=0}^{\\infty}\\dfrac{2}{9^k}$",
+     "$\\sum_{k=0}^{\\infty}2\\cdot(-1)^k$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Needs $\\lim s_n$ to exist as a number.",
+    "option_explanations": [
+     "Twice the harmonic series.",
+     "Ratio $9$.",
+     "Correct: $\\frac{2}{1-1/9}=\\frac94$.",
+     "Partial sums alternate."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Does $\\sum_{k=0}^{\\infty}2^k$ have a sum?",
+   "options": [
+    "Yes, the sum is $-1$ by $\\frac{1}{1-2}$",
+    "Yes, the sum is $0$",
+    "No, $s_n\\to+\\infty$",
+    "Yes, the sum is $2$"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "A divergent series has no sum.",
+   "option_explanations": [
+    "The formula needs $|r|<1$.",
+    "Terms do not cancel.",
+    "Correct.",
+    "Took $r$."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "A divergent series",
+    "options": [
+     "has no sum",
+     "has the sum $0$",
+     "has the sum $+\\infty$",
+     "has a sum equal to its first term"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "By Definition 9.3.2 the sum is $\\lim s_n$, which must exist.",
+    "option_explanations": [
+     "Correct.",
+     "Zero is a sum.",
+     "Not defined as a sum.",
+     "Invented."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "The sum $S$ of $\\sum_{k=1}^{\\infty}u_k$ is defined as",
+    "options": [
+     "$\\lim_{k\\to+\\infty}u_k$",
+     "$s_1+s_2+s_3+\\dots$",
+     "$\\lim_{n\\to+\\infty}u_n\\cdot n$",
+     "$\\lim_{n\\to+\\infty}s_n$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "$S=\\lim s_n$ if it exists.",
+    "option_explanations": [
+     "That is the limit of the terms.",
+     "Adds the partial sums.",
+     "Invented.",
+     "Correct."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Since $s_1=\\frac{25}4$ for $\\sum 5/4^k$ and the sum is $\\frac{20}3$, the sequence $s_0, s_1, s_2,\\dots$ is",
+   "options": [
+    "$5,\\ 1.25,\\ 0.31,\\dots$ approaching $0$",
+    "$5,\\ 6.25,\\ 6.5625,\\dots$ approaching $6.\\overline6$",
+    "$5,\\ 6.25,\\ 7.5,\\dots$ growing forever",
+    "$5,\\ 5,\\ 5,\\dots$ constant"
+   ],
+   "correct": [
+    1
+   ],
+   "explanation": "Partial sums $5, 5+\\frac54, \\dots$ increase to $\\frac{20}3$.",
+   "option_explanations": [
+    "Those are the terms.",
+    "Correct.",
+    "Terms shrink.",
+    "Terms are positive."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "For $\\sum_{k=0}^{\\infty}\\dfrac{3}{2^k}$, the partial sums $s_n$ approach",
+    "options": [
+     "$3$",
+     "$6$",
+     "$2$",
+     "$\\dfrac32$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "$s_n=6\\left(1-2^{-(n+1)}\\right)\\to6$.",
+    "option_explanations": [
+     "The first term.",
+     "Correct: $\\frac{3}{1-1/2}$.",
+     "Used $r$ in place of the sum.",
+     "Took the second term."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "The partial sums of $\\sum_{k=1}^{\\infty}\\dfrac{1}{k(k+1)}$ and of $\\sum_{k=1}^{\\infty}\\dfrac1k$ are $1-\\frac1{n+1}$ and unbounded. This shows",
+    "options": [
+     "both series converge to a limit",
+     "both series diverge to infinity",
+     "the first diverges and the second converges",
+     "one converges, one diverges"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "The first has limit $1$; the second grows without bound.",
+    "option_explanations": [
+     "Harmonic does not.",
+     "The first sums to $1$.",
+     "Reversed.",
+     "Correct."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "basic",
+   "question": "Find $\\sum_{k=1}^{\\infty}3\\left(\\dfrac25\\right)^{k-1}$.",
+   "answer": "This is geometric with $a=3$ and $r=\\frac25$, $|r|<1$.\nSum $=\\frac{a}{1-r}=\\frac{3}{3/5}=5$."
+  },
+  "versions": [
+   {
+    "type": "basic",
+    "question": "Compute the sum of $\\sum_{k=1}^{\\infty}2\\left(\\dfrac13\\right)^{k-1}$.",
+    "answer": "$a=2$, $r=\\frac13$, so the sum is $\\frac{2}{1-1/3}=3$."
+   },
+   {
+    "type": "mcq",
+    "question": "Find $\\sum_{k=1}^{\\infty}4\\left(\\dfrac15\\right)^{k-1}$.",
+    "options": [
+     "$5$",
+     "$\\dfrac{10}{3}$",
+     "$4$",
+     "$\\dfrac{5}{4}$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "$a=4$, $r=\\frac15$.",
+    "option_explanations": [
+     "Correct: $\\frac{4}{4/5}$.",
+     "Used $1+r$ in the denominator.",
+     "Took the first term.",
+     "Inverted the answer."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "basic",
+   "question": "Express $0.636363\\dots$ as a fraction using a geometric series.",
+   "answer": "$0.6363\\dots=\\frac{63}{100}+\\frac{63}{100^2}+\\dots$, geometric with $a=\\frac{63}{100}$, $r=\\frac1{100}$.\nSum $=\\frac{63/100}{1-1/100}=\\frac{63}{99}=\\frac7{11}$."
+  },
+  "versions": [
+   {
+    "type": "basic",
+    "question": "Write $0.181818\\dots$ as a ratio of integers via a geometric series.",
+    "answer": "$0.1818\\dots=\\frac{18}{100}+\\frac{18}{100^2}+\\dots$, with $a=\\frac{18}{100}$, $r=\\frac1{100}$.\nSum $=\\frac{18}{99}=\\frac2{11}$."
+   },
+   {
+    "type": "mcq",
+    "question": "The repeating decimal $0.545454\\dots$ equals",
+    "options": [
+     "$\\dfrac{54}{100}$",
+     "$\\dfrac{54}{101}$",
+     "$\\dfrac{6}{11}$",
+     "$\\dfrac{5}{9}$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "$\\frac{54/100}{1-1/100}=\\frac{54}{99}=\\frac6{11}$.",
+    "option_explanations": [
+     "Only the first block.",
+     "Added $1$ instead of subtracting.",
+     "Correct: $\\frac{54}{99}$.",
+     "Treated it as $0.555\\dots$"
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Find $\\sum_{k=2}^{\\infty}3\\left(\\dfrac12\\right)^k$.",
+   "options": [
+    "$6$",
+    "$3$",
+    "$\\dfrac32$",
+    "$\\dfrac34$"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "First term $\\frac34$, so $\\frac{3/4}{1/2}=\\frac32$.",
+   "option_explanations": [
+    "Used the formula for $k=0$.",
+    "Used the first term $\\frac32$ of the $k=1$ series.",
+    "Correct: first term $\\frac34$, divided by $\\frac12$.",
+    "Took the first term."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "The tail $\\sum_{k=2}^{\\infty}2\\left(\\dfrac13\\right)^k$ equals",
+    "options": [
+     "$\\dfrac13$",
+     "$3$",
+     "$1$",
+     "$\\dfrac29$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "First term $\\frac29$; divide by $1-\\frac13$.",
+    "option_explanations": [
+     "Correct: $\\frac{2/9}{2/3}$.",
+     "Used the formula for $k=0$.",
+     "Used the $k=1$ series.",
+     "Took the first term."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Find $\\sum_{k=3}^{\\infty}5\\left(\\dfrac12\\right)^k$.",
+    "options": [
+     "$10$",
+     "$\\dfrac58$",
+     "$\\dfrac52$",
+     "$\\dfrac54$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "First term $\\frac58$, divided by $\\frac12$.",
+    "option_explanations": [
+     "Used the formula for $k=0$.",
+     "Took the first term.",
+     "Started at $k=2$.",
+     "Correct."
+    ]
+   }
+  ]
+ }
+]

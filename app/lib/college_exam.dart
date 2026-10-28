@@ -235,7 +235,8 @@ class _PracticeResultsState extends State<PracticeResults> {
             final out = <String, String>{};
             for (final k in bySection.keys.where((k) => k.contains('/'))) {
               final ing = await ingestOf(k.split('/')[0]);
-              out[k] = ((ing?['structure'] as List?) ?? []).cast<Map>().where((s) => s['id'] == k.split('/')[1]).firstOrNull?['title'] ?? k;
+              final titled = ((widget.a['scope'] as List?) ?? []).cast<Map>().where((s) => sectionKey(s) == k).firstOrNull?['title']; // imported courses
+              out[k] = ((ing?['structure'] as List?) ?? []).cast<Map>().where((s) => s['id'] == k.split('/')[1]).firstOrNull?['title'] ?? titled ?? k;
             }
             return out;
           }(),

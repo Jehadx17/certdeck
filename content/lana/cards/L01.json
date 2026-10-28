@@ -1,0 +1,3463 @@
+[
+ {
+  "original": {
+   "type": "mcq",
+   "question": "What does the term \"discrete\" mean in **discrete mathematics** (discrete structures)?",
+   "options": [
+    "Continuous, smoothly varying quantities",
+    "Topics that all build on one another",
+    "Only topics that involve the integers",
+    "Separate, distinct topics"
+   ],
+   "correct": [
+    3
+   ],
+   "explanation": "\"Discrete\" means different, independent, separate; discrete mathematics collects distinct topics that computer science uses in different places.",
+   "option_explanations": [
+    "That is the opposite idea (continuous mathematics).",
+    "Discrete topics are independent of each other.",
+    "Integers appear often, but the word means separate/different.",
+    "Correct: Discrete means different, independent and separate."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Which phrase best describes the subject matter of discrete structures?",
+    "options": [
+     "The arithmetic of very large numbers",
+     "A single theory built from one axiom",
+     "A collection of unrelated-in-type mathematical topics",
+     "The study of smooth curves and limits"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Discrete mathematics gathers separate topics (logic, sets, counting, graphs...) used in computer science.",
+    "option_explanations": [
+     "Size of numbers is not what 'discrete' refers to.",
+     "The topics are separate, not one theory.",
+     "Correct: Discrete topics are different and independent.",
+     "That is continuous mathematics."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Why does a computer science student study many different topics under discrete mathematics?",
+    "options": [
+     "CS uses these separate topics at different places",
+     "They all reduce to one common formula",
+     "They are needed only for binary arithmetic",
+     "They replace programming courses"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Discrete mathematics is a set of different topics, each used at different places in computer science.",
+    "option_explanations": [
+     "Correct: The topics are distinct and each is used somewhere in CS.",
+     "They are different topics, not one formula.",
+     "Binary is just one small preliminary.",
+     "They support CS, they do not replace it."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Which of these is correct?",
+   "options": [
+    "$-9 > -8$",
+    "$9 > 9$",
+    "$9 \\ge 9$",
+    "$8 \\ge 9$"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "$a \\ge b$ means $a > b$ or $a = b$, so it holds when $a = b$ but $a > b$ does not.",
+   "option_explanations": [
+    "-9 is smaller than -8.",
+    "9 is not strictly greater than itself.",
+    "Correct.",
+    "8 is smaller than 9."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Which of these is correct?",
+    "options": [
+     "$-2 < -2$",
+     "$-1 \\le -3$",
+     "$0 > 0$",
+     "$-2 \\le -2$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "$a \\le b$ means $a < b$ or $a = b$.",
+    "option_explanations": [
+     "A number is not less than itself.",
+     "-1 is bigger than -3.",
+     "0 is not greater than 0.",
+     "Correct."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which of these is correct?",
+    "options": [
+     "$7.3 \\le 3.9$",
+     "$3.9 < 3.9$",
+     "$3.9 \\ge 3.9$",
+     "$3.9 > 7.3$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "$\\ge$ and $\\le$ are true when the two sides are equal; $<$ and $>$ are not.",
+    "option_explanations": [
+     "7.3 is bigger than 3.9.",
+     "Equal numbers are not strictly ordered.",
+     "Correct.",
+     "3.9 is smaller than 7.3."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Given that $3 < 4$ is correct, which is also correct?",
+   "options": [
+    "$-3 \\le -4$",
+    "$-3 > -4$",
+    "$-3 < -4$",
+    "$-4 > -3$"
+   ],
+   "correct": [
+    1
+   ],
+   "explanation": "Multiplying both sides by $-1$ reverses the inequality: $a<b$ gives $-a>-b$.",
+   "option_explanations": [
+    "-3 is larger than -4.",
+    "Correct.",
+    "Negating reverses the inequality.",
+    "-4 is smaller than -3."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Given $-6 < 2$, which follows?",
+    "options": [
+     "$2 > 6$",
+     "$6 < -2$",
+     "$-6 > -2$",
+     "$6 > -2$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "Negate both sides and flip: $-a > -b$.",
+    "option_explanations": [
+     "2 is less than 6.",
+     "The direction must flip when negating.",
+     "-6 is less than -2.",
+     "Correct."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "If $x < y$, what is true after multiplying both sides by $-1$?",
+    "options": [
+     "$-x > -y$",
+     "$-x \\le -y$",
+     "$-x < -y$",
+     "$-x = -y$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Negation reverses inequalities.",
+    "option_explanations": [
+     "Correct.",
+     "Only holds if the order stayed.",
+     "The sign change reverses the order.",
+     "The values stay different."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Since $-5 < -2$ is correct, which is also correct?",
+   "options": [
+    "$\\frac{1}{-5} = \\frac{1}{-2}$",
+    "$\\frac{1}{-5} \\le \\frac{1}{-2}$",
+    "$\\frac{1}{-5} > \\frac{1}{-2}$",
+    "$\\frac{1}{-5} < \\frac{1}{-2}$"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "For $a<b$ of the same sign, $\\frac1a > \\frac1b$. Here $-0.2 > -0.5$.",
+   "option_explanations": [
+    "-0.2 and -0.5 differ.",
+    "-0.2 is larger than -0.5.",
+    "Correct.",
+    "Reciprocals of same-sign numbers reverse the order."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Since $3 < 8$, which holds?",
+    "options": [
+     "$\\frac13 > \\frac18$",
+     "$\\frac13 = \\frac18$",
+     "$\\frac13 \\le \\frac18$",
+     "$\\frac13 < \\frac18$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Taking inverses of same-sign numbers flips the inequality: 1/small is big.",
+    "option_explanations": [
+     "Correct.",
+     "They are different fractions.",
+     "1/3 is bigger than 1/8.",
+     "The inverse reverses the order."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Since $-4 < -1$, compare $-\\frac14$ with $\\frac{1}{-1}$. Which is correct?",
+    "options": [
+     "$\\frac{1}{-4} < \\frac{1}{-1}$",
+     "$\\frac{1}{-4} = \\frac{1}{-1}$",
+     "$\\frac{1}{-4} > \\frac{1}{-1}$",
+     "$\\frac{1}{-4} \\le \\frac{1}{-1}$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Both numbers are negative, so $\\frac1a > \\frac1b$ when $a<b$: $-0.25 > -1$.",
+    "option_explanations": [
+     "The order flips under inverses.",
+     "-0.25 differs from -1.",
+     "Correct.",
+     "-0.25 is greater than -1."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Given $-2 < 3$, which comparison of $\\frac{1}{-2}$ and $\\frac13$ is correct?",
+   "options": [
+    "$\\frac{1}{-2} > \\frac13$",
+    "$\\frac{1}{-2} = \\frac13$",
+    "$\\frac{1}{-2} \\ge \\frac13$",
+    "$\\frac{1}{-2} < \\frac13$"
+   ],
+   "correct": [
+    3
+   ],
+   "explanation": "The reciprocal rule needs the same sign. With opposite signs the order is kept: $-0.5 < 0.33$.",
+   "option_explanations": [
+    "The inverse rule does not apply here, and -0.5 < 0.33.",
+    "A negative cannot equal a positive.",
+    "A negative is never at least a positive.",
+    "Correct."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Given $-4 < 5$, which is correct?",
+    "options": [
+     "$\\frac{1}{-4} < \\frac15$",
+     "$\\frac{1}{-4} \\ge \\frac15$",
+     "$\\frac{1}{-4} > \\frac15$",
+     "$\\frac{1}{-4} = \\frac15$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Opposite signs: the reciprocal rule does not reverse the order.",
+    "option_explanations": [
+     "Correct.",
+     "-0.25 is smaller than 0.2.",
+     "-0.25 is below 0.2.",
+     "Different signs, so not equal."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which pair is an example where taking reciprocals does NOT reverse the inequality?",
+    "options": [
+     "$-2 < 3$ and $\\frac{1}{-2} < \\frac{1}{3}$",
+     "$-3 < -2$ and $-\\frac13 > -\\frac12$",
+     "$1 < 4$ and $1 > \\frac14$",
+     "$2 < 3$ and $\\frac12 > \\frac13$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Reciprocals reverse order only when both numbers have the same sign.",
+    "option_explanations": [
+     "Correct.",
+     "The rule works for two negatives.",
+     "The rule works for positives.",
+     "The rule works for positives."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "For $0 < a < b$, which is correct?",
+   "options": [
+    "$\\frac{1}{-a} > \\frac{1}{-b}$",
+    "$\\frac{1}{-a} = \\frac{1}{-b}$",
+    "$\\frac{1}{-a} \\ge \\frac{1}{-b}$",
+    "$\\frac{1}{-a} < \\frac{1}{-b}$"
+   ],
+   "correct": [
+    3
+   ],
+   "explanation": "$a<b$ gives $-a>-b$ (both negative), then inverses flip it back: $\\frac1{-a}<\\frac1{-b}$.",
+   "option_explanations": [
+    "$-a>-b$ are both negative, and inverting flips again.",
+    "a and b differ.",
+    "The left side is smaller.",
+    "Correct."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "With $a = 2$ and $b = 5$, which is correct?",
+    "options": [
+     "$\\frac{1}{-2} = \\frac{1}{-5}$",
+     "$\\frac{1}{-2} \\ge \\frac{1}{-5}$",
+     "$\\frac{1}{-2} < \\frac{1}{-5}$",
+     "$\\frac{1}{-2} > \\frac{1}{-5}$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "$-0.5 < -0.2$.",
+    "option_explanations": [
+     "They differ.",
+     "-0.5 is not at least -0.2.",
+     "Correct.",
+     "-0.5 is smaller than -0.2."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "With $a = 1$ and $b = 4$, which is correct?",
+    "options": [
+     "$\\frac{1}{-1} \\ge \\frac{1}{-4}$",
+     "$\\frac{1}{-1} < \\frac{1}{-4}$",
+     "$\\frac{1}{-1} > \\frac{1}{-4}$",
+     "$\\frac{1}{-1} = \\frac{1}{-4}$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "$-1 < -0.25$.",
+    "option_explanations": [
+     "-1 is less than -0.25.",
+     "Correct.",
+     "-1 is smaller than -0.25.",
+     "They differ."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Which expression always gives an even integer?",
+   "options": [
+    "$\\text{odd} - 2$",
+    "$\\text{odd} + \\text{odd}$",
+    "$\\text{odd} + \\text{even}$",
+    "$\\text{even} + 1$"
+   ],
+   "correct": [
+    1
+   ],
+   "explanation": "odd + odd = even, even + even = even, while mixed parity gives odd.",
+   "option_explanations": [
+    "Subtracting an even number keeps it odd.",
+    "Correct.",
+    "That is odd.",
+    "That is odd."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Which expression always gives an odd integer?",
+    "options": [
+     "$\\text{odd} - \\text{odd}$",
+     "$\\text{odd} + 1$",
+     "$\\text{even} - 1$",
+     "$\\text{even} + \\text{even}$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "even $\\pm$ 1 is odd; odd $\\pm$ 1 is even.",
+    "option_explanations": [
+     "That is even.",
+     "That is even.",
+     "Correct.",
+     "That is even."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which expression always gives an even integer?",
+    "options": [
+     "$\\text{even} - \\text{even}$",
+     "$\\text{even} + 3$",
+     "$\\text{odd} + 2$",
+     "$\\text{odd} - \\text{even}$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Same-parity sums and differences are even; mixed ones are odd.",
+    "option_explanations": [
+     "Correct.",
+     "That is odd.",
+     "That is odd.",
+     "That is odd."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Which sum is odd?",
+   "options": [
+    "$3 + 5 + 7$",
+    "$1 + 3$",
+    "$3 + 5 + 7 + 9$",
+    "$2 + 4 + 6$"
+   ],
+   "correct": [
+    0
+   ],
+   "explanation": "A sum of odd integers is odd exactly when it has an odd number of terms (odd+odd=even each pair).",
+   "option_explanations": [
+    "Correct.",
+    "4 is even.",
+    "24 is even.",
+    "12 is even."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Which sum is odd?",
+    "options": [
+     "$10 + 12 + 14$",
+     "$9 + 9 + 9 + 9$",
+     "$11 + 13 + 15$",
+     "$11 + 13$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Three odd terms: odd + odd = even, even + odd = odd, so 39.",
+    "option_explanations": [
+     "36 is even.",
+     "36 is even.",
+     "Correct.",
+     "24 is even."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which sum is odd?",
+    "options": [
+     "$1 + 1 + 1 + 1$",
+     "$1 + 1 + 1$",
+     "$3 + 7$",
+     "$2 + 2 + 2$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "odd + odd + odd = odd.",
+    "option_explanations": [
+     "4 is even.",
+     "Correct.",
+     "10 is even.",
+     "6 is even."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Which difference is odd?",
+   "options": [
+    "$8 - 2$",
+    "$10 - (-4)$",
+    "$-7 - 2$",
+    "$-7 - (-3)$"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "odd $-$ even is odd; odd $-$ odd and even $-$ even are even.",
+   "option_explanations": [
+    "6 is even.",
+    "14 is even.",
+    "Correct.",
+    "-4 is even."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Which difference is odd?",
+    "options": [
+     "$9 - 3$",
+     "$9 - 4$",
+     "$6 - 2$",
+     "$-5 - (-1)$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Mixed parity gives an odd difference.",
+    "option_explanations": [
+     "6 is even.",
+     "Correct.",
+     "4 is even.",
+     "-4 is even."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which difference is odd?",
+    "options": [
+     "$4 - (-6)$",
+     "$-8 - 2$",
+     "$7 - (-5)$",
+     "$4 - (-7)$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "even $-$ odd = odd.",
+    "option_explanations": [
+     "10 is even.",
+     "-10 is even.",
+     "12 is even.",
+     "Correct."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Which describes every odd integer?",
+   "options": [
+    "$4k + 1$ for some integer $k$",
+    "$k + 2$ for some integer $k$",
+    "$2k$ for some integer $k$",
+    "$2k + 1$ for some integer $k$"
+   ],
+   "correct": [
+    3
+   ],
+   "explanation": "Even $= 2k$ and odd $= 2k+1$, where $k$ may itself be even or odd.",
+   "option_explanations": [
+    "That misses odd numbers like 3.",
+    "That gives every integer.",
+    "That describes even integers.",
+    "Correct."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "An integer $n$ is even exactly when",
+    "options": [
+     "$n = 2k + 1$ for some integer $k$",
+     "$n = 2k - 1$ for some integer $k$",
+     "$n = k + 2$ for some integer $k$",
+     "$n = 2k$ for some integer $k$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "Even means a multiple of 2.",
+    "option_explanations": [
+     "That is odd.",
+     "That is odd.",
+     "That is any integer.",
+     "Correct."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which of these can equal $2k - 1$ for an integer $k$?",
+    "options": [
+     "$-4$",
+     "$8$",
+     "$0$",
+     "$7$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "$2k-1 = 2(k-1)+1$ is odd; $7$ comes from $k=4$.",
+    "option_explanations": [
+     "Even.",
+     "Even, so it is not of the form 2k-1.",
+     "Even.",
+     "Correct."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "For two odd integers, what is true of $\\frac{\\text{odd}+\\text{odd}}{2}$?",
+   "options": [
+    "It is an integer, either even or odd",
+    "It is always an even integer",
+    "It is always an odd integer",
+    "It is not an integer"
+   ],
+   "correct": [
+    0
+   ],
+   "explanation": "odd + odd is even, so half of it is an integer, e.g. $\\frac{5+3}{2}=4$ and $\\frac{5+9}{2}=7$.",
+   "option_explanations": [
+    "Correct.",
+    "e.g. (5+9)/2 = 7 is odd.",
+    "e.g. (5+3)/2 = 4 is even.",
+    "The sum is even so halving gives an integer."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "What is $\\frac{7 + 13}{2}$?",
+    "options": [
+     "$11$",
+     "$10$",
+     "$20$",
+     "$9$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "$7+13=20$, half is $10$.",
+    "option_explanations": [
+     "Check: 7+13 = 20.",
+     "Correct.",
+     "That is the sum, not half of it.",
+     "Check: 7+13 = 20."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "What is $\\frac{9 + 15}{2}$?",
+    "options": [
+     "$12$",
+     "$24$",
+     "$11$",
+     "$13$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "$9+15=24$, half is $12$.",
+    "option_explanations": [
+     "Correct.",
+     "That is the sum.",
+     "Check: 9+15=24.",
+     "Check: 9+15=24."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Which product is odd?",
+   "options": [
+    "$8 \\cdot 2$",
+    "$5 \\cdot 3$",
+    "$6 \\cdot 7$",
+    "$5 \\cdot (-2)$"
+   ],
+   "correct": [
+    1
+   ],
+   "explanation": "odd $\\cdot$ odd = odd; any even factor makes the product even.",
+   "option_explanations": [
+    "Even.",
+    "Correct.",
+    "Contains an even factor, so even.",
+    "Contains an even factor, so even."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Which product is odd?",
+    "options": [
+     "$11 \\cdot 4$",
+     "$12 \\cdot 6$",
+     "$11 \\cdot 9$",
+     "$10 \\cdot 13$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Only odd times odd is odd.",
+    "option_explanations": [
+     "44 is even.",
+     "72 is even.",
+     "Correct.",
+     "130 is even."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which product is odd?",
+    "options": [
+     "$(-2)\\cdot 9$",
+     "$7 \\cdot 8$",
+     "$7 \\cdot (-3)$",
+     "$(-4)\\cdot(-6)$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "$-21$ is odd.",
+    "option_explanations": [
+     "-18 is even.",
+     "56 is even.",
+     "Correct.",
+     "24 is even."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Which value is even?",
+   "options": [
+    "$4^3$",
+    "$3^3$",
+    "$5^4$",
+    "$3^2$"
+   ],
+   "correct": [
+    0
+   ],
+   "explanation": "An even base keeps even powers (positive exponents): $4^3=64$; an odd base keeps odd powers.",
+   "option_explanations": [
+    "Correct.",
+    "27 is odd.",
+    "625 is odd.",
+    "9 is odd."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Which value is even?",
+    "options": [
+     "$(-5)^3$",
+     "$6^2$",
+     "$7^2$",
+     "$7^3$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Even base with positive exponent is even.",
+    "option_explanations": [
+     "-125 is odd.",
+     "Correct.",
+     "49 is odd.",
+     "343 is odd."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which value is odd?",
+    "options": [
+     "$9^5$",
+     "$2^5$",
+     "$8^4$",
+     "$4^7$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Odd base to a positive power stays odd.",
+    "option_explanations": [
+     "Correct.",
+     "32 is even.",
+     "Even.",
+     "Even."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "What is $8^0$, and is it odd or even?",
+   "options": [
+    "$1$, odd",
+    "$1$, even",
+    "$0$, even",
+    "$8$, even"
+   ],
+   "correct": [
+    0
+   ],
+   "explanation": "$a^0 = 1$ for $a \\ne 0$, so (even)$^0$ = 1 is odd.",
+   "option_explanations": [
+    "Correct.",
+    "1 is odd.",
+    "Any nonzero number to the power 0 is 1.",
+    "That would be $8^1$."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "What is $(-6)^0$, and is it odd or even?",
+    "options": [
+     "$1$, odd",
+     "$0$, even",
+     "$-6$, even",
+     "$1$, even"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "$(-6)^0=1$, odd.",
+    "option_explanations": [
+     "Correct.",
+     "$a^0=1$.",
+     "That would be exponent 1.",
+     "1 is odd."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "What is $100^0$, and is it odd or even?",
+    "options": [
+     "$0$, even",
+     "$100$, even",
+     "$1$, even",
+     "$1$, odd"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "Zero power gives 1, which is odd.",
+    "option_explanations": [
+     "$a^0 = 1$.",
+     "That would be exponent 1.",
+     "1 is odd.",
+     "Correct."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Which value is NOT at least $-4$?",
+   "options": [
+    "$-4.01$",
+    "$-4$",
+    "$-3.5$",
+    "$0$"
+   ],
+   "correct": [
+    0
+   ],
+   "explanation": "\"At least $a$\" means $\\ge a$: same or more.",
+   "option_explanations": [
+    "Correct.",
+    "Equal counts: at least means same or more.",
+    "Bigger than -4.",
+    "Bigger than -4."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Which value is at least $12$?",
+    "options": [
+     "$-12$",
+     "$2$",
+     "$11.99$",
+     "$12.01$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "At least 12 means 12 or more.",
+    "option_explanations": [
+     "Smaller than 12.",
+     "Smaller than 12.",
+     "Smaller than 12.",
+     "Correct."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which value is at least $-4$ but NOT at least $0$?",
+    "options": [
+     "$-100$",
+     "$-4.5$",
+     "$0.2$",
+     "$-3.5$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "It must satisfy $-4 \\le x < 0$.",
+    "option_explanations": [
+     "Below -4.",
+     "Below -4.",
+     "That is at least 0.",
+     "Correct."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Which value is at most $-4$?",
+   "options": [
+    "$-3.99$",
+    "$-3.5$",
+    "$0$",
+    "$-5.3$"
+   ],
+   "correct": [
+    3
+   ],
+   "explanation": "\"At most $a$\" means $\\le a$: same or less.",
+   "option_explanations": [
+    "Bigger than -4.",
+    "Bigger than -4.",
+    "Bigger than -4.",
+    "Correct."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Which value is at most $12$?",
+    "options": [
+     "$13.5$",
+     "$1000$",
+     "$12.01$",
+     "$11.99$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "At most 12 means 12 or less.",
+    "option_explanations": [
+     "Bigger than 12.",
+     "Bigger than 12.",
+     "Bigger than 12.",
+     "Correct."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which value is at most $10$ and at least $-5$?",
+    "options": [
+     "$-5.1$",
+     "$10.1$",
+     "$15$",
+     "$-5$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "It must lie in $[-5, 10]$.",
+    "option_explanations": [
+     "Below -5.",
+     "Above 10.",
+     "Above 10.",
+     "Correct."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Which list contains only non-negative numbers?",
+   "options": [
+    "$-4,\\ -1,\\ 0$",
+    "$2.5,\\ 4,\\ 0,\\ 0.1,\\ 1$",
+    "$2,\\ -1,\\ 0,\\ 3$",
+    "$0.5,\\ 0,\\ -0.01$"
+   ],
+   "correct": [
+    1
+   ],
+   "explanation": "Non-negative means 0 or positive (same as at least 0).",
+   "option_explanations": [
+    "Contains negatives.",
+    "Correct.",
+    "-1 is negative.",
+    "-0.01 is negative."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Which list contains only non-positive numbers?",
+    "options": [
+     "$-4,\\ 0,\\ 0.01$",
+     "$-2,\\ -1,\\ 1$",
+     "$0,\\ 1,\\ 2$",
+     "$-4,\\ -0.01,\\ -1.1,\\ -1,\\ 0$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "Non-positive means 0 or negative (same as at most 0).",
+    "option_explanations": [
+     "0.01 is positive.",
+     "1 is positive.",
+     "Positives.",
+     "Correct."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which phrase means the same as \"non-negative\"?",
+    "options": [
+     "at least $0$",
+     "greater than $0$",
+     "less than $0$",
+     "at most $0$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Non-negative = zero or more = at least 0.",
+    "option_explanations": [
+     "Correct.",
+     "That excludes 0.",
+     "That is negative.",
+     "That is non-positive."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Which is an increasing sequence?",
+   "options": [
+    "$101, 26, 23, 13, 12$",
+    "$12, 13, 23, 26, 101$",
+    "$12, 13, 13, 26, 81$",
+    "$12, 13, 26, 81, 31$"
+   ],
+   "correct": [
+    1
+   ],
+   "explanation": "Increasing: every value is strictly bigger than the previous one.",
+   "option_explanations": [
+    "That is decreasing.",
+    "Correct.",
+    "A repeat (13, 13) is not allowed.",
+    "31 comes after 81."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Which is an increasing sequence?",
+    "options": [
+     "$3, 8, 15, 12, 41$",
+     "$41, 20, 15, 8, 3$",
+     "$3, 8, 8, 20, 41$",
+     "$3, 8, 15, 20, 41$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "Strictly bigger each step.",
+    "option_explanations": [
+     "12 follows 15.",
+     "That is decreasing.",
+     "The repeat 8, 8 breaks it.",
+     "Correct."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which is an increasing sequence?",
+    "options": [
+     "$-9, -4, -4, 2, 7$",
+     "$-9, -4, 2, 0, 7$",
+     "$7, 2, 0, -4, -9$",
+     "$-9, -4, 0, 2, 7$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "Strict increase, negatives included.",
+    "option_explanations": [
+     "Repeat -4, -4.",
+     "0 follows 2.",
+     "Decreasing.",
+     "Correct."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Which is a non-decreasing sequence?",
+   "options": [
+    "$5, 9, 14, 17, 20, 18$",
+    "$5, 9, 14, 12, 17, 20$",
+    "$5, 9, 14, 14, 17, 20$",
+    "$20, 17, 14, 14, 9, 5$"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "Non-decreasing: each value is the same or bigger; repeats are fine.",
+   "option_explanations": [
+    "18 follows 20.",
+    "12 follows 14.",
+    "Correct.",
+    "That goes down."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Which is a non-decreasing sequence?",
+    "options": [
+     "$9, 2, 2, 7, 7$",
+     "$2, 2, 2, 7, 9$",
+     "$2, 7, 5, 9, 9$",
+     "$2, 7, 9, 9, 8$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Equal neighbours are allowed.",
+    "option_explanations": [
+     "Starts with a drop.",
+     "Correct.",
+     "5 follows 7.",
+     "8 follows 9."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which is a non-decreasing sequence?",
+    "options": [
+     "$1, 3, 3, 4, 10, 9$",
+     "$1, 3, 2, 4, 10, 10$",
+     "$10, 10, 4, 3, 3, 1$",
+     "$1, 3, 3, 4, 10, 10$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "Same or bigger each step.",
+    "option_explanations": [
+     "9 follows 10.",
+     "2 follows 3.",
+     "Goes down.",
+     "Correct."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Which is a decreasing sequence?",
+   "options": [
+    "$101, 26, 23, 13, 12$",
+    "$81, 65, 42, 26, 26, 19$",
+    "$81, 65, 42, 26, 19, 10, 12$",
+    "$12, 13, 23, 26, 101$"
+   ],
+   "correct": [
+    0
+   ],
+   "explanation": "Decreasing: each value is strictly smaller than the previous.",
+   "option_explanations": [
+    "Correct.",
+    "Repeat 26, 26.",
+    "12 follows 10.",
+    "That is increasing."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Which is a decreasing sequence?",
+    "options": [
+     "$2, 9, 17, 40, 50$",
+     "$50, 40, 17, 9, 2$",
+     "$50, 40, 40, 9, 2$",
+     "$50, 40, 17, 20, 2$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Strictly smaller each step.",
+    "option_explanations": [
+     "Increasing.",
+     "Correct.",
+     "Repeat 40, 40.",
+     "20 follows 17."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which is a decreasing sequence?",
+    "options": [
+     "$-9, -5, -2, 1, 4$",
+     "$4, 1, -2, -5, -9$",
+     "$4, 1, 1, -5, -9$",
+     "$4, 1, -2, 0, -9$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Strict decrease through negatives.",
+    "option_explanations": [
+     "Increasing.",
+     "Correct.",
+     "Repeat 1, 1.",
+     "0 follows -2."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Which is a non-increasing sequence?",
+   "options": [
+    "$5, 9, 14, 14, 17$",
+    "$99, 23, 20, 20, 25, 17$",
+    "$99, 33, 20, 21, 18, 17$",
+    "$99, 23, 20, 20, 20, 17, 14, 14, 9, 5$"
+   ],
+   "correct": [
+    3
+   ],
+   "explanation": "Non-increasing: each value is the same or smaller; repeats are fine.",
+   "option_explanations": [
+    "That goes up.",
+    "25 follows 20.",
+    "21 follows 20.",
+    "Correct."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Which is a non-increasing sequence?",
+    "options": [
+     "$30, 30, 12, 12, 7, 1$",
+     "$1, 7, 12, 12, 30, 30$",
+     "$30, 30, 12, 7, 9, 1$",
+     "$30, 12, 12, 15, 7, 1$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Equal neighbours are allowed.",
+    "option_explanations": [
+     "Correct.",
+     "Goes up.",
+     "9 follows 7.",
+     "15 follows 12."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which is a non-increasing sequence?",
+    "options": [
+     "$8, 3, 3, 5, 0, -4$",
+     "$-4, -4, 0, 3, 8, 8$",
+     "$8, 8, 3, 0, -4, -4$",
+     "$8, 8, 3, 0, -4, -1$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Never goes up.",
+    "option_explanations": [
+     "5 follows 3.",
+     "Goes up.",
+     "Correct.",
+     "-1 follows -4."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Which number is irrational?",
+   "options": [
+    "$\\sqrt{2}$",
+    "$1.5$",
+    "$\\frac{22}{7}$",
+    "$0.25$"
+   ],
+   "correct": [
+    0
+   ],
+   "explanation": "An irrational number cannot be written as a ratio of two integers; $\\sqrt2 = 1.4142\\ldots$.",
+   "option_explanations": [
+    "Correct.",
+    "Equals 3/2, rational.",
+    "A ratio of two integers, so rational.",
+    "Equals 1/4, rational."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Which number is irrational?",
+    "options": [
+     "$\\pi$",
+     "$\\frac{4}{3}$",
+     "$5.8$",
+     "$-21.19$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "$\\pi = 3.14159\\ldots$ is not a ratio of integers.",
+    "option_explanations": [
+     "Correct.",
+     "A ratio of integers.",
+     "Equals 58/10.",
+     "Equals -2119/100."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which number is irrational?",
+    "options": [
+     "$\\sqrt{4}$",
+     "$\\sqrt{9}$",
+     "$\\frac{9}{4}$",
+     "$\\sqrt{3}$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "Square roots of non-perfect squares are irrational.",
+    "option_explanations": [
+     "Equals 2, an integer.",
+     "Equals 3, an integer.",
+     "A ratio of integers.",
+     "Correct."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Which is a valid binary number?",
+   "options": [
+    "$10211$",
+    "$3101$",
+    "$10011$",
+    "$10023$"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "Binary numbers use only the digits 0 and 1.",
+   "option_explanations": [
+    "Contains the digit 2.",
+    "Contains the digit 3.",
+    "Correct.",
+    "Contains digits 2 and 3."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Which is a valid binary number?",
+    "options": [
+     "$120100$",
+     "$110104$",
+     "$110200$",
+     "$110100$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "Only 0 and 1 are allowed.",
+    "option_explanations": [
+     "Contains a 2.",
+     "Contains a 4.",
+     "Contains a 2.",
+     "Correct."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which is a valid binary number?",
+    "options": [
+     "$2101$",
+     "$0105$",
+     "$0101$",
+     "$0121$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Leading zeros are allowed in binary.",
+    "option_explanations": [
+     "Contains a 2.",
+     "Contains a 5.",
+     "Correct.",
+     "Contains a 2."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "How many digits does a ternary number system use?",
+   "options": [
+    "$4$",
+    "$10$",
+    "$3$",
+    "$2$"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "Base $b$ uses $b$ digits: binary 2, ternary 3, decimal 10.",
+   "option_explanations": [
+    "Ternary is base 3.",
+    "That is decimal.",
+    "Correct.",
+    "That is binary."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Which digits are used by binary numbers?",
+    "options": [
+     "$0$ and $1$",
+     "$0$ to $9$",
+     "$1$ and $2$",
+     "$0$ to $2$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Binary has just the digits 0 and 1.",
+    "option_explanations": [
+     "Correct.",
+     "That is decimal.",
+     "0 is a binary digit; 2 is not.",
+     "2 is not binary."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "How many digits does the decimal system use?",
+    "options": [
+     "$2$",
+     "$11$",
+     "$10$",
+     "$9$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Decimal digits are $0,1,\\ldots,9$.",
+    "option_explanations": [
+     "That is binary.",
+     "There is no digit 10.",
+     "Correct.",
+     "Digits are 0 through 9, which is ten."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "How many distinct $5$-bit strings are there?",
+   "options": [
+    "$32$",
+    "$25$",
+    "$10$",
+    "$64$"
+   ],
+   "correct": [
+    0
+   ],
+   "explanation": "An $n$-bit string has $2^n$ possibilities; $2^5=32$.",
+   "option_explanations": [
+    "Correct.",
+    "That is $5^2$.",
+    "That is $2\\cdot5$.",
+    "That is $2^6$."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "How many distinct $8$-bit strings are there?",
+    "options": [
+     "$256$",
+     "$64$",
+     "$16$",
+     "$512$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "$2^8 = 256$.",
+    "option_explanations": [
+     "Correct.",
+     "That is $8^2$.",
+     "That is $2\\cdot 8$.",
+     "That is $2^9$."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "How many distinct values can $n$ bits represent?",
+    "options": [
+     "$n^2$",
+     "$2n$",
+     "$2^n$",
+     "$n!$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Each of $n$ bits has 2 choices, so $2^n$.",
+    "option_explanations": [
+     "Each bit has 2 choices, not n.",
+     "Choices multiply.",
+     "Correct.",
+     "Bits are independent, not arranged."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "How many $6$-bit strings have exactly $2$ leading zeros?",
+   "options": [
+    "$64$",
+    "$16$",
+    "$8$",
+    "$4$"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "Exactly 2 leading zeros forces $001xxx$: $2^{n-k-1}=2^{3}=8$.",
+   "option_explanations": [
+    "That is all 6-bit strings.",
+    "That counts strings with at least 2 leading zeros.",
+    "Correct.",
+    "Too few: 3 bits are free."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "How many $8$-bit strings have exactly $3$ leading zeros?",
+    "options": [
+     "$24$",
+     "$16$",
+     "$32$",
+     "$8$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Pattern $0001xxxx$: $2^{8-3-1}=16$.",
+    "option_explanations": [
+     "Not a power of 2.",
+     "Correct.",
+     "That counts at least 3 leading zeros.",
+     "Too few: 4 bits are free."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "How many $5$-bit strings have exactly $1$ leading zero?",
+    "options": [
+     "$8$",
+     "$16$",
+     "$4$",
+     "$2$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Pattern $01xxx$: $2^{5-1-1}=8$.",
+    "option_explanations": [
+     "Correct.",
+     "That counts all strings starting with 0.",
+     "Too few: 3 bits are free.",
+     "Too few."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "What is $10110_2$ in decimal?",
+   "options": [
+    "$20$",
+    "$22$",
+    "$13$",
+    "$26$"
+   ],
+   "correct": [
+    1
+   ],
+   "explanation": "$16+0+4+2+0 = 22$.",
+   "option_explanations": [
+    "16+4, the last 1 was dropped.",
+    "Correct.",
+    "That reads the bits in reverse order.",
+    "16+8+2, wrong bit positions."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "What is $11001_2$ in decimal?",
+    "options": [
+     "$25$",
+     "$24$",
+     "$27$",
+     "$19$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "$16+8+0+0+1=25$.",
+    "option_explanations": [
+     "Correct.",
+     "16+8, the last 1 was dropped.",
+     "Wrong place values.",
+     "That reads the string in reverse (10011)."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "What is $1000101_2$ in decimal?",
+    "options": [
+     "$35$",
+     "$81$",
+     "$70$",
+     "$69$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "$64+4+1=69$.",
+    "option_explanations": [
+     "Positions shifted.",
+     "That reads the string in reverse.",
+     "Off by one.",
+     "Correct."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "What is $13$ in binary?",
+   "options": [
+    "$1101$",
+    "$1110$",
+    "$1001$",
+    "$1011$"
+   ],
+   "correct": [
+    0
+   ],
+   "explanation": "$13 = 8+4+0+1 = 1101_2$.",
+   "option_explanations": [
+    "Correct.",
+    "That is 14.",
+    "That is 9.",
+    "That is 11."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "What is $10$ in binary?",
+    "options": [
+     "$1100$",
+     "$0101$",
+     "$1010$",
+     "$1001$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "$10 = 8+2 = 1010_2$.",
+    "option_explanations": [
+     "That is 12.",
+     "That is 5.",
+     "Correct.",
+     "That is 9."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which $3$-digit binary string equals $6$?",
+    "options": [
+     "$110$",
+     "$011$",
+     "$101$",
+     "$111$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "$6 = 4+2 = 110_2$.",
+    "option_explanations": [
+     "Correct.",
+     "That is 3.",
+     "That is 5.",
+     "That is 7."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "What is the decimal value of the $3$-digit binary number $101$?",
+   "options": [
+    "$4$",
+    "$5$",
+    "$6$",
+    "$3$"
+   ],
+   "correct": [
+    1
+   ],
+   "explanation": "$4+0+1=5$.",
+   "option_explanations": [
+    "That is 100.",
+    "Correct.",
+    "That is 110.",
+    "That is 011."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "What is the decimal value of $011$?",
+    "options": [
+     "$6$",
+     "$3$",
+     "$2$",
+     "$4$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "$0+2+1 = 3$.",
+    "option_explanations": [
+     "That is 110, reading in reverse.",
+     "Correct.",
+     "That is 010.",
+     "That is 100."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "In the list of $3$-digit binary numbers, which comes right after $011$?",
+    "options": [
+     "$111$",
+     "$100$",
+     "$101$",
+     "$110$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Like $99 \\to 100$ in decimal, $011 \\to 100$ (3 to 4).",
+    "option_explanations": [
+     "Too far.",
+     "Correct.",
+     "That is two steps after.",
+     "Too far."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Evaluate $|-4| + |4|$.",
+   "options": [
+    "$4$",
+    "$8$",
+    "$-8$",
+    "$0$"
+   ],
+   "correct": [
+    1
+   ],
+   "explanation": "Absolute value drops the sign: $4+4=8$.",
+   "option_explanations": [
+    "Each term is 4, there are two.",
+    "Correct.",
+    "Absolute values are never negative.",
+    "That would be $-4+4$ without absolute values."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Evaluate $|-9| - |9|$.",
+    "options": [
+     "$-18$",
+     "$9$",
+     "$18$",
+     "$0$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "$9 - 9 = 0$.",
+    "option_explanations": [
+     "Both absolute values are 9.",
+     "9-9 is 0.",
+     "The sign of the second term is minus.",
+     "Correct."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Evaluate $|2 - 7|$.",
+    "options": [
+     "$2$",
+     "$5$",
+     "$-5$",
+     "$9$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "$2-7=-5$ and $|-5|=5$.",
+    "option_explanations": [
+     "That is just $|2|$.",
+     "Correct.",
+     "Absolute value is never negative.",
+     "That adds instead of subtracting."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Which of these is an inequality?",
+   "options": [
+    "$a = c$",
+    "$a \\ge c$",
+    "$x + y = 5$",
+    "$(a+b)^2 - (a-b)^2 = 4ab$"
+   ],
+   "correct": [
+    1
+   ],
+   "explanation": "An inequality uses $<, \\le, >, \\ge$ instead of $=$; $\\le$ and $\\ge$ still count as inequalities.",
+   "option_explanations": [
+    "An equality.",
+    "Correct.",
+    "It has an =, so it is an equality.",
+    "An equality."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Which of these is an equality?",
+    "options": [
+     "$x + y < 5$",
+     "$(a+b)^2 - (a-b)^2 = 4ab$",
+     "$a \\ge c$",
+     "$x \\le 9$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "An equality is an equation with $=$.",
+    "option_explanations": [
+     "An inequality.",
+     "Correct.",
+     "An inequality.",
+     "An inequality."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "How is $x \\le 7$ classified?",
+    "options": [
+     "Inequality",
+     "Equality",
+     "Both equality and inequality",
+     "Neither"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "$\\le$ contains an equals part but is still an inequality symbol.",
+    "option_explanations": [
+     "Correct.",
+     "It is not an equation with just =.",
+     "It is classified as an inequality.",
+     "It is a statement of order."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "What is $6!$?",
+   "options": [
+    "$720$",
+    "$36$",
+    "$120$",
+    "$5040$"
+   ],
+   "correct": [
+    0
+   ],
+   "explanation": "$6! = 6\\cdot5\\cdot4\\cdot3\\cdot2\\cdot1 = 720$.",
+   "option_explanations": [
+    "Correct.",
+    "That is $6\\cdot 6$.",
+    "That is $5!$.",
+    "That is $7!$."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "What is $7!$?",
+    "options": [
+     "$5040$",
+     "$40320$",
+     "$720$",
+     "$49$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "$7\\cdot 720 = 5040$.",
+    "option_explanations": [
+     "Correct.",
+     "That is $8!$.",
+     "That is $6!$.",
+     "That is $7^2$."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "What is $5!$?",
+    "options": [
+     "$120$",
+     "$720$",
+     "$25$",
+     "$24$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "$5\\cdot 24 = 120$.",
+    "option_explanations": [
+     "Correct.",
+     "That is $6!$.",
+     "That is $5^2$.",
+     "That is $4!$."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Evaluate $\\frac{8!}{6!}$.",
+   "options": [
+    "$48$",
+    "$14$",
+    "$336$",
+    "$56$"
+   ],
+   "correct": [
+    3
+   ],
+   "explanation": "$\\frac{8!}{6!} = 8\\cdot 7 = 56$ since $n! = n\\,(n-1)!$.",
+   "option_explanations": [
+    "That is $8\\cdot 6$.",
+    "That is $8+6$.",
+    "That is $8\\cdot7\\cdot6$.",
+    "Correct."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\frac{7!}{5!}$.",
+    "options": [
+     "$35$",
+     "$12$",
+     "$42$",
+     "$210$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "$7\\cdot 6 = 42$.",
+    "option_explanations": [
+     "That is $7\\cdot 5$.",
+     "That is $7+5$.",
+     "Correct.",
+     "That is $7\\cdot6\\cdot5$."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\frac{10!}{8!}$.",
+    "options": [
+     "$80$",
+     "$18$",
+     "$720$",
+     "$90$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "$10\\cdot 9=90$.",
+    "option_explanations": [
+     "That is $10\\cdot 8$.",
+     "That is $10+8$.",
+     "That is $10\\cdot9\\cdot8$.",
+     "Correct."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "What is the value of $0!$?",
+   "options": [
+    "Undefined",
+    "$-1$",
+    "$1$",
+    "$0$"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "By definition $0! = 1$ (and $1! = 1$).",
+   "option_explanations": [
+    "It is defined as 1.",
+    "Factorials are never negative.",
+    "Correct.",
+    "By definition $0! = 1$."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Which pair of factorials has equal values?",
+    "options": [
+     "$1!$ and $2!$",
+     "$2!$ and $3!$",
+     "$0!$ and $2!$",
+     "$0!$ and $1!$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "$0!=1!=1$.",
+    "option_explanations": [
+     "1 and 2.",
+     "2 and 6.",
+     "1 and 2.",
+     "Correct."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "What is $0! + 1!$?",
+    "options": [
+     "$1$",
+     "$3$",
+     "$2$",
+     "$0$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "$1+1=2$.",
+    "option_explanations": [
+     "Both terms are 1.",
+     "Neither term is 2.",
+     "Correct.",
+     "$0!$ is 1."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "What is $\\log_2 64$?",
+   "options": [
+    "$6$",
+    "$8$",
+    "$3$",
+    "$32$"
+   ],
+   "correct": [
+    0
+   ],
+   "explanation": "$2^6=64$, so $\\log_2 64 = 6$.",
+   "option_explanations": [
+    "Correct.",
+    "That is $\\sqrt{64}$.",
+    "$2^3=8$, not 64.",
+    "That is $64/2$."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "What is $\\log_3 81$?",
+    "options": [
+     "$9$",
+     "$27$",
+     "$4$",
+     "$3$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "$3^4=81$.",
+    "option_explanations": [
+     "That is $\\sqrt{81}$.",
+     "That is $81/3$.",
+     "Correct.",
+     "$3^3 = 27$."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "What is $\\log_5 125$?",
+    "options": [
+     "$4$",
+     "$25$",
+     "$3$",
+     "$5$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "$5^3=125$.",
+    "option_explanations": [
+     "$5^4 = 625$.",
+     "That is $125/5$.",
+     "Correct.",
+     "$5^5$ is far bigger than 125."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "What is $\\log_2 0.125$?",
+   "options": [
+    "$3$",
+    "$-4$",
+    "$-3$",
+    "$0.125$"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "$2^{-3}=\\frac18=0.125$.",
+   "option_explanations": [
+    "$2^3=8$.",
+    "$2^{-4}=1/16$.",
+    "Correct.",
+    "That is the argument itself."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "What is $\\log_2 \\frac{1}{16}$?",
+    "options": [
+     "$-8$",
+     "$-4$",
+     "$-16$",
+     "$4$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "$2^{-4}=\\frac1{16}$.",
+    "option_explanations": [
+     "$2^{-8}=1/256$.",
+     "Correct.",
+     "Not an exponent of 2 giving 1/16.",
+     "$2^4=16$, not 1/16."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "What is $\\log_3 \\frac{1}{27}$?",
+    "options": [
+     "$-27$",
+     "$-3$",
+     "$3$",
+     "$-9$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "$3^{-3}=\\frac1{27}$.",
+    "option_explanations": [
+     "Not the exponent.",
+     "Correct.",
+     "$3^3=27$, not 1/27.",
+     "$3^{-9}$ is tiny."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "What is $\\log_2(8\\cdot16)$?",
+   "options": [
+    "$11$",
+    "$12$",
+    "$7$",
+    "$128$"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "$\\log_2 8+\\log_2 16 = 3+4 = 7$.",
+   "option_explanations": [
+    "That is $8+3$.",
+    "That multiplies the logs $3\\cdot4$.",
+    "Correct.",
+    "That is the product, not its log."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "What is $\\log_3(9\\cdot27)$?",
+    "options": [
+     "$3$",
+     "$6$",
+     "$243$",
+     "$5$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "$2+3=5$.",
+    "option_explanations": [
+     "Only the log of 27.",
+     "That multiplies the logs $2\\cdot3$.",
+     "That is the product.",
+     "Correct."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "What is $\\log_{10}(100\\cdot1000)$?",
+    "options": [
+     "$5$",
+     "$300$",
+     "$6$",
+     "$100000$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "$2+3=5$.",
+    "option_explanations": [
+     "Correct.",
+     "Not a log value.",
+     "That multiplies the logs $2\\cdot3$.",
+     "That is the product."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Which identity is correct (with $a,b,c>0$)?",
+   "options": [
+    "$\\log_a(bc)=\\log_a b\\cdot\\log_a c$",
+    "$\\log_a(b+c)=\\log_a b+\\log_a c$",
+    "$\\log_a(bc)=\\log_a b-\\log_a c$",
+    "$\\log_a(bc)=\\log_a b+\\log_a c$"
+   ],
+   "correct": [
+    3
+   ],
+   "explanation": "Product rule: logs of factors add.",
+   "option_explanations": [
+    "The log of a product is a sum.",
+    "No such rule for sums.",
+    "That is for quotients.",
+    "Correct."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "What does $\\log_a(b^n)$ equal?",
+    "options": [
+     "$\\log_a b+n$",
+     "$b\\log_a n$",
+     "$n\\log_a b$",
+     "$(\\log_a b)^n$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Power rule: $\\log_a b^n = n\\log_a b$.",
+    "option_explanations": [
+     "Not additive.",
+     "Roles swapped.",
+     "Correct.",
+     "The exponent comes out as a multiplier."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "What does $\\log_a\\left(\\frac1b\\right)$ equal?",
+    "options": [
+     "$\\log_a b$",
+     "$-\\log_a b$",
+     "$1-\\log_a b$",
+     "$\\frac{1}{\\log_a b}$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "$\\log_a 1/b = -\\log_a b$.",
+    "option_explanations": [
+     "The sign flips.",
+     "Correct.",
+     "Not the rule.",
+     "That is $\\log_b a$-type reciprocal, not this."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "What is $\\log_2(8^4)$?",
+   "options": [
+    "$7$",
+    "$24$",
+    "$32$",
+    "$12$"
+   ],
+   "correct": [
+    3
+   ],
+   "explanation": "$4\\log_2 8 = 4\\cdot3=12$.",
+   "option_explanations": [
+    "That adds $3+4$.",
+    "That is $8\\cdot 3$.",
+    "That is $8\\cdot 4$.",
+    "Correct."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "What is $\\log_3(9^5)$?",
+    "options": [
+     "$10$",
+     "$25$",
+     "$45$",
+     "$14$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "$5\\log_3 9 = 5\\cdot 2=10$.",
+    "option_explanations": [
+     "Correct.",
+     "That is $5\\cdot 5$.",
+     "That is $9\\cdot 5$.",
+     "That adds $9+5$."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "What is $\\log_5(25^3)$?",
+    "options": [
+     "$9$",
+     "$75$",
+     "$6$",
+     "$5$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "$3\\cdot 2=6$.",
+    "option_explanations": [
+     "That is $3\\cdot3$.",
+     "That is $25\\cdot 3$.",
+     "Correct.",
+     "That is $2+3$."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "What is $7^{\\log_7 12}$?",
+   "options": [
+    "$84$",
+    "$5$",
+    "$12$",
+    "$7$"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "$b^{\\log_b a}=a$.",
+   "option_explanations": [
+    "That is $7\\cdot12$.",
+    "That is $12-7$.",
+    "Correct.",
+    "The base is not the result."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "What is $2^{\\log_2 9}$?",
+    "options": [
+     "$2$",
+     "$9$",
+     "$18$",
+     "$11$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "$b^{\\log_b a}=a$.",
+    "option_explanations": [
+     "The base is not the result.",
+     "Correct.",
+     "That is $2\\cdot9$.",
+     "That is $2+9$."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "What is $5^{\\log_5 31}$?",
+    "options": [
+     "$31$",
+     "$5$",
+     "$155$",
+     "$36$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Exponent and log cancel.",
+    "option_explanations": [
+     "Correct.",
+     "The base is not the result.",
+     "That is $5\\cdot31$.",
+     "That is $5+31$."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "What is $\\log_9 9$?",
+   "options": [
+    "$81$",
+    "$0$",
+    "$9$",
+    "$1$"
+   ],
+   "correct": [
+    3
+   ],
+   "explanation": "$\\log_a a = 1$.",
+   "option_explanations": [
+    "$9^2$.",
+    "That is $\\log_9 1$.",
+    "That is the base.",
+    "Correct."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "What is $\\log_e e$?",
+    "options": [
+     "$2.718$",
+     "$0$",
+     "$1$",
+     "$e$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "$\\log_a a=1$ for any valid base.",
+    "option_explanations": [
+     "That is $e$ itself.",
+     "That is $\\log_e 1$.",
+     "Correct.",
+     "That is the base."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "What is $\\log_{12}12$?",
+    "options": [
+     "$12$",
+     "$1$",
+     "$144$",
+     "$0$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "$12^1=12$.",
+    "option_explanations": [
+     "The base.",
+     "Correct.",
+     "$12^2$.",
+     "That is $\\log_{12}1$."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Which formula gives $\\log_a b$ using base $c$?",
+   "options": [
+    "$\\log_c b\\cdot\\log_c a$",
+    "$\\dfrac{\\log_c a}{\\log_c b}$",
+    "$\\dfrac{\\log_c b}{\\log_c a}$",
+    "$\\log_c b-\\log_c a$"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "Change of base: $\\log_a b=\\frac{\\log_c b}{\\log_c a}$.",
+   "option_explanations": [
+    "Not the rule.",
+    "Numerator and denominator are swapped.",
+    "Correct.",
+    "Logs of a quotient, not quotient of logs."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Given $\\log_3 9 = 2$, what is $\\log_9 3$?",
+    "options": [
+     "$-2$",
+     "$\\frac13$",
+     "$\\frac12$",
+     "$2$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "$\\log_a b = \\frac{1}{\\log_b a}$.",
+    "option_explanations": [
+     "The sign does not change.",
+     "Not the reciprocal of 2.",
+     "Correct.",
+     "It is the reciprocal."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Given $\\log_2 16 = 4$, what is $\\log_{16} 2$?",
+    "options": [
+     "$\\frac18$",
+     "$\\frac14$",
+     "$4$",
+     "$-4$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Reciprocal rule.",
+    "option_explanations": [
+     "Not the reciprocal.",
+     "Correct.",
+     "It is the reciprocal.",
+     "Sign unchanged."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Using base $2$, what is $\\log_8 32$?",
+   "options": [
+    "$\\frac35$",
+    "$4$",
+    "$24$",
+    "$\\frac53$"
+   ],
+   "correct": [
+    3
+   ],
+   "explanation": "$\\frac{\\log_2 32}{\\log_2 8} = \\frac53$.",
+   "option_explanations": [
+    "Numerator and denominator swapped.",
+    "That is $32/8$.",
+    "That is $32-8$.",
+    "Correct."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Using base $2$, what is $\\log_4 32$?",
+    "options": [
+     "$28$",
+     "$\\frac52$",
+     "$\\frac25$",
+     "$8$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "$\\frac{5}{2}$.",
+    "option_explanations": [
+     "That is $32-4$.",
+     "Correct.",
+     "Swapped.",
+     "That is $32/4$."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Using base $3$, what is $\\log_9 27$?",
+    "options": [
+     "$3$",
+     "$\\frac32$",
+     "$18$",
+     "$\\frac23$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "$\\frac{\\log_3 27}{\\log_3 9}=\\frac32$.",
+    "option_explanations": [
+     "That is $27/9$.",
+     "Correct.",
+     "That is $27-9$.",
+     "Swapped."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Which expression equals $3^{\\log_5 7}$?",
+   "options": [
+    "$7^{\\log_3 5}$",
+    "$7^{\\log_5 3}$",
+    "$5^{\\log_7 3}$",
+    "$3^{\\log_7 5}$"
+   ],
+   "correct": [
+    1
+   ],
+   "explanation": "$a^{\\log_b c}=c^{\\log_b a}$.",
+   "option_explanations": [
+    "The log base changed.",
+    "Correct.",
+    "Bases are mixed up.",
+    "The log base changed."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Which expression equals $2^{\\log_3 10}$?",
+    "options": [
+     "$10^{\\log_3 2}$",
+     "$2^{\\log_{10} 3}$",
+     "$10^{\\log_2 3}$",
+     "$3^{\\log_{10} 2}$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Swap the base and the argument but keep the log base.",
+    "option_explanations": [
+     "Correct.",
+     "The log base changed.",
+     "The log base changed.",
+     "Bases mixed up."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which expression equals $6^{\\log_4 9}$?",
+    "options": [
+     "$4^{\\log_9 6}$",
+     "$6^{\\log_9 4}$",
+     "$9^{\\log_6 4}$",
+     "$9^{\\log_4 6}$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "$a^{\\log_b c}=c^{\\log_b a}$.",
+    "option_explanations": [
+     "Bases mixed up.",
+     "The log base changed.",
+     "The log base changed.",
+     "Correct."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Which expression is defined?",
+   "options": [
+    "$\\log_1 8$",
+    "$\\log_2 8$",
+    "$\\log_2 0$",
+    "$\\log_2(-8)$"
+   ],
+   "correct": [
+    1
+   ],
+   "explanation": "Need base $a>0$, $a\\ne1$ and argument $>0$.",
+   "option_explanations": [
+    "The base cannot be 1.",
+    "Correct.",
+    "The argument must be positive.",
+    "The argument must be positive."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Which expression is defined?",
+    "options": [
+     "$\\log_{10}(0.01)$",
+     "$\\log_1 10$",
+     "$\\log_{10}(-0.01)$",
+     "$\\log_{-2}8$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Positive argument, valid base.",
+    "option_explanations": [
+     "Correct.",
+     "Base 1.",
+     "Negative argument.",
+     "Negative base."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which expression is defined?",
+    "options": [
+     "$\\log_{-5}5$",
+     "$\\log_5(-5)$",
+     "$\\log_5\\frac15$",
+     "$\\log_5 0$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "$\\log_5 \\frac15=-1$.",
+    "option_explanations": [
+     "Negative base.",
+     "Negative argument.",
+     "Correct.",
+     "Zero argument."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "What is $\\lceil 19.000001\\rceil$?",
+   "options": [
+    "$19$",
+    "$20$",
+    "$21$",
+    "$10$"
+   ],
+   "correct": [
+    1
+   ],
+   "explanation": "The ceiling of a non-integer is the next integer up.",
+   "option_explanations": [
+    "That is the floor.",
+    "Correct.",
+    "Too large.",
+    "Unrelated."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "What is $\\lceil 3.1\\rceil$?",
+    "options": [
+     "$2$",
+     "$4$",
+     "$3$",
+     "$5$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Next integer up.",
+    "option_explanations": [
+     "Too small.",
+     "Correct.",
+     "That is the floor.",
+     "Too large."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "What is $\\lceil -1.2\\rceil$?",
+    "options": [
+     "$1$",
+     "$2$",
+     "$-1$",
+     "$-2$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Least integer $\\ge -1.2$ is $-1$.",
+    "option_explanations": [
+     "Sign dropped.",
+     "Sign dropped and rounded up.",
+     "Correct.",
+     "That is the floor."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "What is $\\lfloor 1.99\\rfloor$?",
+   "options": [
+    "$-1$",
+    "$1$",
+    "$2$",
+    "$0$"
+   ],
+   "correct": [
+    1
+   ],
+   "explanation": "Floor is the greatest integer $\\le x$.",
+   "option_explanations": [
+    "Wrong sign.",
+    "Correct.",
+    "That is the ceiling.",
+    "Too small."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "What is $\\lfloor -2.4\\rfloor$?",
+    "options": [
+     "$-2$",
+     "$2$",
+     "$-3$",
+     "$-4$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Greatest integer $\\le -2.4$ is $-3$.",
+    "option_explanations": [
+     "That is the ceiling.",
+     "Sign dropped.",
+     "Correct.",
+     "Rounded too far."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "What is $\\lfloor -1.2\\rfloor$?",
+    "options": [
+     "$-1$",
+     "$1$",
+     "$2$",
+     "$-2$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "Greatest integer $\\le -1.2$ is $-2$.",
+    "option_explanations": [
+     "That is the ceiling.",
+     "Sign dropped.",
+     "Sign dropped.",
+     "Correct."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "What does $\\lceil x\\rceil$ denote?",
+   "options": [
+    "The least integer $\\ge x$",
+    "The integer part with the fraction deleted",
+    "The greatest integer $\\le x$",
+    "The integer nearest to $x$"
+   ],
+   "correct": [
+    0
+   ],
+   "explanation": "Ceiling = least integer at or above $x$; floor = greatest integer at or below $x$.",
+   "option_explanations": [
+    "Correct.",
+    "That is truncation, i.e. the floor for positives.",
+    "That is the floor.",
+    "Rounding to nearest is different."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "What does $\\lfloor x\\rfloor$ denote?",
+    "options": [
+     "The least integer $> x$",
+     "The least integer $\\ge x$",
+     "The greatest integer $\\le x$",
+     "The integer closest to $x$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Floor = greatest integer at or below $x$.",
+    "option_explanations": [
+     "Not the definition.",
+     "That is the ceiling.",
+     "Correct.",
+     "Not the definition."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "If $x$ is not an integer, which is true?",
+    "options": [
+     "$\\lceil x\\rceil=\\lfloor x\\rfloor$",
+     "$\\lceil x\\rceil=\\lfloor x\\rfloor+2$",
+     "$\\lceil x\\rceil=\\lfloor x\\rfloor-1$",
+     "$\\lceil x\\rceil=\\lfloor x\\rfloor+1$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "For non-integers the two are consecutive integers.",
+    "option_explanations": [
+     "Equal only for integers.",
+     "They are adjacent.",
+     "Ceiling is the larger.",
+     "Correct."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "What is $77 \\bmod 6$?",
+   "options": [
+    "$11$",
+    "$12$",
+    "$5$",
+    "$1$"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "$77=6\\cdot12+5$.",
+   "option_explanations": [
+    "Not the remainder.",
+    "That is the quotient.",
+    "Correct.",
+    "Not the remainder."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "What is $45 \\bmod 7$?",
+    "options": [
+     "$4$",
+     "$2$",
+     "$6$",
+     "$3$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "$45=7\\cdot6+3$.",
+    "option_explanations": [
+     "Not the remainder.",
+     "Not the remainder.",
+     "That is the quotient.",
+     "Correct."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "What is $100 \\bmod 9$?",
+    "options": [
+     "$10$",
+     "$1$",
+     "$11$",
+     "$0$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "$100=9\\cdot11+1$.",
+    "option_explanations": [
+     "Not the remainder.",
+     "Correct.",
+     "That is the quotient.",
+     "9 does not divide 100."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "What is $33 \\% 9$?",
+   "options": [
+    "$9$",
+    "$3$",
+    "$4$",
+    "$6$"
+   ],
+   "correct": [
+    3
+   ],
+   "explanation": "$33=9\\cdot3+6$.",
+   "option_explanations": [
+    "Remainder is less than 9.",
+    "That is the quotient.",
+    "Not the remainder.",
+    "Correct."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "What is $21 \\% 7$?",
+    "options": [
+     "$7$",
+     "$0$",
+     "$1$",
+     "$3$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "$21=7\\cdot3+0$.",
+    "option_explanations": [
+     "Remainder must be below 7.",
+     "Correct.",
+     "7 divides 21.",
+     "That is the quotient."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "What is $0 \\bmod 3$?",
+    "options": [
+     "$3$",
+     "$1$",
+     "$0$",
+     "Undefined"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "$0=3\\cdot0+0$.",
+    "option_explanations": [
+     "Remainder is below 3.",
+     "$0=3\\cdot0+0$.",
+     "Correct.",
+     "It is defined."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "In $a=bq+r$ with $b>0$, which condition does $r$ satisfy?",
+   "options": [
+    "$0\\le r<b$",
+    "$0<r\\le b$",
+    "$0\\le r\\le b$",
+    "$-b<r<b$"
+   ],
+   "correct": [
+    0
+   ],
+   "explanation": "The remainder satisfies $0\\le r<b$.",
+   "option_explanations": [
+    "Correct.",
+    "r can be 0 but never equals b.",
+    "r cannot equal b.",
+    "r is non-negative."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Which is the division of $77$ by $6$ with a valid remainder?",
+    "options": [
+     "$77=6\\cdot13-1$",
+     "$77=6\\cdot10+17$",
+     "$77=6\\cdot11+11$",
+     "$77=6\\cdot12+5$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "Need $0\\le r<6$.",
+    "option_explanations": [
+     "Remainder -1 is negative.",
+     "Remainder 17 is not below 6.",
+     "Remainder 11 is not below 6.",
+     "Correct."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which gives the quotient and remainder of $50\\div7$?",
+    "options": [
+     "$q=5,\\ r=15$",
+     "$q=7,\\ r=1$",
+     "$q=6,\\ r=8$",
+     "$q=8,\\ r=-6$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "$50=7\\cdot7+1$.",
+    "option_explanations": [
+     "r is not below 7.",
+     "Correct.",
+     "r is not below 7.",
+     "r is negative."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "What is (sum of bits of $1101001$) mod $2$?",
+   "options": [
+    "$1$",
+    "$2$",
+    "$4$",
+    "$0$"
+   ],
+   "correct": [
+    3
+   ],
+   "explanation": "The bits sum to 4, and $4 \\bmod 2 = 0$ (even parity).",
+   "option_explanations": [
+    "The sum is 4, which is even.",
+    "A mod 2 result is 0 or 1.",
+    "That is the sum itself.",
+    "Correct."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "What is (sum of bits of $1011101$) mod $2$?",
+    "options": [
+     "$1$",
+     "$0$",
+     "$5$",
+     "$2$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Sum is 5, $5\\bmod2=1$ (odd parity).",
+    "option_explanations": [
+     "Correct.",
+     "The sum is 5, which is odd.",
+     "That is the sum itself.",
+     "A mod 2 result is 0 or 1."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "What is (sum of bits of $10011001$) mod $2$?",
+    "options": [
+     "$2$",
+     "$0$",
+     "$1$",
+     "$4$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Sum is 4, $4\\bmod2=0$.",
+    "option_explanations": [
+     "A mod 2 result is 0 or 1.",
+     "Correct.",
+     "The sum is 4.",
+     "That is the sum."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "basic",
+   "question": "Prove that the product of two odd integers is odd.",
+   "answer": "Let the integers be $m = 2a+1$ and $n = 2b+1$ for integers $a,b$ (odd = $2k+1$).\n$mn = (2a+1)(2b+1) = 4ab + 2a + 2b + 1 = 2(2ab + a + b) + 1$.\nSince $2ab+a+b$ is an integer, $mn$ has the form $2k+1$, so it is odd."
+  },
+  "versions": [
+   {
+    "type": "basic",
+    "question": "Prove that the sum of two odd integers is even.",
+    "answer": "Let $m = 2a+1$ and $n = 2b+1$ with $a,b$ integers.\n$m+n = 2a+2b+2 = 2(a+b+1)$.\nSince $a+b+1$ is an integer, $m+n = 2k$ is even."
+   },
+   {
+    "type": "basic",
+    "question": "Prove that the square of an odd integer is odd.",
+    "answer": "Let $n = 2k+1$ for an integer $k$.\n$n^2 = 4k^2 + 4k + 1 = 2(2k^2 + 2k) + 1$.\nSince $2k^2+2k$ is an integer, $n^2$ has the form $2m+1$, so it is odd."
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "basic",
+   "question": "Convert $10011_2$ to decimal, and convert $22$ to binary.",
+   "answer": "Binary to decimal: $10011_2 = 1\\cdot2^4 + 0\\cdot2^3 + 0\\cdot2^2 + 1\\cdot2^1 + 1\\cdot2^0 = 16+0+0+2+1 = 19$.\nDecimal to binary: $22 = 16 + 4 + 2 = 1\\cdot2^4+0\\cdot2^3+1\\cdot2^2+1\\cdot2^1+0\\cdot2^0$, so $22 = 10110_2$."
+  },
+  "versions": [
+   {
+    "type": "basic",
+    "question": "Convert $11010_2$ to decimal, and convert $19$ to binary.",
+    "answer": "$11010_2 = 16+8+0+2+0 = 26$.\n$19 = 16+2+1 = 1\\cdot2^4+0\\cdot2^3+0\\cdot2^2+1\\cdot2^1+1\\cdot2^0$, so $19 = 10011_2$."
+   },
+   {
+    "type": "basic",
+    "question": "Convert $101101_2$ to decimal, and convert $37$ to binary.",
+    "answer": "$101101_2 = 32+0+8+4+0+1 = 45$.\n$37 = 32+4+1$, so $37 = 100101_2$."
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "basic",
+   "question": "(a) Classify each of $-3$, $\\sqrt5$, $0.75$, $\\pi$ as integer, rational, irrational, and/or real. (b) Is $(2k+1)^2$ even or odd for every integer $k$?",
+   "answer": "(a) $-3$: integer, rational ($-3/1$), real. $\\sqrt5$: irrational, real. $0.75 = 3/4$: rational, real. $\\pi$: irrational, real.\n(b) $(2k+1)^2 = 4k^2+4k+1 = 2(2k^2+2k)+1$, which is odd for every integer $k$."
+  },
+  "versions": [
+   {
+    "type": "basic",
+    "question": "(a) Classify each of $7$, $\\frac{22}{7}$, $\\sqrt7$, $e$ as integer, rational, irrational, and/or real. (b) Is $(2k)^2$ even or odd for every integer $k$?",
+    "answer": "(a) $7$: integer, rational, real. $\\frac{22}{7}$: rational, real. $\\sqrt7$: irrational, real. $e$: irrational, real.\n(b) $(2k)^2 = 4k^2 = 2(2k^2)$, which is even for every integer $k$."
+   },
+   {
+    "type": "basic",
+    "question": "(a) Classify each of $0$, $\\sqrt{16}$, $1.2$, $\\sqrt{11}$ as integer, rational, irrational, and/or real. (b) Is $(2k+3)^2$ even or odd for every integer $k$?",
+    "answer": "(a) $0$: integer, rational, real. $\\sqrt{16}=4$: integer, rational, real. $1.2=6/5$: rational, real. $\\sqrt{11}$: irrational, real.\n(b) $(2k+3)^2 = 4k^2+12k+9 = 2(2k^2+6k+4)+1$, which is odd for every integer $k$."
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "basic",
+   "question": "Evaluate: (1) $\\lfloor -2.4\\rfloor$, (2) $\\lceil 3.1\\rceil$, (3) $\\log_2 32$, (4) $45 \\bmod 7$.",
+   "answer": "(1) The greatest integer $\\le -2.4$ is $-3$.\n(2) The least integer $\\ge 3.1$ is $4$.\n(3) $2^5 = 32$, so $\\log_2 32 = 5$.\n(4) $45 = 7\\cdot6 + 3$, so $45 \\bmod 7 = 3$."
+  },
+  "versions": [
+   {
+    "type": "basic",
+    "question": "Evaluate: (1) $\\lfloor -3.7\\rfloor$, (2) $\\lceil -0.5\\rceil$, (3) $\\log_3 243$, (4) $58 \\bmod 9$.",
+    "answer": "(1) Greatest integer $\\le -3.7$ is $-4$.\n(2) Least integer $\\ge -0.5$ is $0$.\n(3) $3^5 = 243$, so $\\log_3 243 = 5$.\n(4) $58 = 9\\cdot6 + 4$, so $58 \\bmod 9 = 4$."
+   },
+   {
+    "type": "basic",
+    "question": "Evaluate: (1) $\\lfloor -0.2\\rfloor$, (2) $\\lceil 7.01\\rceil$, (3) $\\log_2 \\frac{1}{32}$, (4) $100 \\bmod 7$.",
+    "answer": "(1) Greatest integer $\\le -0.2$ is $-1$.\n(2) Least integer $\\ge 7.01$ is $8$.\n(3) $2^{-5} = \\frac1{32}$, so the log is $-5$.\n(4) $100 = 7\\cdot14 + 2$, so $100 \\bmod 7 = 2$."
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "basic",
+   "question": "Find $q$ and $r$ with $100 = 7q + r$, $0\\le r<7$, and state $100 \\bmod 7$.",
+   "answer": "Largest multiple of 7 not above 100: $7\\cdot14 = 98$. So $q = 14$, $r = 100-98 = 2$.\nCheck $0 \\le 2 < 7$. Hence $100 = 7\\cdot14+2$ and $100 \\bmod 7 = 2$."
+  },
+  "versions": [
+   {
+    "type": "basic",
+    "question": "Find $q$ and $r$ with $250 = 12q + r$, $0\\le r<12$, and state $250 \\bmod 12$.",
+    "answer": "$12\\cdot20 = 240 \\le 250 < 252 = 12\\cdot21$, so $q = 20$, $r = 10$.\nHence $250 = 12\\cdot20+10$ and $250 \\bmod 12 = 10$."
+   },
+   {
+    "type": "basic",
+    "question": "Find $q$ and $r$ with $123 = 8q + r$, $0\\le r<8$, and state $123 \\bmod 8$.",
+    "answer": "$8\\cdot15 = 120 \\le 123 < 128$, so $q = 15$, $r = 3$.\nHence $123 = 8\\cdot15+3$ and $123 \\bmod 8 = 3$."
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "basic",
+   "question": "Evaluate $\\log_2(8\\cdot32) + \\log_2\\frac14 + 2^{\\log_2 9}$.",
+   "answer": "$\\log_2(8\\cdot32) = \\log_2 8 + \\log_2 32 = 3+5 = 8$.\n$\\log_2\\frac14 = -\\log_2 4 = -2$.\n$2^{\\log_2 9} = 9$.\nTotal: $8 - 2 + 9 = 15$."
+  },
+  "versions": [
+   {
+    "type": "basic",
+    "question": "Evaluate $\\log_3(27\\cdot81) - \\log_3 9 + 3^{\\log_3 4}$.",
+    "answer": "$\\log_3(27\\cdot81) = 3+4 = 7$.\n$\\log_3 9 = 2$.\n$3^{\\log_3 4} = 4$.\nTotal: $7 - 2 + 4 = 9$."
+   },
+   {
+    "type": "basic",
+    "question": "Evaluate $\\log_5(25\\cdot125) + \\log_5\\frac15 + 5^{\\log_5 7}$.",
+    "answer": "$\\log_5(25\\cdot125) = 2+3 = 5$.\n$\\log_5\\frac15 = -1$.\n$5^{\\log_5 7} = 7$.\nTotal: $5 - 1 + 7 = 11$."
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "basic",
+   "question": "How many $6$-bit strings are there in total, how many have exactly $2$ leading zeros, and what decimal values do those strings represent?",
+   "answer": "Total: $2^6 = 64$.\nExactly 2 leading zeros means the form $001xxx$, with 3 free bits: $2^{6-2-1} = 2^3 = 8$ strings.\nValues range from $001000_2 = 8$ to $001111_2 = 15$."
+  },
+  "versions": [
+   {
+    "type": "basic",
+    "question": "How many $7$-bit strings are there in total, how many have exactly $3$ leading zeros, and what decimal values do those strings represent?",
+    "answer": "Total: $2^7 = 128$.\nForm $0001xxx$ with 3 free bits: $2^{7-3-1} = 8$ strings.\nValues range from $0001000_2 = 8$ to $0001111_2 = 15$."
+   },
+   {
+    "type": "basic",
+    "question": "How many $5$-bit strings are there in total, how many have exactly $2$ leading zeros, and what decimal values do those strings represent?",
+    "answer": "Total: $2^5 = 32$.\nForm $001xx$ with 2 free bits: $2^{5-2-1} = 4$ strings.\nValues range from $00100_2 = 4$ to $00111_2 = 7$."
+   }
+  ]
+ }
+]

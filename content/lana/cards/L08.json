@@ -1,0 +1,3527 @@
+[
+ {
+  "original": {
+   "type": "mcq",
+   "question": "What is the Cartesian product $A \\times B$ of two sets $A$ and $B$?",
+   "options": [
+    "The set of elements that belong to both $A$ and $B$",
+    "The set of elements that belong to $A$ or to $B$",
+    "The set of all ordered pairs $(a,b)$ with $a \\in A$ and $b \\in B$",
+    "The set of all subsets of $A$ paired with elements of $B$"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "$A\\times B$ collects every pair $(a,b)$ whose first entry comes from $A$ and second from $B$.",
+   "option_explanations": [
+    "That is the intersection $A\\cap B$.",
+    "That is the union $A\\cup B$.",
+    "Correct: this is the definition.",
+    "Its elements are pairs of elements, not subsets of $A$."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Which set-builder expression equals $A \\times B$?",
+    "options": [
+     "$\\{(a,b) \\mid a\\in A \\text{ and } b\\in B\\}$",
+     "$\\{(a,b) \\mid a\\in A \\text{ or } b\\in B\\}$",
+     "$\\{a \\mid a\\in A \\text{ and } a\\in B\\}$",
+     "$\\{(a,b) \\mid a\\in B \\text{ and } b\\in A\\}$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Both coordinates are constrained: the first lies in $A$ and the second in $B$.",
+    "option_explanations": [
+     "Correct.",
+     "'Or' would allow pairs with a coordinate outside its set.",
+     "That describes $A\\cap B$.",
+     "That is $B\\times A$, with the roles swapped."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Each element of a Cartesian product $A\\times B$ is which kind of object?",
+    "options": [
+     "A single element of $A \\cup B$",
+     "A subset of $A \\cup B$",
+     "An unordered pair of elements of $A\\cup B$",
+     "An ordered pair, first entry from $A$ and second from $B$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "Elements of $A\\times B$ are ordered pairs $(a,b)$.",
+    "option_explanations": [
+     "Single elements belong to $A$ or $B$, not to the product.",
+     "Subsets are elements of a power set, not of a product.",
+     "The pair is ordered, and each slot has its own set.",
+     "Correct."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "For $A=\\{f,m\\}$ and $B=\\{3,4\\}$, which set is $A\\times B$?",
+   "options": [
+    "$\\{(3,f),(4,f),(3,m),(4,m)\\}$",
+    "$\\{(f,3),(f,4),(m,3),(m,4)\\}$",
+    "$\\{(f,3),(m,4)\\}$",
+    "$\\{(f,f),(m,m),(3,3),(4,4)\\}$"
+   ],
+   "correct": [
+    1
+   ],
+   "explanation": "Pair every element of $A$ with every element of $B$, $A$ first.",
+   "option_explanations": [
+    "This is $B\\times A$ (order reversed).",
+    "Correct.",
+    "This matches elements one to one instead of pairing all combinations.",
+    "Pairs must take one entry from each set, not repeat one set."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "For $A=\\{x\\}$ and $B=\\{1,2,3\\}$, find $A\\times B$.",
+    "options": [
+     "$\\{(1,x),(2,x),(3,x)\\}$",
+     "$\\{(x,1),(x,2),(x,3)\\}$",
+     "$\\{(x,1),(x,2)\\}$",
+     "$\\{(x,1),(x,2),(x,3),(1,x),(2,x),(3,x)\\}$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "One element of $A$ times three of $B$ gives three pairs, $A$ entry first.",
+    "option_explanations": [
+     "This is $B\\times A$.",
+     "Correct.",
+     "One pair is missing: every $b$ must appear.",
+     "This mixes $A\\times B$ with $B\\times A$."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Let $A=\\{a,b,c\\}$ and $B=\\{0\\}$. Which set is $A\\times B$?",
+    "options": [
+     "$\\{(0,a),(0,b),(0,c)\\}$",
+     "$\\{(a,0),(b,0)\\}$",
+     "$\\{(a,0),(b,0),(c,0),(0,a),(0,b),(0,c)\\}$",
+     "$\\{(a,0),(b,0),(c,0)\\}$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "Each of the three elements of $A$ is paired with $0$.",
+    "option_explanations": [
+     "This is $B\\times A$.",
+     "The pair $(c,0)$ is missing.",
+     "This is $A\\times B \\cup B\\times A$, not $A\\times B$.",
+     "Correct."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Let $A=\\{1,1,2\\}$ and $B=\\{a,b,c,c\\}$. What is $|A\\times B|$?",
+   "options": [
+    "6",
+    "12",
+    "7",
+    "5"
+   ],
+   "correct": [
+    0
+   ],
+   "explanation": "Repeated elements do not count in a set, so $|A|=2$, $|B|=3$ and $|A\\times B|=2\\cdot3$.",
+   "option_explanations": [
+    "Correct.",
+    "This counts the repeats: $3\\cdot 4$.",
+    "This adds the sizes (with repeats) instead of multiplying.",
+    "This adds $2+3$ instead of multiplying."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Let $A=\\{7,7,8,9,9\\}$ and $B=\\{p,q,q,r,r,s\\}$. Find $|A\\times B|$.",
+    "options": [
+     "30",
+     "7",
+     "12",
+     "20"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "$|A|=3$ and $|B|=4$ once duplicates collapse, so $|A\\times B|=12$.",
+    "option_explanations": [
+     "This uses the listed lengths $5\\cdot6$.",
+     "This adds $3+4$.",
+     "Correct.",
+     "This uses $5\\cdot 4$, mixing listed and true sizes."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Let $A=\\{0,0,0,1\\}$ and $B=\\{a,a,b,c,d,d\\}$. What is $|A\\times B|$?",
+    "options": [
+     "24",
+     "6",
+     "10",
+     "8"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "True sizes are $|A|=2$ and $|B|=4$, so $|A\\times B|=8$.",
+    "option_explanations": [
+     "This uses the listed lengths $4\\cdot 6$.",
+     "This adds $2+4$.",
+     "This adds the listed lengths $4+6$.",
+     "Correct."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "For $a\\neq b$, which statement about $(a,b)$ and $(b,a)$ is right?",
+   "options": [
+    "They are the same pair, as in a set",
+    "They are two different ordered pairs",
+    "They are equal whenever both lie in $A\\times B$",
+    "They are equal because a pair is just a two-element set"
+   ],
+   "correct": [
+    1
+   ],
+   "explanation": "In an ordered pair the position matters, so $(a,b)\\neq(b,a)$ when $a\\ne b$.",
+   "option_explanations": [
+    "Pairs are ordered, unlike sets.",
+    "Correct.",
+    "Lying in the same product does not make them equal.",
+    "An ordered pair is not the set $\\{a,b\\}$."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Is $(3,5)$ the same element as $(5,3)$ in a Cartesian product?",
+    "options": [
+     "Yes; both contain 3 and 5",
+     "Yes; order inside a pair is irrelevant",
+     "No; the coordinates are in different positions",
+     "Yes; they are the same set $\\{3,5\\}$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Ordered pairs are equal only if both coordinates agree in position.",
+    "option_explanations": [
+     "Containing the same numbers is not enough.",
+     "Order inside a pair is exactly what matters.",
+     "Correct.",
+     "$\\{3,5\\}$ is a set; $(3,5)$ is an ordered pair."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "For $A=\\{1,2\\}$ and $B=\\{a\\}$, which statement is true?",
+    "options": [
+     "$(1,a)\\in A\\times B$ but $(1,a)\\notin B\\times A$",
+     "$A\\times B = B\\times A$",
+     "$(a,1)\\in A\\times B$",
+     "$|A\\times B| \\neq |B\\times A|$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "$A\\times B=\\{(1,a),(2,a)\\}$ and $B\\times A=\\{(a,1),(a,2)\\}$: different sets of equal size.",
+    "option_explanations": [
+     "Correct.",
+     "The sets contain different pairs.",
+     "$a\\notin A$, so $(a,1)$ is not in $A\\times B$.",
+     "Both have $|A||B|=2$ elements."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Which set equals $\\{a,b\\}\\times\\{1,1,2\\}$?",
+   "options": [
+    "$\\{(a,1),(b,1),(b,2),(a,2)\\}$",
+    "$\\{(1,a),(2,a),(1,b),(2,b)\\}$",
+    "$\\{(a,1),(a,2),(b,1)\\}$",
+    "$\\{(a,a),(b,b),(1,1),(2,2)\\}$"
+   ],
+   "correct": [
+    0
+   ],
+   "explanation": "All four pairs $(a|b, 1|2)$ appear; listing order is irrelevant.",
+   "option_explanations": [
+    "Correct.",
+    "Coordinates are reversed: this is $B\\times A$.",
+    "The pair $(b,2)$ is missing.",
+    "Pairs must take the first entry from $\\{a,b\\}$ and the second from $\\{1,2\\}$."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Which set equals $\\{x,y\\}\\times\\{3,3,4\\}$?",
+    "options": [
+     "$\\{(3,x),(3,y),(4,x),(4,y)\\}$",
+     "$\\{(x,3),(y,4)\\}$",
+     "$\\{(y,4),(x,3),(x,4),(y,3)\\}$",
+     "$\\{(x,3),(x,4),(y,3),(y,4),(3,4)\\}$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "The product has $2\\cdot2=4$ pairs, in any listing order.",
+    "option_explanations": [
+     "Coordinates are reversed.",
+     "Only two of the four pairs are listed.",
+     "Correct.",
+     "$(3,4)$ has first entry outside $\\{x,y\\}$."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which set equals $\\{m\\}\\times\\{5,6,6\\}$?",
+    "options": [
+     "$\\{(5,m),(6,m)\\}$",
+     "$\\{(m,5),(m,6)\\}$",
+     "$\\{(m,5)\\}$",
+     "$\\{(m,5),(m,6),(6,m)\\}$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Duplicates collapse, so $\\{5,6\\}$ pairs with $m$: two pairs.",
+    "option_explanations": [
+     "Coordinates are reversed.",
+     "Correct.",
+     "$(m,6)$ is missing.",
+     "$(6,m)$ puts $m$ in the second slot."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Let $A=\\{a,b\\}$ and $B=\\{2,3\\}$. Which pair is NOT in $A\\times B$?",
+   "options": [
+    "$(a,2)$",
+    "$(b,3)$",
+    "$(b,2)$",
+    "$(3,a)$"
+   ],
+   "correct": [
+    3
+   ],
+   "explanation": "A pair belongs to $A\\times B$ only if its first entry is in $A$ and its second in $B$.",
+   "option_explanations": [
+    "Correct membership: $a\\in A,2\\in B$.",
+    "Correct membership: $b\\in A,3\\in B$.",
+    "Correct membership: $b\\in A,2\\in B$.",
+    "Correct."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Let $A=\\{1,2\\}$ and $B=\\{x,y\\}$. Which pair is NOT in $A\\times B$?",
+    "options": [
+     "$(1,x)$",
+     "$(2,y)$",
+     "$(y,1)$",
+     "$(2,x)$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "The first entry must come from $A$ and the second from $B$.",
+    "option_explanations": [
+     "$1\\in A$, $x\\in B$: it belongs.",
+     "$2\\in A$, $y\\in B$: it belongs.",
+     "Correct.",
+     "$2\\in A$, $x\\in B$: it belongs."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Let $A=\\{p,q,r\\}$ and $B=\\{5\\}$. Which pair is NOT in $A\\times B$?",
+    "options": [
+     "$(5,q)$",
+     "$(p,5)$",
+     "$(q,5)$",
+     "$(r,5)$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "All members have the form (element of $A$, $5$).",
+    "option_explanations": [
+     "Correct.",
+     "It belongs.",
+     "It belongs.",
+     "It belongs."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Let $F=\\{a,b\\}$, $M=\\{2\\}$, $C=\\{x,y\\}$. Which is an element of $F\\times M\\times C$?",
+   "options": [
+    "$(2,b,y)$",
+    "$(a,b,2)$",
+    "$(a,2)$",
+    "$(b,2,y)$"
+   ],
+   "correct": [
+    3
+   ],
+   "explanation": "A triple takes one entry from each set, in the order $F,M,C$.",
+   "option_explanations": [
+    "The entries are in the wrong order.",
+    "$b$ is not in $M$ and $2$ is not in $C$.",
+    "That is a pair, not a 3-tuple.",
+    "Correct."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Let $A=\\{1,2\\}$, $B=\\{k\\}$, $C=\\{m,n\\}$. Which is an element of $A\\times B\\times C$?",
+    "options": [
+     "$(k,2,n)$",
+     "$(2,k,n)$",
+     "$(1,2,k)$",
+     "$(1,k)$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Entries come from $A$, then $B$, then $C$.",
+    "option_explanations": [
+     "$k$ is in the first slot but belongs to $B$.",
+     "Correct.",
+     "The slots do not match $A,B,C$.",
+     "A 3-tuple needs three entries."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Let Father$=\\{Ali\\}$, Mother$=\\{Neha\\}$, Son$=\\{Ashik,Salam\\}$. Which triple is in Father$\\times$Mother$\\times$Son?",
+    "options": [
+     "$(Neha,Ali,Salam)$",
+     "$(Ali,Neha,Salam)$",
+     "$(Ali,Salam,Neha)$",
+     "$(Ali,Neha)$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Order is father, mother, son.",
+    "option_explanations": [
+     "First two entries are swapped.",
+     "Correct.",
+     "Second and third entries are swapped.",
+     "Missing the son's entry."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "How many elements does $\\{a,b\\}\\times\\{1,2\\}\\times\\{x,y\\}\\times\\{p,q,r\\}$ have?",
+   "options": [
+    "9",
+    "12",
+    "18",
+    "24"
+   ],
+   "correct": [
+    3
+   ],
+   "explanation": "Multiply the sizes: $2\\cdot2\\cdot2\\cdot3=24$.",
+   "option_explanations": [
+    "This adds the sizes.",
+    "This omits one factor of 2.",
+    "This uses $2\\cdot3\\cdot3$.",
+    "Correct."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Find the number of elements of $\\{1,2\\}\\times\\{a,b,c\\}\\times\\{x,y\\}\\times\\{u,v,w,z\\}$.",
+    "options": [
+     "48",
+     "11",
+     "24",
+     "36"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "$2\\cdot3\\cdot2\\cdot4=48$.",
+    "option_explanations": [
+     "Correct.",
+     "This adds the sizes.",
+     "This drops the factor 2.",
+     "This is $3\\cdot3\\cdot4$, not the product of the four sizes."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "How many triples are in $\\{0,1\\}\\times\\{a,b,c\\}\\times\\{p,q,r,s,t\\}$?",
+    "options": [
+     "10",
+     "15",
+     "30",
+     "6"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "$2\\cdot3\\cdot5=30$.",
+    "option_explanations": [
+     "This adds $2+3+5$.",
+     "This omits the factor 2.",
+     "Correct.",
+     "This omits the factor 5."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "What is a relation $R$ from a set $A$ to a set $B$?",
+   "options": [
+    "A subset of $A\\cup B$",
+    "An element of $A\\times B$",
+    "The whole set $A\\times B$",
+    "A subset of $A\\times B$"
+   ],
+   "correct": [
+    3
+   ],
+   "explanation": "A relation is any set of ordered pairs $(a,b)$ drawn from $A\\times B$, that is $R\\subseteq A\\times B$.",
+   "option_explanations": [
+    "A subset of the union holds single elements, not pairs.",
+    "An element of the product is one pair; a relation is a set of pairs.",
+    "That is only one particular relation; a relation may be any subset.",
+    "Correct."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "If $R$ is a relation from $A$ to $B$, which statement holds?",
+    "options": [
+     "$R \\subseteq A\\cup B$",
+     "$R \\subseteq A\\times B$",
+     "$R \\in A\\times B$",
+     "$A\\times B \\subseteq R$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Every pair of $R$ has first entry in $A$ and second in $B$.",
+    "option_explanations": [
+     "$R$ contains pairs, which are not elements of $A\\cup B$.",
+     "Correct.",
+     "$R$ is a set of pairs, not a single pair.",
+     "$R$ can omit pairs of $A\\times B$."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which description fits a relation from $A$ to $B$?",
+    "options": [
+     "Any set holding every pair $(a,b)$ of $A\\times B$",
+     "Any single ordered pair $(a,b)$ with $a\\in A$, $b\\in B$",
+     "Any set of ordered pairs $(a,b)$ with $a\\in A$, $b\\in B$",
+     "Any set of elements taken from $A$ and $B$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Choose some, possibly not all, pairs of $A\\times B$.",
+    "option_explanations": [
+     "That forces the whole product.",
+     "A relation is a set of pairs, not one pair.",
+     "Correct.",
+     "Its members must be pairs."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Let $|A|=2$ and $|B|=3$. How many different relations from $A$ to $B$ exist?",
+   "options": [
+    "64",
+    "6",
+    "36",
+    "8"
+   ],
+   "correct": [
+    0
+   ],
+   "explanation": "A relation is any subset of $A\\times B$, which has $6$ pairs, so there are $2^6=64$ subsets.",
+   "option_explanations": [
+    "Correct.",
+    "This is $|A\\times B|$, the number of pairs.",
+    "This is $6^2$.",
+    "This is $2^3$ only."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "How many relations are there from $A=\\{1,2\\}$ to $B=\\{x,y\\}$?",
+    "options": [
+     "16",
+     "4",
+     "8",
+     "6"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "$|A\\times B|=4$, so there are $2^4=16$ subsets.",
+    "option_explanations": [
+     "Correct.",
+     "This is the number of pairs.",
+     "This is $2^3$.",
+     "This is $4+2$."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "How many relations exist on a set $A$ with $3$ elements?",
+    "options": [
+     "9",
+     "27",
+     "512",
+     "18"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "A relation on $A$ is a subset of $A\\times A$, which has $9$ pairs: $2^9=512$.",
+    "option_explanations": [
+     "This is the number of pairs.",
+     "This is $3^3$.",
+     "Correct.",
+     "This is $2\\cdot 9$."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Let $A=\\{2,6\\}$, $B=\\{3,5,9\\}$ and $R=\\{(a,b)\\mid a\\in A,\\ b\\in B,\\ |a-b|\\ge 3\\}$. What is $R$?",
+   "options": [
+    "$\\{(2,5),(2,9),(6,9)\\}$",
+    "$\\{(2,5),(2,9),(6,3),(6,9)\\}$",
+    "$\\{(2,3),(6,5)\\}$",
+    "$\\{(5,2),(9,2),(3,6),(9,6)\\}$"
+   ],
+   "correct": [
+    1
+   ],
+   "explanation": "Test each of the 6 pairs: $|2-5|=3$, $|2-9|=7$, $|6-3|=3$, $|6-9|=3$ qualify; $|2-3|=1$ and $|6-5|=1$ do not.",
+   "option_explanations": [
+    "It drops $(6,3)$, treating $a-b$ as if it had to be positive.",
+    "Correct.",
+    "These are the pairs that fail the condition.",
+    "Coordinates reversed: those pairs are not in $A\\times B$."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Let $A=\\{1,5\\}$, $B=\\{2,4,8\\}$ and $R=\\{(a,b)\\mid |a-b|\\ge 3\\}$. Find $R$.",
+    "options": [
+     "$\\{(1,4),(1,8),(5,8)\\}$",
+     "$\\{(1,2),(5,4)\\}$",
+     "$\\{(4,1),(8,1),(2,5),(8,5)\\}$",
+     "$\\{(1,4),(1,8),(5,2),(5,8)\\}$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "$|1-4|=3,|1-8|=7,|5-2|=3,|5-8|=3$ pass; $|1-2|=1,|5-4|=1$ fail.",
+    "option_explanations": [
+     "It misses $(5,2)$ where $a>b$.",
+     "These pairs fail the condition.",
+     "Pairs are in the wrong order.",
+     "Correct."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Let $A=\\{0,3\\}$, $B=\\{1,4,7\\}$ and $R=\\{(a,b)\\mid |a-b|\\le 2\\}$. Find $R$.",
+    "options": [
+     "$\\{(0,1),(3,4)\\}$",
+     "$\\{(0,4),(0,7),(3,7)\\}$",
+     "$\\{(0,1),(3,1),(3,4)\\}$",
+     "$\\{(1,0),(1,3),(4,3)\\}$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "$|0-1|=1,|3-1|=2,|3-4|=1$ pass; the other three pairs differ by 4 or more.",
+    "option_explanations": [
+     "It misses $(3,1)$, where $a>b$ but the difference is 2.",
+     "These are the pairs that fail.",
+     "Correct.",
+     "Pairs in the wrong order."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "basic",
+   "question": "Let $A=\\{2,5\\}$ and $B=\\{3,6,8\\}$ and $R=\\{(a,b)\\mid a\\in A,\\ b\\in B,\\ a+b\\le 10\\}$. Find $A\\times B$ and $R$.",
+   "answer": "$A\\times B=\\{(2,3),(2,6),(2,8),(5,3),(5,6),(5,8)\\}$. Sums: $2+3=5$, $2+6=8$, $2+8=10$, $5+3=8$ pass; $5+6=11$, $5+8=13$ fail. So $R=\\{(2,3),(2,6),(2,8),(5,3)\\}\\subseteq A\\times B$."
+  },
+  "versions": [
+   {
+    "type": "basic",
+    "question": "Let $A=\\{1,3\\}$ and $B=\\{4,7,9\\}$, $R=\\{(a,b)\\mid a\\in A,\\ b\\in B,\\ a+b\\ge 10\\}$. Find $A\\times B$ and $R$.",
+    "answer": "$A\\times B=\\{(1,4),(1,7),(1,9),(3,4),(3,7),(3,9)\\}$. Sums: $5,8,10,7,10,12$. Those $\\ge10$: $(1,9),(3,7),(3,9)$. So $R=\\{(1,9),(3,7),(3,9)\\}$."
+   },
+   {
+    "type": "basic",
+    "question": "Let $A=\\{3,6\\}$, $B=\\{2,5,7\\}$ and $R=\\{(a,b)\\mid a\\in A,\\ b\\in B,\\ ab\\le 20\\}$. List $A\\times B$, then $R$.",
+    "answer": "$A\\times B=\\{(3,2),(3,5),(3,7),(6,2),(6,5),(6,7)\\}$. Products: $6,15,21,12,30,42$. Those $\\le 20$: $(3,2),(3,5),(6,2)$. So $R=\\{(3,2),(3,5),(6,2)\\}$."
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Let $A=\\{1,4\\}$, $B=\\{3,5\\}$ and $R=\\{(a,b)\\mid a\\in A,b\\in B,|a-b|\\ge2\\}$. Why is $(3,1)\\notin R$?",
+   "options": [
+    "$3\\notin A$, so $(3,1)$ is not in $A\\times B$",
+    "$|3-1|=2$ fails the condition",
+    "A relation holds each pair in only one order",
+    "$(3,1)\\in R$ only if $(1,3)\\notin R$"
+   ],
+   "correct": [
+    0
+   ],
+   "explanation": "$R\\subseteq A\\times B$, and the pair $(3,1)$ has the wrong coordinate order for $A\\times B$.",
+   "option_explanations": [
+    "Correct.",
+    "$|3-1|=2\\ge2$ satisfies the condition.",
+    "Relations can contain both orders when both pairs lie in $A\\times B$.",
+    "There is no such rule."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Let $A=\\{2,7\\}$, $B=\\{4,9\\}$ and $R=\\{(a,b)\\mid a<b\\}$ from $A$ to $B$. Which pair is in $R$?",
+    "options": [
+     "$(4,2)$",
+     "$(9,7)$",
+     "$(7,4)$",
+     "$(7,9)$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "A pair must lie in $A\\times B$ and satisfy $a<b$.",
+    "option_explanations": [
+     "$4\\notin A$, so not in $A\\times B$.",
+     "$9\\notin A$, so not in $A\\times B$.",
+     "$7<4$ is false.",
+     "Correct."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "If $(a,b)\\in R$ for a relation $R$ from $A$ to $B$, what can be said about $(b,a)$?",
+    "options": [
+     "It is forced into $R$",
+     "It is not forced to be in $R$",
+     "It is forced into $R$ whenever $a\\ne b$",
+     "It is forced into $R$ whenever $a\\in B$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Membership of $(a,b)$ says nothing about $(b,a)$ (it may not even lie in $A\\times B$).",
+    "option_explanations": [
+     "Only symmetric relations force this.",
+     "Correct.",
+     "Symmetry has no such condition either.",
+     "Still not forced, even then."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "In the arrow diagram of a relation $R$ from $A$ to $B$, what does an arrow from $a$ to $b$ mean?",
+   "options": [
+    "$(b,a)\\in R$",
+    "$(a,b)\\in R$",
+    "$a=b$",
+    "$a\\in B$ and $b\\in A$"
+   ],
+   "correct": [
+    1
+   ],
+   "explanation": "One arrow is drawn for every pair $(a,b)$ of $R$.",
+   "option_explanations": [
+    "That would be an arrow from $b$ to $a$.",
+    "Correct.",
+    "Arrows connect related elements, not equal ones.",
+    "The left set is $A$ and the right set is $B$."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "$R=\\{(1,4),(2,4),(2,6)\\}$ is drawn as an arrow diagram. How many arrows start at $2$?",
+    "options": [
+     "3",
+     "1",
+     "0",
+     "2"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "Pairs with first entry 2 are $(2,4)$ and $(2,6)$.",
+    "option_explanations": [
+     "That is the total number of arrows.",
+     "$(2,6)$ is also an arrow from 2.",
+     "There are pairs starting at 2.",
+     "Correct."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "How many arrows does the diagram of $R=\\{(p,x),(p,y),(q,y),(r,x)\\}$ have?",
+    "options": [
+     "4",
+     "3",
+     "6",
+     "2"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "One arrow per pair of $R$.",
+    "option_explanations": [
+     "Correct.",
+     "That counts elements of $A$, not pairs.",
+     "That is $|A\\times B|$; only pairs in $R$ get arrows.",
+     "That counts elements of $B$."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "How many pairs are in $R=\\{(a,b)\\mid a+b=10\\}$ on the positive integers?",
+   "options": [
+    "10",
+    "5",
+    "9",
+    "8"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "$(1,9),(2,8),\\dots,(9,1)$: $a$ ranges over $1..9$.",
+   "option_explanations": [
+    "$a=10$ would need $b=0$, not positive.",
+    "That counts unordered pairs.",
+    "Correct.",
+    "$(5,5)$ also counts, so 9."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "How many pairs does $R=\\{(a,b)\\mid a+b=8\\}$ have on the positive integers?",
+    "options": [
+     "8",
+     "4",
+     "6",
+     "7"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "$a=1,\\dots,7$ with $b=8-a$.",
+    "option_explanations": [
+     "$a=8$ needs $b=0$.",
+     "This counts unordered pairs.",
+     "$(4,4)$ is included, giving 7.",
+     "Correct."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "How many pairs does $R=\\{(a,b)\\mid a+b=6\\}$ have on the positive integers?",
+    "options": [
+     "6",
+     "5",
+     "3",
+     "4"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "$a=1,\\dots,5$: $(1,5),(2,4),(3,3),(4,2),(5,1)$.",
+    "option_explanations": [
+     "$a=6$ needs $b=0$.",
+     "Correct.",
+     "This counts unordered pairs.",
+     "The pair $(3,3)$ is also in $R$."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "What does \"$R$ is a relation on $A$\" mean?",
+   "options": [
+    "$R\\subseteq A$",
+    "$R\\subseteq A\\cup A$",
+    "$R\\subseteq A\\times A$",
+    "$R = A\\times A$"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "A relation on $A$ is a relation from $A$ to itself.",
+   "option_explanations": [
+    "$R$ holds pairs, not single elements of $A$.",
+    "$A\\cup A=A$ has no pairs.",
+    "Correct.",
+    "$R$ may be any subset, not just the whole product."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Which of these could be a relation on $A=\\{1,2\\}$?",
+    "options": [
+     "$\\{(2,1),(2,2)\\}$",
+     "$\\{1,2\\}$",
+     "$\\{(1,2,1)\\}$",
+     "$\\{(1,3)\\}$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Every pair must have both entries in $A$.",
+    "option_explanations": [
+     "Correct.",
+     "These are elements, not pairs.",
+     "A triple is not a pair.",
+     "$3\\notin A$."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "What is the largest possible number of pairs in a relation on $A=\\{x,y,z\\}$?",
+    "options": [
+     "9",
+     "3",
+     "6",
+     "27"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "$|A\\times A|=3\\cdot3=9$.",
+    "option_explanations": [
+     "Correct.",
+     "That is $|A|$.",
+     "That is $3\\cdot2$, omitting $(a,a)$ pairs.",
+     "That is $3^3$, the size of a triple product."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Let $R=\\{(a,b)\\mid b=2^a\\}$ on the non-negative integers. Which pair is in $R$?",
+   "options": [
+    "$(5,10)$",
+    "$(3,6)$",
+    "$(4,16)$",
+    "$(4,8)$"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "$2^4=16$.",
+   "option_explanations": [
+    "$2^5=32$, not 10.",
+    "$2^3=8$, not 6.",
+    "Correct.",
+    "$2^4=16$, not 8."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Let $R=\\{(a,b)\\mid b=a^2\\}$ on the non-negative integers. Which pair is in $R$?",
+    "options": [
+     "$(6,12)$",
+     "$(6,36)$",
+     "$(36,6)$",
+     "$(6,64)$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "$6^2=36$.",
+    "option_explanations": [
+     "$6^2$ is 36, not $2\\cdot6$.",
+     "Correct.",
+     "The roles of $a$ and $b$ are swapped.",
+     "$2^6=64$, not $6^2$."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Let $R=\\{(a,b)\\mid b=3a+1\\}$ on the integers. Which pair is in $R$?",
+    "options": [
+     "$(4,12)$",
+     "$(13,4)$",
+     "$(4,7)$",
+     "$(4,13)$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "$3\\cdot4+1=13$.",
+    "option_explanations": [
+     "That is $3a$ without the $+1$.",
+     "The pair is reversed.",
+     "That is $a+3$.",
+     "Correct."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Let $R=\\{(a,b)\\mid a=b^2\\}$ on the integers. Which pair is in $R$?",
+   "options": [
+    "$(-9,3)$",
+    "$(3,9)$",
+    "$(9,-3)$",
+    "$(-3,9)$"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "$(-3)^2=9$.",
+   "option_explanations": [
+    "$3^2=9$, not $-9$.",
+    "$9^2=81\\ne3$.",
+    "Correct.",
+    "$9^2=81\\ne -3$."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Let $R=\\{(a,b)\\mid a=2b\\}$ on the integers. Which pair is in $R$?",
+    "options": [
+     "$(10,5)$",
+     "$(5,10)$",
+     "$(-10,5)$",
+     "$(10,-5)$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "$10=2\\cdot5$.",
+    "option_explanations": [
+     "Correct.",
+     "The coordinates are swapped.",
+     "$2\\cdot5=10\\neq-10$.",
+     "$2\\cdot(-5)=-10\\ne10$."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Let $R=\\{(a,b)\\mid a-b=3\\}$ on the integers. Which pair is in $R$?",
+    "options": [
+     "$(-2,1)$",
+     "$(1,2)$",
+     "$(4,2)$",
+     "$(1,-2)$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "$1-(-2)=3$.",
+    "option_explanations": [
+     "$-2-1=-3$.",
+     "$1-2=-1$.",
+     "$4-2=2$.",
+     "Correct."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "A relation $R$ on $A$ is **reflexive** when:",
+   "options": [
+    "$(a,b)\\in R$ implies $(b,a)\\in R$",
+    "$(a,a)\\in R$ for every $a\\in A$",
+    "$(a,b),(b,c)\\in R$ imply $(a,c)\\in R$",
+    "$(a,a)\\in R$ for some $a\\in A$"
+   ],
+   "correct": [
+    1
+   ],
+   "explanation": "Reflexivity demands every element be related to itself.",
+   "option_explanations": [
+    "That is symmetry.",
+    "Correct.",
+    "That is transitivity.",
+    "It must hold for every element, not just some."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Which pairs must a reflexive relation on $\\{x,y,z\\}$ contain?",
+    "options": [
+     "$\\{(x,y),(y,z),(z,x)\\}$",
+     "$\\{(x,x),(y,y),(z,z)\\}$",
+     "$\\{(x,y),(y,x),(z,z)\\}$",
+     "$\\{(x,z),(z,x),(x,x)\\}$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Each element needs its own pair $(a,a)$.",
+    "option_explanations": [
+     "These relate different elements only.",
+     "Correct.",
+     "This lacks $(x,x)$ and $(y,y)$.",
+     "This lacks $(y,y)$."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "What is the least number of pairs a reflexive relation on a $7$-element set can have?",
+    "options": [
+     "14",
+     "49",
+     "21",
+     "7"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "Exactly the seven pairs $(a,a)$ are forced.",
+    "option_explanations": [
+     "That counts each pair twice.",
+     "That is $|A\\times A|$, the largest relation.",
+     "That is $\\binom72$.",
+     "Correct."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "$A=\\{1,2,3,4\\}$ and $R=\\{(1,1),(2,2),(3,3),(1,4),(4,1)\\}$. Which pair must be added to make $R$ reflexive?",
+   "options": [
+    "$(4,4)$",
+    "$(1,3)$",
+    "$(3,4)$",
+    "$(2,1)$"
+   ],
+   "correct": [
+    0
+   ],
+   "explanation": "Reflexive needs $(a,a)$ for all $a$; only $(4,4)$ is missing.",
+   "option_explanations": [
+    "Correct.",
+    "Not of the form $(a,a)$.",
+    "Not of the form $(a,a)$.",
+    "Not of the form $(a,a)$."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "$A=\\{a,b,c\\}$ and $R=\\{(a,a),(b,b),(a,c),(c,b)\\}$. What must be added for $R$ to be reflexive?",
+    "options": [
+     "$(b,c)$",
+     "$(c,a)$",
+     "$(c,c)$",
+     "$(a,b)$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Only $(c,c)$ is missing among the pairs $(a,a)$.",
+    "option_explanations": [
+     "Not of the form $(a,a)$.",
+     "Not of the form $(a,a)$.",
+     "Correct.",
+     "Not of the form $(a,a)$."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "$R=\\{(5,5),(7,7),(6,5),(6,7),(7,6)\\}$ on $\\{5,6,7\\}$. Which pair makes it reflexive?",
+    "options": [
+     "$(5,6)$",
+     "$(7,5)$",
+     "$(5,7)$",
+     "$(6,6)$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "$(6,6)$ is the only missing $(a,a)$.",
+    "option_explanations": [
+     "Not of the form $(a,a)$.",
+     "Not of the form $(a,a)$.",
+     "Not of the form $(a,a)$.",
+     "Correct."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Which relation on the integers is reflexive?",
+   "options": [
+    "$<$",
+    "$\\le$",
+    "$>$",
+    "$\\neq$"
+   ],
+   "correct": [
+    1
+   ],
+   "explanation": "$a\\le a$ always holds.",
+   "option_explanations": [
+    "$a<a$ is false.",
+    "Correct.",
+    "$a>a$ is false.",
+    "$a\\ne a$ is false."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Which relation on the integers is NOT reflexive?",
+    "options": [
+     "$=$",
+     "$\\le$",
+     "$<$",
+     "$\\ge$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "$a<a$ is never true, so no $(a,a)$ is present.",
+    "option_explanations": [
+     "$a=a$ always holds.",
+     "$a\\le a$ always holds.",
+     "Correct.",
+     "$a\\ge a$ always holds."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which relation on the integers is reflexive?",
+    "options": [
+     "$\\ge$",
+     "$<$",
+     "$\\neq$",
+     "$>$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "$a\\ge a$ is true for every $a$.",
+    "option_explanations": [
+     "Correct.",
+     "Fails: $a<a$ false.",
+     "Fails: $a\\ne a$ false.",
+     "Fails: $a>a$ false."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Which relation on the positive integers is reflexive?",
+   "options": [
+    "$\\{(a,b)\\mid a-b=0\\}$",
+    "$\\{(a,b)\\mid a+b=0\\}$",
+    "$\\{(a,b)\\mid a-b=1\\}$",
+    "$\\{(a,b)\\mid a+b=10\\}$"
+   ],
+   "correct": [
+    0
+   ],
+   "explanation": "$a-a=0$ for every $a$.",
+   "option_explanations": [
+    "Correct.",
+    "$a+a=2a>0$.",
+    "$a-a=0\\ne1$.",
+    "$a+a=10$ holds only for $a=5$."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Which relation on the positive integers is reflexive?",
+    "options": [
+     "$\\{(a,b)\\mid a+b \\text{ is odd}\\}$",
+     "$\\{(a,b)\\mid a-b=2\\}$",
+     "$\\{(a,b)\\mid a/b \\text{ is an integer}\\}$",
+     "$\\{(a,b)\\mid a+b=0\\}$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "$a/a=1$ is an integer.",
+    "option_explanations": [
+     "$a+a=2a$ is even.",
+     "$a-a=0\\ne2$.",
+     "Correct.",
+     "$a+a>0$."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which relation on the positive integers is reflexive?",
+    "options": [
+     "$\\{(a,b)\\mid |a-b|=1\\}$",
+     "$\\{(a,b)\\mid |a-b|<1\\}$",
+     "$\\{(a,b)\\mid a-b\\ge1\\}$",
+     "$\\{(a,b)\\mid a+b<2\\}$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "$|a-a|=0<1$.",
+    "option_explanations": [
+     "$|a-a|=0\\ne1$.",
+     "Correct.",
+     "$a-a=0<1$.",
+     "$a+a\\ge2$."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Which relation on $A=\\{2,3,4\\}$ is reflexive?",
+   "options": [
+    "$\\{(2,2)\\}$",
+    "$\\{\\}$",
+    "$\\{(2,2),(2,3),(3,2),(3,3)\\}$",
+    "$\\{(2,2),(3,3),(4,4)\\}$"
+   ],
+   "correct": [
+    3
+   ],
+   "explanation": "All of $(2,2),(3,3),(4,4)$ are needed.",
+   "option_explanations": [
+    "Lacks $(3,3)$ and $(4,4)$.",
+    "The empty relation has none of the required pairs.",
+    "Lacks $(4,4)$.",
+    "Correct."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Which relation on $A=\\{1,2\\}$ is reflexive?",
+    "options": [
+     "$\\{(1,1),(1,2),(2,1)\\}$",
+     "$\\{(2,2),(2,1)\\}$",
+     "$\\{(1,1),(2,2),(1,2)\\}$",
+     "$\\{\\}$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Both $(1,1)$ and $(2,2)$ are present; extra pairs are allowed.",
+    "option_explanations": [
+     "Lacks $(2,2)$.",
+     "Lacks $(1,1)$.",
+     "Correct.",
+     "Empty: no $(a,a)$ present."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which relation on $A=\\{p,q,r,s\\}$ is reflexive?",
+    "options": [
+     "$\\{(p,p),(q,q),(r,r),(s,s),(p,s)\\}$",
+     "$\\{(p,p),(q,q),(r,r),(p,s),(s,p)\\}$",
+     "$\\{(p,q),(q,r),(r,s),(s,p)\\}$",
+     "$\\{(p,p),(q,q),(s,s),(r,q)\\}$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "All four $(a,a)$ pairs appear.",
+    "option_explanations": [
+     "Correct.",
+     "Lacks $(s,s)$.",
+     "Contains no $(a,a)$ pair.",
+     "Lacks $(r,r)$."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "A relation $R$ is **symmetric** when:",
+   "options": [
+    "$(a,a)\\in R$ for every $a$",
+    "$(a,b),(b,c)\\in R$ imply $(a,c)\\in R$",
+    "$(a,b)\\in R$ implies $(b,a)\\notin R$",
+    "$(a,b)\\in R$ implies $(b,a)\\in R$"
+   ],
+   "correct": [
+    3
+   ],
+   "explanation": "Every pair must come with its reversed pair.",
+   "option_explanations": [
+    "That is reflexivity.",
+    "That is transitivity.",
+    "That is the opposite (asymmetry).",
+    "Correct."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "What are $(a,b)$ and $(b,a)$ called?",
+    "options": [
+     "Transitive pairs",
+     "Symmetric pairs",
+     "Reflexive pairs",
+     "Composite pairs"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Each is the symmetric pair of the other.",
+    "option_explanations": [
+     "Transitive pairs come from chains $(a,b),(b,c)$.",
+     "Correct.",
+     "Reflexive pairs have the form $(a,a)$.",
+     "Composition combines two relations."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "In a symmetric relation, what is the symmetric pair of $(a,a)$?",
+    "options": [
+     "$(a,b)$ for some $b$",
+     "$(a,a)$ itself",
+     "$(b,b)$ for another element",
+     "A new pair that must be added"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "$(a,a)$ reversed is $(a,a)$, so it never needs a partner.",
+    "option_explanations": [
+     "No other pair is forced.",
+     "Correct.",
+     "No other pair is forced.",
+     "Nothing needs adding."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "$R=\\{(1,2),(2,1),(3,3),(1,3)\\}$ on $\\{1,2,3\\}$. Which pair must be added to make $R$ symmetric?",
+   "options": [
+    "$(2,3)$",
+    "$(1,1)$",
+    "$(2,2)$",
+    "$(3,1)$"
+   ],
+   "correct": [
+    3
+   ],
+   "explanation": "$(1,3)\\in R$ needs $(3,1)$.",
+   "option_explanations": [
+    "Nothing forces $(2,3)$.",
+    "$(1,1)$ is not needed for symmetry.",
+    "$(2,2)$ is not needed for symmetry.",
+    "Correct."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "$R=\\{(a,b),(b,a),(c,d),(d,d)\\}$ on $\\{a,b,c,d\\}$. What is needed for symmetry?",
+    "options": [
+     "$(d,c)$",
+     "$(c,c)$",
+     "$(b,c)$",
+     "$(a,d)$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "$(c,d)\\in R$ needs $(d,c)$.",
+    "option_explanations": [
+     "Correct.",
+     "Not forced by any pair.",
+     "Not forced by any pair.",
+     "Not forced by any pair."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "$R=\\{(2,3),(3,2),(4,2),(3,3)\\}$ on $\\{2,3,4\\}$. Which pair makes it symmetric?",
+    "options": [
+     "$(4,3)$",
+     "$(4,4)$",
+     "$(2,4)$",
+     "$(3,4)$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "$(4,2)\\in R$ needs $(2,4)$.",
+    "option_explanations": [
+     "Not forced.",
+     "Not forced.",
+     "Correct.",
+     "Not forced."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Which relation on $A=\\{2,3,4\\}$ is symmetric?",
+   "options": [
+    "$\\{(2,3)\\}$",
+    "$\\{(2,3),(3,4),(4,2)\\}$",
+    "$\\{(2,2),(2,3),(3,2),(4,3)\\}$",
+    "$\\{(4,4),(3,3)\\}$"
+   ],
+   "correct": [
+    3
+   ],
+   "explanation": "Pairs $(a,a)$ are their own partners.",
+   "option_explanations": [
+    "$(3,2)$ is missing.",
+    "None of the reversed pairs is present.",
+    "$(3,4)$ is missing for $(4,3)$.",
+    "Correct."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Which relation on $A=\\{a,b,c\\}$ is symmetric?",
+    "options": [
+     "$\\{(a,b),(b,c),(c,a)\\}$",
+     "$\\{(a,b),(b,a),(c,c)\\}$",
+     "$\\{(a,b),(b,a),(a,c)\\}$",
+     "$\\{(a,a),(b,c)\\}$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Every pair has its reverse.",
+    "option_explanations": [
+     "No reversed pair is present.",
+     "Correct.",
+     "$(c,a)$ is missing.",
+     "$(c,b)$ is missing."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which relation on $A=\\{1,2,3\\}$ is symmetric?",
+    "options": [
+     "$\\{(1,2),(2,2)\\}$",
+     "$\\{(1,3),(3,1),(2,1)\\}$",
+     "$\\{(1,3),(3,1),(2,2)\\}$",
+     "$\\{(3,1),(3,2),(2,3)\\}$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Each pair has its reverse.",
+    "option_explanations": [
+     "$(2,1)$ is missing for $(1,2)$.",
+     "$(1,2)$ is missing.",
+     "Correct.",
+     "$(1,3)$ is missing."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "What can be said about the empty relation $R=\\{\\}$ on $A=\\{1,2,3\\}$?",
+   "options": [
+    "Symmetric and transitive, not reflexive",
+    "Reflexive and symmetric, not transitive",
+    "Reflexive and transitive, not symmetric",
+    "Not symmetric, transitive or reflexive"
+   ],
+   "correct": [
+    0
+   ],
+   "explanation": "No pairs means no symmetric or transitive requirement can fail, but $(a,a)$ is missing.",
+   "option_explanations": [
+    "Correct.",
+    "Not reflexive: no $(a,a)$ pairs.",
+    "Not reflexive: no $(a,a)$ pairs.",
+    "The conditions for symmetry and transitivity hold vacuously."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "The empty relation on $\\{x,y\\}$ satisfies which set of properties?",
+    "options": [
+     "Symmetric and transitive",
+     "Reflexive and symmetric",
+     "Reflexive and transitive",
+     "All three"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Nothing to check for symmetry or transitivity; reflexivity fails.",
+    "option_explanations": [
+     "Correct.",
+     "Reflexivity fails.",
+     "Reflexivity fails.",
+     "Reflexivity fails."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which statement about $R=\\{\\}$ on $\\{p,q,r\\}$ is true?",
+    "options": [
+     "It is reflexive but not symmetric",
+     "It is reflexive but not transitive",
+     "It is symmetric but not reflexive",
+     "It is transitive but not symmetric"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "It lacks $(p,p),(q,q),(r,r)$, but symmetry and transitivity hold vacuously.",
+    "option_explanations": [
+     "It has no pairs $(a,a)$, so it is not reflexive.",
+     "It is not reflexive.",
+     "Correct.",
+     "It is symmetric too, since there is nothing to check."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Which relation on the integers is symmetric?",
+   "options": [
+    "$a-b=1$",
+    "$|a-b|=1$",
+    "$a<b$",
+    "$a\\ge b$"
+   ],
+   "correct": [
+    1
+   ],
+   "explanation": "$|a-b|=|b-a|$.",
+   "option_explanations": [
+    "$b-a=-1$ if $a-b=1$.",
+    "Correct.",
+    "$a<b$ forbids $b<a$.",
+    "$a\\ge b$ does not give $b\\ge a$ unless equal."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Which relation among a set of men is symmetric?",
+    "options": [
+     "\"is a father of\"",
+     "\"is an ancestor of\"",
+     "\"is taller than\"",
+     "\"is a brother of\""
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "If $a$ is a brother of $b$, $b$ is a brother of $a$.",
+    "option_explanations": [
+     "A father is not a son of his child.",
+     "Ancestry goes one way.",
+     "Taller than is one-directional.",
+     "Correct."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Why is $<$ on the integers not symmetric?",
+    "options": [
+     "$(a,a)$ is absent for each $a$",
+     "$(a,c)$ is absent when $a<b<c$",
+     "$a<b$ gives $b\\not<a$",
+     "$(a,b)$ excludes $(b,c)$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "For $(a,b)\\in R$ we get $b\\not< a$, so the reverse is absent.",
+    "option_explanations": [
+     "That is the failure of reflexivity.",
+     "$<$ is transitive, so $(a,c)$ is present.",
+     "Correct.",
+     "Both can be present."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "A relation $R$ is **transitive** when:",
+   "options": [
+    "$(a,b),(b,c)\\in R$ imply $(a,c)\\in R$",
+    "$(a,b)\\in R$ implies $(b,a)\\in R$",
+    "$(a,b),(b,c)\\in R$ imply $(c,a)\\in R$",
+    "$(a,b)\\in R$ implies $(a,a),(b,b)\\in R$"
+   ],
+   "correct": [
+    0
+   ],
+   "explanation": "Every chain $a\\to b\\to c$ must be closed by the pair $(a,c)$.",
+   "option_explanations": [
+    "Correct.",
+    "That is symmetry.",
+    "The closing pair is $(a,c)$, not $(c,a)$.",
+    "That is a reflexivity-type requirement."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "$(3,5)$ and $(5,8)$ are in a transitive relation $R$. Which pair must also be in $R$?",
+    "options": [
+     "$(8,3)$",
+     "$(3,3)$",
+     "$(5,3)$",
+     "$(3,8)$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "The transitive pair of $(a,b),(b,c)$ is $(a,c)$.",
+    "option_explanations": [
+     "That reverses the pair.",
+     "Not forced by this chain.",
+     "Not forced by this chain.",
+     "Correct."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "$(2,6)$ and $(6,9)$ lie in a transitive relation $R$. Which pair is forced?",
+    "options": [
+     "$(9,2)$",
+     "$(2,9)$",
+     "$(2,2)$",
+     "$(6,6)$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Chain $2\\to6\\to9$ forces $(2,9)$.",
+    "option_explanations": [
+     "That reverses the pair.",
+     "Correct.",
+     "Not forced by this chain.",
+     "Not forced by this chain."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "basic",
+   "question": "$R=\\{(1,2),(2,3),(3,1)\\}$ on $\\{1,2,3\\}$. Is $R$ transitive? Justify and list the transitive pairs that are missing.",
+   "answer": "Check each chain: $(1,2),(2,3)$ requires $(1,3)$; $(2,3),(3,1)$ requires $(2,1)$; $(3,1),(1,2)$ requires $(3,2)$. None of $(1,3),(2,1),(3,2)$ is in $R$, so $R$ is **not transitive** (one missing pair is enough). Missing: $(1,3),(2,1),(3,2)$."
+  },
+  "versions": [
+   {
+    "type": "basic",
+    "question": "$R=\\{(a,b),(b,c),(c,c)\\}$ on $\\{a,b,c\\}$. Is $R$ transitive? Justify.",
+    "answer": "Chains: $(a,b),(b,c)$ requires $(a,c)$, which is absent. So $R$ is **not transitive**. Other chains ($(b,c),(c,c)$ gives $(b,c)$; $(c,c),(c,c)$ gives $(c,c)$) are fine. Adding $(a,c)$ makes it transitive."
+   },
+   {
+    "type": "basic",
+    "question": "$R=\\{(1,3),(3,4),(4,2),(2,2)\\}$ on $\\{1,2,3,4\\}$. Is $R$ transitive? List the missing pairs from the direct chains.",
+    "answer": "Chains: $(1,3),(3,4)$ requires $(1,4)$: absent. $(3,4),(4,2)$ requires $(3,2)$: absent. $(4,2),(2,2)$ requires $(4,2)$: present. So $R$ is **not transitive**; missing $(1,4)$ and $(3,2)$. (Adding them creates the new chain $(1,4),(4,2)$ requiring $(1,2)$.)"
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "$R=\\{(1,2),(3,2),(4,2)\\}$ on $\\{1,2,3,4\\}$. What can be said?",
+   "options": [
+    "Not transitive, since $(1,3)$ is missing",
+    "Transitive, since no pair starts with 2",
+    "Not transitive, since $(2,2)$ is missing",
+    "Not transitive, since $(2,1)$ is missing"
+   ],
+   "correct": [
+    1
+   ],
+   "explanation": "A chain needs a pair $(2,c)$ after $(a,2)$; none exists, so nothing is required.",
+   "option_explanations": [
+    "$(1,3)$ would be needed only after a chain $(1,x),(x,3)$.",
+    "Correct.",
+    "$(2,2)$ is needed only after a chain through 2.",
+    "$(2,1)$ is only needed for symmetry."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "$R=\\{(2,1),(3,1),(4,3)\\}$ on $\\{1,2,3,4\\}$. What can be said?",
+    "options": [
+     "Transitive, since no pair starts with 1",
+     "Not transitive, since $(1,1)$ is missing",
+     "Not transitive, since $(3,4)$ is missing",
+     "Not transitive, since $(4,1)$ is missing"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "Chain $(4,3),(3,1)$ forces $(4,1)$.",
+    "option_explanations": [
+     "The chain through 3 does exist.",
+     "$(1,1)$ is not forced by any chain.",
+     "$(3,4)$ is not forced by any chain.",
+     "Correct."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "$R=\\{(5,6),(6,6),(7,6)\\}$ on $\\{5,6,7\\}$. What can be said?",
+    "options": [
+     "Transitive, all chains close",
+     "Not transitive, since $(5,7)$ is missing",
+     "Not transitive, since $(6,5)$ is missing",
+     "Not transitive, since $(6,7)$ is missing"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "The only chains are $(a,6),(6,6)$, which give $(a,6)\\in R$.",
+    "option_explanations": [
+     "Correct.",
+     "No chain forces $(5,7)$.",
+     "No chain forces $(6,5)$.",
+     "No chain forces $(6,7)$."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Which relation on $A=\\{1,2,3,4\\}$ is transitive?",
+   "options": [
+    "$\\{(1,2),(2,3)\\}$",
+    "$\\{(2,3),(3,2),(3,3)\\}$",
+    "$\\{\\}$",
+    "$\\{(1,4),(4,2)\\}$"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "With no pairs there are no chains, so nothing is required.",
+   "option_explanations": [
+    "Needs $(1,3)$.",
+    "Needs $(2,2)$.",
+    "Correct.",
+    "Needs $(1,2)$."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Which relation on $A=\\{1,2,3,4\\}$ is transitive?",
+    "options": [
+     "$\\{(1,2),(2,3)\\}$",
+     "$\\{(2,3),(3,2)\\}$",
+     "$\\{(3,4),(4,1)\\}$",
+     "$\\{(2,2)\\}$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "The only chain is $(2,2),(2,2)$ giving $(2,2)$.",
+    "option_explanations": [
+     "Needs $(1,3)$.",
+     "Needs $(2,2)$ and $(3,3)$.",
+     "Needs $(3,1)$.",
+     "Correct."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which relation on $\\{1,2,3\\}$ is transitive?",
+    "options": [
+     "$\\{(1,2),(2,1)\\}$",
+     "$\\{(1,1),(2,1),(2,2)\\}$",
+     "$\\{(1,2),(2,3),(3,3)\\}$",
+     "$\\{(1,3),(3,2),(2,2)\\}$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Every chain is closed: e.g. $(2,2),(2,1)$ gives $(2,1)$.",
+    "option_explanations": [
+     "Needs $(1,1)$ and $(2,2)$.",
+     "Correct.",
+     "Needs $(1,3)$.",
+     "Needs $(1,2)$."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Which relation on the integers is transitive?",
+   "options": [
+    "$\\neq$",
+    "$a-b=1$",
+    "$>$",
+    "$|a-b|=1$"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "$a>b$ and $b>c$ give $a>c$.",
+   "option_explanations": [
+    "$1\\ne2$, $2\\ne1$ but $1=1$.",
+    "$a-b=1,b-c=1$ gives $a-c=2$.",
+    "Correct.",
+    "$|1-2|=|2-3|=1$ but $|1-3|=2$."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Which relation among a set of men is transitive?",
+    "options": [
+     "\"is an ancestor of\"",
+     "\"is a father of\"",
+     "\"is a grandfather of\"",
+     "\"is an uncle of\""
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "An ancestor of an ancestor of $c$ is an ancestor of $c$.",
+    "option_explanations": [
+     "Correct.",
+     "A father's father is a grandfather, not a father.",
+     "A grandfather's grandfather is a great-grandfather.",
+     "An uncle's uncle need not be an uncle."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "If $a=kb$ and $b=mc$ for integers $k,m$, which expression shows $(a,c)$ is related by $\\{(a,b)\\mid a=kb,\\ k\\in\\mathbb Z\\}$?",
+    "options": [
+     "$a=(km)c$",
+     "$a=(k+m)c$",
+     "$a=(k/m)c$",
+     "$a=(k-m)c$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Substitute: $a=k(mc)=(km)c$, with $km$ an integer.",
+    "option_explanations": [
+     "Correct.",
+     "Substitution gives a product, not a sum.",
+     "Substitution gives a product, not a quotient.",
+     "Substitution gives a product, not a difference."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Is $R=\\{(a,b)\\mid a-b=1\\}$ on the integers transitive?",
+   "options": [
+    "Yes: $a-b=1$ and $b-c=1$ give $a-c=1$",
+    "Yes: $a>b$ and $b>c$ give $a>c$",
+    "No: $a-b=1$ and $b-c=1$ give $a-c=2$",
+    "No: $(a,a)$ is missing"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "The pair $(a,c)$ would need difference 1, but it is 2.",
+   "option_explanations": [
+    "Differences add to 2.",
+    "$a>c$ holds but the required difference is 1.",
+    "Correct.",
+    "Missing $(a,a)$ is a reflexivity issue."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Is $R=\\{(a,b)\\mid a-b=2\\}$ on the integers transitive?",
+    "options": [
+     "Yes: the chain gives $a-c=2$",
+     "No: the chain gives $a-c=4$",
+     "Yes: the chain gives $a-c=0$",
+     "No: $(b,a)$ is missing"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "$(a-b)+(b-c)=4\\ne2$.",
+    "option_explanations": [
+     "The differences add.",
+     "Correct.",
+     "The differences add.",
+     "Missing $(b,a)$ concerns symmetry."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which relation on the integers is NOT transitive?",
+    "options": [
+     "$a\\ge b$",
+     "$a=b$",
+     "$a\\le b$",
+     "$a-b=4$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "$a-b=4$ and $b-c=4$ give $a-c=8$.",
+    "option_explanations": [
+     "$a\\ge b\\ge c$ gives $a\\ge c$.",
+     "Equality is transitive: $a=b$ and $b=c$ give $a=c$.",
+     "$a\\le b\\le c$ gives $a\\le c$.",
+     "Correct."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "An **equivalence relation** is a relation that is:",
+   "options": [
+    "Reflexive and symmetric",
+    "Reflexive and transitive",
+    "Reflexive, symmetric and transitive",
+    "Symmetric and transitive"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "All three properties are required together.",
+   "option_explanations": [
+    "Transitivity is also required.",
+    "Symmetry is also required.",
+    "Correct.",
+    "Reflexivity is also required."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Which relation on the integers is an equivalence relation?",
+    "options": [
+     "$=$",
+     "$\\le$",
+     "$<$",
+     "$\\neq$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Equality is reflexive, symmetric and transitive.",
+    "option_explanations": [
+     "Correct.",
+     "Not symmetric.",
+     "Not reflexive.",
+     "Not reflexive."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "$R=\\{(1,1),(2,2),(3,3),(1,2),(2,1)\\}$ on $\\{1,2,3\\}$. Is it an equivalence relation?",
+    "options": [
+     "No; it is not reflexive",
+     "No; it is not symmetric",
+     "No; it is not transitive",
+     "Yes; all three properties hold"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "All $(a,a)$ present; $(1,2),(2,1)$ match; all chains close.",
+    "option_explanations": [
+     "$(1,1),(2,2),(3,3)$ are all present.",
+     "$(1,2)$ and $(2,1)$ are both present.",
+     "Every chain's closing pair is present.",
+     "Correct."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "$A=\\{a,b,c\\}$, $R=\\{(a,a),(b,b),(c,c),(a,b),(b,a),(b,c),(c,b)\\}$. Why is $R$ not an equivalence relation?",
+   "options": [
+    "Fails reflexivity: $(c,c)$ is missing",
+    "Fails transitivity: $(a,c)$ is missing",
+    "Fails symmetry: $(c,a)$ is missing",
+    "It is an equivalence relation"
+   ],
+   "correct": [
+    1
+   ],
+   "explanation": "Chain $(a,b),(b,c)$ needs $(a,c)$.",
+   "option_explanations": [
+    "$(c,c)$ is present.",
+    "Correct.",
+    "$(c,a)$ is needed only if $(a,c)\\in R$.",
+    "It is not transitive."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "$R=\\{(1,1),(3,3),(1,3),(3,1)\\}$ on $\\{1,2,3\\}$. Which property fails?",
+    "options": [
+     "Symmetry",
+     "Reflexivity",
+     "Transitivity",
+     "None; it is an equivalence"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "$(2,2)$ is missing; the other properties hold.",
+    "option_explanations": [
+     "$(1,3)$ and $(3,1)$ both appear.",
+     "Correct.",
+     "All chains close.",
+     "$(2,2)$ is missing."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "$R=\\{(a,a),(b,b),(c,c),(a,b)\\}$ on $\\{a,b,c\\}$. Which property fails?",
+    "options": [
+     "Reflexivity",
+     "Transitivity",
+     "None; it is an equivalence",
+     "Symmetry"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "$(a,b)\\in R$ but $(b,a)\\notin R$.",
+    "option_explanations": [
+     "All three $(x,x)$ are there.",
+     "Chains like $(a,b),(b,b)$ give $(a,b)$.",
+     "Symmetry fails.",
+     "Correct."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "basic",
+   "question": "On $A=\\{a,b,c\\}$ give a relation that is reflexive and symmetric but not transitive.",
+   "answer": "Take $R=\\{(a,a),(b,b),(c,c),(a,b),(b,a),(b,c),(c,b)\\}$. Reflexive: all $(x,x)$ present. Symmetric: $(a,b)/(b,a)$ and $(b,c)/(c,b)$. Not transitive: $(a,b),(b,c)$ require $(a,c)$, absent."
+  },
+  "versions": [
+   {
+    "type": "basic",
+    "question": "On $A=\\{a,b,c\\}$ give a relation that is symmetric and transitive but not reflexive.",
+    "answer": "Take $R=\\{(a,a),(b,b),(a,b),(b,a)\\}$. Symmetric: $(a,b)/(b,a)$ matched. Transitive: chains close ($(a,b),(b,a)$ gives $(a,a)$ etc.). Not reflexive: $(c,c)$ missing."
+   },
+   {
+    "type": "basic",
+    "question": "On $A=\\{a,b,c\\}$ give a relation that is reflexive and transitive but not symmetric.",
+    "answer": "Take $R=\\{(a,a),(b,b),(c,c),(a,b)\\}$. Reflexive: all $(x,x)$. Transitive: $(a,b),(b,b)$ gives $(a,b)$ present. Not symmetric: $(b,a)$ missing."
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "A \"family\" relation $R\\subseteq F\\times M\\times C$ (fathers, mothers, children) has elements that are:",
+   "options": [
+    "Triples (father, mother, child)",
+    "Ordered pairs of fathers and children",
+    "Single people from $F\\cup M\\cup C$",
+    "Sets of three unrelated people"
+   ],
+   "correct": [
+    0
+   ],
+   "explanation": "With three sets, each element is a 3-tuple with one entry from each set in order.",
+   "option_explanations": [
+    "Correct.",
+    "A pair has only two entries.",
+    "Elements are tuples, not single people.",
+    "Tuples are ordered and each slot has its own set."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "A relation $R\\subseteq A\\times B\\times C\\times D$ consists of tuples with how many components?",
+    "options": [
+     "2",
+     "3",
+     "4",
+     "24"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "One component per set.",
+    "option_explanations": [
+     "That is for two sets.",
+     "That is for three sets.",
+     "Correct.",
+     "24 is not a tuple length."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "With $R=\\{(a,q,x),(b,p,y),(b,p,z)\\}$ (father, mother, child), which tuple records father $b$, mother $p$, child $z$?",
+    "options": [
+     "$(b,z,p)$",
+     "$(p,b,z)$",
+     "$(z,p,b)$",
+     "$(b,p,z)$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "Order is father, mother, child.",
+    "option_explanations": [
+     "Mother and child swapped.",
+     "Father and mother swapped.",
+     "Order reversed.",
+     "Correct."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "$R=\\{(a,q,x),(b,p,y),(b,p,z)\\}$ lists (father, mother, child). How many children does father $b$ have in $R$?",
+   "options": [
+    "1",
+    "2",
+    "3",
+    "0"
+   ],
+   "correct": [
+    1
+   ],
+   "explanation": "Tuples with father $b$ are $(b,p,y)$ and $(b,p,z)$.",
+   "option_explanations": [
+    "$b$ appears twice.",
+    "Correct.",
+    "3 is the number of tuples in total.",
+    "$b$ appears in $R$."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "$R=\\{(a,p,x),(a,p,y),(b,q,z),(c,q,w)\\}$ lists (father, mother, child). How many children does mother $q$ have?",
+    "options": [
+     "1",
+     "3",
+     "2",
+     "4"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Tuples with mother $q$: $(b,q,z)$ and $(c,q,w)$.",
+    "option_explanations": [
+     "$q$ appears twice.",
+     "Only two tuples have mother $q$.",
+     "Correct.",
+     "4 is the number of all tuples."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "$R=\\{(a,p,x),(a,p,y),(b,q,z)\\}$, each tuple a family (father, mother, child). How many families does $R$ represent?",
+    "options": [
+     "3",
+     "2",
+     "6",
+     "1"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "One tuple means one family.",
+    "option_explanations": [
+     "Correct.",
+     "That counts distinct fathers.",
+     "6 is not the number of tuples.",
+     "There are three tuples."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Which set is the composition $R_1\\circ R_2$, with $R_1$ from $A$ to $B$ and $R_2$ from $B$ to $C$?",
+   "options": [
+    "$\\{(a,c)\\mid (a,b)\\in R_1 \\text{ and } (b,c)\\in R_2\\}$",
+    "$\\{(a,c)\\mid (a,b)\\in R_1 \\text{ or } (b,c)\\in R_2\\}$",
+    "$\\{(a,c)\\mid (a,c)\\in R_1 \\text{ and } (a,c)\\in R_2\\}$",
+    "$\\{(c,a)\\mid (a,b)\\in R_1 \\text{ and } (b,c)\\in R_2\\}$"
+   ],
+   "correct": [
+    0
+   ],
+   "explanation": "A pair $(a,c)$ is in the composition if some $b$ links them.",
+   "option_explanations": [
+    "Correct.",
+    "'Or' would not require a linking $b$.",
+    "That is the intersection.",
+    "The result pairs have the form $(a,c)$."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "If $R_1$ is a relation from $A$ to $B$ and $R_2$ from $B$ to $C$, $R_1\\circ R_2$ is a relation from:",
+    "options": [
+     "$A$ to $B$",
+     "$B$ to $C$",
+     "$A$ to $C$",
+     "$C$ to $A$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Its pairs are $(a,c)$.",
+    "option_explanations": [
+     "That is $R_1$.",
+     "That is $R_2$.",
+     "Correct.",
+     "The order is first to last."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "When is $(a,c)\\in R_1\\circ R_2$?",
+    "options": [
+     "For some $b$, $(b,a)\\in R_1$ and $(b,c)\\in R_2$",
+     "For some $b$, $(a,b)\\in R_1$ and $(b,c)\\in R_2$",
+     "For some $b$, $(a,b)\\in R_2$ and $(b,c)\\in R_1$",
+     "When $(a,c)\\in R_1$ or $(a,c)\\in R_2$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "A middle element $b$ must connect them in this order.",
+    "option_explanations": [
+     "The first relation must start at $a$.",
+     "Correct.",
+     "$R_1$ comes first.",
+     "That is the union."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "$R_1=\\{(1,x),(2,y),(2,z)\\}$ and $R_2=\\{(x,k),(y,m),(y,n),(z,m)\\}$. Find $R_1\\circ R_2$.",
+   "options": [
+    "$\\{(1,k),(2,m)\\}$",
+    "$\\{(k,1),(m,2),(n,2)\\}$",
+    "$\\{(1,k),(2,k),(2,n)\\}$",
+    "$\\{(1,k),(2,m),(2,n)\\}$"
+   ],
+   "correct": [
+    3
+   ],
+   "explanation": "$1\\to x\\to k$; $2\\to y\\to m,n$; $2\\to z\\to m$.",
+   "option_explanations": [
+    "Misses $(2,n)$.",
+    "Pairs are reversed.",
+    "$(2,k)$ has no linking element.",
+    "Correct."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "$R_1=\\{(a,1),(b,2),(c,2)\\}$ and $R_2=\\{(1,x),(1,y),(2,z)\\}$. Find $R_1\\circ R_2$.",
+    "options": [
+     "$\\{(a,x),(b,z),(c,z)\\}$",
+     "$\\{(x,a),(y,a),(z,b),(z,c)\\}$",
+     "$\\{(a,x),(a,y),(b,z),(c,z)\\}$",
+     "$\\{(a,x),(a,y),(b,z)\\}$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "$a\\to1\\to x,y$; $b\\to2\\to z$; $c\\to2\\to z$.",
+    "option_explanations": [
+     "Misses $(a,y)$.",
+     "Pairs are reversed.",
+     "Correct.",
+     "Misses $(c,z)$."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "$R_1=\\{(1,2),(2,3),(3,1)\\}$ and $R_2=\\{(2,4),(3,4),(1,5)\\}$. Find $R_1\\circ R_2$.",
+    "options": [
+     "$\\{(1,4),(2,4),(3,5)\\}$",
+     "$\\{(1,4),(2,4),(3,4)\\}$",
+     "$\\{(4,1),(4,2),(5,3)\\}$",
+     "$\\{(1,4),(2,5),(3,4)\\}$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "$1\\to2\\to4$; $2\\to3\\to4$; $3\\to1\\to5$.",
+    "option_explanations": [
+     "Correct.",
+     "$(3,4)$ would need $(1,4)\\in R_2$, but $R_2$ has $(1,5)$.",
+     "Pairs are reversed.",
+     "$(2,5)$ would need $(3,5)\\in R_2$, and $(3,4)$ would need $(1,4)\\in R_2$; neither is there."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "basic",
+   "question": "Let $F=\\{a,b\\}$, $M=\\{p,q,r\\}$, $C=\\{w,x,y,z\\}$, $R_1=\\{(a,p),(b,q),(a,r)\\}$ from $F$ to $M$ and $R_2=\\{(p,x),(p,z),(q,y),(r,w)\\}$ from $M$ to $C$. Find $R_1\\circ R_2$.",
+   "answer": "Follow each pair of $R_1$: $(a,p)$ with $(p,x),(p,z)$ gives $(a,x),(a,z)$; $(b,q)$ with $(q,y)$ gives $(b,y)$; $(a,r)$ with $(r,w)$ gives $(a,w)$. So $R_1\\circ R_2=\\{(a,x),(a,z),(b,y),(a,w)\\}$."
+  },
+  "versions": [
+   {
+    "type": "basic",
+    "question": "$R_1=\\{(1,a),(2,a),(3,b)\\}$ and $R_2=\\{(a,x),(a,y),(b,x),(c,z)\\}$. Find $R_1\\circ R_2$.",
+    "answer": "$(1,a)$ with $(a,x),(a,y)$: $(1,x),(1,y)$. $(2,a)$: $(2,x),(2,y)$. $(3,b)$ with $(b,x)$: $(3,x)$. $(c,z)$ is unused. So $R_1\\circ R_2=\\{(1,x),(1,y),(2,x),(2,y),(3,x)\\}$."
+   },
+   {
+    "type": "basic",
+    "question": "$R_1=\\{(m,1),(n,2),(n,3)\\}$ and $R_2=\\{(1,u),(2,u),(2,v),(4,w)\\}$. Find $R_1\\circ R_2$.",
+    "answer": "$(m,1)$ with $(1,u)$: $(m,u)$. $(n,2)$ with $(2,u),(2,v)$: $(n,u),(n,v)$. $(n,3)$ has no pair starting with 3 in $R_2$. So $R_1\\circ R_2=\\{(m,u),(n,u),(n,v)\\}$."
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "$R=\\{(1,2),(2,3),(3,3)\\}$ on $\\{1,2,3\\}$. Find $R\\circ R$.",
+   "options": [
+    "$\\{(1,3)\\}$",
+    "$\\{(1,2),(2,3),(3,3)\\}$",
+    "$\\{(1,3),(3,3)\\}$",
+    "$\\{(1,3),(2,3),(3,3)\\}$"
+   ],
+   "correct": [
+    3
+   ],
+   "explanation": "$(1,2)(2,3)\\to(1,3)$; $(2,3)(3,3)\\to(2,3)$; $(3,3)(3,3)\\to(3,3)$.",
+   "option_explanations": [
+    "Misses chains starting at 2 and 3.",
+    "That is $R$ itself.",
+    "Misses $(2,3)$.",
+    "Correct."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "$R=\\{(a,b),(b,c),(c,a)\\}$. Find $R\\circ R$.",
+    "options": [
+     "$\\{(a,b),(b,c),(c,a)\\}$",
+     "$\\{(a,c),(b,a),(c,b)\\}$",
+     "$\\{(a,a),(b,b),(c,c)\\}$",
+     "$\\{(a,c),(b,a)\\}$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "$(a,b)(b,c)\\to(a,c)$; $(b,c)(c,a)\\to(b,a)$; $(c,a)(a,b)\\to(c,b)$.",
+    "option_explanations": [
+     "That is $R$.",
+     "Correct.",
+     "That would be $R\\circ R\\circ R$.",
+     "Misses $(c,b)$."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "$R=\\{(p,q),(q,r),(r,s)\\}$. Find $R\\circ R$.",
+    "options": [
+     "$\\{(p,s)\\}$",
+     "$\\{(p,r),(q,s)\\}$",
+     "$\\{(p,q),(q,r),(r,s),(p,r),(q,s)\\}$",
+     "$\\{(p,r),(q,s),(r,s)\\}$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "$(p,q)(q,r)\\to(p,r)$; $(q,r)(r,s)\\to(q,s)$; $(r,s)$ has no continuation.",
+    "option_explanations": [
+     "That is $R\\circ R\\circ R$.",
+     "Correct.",
+     "It includes $R$ itself.",
+     "$(r,s)$ has no continuation."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "$R=\\{(1,2),(2,3),(3,1)\\}$. Find $R\\circ R\\circ R$.",
+   "options": [
+    "$\\{(1,2),(2,3),(3,1)\\}$",
+    "$\\{(1,3),(2,1),(3,2)\\}$",
+    "$\\{\\}$",
+    "$\\{(1,1),(2,2),(3,3)\\}$"
+   ],
+   "correct": [
+    3
+   ],
+   "explanation": "$R\\circ R=\\{(1,3),(2,1),(3,2)\\}$; composing with $R$ gives $(1,1),(2,2),(3,3)$.",
+   "option_explanations": [
+    "That is $R$.",
+    "That is $R\\circ R$.",
+    "There are chains, so it is not empty.",
+    "Correct."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "$R=\\{(a,b),(b,a)\\}$. Find $R\\circ R\\circ R$.",
+    "options": [
+     "$\\{(a,b),(b,a)\\}$",
+     "$\\{(a,a),(b,b)\\}$",
+     "$\\{(a,a),(a,b),(b,a),(b,b)\\}$",
+     "$\\{\\}$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "$R\\circ R=\\{(a,a),(b,b)\\}$; composing again gives $\\{(a,b),(b,a)\\}=R$.",
+    "option_explanations": [
+     "Correct.",
+     "That is $R\\circ R$.",
+     "Too many pairs.",
+     "Chains exist."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "$R=\\{(1,2),(2,3),(3,4)\\}$. Find $R\\circ R\\circ R$.",
+    "options": [
+     "$\\{(1,3),(2,4)\\}$",
+     "$\\{(1,2),(3,4)\\}$",
+     "$\\{(1,4)\\}$",
+     "$\\{\\}$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "$R\\circ R=\\{(1,3),(2,4)\\}$, then $(1,3)(3,4)\\to(1,4)$; $(2,4)$ has no continuation.",
+    "option_explanations": [
+     "That is $R\\circ R$.",
+     "Not a composition.",
+     "Correct.",
+     "$(1,4)$ is produced."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "A **function** $f$ from $A$ to $B$ is a relation from $A$ to $B$ in which:",
+   "options": [
+    "every $b\\in B$ has exactly one $a\\in A$ with $(a,b)\\in f$",
+    "every $a\\in A$ has at least one $b\\in B$",
+    "some $a\\in A$ has exactly one $b\\in B$",
+    "every $a\\in A$ has exactly one $b\\in B$ with $(a,b)\\in f$"
+   ],
+   "correct": [
+    3
+   ],
+   "explanation": "Each element of the domain is paired with exactly one value.",
+   "option_explanations": [
+    "That describes a bijection-type condition on $B$.",
+    "At least one allows several values.",
+    "It must hold for every $a$.",
+    "Correct."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "$f=\\{(1,x),(2,x),(3,y)\\}$ from $\\{1,2,3\\}$ to $\\{x,y,z\\}$. Is it a function?",
+    "options": [
+     "No; $z$ has no argument",
+     "Yes; every element of $A$ has exactly one value",
+     "No; $x$ is used twice",
+     "No; $3$ has two values"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Values may repeat, and not all of $B$ need be used.",
+    "option_explanations": [
+     "Not every element of $B$ needs an argument.",
+     "Correct.",
+     "Several arguments may share a value.",
+     "3 has only the value $y$."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "When $(a,b)\\in f$ for a function $f$, which notation is used?",
+    "options": [
+     "$a=f(b)$",
+     "$f(a,b)=0$",
+     "$b=f(a)$",
+     "$f=a\\to b$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "The value $b$ is written $f(a)$.",
+    "option_explanations": [
+     "Arguments go inside the parentheses.",
+     "Not the notation.",
+     "Correct.",
+     "Not the notation."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Which is a function from $\\{1,2\\}$ to $\\{c,d\\}$?",
+   "options": [
+    "$\\{(1,d),(2,d)\\}$",
+    "$\\{(1,c),(1,d)\\}$",
+    "$\\{(1,k),(2,d)\\}$",
+    "$\\{(2,c)\\}$"
+   ],
+   "correct": [
+    0
+   ],
+   "explanation": "Each of 1 and 2 has exactly one value in $\\{c,d\\}$.",
+   "option_explanations": [
+    "Correct.",
+    "1 has two values.",
+    "$k\\notin B$.",
+    "1 has no value."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Which is a function from $\\{a,b,c\\}$ to $\\{0,1\\}$?",
+    "options": [
+     "$\\{(a,1),(b,1),(c,0)\\}$",
+     "$\\{(a,0),(b,1)\\}$",
+     "$\\{(a,0),(a,1),(b,1),(c,0)\\}$",
+     "$\\{(a,0),(b,1),(c,2)\\}$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Every element of $\\{a,b,c\\}$ gets one value in $\\{0,1\\}$.",
+    "option_explanations": [
+     "Correct.",
+     "$c$ has no value.",
+     "$a$ has two values.",
+     "$2\\notin\\{0,1\\}$."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which is a function from $\\{1,2,3\\}$ to $\\{x,y\\}$?",
+    "options": [
+     "$\\{(1,x),(2,y),(3,z)\\}$",
+     "$\\{(1,x),(3,y)\\}$",
+     "$\\{(1,x),(2,x),(3,x)\\}$",
+     "$\\{(1,x),(1,y),(2,x),(3,y)\\}$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "A constant assignment is a valid function.",
+    "option_explanations": [
+     "$z\\notin B$.",
+     "2 has no value.",
+     "Correct.",
+     "1 has two values."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "$A=\\{x,y,z\\}$, $B=\\{1,2\\}$, $f=\\{(x,1),(y,2)\\}$. Why is $f$ not a function from $A$ to $B$?",
+   "options": [
+    "$x$ has two values",
+    "$z$ has no value",
+    "$1$ has no argument",
+    "$y$ is not in $A$"
+   ],
+   "correct": [
+    1
+   ],
+   "explanation": "Every element of $A$ needs a value.",
+   "option_explanations": [
+    "$x$ has one value.",
+    "Correct.",
+    "$1$ is used by $x$.",
+    "$y\\in A$."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "$f=\\{(x,1),(x,2),(y,1),(z,2)\\}$ with $A=\\{x,y,z\\}$, $B=\\{1,2\\}$. Why is it not a function?",
+    "options": [
+     "$z$ has no value",
+     "$y$ is outside $A$",
+     "$1$ is the value of two arguments",
+     "$x$ has two values"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "$(x,1)$ and $(x,2)$ both appear.",
+    "option_explanations": [
+     "$z$ has a value.",
+     "$y\\in A$.",
+     "Different arguments may share a value.",
+     "Correct."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "$A=\\{x,y,z\\}$, $B=\\{1,2\\}$, $f=\\{(x,1),(y,2),(z,2),(w,1)\\}$. Why is $f$ not a function from $A$ to $B$?",
+    "options": [
+     "$2$ is the value of two arguments",
+     "$1$ has no argument",
+     "$w$ is not an element of $A$",
+     "$z$ has no value"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Every pair must have first entry in $A$.",
+    "option_explanations": [
+     "Sharing a value is allowed.",
+     "1 is the value of $x$.",
+     "Correct.",
+     "$z$ has the value 2."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "For $f:A\\to B$, the set $A$ is called the:",
+   "options": [
+    "domain",
+    "codomain",
+    "range",
+    "argument"
+   ],
+   "correct": [
+    0
+   ],
+   "explanation": "$A$ is the domain, $B$ the codomain.",
+   "option_explanations": [
+    "Correct.",
+    "That is $B$.",
+    "The range is the set of actual values.",
+    "An argument is one element of $A$."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "In $b=f(a)$, the element $a$ is called the:",
+    "options": [
+     "value",
+     "range",
+     "codomain",
+     "argument"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "$a$ is the argument and $b$ is the value of $f$ at $a$.",
+    "option_explanations": [
+     "That is $b$.",
+     "The range is a set of values.",
+     "The codomain is a set.",
+     "Correct."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "For $f:A\\to B$, the set $B$ is called the:",
+    "options": [
+     "domain",
+     "codomain",
+     "range",
+     "image of $a$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "$B$ is the codomain; the range is the part of it actually hit.",
+    "option_explanations": [
+     "That is $A$.",
+     "Correct.",
+     "The range may be a proper subset of $B$.",
+     "That is a single value."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "$f:\\{1,2,3,4\\}\\to\\{a,b,c,d\\}$ with $f=\\{(1,b),(2,b),(3,d),(4,a)\\}$. What is the range?",
+   "options": [
+    "$\\{a,b,c,d\\}$",
+    "$\\{a,b,d\\}$",
+    "$\\{1,2,3,4\\}$",
+    "$\\{b,d\\}$"
+   ],
+   "correct": [
+    1
+   ],
+   "explanation": "The range holds the values actually taken: $b,b,d,a$.",
+   "option_explanations": [
+    "That is the codomain.",
+    "Correct.",
+    "That is the domain.",
+    "$a$ is also a value."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "$f:\\{x,y,z\\}\\to\\{1,2,3,4,5\\}$ with $f(x)=2$, $f(y)=2$, $f(z)=5$. What is the range?",
+    "options": [
+     "$\\{x,y,z\\}$",
+     "$\\{1,2,3,4,5\\}$",
+     "$\\{2\\}$",
+     "$\\{2,5\\}$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "Values taken: $2$ and $5$.",
+    "option_explanations": [
+     "That is the domain.",
+     "That is the codomain.",
+     "$5$ is also a value.",
+     "Correct."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "$f(n)=n^2$ from $\\{-2,-1,0,1,2\\}$ to the integers. What is the range?",
+    "options": [
+     "$\\{0,1,4\\}$",
+     "$\\{-2,-1,0,1,2\\}$",
+     "$\\{0,1,2,4\\}$",
+     "$\\{1,4\\}$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Values: $4,1,0,1,4$.",
+    "option_explanations": [
+     "Correct.",
+     "That is the domain.",
+     "$2$ is not a square of any element.",
+     "$0$ is also a value."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "$F(x)=2x+1$ on the integers. What is $F(-3)$?",
+   "options": [
+    "$-7$",
+    "$7$",
+    "$-5$",
+    "$-4$"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "$2(-3)+1=-5$.",
+   "option_explanations": [
+    "That is $2(-3)-1$.",
+    "Sign dropped.",
+    "Correct.",
+    "Wrong arithmetic: $2\\cdot(-3)=-6$."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "$F(x)=3x-2$ on the integers. What is $F(-4)$?",
+    "options": [
+     "$-10$",
+     "$10$",
+     "$14$",
+     "$-14$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "$3(-4)-2=-14$.",
+    "option_explanations": [
+     "That is $3(-4)+2$.",
+     "That is $3\\cdot4-2$, ignoring the negative sign of $-4$.",
+     "That is $3\\cdot4+2$, flipping both signs.",
+     "Correct."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "What is the range of $F(x)=2x+1$ on the integers?",
+    "options": [
+     "All integers",
+     "All odd integers",
+     "All even integers",
+     "All positive odd integers"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "$2x+1$ is odd for every integer $x$, and every odd $y$ arises from $x=(y-1)/2$.",
+    "option_explanations": [
+     "Even integers are never hit.",
+     "Correct.",
+     "$2x+1$ is never even.",
+     "Negative $x$ gives negative odd values."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Why is $R=\\{(\\text{father},\\text{child})\\}$ on the set of people not a function?",
+   "options": [
+    "One child may have several fathers",
+    "Some children have no mother",
+    "One father may have several children",
+    "Children cannot be arguments"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "A function needs exactly one value per argument; a father may be paired with many children.",
+   "option_explanations": [
+    "A child has one father.",
+    "Mothers are irrelevant here.",
+    "Correct.",
+    "Any element of the domain can be an argument."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Is $R=\\{(\\text{child},\\text{father})\\}$ on the set of people a function?",
+    "options": [
+     "Yes, each child has a single father",
+     "No, a father may have many children",
+     "No, a child may have two fathers",
+     "No, a child needs a mother too"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Each argument (child) has exactly one value (father).",
+    "option_explanations": [
+     "Correct.",
+     "Several arguments may share a value.",
+     "A child has one father.",
+     "Mothers are not part of this relation."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Why is $\\{(x,y)\\mid x,y\\in\\mathbb N,\\ xy \\text{ odd}\\}$ not a function?",
+    "options": [
+     "$x=3$ gives $y=3,5,7,\\dots$",
+     "$x=3$ gives no $y$",
+     "$x=4$ gives $y=1$",
+     "$x=3$ gives $y=9$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "One argument ($3$) has many values.",
+    "option_explanations": [
+     "Correct.",
+     "$3\\cdot3=9$ is odd.",
+     "$4\\cdot1=4$ is even.",
+     "True for $x=3$, but one value does not show the failure; the problem is that $x=3$ has many values."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "A function $f:A\\to B$ is **onto** when:",
+   "options": [
+    "every element of $A$ has a value",
+    "different arguments have different values",
+    "every element of $B$ is a value of some argument",
+    "each element of $B$ is the value of exactly one argument"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "Onto means range equals codomain.",
+   "option_explanations": [
+    "That holds for every function.",
+    "That is injection.",
+    "Correct.",
+    "That is bijection-like."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "$f:A\\to B$ is onto exactly when its range equals:",
+    "options": [
+     "the domain",
+     "the codomain",
+     "the set of arguments",
+     "a proper subset of the codomain"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Onto means the range fills the codomain.",
+    "option_explanations": [
+     "The domain is $A$.",
+     "Correct.",
+     "The set of arguments is $A$.",
+     "Then it would miss some element of $B$."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which function from $\\{1,2,3,4\\}$ to $\\{a,b,c\\}$ is onto?",
+    "options": [
+     "$\\{(1,a),(2,a),(3,b),(4,b)\\}$",
+     "$\\{(1,c),(2,c),(3,c),(4,c)\\}$",
+     "$\\{(1,a),(2,b),(3,a),(4,b)\\}$",
+     "$\\{(1,a),(2,b),(3,c),(4,c)\\}$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "All of $a,b,c$ are values.",
+    "option_explanations": [
+     "$c$ is never a value.",
+     "$a$ and $b$ are never values.",
+     "$c$ is never a value.",
+     "Correct."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "A function is an **injection** when:",
+   "options": [
+    "every element of the codomain is a value",
+    "every argument has a value",
+    "different arguments have different values",
+    "all arguments share one value"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "$x_1\\ne x_2$ implies $f(x_1)\\ne f(x_2)$.",
+   "option_explanations": [
+    "That is onto.",
+    "That holds for every function.",
+    "Correct.",
+    "That is a constant function."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Which function from $\\{1,2,3\\}$ to $\\{a,b,c,d\\}$ is an injection?",
+    "options": [
+     "$\\{(1,b),(2,d),(3,a)\\}$",
+     "$\\{(1,a),(2,a),(3,b)\\}$",
+     "$\\{(1,c),(2,c),(3,c)\\}$",
+     "$\\{(1,d),(2,b),(3,d)\\}$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "The values $b,d,a$ are all different.",
+    "option_explanations": [
+     "Correct.",
+     "1 and 2 share the value $a$.",
+     "All share $c$.",
+     "1 and 3 share $d$."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Why is $f(x)=x^2$ on the integers not an injection?",
+    "options": [
+     "$f(x)=3$ has no integer solution",
+     "$f(0)=0$",
+     "$f(x)\\ge0$ for all $x$",
+     "$f(3)=f(-3)$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "Different arguments $3$ and $-3$ have the same value 9.",
+    "option_explanations": [
+     "That shows not onto, not not-injection.",
+     "A single value does not matter.",
+     "That is also about the range.",
+     "Correct."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "A function is a **bijection** when it is:",
+   "options": [
+    "an injection, whether or not onto",
+    "both onto and an injection",
+    "onto, whether or not injective",
+    "defined on every element of its domain"
+   ],
+   "correct": [
+    1
+   ],
+   "explanation": "Bijection = onto + injection.",
+   "option_explanations": [
+    "Onto is also needed.",
+    "Correct.",
+    "Injection is also needed.",
+    "That holds for every function."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "If $f:A\\to B$ is a bijection, how do $|A|$ and $|B|$ compare?",
+    "options": [
+     "$|A|<|B|$",
+     "$|A|=|B|$",
+     "$|A|>|B|$",
+     "$|A|\\ge|B|$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Pairing elements one to one forces equal sizes.",
+    "option_explanations": [
+     "Onto and injective forbids $B$ being larger.",
+     "Correct.",
+     "Injective forbids $A$ being larger.",
+     "Injective and onto forces equality."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Can a function from a $4$-element set to a $3$-element set be a bijection?",
+    "options": [
+     "Yes, if it is onto",
+     "Yes, if it is injective",
+     "Yes, always",
+     "No; the sizes differ"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "Bijections need $|A|=|B|$.",
+    "option_explanations": [
+     "Onto from 4 to 3 repeats a value, so not injective.",
+     "A 4-element set cannot inject into a 3-element set.",
+     "Not always.",
+     "Correct."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "$f(x)=x+1$ on the integers is:",
+   "options": [
+    "onto and injective",
+    "injective but not onto",
+    "onto but not injective",
+    "neither onto nor injective"
+   ],
+   "correct": [
+    0
+   ],
+   "explanation": "$y=f(y-1)$ and $x_1\\ne x_2$ gives $x_1+1\\ne x_2+1$.",
+   "option_explanations": [
+    "Correct.",
+    "Every integer is hit.",
+    "Different inputs give different outputs.",
+    "It is both."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "$f(x)=x^2$ on the integers is:",
+    "options": [
+     "injective but not onto",
+     "onto but not injective",
+     "neither onto nor injective",
+     "onto and injective"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "No $x$ gives $3$; and $f(1)=f(-1)$.",
+    "option_explanations": [
+     "$f(1)=f(-1)$.",
+     "$3$ is not a value.",
+     "Correct.",
+     "Both fail."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "$f(x)=2x$ on the integers is:",
+    "options": [
+     "onto but not injective",
+     "onto and injective",
+     "neither onto nor injective",
+     "injective but not onto"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "Different $x$ give different $2x$, but odd integers are not values.",
+    "option_explanations": [
+     "It is injective.",
+     "Odd integers are not hit.",
+     "It is injective.",
+     "Correct."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "basic",
+   "question": "Show that $f(x)=-x$ on the integers is onto, an injection, and a bijection.",
+   "answer": "Onto: any integer $y$ equals $f(-y)$. Injection: if $-x_1=-x_2$ then $x_1=x_2$, so different arguments give different values. Being both onto and an injection, $f$ is a bijection."
+  },
+  "versions": [
+   {
+    "type": "basic",
+    "question": "Decide whether $f(x)=x-5$ on the integers is onto, injective, bijective.",
+    "answer": "Onto: any $y$ equals $f(y+5)$. Injective: $x_1-5=x_2-5$ gives $x_1=x_2$. Both hold, so $f$ is a bijection."
+   },
+   {
+    "type": "basic",
+    "question": "Decide whether $f(x)=3x+2$ on the integers is onto, injective, bijective.",
+    "answer": "Injective: $3x_1+2=3x_2+2$ gives $x_1=x_2$. Not onto: $3x+2=3$ needs $x=1/3$, not an integer, so $3$ is not a value. Hence not a bijection."
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Which function is onto but not an injection?",
+   "options": [
+    "$f:\\{1,2\\}\\to\\{a,b,c\\}$ with $f(1)=a,\\ f(2)=b$",
+    "$f:\\{1,2,3\\}\\to\\{a,b\\}$ with $f(1)=a,\\ f(2)=a,\\ f(3)=b$",
+    "$f:\\{1,2\\}\\to\\{a,b\\}$ with $f(1)=a,\\ f(2)=b$",
+    "$f:\\{1,2\\}\\to\\{a,b\\}$ with $f(1)=a,\\ f(2)=a$"
+   ],
+   "correct": [
+    1
+   ],
+   "explanation": "Both $a,b$ are values, but 1 and 2 share $a$.",
+   "option_explanations": [
+    "Injective but $c$ is not a value.",
+    "Correct.",
+    "Bijection.",
+    "Neither onto nor injective."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Which function is an injection but not onto?",
+    "options": [
+     "$f:\\{1,2,3\\}\\to\\{x,y\\}$ with $f(1)=x,\\ f(2)=y,\\ f(3)=y$",
+     "$f:\\{1,2\\}\\to\\{x,y\\}$ with $f(1)=y,\\ f(2)=x$",
+     "$f:\\{1,2\\}\\to\\{x,y,z\\}$ with $f(1)=z,\\ f(2)=x$",
+     "$f:\\{1,2,3\\}\\to\\{x,y,z\\}$ with $f(1)=x,\\ f(2)=x,\\ f(3)=x$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Values differ, but $y$ is missed.",
+    "option_explanations": [
+     "Onto but not injective.",
+     "Bijection.",
+     "Correct.",
+     "Neither."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which function is a bijection?",
+    "options": [
+     "$f:\\{p,q,r\\}\\to\\{1,2,3\\}$ with $f(p)=3,\\ f(q)=1,\\ f(r)=2$",
+     "$f:\\{p,q,r\\}\\to\\{1,2,3\\}$ with $f(p)=1,\\ f(q)=1,\\ f(r)=1$",
+     "$f:\\{p,q\\}\\to\\{1,2,3\\}$ with $f(p)=1,\\ f(q)=3$",
+     "$f:\\{p,q,r\\}\\to\\{1,2\\}$ with $f(p)=1,\\ f(q)=2,\\ f(r)=2$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Each element of the codomain is hit exactly once.",
+    "option_explanations": [
+     "Correct.",
+     "Neither onto nor injective.",
+     "Injective but not onto.",
+     "Onto but not injective."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Husband-wife and mother-child records are given. Which operation on these relations produces the father-child relation?",
+   "options": [
+    "Composition",
+    "Union",
+    "Intersection",
+    "Cartesian product"
+   ],
+   "correct": [
+    0
+   ],
+   "explanation": "Husband-wife followed by mother-child links father to mother to child: $R_1\\circ R_2$.",
+   "option_explanations": [
+    "Correct.",
+    "Union only merges records.",
+    "Intersection keeps common pairs.",
+    "Product pairs everything with everything."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "$R_1$ is father-mother and $R_2$ is mother-child. What does $R_1\\circ R_2$ give?",
+    "options": [
+     "The mother-father relation",
+     "The child-mother relation",
+     "The father-child relation",
+     "The sibling relation"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "It links father to child through the mother.",
+    "option_explanations": [
+     "That would be the reverse of $R_1$.",
+     "That would be the reverse of $R_2$.",
+     "Correct.",
+     "Siblings need a different composition."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "$R_1=\\{(a,p),(b,q)\\}$ (father, mother), $R_2=\\{(p,x),(p,z),(q,y)\\}$ (mother, child). Who is the father of $z$?",
+    "options": [
+     "$b$",
+     "$a$",
+     "$p$",
+     "$q$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "$(a,p)$ and $(p,z)$ give $(a,z)$.",
+    "option_explanations": [
+     "$b$ is linked to $y$.",
+     "Correct.",
+     "$p$ is the mother.",
+     "$q$ is a mother."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "basic",
+   "question": "Decide whether $R=\\{(1,1),(2,2),(3,3),(4,4),(1,2),(2,1),(2,3),(3,2)\\}$ on $\\{1,2,3,4\\}$ is reflexive, symmetric, transitive, and an equivalence relation.",
+   "answer": "Reflexive: $(1,1),(2,2),(3,3),(4,4)$ all present. Symmetric: $(1,2)/(2,1)$ and $(2,3)/(3,2)$ present. Transitive: $(1,2),(2,3)$ requires $(1,3)$, absent, so not transitive. Therefore $R$ is not an equivalence relation."
+  },
+  "versions": [
+   {
+    "type": "basic",
+    "question": "Decide whether $R=\\{(1,1),(2,2),(3,3),(1,2),(2,1),(3,2)\\}$ on $\\{1,2,3\\}$ is reflexive, symmetric, transitive, and an equivalence relation.",
+    "answer": "Reflexive: yes. Symmetric: no, $(3,2)\\in R$ but $(2,3)\\notin R$. Transitive: no, $(3,2),(2,1)$ requires $(3,1)$, absent. Not an equivalence relation."
+   },
+   {
+    "type": "basic",
+    "question": "Decide whether $R=\\{(1,1),(2,2),(1,2),(2,1)\\}$ on $\\{1,2,3\\}$ is reflexive, symmetric, transitive, and an equivalence relation.",
+    "answer": "Reflexive: no, $(3,3)$ missing. Symmetric: yes. Transitive: yes, all chains close. Not reflexive, hence not an equivalence relation."
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "basic",
+   "question": "Let $R=\\{(a,b)\\mid a=b^2\\}$ on the integers. Which of $(4,2),(-5,-3),(4,-2),(0,0),(1,-1),(-1,1),(1,1)$ lie in $R$?",
+   "answer": "Check $a=b^2$: $(4,2)$: $4=2^2$ yes. $(-5,-3)$: $9\\ne-5$ no. $(4,-2)$: $(-2)^2=4$ yes. $(0,0)$: yes. $(1,-1)$: $1=1$ yes. $(-1,1)$: $1\\ne-1$ no. $(1,1)$: yes. In $R$: $(4,2),(4,-2),(0,0),(1,-1),(1,1)$."
+  },
+  "versions": [
+   {
+    "type": "basic",
+    "question": "Let $R=\\{(a,b)\\mid b=a^2\\}$ on the integers. Which of $(3,9),(9,3),(-3,9),(0,0),(2,-4),(-1,1)$ lie in $R$?",
+    "answer": "Check $b=a^2$: $(3,9)$ yes. $(9,3)$: $81\\ne3$ no. $(-3,9)$: $9=9$ yes. $(0,0)$ yes. $(2,-4)$: $4\\ne-4$ no. $(-1,1)$ yes. In $R$: $(3,9),(-3,9),(0,0),(-1,1)$."
+   },
+   {
+    "type": "basic",
+    "question": "Let $R=\\{(a,b)\\mid a+b=0\\}$ on the integers. Which of $(2,-2),(-5,5),(3,3),(0,0),(4,-3)$ lie in $R$?",
+    "answer": "Check $a+b=0$: $(2,-2)$ yes. $(-5,5)$ yes. $(3,3)$: $6$ no. $(0,0)$ yes. $(4,-3)$: $1$ no. In $R$: $(2,-2),(-5,5),(0,0)$."
+   }
+  ]
+ }
+]

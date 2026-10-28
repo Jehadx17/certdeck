@@ -174,5 +174,11 @@ void main() {
     expect(readiness(cert, [known, fresh], importance: {'known': 9, 'fresh': 1}).predicted, closeTo(.9, .01));
     expect(readiness(cert, [known, fresh], importance: {'known': 1, 'fresh': 9}).predicted, closeTo(.1, .01));
   });
+
+  test('equal-value new cards come shuffled by id, not in insertion order', () {
+    final ids = ['m', 'c', 'x', 'a'];
+    final q = pacedQueue(scope([for (final id in ids) card(id)], {}, days: 3), 600);
+    expect(q.map((c) => c['id']), ['a', 'c', 'm', 'x']);
+  });
 }
 

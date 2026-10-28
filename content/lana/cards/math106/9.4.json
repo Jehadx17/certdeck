@@ -1,0 +1,1595 @@
+[
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Suppose $\\lim_{k\\to\\infty}u_k\\neq 0$. What does the Divergence Test say about $\\sum u_k$?",
+   "options": [
+    "The series converges to $\\lim u_k$",
+    "The series diverges",
+    "The series may converge or diverge",
+    "The series converges to $0$"
+   ],
+   "correct": [
+    1
+   ],
+   "explanation": "If the general term does not tend to $0$, the series diverges (Theorem 9.4.1(a)).",
+   "option_explanations": [
+    "Mistake: confuses the limit of the terms with the sum of the series.",
+    "Correct.",
+    "Mistake: this is part (b), which applies only when $\\lim u_k=0$.",
+    "Mistake: mixes up the limit of the terms with the sum."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "A series $\\sum u_k$ has general term with $\\lim_{k\\to\\infty}u_k=3$. Which conclusion is justified?",
+    "options": [
+     "It sums to $3$",
+     "It may or may not converge",
+     "It sums to $0$",
+     "It diverges"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "A nonzero (or nonexistent) limit of $u_k$ forces divergence.",
+    "option_explanations": [
+     "Mistake: the limit of the terms is not the sum.",
+     "Mistake: undecided only occurs when $\\lim u_k=0$.",
+     "Mistake: a series with terms near $3$ cannot sum to $0$.",
+     "Correct."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "For which limit of the general term does the Divergence Test prove divergence?",
+    "options": [
+     "$\\lim_{k\\to\\infty}u_k=0$",
+     "$\\lim_{k\\to\\infty}u_k=\\tfrac12$",
+     "$\\lim_{k\\to\\infty}u_{k+1}/u_k=\\tfrac12$",
+     "$\\lim_{k\\to\\infty}u_k^2=0$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Divergence is proved exactly when $\\lim u_k\\ne0$.",
+    "option_explanations": [
+     "Mistake: a zero limit is inconclusive.",
+     "Correct.",
+     "Mistake: that ratio limit belongs to the Ratio Test and, being below $1$, would indicate convergence.",
+     "Mistake: $u_k^2\\to0$ means $u_k\\to0$, which is inconclusive."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Apply the Divergence Test to $\\displaystyle\\sum_{k=1}^{\\infty}\\frac{3k^2+1}{2k^2-k+4}$.",
+   "options": [
+    "Diverges, since the limit is $\\tfrac32$",
+    "Converges to $\\tfrac32$",
+    "Inconclusive, since the limit is $0$",
+    "Converges, since the limit is $\\tfrac23$"
+   ],
+   "correct": [
+    0
+   ],
+   "explanation": "The ratio of leading coefficients gives $\\lim u_k=\\tfrac32\\ne0$.",
+   "option_explanations": [
+    "Correct.",
+    "Mistake: the limit of the terms is not the sum.",
+    "Mistake: the limit is not $0$, so the test does decide.",
+    "Mistake: inverts the ratio, and a finite nonzero limit means divergence anyway."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "What does the Divergence Test tell you about $\\displaystyle\\sum_{k=1}^{\\infty}\\frac{5k+2}{k+7}$?",
+    "options": [
+     "Converges, as the limit is $\\tfrac27$",
+     "Diverges, as the limit is $5$",
+     "Inconclusive, as the limit is $0$",
+     "Diverges, as the limit is $\\tfrac27$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Dividing by $k$: $u_k\\to 5\\neq0$.",
+    "option_explanations": [
+     "Mistake: takes the constants' ratio and then concludes convergence.",
+     "Correct.",
+     "Mistake: the limit is not $0$.",
+     "Mistake: wrong limit (constants only), though the conclusion would match."
+    ]
+   },
+   {
+    "type": "basic",
+    "question": "Apply the Divergence Test to $\\displaystyle\\sum_{k=1}^{\\infty}\\frac{k}{k^2+1}$ and state what it tells you.",
+    "answer": "$\\lim_{k\\to\\infty}\\frac{k}{k^2+1}=\\lim_{k\\to\\infty}\\frac{1/k}{1+1/k^2}=0$. The limit is $0$, so the Divergence Test is **inconclusive**: the series may converge or diverge and another test is needed."
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "For the harmonic series $\\sum \\frac1k$ we have $u_k\\to0$. What can be concluded from this alone?",
+   "options": [
+    "The series converges",
+    "The test is inconclusive",
+    "The series sums to $0$",
+    "The series diverges"
+   ],
+   "correct": [
+    1
+   ],
+   "explanation": "$\\lim u_k=0$ is necessary for convergence but not sufficient; $\\sum 1/k$ diverges although $1/k\\to0$.",
+   "option_explanations": [
+    "Mistake: the converse of Theorem 9.4.2 is false.",
+    "Correct.",
+    "Mistake: confuses the limit of the terms with the sum.",
+    "Mistake: it does diverge, but not by the Divergence Test."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "A student shows $\\lim_{k\\to\\infty}\\frac{1}{k^2}=0$ and claims $\\sum\\frac1{k^2}$ converges. The reasoning is",
+    "options": [
+     "valid by the Divergence Test",
+     "invalid, since $u_k\\to0$ does not decide convergence",
+     "valid, since $u_k$ decreases",
+     "invalid, since the limit is not $0$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "The Divergence Test can only prove divergence; a zero limit proves nothing about convergence.",
+    "option_explanations": [
+     "Mistake: the test cannot prove convergence.",
+     "Correct.",
+     "Mistake: decreasing terms with limit $0$ still do not guarantee convergence (harmonic series).",
+     "Mistake: the limit is $0$."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which statement is true for every series $\\sum u_k$?",
+    "options": [
+     "$u_k\\to0$ implies convergence",
+     "$u_k\\to 0$ implies divergence",
+     "convergence implies $u_k\\to0$",
+     "divergence implies $u_k\\not\\to0$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Theorem 9.4.2 is one-directional: convergence forces $u_k\\to0$, not the other way.",
+    "option_explanations": [
+     "Mistake: this is the false converse.",
+     "Mistake: reverses the roles; $u_k\\to0$ does not decide.",
+     "Correct.",
+     "Mistake: the harmonic series diverges while $u_k\\to0$."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "The series $\\sum u_k$ is known to converge. Which must hold?",
+   "options": [
+    "$u_k$ is decreasing",
+    "$\\lim_{k\\to\\infty}\\dfrac{u_{k+1}}{u_k}<1$",
+    "$u_k=0$ for large $k$",
+    "$\\lim_{k\\to\\infty}u_k=0$"
+   ],
+   "correct": [
+    3
+   ],
+   "explanation": "Theorem 9.4.2: a convergent series has terms tending to $0$.",
+   "option_explanations": [
+    "Mistake: convergence does not force monotone terms.",
+    "Mistake: the ratio can tend to $1$ (as for $\\sum 1/k^2$).",
+    "Mistake: terms need only tend to $0$, not vanish.",
+    "Correct."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "If $\\sum_{k=1}^{\\infty}a_k$ converges, which limit is guaranteed?",
+    "options": [
+     "$\\lim a_k=1$",
+     "$\\lim a_k=0$",
+     "$\\lim (a_1+\\dots+a_k)=0$",
+     "$\\lim ka_k=0$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Convergent series have general term tending to $0$.",
+    "option_explanations": [
+     "Mistake: $1$ would make the series diverge.",
+     "Correct.",
+     "Mistake: the partial sums tend to the sum $S$, not necessarily $0$.",
+     "Mistake: $ka_k\\to0$ is not guaranteed by convergence alone."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "From the convergence of $\\sum_{k=1}^{\\infty}v_k$, what is $\\lim_{k\\to\\infty}(v_k+5)$?",
+    "options": [
+     "$0$",
+     "$5$",
+     "$\\infty$",
+     "$\\sum v_k+5$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Since $v_k\\to0$, $v_k+5\\to5$.",
+    "option_explanations": [
+     "Mistake: forgets the added $5$.",
+     "Correct.",
+     "Mistake: no growth is implied.",
+     "Mistake: mixes the series sum with the limit of the terms."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Which of these series can be shown to diverge by the Divergence Test?",
+   "options": [
+    "$\\sum\\dfrac{1}{k^2}$",
+    "$\\sum\\dfrac{1}{\\sqrt k}$",
+    "$\\sum\\dfrac{k}{2k+1}$",
+    "$\\sum\\dfrac1{2^k}$"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "Only $\\frac{k}{2k+1}\\to\\frac12\\ne0$; $\\sum 1/\\sqrt k$ diverges too but its terms tend to $0$, so the test cannot show it.",
+   "option_explanations": [
+    "Mistake: terms tend to $0$, and it converges.",
+    "Mistake: it diverges, but its terms tend to $0$, so the Divergence Test cannot prove it.",
+    "Correct.",
+    "Mistake: terms tend to $0$ and it converges."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Only one series below has a general term that fails to tend to $0$. Which one?",
+    "options": [
+     "$\\sum\\dfrac{3k}{k+2}$",
+     "$\\sum\\dfrac{1}{3k}$",
+     "$\\sum\\dfrac{k}{k^3+1}$",
+     "$\\sum\\dfrac{2}{k^{4/3}}$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "$\\frac{3k}{k+2}\\to3$, so that series diverges by the Divergence Test.",
+    "option_explanations": [
+     "Correct.",
+     "Mistake: $\\frac1{3k}\\to0$.",
+     "Mistake: $\\to0$ since the denominator has higher degree.",
+     "Mistake: $\\to0$."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which series is shown to diverge by the Divergence Test?",
+    "options": [
+     "$\\sum\\dfrac{\\ln k}{k}$",
+     "$\\sum\\dfrac{2k^2}{3k^2+1}$",
+     "$\\sum\\dfrac{1}{k\\sqrt k}$",
+     "$\\sum\\dfrac{1}{\\sqrt{k}+1}$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "$\\frac{2k^2}{3k^2+1}\\to\\frac23\\neq0$.",
+    "option_explanations": [
+     "Mistake: terms tend to $0$.",
+     "Correct.",
+     "Mistake: terms tend to $0$ (and it converges).",
+     "Mistake: terms tend to $0$ (it diverges, but not detectable by this test)."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "basic",
+   "question": "Find the sum of $\\displaystyle\\sum_{k=1}^{\\infty}\\left(\\frac{5}{3^k}+\\frac{4}{7^{k-1}}\\right)$.",
+   "answer": "Split into two series (Theorem 9.4.3(a)), both geometric. $\\sum\\frac5{3^k}$: $a=\\frac53$, $r=\\frac13$, sum $=\\frac{5/3}{1-1/3}=\\frac52$. $\\sum\\frac4{7^{k-1}}$: $a=4$, $r=\\frac17$, sum $=\\frac{4}{1-1/7}=\\frac{14}{3}$. Total: $\\frac52+\\frac{14}3=\\frac{43}{6}$."
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Find $\\displaystyle\\sum_{k=1}^{\\infty}\\left(\\frac{2}{3^k}+\\frac{1}{6^{k-1}}\\right)$.",
+    "options": [
+     "$\\dfrac{11}{5}$",
+     "$\\dfrac{6}{5}$",
+     "$2$",
+     "$\\dfrac{21}{5}$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "$\\sum 2/3^k=\\frac{2/3}{1-1/3}=1$ and $\\sum 1/6^{k-1}=\\frac1{1-1/6}=\\frac65$; the total is $\\frac{11}{5}$.",
+    "option_explanations": [
+     "Correct.",
+     "Mistake: takes the second series as having $a=\\frac16$, giving $1+\\frac15$.",
+     "Mistake: uses only the first term of the second series (value $1$) instead of its sum.",
+     "Mistake: starts the first series at $k=0$ (sum $3$)."
+    ]
+   },
+   {
+    "type": "basic",
+    "question": "Find the sum of $\\displaystyle\\sum_{k=1}^{\\infty}\\left(\\frac{7}{2^k}-\\frac{3}{5^k}\\right)$.",
+    "answer": "Both series converge (geometric, $|r|<1$), so subtract the sums (Theorem 9.4.3(a)). $\\sum\\frac7{2^k}=\\frac{7/2}{1-1/2}=7$; $\\sum\\frac3{5^k}=\\frac{3/5}{1-1/5}=\\frac34$. Result: $7-\\frac34=\\frac{25}{4}$."
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Evaluate $\\displaystyle\\sum_{k=1}^{\\infty}\\left(\\frac1{2^k}+\\frac1{3^k}\\right)$.",
+   "options": [
+    "$\\dfrac56$",
+    "$\\dfrac72$",
+    "$2$",
+    "$\\dfrac32$"
+   ],
+   "correct": [
+    3
+   ],
+   "explanation": "$\\sum 2^{-k}=1$ and $\\sum3^{-k}=\\frac12$, so the sum is $\\frac32$.",
+   "option_explanations": [
+    "Mistake: adds only the first terms $\\frac12+\\frac13$.",
+    "Mistake: starts both series at $k=0$ (sums $2$ and $\\frac32$).",
+    "Mistake: takes $\\sum 3^{-k}=1$.",
+    "Correct."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\displaystyle\\sum_{k=1}^{\\infty}\\left(\\frac1{5^k}+\\frac2{3^k}\\right)$.",
+    "options": [
+     "$\\dfrac{17}{4}$",
+     "$\\dfrac{5}{4}$",
+     "$\\dfrac{13}{15}$",
+     "$\\dfrac{7}{4}$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "$\\sum5^{-k}=\\frac14$ and $\\sum 2\\cdot3^{-k}=2\\cdot\\frac12=1$, giving $\\frac54$.",
+    "option_explanations": [
+     "Mistake: starts both series at $k=0$.",
+     "Correct.",
+     "Mistake: adds only the first terms $\\frac15+\\frac23$.",
+     "Mistake: takes $\\sum5^{-k}=\\frac34$ instead of $\\frac14$."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\displaystyle\\sum_{k=1}^{\\infty}\\left(\\frac1{2^k}-\\frac1{4^k}\\right)$.",
+    "options": [
+     "$\\dfrac13$",
+     "$\\dfrac23$",
+     "$\\dfrac14$",
+     "$\\dfrac43$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "$\\sum2^{-k}=1$, $\\sum4^{-k}=\\frac13$; difference $\\frac23$.",
+    "option_explanations": [
+     "Mistake: reports only the sum of the subtracted series.",
+     "Correct.",
+     "Mistake: subtracts only the first terms $\\frac12-\\frac14$.",
+     "Mistake: adds the two sums instead of subtracting."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "What is true of $\\displaystyle\\sum_{k=1}^{\\infty}\\frac{4}{k}$?",
+   "options": [
+    "It converges to $4$",
+    "It converges, as $\\frac4k\\to0$",
+    "It diverges",
+    "It converges to $4\\cdot\\frac{\\pi^2}{6}$"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "It is $4$ times the divergent harmonic series, so it diverges (Theorem 9.4.3(b)).",
+   "option_explanations": [
+    "Mistake: multiplies the first term only.",
+    "Mistake: terms tend to $0$ does not give convergence.",
+    "Correct.",
+    "Mistake: borrows the sum of $\\sum 1/k^2$."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Decide: $\\displaystyle\\sum_{k=1}^{\\infty}\\frac{1}{6k}$",
+    "options": [
+     "Converges, since $\\frac1{6k}\\to0$",
+     "Converges to $\\frac16$",
+     "Diverges",
+     "Converges, since the factor $\\frac16<1$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "$\\sum\\frac1{6k}=\\frac16\\sum\\frac1k$, a nonzero multiple of the harmonic series, so it diverges.",
+    "option_explanations": [
+     "Mistake: a zero limit does not give convergence.",
+     "Mistake: confuses the first term with the sum.",
+     "Correct.",
+     "Mistake: a small constant factor cannot make a divergent series converge."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which statement describes $\\displaystyle\\sum_{k=1}^{\\infty}\\frac{10}{3k}$?",
+    "options": [
+     "A convergent series with sum $\\frac{10}3$",
+     "A divergent series",
+     "A convergent geometric series",
+     "A convergent $p$-series"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "It equals $\\frac{10}{3}\\sum\\frac1k$, divergent by Theorem 9.4.3(b).",
+    "option_explanations": [
+     "Mistake: reads the constant as the sum.",
+     "Correct.",
+     "Mistake: it is not geometric; the ratio of terms is not constant.",
+     "Mistake: $p=1$ is not a convergent $p$-series."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Delete the first three terms of $\\sum_{k=1}^\\infty\\frac1{k^2}$ to get $\\sum_{k=4}^\\infty\\frac1{k^2}$. What happens?",
+   "options": [
+    "It converges to the same sum",
+    "It diverges",
+    "It converges; the sum falls by $\\frac{49}{36}$",
+    "It converges; the sum falls by $1$"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "Removing finitely many terms never changes convergence (Theorem 9.4.3(c)), but the sum drops by the deleted terms.",
+   "option_explanations": [
+    "Mistake: the deleted terms are part of the old sum.",
+    "Mistake: finite deletions do not affect convergence.",
+    "Correct.",
+    "Mistake: subtracts only the first term."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "What is true of $\\displaystyle\\sum_{k=1}^{\\infty}\\frac{1}{k+9}$?",
+    "options": [
+     "Converges, as $\\frac1{k+9}\\to0$",
+     "Converges, as it is $p$-series with $p=9$",
+     "Diverges",
+     "Converges to $\\frac19$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "It is the harmonic series with its first nine terms deleted, so it diverges (Theorem 9.4.3(c)).",
+    "option_explanations": [
+     "Mistake: terms tending to $0$ does not decide.",
+     "Mistake: $9$ is a shift, not the exponent.",
+     "Correct.",
+     "Mistake: confuses the first term with a sum."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which is correct about $\\displaystyle\\sum_{k=10}^{\\infty}\\frac1{k}$?",
+    "options": [
+     "Diverges like the harmonic series",
+     "Converges since the first terms are removed",
+     "Converges to $\\ln 10$",
+     "Converges since $k\\ge10$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Deleting the first nine terms of the harmonic series leaves a divergent series.",
+    "option_explanations": [
+     "Correct.",
+     "Mistake: finite deletion cannot create convergence.",
+     "Mistake: invents a sum from an integral.",
+     "Mistake: a large starting index is irrelevant."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Decide: $\\displaystyle\\sum_{k=1}^{\\infty}\\left(\\frac1{2^k}+\\frac1k\\right)$",
+   "options": [
+    "Converges to $1$",
+    "Converges, as both terms tend to $0$",
+    "Inconclusive",
+    "Diverges"
+   ],
+   "correct": [
+    3
+   ],
+   "explanation": "A convergent series plus a divergent series diverges (otherwise $\\sum\\frac1k$ would be a difference of convergent series).",
+   "option_explanations": [
+    "Mistake: ignores the harmonic part.",
+    "Mistake: terms tending to $0$ proves nothing.",
+    "Mistake: the sum of convergent and divergent is decided: divergent.",
+    "Correct."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "What happens to $\\displaystyle\\sum_{k=1}^{\\infty}\\left(\\frac{3}{5^k}-\\frac1{3k}\\right)$?",
+    "options": [
+     "It diverges",
+     "It converges to $\\frac34$",
+     "It converges to $0$",
+     "It cannot be decided"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "The first piece is a convergent geometric series and the second a divergent multiple of the harmonic series, so the combination diverges.",
+    "option_explanations": [
+     "Correct.",
+     "Mistake: drops the divergent part.",
+     "Mistake: terms tending to $0$ is mistaken for the sum.",
+     "Mistake: it can be decided."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "If $\\sum a_k$ converges and $\\sum b_k$ diverges, then $\\sum(a_k+b_k)$",
+    "options": [
+     "converges",
+     "diverges",
+     "converges to $0$",
+     "may do either"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "If it converged, then $b_k=(a_k+b_k)-a_k$ would give a convergent series.",
+    "option_explanations": [
+     "Mistake: assumes the convergent part dominates.",
+     "Correct.",
+     "Mistake: nothing cancels here.",
+     "Mistake: it is always divergent."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "The Integral Test requires positive terms. For which series does this requirement fail?",
+   "options": [
+    "$\\sum\\dfrac{1}{k+3}$",
+    "$\\sum\\dfrac{(-1)^k}{k^2}$",
+    "$\\sum\\dfrac{1}{k^{3/2}}$",
+    "$\\sum e^{-k}$"
+   ],
+   "correct": [
+    1
+   ],
+   "explanation": "$(-1)^k/k^2$ alternates in sign, so the Integral Test does not apply.",
+   "option_explanations": [
+    "Mistake: all terms are positive.",
+    "Correct.",
+    "Mistake: all terms are positive.",
+    "Mistake: all terms are positive."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Which series is NOT a valid candidate for the Integral Test?",
+    "options": [
+     "$\\sum\\dfrac{2}{k+1}$",
+     "$\\sum\\dfrac{1}{k^2+5}$",
+     "$\\sum\\dfrac{\\cos(\\pi k)}{k}$",
+     "$\\sum ke^{-k^2}$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "$\\cos(\\pi k)=(-1)^k$ makes the terms change sign.",
+    "option_explanations": [
+     "Mistake: positive terms and $\\frac{2}{x+1}$ decreasing.",
+     "Mistake: positive and decreasing.",
+     "Correct.",
+     "Mistake: positive and decreasing for $x\\ge1$."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which function lets the Integral Test be used on $\\sum\\frac{1}{3k+2}$ (with $a=1$)?",
+    "options": [
+     "$f(x)=\\dfrac{1}{3x+2}$",
+     "$f(x)=3x+2$",
+     "$f(x)=\\dfrac{(-1)^x}{3x+2}$",
+     "$f(x)=\\dfrac{1}{3x}+2$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Replace $k$ by $x$ in the general term and check it is positive, continuous and decreasing.",
+    "option_explanations": [
+     "Correct.",
+     "Mistake: this is increasing; the reciprocal is needed.",
+     "Mistake: adds a sign factor not in the term.",
+     "Mistake: misplaces the $2$."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Which improper integral is paired with $\\displaystyle\\sum_{k=1}^{\\infty}\\frac{1}{(k+4)^2}$ in the Integral Test?",
+   "options": [
+    "$\\displaystyle\\int_1^{\\infty}\\frac{dx}{x^2+4}$",
+    "$\\displaystyle\\int_1^{\\infty}\\frac{dx}{x+4}$",
+    "$\\displaystyle\\int_1^{\\infty}\\frac{dx}{(x+4)^2}$",
+    "$\\displaystyle\\int_1^{\\infty}(x+4)^2\\,dx$"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "Replace $k$ by $x$ and the sum limits by the integral limits.",
+   "option_explanations": [
+    "Mistake: squares only $x$.",
+    "Mistake: drops the square.",
+    "Correct.",
+    "Mistake: inverts the integrand."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "For $\\displaystyle\\sum_{k=2}^{\\infty}\\frac{1}{3k-1}$, the Integral Test uses",
+    "options": [
+     "$\\displaystyle\\int_2^{\\infty}\\frac{dx}{3x}$",
+     "$\\displaystyle\\int_2^{\\infty}(3x-1)\\,dx$",
+     "$\\displaystyle\\int_2^{\\infty}\\frac{dx}{(3x-1)^2}$",
+     "$\\displaystyle\\int_2^{\\infty}\\frac{dx}{3x-1}$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "Replace $k$ by $x$ in $u_k$ and use the series' starting index as the lower limit.",
+    "option_explanations": [
+     "Mistake: drops the constant $-1$, which changes the function.",
+     "Mistake: uses the reciprocal of the integrand.",
+     "Mistake: squares the denominator.",
+     "Correct."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "The Integral Test pairs $\\sum_{k=1}^\\infty\\dfrac{1}{(2k+3)^3}$ with",
+    "options": [
+     "$\\displaystyle\\int_1^{\\infty}\\frac{dx}{(2x+3)^3}$",
+     "$\\displaystyle\\int_1^{\\infty}\\frac{dx}{2x^3+3}$",
+     "$\\displaystyle\\int_1^{\\infty}\\frac{dx}{(2x+3)^2}$",
+     "$\\displaystyle\\int_0^{\\infty}\\frac{dx}{x^3}$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Substitute $x$ for $k$ throughout the general term.",
+    "option_explanations": [
+     "Correct.",
+     "Mistake: cubes only $x$.",
+     "Mistake: changes the exponent.",
+     "Mistake: ignores the shift and the limits."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "basic",
+   "question": "Confirm that the Integral Test applies to $\\displaystyle\\sum_{k=1}^{\\infty}\\frac{1}{5k+2}$ and decide convergence.",
+   "answer": "The terms are positive. Let $f(x)=\\frac1{5x+2}$: continuous and decreasing for $x\\ge1$, with $f(k)=u_k$. Then $\\int_1^{\\infty}\\frac{dx}{5x+2}=\\lim_{b\\to\\infty}\\frac15\\ln(5x+2)\\Big|_1^b=\\lim_{b\\to\\infty}\\frac15\\left[\\ln(5b+2)-\\ln7\\right]=+\\infty$. The integral diverges, so the series **diverges**."
+  },
+  "versions": [
+   {
+    "type": "basic",
+    "question": "Show the Integral Test applies to $\\displaystyle\\sum_{k=1}^{\\infty}\\frac{1}{3k+1}$ and decide whether it converges.",
+    "answer": "Positive terms; $f(x)=\\frac1{3x+1}$ is continuous and decreasing on $[1,\\infty)$. $\\int_1^{\\infty}\\frac{dx}{3x+1}=\\lim_{b\\to\\infty}\\frac13\\left[\\ln(3b+1)-\\ln4\\right]=\\infty$. The integral diverges, so the series **diverges**."
+   },
+   {
+    "type": "mcq",
+    "question": "Use the Integral Test on $\\displaystyle\\sum_{k=1}^{\\infty}\\frac{1}{(2k+1)^2}$. The improper integral equals",
+    "options": [
+     "$\\dfrac12$",
+     "$\\dfrac16$",
+     "$\\dfrac13$",
+     "$\\dfrac1{12}$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "$\\int_1^\\infty(2x+1)^{-2}dx=\\left[-\\frac{1}{2(2x+1)}\\right]_1^\\infty=\\frac16$, finite, so the series converges.",
+    "option_explanations": [
+     "Mistake: starts the integral at $0$ instead of $1$.",
+     "Correct.",
+     "Mistake: forgets the factor $\\frac12$ from the chain rule.",
+     "Mistake: divides by $2$ twice."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "basic",
+   "question": "Use the Integral Test to decide whether $\\displaystyle\\sum_{k=1}^{\\infty}k\\,e^{-k^2}$ converges.",
+   "answer": "Terms are positive. $f(x)=xe^{-x^2}$ is continuous, and $f'(x)=(1-2x^2)e^{-x^2}<0$ for $x\\ge1$, so $f$ is decreasing there. $\\int_1^{\\infty}xe^{-x^2}dx=\\lim_{b\\to\\infty}\\left[-\\tfrac12e^{-x^2}\\right]_1^b=\\tfrac12e^{-1}=\\frac1{2e}$, finite. The integral converges, so the series **converges**."
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "The Integral Test is used on $\\displaystyle\\sum_{k=1}^{\\infty}k\\,e^{-k^2/2}$. What is $\\displaystyle\\int_1^{\\infty}x\\,e^{-x^2/2}\\,dx$?",
+    "options": [
+     "$e^{-1/2}$",
+     "$\\tfrac12e^{-1/2}$",
+     "$e^{-1}$",
+     "$-e^{-1/2}$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "$\\int xe^{-x^2/2}dx=-e^{-x^2/2}$, so the improper integral is $0+e^{-1/2}=e^{-1/2}$ (finite, series converges).",
+    "option_explanations": [
+     "Correct.",
+     "Mistake: inserts a spurious factor $\\frac12$.",
+     "Mistake: evaluates $e^{-x^2/2}$ at $x=1$ as $e^{-1}$.",
+     "Mistake: sign slip when evaluating the limits."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "For $\\displaystyle\\sum_{k=1}^{\\infty}e^{-3k}$ the Integral Test gives $\\displaystyle\\int_1^{\\infty}e^{-3x}dx=$",
+    "options": [
+     "$\\dfrac{e^{-3}}{3}$",
+     "$3e^{-3}$",
+     "$\\dfrac13$",
+     "$-\\dfrac{e^{-3}}{3}$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "$\\int_1^\\infty e^{-3x}dx=\\left[-\\frac{e^{-3x}}{3}\\right]_1^\\infty=\\frac{e^{-3}}{3}$, finite, so the series converges.",
+    "option_explanations": [
+     "Correct.",
+     "Mistake: multiplies instead of dividing by $3$ in the antiderivative.",
+     "Mistake: starts the integral at $0$.",
+     "Mistake: sign slip at the limits."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Identify $p$ and decide convergence for $\\displaystyle\\sum_{k=1}^{\\infty}k^{-2/3}$.",
+   "options": [
+    "$p=\\frac23$, diverges",
+    "$p=\\frac23$, converges",
+    "$p=\\frac32$, converges",
+    "$p=-\\frac23$, diverges"
+   ],
+   "correct": [
+    0
+   ],
+   "explanation": "$k^{-2/3}=1/k^{2/3}$, so $p=\\frac23\\le1$ and the $p$-series diverges.",
+   "option_explanations": [
+    "Correct.",
+    "Mistake: any positive $p$ is taken to converge.",
+    "Mistake: inverts the exponent.",
+    "Mistake: takes the sign of the exponent as part of $p$."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "What are $p$ and the behaviour of $\\displaystyle\\sum_{k=1}^{\\infty}\\frac{1}{\\sqrt[3]{k^4}}$?",
+    "options": [
+     "$p=\\frac34$, diverges",
+     "$p=\\frac43$, converges",
+     "$p=4$, converges",
+     "$p=\\frac43$, diverges"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "$\\sqrt[3]{k^4}=k^{4/3}$, so $p=\\frac43>1$ and the series converges.",
+    "option_explanations": [
+     "Mistake: inverts the exponent.",
+     "Correct.",
+     "Mistake: ignores the cube root.",
+     "Mistake: right $p$ but misjudges it as $\\le1$."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Decide: $\\displaystyle\\sum_{k=1}^{\\infty}\\frac{1}{k^{0.9}}$",
+    "options": [
+     "Converges, as the terms tend to $0$",
+     "Diverges, as $p=0.9\\le1$",
+     "Converges, as $p>0$",
+     "Diverges, as the terms tend to $1$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "It is a $p$-series with $0<p<1$, which diverges.",
+    "option_explanations": [
+     "Mistake: terms tending to $0$ is not enough.",
+     "Correct.",
+     "Mistake: $p>0$ is the definition of a $p$-series, not the convergence condition.",
+     "Mistake: the terms tend to $0$."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Which of these $p$-series converges?",
+   "options": [
+    "$\\sum k^{-1}$",
+    "$\\sum k^{-1/2}$",
+    "$\\sum k^{-3/2}$",
+    "$\\sum k^{-2/3}$"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "A $p$-series converges exactly when $p>1$; only $p=\\frac32$ qualifies.",
+   "option_explanations": [
+    "Mistake: $p=1$ is the divergent harmonic series.",
+    "Mistake: $p=\\frac12<1$.",
+    "Correct.",
+    "Mistake: $p=\\frac23<1$."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Exactly one of these series diverges. Which?",
+    "options": [
+     "$\\sum\\dfrac{1}{k^{5/4}}$",
+     "$\\sum\\dfrac{1}{k^{2}}$",
+     "$\\sum\\dfrac1{k^{7/3}}$",
+     "$\\sum\\dfrac{1}{\\sqrt[4]{k^3}}$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "$\\sqrt[4]{k^3}=k^{3/4}$, so $p=\\frac34\\le1$ and the series diverges; the others have $p>1$.",
+    "option_explanations": [
+     "Mistake: $p=\\frac54>1$ converges.",
+     "Mistake: $p=2>1$ converges.",
+     "Mistake: $p=\\frac73>1$ converges.",
+     "Correct."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which series converges?",
+    "options": [
+     "$\\sum\\dfrac1{\\sqrt k}$",
+     "$\\sum\\dfrac{1}{k\\sqrt k}$",
+     "$\\sum\\dfrac1{\\sqrt[3]k}$",
+     "$\\sum\\dfrac1k$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "$k\\sqrt k=k^{3/2}$, so $p=\\frac32>1$.",
+    "option_explanations": [
+     "Mistake: $p=\\frac12$.",
+     "Correct.",
+     "Mistake: $p=\\frac13$.",
+     "Mistake: $p=1$ (harmonic)."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Which statement about $\\sum_{k=1}^\\infty 1/k^p$ is correct?",
+   "options": [
+    "Converges if and only if $p\\ge1$",
+    "Converges for every $p>0$",
+    "Diverges if and only if $p>1$",
+    "Converges if and only if $p>1$"
+   ],
+   "correct": [
+    3
+   ],
+   "explanation": "The boundary case $p=1$ is the harmonic series, which diverges, so the condition is $p>1$.",
+   "option_explanations": [
+    "Mistake: includes the harmonic series.",
+    "Mistake: small positive $p$ gives divergence.",
+    "Mistake: reverses the condition.",
+    "Correct."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "For the $p$-series with $p=1$, the behaviour is",
+    "options": [
+     "convergent with sum $1$",
+     "divergent",
+     "convergent with sum $\\ln 2$",
+     "undecided by the Integral Test"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "$\\int_1^\\infty dx/x=\\lim\\ln b=\\infty$, so the harmonic series diverges.",
+    "option_explanations": [
+     "Mistake: treats the first term as the sum.",
+     "Correct.",
+     "Mistake: confuses with the alternating harmonic series.",
+     "Mistake: the Integral Test settles it."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Where does the borderline between convergence and divergence for $\\sum 1/k^p$ lie?",
+    "options": [
+     "At $p=2$, converging above it",
+     "At $p=0$, converging above it",
+     "At $p=1$, converging above it",
+     "At $p=\\frac12$, converging above it"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Convergence needs $p>1$; the borderline $p=1$ diverges.",
+    "option_explanations": [
+     "Mistake: $\\sum1/k^{3/2}$ already converges.",
+     "Mistake: $p=1$ still diverges.",
+     "Correct.",
+     "Mistake: $p=\\frac34$ still diverges."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "For which $p$ does $\\displaystyle\\sum_{k=1}^{\\infty}\\frac{1}{k^{2p-3}}$ converge?",
+   "options": [
+    "$p>1$",
+    "$p>2$",
+    "$p>\\frac52$",
+    "$p>\\frac32$"
+   ],
+   "correct": [
+    1
+   ],
+   "explanation": "It is a $p$-series with exponent $2p-3$, which converges iff $2p-3>1$, i.e. $p>2$.",
+   "option_explanations": [
+    "Mistake: applies the condition $>1$ to $p$ itself.",
+    "Correct.",
+    "Mistake: requires $2p-3>2$.",
+    "Mistake: only requires a positive exponent, $2p-3>0$."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "The series $\\displaystyle\\sum_{k=1}^{\\infty}\\frac{1}{k^{4p-1}}$ converges exactly when",
+    "options": [
+     "$p>\\frac12$",
+     "$p>\\frac14$",
+     "$p>1$",
+     "$p>\\frac34$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Need $4p-1>1$, i.e. $p>\\frac12$.",
+    "option_explanations": [
+     "Correct.",
+     "Mistake: only requires $4p-1>0$.",
+     "Mistake: applies the condition $>1$ to $p$ itself.",
+     "Mistake: requires $4p-1>2$."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Find all $p$ for which $\\displaystyle\\sum_{k=1}^{\\infty}k^{-(3p+1)}$ converges.",
+    "options": [
+     "$p>\\frac13$",
+     "$p>-\\frac13$",
+     "$p>0$",
+     "$p>1$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Need $3p+1>1$, so $p>0$.",
+    "option_explanations": [
+     "Mistake: solves $3p>1$.",
+     "Mistake: only requires $3p+1>0$.",
+     "Correct.",
+     "Mistake: applies the condition $>1$ to $p$ itself."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "In the proof for $p$-series with $p>1$, $\\int_1^\\infty x^{-p}dx=\\frac1{p-1}$. For $p=4$ the integral equals",
+   "options": [
+    "$\\dfrac14$",
+    "$\\dfrac13$",
+    "$\\dfrac15$",
+    "$\\dfrac43$"
+   ],
+   "correct": [
+    1
+   ],
+   "explanation": "$\\int_1^\\infty x^{-4}dx=\\left[\\frac{x^{-3}}{-3}\\right]_1^\\infty=\\frac13$.",
+   "option_explanations": [
+    "Mistake: uses $\\frac1p$.",
+    "Correct.",
+    "Mistake: uses $\\frac1{p+1}$.",
+    "Mistake: multiplies $\\frac1{p-1}$ by $p$."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "What is $\\displaystyle\\int_1^{\\infty}x^{-5/2}\\,dx$ (the integral behind $\\sum k^{-5/2}$)?",
+    "options": [
+     "$\\dfrac25$",
+     "$\\dfrac32$",
+     "$\\dfrac23$",
+     "$\\dfrac52$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "$\\left[\\frac{x^{-3/2}}{-3/2}\\right]_1^\\infty=\\frac23$.",
+    "option_explanations": [
+     "Mistake: uses $\\frac1p$.",
+     "Mistake: uses $p-1$ instead of $\\frac1{p-1}$.",
+     "Correct.",
+     "Mistake: uses $p$ itself."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "What is $\\displaystyle\\int_1^{\\infty}\\frac{dx}{x^{3}}$?",
+    "options": [
+     "$\\dfrac13$",
+     "$1$",
+     "$\\dfrac12$",
+     "$\\dfrac14$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "$\\left[-\\frac{1}{2x^2}\\right]_1^\\infty=\\frac12$.",
+    "option_explanations": [
+     "Mistake: uses $\\frac1p$.",
+     "Mistake: takes the lower-limit value $1^{-3}$ unchanged.",
+     "Correct.",
+     "Mistake: uses $\\frac1{p+1}$."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Since $\\int_1^{\\infty}\\frac{dx}{x^2}=1$, the Integral Test tells us $\\sum_{k=1}^{\\infty}\\frac1{k^2}$",
+   "options": [
+    "converges",
+    "converges to $1$",
+    "diverges",
+    "converges to $2$"
+   ],
+   "correct": [
+    0
+   ],
+   "explanation": "The test decides convergence only; the integral's value is not the sum of the series.",
+   "option_explanations": [
+    "Correct.",
+    "Mistake: the integral's value is not the sum.",
+    "Mistake: a finite integral means convergence.",
+    "Mistake: invents a sum by adding the first term."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "The integral $\\int_1^\\infty (x+1)^{-2}dx$ equals $\\frac12$. For $\\sum_{k=1}^\\infty\\frac1{(k+1)^2}$ the Integral Test shows that the series",
+    "options": [
+     "sums to $\\frac12$",
+     "diverges",
+     "converges",
+     "sums to $1$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "A finite integral proves convergence; it does not give the sum.",
+    "option_explanations": [
+     "Mistake: integral value is not the sum.",
+     "Mistake: a finite integral gives convergence.",
+     "Correct.",
+     "Mistake: invents a sum."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "If $\\int_1^{\\infty}f(x)\\,dx$ is finite and $f(k)=u_k$ satisfies the Integral Test hypotheses, then",
+    "options": [
+     "$\\sum u_k$ equals the integral",
+     "$\\sum u_k$ diverges",
+     "$\\sum u_k$ converges",
+     "$u_k$ is constant"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Series and integral converge or diverge together.",
+    "option_explanations": [
+     "Mistake: values are generally different.",
+     "Mistake: opposite of the theorem.",
+     "Correct.",
+     "Mistake: unrelated."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "What is the general term $u_k$ of $\\ \\frac23+\\frac35+\\frac47+\\frac59+\\cdots$ ?",
+   "options": [
+    "$\\dfrac{k}{2k+1}$",
+    "$\\dfrac{k+1}{2k-1}$",
+    "$\\dfrac{k+1}{2k+1}$",
+    "$\\dfrac{k+1}{3k}$"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "For $k=1,2,3,4$: numerators $2,3,4,5=k+1$, denominators $3,5,7,9=2k+1$.",
+   "option_explanations": [
+    "Mistake: numerator starts at $1$, so $k=1$ gives $\\frac13$.",
+    "Mistake: denominator gives $1$ at $k=1$.",
+    "Correct.",
+    "Mistake: denominator is not linear with slope $3$."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "A series begins $\\frac12+\\frac25+\\frac38+\\frac4{11}+\\cdots$. Its general term is",
+    "options": [
+     "$\\dfrac{k}{3k-1}$",
+     "$\\dfrac{k}{3k+1}$",
+     "$\\dfrac{k}{2k+1}$",
+     "$\\dfrac{k+1}{3k+2}$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Numerators are $k$, denominators $2,5,8,11=3k-1$.",
+    "option_explanations": [
+     "Correct.",
+     "Mistake: gives $\\frac14$ at $k=1$.",
+     "Mistake: gives $\\frac13$ at $k=1$.",
+     "Mistake: gives $\\frac25$ at $k=1$."
+    ]
+   },
+   {
+    "type": "basic",
+    "question": "Find the general term of $\\frac23+\\frac35+\\frac47+\\cdots$ and use the Divergence Test on it.",
+    "answer": "Numerators $2,3,4,\\dots=k+1$ and denominators $3,5,7,\\dots=2k+1$, so $u_k=\\frac{k+1}{2k+1}$. Then $\\lim_{k\\to\\infty}\\frac{k+1}{2k+1}=\\lim\\frac{1+1/k}{2+1/k}=\\frac12\\ne0$, so the series **diverges** by the Divergence Test."
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Apply the Divergence Test to $\\displaystyle\\sum_{k=1}^{\\infty}(-1)^{k+1}$.",
+   "options": [
+    "Converges, as the terms alternate",
+    "Diverges, as $\\lim u_k$ does not exist",
+    "Inconclusive, as $|u_k|\\to 0$",
+    "Converges to $0$"
+   ],
+   "correct": [
+    1
+   ],
+   "explanation": "$u_k=\\pm1$ has no limit, so it is not $0$, and the series diverges.",
+   "option_explanations": [
+    "Mistake: alternation is not a convergence test here.",
+    "Correct.",
+    "Mistake: $|u_k|=1$ does not tend to $0$.",
+    "Mistake: pairs of terms cancel but the series still diverges."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "What does the Divergence Test say about $\\displaystyle\\sum_{k=1}^{\\infty}\\cos(k\\pi)$?",
+    "options": [
+     "Diverges, because $u_k$ fails to tend to $0$",
+     "Converges to $-1$",
+     "Inconclusive",
+     "Converges, because $|\\cos|\\le1$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "$\\cos k\\pi=(-1)^k$, which oscillates, so $\\lim u_k\\ne0$.",
+    "option_explanations": [
+     "Correct.",
+     "Mistake: invents a sum.",
+     "Mistake: the test does decide.",
+     "Mistake: bounded terms do not give convergence."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which conclusion follows for $\\displaystyle\\sum_{k=1}^{\\infty}(-1)^k\\frac{k}{k+1}$?",
+    "options": [
+     "Converges since it alternates",
+     "Converges to $0$",
+     "Inconclusive since $\\left|u_k\\right|\\to1$",
+     "Diverges since $u_k\\not\\to0$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "$|u_k|=\\frac{k}{k+1}\\to1$, so $u_k$ does not tend to $0$.",
+    "option_explanations": [
+     "Mistake: alternation does not help here.",
+     "Mistake: invents a sum.",
+     "Mistake: a nonzero limit of $|u_k|$ means the test decides.",
+     "Correct."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Apply the Divergence Test to $\\displaystyle\\sum_{k=1}^{\\infty}\\left(1+\\frac2k\\right)^k$.",
+   "options": [
+    "Diverges, limit is $e^{2}$",
+    "Diverges, limit is $2$",
+    "Converges, limit is $1$",
+    "Inconclusive, limit is $0$"
+   ],
+   "correct": [
+    0
+   ],
+   "explanation": "$\\lim(1+\\frac2k)^k=e^2\\ne0$.",
+   "option_explanations": [
+    "Correct.",
+    "Mistake: wrong limit; the exponent $k$ matters.",
+    "Mistake: the base tending to $1$ is not the limit, and nonzero limits mean divergence.",
+    "Mistake: the limit is not $0$."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "What does the Divergence Test show for $\\displaystyle\\sum_{k=1}^{\\infty}\\left(\\frac{k}{k+1}\\right)^{k}$?",
+    "options": [
+     "Converges, limit is $1$",
+     "Diverges, limit is $e^{-1}$",
+     "Inconclusive, limit is $0$",
+     "Diverges, limit is $1$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "$\\left(\\frac{k}{k+1}\\right)^k=\\left(1+\\frac1k\\right)^{-k}\\to e^{-1}\\neq0$.",
+    "option_explanations": [
+     "Mistake: wrong limit and the wrong conclusion.",
+     "Correct.",
+     "Mistake: the limit is not $0$.",
+     "Mistake: right conclusion but wrong limit."
+    ]
+   },
+   {
+    "type": "basic",
+    "question": "Does $\\displaystyle\\sum_{k=1}^{\\infty}\\left(1+\\frac3k\\right)^{k}$ converge? Use the Divergence Test.",
+    "answer": "$\\lim_{k\\to\\infty}\\left(1+\\frac3k\\right)^k=e^{3}\\neq0$. Since the general term does not tend to $0$, the series **diverges**."
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "The Integral Test applied to $\\sum\\frac1k$ uses $\\int_1^b\\frac{dx}{x}$. This equals",
+   "options": [
+    "$\\ln b$",
+    "$\\dfrac{1}{b}-1$",
+    "$\\ln b+1$",
+    "$-\\dfrac1b+\\dfrac1{b^2}$"
+   ],
+   "correct": [
+    0
+   ],
+   "explanation": "$\\int_1^b\\frac{dx}x=\\ln b-\\ln1=\\ln b\\to\\infty$, so the harmonic series diverges.",
+   "option_explanations": [
+    "Correct.",
+    "Mistake: integrates as if it were $x^{-2}$.",
+    "Mistake: treats $\\ln1$ as $-1$.",
+    "Mistake: differentiates instead of integrating."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Using the Integral Test on $\\sum_{k=1}^\\infty\\frac{1}{k+3}$ with $\\int_1^b\\frac{dx}{x+3}$, we get",
+    "options": [
+     "$\\dfrac{1}{4}-\\dfrac1{b+3}$",
+     "$\\ln(b+3)-\\ln4$, tending to $\\infty$",
+     "$\\ln(b+3)$, tending to $0$",
+     "$\\ln4-\\ln(b+3)$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "$\\left[\\ln(x+3)\\right]_1^b=\\ln(b+3)-\\ln4\\to\\infty$, so the series diverges.",
+    "option_explanations": [
+     "Mistake: integrates as if the power were $-2$.",
+     "Correct.",
+     "Mistake: $\\ln(b+3)\\to\\infty$.",
+     "Mistake: reverses the limits."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "As $b\\to\\infty$, which behaviour of $\\int_1^b x^{-1}dx$ shows the harmonic series diverges?",
+    "options": [
+     "it tends to $1$",
+     "it tends to $0$",
+     "it grows without bound",
+     "it oscillates"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "$\\ln b\\to\\infty$.",
+    "option_explanations": [
+     "Mistake: that is $\\int x^{-2}$.",
+     "Mistake: the integral is increasing.",
+     "Correct.",
+     "Mistake: it is monotone."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "If $\\sum u_k=6$ and $\\sum v_k=2$ (both convergent), then $\\sum(3u_k-v_k)=$",
+   "options": [
+    "$16$",
+    "$4$",
+    "$12$",
+    "$20$"
+   ],
+   "correct": [
+    0
+   ],
+   "explanation": "Combine Theorem 9.4.3(a),(b): $3\\cdot6-2=16$.",
+   "option_explanations": [
+    "Correct.",
+    "Mistake: $6-2$, ignoring the factor $3$.",
+    "Mistake: $3(6-2)$.",
+    "Mistake: $3\\cdot 6+2$."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Given convergent $\\sum a_k=5$ and $\\sum b_k=-1$, find $\\sum(2a_k+4b_k)$.",
+    "options": [
+     "$14$",
+     "$6$",
+     "$-14$",
+     "$-6$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "$2\\cdot5+4\\cdot(-1)=6$.",
+    "option_explanations": [
+     "Mistake: sign slip ($10+4$).",
+     "Correct.",
+     "Mistake: reverses the signs of both sums.",
+     "Mistake: sign slip on the first sum."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "If $\\sum u_k=4$, then $\\sum_{k=1}^\\infty\\frac{u_k}{2}$ equals",
+    "options": [
+     "$4$",
+     "$8$",
+     "$2$",
+     "$6$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "A constant factor comes out: $\\frac12\\cdot4=2$.",
+    "option_explanations": [
+     "Mistake: ignores the factor.",
+     "Mistake: multiplies by $2$ instead of $\\frac12$.",
+     "Correct.",
+     "Mistake: adds $2$ instead of halving."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Apply the Divergence Test to $\\displaystyle\\sum_{k=1}^{\\infty}\\frac{k^2+k+3}{2k^2+1}$.",
+   "options": [
+    "Diverges, since the limit is $\\tfrac12$",
+    "Converges, since the limit is $\\tfrac12$",
+    "Inconclusive, since the limit is $0$",
+    "Diverges, since the limit is $2$"
+   ],
+   "correct": [
+    0
+   ],
+   "explanation": "The general term tends to $\\frac12\\neq0$, so the series diverges (Theorem 9.4.1(a)).",
+   "option_explanations": [
+    "Correct.",
+    "Mistake: a nonzero limit of the terms never gives convergence.",
+    "Mistake: the limit is $\\frac12$, not $0$.",
+    "Mistake: inverts the ratio of leading coefficients."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "What does the Divergence Test give for $\\displaystyle\\sum_{k=1}^{\\infty}\\frac{3k^2+k}{k^2+5}$?",
+    "options": [
+     "Inconclusive, as the terms tend to $0$",
+     "Converges, as the limit is $3$",
+     "Diverges, as the limit is $\\tfrac13$",
+     "Diverges, as the limit is $3$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "Dividing by $k^2$ gives limit $3\\neq0$, so the series diverges.",
+    "option_explanations": [
+     "Mistake: the terms tend to $3$.",
+     "Mistake: a nonzero limit cannot show convergence.",
+     "Mistake: inverts the leading coefficients.",
+     "Correct."
+    ]
+   },
+   {
+    "type": "basic",
+    "question": "Use the Divergence Test on $\\displaystyle\\sum_{k=1}^{\\infty}\\frac{2k^2-1}{5k^2+k}$.",
+    "answer": "$\\lim_{k\\to\\infty}\\frac{2k^2-1}{5k^2+k}=\\lim\\frac{2-1/k^2}{5+1/k}=\\frac25\\neq0$, so the series **diverges**."
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Which hypotheses does the Integral Test need? ($u_k=f(k)$ for all $k\\ge a$)",
+   "options": [
+    "$u_k>0$, and $f$ continuous and decreasing on $[a,\\infty)$",
+    "$u_k>0$, and $f$ continuous and increasing on $[a,\\infty)$",
+    "$u_k$ of alternating sign, and $f$ continuous and decreasing",
+    "$u_k>0$, and $f$ bounded and differentiable on $[a,\\infty)$"
+   ],
+   "correct": [
+    0
+   ],
+   "explanation": "Theorem 9.4.3: positive terms, and $f$ decreasing and continuous on $[a,+\\infty)$.",
+   "option_explanations": [
+    "Correct.",
+    "Mistake: $f$ must be decreasing.",
+    "Mistake: the terms must be positive.",
+    "Mistake: boundedness and differentiability are not the conditions; decreasing and continuous are."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Before applying the Integral Test to $\\sum u_k$, one must check that",
+    "options": [
+     "$f$ is positive-valued and increasing near $\\infty$",
+     "$u_k\\to0$ and $f$ is bounded",
+     "$u_k>0$ and $f$ is continuous and decreasing from $a$ on",
+     "$u_k$ alternates and $f$ is continuous"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Positive terms and $f$ continuous, decreasing on $[a,\\infty)$ are required.",
+    "option_explanations": [
+     "Mistake: $f$ must be decreasing.",
+     "Mistake: neither condition is the test's hypothesis.",
+     "Correct.",
+     "Mistake: terms must be positive, not alternating."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "For which series does the Integral Test hypothesis (positive terms) fail?",
+    "options": [
+     "$\\sum\\dfrac{1}{k+2}$",
+     "$\\sum\\dfrac{\\cos(k\\pi)}{k+2}$",
+     "$\\sum\\dfrac{1}{(k+2)^2}$",
+     "$\\sum\\dfrac{k}{e^{k}}$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "$\\cos(k\\pi)=(-1)^k$ makes the terms alternate in sign, so the Integral Test does not apply.",
+    "option_explanations": [
+     "Mistake: positive terms.",
+     "Correct.",
+     "Mistake: positive terms.",
+     "Mistake: positive terms."
+    ]
+   }
+  ]
+ }
+]

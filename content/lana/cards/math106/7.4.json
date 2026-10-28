@@ -1,0 +1,1734 @@
+[
+ {
+  "original": {
+   "type": "mcq",
+   "question": "To remove the radical in $\\int \\frac{dx}{x\\sqrt{7-x^{2}}}$, which substitution is used?",
+   "options": [
+    "$x=\\sqrt{7}\\tan\\theta$",
+    "$x=\\sqrt{7}\\sin\\theta$",
+    "$x=\\sqrt{7}\\sec\\theta$",
+    "$x=7\\sin\\theta$"
+   ],
+   "correct": [
+    1
+   ],
+   "explanation": "For $\\sqrt{a^{2}-x^{2}}$ put $x=a\\sin\\theta$, so that $a^{2}-x^{2}=a^{2}\\cos^{2}\\theta$.",
+   "option_explanations": [
+    "$\\tan$ is for $\\sqrt{a^2+x^2}$.",
+    "Correct: the form $\\sqrt{a^2-x^2}$ with $a=\\sqrt7$ calls for $x=a\\sin\\theta$.",
+    "$\\sec$ is for $\\sqrt{x^2-a^2}$.",
+    "uses $a^2$ instead of $a$."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "The integrand $\\frac{1}{x^{2}\\sqrt{12-x^{2}}}$ is best attacked with which substitution?",
+    "options": [
+     "$x=12\\sin\\theta$",
+     "$x=2\\sqrt{3}\\sec\\theta$",
+     "$x=2\\sqrt{3}\\tan\\theta$",
+     "$x=2\\sqrt{3}\\sin\\theta$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "Match $\\sqrt{a^{2}-x^{2}}$ with $a=\\sqrt{12}=2\\sqrt3$ and use $x=a\\sin\\theta$.",
+    "option_explanations": [
+     "takes $a=12$ instead of $\\sqrt{12}$.",
+     "$\\sec$ is for $x^2-a^2$.",
+     "$\\tan$ is for $x^2+a^2$.",
+     "Correct: $12=a^2$ gives $a=2\\sqrt3$."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which substitution removes the radical in $\\int \\frac{x^{2}}{\\sqrt{100-x^{2}}}\\,dx$?",
+    "options": [
+     "$x=10\\sin\\theta$",
+     "$x=100\\sin\\theta$",
+     "$x=10\\tan\\theta$",
+     "$x=10\\sec\\theta$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "The form is $\\sqrt{a^{2}-x^{2}}$ with $a=10$, so $x=10\\sin\\theta$.",
+    "option_explanations": [
+     "Correct: $a=10$.",
+     "uses $a^2$ rather than $a$.",
+     "$\\tan$ is for a sum $a^2+x^2$.",
+     "$\\sec$ is for $x^2-a^2$."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Which substitution suits the integrand $\\frac{1}{\\sqrt{x^{2}+9}}$?",
+   "options": [
+    "$x=3\\sin\\theta$",
+    "$x=3\\sec\\theta$",
+    "$x=3\\tan\\theta$",
+    "$x=9\\tan\\theta$"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "For $\\sqrt{x^{2}+a^{2}}$ use $x=a\\tan\\theta$, since $a^{2}+a^{2}\\tan^{2}\\theta=a^{2}\\sec^{2}\\theta$.",
+   "option_explanations": [
+    "gives $x^2+9=9\\sin^2\\theta+9$, no simplification.",
+    "gives $9\\sec^2\\theta+9$, no simplification.",
+    "Correct: gives $9+9\\tan^2\\theta=9\\sec^2\\theta$.",
+    "uses $a^2$ instead of $a$."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "To eliminate the radical in $\\int \\sqrt{x^{2}+5}\\,dx$ one sets",
+    "options": [
+     "$x=\\sqrt{5}\\sec\\theta$",
+     "$x=5\\tan\\theta$",
+     "$x=\\sqrt{5}\\sin\\theta$",
+     "$x=\\sqrt{5}\\tan\\theta$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "The form $x^{2}+a^{2}$ with $a=\\sqrt5$ calls for $x=a\\tan\\theta$.",
+    "option_explanations": [
+     "$\\sec$ is for a difference $x^2-a^2$.",
+     "uses $a^2$ instead of $a$.",
+     "$\\sin$ is for $a^2-x^2$.",
+     "Correct: $a=\\sqrt5$."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "What substitution should be used for $\\int \\frac{dx}{x\\sqrt{16+x^{2}}}$?",
+    "options": [
+     "$x=4\\tan\\theta$",
+     "$x=4\\sin\\theta$",
+     "$x=16\\tan\\theta$",
+     "$x=4\\sec\\theta$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Use $x=a\\tan\\theta$ with $a=4$; then $16+x^{2}=16\\sec^{2}\\theta$.",
+    "option_explanations": [
+     "Correct: $a=4$ and the form is $a^2+x^2$.",
+     "that is for $a^2-x^2$.",
+     "uses $a^2$ in place of $a$.",
+     "that is for $x^2-a^2$."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "For $\\int \\frac{dx}{x\\sqrt{x^{2}-4}}$ with $x\\ge 2$ the radical is removed by",
+   "options": [
+    "$x=2\\tan\\theta$",
+    "$x=2\\sin\\theta$",
+    "$x=2\\sec\\theta$",
+    "$x=4\\sec\\theta$"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "$\\sqrt{x^{2}-a^{2}}$ leads to $x=a\\sec\\theta$ because $\\sec^{2}\\theta-1=\\tan^{2}\\theta$.",
+   "option_explanations": [
+    "gives $4\\tan^2\\theta-4$, not a perfect square.",
+    "gives $4\\sin^2\\theta-4=-4\\cos^2\\theta$.",
+    "Correct: gives $4\\sec^2\\theta-4=4\\tan^2\\theta$.",
+    "uses $a^2$ in place of $a$."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "The integral $\\int \\frac{\\sqrt{x^{2}-13}}{x}\\,dx$ ($x\\ge\\sqrt{13}$) starts with which substitution?",
+    "options": [
+     "$x=\\sqrt{13}\\sin\\theta$",
+     "$x=\\sqrt{13}\\sec\\theta$",
+     "$x=13\\sec\\theta$",
+     "$x=\\sqrt{13}\\tan\\theta$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "The form $x^{2}-a^{2}$ with $a=\\sqrt{13}$ calls for $x=a\\sec\\theta$.",
+    "option_explanations": [
+     "that is for $a^2-x^2$.",
+     "Correct: $a=\\sqrt{13}$.",
+     "takes $a^2$ for $a$.",
+     "that is for $a^2+x^2$."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which substitution simplifies $\\sqrt{x^{2}-36}$ when $x\\ge 6$?",
+    "options": [
+     "$x=6\\cos\\theta$",
+     "$x=6\\sec\\theta$",
+     "$x=36\\sec\\theta$",
+     "$x=6\\tan\\theta$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Use $x=a\\sec\\theta$ with $a=6$ for $x^{2}-a^{2}$.",
+    "option_explanations": [
+     "gives $-36\\sin^2\\theta$ under the root.",
+     "Correct: $36\\sec^2\\theta-36=36\\tan^2\\theta$.",
+     "uses $a^2$ for $a$.",
+     "gives $36\\tan^2\\theta-36$."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "With $x=6\\sin\\theta$ and $-\\pi/2\\le\\theta\\le\\pi/2$, the radical $\\sqrt{36-x^{2}}$ equals",
+   "options": [
+    "$36\\cos\\theta$",
+    "$6\\cos^{2}\\theta$",
+    "$36\\cos^{2}\\theta$",
+    "$6\\cos\\theta$"
+   ],
+   "correct": [
+    3
+   ],
+   "explanation": "$a^{2}-a^{2}\\sin^{2}\\theta=a^{2}\\cos^{2}\\theta$ and $\\sqrt{\\cos^{2}\\theta}=\\cos\\theta$ on the given range.",
+   "option_explanations": [
+    "forgets to take the root of 36.",
+    "forgets the square root of $\\cos^{2}\\theta$.",
+    "forgets the square root of the whole expression.",
+    "Correct: $36-36\\sin^2\\theta=36\\cos^2\\theta$, and $\\cos\\theta\\ge0$."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "If $x=4\\tan\\theta$ with $-\\pi/2<\\theta<\\pi/2$, then $\\sqrt{16+x^{2}}$ simplifies to",
+    "options": [
+     "$4\\sec\\theta$",
+     "$16\\sec\\theta$",
+     "$16\\sec^{2}\\theta$",
+     "$4\\sec^{2}\\theta$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Because $1+\\tan^{2}\\theta=\\sec^{2}\\theta$ and $\\sec\\theta>0$ there.",
+    "option_explanations": [
+     "Correct: $16+16\\tan^2\\theta=16\\sec^2\\theta$.",
+     "does not take the root of 16.",
+     "forgets the square root of the whole expression.",
+     "leaves $\\sqrt{\\sec^{2}\\theta}$ unsimplified."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "For $x=5\\sec\\theta$ with $0\\le\\theta<\\pi/2$, the expression $\\sqrt{x^{2}-25}$ becomes",
+    "options": [
+     "$25\\tan\\theta$",
+     "$5\\tan^{2}\\theta$",
+     "$5\\tan\\theta$",
+     "$5\\sec\\theta\\tan\\theta$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "$\\sec^{2}\\theta-1=\\tan^{2}\\theta$, and $\\tan\\theta\\ge 0$ on $[0,\\pi/2)$.",
+    "option_explanations": [
+     "forgets to root the 25.",
+     "leaves $\\sqrt{\\tan^{2}\\theta}$ unsimplified.",
+     "Correct: $25\\sec^2\\theta-25=25\\tan^2\\theta$, and $\\tan\\theta\\ge0$.",
+     "that is $dx/d\\theta$, not the radical."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "The substitution $x=a\\sin\\theta$ is paired with $-\\pi/2\\le\\theta\\le\\pi/2$ so that",
+   "options": [
+    "$\\sin\\theta$ is nonnegative and $\\theta=\\cos^{-1}(x/a)$",
+    "$\\cos\\theta$ never vanishes and $\\theta=\\tan^{-1}(x/a)$",
+    "$dx=a\\cos\\theta\\,d\\theta$ holds and $\\theta=\\sec^{-1}(x/a)$",
+    "$\\sqrt{\\cos^{2}\\theta}=\\cos\\theta$ and $\\theta=\\sin^{-1}(x/a)$"
+   ],
+   "correct": [
+    3
+   ],
+   "explanation": "On this range $\\cos\\theta\\ge 0$ and $\\sin\\theta$ is one-to-one, so the inverse sine exists.",
+   "option_explanations": [
+    "$\\sin\\theta<0$ for $\\theta<0$.",
+    "$\\cos\\theta=0$ at the endpoints.",
+    "the derivative holds for any $\\theta$.",
+    "Correct: both facts hold on that range."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "On the interval $-\\pi/2\\le\\theta\\le\\pi/2$, $\\sqrt{\\cos^{2}\\theta}$ equals",
+    "options": [
+     "$\\cos\\theta$",
+     "$-\\cos\\theta$",
+     "$1-\\sin\\theta$",
+     "$|\\sin\\theta|$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "$\\sqrt{t^{2}}=|t|$, and $|\\cos\\theta|=\\cos\\theta$ when $\\cos\\theta\\ge0$.",
+    "option_explanations": [
+     "Correct: $|\\cos\\theta|=\\cos\\theta$ because cosine is nonnegative there.",
+     "cosine is not negative on this interval.",
+     "replaces $\\sqrt{1-\\sin^{2}\\theta}$ by $1-\\sin\\theta$.",
+     "unrelated to $\\cos^2\\theta$."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which range of $\\theta$ is attached to $x=a\\sin\\theta$ in the table of trigonometric substitutions?",
+    "options": [
+     "$0\\le\\theta\\le\\pi$",
+     "$-\\pi\\le\\theta\\le\\pi$",
+     "$-\\pi/2\\le\\theta\\le\\pi/2$",
+     "$0\\le\\theta\\le\\pi/2$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "The table gives $-\\pi/2\\le\\theta\\le\\pi/2$ for the sine substitution.",
+    "option_explanations": [
+     "cosine is negative on $(\\pi/2,\\pi]$.",
+     "sine is not one-to-one there.",
+     "Correct: the range where sine is one-to-one and cosine is nonnegative.",
+     "misses negative values of $x$."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "In the table of substitutions, which restriction goes with $x=a\\tan\\theta$?",
+   "options": [
+    "$-\\pi/2\\le\\theta\\le\\pi/2$",
+    "$-\\pi/2<\\theta<\\pi/2$",
+    "$0\\le\\theta<\\pi/2$",
+    "$0<\\theta<\\pi$"
+   ],
+   "correct": [
+    1
+   ],
+   "explanation": "Tangent is defined and one-to-one on the open interval $(-\\pi/2,\\pi/2)$.",
+   "option_explanations": [
+    "includes the endpoints where $\\tan$ is undefined.",
+    "Correct: strict inequalities, since $\\tan$ is undefined at $\\pm\\pi/2$.",
+    "excludes negative $x$.",
+    "contains $\\pi/2$, where $\\tan$ is undefined."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "When $x\\ge 5$ and $x=5\\sec\\theta$ is used, $\\theta$ is taken in",
+    "options": [
+     "$\\pi/2<\\theta\\le\\pi$",
+     "$0\\le\\theta<\\pi/2$",
+     "$-\\pi/2<\\theta<\\pi/2$",
+     "$0\\le\\theta\\le\\pi$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "For $x\\ge a$ the table uses $0\\le\\theta<\\pi/2$.",
+    "option_explanations": [
+     "that interval is for $x\\le-5$.",
+     "Correct: so $\\tan\\theta\\ge0$.",
+     "includes negative angles with $\\sec\\theta>0$ but not one-to-one.",
+     "contains $\\pi/2$, where $\\sec$ is undefined."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "For $x\\le -a$ the substitution $x=a\\sec\\theta$ uses which range?",
+    "options": [
+     "$-\\pi/2\\le\\theta<\\pi/2$",
+     "$-\\pi/2<\\theta<0$",
+     "$\\pi\\le\\theta<3\\pi/2$",
+     "$\\pi/2<\\theta\\le\\pi$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "The table: $0\\le\\theta<\\pi/2$ if $x\\ge a$, and $\\pi/2<\\theta\\le\\pi$ if $x\\le-a$.",
+    "option_explanations": [
+     "includes angles where $\\sec\\theta>0$.",
+     "gives $\\sec\\theta\\ge1$, so $x\\ge a$.",
+     "outside the table's range.",
+     "Correct: there $\\sec\\theta\\le-1$."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Evaluate $\\int \\frac{dx}{x^{2}\\sqrt{9-x^{2}}}$.",
+   "options": [
+    "-\\frac{\\sqrt{9-x^{2}}}{9x}+C",
+    "-\\frac{\\sqrt{9-x^{2}}}{3x}+C",
+    "\\frac{\\sqrt{9-x^{2}}}{9x}+C",
+    "-\\frac{x}{9\\sqrt{9-x^{2}}}+C"
+   ],
+   "correct": [
+    0
+   ],
+   "explanation": "With $x=3\\sin\\theta$ the integral becomes $\\frac19\\int\\csc^{2}\\theta\\,d\\theta=-\\frac19\\cot\\theta$.",
+   "option_explanations": [
+    "Correct: $\\frac1{a^2}\\int\\csc^2\\theta\\,d\\theta=-\\frac{1}{9}\\cot\\theta$, and $\\cot\\theta=\\sqrt{9-x^2}/x$.",
+    "divides by $a$ instead of $a^2$.",
+    "loses the minus sign of $\\int\\csc^2\\theta\\,d\\theta=-\\cot\\theta$.",
+    "uses $\\tan\\theta$ instead of $\\cot\\theta$."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Find $\\int \\frac{dx}{x^{2}\\sqrt{25-x^{2}}}$.",
+    "options": [
+     "-\\frac{1}{5}\\cdot\\frac{\\sqrt{25-x^{2}}}{x}+C",
+     "\\frac{1}{25}\\cdot\\frac{\\sqrt{25-x^{2}}}{x}+C",
+     "-\\frac{1}{25}\\cdot\\frac{\\sqrt{25-x^{2}}}{x}+C",
+     "-\\frac{x}{25\\sqrt{25-x^{2}}}+C"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Same pattern with $a=5$: $\\frac{1}{a^{2}}\\int\\csc^{2}\\theta\\,d\\theta$.",
+    "option_explanations": [
+     "uses $a$ in place of $a^2$.",
+     "sign error.",
+     "Correct: $-\\frac1{25}\\cot\\theta$ with $\\cot\\theta=\\sqrt{25-x^2}/x$.",
+     "swaps $\\cot$ and $\\tan$."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Compute the antiderivative of $\\frac{1}{x^{2}\\sqrt{36-x^{2}}}$.",
+    "options": [
+     "-\\frac{\\sqrt{36-x^{2}}}{6x}+C",
+     "\\frac{\\sqrt{36-x^{2}}}{36x}+C",
+     "-\\frac{\\sqrt{36-x^{2}}}{36}+C",
+     "-\\frac{\\sqrt{36-x^{2}}}{36x}+C"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "Take $x=6\\sin\\theta$; the result is $-\\frac{1}{a^{2}}\\cot\\theta$ re-expressed in $x$.",
+    "option_explanations": [
+     "uses $a$ in place of $a^2$.",
+     "drops the minus sign.",
+     "drops the $x$ in the denominator of $\\cot\\theta$.",
+     "Correct: $a^2=36$ in the denominator, $\\cot\\theta=\\sqrt{36-x^2}/x$."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "If $x=3\\sin\\theta$ was used, then $\\cot\\theta$ expressed in $x$ is",
+   "options": [
+    "$\\dfrac{\\sqrt{9-x^{2}}}{x}$",
+    "$\\dfrac{x}{\\sqrt{9-x^{2}}}$",
+    "$\\dfrac{\\sqrt{9-x^{2}}}{3}$",
+    "$\\dfrac{3}{x}$"
+   ],
+   "correct": [
+    0
+   ],
+   "explanation": "Draw the triangle with hypotenuse $3$, opposite side $x$, adjacent side $\\sqrt{9-x^{2}}$.",
+   "option_explanations": [
+    "Correct: opposite side $x$, adjacent $\\sqrt{9-x^2}$.",
+    "that is $\\tan\\theta$.",
+    "that is $\\cos\\theta$.",
+    "that is $\\csc\\theta$."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Given $x=5\\sin\\theta$, which expression equals $\\tan\\theta$?",
+    "options": [
+     "$\\dfrac{\\sqrt{25-x^{2}}}{x}$",
+     "$\\dfrac{x}{5}$",
+     "$\\dfrac{x}{\\sqrt{25-x^{2}}}$",
+     "$\\dfrac{\\sqrt{25-x^{2}}}{5}$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Opposite $=x$, hypotenuse $=5$, adjacent $=\\sqrt{25-x^{2}}$.",
+    "option_explanations": [
+     "that is $\\cot\\theta$.",
+     "that is $\\sin\\theta$.",
+     "Correct: opposite over adjacent.",
+     "that is $\\cos\\theta$."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "With $x=2\\sin\\theta$, $\\cos\\theta$ equals",
+    "options": [
+     "$\\dfrac{x}{2}$",
+     "$\\dfrac{\\sqrt{4-x^{2}}}{2}$",
+     "$\\dfrac{\\sqrt{4-x^{2}}}{x}$",
+     "$\\dfrac{2}{\\sqrt{4-x^{2}}}$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "The triangle has hypotenuse $2$, opposite $x$, adjacent $\\sqrt{4-x^{2}}$.",
+    "option_explanations": [
+     "that is $\\sin\\theta$.",
+     "Correct: adjacent over hypotenuse.",
+     "that is $\\cot\\theta$.",
+     "that is $\\sec\\theta$."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "In $\\int_{3/2}^{3/\\sqrt2}\\frac{dx}{x^{2}\\sqrt{9-x^{2}}}$ with $x=3\\sin\\theta$, the $\\theta$-limits are",
+   "options": [
+    "$5\\pi/6$ and $\\pi/4$",
+    "$\\pi/6$ and $\\pi/4$",
+    "$3/2$ and $3/\\sqrt2$",
+    "$\\pi/6$ and $3\\pi/4$"
+   ],
+   "correct": [
+    1
+   ],
+   "explanation": "Solve $\\sin\\theta=x/3$ for each limit.",
+   "option_explanations": [
+    "takes $5\\pi/6$, which has sine $1/2$ but lies outside $[-\\pi/2,\\pi/2]$.",
+    "Correct: $\\sin^{-1}(1/2)=\\pi/6$ and $\\sin^{-1}(1/\\sqrt2)=\\pi/4$.",
+    "keeps the $x$-limits.",
+    "takes $3\\pi/4$, which has sine $1/\\sqrt2$ but lies outside $[-\\pi/2,\\pi/2]$."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "For $\\int_{2}^{2\\sqrt3}\\frac{dx}{x^{2}\\sqrt{16-x^{2}}}$ with $x=4\\sin\\theta$, the new limits are",
+    "options": [
+     "$\\theta=\\pi/3$ to $\\theta=\\pi/6$",
+     "$\\theta=\\pi/4$ to $\\theta=\\pi/3$",
+     "$\\theta=2$ to $\\theta=2\\sqrt3$",
+     "$\\theta=\\pi/6$ to $\\theta=\\pi/3$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "$\\theta=\\sin^{-1}(x/4)$ at each limit.",
+    "option_explanations": [
+     "swaps the two angles.",
+     "wrong lower angle: $\\sin(\\pi/4)\\ne1/2$.",
+     "leaves the $x$-limits unconverted.",
+     "Correct: $\\sin\\theta=1/2$ and $\\sin\\theta=\\sqrt3/2$."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "The substitution $x=2\\sin\\theta$ turns the limits $x=\\sqrt2$ and $x=\\sqrt3$ into",
+    "options": [
+     "$\\pi/4$ and $\\pi/3$",
+     "$\\pi/6$ and $\\pi/4$",
+     "$\\sqrt2$ and $\\sqrt3$",
+     "$\\pi/4$ and $\\pi/6$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Compute $\\sin^{-1}(x/2)$ at $x=\\sqrt2$ and $x=\\sqrt3$.",
+    "option_explanations": [
+     "Correct: $\\sin\\theta=\\sqrt2/2$ and $\\sqrt3/2$.",
+     "those correspond to $x=1$ and $x=\\sqrt2$.",
+     "unchanged $x$-values.",
+     "angles in the wrong order and wrong second value."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "After $x=2\\sin\\theta$, $\\int_{1}^{\\sqrt2}\\frac{dx}{x^{2}\\sqrt{4-x^{2}}}$ becomes $-\\frac14\\cot\\theta$. Which finish is right?",
+   "options": [
+    "Evaluate $-\\frac14\\cot\\theta$ from $\\theta=1$ to $\\theta=\\sqrt2$",
+    "Evaluate $-\\frac14\\cot\\theta$ from $\\theta=\\pi/3$ to $\\theta=\\pi/4$",
+    "Evaluate $-\\frac14\\cot\\theta$ from $\\theta=\\pi/6$ to $\\theta=\\pi/4$",
+    "Evaluate $-\\frac14\\cot\\theta$ from $\\theta=\\pi/6$ to $\\theta=\\pi/2$"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "Either rewrite the answer in $x$ and use $x$-limits, or change to $\\theta$-limits.",
+   "option_explanations": [
+    "uses the $x$-limits as angles.",
+    "wrong lower angle.",
+    "Correct: converted limits.",
+    "wrong upper angle."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "For $\\int_{2}^{2\\sqrt3}\\frac{dx}{x^{2}\\sqrt{16-x^{2}}}$ with $x=4\\sin\\theta$ one gets $-\\frac1{16}\\cot\\theta$. A correct way to finish is",
+    "options": [
+     "use $\\theta=2$ and $\\theta=2\\sqrt3$ in $-\\frac1{16}\\cot\\theta$",
+     "use $\\theta=\\pi/3$ and $\\theta=\\pi/2$ in $-\\frac1{16}\\cot\\theta$",
+     "use $\\theta=\\pi/4$ and $\\theta=\\pi/3$ in $-\\frac1{16}\\cot\\theta$",
+     "use $\\theta=\\pi/6$ and $\\theta=\\pi/3$ in $-\\frac1{16}\\cot\\theta$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "Limits must be in the variable of the antiderivative.",
+    "option_explanations": [
+     "never convert limits in this way.",
+     "wrong angles.",
+     "wrong lower angle.",
+     "Correct: the limits were converted."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "$\\int_{3/2}^{3\\sqrt3/2}\\frac{dx}{x^{2}\\sqrt{9-x^{2}}}$ with $x=3\\sin\\theta$ gives $-\\frac19\\cot\\theta$. The proper limits are",
+    "options": [
+     "$\\theta=\\pi/6$ to $\\theta=\\pi/3$",
+     "$\\theta=3/2$ to $\\theta=3\\sqrt3/2$",
+     "$\\theta=\\pi/6$ to $\\theta=2\\pi/3$",
+     "$\\theta=\\pi/12$ to $\\theta=\\pi/3$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "$\\sin\\theta=x/3$ at each limit.",
+    "option_explanations": [
+     "Correct: $\\sin\\theta=1/2$ and $\\sin\\theta=\\sqrt3/2$.",
+     "unconverted $x$-limits.",
+     "upper angle $2\\pi/3$ has sine $\\sqrt3/2$ but lies outside $[-\\pi/2,\\pi/2]$.",
+     "wrong lower angle."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "basic",
+   "question": "Evaluate $\\int_{1}^{\\sqrt3}\\frac{dx}{x^{2}\\sqrt{4-x^{2}}}$.",
+   "answer": "Let $x=2\\sin\\theta$, $dx=2\\cos\\theta\\,d\\theta$, $\\sqrt{4-x^{2}}=2\\cos\\theta$. Then $\\int\\frac{dx}{x^{2}\\sqrt{4-x^{2}}}=\\frac14\\int\\csc^{2}\\theta\\,d\\theta=-\\frac14\\cot\\theta+C=-\\frac{\\sqrt{4-x^{2}}}{4x}+C$. Using the $x$-limits: $-\\frac14\\left[\\frac{\\sqrt{4-x^{2}}}{x}\\right]_{1}^{\\sqrt3}=-\\frac14\\left(\\frac{1}{\\sqrt3}-\\sqrt3\\right)=\\frac14\\cdot\\frac{2}{\\sqrt3}=\\frac{\\sqrt3}{6}$."
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Find $\\int_{1}^{2}\\frac{dx}{x^{2}\\sqrt{9-x^{2}}}$.",
+    "options": [
+     "$\\dfrac{4\\sqrt2-5}{18}$",
+     "$\\dfrac{4\\sqrt2-\\sqrt5}{6}$",
+     "$\\dfrac{4\\sqrt2-\\sqrt5}{18}$",
+     "$\\dfrac{4\\sqrt2-\\sqrt5}{9}$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "With $x=3\\sin\\theta$ the antiderivative is $-\\frac{\\sqrt{9-x^{2}}}{9x}$; evaluate it between $1$ and $2$.",
+    "option_explanations": [
+     "writes $\\sqrt5$ as $5$.",
+     "uses the factor $\\frac16$ instead of $\\frac1{18}$.",
+     "Correct: $-\\frac19\\left[\\frac{\\sqrt{9-x^2}}{x}\\right]_1^2=-\\frac19\\left(\\frac{\\sqrt5}{2}-2\\sqrt2\\right)=\\frac{4\\sqrt2-\\sqrt5}{18}$.",
+     "drops the $\\frac12$ from $\\sqrt5/2$."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Compute $\\int_{3}^{4}\\frac{dx}{x^{2}\\sqrt{25-x^{2}}}$.",
+    "options": [
+     "$-\\dfrac{7}{300}$",
+     "$\\dfrac{7}{300}$",
+     "$\\dfrac{7}{60}$",
+     "$\\dfrac{7}{12}$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "The antiderivative is $-\\sqrt{25-x^{2}}/(25x)$.",
+    "option_explanations": [
+     "sign error in the evaluation order.",
+     "Correct: $-\\frac1{25}\\left[\\frac{\\sqrt{25-x^2}}{x}\\right]_3^4=-\\frac1{25}\\left(\\frac34-\\frac43\\right)$.",
+     "divides by 5 rather than 25 in the factor.",
+     "forgets the factor $\\frac1{25}$."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Evaluate $\\int\\frac{\\sqrt{x^{2}-9}}{x}\\,dx$ for $x\\ge3$.",
+   "options": [
+    "\\sqrt{x^{2}-9}+3\\sec^{-1}x+C",
+    "\\sqrt{x^{2}-9}-3\\sec^{-1}\\!\\left(\\tfrac{x}{3}\\right)+C",
+    "\\sqrt{x^{2}-9}-\\sec^{-1}\\!\\left(\\tfrac{x}{3}\\right)+C",
+    "\\sqrt{x^{2}-9}+C"
+   ],
+   "correct": [
+    1
+   ],
+   "explanation": "With $x=3\\sec\\theta$ the integral is $3\\int\\tan^{2}\\theta\\,d\\theta=3(\\tan\\theta-\\theta)+C$.",
+   "option_explanations": [
+    "sign error on the $\\theta$ term and forgets the argument $x/3$.",
+    "Correct: $3\\int\\tan^2\\theta\\,d\\theta=3\\tan\\theta-3\\theta$, $\\tan\\theta=\\sqrt{x^2-9}/3$.",
+    "forgets the factor 3 on $\\theta$.",
+    "forgets that $\\int\\tan^2\\theta\\,d\\theta=\\tan\\theta-\\theta$."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Find $\\int\\frac{\\sqrt{x^{2}-49}}{x}\\,dx$, $x\\ge7$.",
+    "options": [
+     "\\frac{\\sqrt{x^{2}-49}}{7}+7\\sec^{-1}\\!\\left(\\tfrac{x}{7}\\right)+C",
+     "7\\sqrt{x^{2}-49}-7\\sec^{-1}\\!\\left(\\tfrac{x}{7}\\right)+C",
+     "\\sqrt{x^{2}-49}-49\\sec^{-1}\\!\\left(\\tfrac{x}{7}\\right)+C",
+     "\\sqrt{x^{2}-49}-7\\sec^{-1}\\!\\left(\\tfrac{x}{7}\\right)+C"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "The pattern is $\\sqrt{x^{2}-a^{2}}-a\\sec^{-1}(x/a)$.",
+    "option_explanations": [
+     "puts $\\frac17$ on the radical and has the wrong sign on the $\\theta$ term.",
+     "multiplies $\\tan\\theta$ by 7 twice.",
+     "uses $a^2$ as the coefficient of $\\theta$.",
+     "Correct: $7(\\tan\\theta-\\theta)$ with $\\tan\\theta=\\sqrt{x^2-49}/7$."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which is an antiderivative of $\\frac{\\sqrt{x^{2}-4}}{x}$ on $x\\ge2$?",
+    "options": [
+     "\\sqrt{x^{2}-4}-2\\sec^{-1}\\!\\left(\\tfrac{x}{2}\\right)+C",
+     "\\sqrt{x^{2}-4}+2\\sec^{-1}\\!\\left(\\tfrac{x}{2}\\right)+C",
+     "\\sqrt{x^{2}-4}-\\sec^{-1}\\!\\left(\\tfrac{x}{2}\\right)+C",
+     "\\frac{\\sqrt{x^{2}-4}}{2}-2\\sec^{-1}\\!\\left(\\tfrac{x}{2}\\right)+C"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "$x=2\\sec\\theta$ gives $2\\int\\tan^{2}\\theta\\,d\\theta$.",
+    "option_explanations": [
+     "Correct: $2(\\tan\\theta-\\theta)$ with $x=2\\sec\\theta$.",
+     "sign error.",
+     "omits the factor $a=2$.",
+     "uses $\\tan\\theta$ with a stray $\\frac12$."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "With $x=3\\sec\\theta$ ($x\\ge3$), the integral $\\int\\frac{\\sqrt{x^{2}-9}}{x}\\,dx$ turns into",
+   "options": [
+    "$3\\int\\sec^{2}\\theta\\,d\\theta$",
+    "$3\\int\\sec\\theta\\tan\\theta\\,d\\theta$",
+    "$3\\int\\tan^{2}\\theta\\,d\\theta$",
+    "$9\\int\\tan^{2}\\theta\\,d\\theta$"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "$\\sqrt{x^2-9}=3\\tan\\theta$, $x=3\\sec\\theta$, $dx=3\\sec\\theta\\tan\\theta\\,d\\theta$.",
+   "option_explanations": [
+    "uses $\\sec$ in place of $\\tan$ for the radical.",
+    "does not cancel the $\\sec\\theta$ from $1/x$.",
+    "Correct: $\\frac{3\\tan\\theta}{3\\sec\\theta}\\cdot3\\sec\\theta\\tan\\theta=3\\tan^2\\theta$.",
+    "multiplies by $a^2$ instead of $a$."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Substituting $x=4\\sec\\theta$ in $\\int\\frac{\\sqrt{x^{2}-16}}{x}\\,dx$ yields",
+    "options": [
+     "$4\\int\\tan^{2}\\theta\\sec\\theta\\,d\\theta$",
+     "$16\\int\\tan^{2}\\theta\\,d\\theta$",
+     "$4\\int\\sec^{2}\\theta\\tan\\theta\\,d\\theta$",
+     "$4\\int\\tan^{2}\\theta\\,d\\theta$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "$\\frac{4\\tan\\theta}{4\\sec\\theta}\\cdot 4\\sec\\theta\\tan\\theta=4\\tan^{2}\\theta$.",
+    "option_explanations": [
+     "forgets to cancel the $\\sec\\theta$ from $dx$ against the $x$ in the denominator.",
+     "factor $a^2$ in place of $a$.",
+     "keeps an extra $\\sec\\theta$, so the cancellation was not done.",
+     "Correct: the $\\sec\\theta$ factors cancel."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Under $x=6\\sec\\theta$, the integral of $\\frac{\\sqrt{x^{2}-36}}{x}$ becomes",
+    "options": [
+     "$6\\int\\tan^{2}\\theta\\,d\\theta$",
+     "$6\\int\\sec^{2}\\theta\\,d\\theta$",
+     "$36\\int\\tan^{2}\\theta\\,d\\theta$",
+     "$6\\int\\sec\\theta\\tan\\theta\\,d\\theta$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "The result is $a\\int\\tan^{2}\\theta\\,d\\theta$ for $\\int\\frac{\\sqrt{x^{2}-a^{2}}}{x}dx$.",
+    "option_explanations": [
+     "Correct: $a\\tan^2\\theta$.",
+     "swaps $\\tan^2$ for $\\sec^2$.",
+     "uses $a^2$.",
+     "forgets to cancel $\\sec\\theta$."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "basic",
+   "question": "Evaluate $\\int\\frac{x^{2}}{\\sqrt{16-x^{2}}}\\,dx$.",
+   "answer": "Let $x=4\\sin\\theta$, $dx=4\\cos\\theta\\,d\\theta$, $\\sqrt{16-x^{2}}=4\\cos\\theta$. Then $\\int 16\\sin^{2}\\theta\\,d\\theta=8\\int(1-\\cos2\\theta)\\,d\\theta=8\\theta-4\\sin2\\theta+C=8\\theta-8\\sin\\theta\\cos\\theta+C$. With $\\sin\\theta=x/4$, $\\cos\\theta=\\sqrt{16-x^{2}}/4$: $8\\sin^{-1}(x/4)-\\frac{x}{2}\\sqrt{16-x^{2}}+C$."
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int\\frac{x^{2}}{\\sqrt{25-x^{2}}}\\,dx$.",
+    "options": [
+     "25\\sin^{-1}\\!\\tfrac{x}{5}-\\frac{x}{2}\\sqrt{25-x^{2}}+C",
+     "\\frac{25}{2}\\sin^{-1}\\!\\tfrac{x}{5}+\\frac{x}{2}\\sqrt{25-x^{2}}+C",
+     "\\frac{25}{2}\\sin^{-1}\\!\\tfrac{x}{5}-\\frac{x}{2}\\sqrt{25-x^{2}}+C",
+     "\\frac{25}{2}\\sin^{-1}\\!\\tfrac{x}{5}-\\frac{x}{10}\\sqrt{25-x^{2}}+C"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Use $\\sin^{2}\\theta=\\frac{1-\\cos2\\theta}{2}$ and $\\sin2\\theta=2\\sin\\theta\\cos\\theta$.",
+    "option_explanations": [
+     "forgets the $\\frac12$ in $\\sin^2\\theta=\\frac{1-\\cos2\\theta}{2}$.",
+     "sign error on the second term.",
+     "Correct: $25\\int\\sin^2\\theta\\,d\\theta=\\frac{25}{2}\\theta-\\frac{25}{2}\\sin\\theta\\cos\\theta$.",
+     "wrong factor when rewriting $\\sin\\theta\\cos\\theta$ in $x$."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which is an antiderivative of $\\frac{x^{2}}{\\sqrt{4-x^{2}}}$ on $(-2,2)$?",
+    "options": [
+     "4\\sin^{-1}\\!\\tfrac{x}{2}-\\frac{x}{2}\\sqrt{4-x^{2}}+C",
+     "2\\sin^{-1}\\!\\tfrac{x}{2}-\\frac{x}{2}\\sqrt{4-x^{2}}+C",
+     "2\\sin^{-1}\\!\\tfrac{x}{2}+\\frac{x}{2}\\sqrt{4-x^{2}}+C",
+     "\\sin^{-1}\\!\\tfrac{x}{2}-x\\sqrt{4-x^{2}}+C"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "The integrand becomes $4\\sin^{2}\\theta$.",
+    "option_explanations": [
+     "forgets the $\\frac12$ from the double-angle identity.",
+     "Correct: $4\\int\\sin^2\\theta\\,d\\theta=2\\theta-2\\sin\\theta\\cos\\theta$.",
+     "sign error.",
+     "wrong coefficients."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "basic",
+   "question": "Evaluate $\\int\\frac{x^{2}}{\\sqrt{x^{2}+5}}\\,dx$ (you may use $\\int\\sec^{3}\\theta\\,d\\theta=\\frac12(\\sec\\theta\\tan\\theta+\\ln|\\sec\\theta+\\tan\\theta|)+C$).",
+   "answer": "Let $x=\\sqrt5\\tan\\theta$, $dx=\\sqrt5\\sec^{2}\\theta\\,d\\theta$, $\\sqrt{x^{2}+5}=\\sqrt5\\sec\\theta$. Then $\\int\\frac{5\\tan^{2}\\theta}{\\sqrt5\\sec\\theta}\\sqrt5\\sec^{2}\\theta\\,d\\theta=5\\int\\tan^{2}\\theta\\sec\\theta\\,d\\theta=5\\int(\\sec^{3}\\theta-\\sec\\theta)\\,d\\theta=\\frac52(\\sec\\theta\\tan\\theta-\\ln|\\sec\\theta+\\tan\\theta|)+C$. With $\\tan\\theta=x/\\sqrt5$, $\\sec\\theta=\\sqrt{x^{2}+5}/\\sqrt5$: $\\frac{x}{2}\\sqrt{x^{2}+5}-\\frac52\\ln\\left(x+\\sqrt{x^{2}+5}\\right)+C$ (constant absorbed)."
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int\\frac{x^{2}}{\\sqrt{x^{2}+3}}\\,dx$ for $x>0$.",
+    "options": [
+     "\\frac{x}{2}\\sqrt{x^{2}+3}+\\frac32\\ln(x^{2}+3)+C",
+     "\\frac{x}{2}\\sqrt{x^{2}+3}-\\frac32\\ln\\!\\left(x+\\sqrt{x^{2}+3}\\right)+C",
+     "\\frac{x}{2}\\sqrt{x^{2}+3}-3\\ln\\!\\left(x+\\sqrt{x^{2}+3}\\right)+C",
+     "x\\sqrt{x^{2}+3}-\\frac32\\ln\\!\\left(x+\\sqrt{x^{2}+3}\\right)+C"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Write $\\tan^{2}\\theta\\sec\\theta=\\sec^{3}\\theta-\\sec\\theta$.",
+    "option_explanations": [
+     "replaces $\\ln\\left(x+\\sqrt{x^{2}+3}\\right)$ by $\\ln(x^{2}+3)$ and has the wrong sign.",
+     "Correct: $\\frac{a^2}{2}(\\sec\\theta\\tan\\theta-\\ln|\\sec\\theta+\\tan\\theta|)$ with $a^2=3$.",
+     "forgets the $\\frac12$ on the log term.",
+     "forgets the $\\frac12$ on the first term."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which is an antiderivative of $\\frac{x^{2}}{\\sqrt{x^{2}+8}}$ for $x>0$?",
+    "options": [
+     "\\frac{x}{2}\\sqrt{x^{2}+8}+4\\ln\\!\\left(x+\\sqrt{x^{2}+8}\\right)+C",
+     "\\frac{x}{2}\\sqrt{x^{2}+8}-8\\ln\\!\\left(x+\\sqrt{x^{2}+8}\\right)+C",
+     "\\frac{x}{2}\\sqrt{x^{2}+8}-2\\ln\\!\\left(x+\\sqrt{x^{2}+8}\\right)+C",
+     "\\frac{x}{2}\\sqrt{x^{2}+8}-4\\ln\\!\\left(x+\\sqrt{x^{2}+8}\\right)+C"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "The coefficient on the log is $a^{2}/2$.",
+    "option_explanations": [
+     "wrong sign.",
+     "forgets to halve $a^2$.",
+     "halves twice.",
+     "Correct: $\\frac{8}{2}=4$ multiplies the logarithm."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Evaluate $\\int\\frac{dx}{x^{2}\\sqrt{x^{2}+9}}$ for $x>0$.",
+   "options": [
+    "-\\frac{\\sqrt{x^{2}+9}}{9x}+C",
+    "-\\frac{\\sqrt{x^{2}+9}}{3x}+C",
+    "\\frac{\\sqrt{x^{2}+9}}{9x}+C",
+    "-\\frac{x}{9\\sqrt{x^{2}+9}}+C"
+   ],
+   "correct": [
+    0
+   ],
+   "explanation": "The integrand becomes $\\frac{1}{9}\\frac{\\cos\\theta}{\\sin^{2}\\theta}\\,d\\theta$, whose antiderivative is $-\\frac{1}{9\\sin\\theta}$.",
+   "option_explanations": [
+    "Correct: $x=3\\tan\\theta$ gives $\\frac19\\int\\csc\\theta\\cot\\theta\\,d\\theta=-\\frac{1}{9\\sin\\theta}$.",
+    "divides by $a$ instead of $a^2$.",
+    "sign error: $\\int\\csc\\theta\\cot\\theta\\,d\\theta=-\\csc\\theta$.",
+    "uses $\\sin\\theta$ in place of $\\csc\\theta$."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Find $\\int\\frac{dx}{x^{2}\\sqrt{x^{2}+25}}$ on $x>0$.",
+    "options": [
+     "-\\frac{\\sqrt{x^{2}+25}}{5x}+C",
+     "\\frac{\\sqrt{x^{2}+25}}{25x}+C",
+     "-\\frac{\\sqrt{x^{2}+25}}{25x}+C",
+     "-\\frac{\\sqrt{x^{2}+25}}{x}+C"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Same as before with $a=5$.",
+    "option_explanations": [
+     "uses $a$ in place of $a^2$.",
+     "sign error.",
+     "Correct: $-\\frac{1}{25\\sin\\theta}$ with $\\sin\\theta=x/\\sqrt{x^2+25}$.",
+     "forgets the factor $\\frac1{25}$."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which function has derivative $\\frac{1}{x^{2}\\sqrt{x^{2}+1}}$ on $x>0$?",
+    "options": [
+     "\\frac{\\sqrt{x^{2}+1}}{x}+C",
+     "-\\frac{x}{\\sqrt{x^{2}+1}}+C",
+     "-\\frac{1}{x\\sqrt{x^{2}+1}}+C",
+     "-\\frac{\\sqrt{x^{2}+1}}{x}+C"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "Take $x=\\tan\\theta$.",
+    "option_explanations": [
+     "sign error.",
+     "uses $\\sin\\theta$ instead of $\\csc\\theta$.",
+     "wrong power of the radical.",
+     "Correct: $a=1$: $-\\frac{1}{\\sin\\theta}$ with $\\sin\\theta=x/\\sqrt{x^2+1}$."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "For $x=3\\tan\\theta$, which expression equals $\\sin\\theta$?",
+   "options": [
+    "$\\dfrac{x}{\\sqrt{x^{2}+9}}$",
+    "$\\dfrac{3}{\\sqrt{x^{2}+9}}$",
+    "$\\dfrac{x}{3}$",
+    "$\\dfrac{\\sqrt{x^{2}+9}}{3}$"
+   ],
+   "correct": [
+    0
+   ],
+   "explanation": "The triangle has opposite $x$, adjacent $3$, hypotenuse $\\sqrt{x^{2}+9}$.",
+   "option_explanations": [
+    "Correct: opposite $x$ over hypotenuse $\\sqrt{x^2+9}$.",
+    "that is $\\cos\\theta$.",
+    "that is $\\tan\\theta$.",
+    "that is $\\sec\\theta$."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "If $x=5\\tan\\theta$, then $\\cos\\theta$ in terms of $x$ is",
+    "options": [
+     "$\\dfrac{x}{\\sqrt{x^{2}+25}}$",
+     "$\\dfrac{\\sqrt{x^{2}+25}}{5}$",
+     "$\\dfrac{5}{\\sqrt{x^{2}+25}}$",
+     "$\\dfrac{5}{x}$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Opposite $=x$, adjacent $=5$, hypotenuse $=\\sqrt{x^{2}+25}$.",
+    "option_explanations": [
+     "that is $\\sin\\theta$.",
+     "that is $\\sec\\theta$.",
+     "Correct: adjacent over hypotenuse.",
+     "that is $\\cot\\theta$."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Given $x=2\\tan\\theta$, $\\sec\\theta$ equals",
+    "options": [
+     "$\\dfrac{2}{\\sqrt{x^{2}+4}}$",
+     "$\\dfrac{\\sqrt{x^{2}+4}}{2}$",
+     "$\\dfrac{\\sqrt{x^{2}+4}}{x}$",
+     "$\\dfrac{x}{2}$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "The hypotenuse is $\\sqrt{x^{2}+4}$ and the adjacent side is $2$.",
+    "option_explanations": [
+     "that is $\\cos\\theta$.",
+     "Correct: hypotenuse over adjacent.",
+     "that is $\\csc\\theta$.",
+     "that is $\\tan\\theta$."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "If $x=4\\sec\\theta$ with $x\\ge4$, then $\\tan\\theta$ equals",
+   "options": [
+    "$\\dfrac{4}{x}$",
+    "$\\dfrac{\\sqrt{x^{2}-16}}{4}$",
+    "$\\sqrt{x^{2}-16}$",
+    "$\\dfrac{x}{4}$"
+   ],
+   "correct": [
+    1
+   ],
+   "explanation": "Hypotenuse $x$, adjacent $4$, opposite $\\sqrt{x^{2}-16}$.",
+   "option_explanations": [
+    "that is $\\cos\\theta$.",
+    "Correct: opposite over adjacent.",
+    "forgets to divide by $4$.",
+    "that is $\\sec\\theta$."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "With $x=7\\sec\\theta$, $\\sin\\theta$ in terms of $x$ is",
+    "options": [
+     "$\\dfrac{7}{x}$",
+     "$\\dfrac{\\sqrt{x^{2}-49}}{7}$",
+     "$\\dfrac{x}{\\sqrt{x^{2}-49}}$",
+     "$\\dfrac{\\sqrt{x^{2}-49}}{x}$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "Opposite $=\\sqrt{x^{2}-49}$, hypotenuse $=x$.",
+    "option_explanations": [
+     "that is $\\cos\\theta$.",
+     "that is $\\tan\\theta$.",
+     "that is $\\csc\\theta$.",
+     "Correct: opposite over hypotenuse."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "For $x=3\\sec\\theta$, which is $\\cot\\theta$?",
+    "options": [
+     "$\\dfrac{3}{\\sqrt{x^{2}-9}}$",
+     "$\\dfrac{\\sqrt{x^{2}-9}}{3}$",
+     "$\\dfrac{3}{x}$",
+     "$\\dfrac{x}{\\sqrt{x^{2}-9}}$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Adjacent $=3$, opposite $=\\sqrt{x^{2}-9}$.",
+    "option_explanations": [
+     "Correct: adjacent over opposite.",
+     "that is $\\tan\\theta$.",
+     "that is $\\cos\\theta$.",
+     "that is $\\csc\\theta$."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Which integral needs a trigonometric substitution (the other three yield to a plain $u$-substitution)?",
+   "options": [
+    "$\\int\\dfrac{x}{\\sqrt{9-x^{2}}}\\,dx$",
+    "$\\int x\\sqrt{x^{2}+4}\\,dx$",
+    "$\\int\\dfrac{x^{2}}{\\sqrt{16-x^{2}}}\\,dx$",
+    "$\\int\\dfrac{x}{x^{2}+1}\\,dx$"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "If the numerator is (a multiple of) the derivative of the expression under the radical, use $u$; otherwise use trigonometry.",
+   "option_explanations": [
+    "$u=9-x^2$ works.",
+    "$u=x^2+4$ works.",
+    "Correct: the extra $x^2$ cannot be absorbed in $du$, so $x=4\\sin\\theta$ is needed.",
+    "$u=x^2+1$ works."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Exactly one of these integrals requires a trigonometric substitution. Which one?",
+    "options": [
+     "$\\int\\dfrac{x}{\\sqrt{x^{2}-25}}\\,dx$",
+     "$\\int\\dfrac{x}{(x^{2}+9)^{2}}\\,dx$",
+     "$\\int x\\sqrt{1-x^{2}}\\,dx$",
+     "$\\int\\dfrac{\\sqrt{x^{2}-25}}{x}\\,dx$"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "Look for the $x\\,dx$ pattern first; if missing, trig substitution.",
+    "option_explanations": [
+     "$u=x^2-25$.",
+     "$u=x^2+9$.",
+     "$u=1-x^2$.",
+     "Correct: no $u$ removes the radical here."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which one of the following is NOT solved by a plain $u$-substitution?",
+    "options": [
+     "$\\int\\dfrac{dx}{x^{2}\\sqrt{x^{2}+4}}$",
+     "$\\int\\dfrac{x\\,dx}{\\sqrt{x^{2}+4}}$",
+     "$\\int\\dfrac{x\\,dx}{4-x^{2}}$",
+     "$\\int x^{3}\\sqrt{x^{4}+1}\\,dx$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "A radical with no matching $x\\,dx$ factor calls for a trig substitution.",
+    "option_explanations": [
+     "Correct: needs $x=2\\tan\\theta$.",
+     "$u=x^2+4$.",
+     "$u=4-x^2$.",
+     "$u=x^4+1$."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Completing the square gives $x^{2}+6x+13=$",
+   "options": [
+    "$(x+3)^{2}+13$",
+    "$(x+3)^{2}+22$",
+    "$(x+3)^{2}+4$",
+    "$(x+6)^{2}-23$"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "Add and subtract $(\\frac12\\cdot 6)^{2}=9$.",
+   "option_explanations": [
+    "forgets to subtract $9$.",
+    "adds $9$ instead of subtracting.",
+    "Correct: $13-9=4$.",
+    "squares the full coefficient $6$."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Which equals $x^{2}-8x+20$?",
+    "options": [
+     "$(x-4)^{2}+20$",
+     "$(x-4)^{2}+4$",
+     "$(x-8)^{2}-44$",
+     "$(x+4)^{2}-12$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Half of $-8$ is $-4$; subtract $16$.",
+    "option_explanations": [
+     "forgets to subtract 16.",
+     "Correct: $20-16=4$.",
+     "squares the full coefficient.",
+     "wrong sign inside the square, then subtracts 12 outside."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "The quadratic $x^{2}+10x+34$ can be rewritten as",
+    "options": [
+     "$(x+5)^{2}+34$",
+     "$(x+5)^{2}+9$",
+     "$(x+10)^{2}-66$",
+     "$(x+5)^{2}+59$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Half of $10$ is $5$; subtract $25$.",
+    "option_explanations": [
+     "no constant adjustment.",
+     "Correct: $34-25=9$.",
+     "squares the full coefficient.",
+     "adds $25$ rather than subtracting."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Which quadratic is irreducible (has $b^{2}-4ac<0$)?",
+   "options": [
+    "$x^{2}+x-6$",
+    "$x^{2}-6x+9$",
+    "$x^{2}-2x-2$",
+    "$x^{2}+2x+5$"
+   ],
+   "correct": [
+    3
+   ],
+   "explanation": "Irreducible over the reals exactly when $b^{2}-4ac<0$.",
+   "option_explanations": [
+    "discriminant $25>0$; factors as $(x+3)(x-2)$.",
+    "discriminant $0$; it is $(x-3)^2$.",
+    "discriminant $12>0$.",
+    "Correct: $4-20=-16<0$."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Pick the irreducible quadratic.",
+    "options": [
+     "$x^{2}-6x+13$",
+     "$x^{2}-5x+4$",
+     "$x^{2}+4x+4$",
+     "$x^{2}-2x-7$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Compute $b^{2}-4ac$ for each.",
+    "option_explanations": [
+     "Correct: $36-52=-16<0$.",
+     "discriminant $9>0$.",
+     "discriminant $0$.",
+     "discriminant $32>0$."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which of these cannot be factored into real linear factors?",
+    "options": [
+     "$x^{2}+3x-3$",
+     "$x^{2}-4x+4$",
+     "$x^{2}+x+3$",
+     "$x^{2}-7x+10$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "A negative discriminant means no real roots.",
+    "option_explanations": [
+     "discriminant $21>0$.",
+     "discriminant $0$.",
+     "Correct: $1-12=-11<0$.",
+     "discriminant $9>0$."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "basic",
+   "question": "Evaluate $\\int\\frac{x}{x^{2}+2x+2}\\,dx$.",
+   "answer": "Complete the square: $x^{2}+2x+2=(x+1)^{2}+1$. Let $u=x+1$, $x=u-1$, $du=dx$: $\\int\\frac{u-1}{u^{2}+1}\\,du=\\frac12\\int\\frac{2u}{u^{2}+1}\\,du-\\int\\frac{1}{u^{2}+1}\\,du=\\frac12\\ln(u^{2}+1)-\\tan^{-1}u+C$. So the answer is $\\frac12\\ln(x^{2}+2x+2)-\\tan^{-1}(x+1)+C$."
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Evaluate $\\int\\frac{x}{x^{2}-6x+13}\\,dx$.",
+    "options": [
+     "\\frac12\\ln(x^{2}-6x+13)+3\\tan^{-1}\\!\\left(\\tfrac{x-3}{2}\\right)+C",
+     "\\frac12\\ln(x^{2}-6x+13)+\\frac32\\tan^{-1}(x-3)+C",
+     "\\ln(x^{2}-6x+13)+\\frac32\\tan^{-1}\\!\\left(\\tfrac{x-3}{2}\\right)+C",
+     "\\frac12\\ln(x^{2}-6x+13)+\\frac32\\tan^{-1}\\!\\left(\\tfrac{x-3}{2}\\right)+C"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "Complete the square, set $u=x-3$, split into a log term and an arctangent term.",
+    "option_explanations": [
+     "forgets the factor $\\frac1a=\\frac12$ in the arctangent.",
+     "forgets to divide $u$ by $a=2$ inside the arctangent.",
+     "forgets the $\\frac12$ in $\\int\\frac{u}{u^2+4}du$.",
+     "Correct: $u=x-3$: $\\int\\frac{u+3}{u^2+4}du=\\frac12\\ln(u^2+4)+\\frac32\\tan^{-1}(u/2)$."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which is an antiderivative of $\\frac{x}{x^{2}+4x+5}$?",
+    "options": [
+     "\\frac12\\ln(x^{2}+4x+5)-2\\tan^{-1}(x+2)+C",
+     "\\frac12\\ln(x^{2}+4x+5)-\\tan^{-1}(x+2)+C",
+     "\\frac12\\ln(x^{2}+4x+5)-2\\tan^{-1}(x)+C",
+     "\\ln(x^{2}+4x+5)-2\\tan^{-1}(x+2)+C"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "$(x+2)^{2}+1$ is the completed square.",
+    "option_explanations": [
+     "Correct: $u=x+2$: $\\int\\frac{u-2}{u^2+1}du$.",
+     "forgets the factor 2 on the arctangent.",
+     "forgets to shift back to $x$.",
+     "misses the $\\frac12$."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Evaluate $\\int\\frac{dx}{x^{2}-4x+5}$.",
+   "options": [
+    "\\frac12\\tan^{-1}(x-2)+C",
+    "\\ln(x^{2}-4x+5)+C",
+    "\\tan^{-1}(x-2)+C",
+    "\\tan^{-1}(2x-4)+C"
+   ],
+   "correct": [
+    2
+   ],
+   "explanation": "After completing the square the integral is $\\int\\frac{du}{u^{2}+1}$.",
+   "option_explanations": [
+    "inserts an extra $\\frac1a$ with $a=1$ wrongly.",
+    "treats the denominator as $g$ with $g'$ in the numerator.",
+    "Correct: $x^2-4x+5=(x-2)^2+1$.",
+    "doubles the argument as well as shifting it."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Find $\\int\\frac{dx}{x^{2}+6x+10}$.",
+    "options": [
+     "-\\tan^{-1}(x+3)+C",
+     "\\tan^{-1}(x+3)+C",
+     "\\frac13\\tan^{-1}(x+3)+C",
+     "\\ln(x^{2}+6x+10)+C"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Complete the square to $(x+3)^{2}+1$.",
+    "option_explanations": [
+     "stray minus sign.",
+     "Correct: $(x+3)^2+1$.",
+     "invents $a=3$.",
+     "uses the log rule."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which is an antiderivative of $\\frac{1}{x^{2}-2x+10}$?",
+    "options": [
+     "\\tan^{-1}\\!\\left(\\tfrac{x-1}{3}\\right)+C",
+     "\\frac13\\tan^{-1}\\!\\left(\\tfrac{x-1}{3}\\right)+C",
+     "\\frac13\\tan^{-1}\\!\\left(\\tfrac{x+1}{3}\\right)+C",
+     "\\frac19\\tan^{-1}\\!\\left(\\tfrac{x-1}{9}\\right)+C"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "$\\int\\frac{du}{u^{2}+a^{2}}=\\frac1a\\tan^{-1}\\frac ua$ with $u=x-1$, $a=3$.",
+    "option_explanations": [
+     "drops $\\frac1a$.",
+     "Correct: $(x-1)^2+9$, so $a=3$.",
+     "wrong sign of the shift.",
+     "uses $a^2=9$ as $a$."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "For $\\int\\frac{x+1}{x^{2}-6x+13}\\,dx$, completing the square and setting $u=x-3$ gives",
+   "options": [
+    "$\\int\\dfrac{u-2}{u^{2}+4}\\,du$",
+    "$\\int\\dfrac{u+1}{u^{2}+4}\\,du$",
+    "$\\int\\dfrac{u+4}{u^{2}+13}\\,du$",
+    "$\\int\\dfrac{u+4}{u^{2}+4}\\,du$"
+   ],
+   "correct": [
+    3
+   ],
+   "explanation": "Replace $x$ by $u+3$ in the numerator and complete the square in the denominator.",
+   "option_explanations": [
+    "writes $x=u-3$.",
+    "forgets to shift the numerator.",
+    "keeps the original constant.",
+    "Correct: $x+1=u+4$ and $x^2-6x+13=u^2+4$."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Setting $u=x+2$ in $\\int\\frac{2x-1}{x^{2}+4x+8}\\,dx$ turns the integral into",
+    "options": [
+     "$\\int\\dfrac{2u-5}{u^{2}+4}\\,du$",
+     "$\\int\\dfrac{2u+3}{u^{2}+4}\\,du$",
+     "$\\int\\dfrac{2u-1}{u^{2}+4}\\,du$",
+     "$\\int\\dfrac{2u-5}{u^{2}+8}\\,du$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "$x=u-2$ and $x^{2}+4x+8=(x+2)^{2}+4$.",
+    "option_explanations": [
+     "Correct: $2(u-2)-1=2u-5$.",
+     "writes $x=u+2$.",
+     "forgets to shift the numerator.",
+     "does not complete the square."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "For $\\int\\frac{x}{x^{2}-2x+5}\\,dx$, the substitution $u=x-1$ leads to",
+    "options": [
+     "$\\int\\dfrac{u-1}{u^{2}+4}\\,du$",
+     "$\\int\\dfrac{u+1}{u^{2}+5}\\,du$",
+     "$\\int\\dfrac{u+1}{u^{2}+4}\\,du$",
+     "$\\int\\dfrac{u}{u^{2}+4}\\,du$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "$x=u+1$ and $x^{2}-2x+5=(x-1)^{2}+4$.",
+    "option_explanations": [
+     "writes $x=u-1$.",
+     "no completed square.",
+     "Correct: $x=u+1$ and the denominator is $u^2+4$.",
+     "forgets to shift the numerator."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Which expression equals $\\int\\frac{u+3}{u^{2}+9}\\,du$?",
+   "options": [
+    "$\\frac13\\ln(u^{2}+9)+\\frac13\\tan^{-1}\\frac u3+C$",
+    "$\\frac12\\ln(u^{2}+9)+3\\tan^{-1}\\frac u3+C$",
+    "$\\frac12\\ln(u^{2}+9)+\\frac13\\tan^{-1}\\frac u3+C$",
+    "$\\frac12\\ln(u^{2}+9)+\\tan^{-1}\\frac u3+C$"
+   ],
+   "correct": [
+    3
+   ],
+   "explanation": "Split into $\\frac{u}{u^{2}+9}$ and $\\frac{3}{u^{2}+9}$.",
+   "option_explanations": [
+    "puts $\\frac1a$ on both terms and forgets the $3$ on the arctangent term.",
+    "forgets the $\\frac1a$ factor.",
+    "puts $\\frac1a$ instead of $3\\cdot\\frac1a$.",
+    "Correct: $\\frac12\\int\\frac{2u}{u^2+9}du+3\\cdot\\frac13\\tan^{-1}\\frac u3$."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "The integral $\\int\\frac{u+8}{u^{2}+16}\\,du$ equals",
+    "options": [
+     "$\\frac12\\ln(u^{2}+16)+2\\tan^{-1}\\frac u4+C$",
+     "$\\frac12\\ln(u^{2}+16)+8\\tan^{-1}\\frac u4+C$",
+     "$\\ln(u^{2}+16)+2\\tan^{-1}\\frac u4+C$",
+     "$\\frac12\\ln(u^{2}+16)+\\frac12\\tan^{-1}\\frac u4+C$"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "$\\frac{u}{u^{2}+16}$ gives a logarithm; $\\frac{8}{u^{2}+16}$ gives an arctangent.",
+    "option_explanations": [
+     "Correct: $8\\cdot\\frac14=2$.",
+     "forgets the $\\frac14$.",
+     "misses the $\\frac12$.",
+     "divides by 16 instead of multiplying by $\\frac14$ then 8."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which is $\\int\\frac{u+10}{u^{2}+25}\\,du$?",
+    "options": [
+     "$\\frac12\\ln(u^{2}+25)+10\\tan^{-1}\\frac u5+C$",
+     "$\\frac15\\ln(u^{2}+25)+\\frac25\\tan^{-1}\\frac u5+C$",
+     "$\\frac12\\ln(u^{2}+25)+2\\tan^{-1}\\frac u5+C$",
+     "$\\frac12\\ln(u^{2}+25)+\\frac{2}{5}\\tan^{-1}\\frac u5+C$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Split the numerator.",
+    "option_explanations": [
+     "no $\\frac1a$.",
+     "puts $\\frac15$ on the log term and divides $10$ by $25$.",
+     "Correct: $10\\cdot\\frac15=2$.",
+     "divides $10$ by $25$."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "For $|x|<3$, evaluate $\\int\\frac{dx}{9-x^{2}}$.",
+   "options": [
+    "\\frac13\\tan^{-1}\\!\\left(\\tfrac{x}{3}\\right)+C",
+    "\\frac13\\tanh^{-1}\\!\\left(\\tfrac{x}{3}\\right)+C",
+    "\\tanh^{-1}\\!\\left(\\tfrac{x}{3}\\right)+C",
+    "\\frac13\\sin^{-1}\\!\\left(\\tfrac{x}{3}\\right)+C"
+   ],
+   "correct": [
+    1
+   ],
+   "explanation": "Valid for $|u|<a$.",
+   "option_explanations": [
+    "uses the arctangent formula, valid for $a^2+u^2$.",
+    "Correct: $\\int\\frac{du}{a^2-u^2}=\\frac1a\\tanh^{-1}\\frac ua$.",
+    "drops $\\frac1a$.",
+    "mixes with $\\int\\frac{dx}{\\sqrt{a^2-x^2}}$."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Find $\\int\\frac{dx}{25-x^{2}}$ on $|x|<5$.",
+    "options": [
+     "\\frac1{10}\\ln\\left|\\frac{5-x}{5+x}\\right|+C",
+     "\\frac15\\tanh^{-1}\\!\\left(\\tfrac{x}{5}\\right)+C",
+     "\\frac1{25}\\tanh^{-1}\\!\\left(\\tfrac{x}{5}\\right)+C",
+     "-\\frac15\\tanh^{-1}\\!\\left(\\tfrac{x}{5}\\right)+C"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "$\\frac1a\\tanh^{-1}(u/a)$.",
+    "option_explanations": [
+     "inverts the ratio inside the logarithm.",
+     "Correct: $a=5$.",
+     "uses $a^2$ for $\\frac1a$.",
+     "sign error."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which is an antiderivative of $\\frac{1}{4-x^{2}}$ for $|x|<2$?",
+    "options": [
+     "\\frac12\\tan^{-1}\\!\\left(\\tfrac{x}{2}\\right)+C",
+     "\\frac14\\tanh^{-1}\\!\\left(\\tfrac{x}{2}\\right)+C",
+     "\\frac12\\tanh^{-1}(x)+C",
+     "\\frac12\\tanh^{-1}\\!\\left(\\tfrac{x}{2}\\right)+C"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "Use the $\\tanh^{-1}$ formula.",
+    "option_explanations": [
+     "wrong formula for a difference.",
+     "uses $a^2$.",
+     "forgets to divide $x$ by $a$.",
+     "Correct: $a=2$."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Evaluate $\\int\\frac{dx}{x^{2}+16}$.",
+   "options": [
+    "\\frac14\\tan^{-1}\\!\\left(\\tfrac{x}{4}\\right)+C",
+    "\\tan^{-1}\\!\\left(\\tfrac{x}{4}\\right)+C",
+    "\\frac1{16}\\tan^{-1}x+C",
+    "\\frac14\\ln(x^{2}+16)+C"
+   ],
+   "correct": [
+    0
+   ],
+   "explanation": "Recognise $a^{2}+u^{2}$ with $a=4$.",
+   "option_explanations": [
+    "Correct: $\\int\\frac{du}{a^2+u^2}=\\frac1a\\tan^{-1}\\frac ua$.",
+    "no $\\frac1a$.",
+    "$\\frac1{a^2}$ in place of $\\frac1a$, and no scaling of $x$.",
+    "log rule without the $2x$ in the numerator."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Find $\\int\\frac{dx}{x^{2}+25}$.",
+    "options": [
+     "\\frac1{25}\\tan^{-1}\\!\\left(\\tfrac{x}{5}\\right)+C",
+     "5\\tan^{-1}\\!\\left(\\tfrac{x}{5}\\right)+C",
+     "\\frac15\\tan^{-1}\\!\\left(\\tfrac{x}{5}\\right)+C",
+     "\\frac15\\tan^{-1}(x)+C"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "$\\frac1a\\tan^{-1}(x/a)$.",
+    "option_explanations": [
+     "uses $a^2$.",
+     "multiplies instead of dividing by $a$.",
+     "Correct: $a=5$.",
+     "forgets to divide $x$ by $a$."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which is $\\int\\frac{dx}{x^{2}+7}$?",
+    "options": [
+     "\\frac17\\tan^{-1}\\!\\left(\\tfrac{x}{7}\\right)+C",
+     "\\frac1{\\sqrt7}\\tan^{-1}(x)+C",
+     "\\sqrt7\\tan^{-1}\\!\\left(\\tfrac{x}{\\sqrt7}\\right)+C",
+     "\\frac1{\\sqrt7}\\tan^{-1}\\!\\left(\\tfrac{x}{\\sqrt7}\\right)+C"
+    ],
+    "correct": [
+     3
+    ],
+    "explanation": "Here $a=\\sqrt7$.",
+    "option_explanations": [
+     "takes $a=7$.",
+     "forgets to divide $x$ by $a$.",
+     "multiplies by $a$.",
+     "Correct: $a=\\sqrt7$."
+    ]
+   }
+  ]
+ },
+ {
+  "original": {
+   "type": "mcq",
+   "question": "Completing the square in $\\sqrt{5-4x-x^{2}}$ and then using the table suggests",
+   "options": [
+    "$x+2=3\\sin\\theta$",
+    "$x+2=\\sqrt{3}\\tan\\theta$",
+    "$x+2=\\sqrt{3}\\sin\\theta$",
+    "$(x-2)^{2}=9\\sin^{2}\\theta$"
+   ],
+   "correct": [
+    0
+   ],
+   "explanation": "$5-4x-x^{2}=9-(x+2)^{2}$, so $a=3$ and $u=x+2$.",
+   "option_explanations": [
+    "Correct: $5-4x-x^2=9-(x+2)^2$.",
+    "$\\tan$ is for $a^2+u^2$.",
+    "takes $\\sqrt a$ instead of $a$.",
+    "shifts the wrong way."
+   ]
+  },
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "For $\\sqrt{x^{2}-6x+13}$, after completing the square the right substitution is",
+    "options": [
+     "$x-3=2\\sec\\theta$",
+     "$x-3=4\\tan\\theta$",
+     "$x-3=2\\tan\\theta$",
+     "$x+3=2\\tan\\theta$"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "The radical is $\\sqrt{(x-3)^{2}+4}$.",
+    "option_explanations": [
+     "$\\sec$ is for a difference.",
+     "uses $a^2$.",
+     "Correct: $x^2-6x+13=(x-3)^2+4$.",
+     "wrong sign of the shift."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "The radical $\\sqrt{x^{2}+2x-8}$ is handled by",
+    "options": [
+     "$x+1=3\\tan\\theta$",
+     "$x+1=3\\sec\\theta$",
+     "$x+1=9\\sec\\theta$",
+     "$x-1=3\\sec\\theta$"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "$(x+1)^{2}-9$ has the form $u^{2}-a^{2}$.",
+    "option_explanations": [
+     "$\\tan$ is for a sum.",
+     "Correct: $x^2+2x-8=(x+1)^2-9$.",
+     "uses $a^2$.",
+     "wrong sign of the shift."
+    ]
+   }
+  ]
+ }
+]
