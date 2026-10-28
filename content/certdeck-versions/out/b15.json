@@ -1,0 +1,1295 @@
+[
+ {
+  "card_id": "55ac5507-583d-4f24-96e1-98ae35e02a88",
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "An order event must trigger an email, a Lambda function and three queues, and the producer should make a single call. What do you use?",
+    "options": [
+     "A Kinesis stream with five readers",
+     "An SQS queue read by each target",
+     "An SNS topic with five subscriptions",
+     "Separate API calls to each target"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "SNS is pub/sub: every subscription gets every message unless a filter policy says otherwise.",
+    "option_explanations": [
+     "Consumers pull; a stream can't email anyone.",
+     "Each message is taken by one consumer only.",
+     "Correct. One publish, a copy per subscription.",
+     "The producer would integrate with every target."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "One message from a producer has to land at many different receivers at once. Which model fits?",
+    "options": [
+     "Point-to-point queue",
+     "Publish/subscribe",
+     "Request/response",
+     "Polling a shared table"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Pub/sub decouples the producer from how many receivers exist and what they are.",
+    "option_explanations": [
+     "One consumer takes each message.",
+     "Correct. SNS implements this.",
+     "One caller, one callee.",
+     "Couples receivers to a database and adds delay."
+    ]
+   }
+  ]
+ },
+ {
+  "card_id": "82696d9f-3aba-425b-b6cc-18759476fcbe",
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Which endpoint types can an SNS topic deliver to? (Choose 4)",
+    "options": [
+     "AWS Lambda",
+     "Amazon SQS",
+     "Amazon DynamoDB",
+     "Amazon Data Firehose",
+     "SMS text messages",
+     "Amazon ElastiCache"
+    ],
+    "correct": [
+     0,
+     1,
+     3,
+     4
+    ],
+    "explanation": "Protocols: SQS, Lambda, Firehose, HTTP/S, email, SMS and mobile push.",
+    "option_explanations": [
+     "Correct.",
+     "Correct.",
+     "Not a subscription protocol.",
+     "Correct.",
+     "Correct.",
+     "Not a subscription protocol."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "A team wants SNS to notify several targets. Which can a subscription use? (Choose 3)",
+    "options": [
+     "HTTPS",
+     "Email",
+     "S3 bucket",
+     "Mobile push",
+     "Kinesis data stream"
+    ],
+    "correct": [
+     0,
+     1,
+     3
+    ],
+    "explanation": "S3 is a common SNS publisher, but not a subscriber.",
+    "option_explanations": [
+     "Correct.",
+     "Correct.",
+     "To reach S3, go through Firehose.",
+     "Correct.",
+     "SNS can reach Firehose, not Data Streams."
+    ]
+   }
+  ]
+ },
+ {
+  "card_id": "b5a0ffa1-e537-4331-b6cd-24f734206637",
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Pick the accurate statements about SNS standard topics. (Choose 2)",
+    "options": [
+     "Subscribers can replay last week's messages",
+     "Messages are pushed and not kept afterwards",
+     "One topic can hold millions of subscriptions",
+     "Delivery order matches publish order",
+     "Each topic is limited to 100 subscribers"
+    ],
+    "correct": [
+     1,
+     2
+    ],
+    "explanation": "Put SQS behind SNS when messages must survive a consumer outage.",
+    "option_explanations": [
+     "Standard topics have no replay.",
+     "Correct.",
+     "Correct. Around 12.5 million.",
+     "Only FIFO topics order messages.",
+     "The real limit is in the millions."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "A subscriber to an SNS standard topic with no DLQ was down for an hour. What happens to messages it missed once retries run out?",
+    "options": [
+     "They stay on the topic",
+     "They're deleted for good",
+     "SNS replays them later",
+     "Another subscriber gets them"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "SNS retries per its delivery policy; after that, only a DLQ or an SQS subscriber keeps the message.",
+    "option_explanations": [
+     "SNS has no message retention on standard topics.",
+     "Correct. A subscription DLQ (an SQS queue) would have kept them.",
+     "Standard topics have no replay.",
+     "Each subscription is delivered separately."
+    ]
+   }
+  ]
+ },
+ {
+  "card_id": "0f813212-e050-4f5a-807e-da2a48577ed0",
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Which SNS API call delivers one message to every subscription of a topic?",
+    "options": [
+     "Subscribe",
+     "Publish",
+     "SendMessageBatch",
+     "PutRecords"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Publish targets a topic ARN (or a mobile platform endpoint).",
+    "option_explanations": [
+     "Creates a subscription; sends nothing.",
+     "Correct.",
+     "SQS: writes up to 10 messages to one queue.",
+     "Kinesis: writes records to a stream."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "A developer called SQS SendMessage with a topic ARN and got an error. What should the code call instead?",
+    "options": [
+     "PutRecord",
+     "Publish",
+     "PostToConnection",
+     "Notify"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "SQS and SNS have separate APIs: SendMessage for queues, Publish for topics.",
+    "option_explanations": [
+     "Kinesis Data Streams API.",
+     "Correct. The SNS call for topics.",
+     "API Gateway WebSocket API.",
+     "Not an SNS API."
+    ]
+   }
+  ]
+ },
+ {
+  "card_id": "5e1e837b-f4db-4ba6-901d-11b5a51305c8",
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Which controls protect data and access on an SNS topic? (Choose 3)",
+    "options": [
+     "Server-side encryption with a KMS key",
+     "HTTPS for API calls",
+     "Topic resource policies",
+     "Network ACLs on the topic",
+     "Encryption done for you on the client"
+    ],
+    "correct": [
+     0,
+     1,
+     2
+    ],
+    "explanation": "Same model as SQS: IAM policies plus a resource policy on the topic.",
+    "option_explanations": [
+     "Correct.",
+     "Correct.",
+     "Correct.",
+     "NACLs apply to subnets, not topics.",
+     "Client-side encryption is your own code."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "S3 in the same account must publish event notifications to an SNS topic. What grants it permission?",
+    "options": [
+     "A security group rule",
+     "An S3 bucket ACL",
+     "A topic access policy",
+     "An SCP attached to the account"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Service principals like S3 need the topic's resource policy to allow them.",
+    "option_explanations": [
+     "Topics have no security groups.",
+     "Bucket ACLs control access to the bucket.",
+     "Correct. Allow s3.amazonaws.com to sns:Publish.",
+     "SCPs only limit permissions; they don't grant them."
+    ]
+   }
+  ]
+ },
+ {
+  "card_id": "7890dd90-8c9c-4a76-82ea-59ddfc1e2238",
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Orders must reach a billing queue and a warehouse queue without loss, and a third queue joins next month. How do you wire it?",
+    "options": [
+     "Have the app call SendMessage twice",
+     "Subscribe each queue to one SNS topic",
+     "Point both services at one queue",
+     "Stream orders into S3 via Firehose"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "SNS + SQS fan-out: SQS adds persistence, SNS adds the copies.",
+    "option_explanations": [
+     "A crash between calls leaves one queue without the order.",
+     "Correct. Adding a queue is just a new subscription.",
+     "Each message is consumed by one service only.",
+     "Lands in storage, not in the service queues."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "In an SNS-to-SQS fan-out, nothing arrives in the queues. What's the most likely missing piece?",
+    "options": [
+     "A visibility timeout over 30 seconds",
+     "Long polling on each queue",
+     "A queue policy allowing the topic",
+     "A .fifo suffix on each queue"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Each SQS queue's access policy must allow the SNS topic ARN to write.",
+    "option_explanations": [
+     "Affects re-delivery after receive, not arrival.",
+     "Affects how consumers poll, not delivery.",
+     "Correct. The queue must let the topic call SendMessage.",
+     "Standard topics deliver to standard queues."
+    ]
+   }
+  ]
+ },
+ {
+  "card_id": "a89fcede-a3c0-4f1c-b943-bff647dc5f3c",
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Each new object in a bucket should be handled by three queues, but the bucket's notification rules can't overlap. What's the approach?",
+    "options": [
+     "Point the notification at an SNS topic",
+     "Raise the notification rule quota",
+     "Have each queue forward to the next",
+     "Have the first consumer forward it"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "S3 → SNS → SQS is the classic fix for the one-rule-per-event-and-prefix limit.",
+    "option_explanations": [
+     "Correct. All three queues subscribe to the topic.",
+     "Overlapping rules aren't a quota you can raise.",
+     "SQS queues can't forward to each other.",
+     "Couples consumers and fails if that one is down."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "An S3 PUT event must reach queues A, B and C. Which destination do you set on the bucket?",
+    "options": [
+     "Queue A, which forwards to B and C",
+     "An SNS topic for all three",
+     "A Kinesis stream read by all three",
+     "Three rules with the same prefix"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Each queue needs a policy allowing the SNS topic to send to it.",
+    "option_explanations": [
+     "Queues have no forwarding.",
+     "Correct. SNS fan-out.",
+     "S3 notifications can't target Kinesis.",
+     "S3 rejects overlapping rules."
+    ]
+   }
+  ]
+ },
+ {
+  "card_id": "c6f17d1a-8eca-448f-a174-654ca135e60f",
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "A payment event goes to several services that each need strict per-account order and no duplicates. Which setup?",
+    "options": [
+     "Standard topic, FIFO queues",
+     "FIFO topic, FIFO queues",
+     "One shared FIFO queue",
+     "Firehose with S3 buckets"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Use the account ID as the message group ID to keep per-account order.",
+    "option_explanations": [
+     "SNS standard topics can't deliver to FIFO queues.",
+     "Correct. Order per message group, deduplication.",
+     "Each message would reach only one service.",
+     "Firehose doesn't order or deduplicate."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "What does an SNS FIFO topic use to keep related messages in order?",
+    "options": [
+     "Partition key",
+     "Message group ID",
+     "Message sequence token",
+     "Queue visibility timeout"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "SNS FIFO mirrors SQS FIFO: message group IDs for order, a 5-minute dedup window.",
+    "option_explanations": [
+     "That's Kinesis.",
+     "Correct. Plus a deduplication ID or content-based dedup.",
+     "Not an SNS concept.",
+     "An SQS consumer setting."
+    ]
+   }
+  ]
+ },
+ {
+  "card_id": "11450ec4-92df-4408-bb88-8b82227a28f7",
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "One topic carries orders of every status. The refunds queue should receive only status=refunded. Where do you set this?",
+    "options": [
+     "A filter policy on its subscription",
+     "A message group ID for each status",
+     "A Lambda that drops the rest",
+     "A second topic the producer picks"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Filter policies are JSON on the subscription; they match attributes or the body.",
+    "option_explanations": [
+     "Correct. SNS drops non-matching messages for that subscription.",
+     "Groups order messages; doesn't route them.",
+     "Extra code and the messages still arrive.",
+     "Pushes routing logic into the producer."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "An SNS subscription has no filter policy. Which messages does it get?",
+    "options": [
+     "Every message on the topic",
+     "None until a policy is added",
+     "Only messages with attributes",
+     "Only the first per group"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "No filter policy means the subscription receives everything published.",
+    "option_explanations": [
+     "Correct.",
+     "Delivery doesn't wait for a policy.",
+     "Attributes are optional.",
+     "Groups don't limit delivery."
+    ]
+   }
+  ]
+ },
+ {
+  "card_id": "7f761181-aa1a-4152-9029-2fea5bda4b16",
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Which subscription filter policy lets through only messages whose `state` attribute is `placed`?",
+    "options": [
+     "{\"placed\": \"state\"}",
+     "{\"state\": [\"placed\"]}",
+     "{\"attributes\": {\"state\": [\"placed\"]}}",
+     "{\"state\": {\"equals\": \"placed\"}}"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Each key is an attribute name; its value is an array of allowed values.",
+    "option_explanations": [
+     "Key and value are swapped, and values must be arrays.",
+     "Correct.",
+     "Attribute names go at the top level, with no wrapper key.",
+     "Values must be arrays; there's no equals operator."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "By default, what does SNS match a subscription's filter policy against?",
+    "options": [
+     "The full message body",
+     "Message attributes",
+     "Topic tags",
+     "The subject line"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Set the scope to MessageBody for payload-based filtering.",
+    "option_explanations": [
+     "Possible, but only if you set FilterPolicyScope to MessageBody.",
+     "Correct. FilterPolicyScope defaults to MessageAttributes.",
+     "Tags don't affect delivery.",
+     "Not used for filtering."
+    ]
+   }
+  ]
+ },
+ {
+  "card_id": "78d8564b-d546-428d-8109-fe11cb4a1cc7",
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Every message on an SNS topic must also be stored in an S3 bucket, with no code to run. What do you add?",
+    "options": [
+     "Subscribe a Lambda function",
+     "Subscribe a Firehose stream",
+     "Subscribe the S3 bucket",
+     "Subscribe an SQS queue"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "SNS → Firehose → S3 is the managed archive path.",
+    "option_explanations": [
+     "Works, but it's code you must run.",
+     "Correct. Firehose delivers to S3.",
+     "S3 isn't an SNS protocol; go through Firehose.",
+     "Holds messages; nothing writes them to S3."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which SNS subscription type can pass messages on to S3, Redshift or OpenSearch?",
+    "options": [
+     "HTTPS endpoint",
+     "Email-JSON",
+     "Data Firehose",
+     "Mobile application"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Firehose can deliver to any of its supported destinations.",
+    "option_explanations": [
+     "You'd host the endpoint yourself.",
+     "Sends to an inbox.",
+     "Correct.",
+     "Mobile push."
+    ]
+   }
+  ]
+ },
+ {
+  "card_id": "b5f0df36-c90b-477b-8748-d06dea47ac24",
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Sensor readings must be processed as they arrive, and an analytics app added later must re-read last week's data. Which service?",
+    "options": [
+     "Managed Service for Apache Flink",
+     "Kinesis Data Streams",
+     "SQS",
+     "Data Firehose"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Default retention is 24 hours; you can raise it to 365 days.",
+    "option_explanations": [
+     "Processes streams; it doesn't store them for replay.",
+     "Correct. Records stay until retention expires.",
+     "Deleted once processed.",
+     "Buffers and delivers; no replay."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "What's the longest retention you can set on a Kinesis data stream?",
+    "options": [
+     "14 days",
+     "365 days",
+     "7 days",
+     "Unlimited"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Records can't be deleted individually; they expire.",
+    "option_explanations": [
+     "That's the SQS maximum.",
+     "Correct.",
+     "Was the old maximum.",
+     "Records always expire."
+    ]
+   }
+  ]
+ },
+ {
+  "card_id": "53fda681-7471-492d-bd51-e87d66aedb3b",
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Which of these can read records from a Kinesis data stream? (Choose 3)",
+    "options": [
+     "Lambda",
+     "SNS",
+     "Managed Service for Apache Flink",
+     "Data Firehose",
+     "Amazon SES"
+    ],
+    "correct": [
+     0,
+     2,
+     3
+    ],
+    "explanation": "Custom apps use the KCL to read.",
+    "option_explanations": [
+     "Correct.",
+     "SNS can't consume a stream.",
+     "Correct.",
+     "Correct.",
+     "SES sends email; it doesn't read streams."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which tools write records into a Kinesis data stream? (Choose 2)",
+    "options": [
+     "Kinesis Producer Library",
+     "Kinesis Client Library",
+     "Kinesis Agent",
+     "Amazon Athena"
+    ],
+    "correct": [
+     0,
+     2
+    ],
+    "explanation": "KPL batches and retries for high throughput; KCL is the consumer side.",
+    "option_explanations": [
+     "Correct.",
+     "Reads from a stream.",
+     "Correct. Tails log files on servers.",
+     "Queries data; doesn't produce records."
+    ]
+   }
+  ]
+ },
+ {
+  "card_id": "0bbe6ca3-3b41-4a2a-969b-644256d73abc",
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Events for each user must be processed in the order they happened. What should producers set on each record?",
+    "options": [
+     "A random UUID as the partition key",
+     "The timestamp as the partition key",
+     "The user ID as the partition key",
+     "One stream for each producer"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Order holds within a shard; the partition key picks the shard.",
+    "option_explanations": [
+     "Spreads one user's events across shards.",
+     "Each event gets a different key.",
+     "Correct. One user, one shard.",
+     "Doesn't keep a user's events together."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Kinesis Data Streams guarantees order at what level?",
+    "options": [
+     "Across the stream",
+     "Within each shard",
+     "Within each consumer",
+     "Per producer connection"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Same partition key → same shard → ordered.",
+    "option_explanations": [
+     "Shards are independent.",
+     "Correct.",
+     "A consumer may read many shards.",
+     "Connections don't map to shards."
+    ]
+   }
+  ]
+ },
+ {
+  "card_id": "18715afa-c058-46ea-9b1a-74814d85c87f",
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Producers will write 6 MB/s into a provisioned stream. What's the fewest shards that can take it?",
+    "options": [
+     "3",
+     "6",
+     "12",
+     "1"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Writes: 1 MB/s or 1,000 records/s per shard. Reads: 2 MB/s per shard.",
+    "option_explanations": [
+     "Gives 3 MB/s.",
+     "Correct. 1 MB/s each.",
+     "More than needed.",
+     "Gives 1 MB/s."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "A stream has 4 provisioned shards. Roughly how much can it ingest per second?",
+    "options": [
+     "2 MB or 2,000 records",
+     "4 MB or 4,000 records",
+     "8 MB or 8,000 records",
+     "16 MB or 16,000 records"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Each shard: 1 MB/s or 1,000 records/s in, 2 MB/s out.",
+    "option_explanations": [
+     "Too low.",
+     "Correct.",
+     "That's the read limit in MB.",
+     "Too high."
+    ]
+   }
+  ]
+ },
+ {
+  "card_id": "1cfe384e-5597-4e74-b456-77ae9e5380cf",
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Load on a new stream could be 1 MB/s or 50 MB/s and nobody can predict it. Which setting spares the team from resizing?",
+    "options": [
+     "Provisioned mode with spare shards",
+     "On-demand capacity mode",
+     "Enhanced fan-out consumers",
+     "Longer data retention"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "On-demand scales to double the previous 30-day write peak.",
+    "option_explanations": [
+     "Still manual, and you pay for idle shards.",
+     "Correct. Scales with observed traffic.",
+     "Changes read throughput only.",
+     "Affects storage, not capacity."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "A new on-demand stream starts with what write capacity?",
+    "options": [
+     "1 MB/s or 1,000 records/s",
+     "4 MB/s or 4,000 records/s",
+     "10 MB/s or 10,000 records/s",
+     "2 MB/s or 2,000 records/s"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "It then grows with your 30-day peak; pay per stream-hour plus data.",
+    "option_explanations": [
+     "That's one provisioned shard.",
+     "Correct.",
+     "Too high for a new stream.",
+     "That's a shard's read limit in MB."
+    ]
+   }
+  ]
+ },
+ {
+  "card_id": "f997c9ac-f2ff-4c7f-ab93-875d64ecd073",
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Three apps read one stream and keep getting read-throttled. How can each app get dedicated read bandwidth?",
+    "options": [
+     "Switch the stream to on-demand",
+     "Register them for enhanced fan-out",
+     "Raise the retention period",
+     "Spread writes over more keys"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Enhanced fan-out uses SubscribeToShard (HTTP/2 push).",
+    "option_explanations": [
+     "Shared readers still split the same read limit.",
+     "Correct. 2 MB/s per shard per consumer, pushed.",
+     "Changes storage, not reads.",
+     "Changes write spread, not read limits."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "With standard shared consumers, how much read throughput does one shard give?",
+    "options": [
+     "2 MB/s for each consumer",
+     "2 MB/s split across all",
+     "1 MB/s shared by all",
+     "4 MB/s for each consumer"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Shared mode also caps GetRecords at 5 calls/s per shard.",
+    "option_explanations": [
+     "That's enhanced fan-out.",
+     "Correct.",
+     "That's the write limit.",
+     "No such tier."
+    ]
+   }
+  ]
+ },
+ {
+  "card_id": "176a6597-8ade-43a3-87fd-15e12369cb7c",
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "With CLI v2, `aws kinesis put-record --data \"user signup\"` fails on plain text. Which flag fixes it?",
+    "options": [
+     "--encoding utf-8",
+     "--cli-binary-format raw-in-base64-out",
+     "--no-base64",
+     "--output text"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "CLI v2 expects blob input to be Base64 unless you set this flag.",
+    "option_explanations": [
+     "Not a CLI option.",
+     "Correct. Tells the CLI to Base64-encode the raw text.",
+     "Not a CLI option.",
+     "Changes output format only."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which shard iterator type starts reading from the oldest record still in the shard?",
+    "options": [
+     "LATEST",
+     "AT_TIMESTAMP",
+     "TRIM_HORIZON",
+     "AFTER_SEQUENCE_NUMBER"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Use NextShardIterator from each GetRecords response to keep reading.",
+    "option_explanations": [
+     "Only new records.",
+     "Starts at a time you give.",
+     "Correct.",
+     "Starts after a given record."
+    ]
+   }
+  ]
+ },
+ {
+  "card_id": "00a597bd-1ac5-4d04-b00b-e52540c9d23d",
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "A consumer logs a record's data field and sees `dXNlciBzaWdudXA=`. What's going on?",
+    "options": [
+     "It's KMS ciphertext",
+     "It's Base64-encoded text",
+     "Kinesis gzipped it",
+     "The producer sent raw bytes"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Lambda and the raw API both hand you Base64; SDKs often decode it for you.",
+    "option_explanations": [
+     "KMS decrypts transparently for allowed callers.",
+     "Correct. Decode it to get the text.",
+     "Kinesis doesn't compress records.",
+     "The text was fine; it's an encoding."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Data read through the raw Kinesis API arrives in which encoding?",
+    "options": [
+     "Hexadecimal",
+     "UTF-16",
+     "Base64",
+     "Gzip"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Decode the data field before parsing it.",
+    "option_explanations": [
+     "Not used.",
+     "Not used.",
+     "Correct.",
+     "Not applied by Kinesis."
+    ]
+   }
+  ]
+ },
+ {
+  "card_id": "716e3b96-6c03-4a67-9c88-cf7c491681fa",
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "App logs must land in S3 and OpenSearch within a minute or so, and the team won't run any consumer code. What do they use?",
+    "options": [
+     "Kinesis Data Streams with Lambda",
+     "Amazon Data Firehose",
+     "SQS with an EC2 worker",
+     "Managed Service for Apache Flink"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Firehose = managed, serverless, near real-time delivery.",
+    "option_explanations": [
+     "You'd write and run the function.",
+     "Correct.",
+     "You'd write and run the worker.",
+     "You'd write a Flink app."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which service loads streaming data into Redshift for you, scaling on its own, with no servers or shards to manage?",
+    "options": [
+     "Kinesis Data Streams",
+     "Data Firehose",
+     "Amazon MSK",
+     "Amazon MQ"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Near real-time because of buffering.",
+    "option_explanations": [
+     "You'd manage shards and consumers.",
+     "Correct. It stages in S3 and runs COPY.",
+     "Kafka; you'd run connectors.",
+     "A message broker."
+    ]
+   }
+  ]
+ },
+ {
+  "card_id": "47fd6e15-6295-41f5-8793-fda05532958e",
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Which can a Firehose stream deliver to? (Choose 3)",
+    "options": [
+     "Amazon OpenSearch Service",
+     "Amazon EFS",
+     "Splunk",
+     "Amazon Redshift",
+     "Kinesis Data Streams"
+    ],
+    "correct": [
+     0,
+     2,
+     3
+    ],
+    "explanation": "Also S3, HTTP endpoints, partners like Datadog, Snowflake and Iceberg tables.",
+    "option_explanations": [
+     "Correct.",
+     "Not a destination.",
+     "Correct.",
+     "Correct.",
+     "Firehose can read from it, not write to it."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "A team picks Firehose for log delivery. Which targets can they set? (Choose 2)",
+    "options": [
+     "An HTTPS endpoint they host",
+     "An SQS queue",
+     "An S3 bucket",
+     "A DynamoDB table"
+    ],
+    "correct": [
+     0,
+     2
+    ],
+    "explanation": "Failed or all records can also be backed up to S3.",
+    "option_explanations": [
+     "Correct.",
+     "Not a destination.",
+     "Correct.",
+     "Not a destination."
+    ]
+   }
+  ]
+ },
+ {
+  "card_id": "faadfba3-40f6-4ac0-8900-9a95a9e9c7ca",
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Firehose receives CSV lines, but the destination wants JSON documents. Which feature handles it?",
+    "options": [
+     "Format conversion",
+     "Dynamic partitioning",
+     "A transformation Lambda",
+     "S3 backup mode"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Firehose invokes the Lambda on batches and delivers what it returns.",
+    "option_explanations": [
+     "Only JSON to Parquet or ORC.",
+     "Splits data by key into prefixes.",
+     "Correct.",
+     "Keeps a copy of source records."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Firehose's built-in record format conversion turns JSON into which formats? (Choose 2)",
+    "options": [
+     "Apache Parquet",
+     "CSV",
+     "Apache ORC",
+     "XML"
+    ],
+    "correct": [
+     0,
+     2
+    ],
+    "explanation": "Columnar formats save space and query cost in Athena or Redshift Spectrum.",
+    "option_explanations": [
+     "Correct.",
+     "Use Lambda for this.",
+     "Correct.",
+     "Use Lambda for this."
+    ]
+   }
+  ]
+ },
+ {
+  "card_id": "c4f81be5-3286-4011-a65d-52551e4711fb",
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Data sent to Firehose shows up in S3 a few minutes later. What causes the delay?",
+    "options": [
+     "Shard rebalancing",
+     "Record buffering",
+     "Lambda cold starts",
+     "Replication lag"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "The S3 default buffer is 5 MiB or 300 s, whichever comes first.",
+    "option_explanations": [
+     "Firehose has no shards to manage.",
+     "Correct. It flushes on size or time.",
+     "Only if a transform is set, and it's seconds.",
+     "Replication isn't part of delivery."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which two settings decide when Firehose flushes data to S3? (Choose 2)",
+    "options": [
+     "Buffer size",
+     "Buffer interval",
+     "Shard count",
+     "Retention period"
+    ],
+    "correct": [
+     0,
+     1
+    ],
+    "explanation": "Whichever limit is hit first triggers delivery.",
+    "option_explanations": [
+     "Correct.",
+     "Correct.",
+     "Firehose has no shards.",
+     "Firehose doesn't retain data."
+    ]
+   }
+  ]
+ },
+ {
+  "card_id": "6d9b49ed-7840-4a61-8726-d9391dac1353",
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Which is TRUE of Data Firehose but not of Kinesis Data Streams?",
+    "options": [
+     "It retains data for replay",
+     "Its capacity is fully managed",
+     "It delivers in real time",
+     "It needs your own consumers"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Streams: collect and replay. Firehose: load into destinations.",
+    "option_explanations": [
+     "Data Streams does; Firehose doesn't.",
+     "Correct. Fully managed and auto scaling.",
+     "Firehose is near real-time.",
+     "That's Data Streams."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which is TRUE of Kinesis Data Streams but not of Firehose?",
+    "options": [
+     "It loads Redshift itself",
+     "It buffers before delivery",
+     "It can keep data 365 days",
+     "It needs no code to load S3"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Data Streams supports provisioned or on-demand capacity and replay.",
+    "option_explanations": [
+     "That's Firehose.",
+     "That's Firehose.",
+     "Correct.",
+     "That's Firehose."
+    ]
+   }
+  ]
+ },
+ {
+  "card_id": "c9356c30-4e3c-43f7-9918-a1a77904b74d",
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "A Flink application on AWS needs an input stream. Which can it read? (Choose 2)",
+    "options": [
+     "Amazon MSK topics",
+     "Data Firehose streams",
+     "Kinesis data streams",
+     "SNS topics",
+     "CloudWatch alarms"
+    ],
+    "correct": [
+     0,
+     2
+    ],
+    "explanation": "Managed Service for Apache Flink was formerly Kinesis Data Analytics.",
+    "option_explanations": [
+     "Correct.",
+     "Firehose can be a Flink output, not an input.",
+     "Correct.",
+     "SNS pushes to subscribers.",
+     "Alarms aren't a stream source."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which pipeline puts Managed Service for Apache Flink in a valid place?",
+    "options": [
+     "Firehose → Flink → S3",
+     "Data Streams → Flink → Firehose",
+     "SNS → Flink → Redshift",
+     "S3 events → Firehose → Flink"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Flink reads Data Streams or MSK and can write to Firehose, S3 and more.",
+    "option_explanations": [
+     "Flink can't read from Firehose.",
+     "Correct.",
+     "SNS isn't a Flink source.",
+     "Firehose can't deliver to Flink."
+    ]
+   }
+  ]
+ },
+ {
+  "card_id": "da86d6f8-2fa0-4a6f-b10b-08023a7beed2",
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Jobs must sit in a durable buffer until one of many workers takes each, and the worker removes it when done. Which service?",
+    "options": [
+     "SNS",
+     "Kinesis Data Streams",
+     "SQS",
+     "Data Firehose"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "SQS: pull model, scales automatically, FIFO when order matters.",
+    "option_explanations": [
+     "Pushes copies to every subscriber.",
+     "Records stay for every reader until expiry.",
+     "Correct.",
+     "Delivers to destinations; no workers."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "After processing an SQS message, what must a worker do so no other worker gets it?",
+    "options": [
+     "Let it expire",
+     "Call DeleteMessage",
+     "Call Unsubscribe",
+     "Advance a checkpoint"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "Until deleted, a message becomes visible again after the visibility timeout.",
+    "option_explanations": [
+     "It reappears after the visibility timeout.",
+     "Correct.",
+     "An SNS action.",
+     "That's how KCL tracks Kinesis progress."
+    ]
+   }
+  ]
+ },
+ {
+  "card_id": "32baadb0-20dd-484f-a4b4-5583be4d09c8",
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "A message must survive until a consumer deletes it, for up to two weeks. Which service has that persistence model?",
+    "options": [
+     "SNS",
+     "SQS",
+     "Kinesis Data Streams",
+     "Data Firehose"
+    ],
+    "correct": [
+     1
+    ],
+    "explanation": "SQS: pull then delete. SNS: push. Data Streams: retain and replay.",
+    "option_explanations": [
+     "Standard topics don't keep messages.",
+     "Correct. Up to 14 days.",
+     "Records expire; consumers can't delete them.",
+     "No storage."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which service makes you choose provisioned shards or on-demand capacity?",
+    "options": [
+     "Amazon SQS",
+     "Amazon SNS",
+     "Kinesis Data Streams",
+     "Amazon EventBridge Scheduler"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "SQS and SNS scale with no capacity settings.",
+    "option_explanations": [
+     "No provisioning.",
+     "No provisioning.",
+     "Correct.",
+     "No provisioning."
+    ]
+   }
+  ]
+ },
+ {
+  "card_id": "3045731a-5b5d-4e13-a064-1d5fb9311cae",
+  "versions": [
+   {
+    "type": "mcq",
+    "question": "Which SQS setting and maximum go together?",
+    "options": [
+     "Delay queue up to 15 minutes",
+     "Visibility timeout up to 24 hours",
+     "Long polling up to 60 seconds",
+     "Retention up to 30 days"
+    ],
+    "correct": [
+     0
+    ],
+    "explanation": "Defaults: retention 4 days, visibility timeout 30 s.",
+    "option_explanations": [
+     "Correct.",
+     "The maximum is 12 hours.",
+     "The maximum is 20 seconds.",
+     "The maximum is 14 days."
+    ]
+   },
+   {
+    "type": "mcq",
+    "question": "Which statement about these streaming and messaging services is accurate?",
+    "options": [
+     "Flink reads from Firehose",
+     "Firehose replays data",
+     "Each shard ingests 1 MB/s",
+     "SNS keeps messages 14 days"
+    ],
+    "correct": [
+     2
+    ],
+    "explanation": "Know the limits that separate SQS, SNS, Data Streams, Firehose and Flink.",
+    "option_explanations": [
+     "Flink reads Data Streams or MSK.",
+     "Firehose has no storage.",
+     "Correct. And 2 MB/s out.",
+     "SNS doesn't retain messages."
+    ]
+   }
+  ]
+ }
+]

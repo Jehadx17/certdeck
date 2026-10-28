@@ -1,0 +1,781 @@
+[
+ {
+  "type": "mcq",
+  "question": "An order service calls the shipping service directly, and a sales spike overwhelms shipping. What design fixes this?",
+  "options": [
+   "Add an SQS queue between them",
+   "Make the call synchronous with retries",
+   "Move shipping to one bigger server",
+   "Use Route 53 weighted routing"
+  ],
+  "correct": [
+   0
+  ],
+  "option_explanations": [
+   "Correct. The queue absorbs spikes and each side scales on its own.",
+   "A synchronous call keeps the services tightly coupled.",
+   "A bigger server still takes every request directly.",
+   "DNS routing doesn't buffer work."
+  ],
+  "explanation": "Three decoupling options: **SQS** (queue), **SNS** (pub/sub), **Kinesis** (real-time streaming, big data).",
+  "certs": {
+   "DVA-C02": "1",
+   "SAA-C03": "2"
+  },
+  "tags": [
+   "messaging",
+   "decoupling"
+  ],
+  "id": "594beed8-4313-406e-957a-6cc71b0a9274"
+ },
+ {
+  "type": "mcq",
+  "question": "Which are characteristics of an SQS **standard** queue? (Choose 3)",
+  "options": [
+   "Unlimited throughput",
+   "At-least-once delivery",
+   "Best-effort ordering",
+   "Exactly-once processing",
+   "Retention of up to 30 days"
+  ],
+  "correct": [
+   0,
+   1,
+   2
+  ],
+  "option_explanations": [
+   "Correct. Throughput and backlog size have no limit.",
+   "Correct. Duplicates are possible.",
+   "Correct. Order isn't guaranteed.",
+   "That's FIFO's deduplication.",
+   "Retention maxes out at 14 days."
+  ],
+  "explanation": "Also: fully managed, latency under ~10 ms, the oldest AWS service. Exam keyword **'decouple applications' → SQS**.",
+  "certs": {
+   "DVA-C02": "1",
+   "SAA-C03": "2"
+  },
+  "tags": [
+   "sqs",
+   "standard-queue"
+  ],
+  "id": "35c7e49f-d9e8-4923-9365-97a694002625"
+ },
+ {
+  "type": "cloze",
+  "question": "SQS message retention is {{4 days}} by default and up to {{14 days}}. A ReceiveMessage call returns up to {{10}} messages.",
+  "explanation": "Unprocessed messages are lost after the retention period. Maximum message size per the course: about 1 MB (1,024 KB).",
+  "certs": {
+   "DVA-C02": "1",
+   "SAA-C03": "2"
+  },
+  "tags": [
+   "sqs"
+  ],
+  "id": "d70115ee-6336-4c5d-98ef-930d4ad31a3b"
+ },
+ {
+  "type": "ordering",
+  "question": "Order the SQS message lifecycle for a standard queue.",
+  "items": [
+   "Producer calls SendMessage",
+   "Message is stored in the queue",
+   "Consumer polls with ReceiveMessage",
+   "Consumer processes the message (e.g. writes to RDS)",
+   "Consumer calls DeleteMessage"
+  ],
+  "explanation": "If the consumer doesn't delete it, the message becomes visible again for other consumers.",
+  "certs": {
+   "DVA-C02": "1",
+   "SAA-C03": "2"
+  },
+  "tags": [
+   "sqs"
+  ],
+  "id": "1fa2c4cb-dc7a-4f45-bc1f-2417cdd3677b"
+ },
+ {
+  "type": "mcq",
+  "question": "Where can SQS consumers run? (Choose 3)",
+  "options": [
+   "EC2 instances",
+   "On-premises servers",
+   "AWS Lambda",
+   "Amazon S3",
+   "Amazon DynamoDB"
+  ],
+  "correct": [
+   0,
+   1,
+   2
+  ],
+  "option_explanations": [
+   "Correct.",
+   "Correct. Anything that can call the SQS API can poll.",
+   "Correct. Through an event source mapping.",
+   "S3 stores objects; it doesn't run consumer code.",
+   "DynamoDB stores items; it doesn't run consumer code."
+  ],
+  "explanation": "Consumers are code **you** write; they poll SQS.",
+  "certs": {
+   "DVA-C02": "1",
+   "SAA-C03": "2"
+  },
+  "tags": [
+   "sqs",
+   "consumers"
+  ],
+  "id": "38a659bb-3c06-4f3e-b8c4-98d4aa8b81de"
+ },
+ {
+  "type": "mcq",
+  "question": "Consumers on EC2 can't keep up during order spikes. How should they scale automatically?",
+  "options": [
+   "Scale an ASG on queue length",
+   "Scale an ASG on producer CPU",
+   "Raise the visibility timeout",
+   "Switch to a FIFO queue"
+  ],
+  "correct": [
+   0
+  ],
+  "option_explanations": [
+   "Correct. A CloudWatch alarm on ApproximateNumberOfMessages drives the ASG; a very common exam pattern.",
+   "Producers aren't the bottleneck.",
+   "A longer timeout doesn't add capacity.",
+   "FIFO has lower throughput, not more consumers."
+  ],
+  "explanation": "More messages → more consumer instances.",
+  "certs": {
+   "DVA-C02": "1",
+   "SAA-C03": "3"
+  },
+  "tags": [
+   "sqs",
+   "asg",
+   "cloudwatch"
+  ],
+  "id": "d655f0da-1845-49b2-bd11-cae53b12cd72"
+ },
+ {
+  "type": "mcq",
+  "question": "A web front end handles video processing requests, but processing is slow and hurts the site. What architecture fits?",
+  "options": [
+   "Queue jobs in SQS for a separate worker ASG",
+   "Add more threads to the front-end servers",
+   "Put CloudFront in front of the website",
+   "Store the uploaded videos on EBS volumes"
+  ],
+  "correct": [
+   0
+  ],
+  "option_explanations": [
+   "Correct. Workers (e.g. GPU instances) write results to S3, and each tier scales with its own instance type.",
+   "The front end still does the slow work.",
+   "Caching doesn't process videos.",
+   "Storage alone doesn't move the processing off the front end."
+  ],
+  "explanation": "Decoupling tiers lets each use optimal hardware.",
+  "certs": {
+   "DVA-C02": "1",
+   "SAA-C03": "3"
+  },
+  "tags": [
+   "sqs",
+   "architecture"
+  ],
+  "id": "1cce5e0a-d327-4eb9-b79a-15876ebce55d"
+ },
+ {
+  "type": "mcq",
+  "question": "Which security options does SQS offer? (Choose 3)",
+  "options": [
+   "HTTPS encryption in flight",
+   "KMS encryption at rest",
+   "SQS access policies",
+   "Security groups on the queue",
+   "Built-in client-side encryption"
+  ],
+  "correct": [
+   0,
+   1,
+   2
+  ],
+  "option_explanations": [
+   "Correct.",
+   "Correct. SSE with KMS keys (or SQS-managed keys).",
+   "Correct. Resource policies for cross-account access and service integrations.",
+   "Queues have no security groups.",
+   "Client-side encryption is your code's job, not an SQS feature."
+  ],
+  "explanation": "IAM policies control API access; access policies work like S3 bucket policies.",
+  "certs": {
+   "DVA-C02": "2",
+   "SAA-C03": "1"
+  },
+  "tags": [
+   "sqs",
+   "security"
+  ],
+  "id": "2e85540f-b92b-473f-9692-edc9c9cf54ec"
+ },
+ {
+  "type": "mcq",
+  "question": "An EC2 instance in **account B** must poll a queue in **account A**. What's needed on the queue?",
+  "options": [
+   "An SQS access policy granting account B",
+   "A VPC peering connection to account B",
+   "A NAT gateway in account B",
+   "A security group rule on the queue"
+  ],
+  "correct": [
+   0
+  ],
+  "option_explanations": [
+   "Correct. It allows account B's principal sqs:ReceiveMessage.",
+   "Networking doesn't grant permissions.",
+   "A NAT gateway only gives outbound internet access.",
+   "Queues have no security groups."
+  ],
+  "explanation": "Resource policies enable cross-account access.",
+  "certs": {
+   "DVA-C02": "2",
+   "SAA-C03": "1"
+  },
+  "tags": [
+   "sqs",
+   "access-policy",
+   "cross-account"
+  ],
+  "id": "ac8e373b-7c32-4c70-a1bc-c74578cbac30"
+ },
+ {
+  "type": "mcq",
+  "question": "An S3 event notification to SQS fails with 'unable to validate destination'. What fixes it?",
+  "options": [
+   "An SQS access policy for S3",
+   "An IAM role attached to the bucket",
+   "Converting the queue to FIFO",
+   "Enabling versioning on the bucket"
+  ],
+  "correct": [
+   0
+  ],
+  "option_explanations": [
+   "Correct. Allow s3.amazonaws.com sqs:SendMessage, with aws:SourceArn and aws:SourceAccount conditions.",
+   "Buckets don't assume roles to send events; the queue policy decides.",
+   "S3 event notifications don't support FIFO queues.",
+   "Versioning doesn't affect event permissions."
+  ],
+  "explanation": "Same idea for SNS → SQS fan-out.",
+  "certs": {
+   "DVA-C02": "4",
+   "SAA-C03": "2"
+  },
+  "tags": [
+   "sqs",
+   "access-policy",
+   "s3"
+  ],
+  "id": "d3432615-dee6-417f-b66f-5a4d63de8dce"
+ },
+ {
+  "type": "code",
+  "question": "Write the SQS access policy statement letting S3 bucket `uploads-bucket` send events to the queue.",
+  "language": "json",
+  "explanation": "Conditions stop other buckets or accounts from writing to your queue. *(Goes slightly beyond the lecture.)*",
+  "certs": {
+   "DVA-C02": "2",
+   "SAA-C03": "1"
+  },
+  "tags": [
+   "sqs",
+   "access-policy",
+   "s3"
+  ],
+  "answer_code": "{\n  \"Effect\": \"Allow\",\n  \"Principal\": {\"Service\": \"s3.amazonaws.com\"},\n  \"Action\": \"sqs:SendMessage\",\n  \"Resource\": \"arn:aws:sqs:us-east-1:111122223333:events-from-s3\",\n  \"Condition\": {\n    \"ArnLike\": {\"aws:SourceArn\": \"arn:aws:s3:::uploads-bucket\"},\n    \"StringEquals\": {\"aws:SourceAccount\": \"111122223333\"}\n  }\n}",
+  "id": "93658d4b-f034-4918-9c2e-8d627f81e0b4"
+ },
+ {
+  "type": "mcq",
+  "question": "What happens when a consumer receives an SQS message?",
+  "options": [
+   "It's hidden from other consumers",
+   "It's deleted from the queue",
+   "Every consumer gets a copy",
+   "It moves to the dead-letter queue"
+  ],
+  "correct": [
+   0
+  ],
+  "option_explanations": [
+   "Correct. Hidden for the visibility timeout (default 30 s).",
+   "Only DeleteMessage deletes it.",
+   "That's SNS fan-out.",
+   "Only after the max receive count."
+  ],
+  "explanation": "If not deleted before the timeout ends, it becomes visible again and may be processed twice.",
+  "certs": {
+   "DVA-C02": "1",
+   "SAA-C03": "2"
+  },
+  "tags": [
+   "sqs",
+   "visibility-timeout"
+  ],
+  "id": "bee5d8c5-5203-4caa-b8c6-9bea4c2045a9"
+ },
+ {
+  "type": "mcq",
+  "question": "A consumer sometimes needs 2 minutes to process a message, but the visibility timeout is 30 s, causing duplicate processing. Best fix in code?",
+  "options": [
+   "Call ChangeMessageVisibility during processing",
+   "Call DeleteMessage before processing",
+   "Set DelaySeconds on each message",
+   "Turn off long polling"
+  ],
+  "correct": [
+   0
+  ],
+  "option_explanations": [
+   "Correct. Extend the timeout while the work runs.",
+   "You'd lose the message if processing fails.",
+   "Delays delivery, not processing time.",
+   "Polling mode doesn't affect visibility."
+  ],
+  "explanation": "You can also raise the queue's default timeout (0 s to 12 h).",
+  "certs": {
+   "DVA-C02": "4",
+   "SAA-C03": "2"
+  },
+  "tags": [
+   "sqs",
+   "visibility-timeout"
+  ],
+  "id": "098b8248-753b-49c3-b6e8-acdc402bf459"
+ },
+ {
+  "type": "mcq",
+  "question": "What's the risk of setting a very **high** visibility timeout (e.g. hours)?",
+  "options": [
+   "Slow crash recovery",
+   "Duplicate processing",
+   "Early message deletion",
+   "Higher cost per message"
+  ],
+  "correct": [
+   0
+  ],
+  "option_explanations": [
+   "Correct. The message stays hidden until the timeout ends.",
+   "That's the risk of too low a timeout.",
+   "The timeout never deletes messages; retention does.",
+   "Cost is per request, not per timeout length."
+  ],
+  "explanation": "Too low → duplicates. Too high → slow recovery. Pick a reasonable value and extend when needed.",
+  "certs": {
+   "DVA-C02": "4",
+   "SAA-C03": "2"
+  },
+  "tags": [
+   "sqs",
+   "visibility-timeout"
+  ],
+  "id": "acc1261d-073d-45db-9b53-07dc8e84bd38"
+ },
+ {
+  "type": "mcq",
+  "question": "A malformed message keeps failing and returning to the queue forever. What should you configure?",
+  "options": [
+   "A dead-letter queue",
+   "A longer retention period",
+   "Long polling",
+   "A delay queue"
+  ],
+  "correct": [
+   0
+  ],
+  "option_explanations": [
+   "Correct. After the max receives threshold it moves to the DLQ for debugging.",
+   "It still loops until it expires.",
+   "Polling mode doesn't stop retries.",
+   "Delay only applies when a message is first sent."
+  ],
+  "explanation": "DLQs are for **debugging** poison messages.",
+  "certs": {
+   "DVA-C02": "4",
+   "SAA-C03": "2"
+  },
+  "tags": [
+   "sqs",
+   "dlq"
+  ],
+  "id": "c600da43-f848-4898-907e-653bad53945c"
+ },
+ {
+  "type": "mcq",
+  "question": "Which statements about SQS dead-letter queues are TRUE? (Choose 3)",
+  "options": [
+   "A FIFO queue needs a FIFO DLQ",
+   "Give the DLQ a long retention period",
+   "Redrive can move messages back to the source",
+   "A standard queue can use a FIFO DLQ",
+   "Messages in a DLQ are retried automatically"
+  ],
+  "correct": [
+   0,
+   1,
+   2
+  ],
+  "option_explanations": [
+   "Correct. And a standard queue needs a standard DLQ.",
+   "Correct. E.g. 14 days, so messages don't expire before you inspect them.",
+   "Correct. Redrive to source after you fix the consumer.",
+   "The DLQ type must match the source queue.",
+   "They wait in the DLQ until you inspect or redrive them."
+  ],
+  "explanation": "Flow: inspect → fix consumer code → **redrive** to source → reprocessed normally.",
+  "certs": {
+   "DVA-C02": "4",
+   "SAA-C03": "2"
+  },
+  "tags": [
+   "sqs",
+   "dlq",
+   "redrive"
+  ],
+  "id": "5d3d3567-a2e4-4664-a396-64cba807a9f4"
+ },
+ {
+  "type": "mcq",
+  "question": "New messages should not be visible to consumers until 5 minutes after they're sent. What fits?",
+  "options": [
+   "A delivery delay",
+   "A visibility timeout",
+   "Long polling",
+   "A retention period"
+  ],
+  "correct": [
+   0
+  ],
+  "option_explanations": [
+   "Correct. A queue default or per-message DelaySeconds, up to 15 minutes.",
+   "Applies after a receive, not on send.",
+   "Long polling makes a consumer wait for messages; it doesn't hide them.",
+   "Retention decides when messages are deleted."
+  ],
+  "explanation": "Delay can be a queue default or set per message on SendMessage.",
+  "certs": {
+   "DVA-C02": "1",
+   "SAA-C03": "2"
+  },
+  "tags": [
+   "sqs",
+   "delay-queue"
+  ],
+  "id": "446139da-a3cb-4212-947f-e864b35fd264"
+ },
+ {
+  "type": "basic",
+  "question": "Delay vs visibility timeout vs long polling vs retention in SQS.",
+  "answer": "- **Delivery delay:** hide a *new* message for up to **15 min** after sending\n- **Visibility timeout:** hide a *received* message while it's processed (default **30 s**, up to **12 h**)\n- **Long polling:** a consumer *waits* up to **20 s** for messages to arrive\n- **Retention:** how long an unprocessed message is kept (default **4 days**, up to **14 days**)",
+  "explanation": "These four are often mixed up in exam options.",
+  "certs": {
+   "DVA-C02": "1",
+   "SAA-C03": "2"
+  },
+  "tags": [
+   "sqs"
+  ],
+  "id": "263ce0cb-fc7b-4b7d-a705-599834691018"
+ },
+ {
+  "type": "mcq",
+  "question": "Consumers make many empty ReceiveMessage calls, wasting money and CPU. What fixes it?",
+  "options": [
+   "Long polling",
+   "Short polling",
+   "A longer visibility timeout",
+   "A FIFO queue"
+  ],
+  "correct": [
+   0
+  ],
+  "option_explanations": [
+   "Correct. WaitTimeSeconds up to 20 s means fewer calls, and messages return as soon as they arrive.",
+   "That's what causes the empty responses.",
+   "Visibility doesn't change how often consumers poll.",
+   "Queue type doesn't reduce empty receives."
+  ],
+  "explanation": "Enable at the queue level (`ReceiveMessageWaitTimeSeconds`) or per call (`WaitTimeSeconds`). 20 s is preferred.",
+  "certs": {
+   "DVA-C02": "4",
+   "SAA-C03": "4"
+  },
+  "tags": [
+   "sqs",
+   "long-polling"
+  ],
+  "id": "0fd22dea-27c5-43f4-80ec-18decda8f7b9"
+ },
+ {
+  "type": "code",
+  "question": "Receive up to 10 messages with long polling from the CLI.",
+  "language": "bash",
+  "explanation": "`--wait-time-seconds 20` enables long polling for this call; `--max-number-of-messages` defaults to 1 and maxes at 10. *(Goes slightly beyond the lecture.)*",
+  "certs": {
+   "DVA-C02": "1",
+   "SAA-C03": "2"
+  },
+  "tags": [
+   "sqs",
+   "long-polling",
+   "cli"
+  ],
+  "answer_code": "aws sqs receive-message \\\n  --queue-url https://sqs.us-east-1.amazonaws.com/111122223333/orders \\\n  --max-number-of-messages 10 \\\n  --wait-time-seconds 20",
+  "id": "d8e0915d-784e-4b84-8d1c-a46978bfc74b"
+ },
+ {
+  "type": "mcq",
+  "question": "A producer must send 500 MB video files through SQS-based processing. How?",
+  "options": [
+   "Send an S3 object pointer",
+   "Raise the queue's message size limit",
+   "Split the file across many messages",
+   "Send it through a FIFO queue instead"
+  ],
+  "correct": [
+   0
+  ],
+  "option_explanations": [
+   "Correct. The SQS Extended Client pattern; the Java library does it, and the idea works in any language.",
+   "The limit is 1 MiB and can't be raised.",
+   "Messy and error-prone to reassemble.",
+   "FIFO has the same size limit."
+  ],
+  "explanation": "Consumers read the pointer, then fetch the object from S3.",
+  "certs": {
+   "DVA-C02": "1",
+   "SAA-C03": "2"
+  },
+  "tags": [
+   "sqs",
+   "extended-client",
+   "s3"
+  ],
+  "id": "e5d15393-22b3-4f8f-bf1b-83d5806fa35f"
+ },
+ {
+  "type": "mcq",
+  "question": "Which API deletes **all messages** in a queue but keeps the queue?",
+  "options": [
+   "PurgeQueue",
+   "DeleteQueue",
+   "DeleteMessage",
+   "ChangeMessageVisibility"
+  ],
+  "correct": [
+   0
+  ],
+  "option_explanations": [
+   "Correct.",
+   "Deletes the queue and its messages.",
+   "Deletes one message.",
+   "Changes one message's visibility timeout."
+  ],
+  "explanation": "Other APIs: CreateQueue (MessageRetentionPeriod), SendMessage (DelaySeconds), ReceiveMessage, DeleteMessage.",
+  "certs": {
+   "DVA-C02": "1",
+   "SAA-C03": "2"
+  },
+  "tags": [
+   "sqs",
+   "api"
+  ],
+  "id": "7a845619-05bd-4e38-8bfa-7bf77ff45f58"
+ },
+ {
+  "type": "mcq",
+  "question": "Which SQS APIs support **batch** versions to reduce cost? (Choose 3)",
+  "options": [
+   "SendMessage",
+   "DeleteMessage",
+   "ChangeMessageVisibility",
+   "PurgeQueue",
+   "CreateQueue"
+  ],
+  "correct": [
+   0,
+   1,
+   2
+  ],
+  "option_explanations": [
+   "Correct.",
+   "Correct.",
+   "Correct.",
+   "Not batched.",
+   "Not batched."
+  ],
+  "explanation": "Batching cuts the number of API calls you pay for.",
+  "certs": {
+   "DVA-C02": "4",
+   "SAA-C03": "4"
+  },
+  "tags": [
+   "sqs",
+   "api",
+   "batch"
+  ],
+  "id": "8840b335-4be0-4839-a184-b1ca4a237500"
+ },
+ {
+  "type": "mcq",
+  "question": "What does `MaxNumberOfMessages` control on ReceiveMessage?",
+  "options": [
+   "Messages returned per call",
+   "Messages the queue can hold",
+   "How long messages are kept",
+   "How long messages stay hidden"
+  ],
+  "correct": [
+   0
+  ],
+  "option_explanations": [
+   "Correct. Default 1, up to 10.",
+   "Queue size is unlimited.",
+   "That's MessageRetentionPeriod.",
+   "That's the visibility timeout."
+  ],
+  "explanation": "Batch receives are more efficient.",
+  "certs": {
+   "DVA-C02": "1",
+   "SAA-C03": "2"
+  },
+  "tags": [
+   "sqs",
+   "api"
+  ],
+  "id": "46917535-5075-4aac-a71c-c860d457d72a"
+ },
+ {
+  "type": "mcq",
+  "question": "Orders must be processed in **exactly the sent order** with **no duplicates**. Which queue type?",
+  "options": [
+   "SQS FIFO",
+   "SQS standard",
+   "SNS topic",
+   "Data Firehose"
+  ],
+  "correct": [
+   0
+  ],
+  "option_explanations": [
+   "Correct. Ordering plus exactly-once processing via deduplication.",
+   "Best-effort order, possible duplicates.",
+   "No ordering and no persistence.",
+   "A delivery stream, not a queue."
+  ],
+  "explanation": "FIFO queue names must end in **`.fifo`**.",
+  "certs": {
+   "DVA-C02": "1",
+   "SAA-C03": "2"
+  },
+  "tags": [
+   "sqs",
+   "fifo"
+  ],
+  "id": "d2c48b61-1f14-498f-9052-43aa34c04d33"
+ },
+ {
+  "type": "cloze",
+  "question": "Without high-throughput mode, SQS FIFO throughput is about {{300}} messages per second without batching and {{3,000}} with batching. Duplicates are removed within a {{5-minute}} deduplication interval.",
+  "explanation": "The ordering guarantee costs throughput compared with unlimited standard queues. High-throughput mode raises the limit much further (up to 70,000 per second in some Regions).",
+  "certs": {
+   "DVA-C02": "1",
+   "SAA-C03": "3"
+  },
+  "tags": [
+   "sqs",
+   "fifo"
+  ],
+  "id": "1c70402a-4db9-4be5-a5fb-0d620c9f2228"
+ },
+ {
+  "type": "mcq",
+  "question": "What are the two ways SQS FIFO deduplicates messages? (Choose 2)",
+  "options": [
+   "Content-based deduplication",
+   "A MessageDeduplicationId",
+   "Matching MessageGroupId",
+   "Matching send timestamps"
+  ],
+  "correct": [
+   0,
+   1
+  ],
+  "option_explanations": [
+   "Correct. A SHA-256 hash of the body.",
+   "Correct. Set explicitly on each send.",
+   "Group ID is for ordering, not deduplication.",
+   "Timestamps aren't used for deduplication."
+  ],
+  "explanation": "A duplicate within 5 minutes is accepted by the API but not added again.",
+  "certs": {
+   "DVA-C02": "1",
+   "SAA-C03": "2"
+  },
+  "tags": [
+   "sqs",
+   "fifo",
+   "deduplication"
+  ],
+  "id": "2fbc0053-1ac0-4d13-b719-ec729d5fae92"
+ },
+ {
+  "type": "mcq",
+  "question": "A FIFO queue needs ordering **per customer**, but different customers can be processed in parallel. What do you set?",
+  "options": [
+   "MessageGroupId = customer ID",
+   "One MessageGroupId for all messages",
+   "A delay per customer",
+   "A DLQ per customer"
+  ],
+  "correct": [
+   0
+  ],
+  "option_explanations": [
+   "Correct. Order is kept within each group; groups can have separate consumers.",
+   "Forces one consumer and total ordering.",
+   "Delays don't affect ordering.",
+   "DLQs hold failed messages; they don't order them."
+  ],
+  "explanation": "Ordering **across** groups isn't guaranteed. MessageGroupId is **required** on FIFO sends.",
+  "certs": {
+   "DVA-C02": "1",
+   "SAA-C03": "3"
+  },
+  "tags": [
+   "sqs",
+   "fifo",
+   "message-group"
+  ],
+  "id": "c2ad25c6-9348-4181-b4f0-962eb55bc745"
+ },
+ {
+  "type": "code",
+  "question": "Send an ordered, deduplicated message to a FIFO queue with the CLI.",
+  "language": "bash",
+  "explanation": "`--message-group-id` is required for FIFO. `--message-deduplication-id` is optional if content-based deduplication is enabled. *(Goes slightly beyond the lecture.)*",
+  "certs": {
+   "DVA-C02": "1",
+   "SAA-C03": "2"
+  },
+  "tags": [
+   "sqs",
+   "fifo",
+   "cli"
+  ],
+  "answer_code": "aws sqs send-message \\\n  --queue-url https://sqs.us-east-1.amazonaws.com/111122223333/orders.fifo \\\n  --message-body '{\"order\":42,\"item\":\"apple\"}' \\\n  --message-group-id customer-123 \\\n  --message-deduplication-id order-42",
+  "id": "6e544200-7db9-41ae-8c17-d0146cde0385"
+ }
+]

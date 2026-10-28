@@ -1,0 +1,289 @@
+{
+ "DVA-C02": [
+  {
+   "id": "594beed8-4313-406e-957a-6cc71b0a9274",
+   "score": 5,
+   "reason": "SQS/SNS/Kinesis as decoupling options; event-driven design (1.1)"
+  },
+  {
+   "id": "35c7e49f-d9e8-4923-9365-97a694002625",
+   "score": 7,
+   "reason": "Standard queue at-least-once/best-effort ordering; core SQS semantics (1.1)"
+  },
+  {
+   "id": "d70115ee-6336-4c5d-98ef-930d4ad31a3b",
+   "score": 5,
+   "reason": "Retention 4/14 days, 10 msgs per receive; recurring limits"
+  },
+  {
+   "id": "1fa2c4cb-dc7a-4f45-bc1f-2417cdd3677b",
+   "score": 6,
+   "reason": "Receive-process-delete lifecycle; core SQS consumer flow (1.1)"
+  },
+  {
+   "id": "38a659bb-3c06-4f3e-b8c4-98d4aa8b81de",
+   "score": 3,
+   "reason": "Consumers run anywhere; basic overview"
+  },
+  {
+   "id": "d655f0da-1845-49b2-bd11-cae53b12cd72",
+   "score": 5,
+   "reason": "ASG scaling on ApproximateNumberOfMessages; queue-based scaling"
+  },
+  {
+   "id": "1cce5e0a-d327-4eb9-b79a-15876ebce55d",
+   "score": 5,
+   "reason": "Decouple tiers with SQS; resilient architecture pattern (1.1)"
+  },
+  {
+   "id": "2e85540f-b92b-473f-9692-edc9c9cf54ec",
+   "score": 5,
+   "reason": "SQS IAM/KMS/access policy security; encryption 2.2"
+  },
+  {
+   "id": "ac8e373b-7c32-4c70-a1bc-c74578cbac30",
+   "score": 6,
+   "reason": "SQS resource policy for cross-account access; authz 2.1"
+  },
+  {
+   "id": "d3432615-dee6-417f-b66f-5a4d63de8dce",
+   "score": 6,
+   "reason": "Queue access policy for S3 events; common troubleshooting (4.1)"
+  },
+  {
+   "id": "93658d4b-f034-4918-9c2e-8d627f81e0b4",
+   "score": 4,
+   "reason": "Access policy JSON with SourceArn condition; syntax detail"
+  },
+  {
+   "id": "bee5d8c5-5203-4caa-b8c6-9bea4c2045a9",
+   "score": 7,
+   "reason": "Visibility timeout behavior; heavily tested SQS concept"
+  },
+  {
+   "id": "098b8248-753b-49c3-b6e8-acdc402bf459",
+   "score": 8,
+   "reason": "ChangeMessageVisibility to stop duplicates; classic exam scenario"
+  },
+  {
+   "id": "acc1261d-073d-45db-9b53-07dc8e84bd38",
+   "score": 5,
+   "reason": "Too-high visibility timeout slows recovery; tuning nuance"
+  },
+  {
+   "id": "c600da43-f848-4898-907e-653bad53945c",
+   "score": 7,
+   "reason": "DLQ via maxReceiveCount for poison messages; frequently tested (4.1)"
+  },
+  {
+   "id": "5d3d3567-a2e4-4664-a396-64cba807a9f4",
+   "score": 6,
+   "reason": "DLQ facts and redrive; debugging failures (4.1)"
+  },
+  {
+   "id": "446139da-a3cb-4212-947f-e864b35fd264",
+   "score": 6,
+   "reason": "Delay queues/DelaySeconds; recurring distractor (1.1)"
+  },
+  {
+   "id": "263ce0cb-fc7b-4b7d-a705-599834691018",
+   "score": 6,
+   "reason": "Delay vs visibility vs long polling vs retention; summary of tested knobs"
+  },
+  {
+   "id": "0fd22dea-27c5-43f4-80ec-18decda8f7b9",
+   "score": 8,
+   "reason": "Long polling cuts empty receives; very frequently tested (4.3)"
+  },
+  {
+   "id": "d8e0915d-784e-4b84-8d1c-a46978bfc74b",
+   "score": 4,
+   "reason": "CLI receive-message flags; syntax detail"
+  },
+  {
+   "id": "e5d15393-22b3-4f8f-bf1b-83d5806fa35f",
+   "score": 7,
+   "reason": "Extended Client/S3 pointer for large payloads; recurring exam answer"
+  },
+  {
+   "id": "7a845619-05bd-4e38-8bfa-7bf77ff45f58",
+   "score": 4,
+   "reason": "PurgeQueue API; occasional"
+  },
+  {
+   "id": "8840b335-4be0-4839-a184-b1ca4a237500",
+   "score": 5,
+   "reason": "Batch APIs reduce cost; optimization (4.3)"
+  },
+  {
+   "id": "46917535-5075-4aac-a71c-c860d457d72a",
+   "score": 4,
+   "reason": "MaxNumberOfMessages meaning; small API fact"
+  },
+  {
+   "id": "d2c48b61-1f14-498f-9052-43aa34c04d33",
+   "score": 7,
+   "reason": "FIFO for order + no duplicates; core queue choice (1.1)"
+  },
+  {
+   "id": "1c70402a-4db9-4be5-a5fb-0d620c9f2228",
+   "score": 6,
+   "reason": "FIFO 300/3,000 msg/s and 5-min dedup; recurring numbers"
+  },
+  {
+   "id": "2fbc0053-1ac0-4d13-b719-ec729d5fae92",
+   "score": 6,
+   "reason": "Content-based vs deduplication ID; FIFO dedup (1.1)"
+  },
+  {
+   "id": "c2ad25c6-9348-4181-b4f0-962eb55bc745",
+   "score": 8,
+   "reason": "MessageGroupId for per-key ordering; frequently tested"
+  },
+  {
+   "id": "6e544200-7db9-41ae-8c17-d0146cde0385",
+   "score": 4,
+   "reason": "CLI FIFO send flags; syntax detail"
+  },
+  {
+   "id": "55ac5507-583d-4f24-96e1-98ae35e02a88",
+   "score": 6,
+   "reason": "SNS pub/sub fan-out to many subscribers; core pattern (1.1)"
+  },
+  {
+   "id": "82696d9f-3aba-425b-b6cc-18759476fcbe",
+   "score": 5,
+   "reason": "SNS subscriber types; recurring list"
+  },
+  {
+   "id": "b5a0ffa1-e537-4331-b6cd-24f734206637",
+   "score": 3,
+   "reason": "SNS scale/limits; overview, not tested"
+  },
+  {
+   "id": "0f813212-e050-4f5a-807e-da2a48577ed0",
+   "score": 4,
+   "reason": "Publish to topic vs direct publish; basic"
+  },
+  {
+   "id": "5e1e837b-f4db-4ba6-901d-11b5a51305c8",
+   "score": 5,
+   "reason": "SNS IAM/KMS/access policies; security 2.1/2.2"
+  },
+  {
+   "id": "7890dd90-8c9c-4a76-82ea-59ddfc1e2238",
+   "score": 8,
+   "reason": "SNS + SQS fan-out; flagship decoupling pattern (1.1)"
+  },
+  {
+   "id": "a89fcede-a3c0-4f1c-b943-bff647dc5f3c",
+   "score": 6,
+   "reason": "S3 event fan-out through SNS; common scenario"
+  },
+  {
+   "id": "c6f17d1a-8eca-448f-a174-654ca135e60f",
+   "score": 5,
+   "reason": "SNS FIFO + SQS FIFO for ordered fan-out"
+  },
+  {
+   "id": "11450ec4-92df-4408-bb88-8b82227a28f7",
+   "score": 7,
+   "reason": "SNS filter policies route by attribute; frequently tested (1.1)"
+  },
+  {
+   "id": "7f761181-aa1a-4152-9029-2fea5bda4b16",
+   "score": 5,
+   "reason": "Filter policy JSON; code detail"
+  },
+  {
+   "id": "78d8564b-d546-428d-8109-fe11cb4a1cc7",
+   "score": 4,
+   "reason": "SNS to Firehose to S3 archiving; niche integration"
+  },
+  {
+   "id": "b5f0df36-c90b-477b-8748-d06dea47ac24",
+   "score": 7,
+   "reason": "Kinesis Data Streams for real-time + replay; core service choice (1.1)"
+  },
+  {
+   "id": "53fda681-7471-492d-bd51-e87d66aedb3b",
+   "score": 5,
+   "reason": "KPL/KCL/SDK producers and consumers; streaming code (1.1)"
+  },
+  {
+   "id": "0bbe6ca3-3b41-4a2a-969b-644256d73abc",
+   "score": 8,
+   "reason": "Partition key keeps records ordered per shard; frequently tested"
+  },
+  {
+   "id": "18715afa-c058-46ea-9b1a-74814d85c87f",
+   "score": 7,
+   "reason": "Shard math 1 MB/s in; classic throughput question (4.3)"
+  },
+  {
+   "id": "1cfe384e-5597-4e74-b456-77ae9e5380cf",
+   "score": 5,
+   "reason": "On-demand vs provisioned capacity mode"
+  },
+  {
+   "id": "f997c9ac-f2ff-4c7f-ab93-875d64ecd073",
+   "score": 7,
+   "reason": "Enhanced fan-out for per-consumer throughput; recurring answer"
+  },
+  {
+   "id": "176a6597-8ade-43a3-87fd-15e12369cb7c",
+   "score": 4,
+   "reason": "Kinesis CLI put/get with base64 flag; syntax detail"
+  },
+  {
+   "id": "00a597bd-1ac5-4d04-b00b-e52540c9d23d",
+   "score": 4,
+   "reason": "Base64-encoded records from CLI; small troubleshooting fact"
+  },
+  {
+   "id": "716e3b96-6c03-4a67-9c88-cf7c491681fa",
+   "score": 7,
+   "reason": "Firehose for no-code near real-time loads to S3/Redshift (1.1)"
+  },
+  {
+   "id": "47fd6e15-6295-41f5-8793-fda05532958e",
+   "score": 5,
+   "reason": "Firehose destinations; recurring list"
+  },
+  {
+   "id": "faadfba3-40f6-4ac0-8900-9a95a9e9c7ca",
+   "score": 5,
+   "reason": "Firehose Lambda transformation; data processing"
+  },
+  {
+   "id": "c4f81be5-3286-4011-a65d-52551e4711fb",
+   "score": 5,
+   "reason": "Firehose buffering means near real-time; keyword fact"
+  },
+  {
+   "id": "6d9b49ed-7840-4a61-8726-d9391dac1353",
+   "score": 6,
+   "reason": "Data Streams vs Firehose; common exam comparison"
+  },
+  {
+   "id": "c9356c30-4e3c-43f7-9918-a1a77904b74d",
+   "score": 3,
+   "reason": "Managed Flink sources; analytics, light in DVA"
+  },
+  {
+   "id": "da86d6f8-2fa0-4a6f-b10b-08023a7beed2",
+   "score": 5,
+   "reason": "SQS worker-pool consume-and-delete choice; service selection"
+  },
+  {
+   "id": "32baadb0-20dd-484f-a4b4-5583be4d09c8",
+   "score": 5,
+   "reason": "SQS vs SNS vs Kinesis comparison; summary card"
+  },
+  {
+   "id": "3045731a-5b5d-4e13-a064-1d5fb9311cae",
+   "score": 2,
+   "reason": "Section overview card; summary"
+  }
+ ]
+}

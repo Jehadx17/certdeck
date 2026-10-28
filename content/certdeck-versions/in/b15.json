@@ -1,0 +1,772 @@
+[
+ {
+  "type": "mcq",
+  "question": "One event must reach email, a Lambda function and several queues without the producer integrating each one. Which service?",
+  "options": [
+   "An SNS topic",
+   "An SQS standard queue",
+   "A Kinesis data stream",
+   "Direct API calls"
+  ],
+  "correct": [
+   0
+  ],
+  "option_explanations": [
+   "Correct. Publish once; every subscriber gets a copy.",
+   "Each message goes to one consumer.",
+   "Consumers pull from shards; it can't push to email.",
+   "Couples the producer to every target."
+  ],
+  "explanation": "Each subscriber gets **all** messages unless you use filter policies.",
+  "certs": {
+   "DVA-C02": "1",
+   "SAA-C03": "2"
+  },
+  "tags": [
+   "sns",
+   "pubsub"
+  ],
+  "id": "55ac5507-583d-4f24-96e1-98ae35e02a88"
+ },
+ {
+  "type": "mcq",
+  "question": "Which can be SNS **subscribers**? (Choose 4)",
+  "options": [
+   "SQS queues",
+   "Lambda functions",
+   "Email and SMS / mobile push",
+   "HTTP/HTTPS endpoints and Data Firehose",
+   "Kinesis Data Streams"
+  ],
+  "correct": [
+   0,
+   1,
+   2,
+   3
+  ],
+  "option_explanations": [
+   "Correct.",
+   "Correct.",
+   "Correct.",
+   "Correct.",
+   "SNS delivers to Firehose, not to Data Streams."
+  ],
+  "explanation": "Many AWS services also **publish** to SNS: CloudWatch alarms, ASG notifications, CloudFormation, Budgets, S3, RDS events…",
+  "certs": {
+   "DVA-C02": "1",
+   "SAA-C03": "2"
+  },
+  "tags": [
+   "sns",
+   "subscribers"
+  ],
+  "id": "82696d9f-3aba-425b-b6cc-18759476fcbe"
+ },
+ {
+  "type": "mcq",
+  "question": "Which are TRUE about SNS? (Choose 2)",
+  "options": [
+   "A standard topic supports millions of subscriptions",
+   "Standard topics don't store messages for later reads",
+   "Standard topics keep messages for 14 days",
+   "Standard topics deliver in publish order"
+  ],
+  "correct": [
+   0,
+   1
+  ],
+  "option_explanations": [
+   "Correct. About 12.5 million per standard topic.",
+   "Correct. Add SQS (or a DLQ) for durability.",
+   "That's SQS retention; SNS has no queue to read from.",
+   "Only FIFO topics keep order."
+  ],
+  "explanation": "Limits change over time and aren't tested; just know it's huge. FIFO topics can optionally archive messages for replay.",
+  "certs": {
+   "DVA-C02": "1",
+   "SAA-C03": "2"
+  },
+  "tags": [
+   "sns"
+  ],
+  "id": "b5a0ffa1-e537-4331-b6cd-24f734206637"
+ },
+ {
+  "type": "mcq",
+  "question": "How does a producer send a message to all subscribers of a topic?",
+  "options": [
+   "Publish",
+   "SendMessage",
+   "PutRecord",
+   "ReceiveMessage"
+  ],
+  "correct": [
+   0
+  ],
+  "option_explanations": [
+   "Correct. One call on the topic; SNS delivers to every subscription.",
+   "SQS: writes to one queue.",
+   "Kinesis Data Streams: writes one record.",
+   "SQS: polls a queue."
+  ],
+  "explanation": "For mobile apps there's **direct publish** to a platform endpoint (APNs, FCM, ADM).",
+  "certs": {
+   "DVA-C02": "1",
+   "SAA-C03": "2"
+  },
+  "tags": [
+   "sns",
+   "api"
+  ],
+  "id": "0f813212-e050-4f5a-807e-da2a48577ed0"
+ },
+ {
+  "type": "mcq",
+  "question": "Which security features does SNS have? (Choose 3)",
+  "options": [
+   "In-flight encryption by default",
+   "At-rest encryption with KMS",
+   "SNS access policies",
+   "Security groups on topics",
+   "Automatic client-side encryption"
+  ],
+  "correct": [
+   0,
+   1,
+   2
+  ],
+  "option_explanations": [
+   "Correct.",
+   "Correct.",
+   "Correct. Used for cross-account and service publishing, e.g. S3 events.",
+   "Topics are API resources; security groups apply to network interfaces.",
+   "Client-side encryption is your code's job."
+  ],
+  "explanation": "Same model as SQS: IAM + resource access policies.",
+  "certs": {
+   "DVA-C02": "2",
+   "SAA-C03": "1"
+  },
+  "tags": [
+   "sns",
+   "security"
+  ],
+  "id": "5e1e837b-f4db-4ba6-901d-11b5a51305c8"
+ },
+ {
+  "type": "mcq",
+  "question": "A purchase event must go to both a fraud-check queue and a shipping queue reliably, with more queues added later. What's the best design?",
+  "options": [
+   "SNS topic with each queue subscribed",
+   "Producer writes to each queue in turn",
+   "One queue shared by both services",
+   "Data Firehose delivering to S3"
+  ],
+  "correct": [
+   0
+  ],
+  "option_explanations": [
+   "Correct. Decoupled, no data loss, new queues just subscribe.",
+   "A crash between writes leaves the queues out of sync.",
+   "Each message reaches only one consumer.",
+   "Delivers to storage, not to service queues."
+  ],
+  "explanation": "The **SQS access policy** must allow the SNS topic to write. Cross-Region delivery works too.",
+  "certs": {
+   "DVA-C02": "1",
+   "SAA-C03": "2"
+  },
+  "tags": [
+   "sns",
+   "sqs",
+   "fan-out"
+  ],
+  "id": "7890dd90-8c9c-4a76-82ea-59ddfc1e2238"
+ },
+ {
+  "type": "mcq",
+  "question": "S3 only allows one event rule per event type + prefix, but the same upload event must reach several queues. What do you do?",
+  "options": [
+   "Send the event to an SNS topic",
+   "List every queue in one rule",
+   "Turn on S3 Replication for the bucket",
+   "Send the event to Kinesis"
+  ],
+  "correct": [
+   0
+  ],
+  "option_explanations": [
+   "Correct. SNS fans the event out to every subscribed queue.",
+   "Each notification rule has exactly one destination.",
+   "Replication copies objects, not event notifications.",
+   "S3 notifications can't target Kinesis directly."
+  ],
+  "explanation": "Fan-out works around the one-rule limit. EventBridge is another way to route S3 events to many targets.",
+  "certs": {
+   "DVA-C02": "1",
+   "SAA-C03": "2"
+  },
+  "tags": [
+   "sns",
+   "sqs",
+   "s3",
+   "fan-out"
+  ],
+  "id": "a89fcede-a3c0-4f1c-b943-bff647dc5f3c"
+ },
+ {
+  "type": "mcq",
+  "question": "Fraud and shipping services both need events **in order** and **deduplicated**, fanned out. What fits?",
+  "options": [
+   "SNS FIFO topic to SQS FIFO queues",
+   "SNS standard topic to SQS standard queues",
+   "Data Firehose to an S3 bucket per service",
+   "Separate producer per service"
+  ],
+  "correct": [
+   0
+  ],
+  "option_explanations": [
+   "Correct. Ordering by message group ID and deduplication, like SQS FIFO.",
+   "Standard topics don't order or dedupe.",
+   "Delivers to storage; no ordering or fan-out to services.",
+   "Two writes can diverge; it isn't fan-out."
+  ],
+  "explanation": "SNS FIFO defaults to 3,000 msg/s per topic (300 per message group), with a high-throughput mode for more. FIFO topics can deliver to both FIFO and standard SQS queues.",
+  "certs": {
+   "DVA-C02": "1",
+   "SAA-C03": "2"
+  },
+  "tags": [
+   "sns",
+   "fifo",
+   "fan-out"
+  ],
+  "id": "c6f17d1a-8eca-448f-a174-654ca135e60f"
+ },
+ {
+  "type": "mcq",
+  "question": "Only orders with `state = placed` should reach one queue, and `cancelled` orders another, from the same topic. What feature?",
+  "options": [
+   "Subscription filter policies",
+   "Separate topics per producer",
+   "SQS delay queues",
+   "Kinesis partition keys"
+  ],
+  "correct": [
+   0
+  ],
+  "option_explanations": [
+   "Correct. Each subscription gets a JSON filter policy; unfiltered subscriptions get everything.",
+   "Producers would have to know the routing; the topic can filter for them.",
+   "Delays delivery; doesn't route.",
+   "Group records into shards; SNS doesn't use them."
+  ],
+  "explanation": "Filter policies match message attributes (or the body).",
+  "certs": {
+   "DVA-C02": "1",
+   "SAA-C03": "2"
+  },
+  "tags": [
+   "sns",
+   "filtering"
+  ],
+  "id": "11450ec4-92df-4408-bb88-8b82227a28f7"
+ },
+ {
+  "type": "code",
+  "question": "Write an SNS subscription filter policy that only delivers placed orders.",
+  "language": "json",
+  "explanation": "Attach it to the subscription. Messages need a matching attribute (or use payload-based filtering). *(Goes slightly beyond the lecture.)*",
+  "certs": {
+   "DVA-C02": "1",
+   "SAA-C03": "2"
+  },
+  "tags": [
+   "sns",
+   "filtering"
+  ],
+  "answer_code": "{\n  \"state\": [\"placed\"]\n}",
+  "id": "7f761181-aa1a-4152-9029-2fea5bda4b16"
+ },
+ {
+  "type": "mcq",
+  "question": "SNS messages should be archived in S3. What's the simplest integration?",
+  "options": [
+   "A Data Firehose subscription",
+   "An SQS queue subscription",
+   "A KCL app on a data stream",
+   "A scheduled export job"
+  ],
+  "correct": [
+   0
+  ],
+  "option_explanations": [
+   "Correct. SNS delivers straight to Firehose, which writes to S3.",
+   "A queue holds messages; something must still write them to S3.",
+   "SNS can't publish to Data Streams, and you'd write the consumer.",
+   "SNS keeps no message store to export."
+  ],
+  "explanation": "Firehose can deliver to any of its supported destinations.",
+  "certs": {
+   "DVA-C02": "1",
+   "SAA-C03": "2"
+  },
+  "tags": [
+   "sns",
+   "firehose",
+   "s3"
+  ],
+  "id": "78d8564b-d546-428d-8109-fe11cb4a1cc7"
+ },
+ {
+  "type": "mcq",
+  "question": "Clickstream and IoT data must be collected and processed in **real time**, and consumers must be able to **replay** it. Which service?",
+  "options": [
+   "Kinesis Data Streams",
+   "SQS standard",
+   "SNS",
+   "Data Firehose"
+  ],
+  "correct": [
+   0
+  ],
+  "option_explanations": [
+   "Correct. Exam keyword: real-time.",
+   "Messages are deleted after processing; no replay.",
+   "No persistence.",
+   "Near real-time, no replay."
+  ],
+  "explanation": "Retention up to **365 days**. Data can't be deleted; it expires.",
+  "certs": {
+   "DVA-C02": "1",
+   "SAA-C03": "3"
+  },
+  "tags": [
+   "kinesis",
+   "data-streams"
+  ],
+  "id": "b5f0df36-c90b-477b-8748-d06dea47ac24"
+ },
+ {
+  "type": "mcq",
+  "question": "Which can produce to and consume from Kinesis Data Streams? (Choose 3)",
+  "options": [
+   "Producers: apps with the SDK or KPL, and the Kinesis Agent",
+   "Consumers: apps with the KCL, and Lambda",
+   "Consumers: Data Firehose and Managed Service for Apache Flink",
+   "Consumers: SNS topics and SQS queues",
+   "Producers: Athena and Route 53"
+  ],
+  "correct": [
+   0,
+   1,
+   2
+  ],
+  "option_explanations": [
+   "Correct.",
+   "Correct.",
+   "Correct.",
+   "Neither reads from a stream directly.",
+   "Neither writes records into a stream."
+  ],
+  "explanation": "**KPL** = optimized high-throughput producer. **KCL** = optimized consumer library.",
+  "certs": {
+   "DVA-C02": "1",
+   "SAA-C03": "2"
+  },
+  "tags": [
+   "kinesis",
+   "producers",
+   "consumers"
+  ],
+  "id": "53fda681-7471-492d-bd51-e87d66aedb3b"
+ },
+ {
+  "type": "mcq",
+  "question": "How do you keep related records **in order** in Kinesis Data Streams?",
+  "options": [
+   "Use the same partition key",
+   "Turn on FIFO mode",
+   "Read with one consumer",
+   "Add a delay between writes"
+  ],
+  "correct": [
+   0
+  ],
+  "option_explanations": [
+   "Correct. Same key, same shard; order is per shard.",
+   "Kinesis streams have no FIFO mode.",
+   "Records on different shards still interleave.",
+   "Timing doesn't control which shard gets a record."
+  ],
+  "explanation": "Also: KMS at rest, HTTPS in flight.",
+  "certs": {
+   "DVA-C02": "1",
+   "SAA-C03": "2"
+  },
+  "tags": [
+   "kinesis",
+   "partition-key",
+   "ordering"
+  ],
+  "id": "0bbe6ca3-3b41-4a2a-969b-644256d73abc"
+ },
+ {
+  "type": "mcq",
+  "question": "A provisioned stream must ingest 10 MB/s. How many shards are needed at minimum?",
+  "options": [
+   "10",
+   "5",
+   "1",
+   "20"
+  ],
+  "correct": [
+   0
+  ],
+  "option_explanations": [
+   "Correct. Each shard takes 1 MB/s (or 1,000 records/s) in.",
+   "Only 5 MB/s.",
+   "Only 1 MB/s.",
+   "More than needed for writes."
+  ],
+  "explanation": "Each shard gives **1 MB/s or 1,000 records/s in** and **2 MB/s out**. Pay per shard per hour.",
+  "certs": {
+   "DVA-C02": "1",
+   "SAA-C03": "3"
+  },
+  "tags": [
+   "kinesis",
+   "shards"
+  ],
+  "id": "18715afa-c058-46ea-9b1a-74814d85c87f"
+ },
+ {
+  "type": "mcq",
+  "question": "Traffic is unpredictable and the team doesn't want to manage shards. Which capacity mode?",
+  "options": [
+   "On-demand",
+   "Provisioned",
+   "Enhanced fan-out",
+   "Data Firehose"
+  ],
+  "correct": [
+   0
+  ],
+  "option_explanations": [
+   "Correct. Starts at 4 MB/s or 4,000 records/s and scales to double the 30-day peak; pay per stream-hour plus data.",
+   "You manage the shard count.",
+   "A consumer feature, not a capacity mode.",
+   "A separate delivery service, not a stream mode."
+  ],
+  "explanation": "Provisioned = you scale shards manually and monitor throughput.",
+  "certs": {
+   "DVA-C02": "4",
+   "SAA-C03": "4"
+  },
+  "tags": [
+   "kinesis",
+   "on-demand"
+  ],
+  "id": "1cfe384e-5597-4e74-b456-77ae9e5380cf"
+ },
+ {
+  "type": "mcq",
+  "question": "Five consumer apps read the same stream and are being throttled. What gives each consumer its own throughput?",
+  "options": [
+   "Enhanced fan-out",
+   "Standard shared consumers",
+   "Long polling",
+   "More partition keys"
+  ],
+  "correct": [
+   0
+  ],
+  "option_explanations": [
+   "Correct. Each consumer gets its own 2 MB/s per shard, pushed.",
+   "All consumers share 2 MB/s per shard.",
+   "An SQS setting, not a Kinesis one.",
+   "Spreads writes; doesn't raise read limits."
+  ],
+  "explanation": "Shared mode = consumers **pull**; enhanced fan-out = Kinesis **pushes**.",
+  "certs": {
+   "DVA-C02": "1",
+   "SAA-C03": "3"
+  },
+  "tags": [
+   "kinesis",
+   "enhanced-fan-out"
+  ],
+  "id": "f997c9ac-f2ff-4c7f-ab93-875d64ecd073"
+ },
+ {
+  "type": "code",
+  "question": "Put a record into a stream and read from the beginning with the CLI (v2).",
+  "language": "bash",
+  "explanation": "Text data needs `--cli-binary-format raw-in-base64-out`. `TRIM_HORIZON` reads from the oldest record; `LATEST` reads only new ones. Returned data is **Base64-encoded**; use NextShardIterator to keep reading. The KCL handles all of this for you.",
+  "certs": {
+   "DVA-C02": "1",
+   "SAA-C03": "2"
+  },
+  "tags": [
+   "kinesis",
+   "cli"
+  ],
+  "answer_code": "aws kinesis put-record --stream-name DemoStream \\\n  --partition-key user1 --data \"user signup\" \\\n  --cli-binary-format raw-in-base64-out\n\naws kinesis describe-stream --stream-name DemoStream\n\naws kinesis get-shard-iterator --stream-name DemoStream \\\n  --shard-id shardId-000000000000 --shard-iterator-type TRIM_HORIZON\n\naws kinesis get-records --shard-iterator <ShardIterator>",
+  "id": "176a6597-8ade-43a3-87fd-15e12369cb7c"
+ },
+ {
+  "type": "mcq",
+  "question": "Records read from Kinesis with get-records look like gibberish. Why?",
+  "options": [
+   "The data is Base64-encoded",
+   "KMS keeps the data encrypted",
+   "The partition key was wrong",
+   "Records were split across shards"
+  ],
+  "correct": [
+   0
+  ],
+  "option_explanations": [
+   "Correct. Decode the data field.",
+   "KMS decrypts transparently for callers with permission.",
+   "The key picks a shard; it doesn't change the bytes.",
+   "A record always lands whole on one shard."
+  ],
+  "explanation": "SDKs usually decode for you.",
+  "certs": {
+   "DVA-C02": "4",
+   "SAA-C03": "2"
+  },
+  "tags": [
+   "kinesis",
+   "base64"
+  ],
+  "id": "00a597bd-1ac5-4d04-b00b-e52540c9d23d"
+ },
+ {
+  "type": "mcq",
+  "question": "Streaming logs must be loaded into S3 and Redshift with **no code to manage**, and a short delay is fine. Which service?",
+  "options": [
+   "Data Firehose",
+   "Kinesis Data Streams",
+   "SQS",
+   "SNS"
+  ],
+  "correct": [
+   0
+  ],
+  "option_explanations": [
+   "Correct. Fully managed, serverless, scales on its own, near real-time.",
+   "You'd write and run consumers.",
+   "A queue; it doesn't load S3 or Redshift.",
+   "Pushes notifications; it doesn't load Redshift."
+  ],
+  "explanation": "Exam keyword **near real-time → Firehose** (because of buffering).",
+  "certs": {
+   "DVA-C02": "1",
+   "SAA-C03": "3"
+  },
+  "tags": [
+   "firehose"
+  ],
+  "id": "716e3b96-6c03-4a67-9c88-cf7c491681fa"
+ },
+ {
+  "type": "mcq",
+  "question": "Which are Data Firehose destinations? (Choose 3)",
+  "options": [
+   "S3, Redshift and OpenSearch",
+   "Splunk, Datadog and other partners",
+   "Custom HTTP endpoints",
+   "DynamoDB and Aurora tables",
+   "SQS queues and SNS topics"
+  ],
+  "correct": [
+   0,
+   1,
+   2
+  ],
+  "option_explanations": [
+   "Correct.",
+   "Correct.",
+   "Correct. The endpoint must use HTTPS.",
+   "Not Firehose destinations.",
+   "Not Firehose destinations."
+  ],
+  "explanation": "You can also back up **all** or **failed** records to S3. Newer destinations include Snowflake and Apache Iceberg tables.",
+  "certs": {
+   "DVA-C02": "1",
+   "SAA-C03": "2"
+  },
+  "tags": [
+   "firehose"
+  ],
+  "id": "47fd6e15-6295-41f5-8793-fda05532958e"
+ },
+ {
+  "type": "mcq",
+  "question": "Firehose must convert incoming CSV to JSON before delivery. How?",
+  "options": [
+   "Lambda data transformation",
+   "Built-in format conversion",
+   "A KCL consumer app",
+   "An SNS filter policy"
+  ],
+  "correct": [
+   0
+  ],
+  "option_explanations": [
+   "Correct. Firehose invokes the function on buffered batches.",
+   "Only turns JSON into Parquet or ORC.",
+   "KCL reads Data Streams; it isn't part of Firehose.",
+   "Filters SNS deliveries; doesn't change data."
+  ],
+  "explanation": "Built-in: convert **JSON** to **Parquet/ORC**, compress with **GZIP, ZIP or Snappy**. Other input formats such as CSV need a Lambda transform first.",
+  "certs": {
+   "DVA-C02": "1",
+   "SAA-C03": "2"
+  },
+  "tags": [
+   "firehose",
+   "lambda"
+  ],
+  "id": "faadfba3-40f6-4ac0-8900-9a95a9e9c7ca"
+ },
+ {
+  "type": "mcq",
+  "question": "Why is Firehose 'near real-time' rather than real-time?",
+  "options": [
+   "It buffers records before delivery",
+   "It polls sources on a schedule",
+   "It holds records for replay first",
+   "It routes records through SQS"
+  ],
+  "correct": [
+   0
+  ],
+  "option_explanations": [
+   "Correct. It flushes when the buffer size or interval is reached.",
+   "Producers push to Firehose; it doesn't poll on a timer.",
+   "Firehose stores nothing for replay.",
+   "Firehose doesn't use SQS."
+  ],
+  "explanation": "Buffer size and interval are configurable; the interval can go as low as 0 s (zero buffering) for delivery within seconds.",
+  "certs": {
+   "DVA-C02": "1",
+   "SAA-C03": "3"
+  },
+  "tags": [
+   "firehose",
+   "buffering"
+  ],
+  "id": "c4f81be5-3286-4011-a65d-52551e4711fb"
+ },
+ {
+  "type": "basic",
+  "question": "Kinesis Data Streams vs Data Firehose.",
+  "answer": "**Data Streams:** collect streaming data; you write producers/consumers; **real-time**; provisioned or on-demand; stores data up to **365 days**; **replay**.\n\n**Firehose:** load streaming data into destinations (S3, Redshift, OpenSearch, third parties, HTTP); **fully managed**, serverless, auto scaling; **near real-time**; **no storage, no replay**.",
+  "explanation": "A common exam comparison.",
+  "certs": {
+   "DVA-C02": "1",
+   "SAA-C03": "3"
+  },
+  "tags": [
+   "kinesis",
+   "firehose"
+  ],
+  "id": "6d9b49ed-7840-4a61-8726-d9391dac1353"
+ },
+ {
+  "type": "mcq",
+  "question": "Which sources can Amazon Managed Service for Apache Flink read from? (Choose 2)",
+  "options": [
+   "Kinesis Data Streams",
+   "Amazon MSK",
+   "Amazon Data Firehose",
+   "SNS"
+  ],
+  "correct": [
+   0,
+   1
+  ],
+  "option_explanations": [
+   "Correct.",
+   "Correct. Managed Apache Kafka.",
+   "An exam trick: Flink can't read from Firehose.",
+   "SNS pushes to subscribers; it isn't a Flink source."
+  ],
+  "explanation": "Flink (Java, Scala, Python, SQL) processes streams in real time on a managed cluster with auto scaling and checkpoint/snapshot backups. It used to be called Kinesis Data Analytics.",
+  "certs": {
+   "DVA-C02": "1",
+   "SAA-C03": "3"
+  },
+  "tags": [
+   "flink",
+   "kinesis"
+  ],
+  "id": "c9356c30-4e3c-43f7-9918-a1a77904b74d"
+ },
+ {
+  "type": "mcq",
+  "question": "Messages must be persisted, consumed by a pool of workers, each processed by **one** worker, and deleted afterwards. Which service?",
+  "options": [
+   "SQS",
+   "SNS",
+   "Kinesis Data Streams",
+   "Firehose"
+  ],
+  "correct": [
+   0
+  ],
+  "option_explanations": [
+   "Correct. Pull model; consumers delete messages.",
+   "Pushes copies to all subscribers; no persistence.",
+   "Records stay for replay; consumers don't delete.",
+   "Delivery service."
+  ],
+  "explanation": "SQS: no provisioning, scales to huge volumes, FIFO for ordering, per-message delay.",
+  "certs": {
+   "DVA-C02": "1",
+   "SAA-C03": "2"
+  },
+  "tags": [
+   "sqs",
+   "sns",
+   "kinesis"
+  ],
+  "id": "da86d6f8-2fa0-4a6f-b10b-08023a7beed2"
+ },
+ {
+  "type": "basic",
+  "question": "SQS vs SNS vs Kinesis Data Streams: model, persistence, ordering, scaling.",
+  "answer": "| | SQS | SNS | Kinesis Data Streams |\n|---|---|---|---|\n| Model | Consumers **pull**, then delete | **Push** copies to subscribers (pub/sub) | Pull (shared) or push (enhanced fan-out) |\n| Persistence | Until deleted (≤14 days) | None (FIFO topics can archive) | 1–365 days, **replay** |\n| Ordering | FIFO queues only | FIFO topics only | Per shard (partition key) |\n| Capacity | No provisioning | No provisioning | Provisioned shards or on-demand |\n| Use | Decoupling, work queues | Fan-out notifications | Real-time big data, analytics, ETL |",
+  "explanation": "Combine SNS + SQS for fan-out with persistence.",
+  "certs": {
+   "DVA-C02": "1",
+   "SAA-C03": "2"
+  },
+  "tags": [
+   "sqs",
+   "sns",
+   "kinesis"
+  ],
+  "id": "32baadb0-20dd-484f-a4b4-5583be4d09c8"
+ },
+ {
+  "type": "basic",
+  "question": "Section 19 in one card.",
+  "answer": "- **SQS standard:** unlimited throughput, retention 4 → 14 days, ≤10 messages per receive, at-least-once, best-effort order; scale consumers with an ASG on queue length\n- **Visibility timeout** 30 s (≤12 h) + ChangeMessageVisibility; **DLQ** with max receives + redrive; **delay** ≤15 min; **long polling** ≤20 s; **Extended Client** via S3; batch APIs\n- **SQS FIFO:** `.fifo`, 300/3,000 msg/s (more in high-throughput mode), 5-min dedup (content or ID), MessageGroupId ordering\n- **SNS:** pub/sub, Publish, many subscriber types, no persistence, access policies\n- **Fan-out** SNS → SQS (queue policy must allow SNS); S3 events to many queues; SNS FIFO → SQS FIFO; filter policies; SNS → Firehose → S3\n- **Kinesis Data Streams:** real-time, partition key → shard order, 1 MB/s in / 2 MB/s out per shard, provisioned vs on-demand, KPL/KCL, enhanced fan-out, replay ≤365 days\n- **Firehose:** managed near real-time delivery (S3, Redshift, OpenSearch, third parties, HTTP), Lambda transform, no replay\n- **Flink:** processes KDS/MSK (not Firehose)",
+  "explanation": "Review this first.",
+  "certs": {
+   "DVA-C02": "1",
+   "SAA-C03": "2"
+  },
+  "tags": [
+   "sqs",
+   "sns",
+   "kinesis"
+  ],
+  "id": "3045731a-5b5d-4e13-a064-1d5fb9311cae"
+ }
+]

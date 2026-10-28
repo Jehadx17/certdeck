@@ -1,0 +1,486 @@
+[
+ {
+  "card_id": "55ac5507-583d-4f24-96e1-98ae35e02a88",
+  "notes": [
+   [
+    "Consumers pull; a stream can't email anyone.",
+    "Each message is taken by one consumer only.",
+    "Correct. One publish, a copy per subscription.",
+    "The producer would integrate with every target."
+   ],
+   [
+    "One consumer takes each message.",
+    "Correct. SNS implements this.",
+    "One caller, one callee.",
+    "Couples receivers to a database and adds delay."
+   ]
+  ]
+ },
+ {
+  "card_id": "82696d9f-3aba-425b-b6cc-18759476fcbe",
+  "notes": [
+   [
+    "Correct.",
+    "Correct.",
+    "Not a subscription protocol.",
+    "Correct.",
+    "Correct.",
+    "Not a subscription protocol."
+   ],
+   [
+    "Correct.",
+    "Correct.",
+    "To reach S3, go through Firehose.",
+    "Correct.",
+    "SNS can reach Firehose, not Data Streams."
+   ]
+  ]
+ },
+ {
+  "card_id": "b5a0ffa1-e537-4331-b6cd-24f734206637",
+  "notes": [
+   [
+    "Standard topics have no replay.",
+    "Correct.",
+    "Correct. Around 12.5 million.",
+    "Only FIFO topics order messages.",
+    "The real limit is in the millions."
+   ],
+   [
+    "SNS has no message retention on standard topics.",
+    "Correct. A subscription DLQ (an SQS queue) would have kept them.",
+    "Standard topics have no replay.",
+    "Each subscription is delivered separately."
+   ]
+  ]
+ },
+ {
+  "card_id": "0f813212-e050-4f5a-807e-da2a48577ed0",
+  "notes": [
+   [
+    "Creates a subscription; sends nothing.",
+    "Correct.",
+    "SQS: writes up to 10 messages to one queue.",
+    "Kinesis: writes records to a stream."
+   ],
+   [
+    "Kinesis Data Streams API.",
+    "Correct. The SNS call for topics.",
+    "API Gateway WebSocket API.",
+    "Not an SNS API."
+   ]
+  ]
+ },
+ {
+  "card_id": "5e1e837b-f4db-4ba6-901d-11b5a51305c8",
+  "notes": [
+   [
+    "Correct.",
+    "Correct.",
+    "Correct.",
+    "NACLs apply to subnets, not topics.",
+    "Client-side encryption is your own code."
+   ],
+   [
+    "Topics have no security groups.",
+    "Bucket ACLs control access to the bucket.",
+    "Correct. Allow s3.amazonaws.com to sns:Publish.",
+    "SCPs only limit permissions; they don't grant them."
+   ]
+  ]
+ },
+ {
+  "card_id": "7890dd90-8c9c-4a76-82ea-59ddfc1e2238",
+  "notes": [
+   [
+    "A crash between calls leaves one queue without the order.",
+    "Correct. Adding a queue is just a new subscription.",
+    "Each message is consumed by one service only.",
+    "Lands in storage, not in the service queues."
+   ],
+   [
+    "Affects re-delivery after receive, not arrival.",
+    "Affects how consumers poll, not delivery.",
+    "Correct. The queue must let the topic call SendMessage.",
+    "Standard topics deliver to standard queues."
+   ]
+  ]
+ },
+ {
+  "card_id": "a89fcede-a3c0-4f1c-b943-bff647dc5f3c",
+  "notes": [
+   [
+    "Correct. All three queues subscribe to the topic.",
+    "Overlapping rules aren't a quota you can raise.",
+    "SQS queues can't forward to each other.",
+    "Couples consumers and fails if that one is down."
+   ],
+   [
+    "Queues have no forwarding.",
+    "Correct. SNS fan-out.",
+    "S3 notifications can't target Kinesis.",
+    "S3 rejects overlapping rules."
+   ]
+  ]
+ },
+ {
+  "card_id": "c6f17d1a-8eca-448f-a174-654ca135e60f",
+  "notes": [
+   [
+    "SNS standard topics can't deliver to FIFO queues.",
+    "Correct. Order per message group, deduplication.",
+    "Each message would reach only one service.",
+    "Firehose doesn't order or deduplicate."
+   ],
+   [
+    "That's Kinesis.",
+    "Correct. Plus a deduplication ID or content-based dedup.",
+    "Not an SNS concept.",
+    "An SQS consumer setting."
+   ]
+  ]
+ },
+ {
+  "card_id": "11450ec4-92df-4408-bb88-8b82227a28f7",
+  "notes": [
+   [
+    "Correct. SNS drops non-matching messages for that subscription.",
+    "Groups order messages; doesn't route them.",
+    "Extra code and the messages still arrive.",
+    "Pushes routing logic into the producer."
+   ],
+   [
+    "Correct.",
+    "Delivery doesn't wait for a policy.",
+    "Attributes are optional.",
+    "Groups don't limit delivery."
+   ]
+  ]
+ },
+ {
+  "card_id": "7f761181-aa1a-4152-9029-2fea5bda4b16",
+  "notes": [
+   [
+    "Key and value are swapped, and values must be arrays.",
+    "Correct.",
+    "Attribute names go at the top level, with no wrapper key.",
+    "Values must be arrays; there's no equals operator."
+   ],
+   [
+    "Possible, but only if you set FilterPolicyScope to MessageBody.",
+    "Correct. FilterPolicyScope defaults to MessageAttributes.",
+    "Tags don't affect delivery.",
+    "Not used for filtering."
+   ]
+  ]
+ },
+ {
+  "card_id": "78d8564b-d546-428d-8109-fe11cb4a1cc7",
+  "notes": [
+   [
+    "Works, but it's code you must run.",
+    "Correct. Firehose delivers to S3.",
+    "S3 isn't an SNS protocol; go through Firehose.",
+    "Holds messages; nothing writes them to S3."
+   ],
+   [
+    "You'd host the endpoint yourself.",
+    "Sends to an inbox.",
+    "Correct.",
+    "Mobile push."
+   ]
+  ]
+ },
+ {
+  "card_id": "b5f0df36-c90b-477b-8748-d06dea47ac24",
+  "notes": [
+   [
+    "Processes streams; it doesn't store them for replay.",
+    "Correct. Records stay until retention expires.",
+    "Deleted once processed.",
+    "Buffers and delivers; no replay."
+   ],
+   [
+    "That's the SQS maximum.",
+    "Correct.",
+    "Was the old maximum.",
+    "Records always expire."
+   ]
+  ]
+ },
+ {
+  "card_id": "53fda681-7471-492d-bd51-e87d66aedb3b",
+  "notes": [
+   [
+    "Correct.",
+    "SNS can't consume a stream.",
+    "Correct.",
+    "Correct.",
+    "SES sends email; it doesn't read streams."
+   ],
+   [
+    "Correct.",
+    "Reads from a stream.",
+    "Correct. Tails log files on servers.",
+    "Queries data; doesn't produce records."
+   ]
+  ]
+ },
+ {
+  "card_id": "0bbe6ca3-3b41-4a2a-969b-644256d73abc",
+  "notes": [
+   [
+    "Spreads one user's events across shards.",
+    "Each event gets a different key.",
+    "Correct. One user, one shard.",
+    "Doesn't keep a user's events together."
+   ],
+   [
+    "Shards are independent.",
+    "Correct.",
+    "A consumer may read many shards.",
+    "Connections don't map to shards."
+   ]
+  ]
+ },
+ {
+  "card_id": "18715afa-c058-46ea-9b1a-74814d85c87f",
+  "notes": [
+   [
+    "Gives 3 MB/s.",
+    "Correct. 1 MB/s each.",
+    "More than needed.",
+    "Gives 1 MB/s."
+   ],
+   [
+    "Too low.",
+    "Correct.",
+    "That's the read limit in MB.",
+    "Too high."
+   ]
+  ]
+ },
+ {
+  "card_id": "1cfe384e-5597-4e74-b456-77ae9e5380cf",
+  "notes": [
+   [
+    "Still manual, and you pay for idle shards.",
+    "Correct. Scales with observed traffic.",
+    "Changes read throughput only.",
+    "Affects storage, not capacity."
+   ],
+   [
+    "That's one provisioned shard.",
+    "Correct.",
+    "Too high for a new stream.",
+    "That's a shard's read limit in MB."
+   ]
+  ]
+ },
+ {
+  "card_id": "f997c9ac-f2ff-4c7f-ab93-875d64ecd073",
+  "notes": [
+   [
+    "Shared readers still split the same read limit.",
+    "Correct. 2 MB/s per shard per consumer, pushed.",
+    "Changes storage, not reads.",
+    "Changes write spread, not read limits."
+   ],
+   [
+    "That's enhanced fan-out.",
+    "Correct.",
+    "That's the write limit.",
+    "No such tier."
+   ]
+  ]
+ },
+ {
+  "card_id": "176a6597-8ade-43a3-87fd-15e12369cb7c",
+  "notes": [
+   [
+    "Not a CLI option.",
+    "Correct. Tells the CLI to Base64-encode the raw text.",
+    "Not a CLI option.",
+    "Changes output format only."
+   ],
+   [
+    "Only new records.",
+    "Starts at a time you give.",
+    "Correct.",
+    "Starts after a given record."
+   ]
+  ]
+ },
+ {
+  "card_id": "00a597bd-1ac5-4d04-b00b-e52540c9d23d",
+  "notes": [
+   [
+    "KMS decrypts transparently for allowed callers.",
+    "Correct. Decode it to get the text.",
+    "Kinesis doesn't compress records.",
+    "The text was fine; it's an encoding."
+   ],
+   [
+    "Not used.",
+    "Not used.",
+    "Correct.",
+    "Not applied by Kinesis."
+   ]
+  ]
+ },
+ {
+  "card_id": "716e3b96-6c03-4a67-9c88-cf7c491681fa",
+  "notes": [
+   [
+    "You'd write and run the function.",
+    "Correct.",
+    "You'd write and run the worker.",
+    "You'd write a Flink app."
+   ],
+   [
+    "You'd manage shards and consumers.",
+    "Correct. It stages in S3 and runs COPY.",
+    "Kafka; you'd run connectors.",
+    "A message broker."
+   ]
+  ]
+ },
+ {
+  "card_id": "47fd6e15-6295-41f5-8793-fda05532958e",
+  "notes": [
+   [
+    "Correct.",
+    "Not a destination.",
+    "Correct.",
+    "Correct.",
+    "Firehose can read from it, not write to it."
+   ],
+   [
+    "Correct.",
+    "Not a destination.",
+    "Correct.",
+    "Not a destination."
+   ]
+  ]
+ },
+ {
+  "card_id": "faadfba3-40f6-4ac0-8900-9a95a9e9c7ca",
+  "notes": [
+   [
+    "Only JSON to Parquet or ORC.",
+    "Splits data by key into prefixes.",
+    "Correct.",
+    "Keeps a copy of source records."
+   ],
+   [
+    "Correct.",
+    "Use Lambda for this.",
+    "Correct.",
+    "Use Lambda for this."
+   ]
+  ]
+ },
+ {
+  "card_id": "c4f81be5-3286-4011-a65d-52551e4711fb",
+  "notes": [
+   [
+    "Firehose has no shards to manage.",
+    "Correct. It flushes on size or time.",
+    "Only if a transform is set, and it's seconds.",
+    "Replication isn't part of delivery."
+   ],
+   [
+    "Correct.",
+    "Correct.",
+    "Firehose has no shards.",
+    "Firehose doesn't retain data."
+   ]
+  ]
+ },
+ {
+  "card_id": "6d9b49ed-7840-4a61-8726-d9391dac1353",
+  "notes": [
+   [
+    "Data Streams does; Firehose doesn't.",
+    "Correct. Fully managed and auto scaling.",
+    "Firehose is near real-time.",
+    "That's Data Streams."
+   ],
+   [
+    "That's Firehose.",
+    "That's Firehose.",
+    "Correct.",
+    "That's Firehose."
+   ]
+  ]
+ },
+ {
+  "card_id": "c9356c30-4e3c-43f7-9918-a1a77904b74d",
+  "notes": [
+   [
+    "Correct.",
+    "Firehose can be a Flink output, not an input.",
+    "Correct.",
+    "SNS pushes to subscribers.",
+    "Alarms aren't a stream source."
+   ],
+   [
+    "Flink can't read from Firehose.",
+    "Correct.",
+    "SNS isn't a Flink source.",
+    "Firehose can't deliver to Flink."
+   ]
+  ]
+ },
+ {
+  "card_id": "da86d6f8-2fa0-4a6f-b10b-08023a7beed2",
+  "notes": [
+   [
+    "Pushes copies to every subscriber.",
+    "Records stay for every reader until expiry.",
+    "Correct.",
+    "Delivers to destinations; no workers."
+   ],
+   [
+    "It reappears after the visibility timeout.",
+    "Correct.",
+    "An SNS action.",
+    "That's how KCL tracks Kinesis progress."
+   ]
+  ]
+ },
+ {
+  "card_id": "32baadb0-20dd-484f-a4b4-5583be4d09c8",
+  "notes": [
+   [
+    "Standard topics don't keep messages.",
+    "Correct. Up to 14 days.",
+    "Records expire; consumers can't delete them.",
+    "No storage."
+   ],
+   [
+    "No provisioning.",
+    "No provisioning.",
+    "Correct.",
+    "No provisioning."
+   ]
+  ]
+ },
+ {
+  "card_id": "3045731a-5b5d-4e13-a064-1d5fb9311cae",
+  "notes": [
+   [
+    "Correct.",
+    "The maximum is 12 hours.",
+    "The maximum is 20 seconds.",
+    "The maximum is 14 days."
+   ],
+   [
+    "Flink reads Data Streams or MSK.",
+    "Firehose has no storage.",
+    "Correct. And 2 MB/s out.",
+    "SNS doesn't retain messages."
+   ]
+  ]
+ }
+]

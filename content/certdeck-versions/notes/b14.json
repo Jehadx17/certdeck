@@ -1,0 +1,500 @@
+[
+ {
+  "card_id": "594beed8-4313-406e-957a-6cc71b0a9274",
+  "notes": [
+   [
+    "CloudFront caches responses; it doesn't hold writes for later.",
+    "Correct. Fulfilment pulls work at its own pace and scales separately.",
+    "More retries add load during the spike.",
+    "A bigger box still receives every call directly."
+   ],
+   [
+    "Failover changes where DNS points; it doesn't absorb load.",
+    "An ALB spreads calls but still passes each one through synchronously.",
+    "Correct. Each side scales on its own.",
+    "The database isn't the coupled component."
+   ]
+  ]
+ },
+ {
+  "card_id": "35c7e49f-d9e8-4923-9365-97a694002625",
+  "notes": [
+   [
+    "Correct. At-least-once delivery.",
+    "Correct. Ordering is best effort.",
+    "Correct. Throughput is unlimited.",
+    "That's FIFO with deduplication.",
+    "Retention tops out at 14 days."
+   ],
+   [
+    "That's a FIFO queue.",
+    "Correct. Delivery is at least once.",
+    "That's the FIFO limit without batching.",
+    "Correct.",
+    "Correct."
+   ]
+  ]
+ },
+ {
+  "card_id": "d70115ee-6336-4c5d-98ef-930d4ad31a3b",
+  "notes": [
+   [
+    "Not the default; the minimum is 60 seconds.",
+    "Correct. Up to 14 days if you raise it.",
+    "Not an SQS default.",
+    "That's the maximum, not the default."
+   ],
+   [
+    "That's the default, not the maximum.",
+    "Not an SQS limit.",
+    "Correct. Set MaxNumberOfMessages to 10.",
+    "Too high; a receive caps at 10."
+   ]
+  ]
+ },
+ {
+  "card_id": "1fa2c4cb-dc7a-4f45-bc1f-2417cdd3677b",
+  "notes": [
+   [
+    "PurgeQueue wipes every message in the queue.",
+    "Correct. Otherwise it reappears after the visibility timeout.",
+    "That would add a second copy.",
+    "SQS keeps it until retention ends or someone deletes it."
+   ],
+   null
+  ]
+ },
+ {
+  "card_id": "38a659bb-3c06-4f3e-b8c4-98d4aa8b81de",
+  "notes": [
+   [
+    "A volume stores blocks; it runs no code.",
+    "Correct. Via an event source mapping.",
+    "Correct. Over the public SQS endpoint.",
+    "CloudFront delivers content; it doesn't poll queues.",
+    "Correct."
+   ],
+   [
+    "Correct.",
+    "S3 stores objects and can't poll.",
+    "Correct.",
+    "Correct. Over the internet or a private link.",
+    "RDS runs a database engine, not your consumer."
+   ]
+  ]
+ },
+ {
+  "card_id": "d655f0da-1845-49b2-bd11-cae53b12cd72",
+  "notes": [
+   [
+    "The web tier produces messages; it isn't the bottleneck.",
+    "Correct. Backlog size tracks the work waiting for workers.",
+    "Producer traffic doesn't show the consumer backlog.",
+    "Workers run on EC2, not Lambda."
+   ],
+   [
+    "Hides messages longer; adds no instances.",
+    "Cuts empty receives; adds no instances.",
+    "FIFO lowers throughput.",
+    "Correct. Alarm on ApproximateNumberOfMessages."
+   ]
+  ]
+ },
+ {
+  "card_id": "1cce5e0a-d327-4eb9-b79a-15876ebce55d",
+  "notes": [
+   [
+    "The site still competes with transcoding.",
+    "Correct. Workers scale apart from the web tier and write results to S3.",
+    "Caching doesn't move the transcoding work.",
+    "Shared storage doesn't take work off the web servers."
+   ],
+   [
+    "Edge caching is CloudFront.",
+    "Correct. Web and worker tiers scale independently.",
+    "Encryption is a separate setting.",
+    "Uploads still reach the front end; it just enqueues the job."
+   ]
+  ]
+ },
+ {
+  "card_id": "2e85540f-b92b-473f-9692-edc9c9cf54ec",
+  "notes": [
+   [
+    "Correct. In-flight encryption over HTTPS.",
+    "Correct. Used for cross-account access and service integrations.",
+    "NACLs apply to subnets, not queues.",
+    "Correct. Encryption at rest.",
+    "SQS doesn't sign message bodies for you."
+   ],
+   [
+    "Queues have no security groups.",
+    "Correct.",
+    "Correct.",
+    "Client-side encryption is your code's job.",
+    "Correct. Resource policies control who can use the queue."
+   ]
+  ]
+ },
+ {
+  "card_id": "ac8e373b-7c32-4c70-a1bc-c74578cbac30",
+  "notes": [
+   [
+    "Networking doesn't grant permissions.",
+    "Correct. It grants account 2222 actions such as sqs:ReceiveMessage.",
+    "Queues don't live in a VPC.",
+    "An endpoint gives private connectivity, not permission."
+   ],
+   [
+    "Correct. A resource-based policy on the queue.",
+    "Peering connects networks; it grants no permissions.",
+    "SCPs only restrict permissions; they never grant them.",
+    "NAT is for outbound internet traffic."
+   ]
+  ]
+ },
+ {
+  "card_id": "d3432615-dee6-417f-b66f-5a4d63de8dce",
+  "notes": [
+   [
+    "CORS is for browser requests.",
+    "Object Lock protects objects from deletion.",
+    "Correct. Allow s3.amazonaws.com sqs:SendMessage, scoped by aws:SourceArn and aws:SourceAccount.",
+    "S3 notifications don't support FIFO queues."
+   ],
+   [
+    "Lambda isn't the sender here.",
+    "Correct.",
+    "EventBridge is a different route for S3 events.",
+    "SNS isn't part of a direct S3 to SQS notification."
+   ]
+  ]
+ },
+ {
+  "card_id": "93658d4b-f034-4918-9c2e-8d627f81e0b4",
+  "notes": [
+   [
+    "Correct. ArnLike on the bucket ARN; add aws:SourceAccount too.",
+    "S3 doesn't call from fixed IPs you'd list.",
+    "aws:userid identifies an IAM caller, not a bucket.",
+    "The bucket isn't a tagged principal here."
+   ],
+   [
+    "Root and ReceiveMessage don't let S3 send.",
+    "S3 sends messages; it doesn't receive them.",
+    "Principal and action are swapped.",
+    "Correct."
+   ]
+  ]
+ },
+ {
+  "card_id": "bee5d8c5-5203-4caa-b8c6-9bea4c2045a9",
+  "notes": [
+   [
+    "Each receive hides the message; SNS is the one that fans out.",
+    "Correct. Hidden for the visibility timeout, 30 s by default.",
+    "SQS doesn't flag duplicates.",
+    "Messages reach a DLQ only after the max receive count."
+   ],
+   [
+    "That would let other consumers grab it at once.",
+    "20 s is the long-polling maximum.",
+    "Correct.",
+    "That's the maximum."
+   ]
+  ]
+ },
+ {
+  "card_id": "098b8248-753b-49c3-b6e8-acdc402bf459",
+  "notes": [
+   [
+    "Correct. Extends the timeout for that message while work continues.",
+    "Delay affects new messages, not received ones.",
+    "That's long polling.",
+    "Deleting first loses the message if the job fails."
+   ],
+   [
+    "A failure would lose the message.",
+    "Polling mode doesn't change visibility.",
+    "Correct. Call ChangeMessageVisibility with the receipt handle.",
+    "Delay applies to new sends, not received messages."
+   ]
+  ]
+ },
+ {
+  "card_id": "acc1261d-073d-45db-9b53-07dc8e84bd38",
+  "notes": [
+   [
+    "Duplicates come from too short a timeout.",
+    "Correct. If the consumer crashes, nobody retries until the timeout ends.",
+    "Pricing is per request.",
+    "Retention, not visibility, controls deletion."
+   ],
+   [
+    "Neither setting deletes messages.",
+    "Correct.",
+    "Cost doesn't depend on the timeout, and nothing is lost.",
+    "That's backwards."
+   ]
+  ]
+ },
+ {
+  "card_id": "c600da43-f848-4898-907e-653bad53945c",
+  "notes": [
+   [
+    "Correct. After maxReceiveCount receives it moves to the dead-letter queue.",
+    "It still loops until it expires.",
+    "Deduplication only drops repeated sends.",
+    "Long polling doesn't stop retries."
+   ],
+   [
+    "Retention only decides when messages expire.",
+    "Correct. After that many receives, it moves to the DLQ.",
+    "Controls hiding after a receive.",
+    "Controls delay on send."
+   ]
+  ]
+ },
+ {
+  "card_id": "5d3d3567-a2e4-4664-a396-64cba807a9f4",
+  "notes": [
+   [
+    "Correct. FIFO with FIFO, standard with standard.",
+    "SQS doesn't change message bodies; you fix the consumer.",
+    "Correct. Redrive to source after the fix.",
+    "The DLQ must be in the same account and Region.",
+    "Correct. E.g. 14 days, so nothing expires before you look."
+   ],
+   [
+    "Queue types must match.",
+    "Correct.",
+    "Correct. Messages are then processed normally.",
+    "Correct.",
+    "DLQ messages wait until you inspect or redrive them."
+   ]
+  ]
+ },
+ {
+  "card_id": "446139da-a3cb-4212-947f-e864b35fd264",
+  "notes": [
+   [
+    "Correct. Up to 900 s.",
+    "Applies only once a message is received.",
+    "Long-poll waits max out at 20 s.",
+    "Retention would delete messages after 2 minutes."
+   ],
+   [
+    "Too short.",
+    "Correct.",
+    "Too long; 15 minutes is the cap.",
+    "That's the visibility timeout maximum."
+   ]
+  ]
+ },
+ {
+  "card_id": "263ce0cb-fc7b-4b7d-a705-599834691018",
+  "notes": [
+   [
+    "Hides only newly sent messages.",
+    "Correct. Default 30 s, up to 12 h.",
+    "That's long polling, up to 20 s.",
+    "How long unprocessed messages are kept, up to 14 days."
+   ],
+   [
+    "Correct.",
+    "Delay caps at 15 minutes.",
+    "Retention caps at 14 days.",
+    "Visibility goes up to 12 hours."
+   ]
+  ]
+ },
+ {
+  "card_id": "0fd22dea-27c5-43f4-80ec-18decda8f7b9",
+  "notes": [
+   [
+    "Correct. Long polling.",
+    "Visibility doesn't affect empty responses.",
+    "Delay hides messages, causing more empties.",
+    "The maximum is 10, and it doesn't stop empty calls."
+   ],
+   [
+    "Below the limit.",
+    "Correct.",
+    "Above the limit.",
+    "That's the delivery delay maximum."
+   ]
+  ]
+ },
+ {
+  "card_id": "d8e0915d-784e-4b84-8d1c-a46978bfc74b",
+  "notes": [
+   [
+    "Sets how long received messages stay hidden.",
+    "Correct.",
+    "Sets batch size, and the max is 10.",
+    "No such flag."
+   ],
+   [
+    "Correct.",
+    "Enables long polling, not more per call.",
+    "That's a Lambda event source setting.",
+    "Controls CLI pagination, not messages per call."
+   ]
+  ]
+ },
+ {
+  "card_id": "e5d15393-22b3-4f8f-bf1b-83d5806fa35f",
+  "notes": [
+   [
+    "2 GB won't compress below 1 MiB.",
+    "Correct. The Extended Client library automates this.",
+    "The 1 MiB limit can't be raised.",
+    "Encoding makes it bigger, and FIFO has the same limit."
+   ],
+   [
+    "It doesn't chunk messages.",
+    "Correct. Consumers use the pointer to fetch the object.",
+    "Kinesis isn't involved.",
+    "It offloads rather than compresses."
+   ]
+  ]
+ },
+ {
+  "card_id": "7a845619-05bd-4e38-8bfa-7bf77ff45f58",
+  "notes": [
+   [
+    "Removes up to 10 messages per call.",
+    "Correct. It can take up to 60 seconds to finish.",
+    "Removes the queue too.",
+    "Changes settings, not messages."
+   ],
+   [
+    "Correct.",
+    "That's swapped.",
+    "Neither changes visibility.",
+    "Purge keeps the queue."
+   ]
+  ]
+ },
+ {
+  "card_id": "8840b335-4be0-4839-a184-b1ca4a237500",
+  "notes": [
+   [
+    "Already returns up to 10 messages; there's no batch form.",
+    "Correct.",
+    "Returns one URL; no batch form.",
+    "Correct.",
+    "Correct."
+   ],
+   [
+    "Correct.",
+    "Doesn't exist; purge already acts on the whole queue.",
+    "Correct.",
+    "Doesn't exist.",
+    "Correct."
+   ]
+  ]
+ },
+ {
+  "card_id": "46917535-5075-4aac-a71c-c860d457d72a",
+  "notes": [
+   [
+    "That's long polling.",
+    "Correct. Default 1, up to 10.",
+    "Controls hiding after a receive.",
+    "Delays newly sent messages."
+   ],
+   [
+    "Correct.",
+    "Too high.",
+    "0 isn't valid, and 20 is the long-poll limit.",
+    "Too high."
+   ]
+  ]
+ },
+ {
+  "card_id": "d2c48b61-1f14-498f-9052-43aa34c04d33",
+  "notes": [
+   [
+    "No ordering or persistence.",
+    "Best-effort order with possible duplicates.",
+    "Correct. Ordered, with deduplication.",
+    "A delivery stream to destinations, not a queue."
+   ],
+   [
+    "Correct.",
+    "Not a required suffix.",
+    "Not a required suffix.",
+    "Not a required suffix."
+   ]
+  ]
+ },
+ {
+  "card_id": "1c70402a-4db9-4be5-a5fb-0d620c9f2228",
+  "notes": [
+   [
+    "That's without batching.",
+    "Correct. 300 calls per second times 10 messages per batch.",
+    "Not a FIFO default.",
+    "That's a standard queue."
+   ],
+   [
+    "Too short.",
+    "Correct.",
+    "Too long.",
+    "Too long."
+   ]
+  ]
+ },
+ {
+  "card_id": "2fbc0053-1ac0-4d13-b719-ec729d5fae92",
+  "notes": [
+   [
+    "Correct. Content-based deduplication.",
+    "Correct.",
+    "Groups control ordering.",
+    "That dedups ReceiveMessage retries, not sends."
+   ],
+   [
+    "Timestamps aren't compared.",
+    "Correct.",
+    "Correct.",
+    "Groups only order messages."
+   ]
+  ]
+ },
+ {
+  "card_id": "c2ad25c6-9348-4181-b4f0-962eb55bc745",
+  "notes": [
+   [
+    "Every message becomes its own group, so nothing stays in order.",
+    "Correct. Order holds within each group; groups run in parallel.",
+    "That controls deduplication, not ordering.",
+    "One group means one ordered stream with no parallelism."
+   ],
+   [
+    "Order across groups isn't guaranteed.",
+    "Correct.",
+    "Consumers don't define order.",
+    "Batches don't define order."
+   ]
+  ]
+ },
+ {
+  "card_id": "6e544200-7db9-41ae-8c17-d0146cde0385",
+  "notes": [
+   [
+    "Optional when content-based deduplication is on.",
+    "Correct.",
+    "FIFO queues don't support per-message delays.",
+    "Optional metadata."
+   ],
+   [
+    "Correct. SQS then hashes the body.",
+    "Size doesn't affect deduplication.",
+    "The group ID is always required.",
+    "All FIFO URLs end in .fifo."
+   ]
+  ]
+ }
+]
