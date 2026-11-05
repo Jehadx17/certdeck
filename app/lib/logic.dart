@@ -503,6 +503,35 @@ Future<List<Json>> buildExtraQueue(Json cert, {int? minutes}) async {
   return capByTime(queue, minutes ?? App.sessionBudget, await avgCardSeconds());
 }
 
+/// Unseen cards, most valuable first: exam [importance] (unrated: 5) + 3 x the student's worst miss rate among the card's
+/// topics in [reviews]. A topic needs 4 answers to count, the same bar as Weak Spots.
+List<Json> rankNew(List<Json> cards, List<Json> reviews, Map<String, int> importance) {
+  List<String> tagsOf(Json? c) => ((c?['tags'] as List?) ?? []).cast<String>();
+  final byId = {for (final c in cards) c['id']: c};
+  final answered = <String, int>{}, missed = <String, int>{};
+  for (final r in reviews) {
+    for (final t in tagsOf(byId[r['card_id']])) {
+      answered[t] = (answered[t] ?? 0) + 1;
+      if (r['correct'] != true) missed[t] = (missed[t] ?? 0) + 1;
+    }
+  }
+  double missRate(String t) => answered[t]! < 4 ? 0 : (missed[t] ?? 0) / answered[t]!;
+  double score(Json c) =>
+      (importance[c['id']] ?? 5) + 3 * tagsOf(c).where(answered.containsKey).map(missRate).fold(0.0, max);
+  final scores = {for (final c in cards) c['id']: score(c)};
+  return cards.where((c) => isNew(c) && !isSuspended(c)).toList()
+    ..sort((a, b) {
+      final s = scores[b['id']]!.compareTo(scores[a['id']]!);
+      return s != 0 ? s : ((a['created_at'] as int?) ?? 0).compareTo((b['created_at'] as int?) ?? 0);
+    });
+}
+
+/// A session of unseen cards only, past the daily new-card limit.
+Future<List<Json>> buildNewQueue(Json cert, {int? minutes}) async {
+  final ranked = rankNew(await Db.cardsFor(cert['id']), await Db.reviewsSince(nowMs() - 14 * dayMs), await importanceFor(cert['id']));
+  return capByTime(ranked, minutes ?? App.sessionBudget, await avgCardSeconds());
+}
+
 /// Weak-area / final-days review: misconceptions first, then the weakest domains' least
 /// retained cards, regardless of due date.
 Future<List<Json>> buildCramQueue(Json cert, {int limit = 40}) async {

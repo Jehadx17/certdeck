@@ -254,4 +254,32 @@ void main() {
     expect(s.avgMsByConf, {('sure', true): 40000, ('guess', false): 60000});
     expect([for (final x in s.sessions) (x.ms, x.cards)], [(80000, 3), (60000, 1)]);
   });
+
+  test('new cards rank by importance plus topic miss rate, unseen only', () {
+    Map<String, dynamic> card(String id, String tag, {bool seen = false, bool suspended = false}) => {
+          'id': id,
+          'tags': [tag],
+          'created_at': int.parse(id),
+          if (seen) 'fsrs': {'state': 2, 'due': 0},
+          'suspended': suspended,
+        };
+    Map<String, dynamic> answer(String id, bool ok) => {'card_id': id, 'correct': ok};
+    final cards = [
+      card('1', 'iam'), // 8, never missed: 8
+      card('2', 's3'), // 7, s3 missed 2 of 4: 7 + 1.5
+      card('3', 'vpc'), // 7, vpc missed 3 of 3, under 4 answers: 7
+      card('4', 'other'), // unrated: 5
+      card('5', 'other'), // same score, created later
+      card('6', 's3', seen: true),
+      card('7', 'vpc', seen: true),
+      card('8', 'iam', seen: true),
+      card('9', 's3', suspended: true),
+    ];
+    final q = rankNew(cards, [
+      answer('6', false), answer('6', false), answer('6', true), answer('6', true),
+      answer('7', false), answer('7', false), answer('7', false),
+      answer('8', true), answer('8', true), answer('8', true), answer('8', true),
+    ], {'1': 8, '2': 7, '3': 7});
+    expect(q.map((c) => c['id']), ['2', '1', '3', '4', '5']);
+  });
 }

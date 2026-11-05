@@ -24,6 +24,15 @@ Future<void> studyCert(BuildContext context, List<Json> queue) => Navigator.push
               studyCert(context, next);
             })));
 
+/// A session of unseen cards only, re-ranked on every "Do more".
+Future<void> studyNewCards(BuildContext context) async {
+  final q = await buildNewQueue(App.cert);
+  if (!context.mounted) return;
+  if (q.isEmpty) return toast(context, t('Nothing left to study. Everything is fresh.'));
+  await Navigator.push(
+      context, MaterialPageRoute(builder: (_) => StudyScreen(q, title: t('New cards only'), onMore: () => studyNewCards(context))));
+}
+
 /// Ticks the topic tags covered in today's course sections: their unseen cards come first today, past the daily limit.
 Future<void> pickStudiedTags(BuildContext context) async {
   final tags = {for (final c in await Db.cardsFor(App.cert['id'])) ...((c['tags'] as List?) ?? []).cast<String>()}.toList()..sort();
@@ -137,6 +146,14 @@ class TodayScreen extends StatelessWidget {
                         ? t('Continue · {n} left', {'n': queue.length})
                         : t('Study ({n}) · about {m} min', {'n': queue.length, 'm': App.sessionMinutes})),
               ),
+              if (st.plan.remaining > 0)
+                Padding(
+                  padding: const EdgeInsets.only(top: 8),
+                  child: OutlinedButton.icon(
+                      onPressed: () => studyNewCards(context),
+                      icon: const Icon(Icons.fiber_new_outlined),
+                      label: Text(t('New cards only ({n} left)', {'n': st.plan.remaining}))),
+                ),
               TextButton.icon(
                   onPressed: () => pickStudiedTags(context),
                   icon: const Icon(Icons.menu_book_outlined),

@@ -488,6 +488,8 @@ const _ar = <String, String>{
   'Nothing left to study. Everything is fresh.': 'لا شيء للمذاكرة. كل شيء محفوظ جيدًا.',
   'Done for today · study ahead': 'انتهيت لليوم · ذاكر مقدمًا',
   'Continue · {n} left': 'تابع · باقي {n}',
+  'New cards only': 'البطاقات الجديدة فقط',
+  'New cards only ({n} left)': 'البطاقات الجديدة فقط (باقي {n})',
   'Study ({n}) · about {m} min': 'مذاكرة ({n}) · نحو {m} دقيقة',
   'Exam pacing: {p} new/day to introduce all {r} unseen cards before the final review window.': 'وتيرة الاختبار: {p} بطاقة جديدة يوميًا لتغطية كل البطاقات غير المرئية ({r}) قبل فترة المراجعة النهائية.',
   'Exam sim': 'اختبار تجريبي',
