@@ -30,7 +30,7 @@ Future<void> studyNewCards(BuildContext context) async {
   if (!context.mounted) return;
   if (q.isEmpty) return toast(context, t('Nothing left to study. Everything is fresh.'));
   await Navigator.push(
-      context, MaterialPageRoute(builder: (_) => StudyScreen(q, title: t('New cards only'), onMore: () => studyNewCards(context))));
+      context, MaterialPageRoute(builder: (_) => StudyScreen(q, title: t('New cards only'), newOnly: true, onMore: () => studyNewCards(context))));
 }
 
 /// Ticks the topic tags covered in today's course sections: their unseen cards come first today, past the daily limit.

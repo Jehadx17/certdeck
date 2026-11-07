@@ -15,11 +15,13 @@ import 'logic.dart';
 import 'widgets.dart';
 
 /// Queue with Anki-style relearning: cards due again within 30 min come back this session.
+/// [unsureOnly] (new-cards-only session): a card comes back only if it was wrong or not Sure, not on the FSRS step.
 class Session implements StudyQueue {
   final List<Json> queue;
   final List<Json> pending = [];
   final bool relearn;
-  Session(this.queue, {this.relearn = true});
+  final bool unsureOnly;
+  Session(this.queue, {this.relearn = true, this.unsureOnly = false});
 
   @override
   int get remaining => queue.length + pending.length;
@@ -33,8 +35,10 @@ class Session implements StudyQueue {
   }
 
   @override
-  void answered(Json card, double score) {
-    if (relearn && dueOf(card) <= nowMs() + 30 * 60000) pending.add(card);
+  void answered(Json card, double score, {Conf? conf}) {
+    if (!relearn) return;
+    final again = unsureOnly ? (score < .85 || conf != Conf.sure) : dueOf(card) <= nowMs() + 30 * 60000;
+    if (again) pending.add(card);
   }
 }
 
@@ -54,14 +58,16 @@ class StudyScreen extends StatefulWidget {
   final VoidCallback? onMore;
   /// Drill: show only rewritten versions, never the original wording.
   final bool rewriteOnly;
+  /// New-cards-only session: a card comes back this session only if it was wrong or not Sure.
+  final bool newOnly;
   const StudyScreen(this.queue,
-      {super.key, this.source = 'study', this.title = 'Study', this.custom, this.scheduler, this.easy = false, this.practice = false, this.onMore, this.rewriteOnly = false});
+      {super.key, this.source = 'study', this.title = 'Study', this.custom, this.scheduler, this.easy = false, this.practice = false, this.onMore, this.rewriteOnly = false, this.newOnly = false});
   @override
   State<StudyScreen> createState() => _StudyScreenState();
 }
 
 class _StudyScreenState extends State<StudyScreen> {
-  late final StudyQueue session = widget.custom ?? Session([...widget.queue], relearn: widget.source == 'study');
+  late final StudyQueue session = widget.custom ?? Session([...widget.queue], relearn: widget.source == 'study', unsureOnly: widget.newOnly);
   Json? card;
   AnswerState? ans;
   Conf? conf;
@@ -155,7 +161,7 @@ class _StudyScreenState extends State<StudyScreen> {
         studyFirst: studying,
         shownVer: versions.containsKey(card!['id']) ? shownVer : null,
         errorType: (a.written && !a.correct) ? (a.aiGrade ?? const {})['error_type']?.toString() : null);
-    session.answered(updated, a.score);
+    session.answered(updated, a.score, conf: conf);
     done++;
     if (a.correct) right++;
     if (!studying) calib.add((conf!, a.correct));

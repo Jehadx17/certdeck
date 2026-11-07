@@ -277,8 +277,8 @@ Future<Json> recordAnswer(Json card,
 /// What a study screen pulls cards from: the cert/FSRS session or the college sprint loop.
 abstract class StudyQueue {
   Json? next();
-  /// [score] 1 = right, 0..1 partial, 0 wrong.
-  void answered(Json card, double score);
+  /// [score] 1 = right, 0..1 partial, 0 wrong. [conf] = the answer's confidence, for sessions that re-queue by it.
+  void answered(Json card, double score, {Conf? conf});
   int get remaining;
 }
 

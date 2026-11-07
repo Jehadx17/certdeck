@@ -227,9 +227,9 @@ class SprintSession implements StudyQueue {
   @override
   Json? next() => queue.isEmpty ? null : queue.removeAt(0);
 
-  /// [score] 1 = right, 0..1 = partial (counts as a miss here), 0 = wrong.
+  /// [score] 1 = right, 0..1 = partial (counts as a miss here), 0 = wrong. [conf] unused here.
   @override
-  void answered(Json card, double score) {
+  void answered(Json card, double score, {Conf? conf}) {
     final id = card['id'] as String;
     if (score >= .85) {
       streak[id] = (streak[id] ?? 0) + 1;

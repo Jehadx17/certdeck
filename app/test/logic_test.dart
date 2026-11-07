@@ -2,6 +2,7 @@ import 'package:certdeck/cards.dart';
 import 'package:markdown/markdown.dart' as md;
 import 'package:certdeck/api.dart' show budgetMessage;
 import 'package:certdeck/logic.dart';
+import 'package:certdeck/study.dart' show Session;
 import 'package:certdeck/widgets.dart' show clozeBack, clozeFront, isolateRuns;
 import 'package:fsrs/fsrs.dart' as fsrs;
 import 'package:flutter_test/flutter_test.dart';
@@ -281,5 +282,27 @@ void main() {
       answer('8', true), answer('8', true), answer('8', true), answer('8', true),
     ], {'1': 8, '2': 7, '3': 7});
     expect(q.map((c) => c['id']), ['2', '1', '3', '4', '5']);
+  });
+
+  test('new-cards-only session brings a card back only when wrong or not Sure', () {
+    Map<String, dynamic> card(String id) => {'id': id};
+    final s = Session([card('right-sure'), card('wrong'), card('right-unsure'), card('right-guess')], unsureOnly: true);
+    final answers = {
+      'right-sure': (1.0, Conf.sure), // right + Sure → gone this session
+      'wrong': (0.0, Conf.sure), // mistaken → comes back
+      'right-unsure': (1.0, Conf.unsure), // right but not Sure → comes back
+      'right-guess': (1.0, Conf.guess), // right but guessing → comes back
+    };
+    final seenOnce = <String>{}, cameBack = <String>{};
+    for (var c = s.next(); c != null; c = s.next()) {
+      final id = c['id'] as String;
+      if (!seenOnce.add(id)) {
+        cameBack.add(id); // already answered once; this is the in-session re-queue
+        continue;
+      }
+      final (score, conf) = answers[id]!;
+      s.answered(c, score, conf: conf);
+    }
+    expect(cameBack, {'wrong', 'right-unsure', 'right-guess'});
   });
 }
