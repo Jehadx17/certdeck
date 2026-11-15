@@ -112,7 +112,7 @@ class Reminders {
       if (App.settings['reminders'] == false) return;
       _learnedMinute = await _studyHour();
       final plan = App.isOwner ? <PlanItem>[] : await todayPlan(); // the owner has no college plan
-      if (plan.isEmpty) return _certReminders();
+      if (plan.isEmpty) return await _certReminders();
       await _askPermission();
       final now = DateTime.now();
       for (var day = 0; day < 7; day++) {
