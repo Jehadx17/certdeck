@@ -87,23 +87,16 @@ Significant choices made while building CertDeck, newest at the bottom of each s
   `devicectl` install): no App Store, works with a free Apple ID (7-day signature) or a paid team (1 year).
 
 ## Deployment (VPS)
-- At the user's request the backend runs on **169.58.7.222** (the server that hosts mithaqstay.com), not the
-  first VPS (217.76.55.241). Everything deployed there during setup was removed and the other project there
-  was verified unaffected before and after.
-- Read-only inspection of 169.58.7.222: host nginx (systemd) with one site per project (`mithaqstay`, `uptick`),
-  host certbot using the nginx authenticator on the stock `certbot.timer` with no custom hooks, and the other
-  projects in Docker bound to `127.0.0.1` (`:8000`, `:3100`).
-- CertDeck is its own compose project in `/opt/certdeck` (project `certdeck`): own Postgres 16 container + volume,
-  own media volume, own internal network, API only on `127.0.0.1:18765`. Secrets are in `/opt/certdeck/.env`
-  (generated on the server, chmod 600). Code is shipped with `git archive` by `deploy/deploy.sh`, so no GitHub
-  credentials live on the server.
-- nginx: one added site, `/etc/nginx/sites-available/certdeck` (+ symlink); `nginx -t`, then a graceful
-  `systemctl reload nginx`. Other sites' responses were checked before and after.
-- TLS: `certbot certonly --nginx -d certdeck.mithaqstay.com`, the same authenticator the existing certs use, so the
-  existing timer renews it. `certonly` means certbot never edits our site file.
-- Lesson from the first VPS, kept in case it ever moves back: there, the shared certbot's deploy hook copied every
-  renewed cert over another site's live cert, and Docker DNS answers to *service names* on shared networks.
-  So: never reuse another project's certbot, and give services unique names (`certdeck-api`, `certdeck-db`).
+- The backend runs on a Linux VPS shared with other projects, as its own isolated Docker Compose project in
+  `/opt/certdeck`: own Postgres 16 container and volume, own media volume, own internal network, API bound only to
+  `127.0.0.1`. Secrets live in `/opt/certdeck/.env` on the server (chmod 600), never in git.
+- Code is shipped with `git archive` by `deploy/deploy.sh` (target from `CERTDECK_HOST` or the gitignored
+  `deploy/.host`), so no GitHub credentials live on the server.
+- nginx: one added site file (`deploy/nginx-certdeck.conf`); `nginx -t`, then a graceful reload.
+- TLS: `certbot certonly --nginx -d certdeck.mithaqstay.com`, renewed by the stock `certbot.timer`; `certonly` means
+  certbot never edits the site file.
+- Lesson learned: never reuse another project's certbot deploy hooks, and give services unique names
+  (`certdeck-api`, `certdeck-db`), because Docker DNS answers to service names on shared networks.
 - FSRS re-optimization runs weekly in a small `certdeck-optimizer` container (a sleep loop; no host cron needed).
 
 ## Acceptance device

@@ -4,7 +4,7 @@
 # (arm64 only: ~20 MB instead of ~56 MB; every phone it goes to is 64-bit ARM), then run this.
 # Also prints a browser download link for first installs.
 set -euo pipefail
-HOST=${CERTDECK_HOST:-root@169.58.7.222}
+HOST=${CERTDECK_HOST:-$(cat "$(dirname "$0")/.host" 2>/dev/null)}; : "${HOST:?set CERTDECK_HOST or put user@host in deploy/.host}"
 cd "$(git rev-parse --show-toplevel)"
 APK=app/build/app/outputs/flutter-apk/app-release.apk
 VERSION=$(sed -n 's/^version: *//p' app/pubspec.yaml)  # e.g. 1.2.0+3

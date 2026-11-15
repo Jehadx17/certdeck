@@ -21,7 +21,7 @@
 - Drills: `StudyScreen(..., source: 'cram')`, schedule normally.
 - Owner college data is hidden, never deleted.
 - Builds: Flutter at `/home/jehad/FlutterSDK/flutter/bin/flutter`; JDK 17 at `~/opt`; Gradle capped at 2 GB, never with the emulator running; delete `app/build` and stop Gradle after builds; release APKs arm64-only via `deploy/release-apk.sh`.
-- Content: authored in Claude Code, never the API pack pipeline. Anything that writes to the production server (169.58.7.222) or publishes a release needs the user's go-ahead first.
+- Content: authored in Claude Code, never the API pack pipeline. Anything that writes to the production server or publishes a release needs the user's go-ahead first.
 
 ## Review Focus
 

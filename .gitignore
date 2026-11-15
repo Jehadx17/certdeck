@@ -1,1 +1,6 @@
 .superpowers/
+
+# Private ops notes and deploy target (kept out of the public repo)
+deploy/.host
+PRIVATE-OPS.md
+content/lana/

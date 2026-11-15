@@ -141,7 +141,7 @@ slides or notes and $0.15-0.25 per page of dense prose prepared now, half that t
 more than 3 days away); the app shows the estimate before anything runs. Grading a written answer ≈ $0.01-0.02,
 a fresh practice question ≈ $0.02.
 
-### Production (169.58.7.222, root)
+### Production
 Isolated compose project in `/opt/certdeck` (own Postgres, volumes, network; API on `127.0.0.1:18765`),
 served at `https://certdeck.mithaqstay.com/api/` by the host nginx (site file `deploy/nginx-certdeck.conf` →
 `/etc/nginx/sites-available/certdeck`), with a Let's Encrypt cert renewed by the existing `certbot.timer`.
@@ -172,7 +172,7 @@ Everyone signs in with **email and password**, on as many phones as they like (e
 behind the scenes; signing in on one never signs out another). An account is `owner` (me: certs + college) or
 `student` (college only); students can also register themselves in the app. Manage accounts on the server:
 ```bash
-ssh root@169.58.7.222
+ssh "$CERTDECK_HOST"
 cd /opt/certdeck/src/deploy && alias users='docker compose --env-file /opt/certdeck/.env exec certdeck-api python manage.py users'
 users create sara a@b.com      # a student with the default $10/month AI cap; asks for her password
 users create sara a@b.com --cap 20  # another cap; --cap none = no cap
