@@ -12,10 +12,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: astral-sh/setup-uv@v6
-        with:
-          python-version: "3.12"
-      - run: uv pip install --system --index-strategy unsafe-best-match -r requirements.txt
-      - run: python manage.py test
+      - run: uv venv --python 3.12 .venv
+      - run: uv pip install --python .venv/bin/python --index-strategy unsafe-best-match -r requirements.txt
+      - run: .venv/bin/python manage.py test
 
   app:
     runs-on: ubuntu-latest
