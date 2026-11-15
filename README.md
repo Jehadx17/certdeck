@@ -1,5 +1,13 @@
 # CertDeck
 
+[![CI](https://github.com/Jehadx17/certdeck/actions/workflows/ci.yml/badge.svg)](https://github.com/Jehadx17/certdeck/actions/workflows/ci.yml)
+
+**Offline-first certification study app (AWS, Kubernetes CKAD): a Flutter Android app with FSRS spaced repetition and timed exam simulations, syncing to a Django REST Framework backend with Claude-powered AI.** Live: [certdeck.mithaqstay.com](https://certdeck.mithaqstay.com)
+
+![CertDeck app (UI mockup)](docs/screenshots/app-mockup.png)
+
+*UI mockup of the main screens: daily study, a card with an AI explanation, and an exam simulation result.*
+
 Personal, offline-first, AI-powered spaced-repetition app for certification exams (DVA-C02 → SAA-C03 → CKAD), plus a
 **College** side for a few invited students: they upload their course material and get cards, practice exams, sheets
 and a study plan aimed at their next quiz, midterm or final.
@@ -24,7 +32,7 @@ key) and show "Needs connection" when offline. See [docs/PROTOCOL.md](docs/PROTO
 
 ## App
 
-Requirements on the laptop: Flutter 3.22.2 (`~/FlutterSDK/flutter`), JDK 17 (`~/opt/jdk17`), Android SDK
+Requirements on the laptop: Flutter 3.47.8 (`~/FlutterSDK/flutter`), JDK 17 (`~/opt/jdk17`), Android SDK
 (`~/Android/Sdk`). The release keystore is `~/.config/certdeck/release.jks`, referenced by the gitignored
 `app/android/key.properties`. **Back both up:** a different key means updates must uninstall first.
 
@@ -71,7 +79,7 @@ cd backend
 ~/.local/bin/uv venv --python 3.12 .venv
 ~/.local/bin/uv pip install --python .venv/bin/python --index-strategy unsafe-best-match -r requirements.txt
 .venv/bin/python manage.py migrate
-.venv/bin/python manage.py test                  # 24 tests (accounts, isolation, caps, college pipeline), Anthropic mocked
+.venv/bin/python manage.py test                  # 36 tests (accounts, isolation, caps, college pipeline), Anthropic mocked
 .venv/bin/python manage.py users login owner me@example.com    # once: the owner's sign-in (asks for a password)
 .venv/bin/python manage.py runserver 127.0.0.1:8765
 ```
